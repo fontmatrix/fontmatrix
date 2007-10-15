@@ -1,0 +1,117 @@
+<ui version="4.0" >
+ <author>Pierre Marchand</author>
+ <class>FontAction</class>
+ <widget class="QWidget" name="FontAction" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>292</width>
+    <height>523</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <layout class="QVBoxLayout" >
+     <item>
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QLabel" name="titleLabel" >
+         <property name="font" >
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="frameShape" >
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="text" >
+          <string>action</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="activatedBox" >
+         <property name="toolTip" >
+          <string>Activated Or Not</string>
+         </property>
+         <property name="layoutDirection" >
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="text" >
+          <string>Active</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListWidget" name="tagsListWidget" />
+     </item>
+     <item>
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QLineEdit" name="newTagText" />
+       </item>
+       <item>
+        <widget class="QPushButton" name="newTagButton" >
+         <property name="text" >
+          <string>Add Tag</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox" >
+       <property name="standardButtons" >
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>activatedBox</tabstop>
+  <tabstop>tagsListWidget</tabstop>
+  <tabstop>newTagText</tabstop>
+  <tabstop>newTagButton</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

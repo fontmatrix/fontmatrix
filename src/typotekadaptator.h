@@ -17,48 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef FONTACTIONWIDGET_H
-#define FONTACTIONWIDGET_H
+#ifndef TYPOTEKADAPTATOR_H
+#define TYPOTEKADAPTATOR_H
 
-#include <ui_fontaction.h>
+#include <QtDBus>
+#include <QDBusAbstractAdaptor>
 
-#include <QStringList>
-#include <QList>
-
-
-
-class FontItem;
-class TypotekAdaptator;
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
-	
-	activtion tag is : Activated_{On,Off}
 */
-class FontActionWidget :  public QWidget, private Ui::FontAction
+class TypotekAdaptator : public QDBusAbstractAdaptor
 {
+
 		Q_OBJECT
-
+		Q_CLASSINFO ( "D-Bus Interface", "org.freedesktop.typotek.FontActivation" )
 	public:
-		FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada, QWidget* parent = 0);
+		TypotekAdaptator ( QObject *parent );
 
-		~FontActionWidget();
-		
-		bool isOk;
-		QStringList tags;
-	private:
-		QList<FontItem*> theFonts;
-		TypotekAdaptator *adaptator;
-		
-	private slots:
-		void slotOk();
-		void slotCancel();
-		void slotSwitchCheckState( QListWidgetItem * item );
-		void slotNewTag();
-		void slotFinalize();
+		~TypotekAdaptator();
 	signals:
-		void cleanMe();	
-				
+		void activated ( QString );
+		void desactivated ( QString );
 
+	public slots:
+		void signal ( int i, QString fontname );
 
 };
 

@@ -20,6 +20,7 @@
 #include "fontactionwidget.h"
 #include "fontitem.h"
 #include "typotek.h"
+#include "typotekadaptator.h"
 
 #include <QDebug>
 #include <QListWidgetItem>
@@ -27,7 +28,7 @@
 #include <QFile>
 #include <QFileInfo>
 
-FontActionWidget::FontActionWidget ( QList<FontItem*> fonts, QWidget* parent ) : QWidget ( parent ), theFonts ( fonts )
+FontActionWidget::FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada,QWidget* parent ) : QWidget ( parent ), theFonts ( fonts ),adaptator(ada)
 {
 	setupUi ( this );
 
@@ -74,6 +75,8 @@ FontActionWidget::FontActionWidget ( QList<FontItem*> fonts, QWidget* parent ) :
 
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
+	
+
 }
 
 
@@ -134,12 +137,19 @@ void FontActionWidget::slotFinalize()
 			
 			for(int i = 0;i<theFonts.count();++i)
 			{
+				if(theFonts[i]->tags().contains("Activated_On"))
+					continue;
+				
 				qDebug() << "Activate : "<<  theFonts[i]->path();
 				
 				QFileInfo fofi(theFonts[i]->path());
 				if(!QFile::link( theFonts[i]->path() , QDir::home().absolutePath() + "/.fonts/" + fofi.baseName()))
 				{
 					qDebug() << "unable to link " << fofi.fileName();
+				}
+				else
+				{
+					adaptator->signal(1, fofi.fileName());
 				}
 			}
 		}
@@ -149,12 +159,19 @@ void FontActionWidget::slotFinalize()
 			
 			for(int i = 0;i<theFonts.count();++i)
 			{
+				if(theFonts[i]->tags().contains("Activated_Off"))
+					continue;
+				
 				qDebug() << "Desactivate : "<<  theFonts[i]->path();
 				
 				QFileInfo fofi(theFonts[i]->path());
 				if(!QFile::remove( QDir::home().absolutePath() + "/.fonts/" + fofi.baseName()))
 				{
 					qDebug() << "unable to remove " << fofi.fileName();
+				}
+				else
+				{
+					adaptator->signal(0, fofi.fileName());
 				}
 			}
 		}

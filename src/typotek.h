@@ -33,6 +33,7 @@ class QMenu;
 class QTextEdit;
 class MainViewWidget;
 class FontItem;
+class TypotekAdaptator;
 
 class typotek:public QMainWindow
 {
@@ -99,12 +100,17 @@ class typotek:public QMainWindow
 		QMap<QString, QStringList> tagsMap;
 		QList<FontItem*> fontMap;
 		QMap<QString, FontItem*> realFontMap;
+		
+		TypotekAdaptator *actAdaptator;
 	public:
 		FontItem* getFont ( int i ) {return fontMap.at ( i );};
 		FontItem* getFont ( QString s ) {return realFontMap.value ( s );};
 		QList<FontItem*> getAllFonts() {return fontMap;};
 		QList<FontItem*> getFonts ( QString pattern, QString field );
+		
+		
 		static QStringList tagsList;
+		TypotekAdaptator *adaptator(){return actAdaptator;};
 };
 
 #endif

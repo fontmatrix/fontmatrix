@@ -17,49 +17,25 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef FONTACTIONWIDGET_H
-#define FONTACTIONWIDGET_H
+#include "typotekadaptator.h"
 
-#include <ui_fontaction.h>
-
-#include <QStringList>
-#include <QList>
-
-
-
-class FontItem;
-class TypotekAdaptator;
-/**
-	@author Pierre Marchand <pierre@oep-h.com>
-	
-	activtion tag is : Activated_{On,Off}
-*/
-class FontActionWidget :  public QWidget, private Ui::FontAction
+TypotekAdaptator::TypotekAdaptator(QObject *parent)
+ : QDBusAbstractAdaptor(parent)
 {
-		Q_OBJECT
-
-	public:
-		FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada, QWidget* parent = 0);
-
-		~FontActionWidget();
-		
-		bool isOk;
-		QStringList tags;
-	private:
-		QList<FontItem*> theFonts;
-		TypotekAdaptator *adaptator;
-		
-	private slots:
-		void slotOk();
-		void slotCancel();
-		void slotSwitchCheckState( QListWidgetItem * item );
-		void slotNewTag();
-		void slotFinalize();
-	signals:
-		void cleanMe();	
-				
+}
 
 
-};
+TypotekAdaptator::~TypotekAdaptator()
+{
+}
 
-#endif
+void TypotekAdaptator::signal(int i, QString fontname)
+{
+	if (i == 1)
+		emit activated(fontname);
+	if( i == 0)
+		emit desactivated(fontname);
+	
+}
+
+

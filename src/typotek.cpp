@@ -19,16 +19,19 @@
  ***************************************************************************/
 
 
-#include <QtGui>
+
 #include "typotek.h"
 #include "mainviewwidget.h"
 #include "fontitem.h"
+#include "typotekadaptator.h"
 
+#include <QtGui>
 #include <QTextEdit>
 #include <QTextStream>
 #include <QCloseEvent>
 #include <QFileDialog>
 #include <QDir>
+#include <QDBusConnection>
 
 QStringList typotek::tagsList;
 
@@ -53,6 +56,8 @@ typotek::typotek()
 	setCurrentFile ( "" );
 	fillTagsList();
 	initDir();
+	actAdaptator = new TypotekAdaptator(this);
+	QDBusConnection::sessionBus () .registerObject("/FontActivation", this);
 }
 
 void typotek::closeEvent ( QCloseEvent *event )

@@ -2,16 +2,19 @@ SOURCES += typotek.cpp \
            main.cpp \
  mainviewwidget.cpp \
  fontitem.cpp \
- fontactionwidget.cpp
+ fontactionwidget.cpp \
+ typotekadaptator.cpp
 HEADERS += typotek.h \
  mainviewwidget.h \
  fontitem.h \
- fontactionwidget.h
+ fontactionwidget.h \
+ typotekadaptator.h
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
           qt \
- uitools
+ uitools \
+ qdbus
 TARGET = ../bin/typotek
 RESOURCES = application.qrc
 FORMS += mainview.ui \

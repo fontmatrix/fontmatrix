@@ -175,7 +175,7 @@ void MainViewWidget::slotFontAction(QTreeWidgetItem * item, int column)
 		FoIt->lock();
 		QList<FontItem*> fl;
 		fl.append(FoIt);
-		FontActionWidget *faction = new FontActionWidget(fl);
+		FontActionWidget *faction = new FontActionWidget(fl,typo->adaptator());
 		connect(faction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
 		faction->show();
 	}
@@ -195,7 +195,7 @@ void MainViewWidget::slotEditAll()
 	if(fl.isEmpty())
 		return;
 	
-	FontActionWidget *faction = new FontActionWidget(fl);
+	FontActionWidget *faction = new FontActionWidget(fl, typo->adaptator());
 	connect(faction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
 	faction->show();
 }

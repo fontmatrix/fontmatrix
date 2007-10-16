@@ -1,0 +1,16 @@
+Requirements :
+	-- Qt 4.3
+	-- Freetype2
+	
+Run "qmake -o Makefile typotek.pro",
+then "make" (typotek will be in ./bin/),
+then do _not_ run "make install" ;-)
+
+
+It should work as is with OpenSuse 10.3. For other configurations,
+you might have to alter the pro files (typotek.pro & src/src.pro).
+If you are familiar with cmake and interesting in this project,
+a reliable cmakelist.txt would be very much appreciated! 
+If you encounter problems or just have questions or if you have 
+suggestions, please take time to suscribe to the undertype-users
+mailing list ( https://mail.gna.org/listinfo/undertype-users ).

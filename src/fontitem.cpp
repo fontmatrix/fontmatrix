@@ -63,7 +63,7 @@ FontItem::FontItem ( QString path )
 	allIsRendered = false;
 
 	m_path = path;
-	m_name = QFileInfo ( m_path ).baseName();
+	m_name = QFileInfo ( m_path ).fileName();
 	if ( ! ensureLibrary() )
 		qDebug() << "Unable to init freetype library" ;
 	ft_error = FT_New_Face ( theLibrary, path.toLocal8Bit() , 0, &m_face );

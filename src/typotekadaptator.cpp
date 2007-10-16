@@ -18,6 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "typotekadaptator.h"
+#include "typotek.h"
+#include "fontitem.h"
 
 TypotekAdaptator::TypotekAdaptator(QObject *parent)
  : QDBusAbstractAdaptor(parent)
@@ -36,6 +38,16 @@ void TypotekAdaptator::signal(int i, QString fontname)
 	if( i == 0)
 		emit desactivated(fontname);
 	
+}
+
+void TypotekAdaptator::lock(QString fontname)
+{
+	typotek::getInstance()->getFont(fontname)->lock();
+}
+
+void TypotekAdaptator::unlock(QString fontname)
+{
+	typotek::getInstance()->getFont(fontname)->unLock();
 }
 
 

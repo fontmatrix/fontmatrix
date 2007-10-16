@@ -20,6 +20,8 @@
 #ifndef TYPOTEKADAPTATOR_H
 #define TYPOTEKADAPTATOR_H
 
+
+
 #include <QtDBus>
 #include <QDBusAbstractAdaptor>
 
@@ -41,6 +43,8 @@ class TypotekAdaptator : public QDBusAbstractAdaptor
 
 	public slots:
 		void signal ( int i, QString fontname );
+		void lock (QString fontname);
+		void unlock(QString fontname);
 
 };
 

@@ -34,9 +34,11 @@
 #include <QDBusConnection>
 
 QStringList typotek::tagsList;
+typotek* typotek::instance = 0;
 
 typotek::typotek()
 {
+	instance = this;
 	textEdit = new QTextEdit;
 	checkOwnDir();
 	theMainView = new MainViewWidget ( this );

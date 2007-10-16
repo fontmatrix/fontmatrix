@@ -111,6 +111,9 @@ class typotek:public QMainWindow
 		
 		static QStringList tagsList;
 		TypotekAdaptator *adaptator(){return actAdaptator;};
+		
+		static typotek* instance;
+		static typotek* getInstance(){return instance;};
 };
 
 #endif

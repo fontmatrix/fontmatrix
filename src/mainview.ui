@@ -96,11 +96,69 @@
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="editAllButton" >
-          <property name="text" >
-           <string>Edit All</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label_4" >
+            <property name="text" >
+             <string>Tags</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="tagsCombo" />
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QPushButton" name="editAllButton" >
+            <property name="text" >
+             <string>Edit All</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="activateAllButton" >
+            <property name="text" >
+             <string>Activate all</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="desactivateAllButton" >
+            <property name="text" >
+             <string>Desactivate all</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QTreeWidget" name="fontTree" >
@@ -121,9 +179,6 @@
         </item>
         <item>
          <widget class="QTextBrowser" name="fontInfoText" />
-        </item>
-        <item>
-         <widget class="QTextBrowser" name="glyphInfo" />
         </item>
        </layout>
       </item>
@@ -214,8 +269,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>112</width>
-           <height>139</height>
+           <width>824</width>
+           <height>603</height>
           </rect>
          </property>
          <attribute name="label" >
@@ -254,6 +309,9 @@
           <item row="1" column="0" colspan="2" >
            <widget class="QGraphicsView" name="abcView" />
           </item>
+          <item row="2" column="0" colspan="2" >
+           <widget class="QTextBrowser" name="glyphInfo" />
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="tagPage" >
@@ -261,8 +319,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>407</width>
-           <height>603</height>
+           <width>96</width>
+           <height>26</height>
           </rect>
          </property>
          <attribute name="label" >

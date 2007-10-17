@@ -61,6 +61,7 @@ class FontActionWidget :  public QWidget, private Ui::FontAction
 		void slotFinalize();
 	signals:
 		void cleanMe();	
+		void tagAdded(QString);
 				
 
 

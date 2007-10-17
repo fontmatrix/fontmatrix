@@ -37,14 +37,18 @@ FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) : Q
 
 void FontActionWidget::prepare(QList< FontItem * > fonts)
 {
-	for(int i=0;i<theFonts.count();++i )
-	{
-		theFonts[i]->unLock();
-	}
+
 	slotFinalize();
 	isOk = false;
 	theFonts.clear();
 	theFonts = fonts;
+	for(int i= theFonts.count() - 1; i >= 0; --i)
+	{
+		if(theFonts[i]->isLocked())
+			theFonts.removeAt(i);
+	}
+	
+	qDebug() << theFonts.count();
 	
 	tagsListWidget->clear();
 	activatedBox->setCheckState(Qt::Unchecked);
@@ -134,6 +138,7 @@ void FontActionWidget::slotNewTag()
 	QListWidgetItem *lit = new QListWidgetItem ( newTagText->text() );
 	lit->setCheckState ( Qt::Checked );
 	tagsListWidget->addItem ( lit );
+	emit tagAdded(newTagText->text());
 
 }
 

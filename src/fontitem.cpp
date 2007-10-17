@@ -79,7 +79,7 @@ FontItem::FontItem ( QString path )
 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_FIXED_WIDTH, "Is monospace\n","" );
 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "Is SFNT based (open or true type)\n","" );
 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_GLYPH_NAMES, "Has glyphs names\n","Has not glyphs names\n" );
-	for ( int i=0;i < m_face->num_charmaps; ++i )
+	for ( int i = 1;i < m_face->num_charmaps; ++i )
 	{
 		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
 	}

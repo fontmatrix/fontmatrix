@@ -40,28 +40,22 @@ typotek* typotek::instance = 0;
 typotek::typotek()
 {
 	instance = this;
-	textEdit = new QTextEdit;
+	
 	checkOwnDir();
+	fillTagsList();
 	theMainView = new MainViewWidget ( this );
 
 	setCentralWidget ( theMainView );
 
 	createActions();
 	createMenus();
-	createToolBars();
+	//createToolBars();
 	createStatusBar();
 
 	readSettings();
-
-	connect ( textEdit->document(), SIGNAL ( contentsChanged() ),
-	          this, SLOT ( documentWasModified() ) );
-
-	setCurrentFile ( "" );
-	fillTagsList();
 	initDir();
 	
 	actAdaptator = new TypotekAdaptator ( this );
-
 	if ( !QDBusConnection::sessionBus().registerObject ( "/FontActivation", this ) )
 		qDebug() << "unable to register to DBUS";
 }
@@ -166,10 +160,8 @@ bool typotek::saveAs()
 
 void typotek::about()
 {
-	QMessageBox::about ( this, tr ( "About Application" ),
-	                     tr ( "The <b>Application</b> example demonstrates how to "
-	                          "write modern GUI applications using Qt, with a menu bar, "
-	                          "toolbars, and a status bar." ) );
+	QMessageBox::about ( this, tr ( "About Typotek" ),
+	                     tr ( "Typotek is what we all hoped for long time : a font manager for linux" ) );
 }
 
 void typotek::documentWasModified()
@@ -179,10 +171,7 @@ void typotek::documentWasModified()
 
 void typotek::createActions()
 {
-	newAct = new QAction ( QIcon ( ":/filenew.xpm" ), tr ( "&New" ), this );
-	newAct->setShortcut ( tr ( "Ctrl+N" ) );
-	newAct->setStatusTip ( tr ( "Create a new file" ) );
-	connect ( newAct, SIGNAL ( triggered() ), this, SLOT ( newFile() ) );
+
 
 	openAct = new QAction ( QIcon ( ":/fileopen.xpm" ), tr ( "&Import..." ), this );
 	openAct->setShortcut ( tr ( "Ctrl+O" ) );
@@ -194,69 +183,31 @@ void typotek::createActions()
 	saveAct->setStatusTip ( tr ( "Save the document to disk" ) );
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
 
-	saveAsAct = new QAction ( tr ( "Save &As..." ), this );
-	saveAsAct->setStatusTip ( tr ( "Save the document under a new name" ) );
-	connect ( saveAsAct, SIGNAL ( triggered() ), this, SLOT ( saveAs() ) );
-
 	exitAct = new QAction ( tr ( "E&xit" ), this );
 	exitAct->setShortcut ( tr ( "Ctrl+Q" ) );
 	exitAct->setStatusTip ( tr ( "Exit the application" ) );
 	connect ( exitAct, SIGNAL ( triggered() ), this, SLOT ( close() ) );
 
-	cutAct = new QAction ( QIcon ( ":/editcut.xpm" ), tr ( "Cu&t" ), this );
-	cutAct->setShortcut ( tr ( "Ctrl+X" ) );
-	cutAct->setStatusTip ( tr ( "Cut the current selection's contents to the "
-	                            "clipboard" ) );
-	connect ( cutAct, SIGNAL ( triggered() ), textEdit, SLOT ( cut() ) );
-
-	copyAct = new QAction ( QIcon ( ":/editcopy.xpm" ), tr ( "&Copy" ), this );
-	copyAct->setShortcut ( tr ( "Ctrl+C" ) );
-	copyAct->setStatusTip ( tr ( "Copy the current selection's contents to the "
-	                             "clipboard" ) );
-	connect ( copyAct, SIGNAL ( triggered() ), textEdit, SLOT ( copy() ) );
-
-	pasteAct = new QAction ( QIcon ( ":/editpaste.xpm" ), tr ( "&Paste" ), this );
-	pasteAct->setShortcut ( tr ( "Ctrl+V" ) );
-	pasteAct->setStatusTip ( tr ( "Paste the clipboard's contents into the current "
-	                              "selection" ) );
-	connect ( pasteAct, SIGNAL ( triggered() ), textEdit, SLOT ( paste() ) );
 
 	aboutAct = new QAction ( tr ( "&About" ), this );
-	aboutAct->setStatusTip ( tr ( "Show the application's About box" ) );
+	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
-
-	aboutQtAct = new QAction ( tr ( "About &Qt" ), this );
-	aboutQtAct->setStatusTip ( tr ( "Show the Qt library's About box" ) );
-	connect ( aboutQtAct, SIGNAL ( triggered() ), qApp, SLOT ( aboutQt() ) );
-
-	cutAct->setEnabled ( false );
-	copyAct->setEnabled ( false );
-	connect ( textEdit, SIGNAL ( copyAvailable ( bool ) ),
-	          cutAct, SLOT ( setEnabled ( bool ) ) );
-	connect ( textEdit, SIGNAL ( copyAvailable ( bool ) ),
-	          copyAct, SLOT ( setEnabled ( bool ) ) );
+	      
 }
 
 void typotek::createMenus()
 {
 	fileMenu = menuBar()->addMenu ( tr ( "&File" ) );
-	fileMenu->addAction ( newAct );
+
 	fileMenu->addAction ( openAct );
 	fileMenu->addAction ( saveAct );
-	fileMenu->addAction ( saveAsAct );
+
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
 
-	editMenu = menuBar()->addMenu ( tr ( "&Edit" ) );
-	editMenu->addAction ( cutAct );
-	editMenu->addAction ( copyAct );
-	editMenu->addAction ( pasteAct );
-
-	menuBar()->addSeparator();
-
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
-	helpMenu->addAction ( aboutQtAct );
+
 }
 
 void typotek::createToolBars()
@@ -295,19 +246,7 @@ void typotek::writeSettings()
 
 bool typotek::maybeSave()
 {
-	if ( textEdit->document()->isModified() )
-	{
-		int ret = QMessageBox::warning ( this, tr ( "Application" ),
-		                                 tr ( "The document has been modified.\n"
-		                                      "Do you want to save your changes?" ),
-		                                 QMessageBox::Yes | QMessageBox::Default,
-		                                 QMessageBox::No,
-		                                 QMessageBox::Cancel | QMessageBox::Escape );
-		if ( ret == QMessageBox::Yes )
-			return save();
-		else if ( ret == QMessageBox::Cancel )
-			return false;
-	}
+
 	return true;
 }
 

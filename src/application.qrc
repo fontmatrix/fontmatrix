@@ -6,5 +6,6 @@
       <file>fileopen.xpm</file>
       <file>editpaste.xpm</file>
       <file>filesave.xpm</file>
+      <file>typotek.png</file>
 </qresource>
 </RCC>

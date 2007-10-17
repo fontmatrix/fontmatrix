@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'fontaction.ui'
 **
-** Created: mer. oct. 17 01:39:48 2007
+** Created: mer. oct. 17 11:31:36 2007
 **      by: Qt User Interface Compiler version 4.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!

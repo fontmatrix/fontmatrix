@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'mainview.ui'
 **
-** Created: mer. oct. 17 01:39:48 2007
+** Created: mer. oct. 17 11:31:36 2007
 **      by: Qt User Interface Compiler version 4.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -51,10 +51,17 @@ public:
     QHBoxLayout *hboxLayout1;
     QLabel *label;
     QComboBox *orderingCombo;
+    QHBoxLayout *hboxLayout2;
+    QLabel *label_4;
+    QComboBox *tagsCombo;
+    QSpacerItem *spacerItem1;
+    QHBoxLayout *hboxLayout3;
     QPushButton *editAllButton;
+    QSpacerItem *spacerItem2;
+    QPushButton *activateAllButton;
+    QPushButton *desactivateAllButton;
     QTreeWidget *fontTree;
     QTextBrowser *fontInfoText;
-    QTextBrowser *glyphInfo;
     QFrame *viewFrame;
     QGridLayout *gridLayout2;
     QToolBox *toolBox;
@@ -63,14 +70,15 @@ public:
     QTextEdit *textEdit;
     QWidget *pageRender;
     QGridLayout *gridLayout4;
-    QSpacerItem *spacerItem1;
+    QSpacerItem *spacerItem3;
     QSlider *renderZoom;
     QGraphicsView *loremView;
     QWidget *page;
     QGridLayout *gridLayout5;
-    QSpacerItem *spacerItem2;
+    QSpacerItem *spacerItem4;
     QSlider *allZoom;
     QGraphicsView *abcView;
+    QTextBrowser *glyphInfo;
     QWidget *tagPage;
 
     void setupUi(QWidget *MainView)
@@ -152,10 +160,48 @@ public:
 
     vboxLayout->addLayout(hboxLayout);
 
+    hboxLayout2 = new QHBoxLayout();
+    hboxLayout2->setObjectName(QString::fromUtf8("hboxLayout2"));
+    label_4 = new QLabel(manageFrame);
+    label_4->setObjectName(QString::fromUtf8("label_4"));
+
+    hboxLayout2->addWidget(label_4);
+
+    tagsCombo = new QComboBox(manageFrame);
+    tagsCombo->setObjectName(QString::fromUtf8("tagsCombo"));
+
+    hboxLayout2->addWidget(tagsCombo);
+
+    spacerItem1 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    hboxLayout2->addItem(spacerItem1);
+
+
+    vboxLayout->addLayout(hboxLayout2);
+
+    hboxLayout3 = new QHBoxLayout();
+    hboxLayout3->setObjectName(QString::fromUtf8("hboxLayout3"));
     editAllButton = new QPushButton(manageFrame);
     editAllButton->setObjectName(QString::fromUtf8("editAllButton"));
 
-    vboxLayout->addWidget(editAllButton);
+    hboxLayout3->addWidget(editAllButton);
+
+    spacerItem2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    hboxLayout3->addItem(spacerItem2);
+
+    activateAllButton = new QPushButton(manageFrame);
+    activateAllButton->setObjectName(QString::fromUtf8("activateAllButton"));
+
+    hboxLayout3->addWidget(activateAllButton);
+
+    desactivateAllButton = new QPushButton(manageFrame);
+    desactivateAllButton->setObjectName(QString::fromUtf8("desactivateAllButton"));
+
+    hboxLayout3->addWidget(desactivateAllButton);
+
+
+    vboxLayout->addLayout(hboxLayout3);
 
     fontTree = new QTreeWidget(manageFrame);
     fontTree->setObjectName(QString::fromUtf8("fontTree"));
@@ -167,11 +213,6 @@ public:
     fontInfoText->setObjectName(QString::fromUtf8("fontInfoText"));
 
     vboxLayout->addWidget(fontInfoText);
-
-    glyphInfo = new QTextBrowser(manageFrame);
-    glyphInfo->setObjectName(QString::fromUtf8("glyphInfo"));
-
-    vboxLayout->addWidget(glyphInfo);
 
 
     gridLayout1->addLayout(vboxLayout, 0, 0, 1, 1);
@@ -203,9 +244,9 @@ public:
     pageRender->setGeometry(QRect(0, 0, 407, 603));
     gridLayout4 = new QGridLayout(pageRender);
     gridLayout4->setObjectName(QString::fromUtf8("gridLayout4"));
-    spacerItem1 = new QSpacerItem(161, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    spacerItem3 = new QSpacerItem(161, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    gridLayout4->addItem(spacerItem1, 0, 0, 1, 1);
+    gridLayout4->addItem(spacerItem3, 0, 0, 1, 1);
 
     renderZoom = new QSlider(pageRender);
     renderZoom->setObjectName(QString::fromUtf8("renderZoom"));
@@ -224,12 +265,12 @@ public:
     toolBox->addItem(pageRender, QApplication::translate("MainView", "Rendered text", 0, QApplication::UnicodeUTF8));
     page = new QWidget();
     page->setObjectName(QString::fromUtf8("page"));
-    page->setGeometry(QRect(0, 0, 112, 139));
+    page->setGeometry(QRect(0, 0, 824, 603));
     gridLayout5 = new QGridLayout(page);
     gridLayout5->setObjectName(QString::fromUtf8("gridLayout5"));
-    spacerItem2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    spacerItem4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    gridLayout5->addItem(spacerItem2, 0, 0, 1, 1);
+    gridLayout5->addItem(spacerItem4, 0, 0, 1, 1);
 
     allZoom = new QSlider(page);
     allZoom->setObjectName(QString::fromUtf8("allZoom"));
@@ -245,10 +286,15 @@ public:
 
     gridLayout5->addWidget(abcView, 1, 0, 1, 2);
 
+    glyphInfo = new QTextBrowser(page);
+    glyphInfo->setObjectName(QString::fromUtf8("glyphInfo"));
+
+    gridLayout5->addWidget(glyphInfo, 2, 0, 1, 2);
+
     toolBox->addItem(page, QApplication::translate("MainView", "All glyphs", 0, QApplication::UnicodeUTF8));
     tagPage = new QWidget();
     tagPage->setObjectName(QString::fromUtf8("tagPage"));
-    tagPage->setGeometry(QRect(0, 0, 407, 603));
+    tagPage->setGeometry(QRect(0, 0, 96, 26));
     toolBox->addItem(tagPage, QApplication::translate("MainView", "Tags", 0, QApplication::UnicodeUTF8));
 
     gridLayout2->addWidget(toolBox, 0, 0, 1, 1);
@@ -272,7 +318,10 @@ public:
     label_3->setText(QApplication::translate("MainView", "In", 0, QApplication::UnicodeUTF8));
     searchButton->setText(QApplication::translate("MainView", "Search", 0, QApplication::UnicodeUTF8));
     label->setText(QApplication::translate("MainView", "Ordering", 0, QApplication::UnicodeUTF8));
+    label_4->setText(QApplication::translate("MainView", "Tags", 0, QApplication::UnicodeUTF8));
     editAllButton->setText(QApplication::translate("MainView", "Edit All", 0, QApplication::UnicodeUTF8));
+    activateAllButton->setText(QApplication::translate("MainView", "Activate all", 0, QApplication::UnicodeUTF8));
+    desactivateAllButton->setText(QApplication::translate("MainView", "Desactivate all", 0, QApplication::UnicodeUTF8));
     fontTree->headerItem()->setText(0, QApplication::translate("MainView", "1", 0, QApplication::UnicodeUTF8));
     fontTree->headerItem()->setText(1, QApplication::translate("MainView", "2", 0, QApplication::UnicodeUTF8));
     toolBox->setItemText(toolBox->indexOf(pageText), QApplication::translate("MainView", "input text", 0, QApplication::UnicodeUTF8));

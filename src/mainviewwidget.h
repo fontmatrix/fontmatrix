@@ -53,6 +53,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QList<FontItem*> currentFonts;
 		FontActionWidget *currentFaction;
 		
+		void allActivation(bool act);
+		
 	public slots:
 		void slotOrderingChanged ( QString s );
 		void slotfontSelected ( QTreeWidgetItem * item, int column );
@@ -64,6 +66,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotEditAll();
 		void slotCleanFontAction();
 		void slotZoom(int z);
+		void slotAppendTag(QString tag);
+		void slotFilterTag(QString tag);
+		void slotDesactivateAll();
+		void slotActivateAll();
 	signals:
 		void faceChanged();
 

@@ -21,11 +21,14 @@
 #include "typotek.h"
 #include "fontitem.h"
 #include "fontactionwidget.h"
+#include "typotekadaptator.h"
 
 #include <QString>
 #include <QDebug>
 #include <QGraphicsItem>
 #include <QTransform>
+
+
 
 MainViewWidget::MainViewWidget(QWidget *parent)
 	: QWidget(parent)
@@ -47,20 +50,36 @@ MainViewWidget::MainViewWidget(QWidget *parent)
 	ord << "family" << "variant";
 	orderingCombo->addItems(ord);
 	
-	fields << "family" << "variant"<<  "tag";
+	fields << "family" << "variant";
 	searchField->addItems(fields);
 	
+	QStringList tl_tmp = typotek::tagsList;
+	qDebug() << "TAGLIST\n" << typotek::tagsList.join("\n");
+	tl_tmp.removeAll("Activated_On");
+	tl_tmp.removeAll("Activated_Off");
+	
+	tagsCombo->addItems(tl_tmp);
+	
 	connect(orderingCombo,SIGNAL(activated( const QString )),this,SLOT(slotOrderingChanged(QString)));
+	
 	connect(fontTree,SIGNAL(itemClicked( QTreeWidgetItem*, int )),this,SLOT(slotfontSelected(QTreeWidgetItem*, int)));
 	connect(fontTree,SIGNAL(itemClicked( QTreeWidgetItem*, int )),this,SLOT(slotFontAction(QTreeWidgetItem*, int)));
+	connect(editAllButton,SIGNAL(clicked( bool )),this,SLOT(slotEditAll()));
+	
 	connect(this,SIGNAL(faceChanged()),this,SLOT(slotInfoFont()));
 	connect(this,SIGNAL(faceChanged()),this,SLOT(slotView()));
+	
 	connect(abcScene,SIGNAL(selectionChanged()),this,SLOT(slotglyphInfo()));
 	connect(searchButton,SIGNAL(clicked( bool )),this,SLOT(slotSearch()));
-	connect(editAllButton,SIGNAL(clicked( bool )),this,SLOT(slotEditAll()));
+	
 	
 	connect(renderZoom,SIGNAL(valueChanged( int )),this,SLOT(slotZoom(int)));
 	connect(allZoom,SIGNAL(valueChanged( int )),this,SLOT(slotZoom(int)));
+	
+	connect(tagsCombo,SIGNAL(activated( const QString& )),this,SLOT(slotFilterTag(QString)));
+	
+	connect(activateAllButton,SIGNAL(released()),this,SLOT(slotActivateAll()));
+	connect(desactivateAllButton,SIGNAL(released()),this,SLOT(slotDesactivateAll()));
 	
 	
 }
@@ -170,17 +189,49 @@ void MainViewWidget::slotSearch()
 	}
 }
 
+void MainViewWidget::slotFilterTag(QString tag)
+{
+	fontTree->clear();
+	
+	QString fs(tag);
+	QString ff("tag");
+	
+	currentFonts = typo->getFonts(fs,ff) ;
+
+	QMap<QString,QList<FontItem*> > keyList;
+	for(int i=0;i <currentFonts.count();++i)
+	{
+		keyList[currentFonts[i]->value(orderingCombo->currentText())].append(currentFonts[i]);
+	}
+	
+	QMap<QString, QList<FontItem*> >::const_iterator kit;
+	for(kit = keyList.begin(); kit != keyList.end(); ++kit)
+	{
+		QTreeWidgetItem *ord = new QTreeWidgetItem(fontTree);
+		ord->setText(0, kit.key());
+		QList<FontItem*> alist = kit.value();
+		for(int  n = 0; n < alist.count(); ++n)
+		{
+			QTreeWidgetItem *entry = new QTreeWidgetItem(ord);
+			entry->setText(1, alist[n]->name());
+		}
+		fontTree->addTopLevelItem(ord);
+	}
+}
+
+
 void MainViewWidget::slotFontAction(QTreeWidgetItem * item, int column)
 {
 	if (!currentFaction)
 	{
 		currentFaction = new FontActionWidget(typo->adaptator(), tagPage);
 		connect(currentFaction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
+		connect(currentFaction,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
 		currentFaction->show();
 	}
 	
 	FontItem * FoIt = typo->getFont( item->text(1) );
-	if(FoIt && (!FoIt->isLocked()))
+	if(FoIt/* && (!FoIt->isLocked())*/)
 	{
 // 		currentFaction->slotFinalize();
 		QList<FontItem*> fl;
@@ -197,6 +248,7 @@ void MainViewWidget::slotEditAll()
 	{
 		currentFaction = new FontActionWidget(typo->adaptator(), tagPage);
 		connect(currentFaction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
+		connect(currentFaction,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
 		currentFaction->show();
 	}
 	
@@ -204,10 +256,10 @@ void MainViewWidget::slotEditAll()
 	QList<FontItem*> fl;
 	for(int i =0; i< currentFonts.count(); ++i)
 	{
-		if(!currentFonts[i]->isLocked())
-		{
+// 		if(!currentFonts[i]->isLocked())
+// 		{
 			fl.append(currentFonts[i]);
-		}
+// 		}
 	}
 	if(fl.isEmpty())
 		return;
@@ -234,6 +286,80 @@ void MainViewWidget::slotZoom(int z)
 	trans.scale(delta,delta);
 	concernedView->setTransform(trans, false);
 
+}
+
+void MainViewWidget::slotAppendTag(QString tag)
+{
+	qDebug() << "add tag to combo " << tag;
+	tagsCombo->addItem(tag);
+}
+
+void MainViewWidget::allActivation(bool act)
+{
+	if(act)
+	{
+		foreach(FontItem* fit, currentFonts)
+		{
+			if(!fit->isLocked())
+			{
+				QStringList tl = fit->tags();
+				if(!tl.contains("Activated_On"))
+				{
+					tl.removeAll("Activated_Off");
+					tl << "Activated_On";
+					fit->setTags(tl);
+					
+					QFileInfo fofi(fit->path());
+					if(!QFile::link( fit->path() , QDir::home().absolutePath() + "/.fonts/" + fofi.baseName()))
+					{
+						qDebug() << "unable to link " << fofi.fileName();
+					}
+					else
+					{
+						typo->adaptator()->private_signal(1, fofi.fileName());
+					}
+				}
+				
+			}
+		}
+	}
+	else
+	{
+		foreach(FontItem* fit, currentFonts)
+		{
+			if(!fit->isLocked())
+			{
+				QStringList tl = fit->tags();
+				if(!tl.contains("Activated_Off"))
+				{
+					tl.removeAll("Activated_On");
+					tl << "Activated_Off";
+					fit->setTags(tl);
+					
+					QFileInfo fofi(fit->path());
+					if(!QFile::remove( QDir::home().absolutePath() + "/.fonts/" + fofi.baseName()))
+					{
+						qDebug() << "unable to remove " << fofi.fileName();
+					}
+					else
+					{
+						typo->adaptator()->private_signal(0, fofi.fileName());
+					}
+				}
+				
+			}
+		}
+	}
+}
+
+void MainViewWidget::slotDesactivateAll()
+{
+	allActivation(false);
+}
+
+void MainViewWidget::slotActivateAll()
+{
+	allActivation(true);
 }
 
 

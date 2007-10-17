@@ -20,12 +20,14 @@
 
 
 #include <QApplication>
+#include <QIcon>
 #include "typotek.h"
 
 int main(int argc, char *argv[])
 {
       Q_INIT_RESOURCE(application);
       QApplication app(argc, argv);
+      app.setWindowIcon (QIcon(":/typotek.png") );
       typotek * mw = new typotek();
       mw->show();
       return app.exec();

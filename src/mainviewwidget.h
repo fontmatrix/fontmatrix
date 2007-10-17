@@ -28,6 +28,7 @@ class QGraphicsScene;
 class typotek;
 class FontItem;
 class FontActionWidget;
+class QTextEdit;
 
 /**
 MainViewWidget inherits from an ui designed.
@@ -52,6 +53,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString lastIndex;
 		QList<FontItem*> currentFonts;
 		FontActionWidget *currentFaction;
+		QString sampleText;
 		
 		void allActivation(bool act);
 		
@@ -70,6 +72,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotFilterTag(QString tag);
 		void slotDesactivateAll();
 		void slotActivateAll();
+		void slotSetSampleText();
 	signals:
 		void faceChanged();
 

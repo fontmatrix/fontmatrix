@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>891</width>
-    <height>767</height>
+    <width>963</width>
+    <height>773</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -16,169 +16,315 @@
   <layout class="QGridLayout" >
    <item row="0" column="0" >
     <widget class="QFrame" name="manageFrame" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Minimum" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>485</width>
+       <height>400</height>
+      </size>
+     </property>
      <property name="frameShape" >
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow" >
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <layout class="QVBoxLayout" >
-        <item>
-         <layout class="QHBoxLayout" >
+     <layout class="QVBoxLayout" >
+      <item>
+       <layout class="QGridLayout" >
+        <item row="0" column="0" >
+         <layout class="QVBoxLayout" >
           <item>
-           <layout class="QVBoxLayout" >
-            <item>
-             <widget class="QLabel" name="label_2" >
-              <property name="text" >
-               <string>Search</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_3" >
-              <property name="text" >
-               <string>In</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" >
-            <item>
-             <widget class="QLineEdit" name="searchString" />
-            </item>
-            <item>
-             <widget class="QComboBox" name="searchField" />
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" >
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>61</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="searchButton" >
-              <property name="text" >
-               <string>Search</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" >
-            <item>
-             <widget class="QLabel" name="label" >
-              <property name="text" >
-               <string>Ordering</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="orderingCombo" />
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" >
-          <item>
-           <widget class="QLabel" name="label_4" >
+           <widget class="QLabel" name="search" >
             <property name="text" >
-             <string>Tags</string>
+             <string>Search</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="tagsCombo" />
+           <widget class="QLabel" name="in" >
+            <property name="text" >
+             <string>In</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1" >
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLineEdit" name="searchString" />
           </item>
           <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
+           <widget class="QComboBox" name="searchField" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="sizeHint" >
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="2" >
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QPushButton" name="searchButton" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize" >
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>120</width>
+              <height>0</height>
              </size>
             </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" >
-          <item>
-           <widget class="QPushButton" name="editAllButton" >
+            <property name="font" >
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="text" >
-             <string>Edit All</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="activateAllButton" >
-            <property name="text" >
-             <string>Activate all</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="desactivateAllButton" >
-            <property name="text" >
-             <string>Desactivate all</string>
+             <string>Search</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="FontInformations" >
+        <property name="font" >
+         <font>
+          <pointsize>12</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="text" >
+         <string>Font informations:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextBrowser" name="fontInfoText" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="FontList" >
+        <property name="font" >
+         <font>
+          <pointsize>12</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="text" >
+         <string>Font list:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
         <item>
-         <widget class="QTreeWidget" name="fontTree" >
-          <property name="columnCount" >
-           <number>2</number>
+         <widget class="QLabel" name="OrderBy" >
+          <property name="font" >
+           <font>
+            <pointsize>9</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
           </property>
-          <column>
-           <property name="text" >
-            <string>1</string>
-           </property>
-          </column>
-          <column>
-           <property name="text" >
-            <string>2</string>
-           </property>
-          </column>
+          <property name="text" >
+           <string/>
+          </property>
          </widget>
         </item>
         <item>
-         <widget class="QTextBrowser" name="fontInfoText" />
+         <widget class="QLabel" name="Tags" >
+          <property name="text" >
+           <string>Tags</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="tagsCombo" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="contextMenuPolicy" >
+           <enum>Qt::DefaultContextMenu</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType" >
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="Ordering" >
+          <property name="text" >
+           <string>Ordering</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="orderingCombo" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTreeWidget" name="fontTree" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font" >
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="cursor" stdset="0" >
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground" >
+         <bool>false</bool>
+        </property>
+        <property name="frameShape" >
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow" >
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <property name="lineWidth" >
+         <number>1</number>
+        </property>
+        <property name="textElideMode" >
+         <enum>Qt::ElideRight</enum>
+        </property>
+        <property name="columnCount" >
+         <number>2</number>
+        </property>
+        <column>
+         <property name="text" >
+          <string>Family</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>Variant</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_2" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QPushButton" name="editAllButton" >
+          <property name="text" >
+           <string>Edit All</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>186</width>
+            <height>26</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="activateAllButton" >
+          <property name="text" >
+           <string>Activate all</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="desactivateAllButton" >
+          <property name="text" >
+           <string>Deactivate all</string>
+          </property>
+          <property name="autoExclusive" >
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -187,6 +333,18 @@
    </item>
    <item row="0" column="1" >
     <widget class="QFrame" name="viewFrame" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>350</width>
+       <height>500</height>
+      </size>
+     </property>
      <property name="frameShape" >
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -197,54 +355,29 @@
       <item row="0" column="0" >
        <widget class="QToolBox" name="toolBox" >
         <property name="currentIndex" >
-         <number>1</number>
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="pageText" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>112</width>
-           <height>112</height>
-          </rect>
-         </property>
-         <attribute name="label" >
-          <string>input text</string>
-         </attribute>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QTextEdit" name="textEdit" />
-          </item>
-         </layout>
-        </widget>
         <widget class="QWidget" name="pageRender" >
          <property name="geometry" >
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>407</width>
-           <height>603</height>
+           <width>432</width>
+           <height>640</height>
           </rect>
          </property>
          <attribute name="label" >
-          <string>Rendered text</string>
+          <string>Sample text</string>
          </attribute>
          <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>161</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
           <item row="0" column="1" >
            <widget class="QSlider" name="renderZoom" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="maximum" >
              <number>1000</number>
             </property>
@@ -262,6 +395,13 @@
           <item row="1" column="0" colspan="2" >
            <widget class="QGraphicsView" name="loremView" />
           </item>
+          <item row="0" column="0" >
+           <widget class="QPushButton" name="textButton" >
+            <property name="text" >
+             <string>Enter your sample text here...</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="page" >
@@ -269,29 +409,22 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>824</width>
-           <height>603</height>
+           <width>432</width>
+           <height>640</height>
           </rect>
          </property>
          <attribute name="label" >
           <string>All glyphs</string>
          </attribute>
          <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
           <item row="0" column="1" >
            <widget class="QSlider" name="allZoom" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="maximum" >
              <number>1000</number>
             </property>
@@ -319,8 +452,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>96</width>
-           <height>26</height>
+           <width>432</width>
+           <height>640</height>
           </rect>
          </property>
          <attribute name="label" >

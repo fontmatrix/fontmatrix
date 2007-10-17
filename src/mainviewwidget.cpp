@@ -27,6 +27,7 @@
 #include <QDebug>
 #include <QGraphicsItem>
 #include <QTransform>
+#include <QInputDialog>
 
 
 
@@ -45,7 +46,7 @@ MainViewWidget::MainViewWidget(QWidget *parent)
 	loremView->setScene(loremScene);
 // 	loremView->scale(0.5,0.5);
 	
-	textEdit->setPlainText("Here, type your own\nlorem ipsum");
+	sampleText = "Here, type your own\nlorem ipsum";
 	
 	ord << "family" << "variant";
 	orderingCombo->addItems(ord);
@@ -80,6 +81,8 @@ MainViewWidget::MainViewWidget(QWidget *parent)
 	
 	connect(activateAllButton,SIGNAL(released()),this,SLOT(slotActivateAll()));
 	connect(desactivateAllButton,SIGNAL(released()),this,SLOT(slotDesactivateAll()));
+	
+	connect(textButton,SIGNAL(released()),this,SLOT(slotSetSampleText()));
 	
 	
 }
@@ -146,7 +149,7 @@ void MainViewWidget::slotView()
 	f->deRenderAll();
 	f->renderAll(abcScene);
 	
-	QStringList stl = textEdit->toPlainText().split('\n');
+	QStringList stl = sampleText.split('\n');
 	for(int i=0; i< stl.count(); ++i)
 		f->renderLine(loremScene,stl[i],25*i);}
 
@@ -360,6 +363,11 @@ void MainViewWidget::slotDesactivateAll()
 void MainViewWidget::slotActivateAll()
 {
 	allActivation(true);
+}
+
+void MainViewWidget::slotSetSampleText()
+{
+	sampleText = QInputDialog::getText(this, "typotek - getText", "Type your sample text here",QLineEdit::Normal,sampleText);
 }
 
 

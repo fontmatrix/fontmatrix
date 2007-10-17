@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'fontaction.ui'
 **
-** Created: mar. oct. 16 11:13:30 2007
+** Created: mer. oct. 17 01:39:48 2007
 **      by: Qt User Interface Compiler version 4.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -46,7 +46,7 @@ public:
     {
     if (FontAction->objectName().isEmpty())
         FontAction->setObjectName(QString::fromUtf8("FontAction"));
-    FontAction->resize(292, 523);
+    FontAction->resize(309, 241);
     gridLayout = new QGridLayout(FontAction);
     gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
     vboxLayout = new QVBoxLayout();

@@ -32,19 +32,19 @@ class TypotekAdaptator : public QDBusAbstractAdaptor
 {
 
 		Q_OBJECT
-		Q_CLASSINFO ( "D-Bus Interface", "org.freedesktop.typotek.FontActivation" )
+		Q_CLASSINFO ( "D-Bus Interface", "org.freedesktop.typotek" )
 	public:
 		TypotekAdaptator ( QObject *parent );
 
 		~TypotekAdaptator();
 	signals:
-		void activated ( QString );
-		void desactivated ( QString );
+		void FontActivated ( QString );
+		void FontDesactivated ( QString );
 
 	public slots:
-		void signal ( int i, QString fontname );
-		void lock (QString fontname);
-		void unlock(QString fontname);
+		void private_signal ( int i, QString fontname );
+		void FontLock (QString fontname);
+		void FontUnlock(QString fontname);
 
 };
 

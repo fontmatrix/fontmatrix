@@ -34,6 +34,7 @@ MainViewWidget::MainViewWidget(QWidget *parent)
 	
 	typo = reinterpret_cast<typotek*>(parent);
 	
+	currentFaction =0;
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
 	
@@ -51,7 +52,7 @@ MainViewWidget::MainViewWidget(QWidget *parent)
 	
 	connect(orderingCombo,SIGNAL(activated( const QString )),this,SLOT(slotOrderingChanged(QString)));
 	connect(fontTree,SIGNAL(itemClicked( QTreeWidgetItem*, int )),this,SLOT(slotfontSelected(QTreeWidgetItem*, int)));
-	connect(fontTree,SIGNAL(itemDoubleClicked( QTreeWidgetItem*, int )),this,SLOT(slotFontAction(QTreeWidgetItem*, int)));
+	connect(fontTree,SIGNAL(itemClicked( QTreeWidgetItem*, int )),this,SLOT(slotFontAction(QTreeWidgetItem*, int)));
 	connect(this,SIGNAL(faceChanged()),this,SLOT(slotInfoFont()));
 	connect(this,SIGNAL(faceChanged()),this,SLOT(slotView()));
 	connect(abcScene,SIGNAL(selectionChanged()),this,SLOT(slotglyphInfo()));
@@ -60,6 +61,8 @@ MainViewWidget::MainViewWidget(QWidget *parent)
 	
 	connect(renderZoom,SIGNAL(valueChanged( int )),this,SLOT(slotZoom(int)));
 	connect(allZoom,SIGNAL(valueChanged( int )),this,SLOT(slotZoom(int)));
+	
+	
 }
 
 
@@ -169,46 +172,53 @@ void MainViewWidget::slotSearch()
 
 void MainViewWidget::slotFontAction(QTreeWidgetItem * item, int column)
 {
+	if (!currentFaction)
+	{
+		currentFaction = new FontActionWidget(typo->adaptator(), tagPage);
+		connect(currentFaction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
+		currentFaction->show();
+	}
+	
 	FontItem * FoIt = typo->getFont( item->text(1) );
 	if(FoIt && (!FoIt->isLocked()))
 	{
-		FoIt->lock();
+// 		currentFaction->slotFinalize();
 		QList<FontItem*> fl;
 		fl.append(FoIt);
-		FontActionWidget *faction = new FontActionWidget(fl,typo->adaptator());
-		connect(faction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
-		faction->show();
+		currentFaction->prepare(fl);
+		
+		
 	}
 }
 
 void MainViewWidget::slotEditAll()
 {
+	if (!currentFaction)
+	{
+		currentFaction = new FontActionWidget(typo->adaptator(), tagPage);
+		connect(currentFaction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
+		currentFaction->show();
+	}
+	
+	
 	QList<FontItem*> fl;
 	for(int i =0; i< currentFonts.count(); ++i)
 	{
 		if(!currentFonts[i]->isLocked())
 		{
 			fl.append(currentFonts[i]);
-			currentFonts[i]->lock();
 		}
 	}
 	if(fl.isEmpty())
 		return;
 	
-	FontActionWidget *faction = new FontActionWidget(fl, typo->adaptator());
-	connect(faction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
-	faction->show();
+	currentFaction->prepare(fl);
 }
 
 void MainViewWidget::slotCleanFontAction()
 {
-	FontActionWidget *sf = dynamic_cast<FontActionWidget *>(sender());
-	if(sf)
-		delete sf;
-	
 	typo->save();
-	
-	qDebug() << " FontActionWidget cleaned & saved";
+	qDebug() << " FontActionWidget  saved";
 }
 
 void MainViewWidget::slotZoom(int z)

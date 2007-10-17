@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'mainview.ui'
 **
-** Created: mar. oct. 16 11:13:30 2007
+** Created: mer. oct. 17 01:39:48 2007
 **      by: Qt User Interface Compiler version 4.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -71,6 +71,7 @@ public:
     QSpacerItem *spacerItem2;
     QSlider *allZoom;
     QGraphicsView *abcView;
+    QWidget *tagPage;
 
     void setupUi(QWidget *MainView)
     {
@@ -199,7 +200,7 @@ public:
     toolBox->addItem(pageText, QApplication::translate("MainView", "input text", 0, QApplication::UnicodeUTF8));
     pageRender = new QWidget();
     pageRender->setObjectName(QString::fromUtf8("pageRender"));
-    pageRender->setGeometry(QRect(0, 0, 407, 634));
+    pageRender->setGeometry(QRect(0, 0, 407, 603));
     gridLayout4 = new QGridLayout(pageRender);
     gridLayout4->setObjectName(QString::fromUtf8("gridLayout4"));
     spacerItem1 = new QSpacerItem(161, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -223,7 +224,7 @@ public:
     toolBox->addItem(pageRender, QApplication::translate("MainView", "Rendered text", 0, QApplication::UnicodeUTF8));
     page = new QWidget();
     page->setObjectName(QString::fromUtf8("page"));
-    page->setGeometry(QRect(0, 0, 407, 634));
+    page->setGeometry(QRect(0, 0, 112, 139));
     gridLayout5 = new QGridLayout(page);
     gridLayout5->setObjectName(QString::fromUtf8("gridLayout5"));
     spacerItem2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -245,6 +246,10 @@ public:
     gridLayout5->addWidget(abcView, 1, 0, 1, 2);
 
     toolBox->addItem(page, QApplication::translate("MainView", "All glyphs", 0, QApplication::UnicodeUTF8));
+    tagPage = new QWidget();
+    tagPage->setObjectName(QString::fromUtf8("tagPage"));
+    tagPage->setGeometry(QRect(0, 0, 407, 603));
+    toolBox->addItem(tagPage, QApplication::translate("MainView", "Tags", 0, QApplication::UnicodeUTF8));
 
     gridLayout2->addWidget(toolBox, 0, 0, 1, 1);
 
@@ -273,6 +278,7 @@ public:
     toolBox->setItemText(toolBox->indexOf(pageText), QApplication::translate("MainView", "input text", 0, QApplication::UnicodeUTF8));
     toolBox->setItemText(toolBox->indexOf(pageRender), QApplication::translate("MainView", "Rendered text", 0, QApplication::UnicodeUTF8));
     toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainView", "All glyphs", 0, QApplication::UnicodeUTF8));
+    toolBox->setItemText(toolBox->indexOf(tagPage), QApplication::translate("MainView", "Tags", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(MainView);
     } // retranslateUi
 

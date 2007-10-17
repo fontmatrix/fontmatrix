@@ -32,6 +32,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QDBusConnection>
+#include <QProgressDialog>
 
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
@@ -58,8 +59,11 @@ typotek::typotek()
 	setCurrentFile ( "" );
 	fillTagsList();
 	initDir();
-	actAdaptator = new TypotekAdaptator(this);
-	QDBusConnection::sessionBus () .registerObject("/FontActivation", this);
+	
+	actAdaptator = new TypotekAdaptator ( this );
+
+	if ( !QDBusConnection::sessionBus().registerObject ( "/FontActivation", this ) )
+		qDebug() << "unable to register to DBUS";
 }
 
 void typotek::closeEvent ( QCloseEvent *event )
@@ -88,21 +92,50 @@ void typotek::open()
 {
 
 	QStringList pathList;
+	QStringList dirList;
 	QString dir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), QDir::homePath ()  ,  QFileDialog::ShowDirsOnly );
 	QDir theDir ( dir );
+	QStringList tmpDirL = theDir.entryList ( QDir::AllDirs );
+	foreach ( QString dirEntry, tmpDirL )
+	{
+		QDir d ( theDir.absolutePath() + "/"+dirEntry );
+		dirList << d.absolutePath();
+	}
+	dirList << theDir.absolutePath();
+// 	qDebug() << dirList.join ( "\n" );
 	QStringList filters;
 	filters << "*.otf" << "*.pfb" << "*.ttf" ;
-	theDir.setNameFilters ( filters );
-	// We'll recurse another day
-	pathList = theDir.entryList();
+	foreach ( QString dr, dirList )
+	{
+		QDir d ( dr );
+		QFileInfoList fil= d.entryInfoList ( filters );
+		foreach ( QFileInfo fp, fil )
+		{
+			pathList <<  fp.absoluteFilePath();
+		}
+	}
+
+	QProgressDialog progress ( "Importing font files... ", "cancel", 0, pathList.count(), this );
+	progress.setWindowModality(Qt::WindowModal);
+	
+	QString importstring ( "Import %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
-		QFile ff ( theDir.absoluteFilePath ( pathList.at ( i ) ) );
-		if ( ff.copy ( ownDir.absolutePath() + "/" + pathList.at ( i ) ) )
+		progress.setLabelText ( importstring.arg ( pathList.at ( i ) ) );
+		progress.setValue ( i );
+		if(progress.wasCanceled())
+			break;
+		
+		QFile ff ( pathList.at ( i ) );
+		QFileInfo fi ( pathList.at ( i ) );
+		
+		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
 		{
-			FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
+
+
+			FontItem *fi = new FontItem ( pathList.at ( i ) );
 			fontMap.append ( fi );
-			realFontMap[fi->name()] = fi;
+			realFontMap[fi->name() ] = fi;
 		}
 	}
 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
@@ -110,14 +143,14 @@ void typotek::open()
 
 bool typotek::save()
 {
-	if(!fontsdata.open(QFile::WriteOnly | QIODevice::Truncate| QFile::Text))
+	if ( !fontsdata.open ( QFile::WriteOnly | QIODevice::Truncate| QFile::Text ) )
 	{
 		qDebug() << "re-oops";
 	}
-	QTextStream ts(&fontsdata);
-	for(int i=0;i<fontMap.count();++i)
+	QTextStream ts ( &fontsdata );
+	for ( int i=0;i<fontMap.count();++i )
 	{
-		ts << fontMap[i]->name() << "#" << fontMap[i]->tags().join("#") << '\n';
+		ts << fontMap[i]->name() << "#" << fontMap[i]->tags().join ( "#" ) << '\n';
 	}
 	fontsdata.close();
 }
@@ -366,24 +399,24 @@ void typotek::initDir()
 {
 
 	//load data file
-	if(!fontsdata.open( QFile::ReadOnly | QFile::Text))
+	if ( !fontsdata.open ( QFile::ReadOnly | QFile::Text ) )
 	{
 		qDebug() << "oops";
 	}
-	QTextStream ts(&fontsdata);
-	while(!ts.atEnd())
+	QTextStream ts ( &fontsdata );
+	while ( !ts.atEnd() )
 	{
-		QStringList line = ts.readLine().split('#');
-		tagsMap[line[0]] = line.mid(1);
-		for(int i = 1; i< line.count();++i)
+		QStringList line = ts.readLine().split ( '#' );
+		tagsMap[line[0]] = line.mid ( 1 );
+		for ( int i = 1; i< line.count();++i )
 		{
-			if(!tagsList.contains(line[i]))
-				tagsList.append(line[i]);
+			if ( !tagsList.contains ( line[i] ) )
+				tagsList.append ( line[i] );
 		}
-		
+
 	}
 	fontsdata.close();
-	
+
 	// load font files
 	QStringList filters;
 	filters << "*.otf" << "*.pfb"  << "*.ttf" ;
@@ -394,12 +427,12 @@ void typotek::initDir()
 	{
 		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
 		fontMap.append ( fi );
-		realFontMap[fi->name()] = fi;
-		fi->setTags(tagsMap.value(fi->name()));
+		realFontMap[fi->name() ] = fi;
+		fi->setTags ( tagsMap.value ( fi->name() ) );
 	}
 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
-	
-	
+
+
 }
 
 QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
@@ -408,13 +441,13 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 
 	for ( int i =0; i < fontMap.count(); ++i )
 	{
-		if(field == "tag")
+		if ( field == "tag" )
 		{
 			QStringList tl =  fontMap[i]->tags();
-			for(int ii=0; ii<tl.count(); ++ii)
+			for ( int ii=0; ii<tl.count(); ++ii )
 			{
-				if(tl[ii].contains(pattern,Qt::CaseInsensitive))
-					ret.append(fontMap[i]);
+				if ( tl[ii].contains ( pattern,Qt::CaseInsensitive ) )
+					ret.append ( fontMap[i] );
 			}
 		}
 		else

@@ -168,7 +168,7 @@
            <x>0</x>
            <y>0</y>
            <width>407</width>
-           <height>634</height>
+           <height>603</height>
           </rect>
          </property>
          <attribute name="label" >
@@ -214,8 +214,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>407</width>
-           <height>634</height>
+           <width>112</width>
+           <height>139</height>
           </rect>
          </property>
          <attribute name="label" >
@@ -255,6 +255,19 @@
            <widget class="QGraphicsView" name="abcView" />
           </item>
          </layout>
+        </widget>
+        <widget class="QWidget" name="tagPage" >
+         <property name="geometry" >
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>407</width>
+           <height>603</height>
+          </rect>
+         </property>
+         <attribute name="label" >
+          <string>Tags</string>
+         </attribute>
         </widget>
        </widget>
       </item>

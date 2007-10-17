@@ -14,7 +14,8 @@ CONFIG += warn_on \
 	  thread \
           qt \
  uitools \
- qdbus
+ qdbus \
+ debug
 TARGET = ../bin/typotek
 RESOURCES = application.qrc
 FORMS += mainview.ui \
@@ -28,4 +29,6 @@ INCLUDEPATH += /usr/include/freetype2
 INSTALLS += target
 
 target.path = /usr/bin
+
+CONFIG -= release
 

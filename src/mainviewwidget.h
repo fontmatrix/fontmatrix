@@ -27,6 +27,7 @@
 class QGraphicsScene;
 class typotek;
 class FontItem;
+class FontActionWidget;
 
 /**
 MainViewWidget inherits from an ui designed.
@@ -50,6 +51,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString faceIndex;
 		QString lastIndex;
 		QList<FontItem*> currentFonts;
+		FontActionWidget *currentFaction;
+		
 	public slots:
 		void slotOrderingChanged ( QString s );
 		void slotfontSelected ( QTreeWidgetItem * item, int column );

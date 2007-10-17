@@ -21,6 +21,8 @@
 #include "typotek.h"
 #include "fontitem.h"
 
+#include <QDebug>
+
 TypotekAdaptator::TypotekAdaptator(QObject *parent)
  : QDBusAbstractAdaptor(parent)
 {
@@ -31,22 +33,24 @@ TypotekAdaptator::~TypotekAdaptator()
 {
 }
 
-void TypotekAdaptator::signal(int i, QString fontname)
+void TypotekAdaptator::private_signal(int i, QString fontname)
 {
 	if (i == 1)
-		emit activated(fontname);
+		emit FontActivated(fontname);
 	if( i == 0)
-		emit desactivated(fontname);
+		emit FontDesactivated(fontname);
 	
 }
 
-void TypotekAdaptator::lock(QString fontname)
+void TypotekAdaptator::FontLock(QString fontname)
 {
+	qDebug() << "DBUS : lock " << fontname;
 	typotek::getInstance()->getFont(fontname)->lock();
 }
 
-void TypotekAdaptator::unlock(QString fontname)
+void TypotekAdaptator::FontUnlock(QString fontname)
 {
+	qDebug() << "DBUS : unlock " << fontname;
 	typotek::getInstance()->getFont(fontname)->unLock();
 }
 

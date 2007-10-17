@@ -28,16 +28,33 @@
 #include <QFile>
 #include <QFileInfo>
 
-FontActionWidget::FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada,QWidget* parent ) : QWidget ( parent ), theFonts ( fonts ),adaptator(ada)
+FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) : QWidget ( parent ), adaptator(ada)
 {
 	setupUi ( this );
+	isOk = false;
 
+}
+
+void FontActionWidget::prepare(QList< FontItem * > fonts)
+{
+	for(int i=0;i<theFonts.count();++i )
+	{
+		theFonts[i]->unLock();
+	}
+	slotFinalize();
+	isOk = false;
+	theFonts.clear();
+	theFonts = fonts;
+	
+	tagsListWidget->clear();
+	activatedBox->setCheckState(Qt::Unchecked);
 	
 	QString tit ( "%1" );
 	QString tot;
 	for ( int i=0;i<theFonts.count();++i )
 	{
 		tot.append("[" + theFonts[i]->name() + "] ");
+		theFonts[i]->lock();
 	}
 	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
 	titleLabel->setText ( tit.arg ( theFonts[0]->name() ) + itsagroup );
@@ -69,16 +86,17 @@ FontActionWidget::FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* a
 			activatedBox->setCheckState ( Qt::Checked );
 	}
 	
+	doConnect();
+}
 
+void FontActionWidget::doConnect()
+{
 	connect ( buttonBox,SIGNAL ( accepted() ),this,SLOT ( slotOk() ) );
 	connect ( buttonBox,SIGNAL ( rejected() ),this,SLOT ( slotCancel() ) );
 
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
-	
-
 }
-
 
 FontActionWidget::~FontActionWidget()
 {
@@ -88,7 +106,7 @@ void FontActionWidget::slotOk()
 {
 	isOk = true;
 	
-	close();
+// 	close();
 	slotFinalize();
 }
 
@@ -96,7 +114,7 @@ void FontActionWidget::slotCancel()
 {
 	isOk = false;
 	
-	close();
+// 	close();
 	slotFinalize();
 }
 
@@ -149,7 +167,7 @@ void FontActionWidget::slotFinalize()
 				}
 				else
 				{
-					adaptator->signal(1, fofi.fileName());
+					adaptator->private_signal(1, fofi.fileName());
 				}
 			}
 		}
@@ -171,7 +189,7 @@ void FontActionWidget::slotFinalize()
 				}
 				else
 				{
-					adaptator->signal(0, fofi.fileName());
+					adaptator->private_signal(0, fofi.fileName());
 				}
 			}
 		}
@@ -187,5 +205,7 @@ void FontActionWidget::slotFinalize()
 	
 	emit cleanMe();
 }
+
+
 
 

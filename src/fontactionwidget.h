@@ -40,7 +40,10 @@ class FontActionWidget :  public QWidget, private Ui::FontAction
 
 	public:
 		FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada, QWidget* parent = 0);
-
+		FontActionWidget ( TypotekAdaptator* ada, QWidget* parent = 0);
+		void prepare(QList<FontItem*> fonts);
+		void doConnect();
+		void undoConnect();
 		~FontActionWidget();
 		
 		bool isOk;
@@ -54,6 +57,7 @@ class FontActionWidget :  public QWidget, private Ui::FontAction
 		void slotCancel();
 		void slotSwitchCheckState( QListWidgetItem * item );
 		void slotNewTag();
+	public slots:
 		void slotFinalize();
 	signals:
 		void cleanMe();	

@@ -27,7 +27,8 @@
 #include <QDebug>
 #include <QGraphicsItem>
 #include <QTransform>
-#include <QInputDialog>
+#include <QDialog>
+#include <QGridLayout>
 
 
 
@@ -39,11 +40,14 @@ MainViewWidget::MainViewWidget(QWidget *parent)
 	typo = reinterpret_cast<typotek*>(parent);
 	
 	currentFaction =0;
+	tagLayout = new QGridLayout(tagPage);
+	
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
 	
 	abcView->setScene(abcScene);
 	loremView->setScene(loremScene);
+	loremView->setRenderHint ( QPainter::Antialiasing, true );
 // 	loremView->scale(0.5,0.5);
 	
 	sampleText = "Here, type your own\nlorem ipsum";
@@ -144,10 +148,15 @@ void MainViewWidget::slotView()
 {
 	FontItem *l = typo->getFont(lastIndex);
 	FontItem *f = typo->getFont(faceIndex);
+	if(!f)
+		return;
 	if(l)
 		l->deRenderAll();
 	f->deRenderAll();
-	f->renderAll(abcScene);
+	
+	QApplication::setOverrideCursor ( Qt::WaitCursor );
+	f->renderAll(abcScene); // can be rather long depending of the number of glyphs
+	QApplication::restoreOverrideCursor();
 	
 	QStringList stl = sampleText.split('\n');
 	for(int i=0; i< stl.count(); ++i)
@@ -227,7 +236,8 @@ void MainViewWidget::slotFontAction(QTreeWidgetItem * item, int column)
 {
 	if (!currentFaction)
 	{
-		currentFaction = new FontActionWidget(typo->adaptator(), tagPage);
+		currentFaction = new FontActionWidget(typo->adaptator());
+		tagLayout->addWidget(currentFaction);
 		connect(currentFaction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
 		connect(currentFaction,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
 		currentFaction->show();
@@ -249,7 +259,8 @@ void MainViewWidget::slotEditAll()
 {
 	if (!currentFaction)
 	{
-		currentFaction = new FontActionWidget(typo->adaptator(), tagPage);
+		currentFaction = new FontActionWidget(typo->adaptator());
+		tagLayout->addWidget(currentFaction);
 		connect(currentFaction,SIGNAL(cleanMe()),this,SLOT(slotCleanFontAction()));
 		connect(currentFaction,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
 		currentFaction->show();
@@ -297,62 +308,71 @@ void MainViewWidget::slotAppendTag(QString tag)
 	tagsCombo->addItem(tag);
 }
 
-void MainViewWidget::allActivation(bool act)
+void MainViewWidget::activation ( FontItem* fit , bool act )
 {
-	if(act)
+	if ( act )
 	{
-		foreach(FontItem* fit, currentFonts)
+
+		if ( !fit->isLocked() )
 		{
-			if(!fit->isLocked())
+			QStringList tl = fit->tags();
+			if ( !tl.contains ( "Activated_On" ) )
 			{
-				QStringList tl = fit->tags();
-				if(!tl.contains("Activated_On"))
+				tl.removeAll ( "Activated_Off" );
+				tl << "Activated_On";
+				fit->setTags ( tl );
+
+				QFileInfo fofi ( fit->path() );
+				if ( !QFile::link ( fit->path() , QDir::home().absolutePath() + "/.fonts/" + fofi.baseName() ) )
 				{
-					tl.removeAll("Activated_Off");
-					tl << "Activated_On";
-					fit->setTags(tl);
-					
-					QFileInfo fofi(fit->path());
-					if(!QFile::link( fit->path() , QDir::home().absolutePath() + "/.fonts/" + fofi.baseName()))
-					{
-						qDebug() << "unable to link " << fofi.fileName();
-					}
-					else
-					{
-						typo->adaptator()->private_signal(1, fofi.fileName());
-					}
+					qDebug() << "unable to link " << fofi.fileName();
 				}
-				
+				else
+				{
+					typo->adaptator()->private_signal ( 1, fofi.fileName() );
+				}
 			}
+
 		}
+
 	}
 	else
 	{
-		foreach(FontItem* fit, currentFonts)
+
+		if ( !fit->isLocked() )
 		{
-			if(!fit->isLocked())
+			QStringList tl = fit->tags();
+			if ( !tl.contains ( "Activated_Off" ) )
 			{
-				QStringList tl = fit->tags();
-				if(!tl.contains("Activated_Off"))
+				tl.removeAll ( "Activated_On" );
+				tl << "Activated_Off";
+				fit->setTags ( tl );
+
+				QFileInfo fofi ( fit->path() );
+				if ( !QFile::remove ( QDir::home().absolutePath() + "/.fonts/" + fofi.baseName() ) )
 				{
-					tl.removeAll("Activated_On");
-					tl << "Activated_Off";
-					fit->setTags(tl);
-					
-					QFileInfo fofi(fit->path());
-					if(!QFile::remove( QDir::home().absolutePath() + "/.fonts/" + fofi.baseName()))
-					{
-						qDebug() << "unable to remove " << fofi.fileName();
-					}
-					else
-					{
-						typo->adaptator()->private_signal(0, fofi.fileName());
-					}
+					qDebug() << "unable to remove " << fofi.fileName();
 				}
-				
+				else
+				{
+					typo->adaptator()->private_signal ( 0, fofi.fileName() );
+				}
 			}
+
 		}
 	}
+
+}
+
+
+void MainViewWidget::allActivation ( bool act )
+{
+
+	foreach ( FontItem* fit, currentFonts )
+	{
+		activation ( fit,act );
+	}
+
 }
 
 void MainViewWidget::slotDesactivateAll()
@@ -367,7 +387,41 @@ void MainViewWidget::slotActivateAll()
 
 void MainViewWidget::slotSetSampleText()
 {
-	sampleText = QInputDialog::getText(this, "typotek - getText", "Type your sample text here",QLineEdit::Normal,sampleText);
+	QDialog dial(this);
+	QGridLayout *lay = new QGridLayout(&dial);
+	QTextEdit *ted = new QTextEdit(sampleText);
+	QPushButton *okButton = new QPushButton("Ok");
+	lay->addWidget(ted, 0,0,1,-1);
+	lay->addWidget(okButton,1,2);
+	connect(okButton,SIGNAL(released()),&dial,SLOT(close()));
+	
+	dial.exec();
+	sampleText = ted->toPlainText () ;
+	delete okButton;
+	delete ted;
+	delete lay;
+	
+	slotView();
+	
 }
+
+void MainViewWidget::slotActivate(QTreeWidgetItem * item, int column)
+{
+	FontItem * FoIt = typo->getFont( item->text(1) );
+	if(FoIt)
+	{
+		activation(FoIt, true);
+	}
+}
+
+void MainViewWidget::slotDesactivate(QTreeWidgetItem * item, int column)
+{
+	FontItem * FoIt = typo->getFont( item->text(1) );
+	if(FoIt)
+	{
+		activation(FoIt, false);
+	}
+}
+
 
 

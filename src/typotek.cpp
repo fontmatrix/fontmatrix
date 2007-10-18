@@ -182,6 +182,10 @@ void typotek::createActions()
 	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
 	saveAct->setStatusTip ( tr ( "Save the document to disk" ) );
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
+	
+	printAct = new QAction(tr("Print..."),this);
+	printAct->setStatusTip(tr("Print a specimen of the current font"));
+	connect ( printAct, SIGNAL ( triggered() ), this, SLOT ( print() ) );
 
 	exitAct = new QAction ( tr ( "E&xit" ), this );
 	exitAct->setShortcut ( tr ( "Ctrl+Q" ) );
@@ -201,7 +205,8 @@ void typotek::createMenus()
 
 	fileMenu->addAction ( openAct );
 	fileMenu->addAction ( saveAct );
-
+	fileMenu->addSeparator();
+	fileMenu->addAction(printAct);
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
 
@@ -396,5 +401,29 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 		}
 	}
 	return ret;
+}
+
+void typotek::print()
+{
+	QPrinter thePrinter(QPrinter::HighResolution);
+	QPrintDialog *dialog = new QPrintDialog(&thePrinter, this);
+	dialog->setWindowTitle(tr("Print specimen"));
+
+	if (dialog->exec() != QDialog::Accepted)
+		return;
+	
+	QPainter aPainter(&thePrinter);
+	theMainView->textScene()->render(&aPainter);
+// 	int maxPages = theMainView->glyphsScene()->sceneRect().height() / 600;
+// 	QRectF prect = aPainter.viewport();
+// 	for(int i = 0; i < maxPages ; i++)
+// 	{
+// 		qDebug() << "Print page " << i;
+// 		QRectF prect(0, i * 600 , 300, 600);
+// 		thePrinter.newPage();
+// 		theMainView->glyphsScene()->render(&aPainter,prect,prect);
+// 		
+// 	}
+// 	
 }
 

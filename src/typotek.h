@@ -49,6 +49,7 @@ class typotek:public QMainWindow
 	private slots:
 		void newFile();
 		void open();
+		void print();
 
 		bool saveAs();
 		void about();
@@ -91,6 +92,7 @@ class typotek:public QMainWindow
 		QAction *pasteAct;
 		QAction *aboutAct;
 		QAction *aboutQtAct;
+		QAction *printAct;
 
 		MainViewWidget *theMainView;
 

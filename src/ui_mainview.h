@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'mainview.ui'
 **
-** Created: mer. oct. 17 20:53:10 2007
+** Created: jeu. oct. 18 12:55:47 2007
 **      by: Qt User Interface Compiler version 4.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -68,11 +68,16 @@ public:
     QToolBox *toolBox;
     QWidget *pageRender;
     QGridLayout *gridLayout3;
+    QPushButton *textButton;
+    QSpacerItem *spacerItem2;
+    QLabel *label;
     QSlider *renderZoom;
     QGraphicsView *loremView;
-    QPushButton *textButton;
     QWidget *page;
     QGridLayout *gridLayout4;
+    QSpacerItem *spacerItem3;
+    QSpacerItem *spacerItem4;
+    QLabel *label_2;
     QSlider *allZoom;
     QGraphicsView *abcView;
     QTextBrowser *glyphInfo;
@@ -317,6 +322,22 @@ public:
     pageRender->setGeometry(QRect(0, 0, 432, 640));
     gridLayout3 = new QGridLayout(pageRender);
     gridLayout3->setObjectName(QString::fromUtf8("gridLayout3"));
+    textButton = new QPushButton(pageRender);
+    textButton->setObjectName(QString::fromUtf8("textButton"));
+
+    gridLayout3->addWidget(textButton, 0, 0, 1, 1);
+
+    spacerItem2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    gridLayout3->addItem(spacerItem2, 0, 1, 1, 1);
+
+    label = new QLabel(pageRender);
+    label->setObjectName(QString::fromUtf8("label"));
+    label->setPixmap(QPixmap(QString::fromUtf8(":/zoom.png")));
+    label->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+    gridLayout3->addWidget(label, 0, 2, 1, 1);
+
     renderZoom = new QSlider(pageRender);
     renderZoom->setObjectName(QString::fromUtf8("renderZoom"));
     sizePolicy3.setHeightForWidth(renderZoom->sizePolicy().hasHeightForWidth());
@@ -326,17 +347,12 @@ public:
     renderZoom->setTracking(false);
     renderZoom->setOrientation(Qt::Horizontal);
 
-    gridLayout3->addWidget(renderZoom, 0, 1, 1, 1);
+    gridLayout3->addWidget(renderZoom, 0, 3, 1, 1);
 
     loremView = new QGraphicsView(pageRender);
     loremView->setObjectName(QString::fromUtf8("loremView"));
 
-    gridLayout3->addWidget(loremView, 1, 0, 1, 2);
-
-    textButton = new QPushButton(pageRender);
-    textButton->setObjectName(QString::fromUtf8("textButton"));
-
-    gridLayout3->addWidget(textButton, 0, 0, 1, 1);
+    gridLayout3->addWidget(loremView, 1, 0, 1, 4);
 
     toolBox->addItem(pageRender, QApplication::translate("MainView", "Sample text", 0, QApplication::UnicodeUTF8));
     page = new QWidget();
@@ -344,6 +360,21 @@ public:
     page->setGeometry(QRect(0, 0, 432, 640));
     gridLayout4 = new QGridLayout(page);
     gridLayout4->setObjectName(QString::fromUtf8("gridLayout4"));
+    spacerItem3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    gridLayout4->addItem(spacerItem3, 0, 0, 1, 1);
+
+    spacerItem4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    gridLayout4->addItem(spacerItem4, 0, 1, 1, 1);
+
+    label_2 = new QLabel(page);
+    label_2->setObjectName(QString::fromUtf8("label_2"));
+    label_2->setPixmap(QPixmap(QString::fromUtf8(":/zoom.png")));
+    label_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+    gridLayout4->addWidget(label_2, 0, 2, 1, 1);
+
     allZoom = new QSlider(page);
     allZoom->setObjectName(QString::fromUtf8("allZoom"));
     sizePolicy3.setHeightForWidth(allZoom->sizePolicy().hasHeightForWidth());
@@ -353,22 +384,22 @@ public:
     allZoom->setTracking(false);
     allZoom->setOrientation(Qt::Horizontal);
 
-    gridLayout4->addWidget(allZoom, 0, 1, 1, 1);
+    gridLayout4->addWidget(allZoom, 0, 3, 1, 1);
 
     abcView = new QGraphicsView(page);
     abcView->setObjectName(QString::fromUtf8("abcView"));
 
-    gridLayout4->addWidget(abcView, 1, 0, 1, 2);
+    gridLayout4->addWidget(abcView, 1, 0, 1, 4);
 
     glyphInfo = new QTextBrowser(page);
     glyphInfo->setObjectName(QString::fromUtf8("glyphInfo"));
 
-    gridLayout4->addWidget(glyphInfo, 2, 0, 1, 2);
+    gridLayout4->addWidget(glyphInfo, 2, 0, 1, 4);
 
     toolBox->addItem(page, QApplication::translate("MainView", "All glyphs", 0, QApplication::UnicodeUTF8));
     tagPage = new QWidget();
     tagPage->setObjectName(QString::fromUtf8("tagPage"));
-    tagPage->setGeometry(QRect(0, 0, 432, 640));
+    tagPage->setGeometry(QRect(0, 0, 96, 26));
     toolBox->addItem(tagPage, QApplication::translate("MainView", "Tags", 0, QApplication::UnicodeUTF8));
 
     gridLayout2->addWidget(toolBox, 0, 0, 1, 1);
@@ -401,8 +432,12 @@ public:
     editAllButton->setText(QApplication::translate("MainView", "Edit All", 0, QApplication::UnicodeUTF8));
     activateAllButton->setText(QApplication::translate("MainView", "Activate all", 0, QApplication::UnicodeUTF8));
     desactivateAllButton->setText(QApplication::translate("MainView", "Deactivate all", 0, QApplication::UnicodeUTF8));
-    textButton->setText(QApplication::translate("MainView", "Enter your sample text here...", 0, QApplication::UnicodeUTF8));
+    textButton->setText(QApplication::translate("MainView", "Sample text...", 0, QApplication::UnicodeUTF8));
+    label->setText(QString());
+    renderZoom->setToolTip(QApplication::translate("MainView", "zoom", "zoom", QApplication::UnicodeUTF8));
+    renderZoom->setStatusTip(QApplication::translate("MainView", "zoom", 0, QApplication::UnicodeUTF8));
     toolBox->setItemText(toolBox->indexOf(pageRender), QApplication::translate("MainView", "Sample text", 0, QApplication::UnicodeUTF8));
+    label_2->setText(QString());
     toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainView", "All glyphs", 0, QApplication::UnicodeUTF8));
     toolBox->setItemText(toolBox->indexOf(tagPage), QApplication::translate("MainView", "Tags", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(MainView);

@@ -29,6 +29,7 @@
 #include FT_FREETYPE_H
 
 class QGraphicsPixmapItem;
+class QGraphicsPathItem;
 class QGraphicsScene;
 
 /**
@@ -63,12 +64,14 @@ public:
 		FT_Error      ft_error;
 		FT_Face m_face;
 		FT_GlyphSlot m_glyph;
+		QGraphicsPathItem* itemFromChar(int charcode, double size);
 		bool ensureLibrary();
 		QString testFlag(long flag , long against, QString yes, QString no);
 		QByteArray pixarray(uchar *b, int len);
 		
 		
 		QList<QGraphicsPixmapItem *> pixList;
+		QList<QGraphicsPathItem*> glyphList;
 		QList<QGraphicsScene *> sceneList;
 		bool allIsRendered;
 // 		QGraphicsPixmapItem *loremPixmap;

@@ -23,13 +23,54 @@
 #include <QFileInfo>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QGraphicsPathItem>
 #include <QApplication>
 #include <QDesktopWidget>
 
 #include FT_XFREE86_H
+#include FT_GLYPH_H
+#include FT_OUTLINE_H 
 
 FT_Library FontItem::theLibrary = 0;
 QMap<FT_Encoding, QString> FontItem::charsetMap;
+
+/** functions set for decomposition
+ */
+static int _moveTo ( const FT_Vector*  to, void*   user )
+{
+	QPainterPath * p = reinterpret_cast<QPainterPath*>( user );
+	p->moveTo ( to->x, to->y );
+	return 0;
+}
+static int _lineTo ( const FT_Vector*  to, void*   user )
+{
+	QPainterPath * p = reinterpret_cast<QPainterPath*>( user );
+	p->lineTo ( to->x, to->y );
+	return  0;
+}
+static int _conicTo ( const FT_Vector* control, const FT_Vector*  to, void*   user )
+{
+	QPainterPath * p = reinterpret_cast<QPainterPath*>( user );
+	p->quadTo ( control->x,control->y,to->x,to->y );
+	return 0;
+}
+static int _cubicTo ( const FT_Vector* control1, const FT_Vector* control2, const FT_Vector*  to, void*   user )
+{
+	QPainterPath * p = reinterpret_cast<QPainterPath*>( user );
+	p->cubicTo ( control1->x,control1->y,control2->x,control2->y,to->x,to->y );
+	return 0;
+}
+
+FT_Outline_Funcs outline_funcs={
+_moveTo,
+_lineTo,
+_conicTo,
+_cubicTo,
+0,
+0
+};
+/** **************************************************/
+
 
 void fillCharsetMap()
 {
@@ -131,6 +172,27 @@ QString FontItem::name()
 	return m_name;
 }
 
+QGraphicsPathItem * FontItem::itemFromChar(int charcode, double size)
+{
+	ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_NO_SCALE);//spec.at ( i ).unicode()
+	if ( ft_error )
+	{
+		return 0;
+	}
+	FT_Outline *outline = &m_glyph->outline;
+	QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
+	FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
+		
+	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
+	glyph->setBrush(QBrush ( Qt::SolidPattern ) );
+	glyph->setPath ( glyphPath );
+	double scalefactor = size / m_face->units_per_EM;
+	glyph->scale(scalefactor,-scalefactor);
+	double advance = m_glyph->metrics.horiAdvance * scalefactor;
+return glyph;
+
+}
+
 void FontItem::renderLine ( QGraphicsScene * scene, QString spec, double origine,bool append )
 {
 	qDebug() << "renderLine : " << spec;
@@ -153,30 +215,32 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, double origine
 	}
 
 	double sizz = 20;
-	FT_Set_Char_Size ( m_face, sizz * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
+	//FT_Set_Char_Size ( m_face, sizz * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
 	QPointF pen;
 	pen.setX ( 0 );
 	pen.setY ( origine );
 	for ( int i=0; i < spec.length(); ++i )
 	{
-		ft_error = FT_Load_Char ( m_face, spec.at ( i ).unicode() , FT_LOAD_RENDER );
-		if ( ft_error )
-		{
-			continue;
-		}
-		QByteArray par = pixarray ( m_face->glyph->bitmap.buffer, m_face->glyph->bitmap.width * m_face->glyph->bitmap.rows );
-
-		QImage image ( reinterpret_cast<uchar*> ( par.data() ), m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows,  QImage::Format_ARGB32 );
-
-		if ( !image.isNull() )
-		{
-			QGraphicsPixmapItem *pitem = new QGraphicsPixmapItem ( QPixmap::fromImage ( image ) );
-			pixList.append ( pitem );
-			scene->addItem ( pitem );
-			pitem->setPos ( pen );
-			pitem->moveBy ( m_face->glyph->bitmap_left , - m_face->glyph->bitmap_top );
-		}
-		pen.rx() += m_face->glyph->advance.x / 64 ;
+		QGraphicsPathItem *glyph = itemFromChar(spec.at ( i ).unicode(), sizz);
+		glyphList.append(glyph);
+		scene->addItem ( glyph);
+		glyph->setPos ( pen );
+		double scalefactor = sizz / m_face->units_per_EM;
+		pen.rx() += m_glyph->metrics.horiAdvance * scalefactor;
+		
+// 		QByteArray par = pixarray ( m_face->glyph->bitmap.buffer, m_face->glyph->bitmap.width * m_face->glyph->bitmap.rows );
+// 
+// 		QImage image ( reinterpret_cast<uchar*> ( par.data() ), m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows,  QImage::Format_ARGB32 );
+// 
+// 		if ( !image.isNull() )
+// 		{
+// 			QGraphicsPixmapItem *pitem = new QGraphicsPixmapItem ( QPixmap::fromImage ( image ) );
+// 			pixList.append ( pitem );
+// 			scene->addItem ( pitem );
+// 			pitem->setPos ( pen );
+// 			pitem->moveBy ( m_face->glyph->bitmap_left , - m_face->glyph->bitmap_top );
+// 		}
+// 		pen.rx() += m_face->glyph->advance.x / 64 ;
 
 
 
@@ -206,6 +270,12 @@ void FontItem::deRenderAll()
 		pixList[i]->scene()->removeItem ( pixList[i] );
 	}
 	pixList.clear();
+	for ( int i = 0; i < glyphList.count(); ++i )
+	{
+		glyphList[i]->scene()->removeItem ( glyphList[i] );
+	}
+	glyphList.clear();
+	
 	allIsRendered = false;
 }
 
@@ -335,5 +405,7 @@ QString FontItem::infoGlyph ( int index, int code )
 	       .arg ( code, 4, 16,QLatin1Char ( '0' ) )
 	       .arg ( m_name );
 }
+
+
 
 

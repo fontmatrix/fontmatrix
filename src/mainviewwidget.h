@@ -29,6 +29,7 @@ class typotek;
 class FontItem;
 class FontActionWidget;
 class QTextEdit;
+class QGridLayout;
 
 /**
 MainViewWidget inherits from an ui designed.
@@ -54,8 +55,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QList<FontItem*> currentFonts;
 		FontActionWidget *currentFaction;
 		QString sampleText;
+		QGridLayout *tagLayout;
 		
 		void allActivation(bool act);
+		void activation(FontItem* fit, bool act);
 		
 	public slots:
 		void slotOrderingChanged ( QString s );
@@ -73,11 +76,15 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotDesactivateAll();
 		void slotActivateAll();
 		void slotSetSampleText();
+		void slotActivate(QTreeWidgetItem * item, int column);
+		void slotDesactivate(QTreeWidgetItem * item, int column);
 	signals:
 		void faceChanged();
 
 	public:
 		QString defaultOrd() {return ord[0];};
+		QGraphicsScene* glyphsScene()const{return abcScene;};
+		QGraphicsScene* textScene()const{return loremScene;};
 
 };
 

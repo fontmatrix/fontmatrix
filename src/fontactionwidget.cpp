@@ -28,6 +28,8 @@
 #include <QFile>
 #include <QFileInfo>
 
+
+
 FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) : QWidget ( parent ), adaptator(ada)
 {
 	setupUi ( this );

@@ -97,7 +97,7 @@ void fillCharsetMap()
 
 FontItem::FontItem ( QString path )
 {
-	qDebug() << path;
+// 	qDebug() << path;
 	if ( charsetMap.isEmpty() )
 		fillCharsetMap();
 
@@ -228,20 +228,6 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, double origine
 		double scalefactor = sizz / m_face->units_per_EM;
 		pen.rx() += m_glyph->metrics.horiAdvance * scalefactor;
 		
-// 		QByteArray par = pixarray ( m_face->glyph->bitmap.buffer, m_face->glyph->bitmap.width * m_face->glyph->bitmap.rows );
-// 
-// 		QImage image ( reinterpret_cast<uchar*> ( par.data() ), m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows,  QImage::Format_ARGB32 );
-// 
-// 		if ( !image.isNull() )
-// 		{
-// 			QGraphicsPixmapItem *pitem = new QGraphicsPixmapItem ( QPixmap::fromImage ( image ) );
-// 			pixList.append ( pitem );
-// 			scene->addItem ( pitem );
-// 			pitem->setPos ( pen );
-// 			pitem->moveBy ( m_face->glyph->bitmap_left , - m_face->glyph->bitmap_top );
-// 		}
-// 		pen.rx() += m_face->glyph->advance.x / 64 ;
-
 
 
 	}
@@ -311,6 +297,8 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 	int glyph_count = 0;
 	int nl = 0;
 
+	for(int i=1;i<=m_numGlyphs; ++i)
+		m_charLess.append(i);
 
 	FT_ULong  charcode;
 	FT_UInt   gindex;
@@ -337,7 +325,7 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 
 		QImage image ( reinterpret_cast<uchar*> ( par.data() ), m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows,  QImage::Format_ARGB32 );
 
-
+		
 		QGraphicsPixmapItem *pitem = new QGraphicsPixmapItem ( QPixmap::fromImage ( image ) );
 		pitem->setShapeMode ( QGraphicsPixmapItem::BoundingRectShape );
 		pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
@@ -351,22 +339,65 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 		pen.rx() += 100;
 
 		++glyph_count;
+		m_charLess.removeAll(gindex);
 		++nl;
 		charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
 	}
+	
+	// We want OpenTyped glyphs
+	nl = 0;
+	pen.rx() = 0;
+	pen.ry() += 100;
+	for(int gi=0;gi<m_charLess.count(); ++gi)
+	{
+		if ( nl == 6 )
+		{
+			nl = 0;
+			pen.rx() = 0;
+			pen.ry() += 100;
+		}
+		ft_error = FT_Load_Glyph ( m_face, m_charLess[gi], FT_LOAD_RENDER );
+		if ( ft_error )
+		{
+			
+			continue;
+		}
+
+		QByteArray par = pixarray ( m_face->glyph->bitmap.buffer, m_face->glyph->bitmap.width * m_face->glyph->bitmap.rows );
+
+		QImage image ( reinterpret_cast<uchar*> ( par.data() ), m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows,  QImage::Format_ARGB32 );
+
+		image.invertPixels(QImage::InvertRgba);
+		QGraphicsPixmapItem *pitem = new QGraphicsPixmapItem ( QPixmap::fromImage ( image ) );
+		pitem->setShapeMode ( QGraphicsPixmapItem::BoundingRectShape );
+		pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
+		pitem->setData ( 1,gindex );
+		uint ucharcode = charcode;
+		pitem->setData ( 2,0 );
+		pixList.append ( pitem );
+		scene->addItem ( pitem );
+		pitem->setPos ( pen );
+		pitem->moveBy ( m_face->glyph->bitmap_left , - m_face->glyph->bitmap_top );
+		pen.rx() += 100;
+		++nl;
+	}
+	
+	qDebug() << m_name <<m_charLess.count();
 	allIsRendered = true;
 }
 
 QString FontItem::infoText()
 {
-	QString ret ( "<h3>%1</h3> <p>%2</p> <p>%3</p> <p>%4</p>  <p>%5 glyphs in %6 faces</p><p>%7</p>" );
-	return ret.arg ( m_family + " " + m_variant )
-	       .arg ( m_path )
-	       .arg ( m_type )
-	       .arg ( m_charsets.join ( ", " ) )
-	       .arg ( m_numGlyphs )
-	       .arg ( m_numFaces )
-	       .arg ( m_tags.join ( ", " ) );
+	QString ret ( "<h3>%1</h3> <p>%2</p> <p>%3</p> <p>%4</p>  <p>%5 glyphs in %6 faces (including %8 glyphs unreachable by character codes)</p><p>%7</p>" );
+	return ret.arg ( m_family + " " + m_variant )//1
+	       .arg ( m_path )//2
+	       .arg ( m_type )//3
+	       .arg ( m_charsets.join ( ", " ) )//4
+	       .arg ( m_numGlyphs )//5
+	       .arg ( m_numFaces )//6
+	       .arg ( m_tags.join ( ", " ) )//7
+	       .arg(m_charLess.count() - 1)//8
+			;
 }
 
 QString FontItem::infoGlyph ( int index, int code )

@@ -53,14 +53,14 @@ void FontActionWidget::prepare(QList< FontItem * > fonts)
 	qDebug() << theFonts.count();
 	
 	tagsListWidget->clear();
-	activatedBox->setCheckState(Qt::Unchecked);
+// 	activatedBox->setCheckState(Qt::Unchecked);
 	
 	QString tit ( "%1" );
 	QString tot;
 	for ( int i=0;i<theFonts.count();++i )
 	{
 		tot.append("[" + theFonts[i]->name() + "] ");
-		theFonts[i]->lock();
+// 		theFonts[i]->lock();
 	}
 	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
 	titleLabel->setText ( tit.arg ( theFonts[0]->name() ) + itsagroup );
@@ -86,11 +86,11 @@ void FontActionWidget::prepare(QList< FontItem * > fonts)
 		}
 		tagsListWidget->addItem ( lit );
 	}
-	if ( theFonts.count() == 1 )
-	{
-		if( theFonts[0]->tags().contains( "Activated_On" ) )
-			activatedBox->setCheckState ( Qt::Checked );
-	}
+// 	if ( theFonts.count() == 1 )
+// 	{
+// 		if( theFonts[0]->tags().contains( "Activated_On" ) )
+// 			activatedBox->setCheckState ( Qt::Checked );
+// 	}
 	
 	doConnect();
 }
@@ -155,60 +155,21 @@ void FontActionWidget::slotFinalize()
 				tags.append ( tagsListWidget->item ( i )->text() );
 		}
 		
-		if(activatedBox->checkState() == Qt::Checked )
-		{
-			
-			tags.append("Activated_On");
-			
-			for(int i = 0;i<theFonts.count();++i)
-			{
-				if(theFonts[i]->tags().contains("Activated_On"))
-					continue;
-				
-				qDebug() << "Activate : "<<  theFonts[i]->path();
-				
-				QFileInfo fofi(theFonts[i]->path());
-				if(!QFile::link( theFonts[i]->path() , QDir::home().absolutePath() + "/.fonts/" + fofi.baseName()))
-				{
-					qDebug() << "unable to link " << fofi.fileName();
-				}
-				else
-				{
-					adaptator->private_signal(1, fofi.fileName());
-				}
-			}
-		}
-		else
-		{
-			tags.append("Activated_Off");
-			
-			for(int i = 0;i<theFonts.count();++i)
-			{
-				if(theFonts[i]->tags().contains("Activated_Off"))
-					continue;
-				
-				qDebug() << "Desactivate : "<<  theFonts[i]->path();
-				
-				QFileInfo fofi(theFonts[i]->path());
-				if(!QFile::remove( QDir::home().absolutePath() + "/.fonts/" + fofi.baseName()))
-				{
-					qDebug() << "unable to remove " << fofi.fileName();
-				}
-				else
-				{
-					adaptator->private_signal(0, fofi.fileName());
-				}
-			}
-		}
 		
 		for ( int i=0;i<theFonts.count();++i )
+		{
+			if(theFonts[i]->tags().contains("Acivated_On"))
+				tags << "Acivated_On";
+			if(theFonts[i]->tags().contains("Acivated_Off"))
+				tags << "Acivated_Off";
 			theFonts[i]->setTags ( tags );
+		}
 	}
 	
-	for ( int i=0;i<theFonts.count();++i )
-	{
-		theFonts[i]->unLock();
-	}
+// 	for ( int i=0;i<theFonts.count();++i )
+// 	{
+// 		theFonts[i]->unLock();
+// 	}
 	
 	emit cleanMe();
 }

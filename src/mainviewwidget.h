@@ -30,6 +30,7 @@ class FontItem;
 class FontActionWidget;
 class QTextEdit;
 class QGridLayout;
+class QTreeWidgetItem;
 
 /**
 MainViewWidget inherits from an ui designed.
@@ -56,9 +57,14 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		FontActionWidget *currentFaction;
 		QString sampleText;
 		QGridLayout *tagLayout;
+		QString currentOrdering;
 		
 		void allActivation(bool act);
 		void activation(FontItem* fit, bool act);
+		void fillTree();
+		
+		QStringList openKeys;
+		QString curItemName;
 		
 	public slots:
 		void slotOrderingChanged ( QString s );
@@ -76,8 +82,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotDesactivateAll();
 		void slotActivateAll();
 		void slotSetSampleText();
-		void slotActivate(QTreeWidgetItem * item, int column);
-		void slotDesactivate(QTreeWidgetItem * item, int column);
+		void slotActivate(bool act, QTreeWidgetItem * item, int column);
+		void slotReloadFontList();
 	signals:
 		void faceChanged();
 

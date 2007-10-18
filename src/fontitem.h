@@ -55,6 +55,7 @@ public:
 		int m_numGlyphs;
 		int m_numFaces;
 		QStringList m_charsets;
+		QList<int> m_charLess;
 		
 		QString m_author;
 		QString m_foundry;

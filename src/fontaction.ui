@@ -49,19 +49,6 @@
          </property>
         </spacer>
        </item>
-       <item>
-        <widget class="QCheckBox" name="activatedBox" >
-         <property name="toolTip" >
-          <string>Activated Or Not</string>
-         </property>
-         <property name="layoutDirection" >
-          <enum>Qt::RightToLeft</enum>
-         </property>
-         <property name="text" >
-          <string>Active</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
@@ -106,7 +93,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>activatedBox</tabstop>
   <tabstop>tagsListWidget</tabstop>
   <tabstop>newTagText</tabstop>
   <tabstop>newTagButton</tabstop>

@@ -23,8 +23,8 @@
 
 #include <QDebug>
 
-TypotekAdaptator::TypotekAdaptator(QObject *parent)
- : QDBusAbstractAdaptor(parent)
+TypotekAdaptator::TypotekAdaptator ( QObject *parent )
+		: QDBusAbstractAdaptor ( parent )
 {
 }
 
@@ -33,25 +33,35 @@ TypotekAdaptator::~TypotekAdaptator()
 {
 }
 
-void TypotekAdaptator::private_signal(int i, QString fontname)
+void TypotekAdaptator::private_signal ( int i, QString fontname )
 {
-	if (i == 1)
-		emit FontActivated(fontname);
-	if( i == 0)
-		emit FontDesactivated(fontname);
-	
+	if ( i == 1 )
+		emit FontActivated ( fontname );
+	if ( i == 0 )
+		emit FontDesactivated ( fontname );
+
 }
 
-void TypotekAdaptator::FontLock(QString fontname)
+void TypotekAdaptator::FontLock ( QString fontname )
 {
 	qDebug() << "DBUS : lock " << fontname;
-	typotek::getInstance()->getFont(fontname)->lock();
+	FontItem *fit = typotek::getInstance()->getFont ( fontname );
+	if ( fit )
+	{
+		fit->lock();
+		emit FontActivated ( fontname );
+	}
 }
 
-void TypotekAdaptator::FontUnlock(QString fontname)
+void TypotekAdaptator::FontUnlock ( QString fontname )
 {
 	qDebug() << "DBUS : unlock " << fontname;
-	typotek::getInstance()->getFont(fontname)->unLock();
+	FontItem *fit = typotek::getInstance()->getFont ( fontname );
+	if ( fit )
+	{
+		fit->unLock();
+		emit FontDesactivated ( fontname );
+	}
 }
 
 

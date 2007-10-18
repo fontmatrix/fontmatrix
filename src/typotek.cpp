@@ -40,24 +40,28 @@ typotek* typotek::instance = 0;
 typotek::typotek()
 {
 	instance = this;
-	
-	checkOwnDir();
-	fillTagsList();
-	theMainView = new MainViewWidget ( this );
 
+	checkOwnDir();
+	readSettings();
+	fillTagsList();
+	initDir();
+
+
+	theMainView = new MainViewWidget ( this );
 	setCentralWidget ( theMainView );
 
 	createActions();
 	createMenus();
-	//createToolBars();
 	createStatusBar();
 
-	readSettings();
-	initDir();
-	
-	actAdaptator = new TypotekAdaptator ( this );
-	if ( !QDBusConnection::sessionBus().registerObject ( "/FontActivation", this ) )
-		qDebug() << "unable to register to DBUS";
+
+	{
+		actAdaptator = new TypotekAdaptator ( this );
+		if ( !QDBusConnection::sessionBus().registerService ( "com.typotek.fonts" ) )
+			qDebug() << "unable to register to DBUS";
+		if ( !QDBusConnection::sessionBus().registerObject ( "/FontActivation", actAdaptator, QDBusConnection::ExportAllContents ) )
+			qDebug() << "unable to register to DBUS";
+	}
 }
 
 void typotek::closeEvent ( QCloseEvent *event )
@@ -110,19 +114,19 @@ void typotek::open()
 	}
 
 	QProgressDialog progress ( "Importing font files... ", "cancel", 0, pathList.count(), this );
-	progress.setWindowModality(Qt::WindowModal);
-	
+	progress.setWindowModality ( Qt::WindowModal );
+
 	QString importstring ( "Import %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
 		progress.setLabelText ( importstring.arg ( pathList.at ( i ) ) );
 		progress.setValue ( i );
-		if(progress.wasCanceled())
+		if ( progress.wasCanceled() )
 			break;
-		
+
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
-		
+
 		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
 		{
 
@@ -132,7 +136,8 @@ void typotek::open()
 			realFontMap[fi->name() ] = fi;
 		}
 	}
-	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
+	theMainView->slotReloadFontList();
+// 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 }
 
 bool typotek::save()
@@ -182,9 +187,9 @@ void typotek::createActions()
 	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
 	saveAct->setStatusTip ( tr ( "Save the document to disk" ) );
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
-	
-	printAct = new QAction(tr("Print..."),this);
-	printAct->setStatusTip(tr("Print a specimen of the current font"));
+
+	printAct = new QAction ( tr ( "Print..." ),this );
+	printAct->setStatusTip ( tr ( "Print a specimen of the current font" ) );
 	connect ( printAct, SIGNAL ( triggered() ), this, SLOT ( print() ) );
 
 	exitAct = new QAction ( tr ( "E&xit" ), this );
@@ -196,7 +201,7 @@ void typotek::createActions()
 	aboutAct = new QAction ( tr ( "&About" ), this );
 	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
-	      
+
 }
 
 void typotek::createMenus()
@@ -206,7 +211,7 @@ void typotek::createMenus()
 	fileMenu->addAction ( openAct );
 	fileMenu->addAction ( saveAct );
 	fileMenu->addSeparator();
-	fileMenu->addAction(printAct);
+	fileMenu->addAction ( printAct );
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
 
@@ -374,7 +379,7 @@ void typotek::initDir()
 		realFontMap[fi->name() ] = fi;
 		fi->setTags ( tagsMap.value ( fi->name() ) );
 	}
-	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
+// 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 
 
 }
@@ -405,15 +410,15 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 
 void typotek::print()
 {
-	QPrinter thePrinter(QPrinter::HighResolution);
-	QPrintDialog *dialog = new QPrintDialog(&thePrinter, this);
-	dialog->setWindowTitle(tr("Print specimen"));
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	QPrintDialog *dialog = new QPrintDialog ( &thePrinter, this );
+	dialog->setWindowTitle ( tr ( "Print specimen" ) );
 
-	if (dialog->exec() != QDialog::Accepted)
+	if ( dialog->exec() != QDialog::Accepted )
 		return;
-	
-	QPainter aPainter(&thePrinter);
-	theMainView->textScene()->render(&aPainter);
+
+	QPainter aPainter ( &thePrinter );
+	theMainView->textScene()->render ( &aPainter );
 // 	int maxPages = theMainView->glyphsScene()->sceneRect().height() / 600;
 // 	QRectF prect = aPainter.viewport();
 // 	for(int i = 0; i < maxPages ; i++)
@@ -422,8 +427,8 @@ void typotek::print()
 // 		QRectF prect(0, i * 600 , 300, 600);
 // 		thePrinter.newPage();
 // 		theMainView->glyphsScene()->render(&aPainter,prect,prect);
-// 		
+//
 // 	}
-// 	
+//
 }
 

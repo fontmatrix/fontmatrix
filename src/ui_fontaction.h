@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'fontaction.ui'
 **
-** Created: jeu. oct. 18 12:55:47 2007
+** Created: jeu. oct. 18 14:34:52 2007
 **      by: Qt User Interface Compiler version 4.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -14,7 +14,6 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
@@ -34,7 +33,6 @@ public:
     QHBoxLayout *hboxLayout;
     QLabel *titleLabel;
     QSpacerItem *spacerItem;
-    QCheckBox *activatedBox;
     QListWidget *tagsListWidget;
     QHBoxLayout *hboxLayout1;
     QLineEdit *newTagText;
@@ -66,12 +64,6 @@ public:
     spacerItem = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     hboxLayout->addItem(spacerItem);
-
-    activatedBox = new QCheckBox(FontAction);
-    activatedBox->setObjectName(QString::fromUtf8("activatedBox"));
-    activatedBox->setLayoutDirection(Qt::RightToLeft);
-
-    hboxLayout->addWidget(activatedBox);
 
 
     vboxLayout->addLayout(hboxLayout);
@@ -109,7 +101,6 @@ public:
 
     gridLayout->addLayout(vboxLayout, 0, 0, 1, 1);
 
-    QWidget::setTabOrder(activatedBox, tagsListWidget);
     QWidget::setTabOrder(tagsListWidget, newTagText);
     QWidget::setTabOrder(newTagText, newTagButton);
     QWidget::setTabOrder(newTagButton, buttonBox);
@@ -123,8 +114,6 @@ public:
     {
     FontAction->setWindowTitle(QApplication::translate("FontAction", "Form", 0, QApplication::UnicodeUTF8));
     titleLabel->setText(QApplication::translate("FontAction", "action", 0, QApplication::UnicodeUTF8));
-    activatedBox->setToolTip(QApplication::translate("FontAction", "Activated Or Not", 0, QApplication::UnicodeUTF8));
-    activatedBox->setText(QApplication::translate("FontAction", "Active", 0, QApplication::UnicodeUTF8));
     newTagButton->setText(QApplication::translate("FontAction", "Add Tag", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(FontAction);
     } // retranslateUi

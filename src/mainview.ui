@@ -264,12 +264,12 @@
         </property>
         <column>
          <property name="text" >
-          <string>Family</string>
+          <string>Names</string>
          </property>
         </column>
         <column>
          <property name="text" >
-          <string>Variant</string>
+          <string>Files</string>
          </property>
         </column>
        </widget>
@@ -441,8 +441,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>432</width>
-           <height>640</height>
+           <width>112</width>
+           <height>238</height>
           </rect>
          </property>
          <attribute name="label" >

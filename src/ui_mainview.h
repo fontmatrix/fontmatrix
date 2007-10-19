@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'mainview.ui'
 **
-** Created: jeu. oct. 18 12:55:47 2007
+** Created: ven. oct. 19 12:38:34 2007
 **      by: Qt User Interface Compiler version 4.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -357,7 +357,7 @@ public:
     toolBox->addItem(pageRender, QApplication::translate("MainView", "Sample text", 0, QApplication::UnicodeUTF8));
     page = new QWidget();
     page->setObjectName(QString::fromUtf8("page"));
-    page->setGeometry(QRect(0, 0, 432, 640));
+    page->setGeometry(QRect(0, 0, 112, 238));
     gridLayout4 = new QGridLayout(page);
     gridLayout4->setObjectName(QString::fromUtf8("gridLayout4"));
     spacerItem3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -427,8 +427,8 @@ public:
     OrderBy->setText(QString());
     Tags->setText(QApplication::translate("MainView", "Tags", 0, QApplication::UnicodeUTF8));
     Ordering->setText(QApplication::translate("MainView", "Ordering", 0, QApplication::UnicodeUTF8));
-    fontTree->headerItem()->setText(0, QApplication::translate("MainView", "Family", 0, QApplication::UnicodeUTF8));
-    fontTree->headerItem()->setText(1, QApplication::translate("MainView", "Variant", 0, QApplication::UnicodeUTF8));
+    fontTree->headerItem()->setText(0, QApplication::translate("MainView", "Names", 0, QApplication::UnicodeUTF8));
+    fontTree->headerItem()->setText(1, QApplication::translate("MainView", "Files", 0, QApplication::UnicodeUTF8));
     editAllButton->setText(QApplication::translate("MainView", "Edit All", 0, QApplication::UnicodeUTF8));
     activateAllButton->setText(QApplication::translate("MainView", "Activate all", 0, QApplication::UnicodeUTF8));
     desactivateAllButton->setText(QApplication::translate("MainView", "Deactivate all", 0, QApplication::UnicodeUTF8));

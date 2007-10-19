@@ -62,8 +62,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	QStringList tl_tmp = typotek::tagsList;
 	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
-	tl_tmp.removeAll ( "Activated_On" );
-	tl_tmp.removeAll ( "Activated_Off" );
+// 	tl_tmp.removeAll ( "Activated_On" );
+// 	tl_tmp.removeAll ( "Activated_Off" );
 
 	tagsCombo->addItems ( tl_tmp );
 
@@ -74,7 +74,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( editAllButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotEditAll() ) );
 	
 	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotView() ) );
-	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotInfoFont() ) );
+// 	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotInfoFont() ) );
 	
 
 	connect ( abcScene,SIGNAL ( selectionChanged() ),this,SLOT ( slotglyphInfo() ) );
@@ -130,6 +130,7 @@ void MainViewWidget::fillTree()
 		for ( int  n = 0; n < kit.value().count(); ++n )
 		{
 			QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
+			entry->setText(0, kit.value()[n]->variant());
 			entry->setText ( 1, kit.value() [n]->name() );
 			bool act = kit.value() [n]->tags().contains ( "Activated_On" );
 			entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
@@ -139,7 +140,7 @@ void MainViewWidget::fillTree()
 		fontTree->addTopLevelItem ( ord );
 	}
 	if(curItem)
-		fontTree->scrollToItem(curItem);
+		fontTree->scrollToItem(curItem,QAbstractItemView::PositionAtTop);
 
 }
 
@@ -160,7 +161,7 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 // 	qDebug() << "font select";
 
 	curItemName = item->text(0).isNull() ? item->text(1) : item->text(0);
-	if ( column == 0 )
+	if ( item->childCount() > 0)
 		return;
 
 	lastIndex = faceIndex;
@@ -205,6 +206,8 @@ void MainViewWidget::slotView()
 	QStringList stl = sampleText.split ( '\n' );
 	for ( int i=0; i< stl.count(); ++i )
 		f->renderLine ( loremScene,stl[i],25*i );
+	
+	slotInfoFont();
 }
 
 void MainViewWidget::slotglyphInfo()

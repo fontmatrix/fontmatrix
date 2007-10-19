@@ -112,7 +112,10 @@ void typotek::open()
 			pathList <<  fp.absoluteFilePath();
 		}
 	}
-
+	
+	QStringList tali;
+	tali << "Activated_Off";
+	
 	QProgressDialog progress ( "Importing font files... ", "cancel", 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 
@@ -132,6 +135,8 @@ void typotek::open()
 
 
 			FontItem *fi = new FontItem ( pathList.at ( i ) );
+			
+			fi->setTags(tali);
 			fontMap.append ( fi );
 			realFontMap[fi->name() ] = fi;
 		}
@@ -330,7 +335,7 @@ typotek::~typotek()
 
 void typotek::fillTagsList()
 {
-	tagsList <<  "notag";
+	
 }
 
 void typotek::checkOwnDir()

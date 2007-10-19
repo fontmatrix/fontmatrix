@@ -24,7 +24,7 @@
 #include <QStringList>
 #include <QByteArray>
 #include <QMap>
-
+#include <QPointF>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -95,7 +95,7 @@ public:
 		
 		QString value(QString k);
 		
-		void renderLine(QGraphicsScene *scene, QString spec, double origine, bool append = true);
+		void renderLine(QGraphicsScene *scene, QString spec,  QPointF origine, double fsize);
 		void renderAll(QGraphicsScene *scene);
 		void deRender(QGraphicsScene *scene);
 		void deRenderAll();

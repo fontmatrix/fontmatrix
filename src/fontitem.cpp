@@ -193,32 +193,11 @@ return glyph;
 
 }
 
-void FontItem::renderLine ( QGraphicsScene * scene, QString spec, double origine,bool append )
+void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize)
 {
-	qDebug() << "renderLine : " << spec;
-
 	sceneList.append ( scene );
-
-	if ( append == false )
-	{
-		QList<int> rem;
-		for ( int i = 0; i < pixList.count(); ++i )
-		{
-			if ( pixList[i]->scene() == scene )
-			{
-				scene->removeItem ( pixList[i] );
-				rem.append ( i );
-			}
-		}
-		for ( int i = rem.count() - 1; i >= 0; --i )
-			pixList.removeAt ( rem[i] );
-	}
-
-	double sizz = 20;
-	//FT_Set_Char_Size ( m_face, sizz * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
-	QPointF pen;
-	pen.setX ( 0 );
-	pen.setY ( origine );
+	double sizz = fsize;
+	QPointF pen( origine );
 	for ( int i=0; i < spec.length(); ++i )
 	{
 		QGraphicsPathItem *glyph = itemFromChar(spec.at ( i ).unicode(), sizz);
@@ -227,9 +206,6 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, double origine
 		glyph->setPos ( pen );
 		double scalefactor = sizz / m_face->units_per_EM;
 		pen.rx() += m_glyph->metrics.horiAdvance * scalefactor;
-		
-
-
 	}
 }
 

@@ -66,6 +66,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QStringList openKeys;
 		QString curItemName;
 		
+		double sampleFontSize;
+		double sampleInterSize;
+		
 	public slots:
 		void slotOrderingChanged ( QString s );
 		void slotfontSelected ( QTreeWidgetItem * item, int column );

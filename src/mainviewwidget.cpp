@@ -29,6 +29,9 @@
 #include <QTransform>
 #include <QDialog>
 #include <QGridLayout>
+#include <QGraphicsRectItem>
+#include <QDoubleSpinBox>
+#include <QLabel>
 
 
 
@@ -41,19 +44,29 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
+	
+	
 
 	tagLayout = new QGridLayout ( tagPage );
 
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
+	QRectF pageRect(0,0,597.6,842.4); //TODO find means to smartly decide of page size (here, iso A4)
+	loremScene->setSceneRect(pageRect);
+	QGraphicsRectItem *backp = loremScene->addRect(pageRect,QPen(),Qt::white);
 
 	abcView->setScene ( abcScene );
 	loremView->setScene ( loremScene );
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
+	loremView->setBackgroundBrush(Qt::gray);
+	loremView->scroll(0,-10000);
 // 	loremView->scale(0.5,0.5);
 
-	sampleText = "Here, type your own\nlorem ipsum";
-
+	
+	sampleText= "A font is a set of glyphs (images) representing the characters from a particular \ncharacter set in a particular typeface. In professional typography the term typeface is not \ninterchangeable with the word font, which is defined as\n a given alphabet and its associated characters\nin a single size. For example, 8-point Caslon is one font, and 10-point \nCaslon is another. Historically, fonts came in specific sizes determining \nthe size of characters, and in quantities of sorts or number of each letter \nprovided. The design of characters in a font took into account all \nthese factors. As the range of typeface designs increased and requirements \nof publishers broadened over the centuries, fonts of specific \nweight (blackness or lightness) and stylistic variants-most commonly regular \nor roman as distinct to italic, as well as condensed \n -- have led to font families, collections of \nclosely-related typeface designs that can include hundreds of styles. \nA font family is typically a group of related fonts which \nvary only in weight, orientation, width, etc, but not design. For example, Times is a font \nfamily, whereas Times Roman, Times Italic and Times \nBold are individual fonts making up the Times family. Font families \ntypically include several fonts, though some, such as Helvetica, may \nconsist of dozens of fonts. Helvetica, Century Schoolbook, and Courier \nare examples of three widely distributed typefaces."; // from http://en.wikipedia.org/wiki/Typeface
+	sampleFontSize = 20;
+	sampleInterSize = 26;
+	
 	ord << "family" << "variant";
 	orderingCombo->addItems ( ord );
 
@@ -204,8 +217,12 @@ void MainViewWidget::slotView()
 	QApplication::restoreOverrideCursor();
 
 	QStringList stl = sampleText.split ( '\n' );
+	QPointF pen(100,80);
 	for ( int i=0; i< stl.count(); ++i )
-		f->renderLine ( loremScene,stl[i],25*i );
+	{
+		pen.ry() = 100 + sampleInterSize * i;
+		f->renderLine ( loremScene,stl[i],pen, sampleFontSize );
+	}
 	
 	slotInfoFont();
 }
@@ -410,18 +427,33 @@ void MainViewWidget::slotActivateAll()
 void MainViewWidget::slotSetSampleText()
 {
 	QDialog dial ( this );
-	QGridLayout *lay = new QGridLayout ( &dial );
-	QTextEdit *ted = new QTextEdit ( sampleText );
-	QPushButton *okButton = new QPushButton ( "Ok" );
-	lay->addWidget ( ted, 0,0,1,-1 );
-	lay->addWidget ( okButton,1,2 );
-	connect ( okButton,SIGNAL ( released() ),&dial,SLOT ( close() ) );
+	QGridLayout lay ( &dial );
+	QTextEdit ted  ( sampleText.replace("\n","<br/>") );
+	QPushButton okButton  ( "Ok" );
+	
+	QLabel labfs("size");
+	QLabel labls("interline");
+	
+	QDoubleSpinBox boxfs;
+	boxfs.setRange(1,999);
+	boxfs.setValue(sampleFontSize);
+	
+	QDoubleSpinBox boxls;
+	boxls.setRange(1,999);
+	boxls.setValue(sampleInterSize);
+	
+	lay.addWidget ( &ted, 0,0,1,-1 );
+	lay.addWidget(&labfs, 1,0);
+	lay.addWidget(&labls, 2,0);
+	lay.addWidget(&boxfs,1,1);
+	lay.addWidget(&boxls,2,1);
+	lay.addWidget ( &okButton,3,1 );
+	connect ( &okButton,SIGNAL ( released() ),&dial,SLOT ( close() ) );
 
 	dial.exec();
-	sampleText = ted->toPlainText () ;
-	delete okButton;
-	delete ted;
-	delete lay;
+	sampleText = ted.toPlainText () ;
+	sampleInterSize = boxls.value();
+	sampleFontSize = boxfs.value();
 
 	slotView();
 

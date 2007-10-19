@@ -64,8 +64,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	
 	sampleText= "A font is a set of glyphs (images) representing the characters from a particular \ncharacter set in a particular typeface. In professional typography the term typeface is not \ninterchangeable with the word font, which is defined as\n a given alphabet and its associated characters\nin a single size. For example, 8-point Caslon is one font, and 10-point \nCaslon is another. Historically, fonts came in specific sizes determining \nthe size of characters, and in quantities of sorts or number of each letter \nprovided. The design of characters in a font took into account all \nthese factors. As the range of typeface designs increased and requirements \nof publishers broadened over the centuries, fonts of specific \nweight (blackness or lightness) and stylistic variants-most commonly regular \nor roman as distinct to italic, as well as condensed \n -- have led to font families, collections of \nclosely-related typeface designs that can include hundreds of styles. \nA font family is typically a group of related fonts which \nvary only in weight, orientation, width, etc, but not design. For example, Times is a font \nfamily, whereas Times Roman, Times Italic and Times \nBold are individual fonts making up the Times family. Font families \ntypically include several fonts, though some, such as Helvetica, may \nconsist of dozens of fonts. Helvetica, Century Schoolbook, and Courier \nare examples of three widely distributed typefaces."; // from http://en.wikipedia.org/wiki/Typeface
-	sampleFontSize = 20;
-	sampleInterSize = 26;
+	sampleFontSize = 11;
+	sampleInterSize = 14;
 	
 	ord << "family" << "variant";
 	orderingCombo->addItems ( ord );
@@ -153,7 +153,7 @@ void MainViewWidget::fillTree()
 		fontTree->addTopLevelItem ( ord );
 	}
 	if(curItem)
-		fontTree->scrollToItem(curItem,QAbstractItemView::PositionAtTop);
+		fontTree->scrollToItem(curItem);
 
 }
 
@@ -214,7 +214,7 @@ void MainViewWidget::slotView()
 
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	f->renderAll ( abcScene ); // can be rather long depending of the number of glyphs
-	QApplication::restoreOverrideCursor();
+	
 
 	QStringList stl = sampleText.split ( '\n' );
 	QPointF pen(100,80);
@@ -225,6 +225,7 @@ void MainViewWidget::slotView()
 	}
 	
 	slotInfoFont();
+	QApplication::restoreOverrideCursor();
 }
 
 void MainViewWidget::slotglyphInfo()

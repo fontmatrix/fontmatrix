@@ -174,21 +174,26 @@ QString FontItem::name()
 
 QGraphicsPathItem * FontItem::itemFromChar(int charcode, double size)
 {
-	ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_NO_SCALE);//spec.at ( i ).unicode()
-	if ( ft_error )
+	
+	if(!contourCache.contains(charcode))
 	{
-		return 0;
+		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_NO_SCALE);//spec.at ( i ).unicode()
+		if ( ft_error )
+		{
+			return 0;
+		}
+		FT_Outline *outline = &m_glyph->outline;
+		QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
+		FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
+		contourCache[charcode] = glyphPath;
+		advanceCache[charcode] =  m_glyph->metrics.horiAdvance;
 	}
-	FT_Outline *outline = &m_glyph->outline;
-	QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
-	FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
 		
 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 	glyph->setBrush(QBrush ( Qt::SolidPattern ) );
-	glyph->setPath ( glyphPath );
+	glyph->setPath ( contourCache[charcode] );
 	double scalefactor = size / m_face->units_per_EM;
 	glyph->scale(scalefactor,-scalefactor);
-	double advance = m_glyph->metrics.horiAdvance * scalefactor;
 return glyph;
 
 }
@@ -205,7 +210,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 		scene->addItem ( glyph);
 		glyph->setPos ( pen );
 		double scalefactor = sizz / m_face->units_per_EM;
-		pen.rx() += m_glyph->metrics.horiAdvance * scalefactor;
+		pen.rx() += advanceCache[spec.at ( i ).unicode()] * scalefactor;
 	}
 }
 

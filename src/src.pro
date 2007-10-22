@@ -15,6 +15,7 @@ CONFIG += warn_on \
           qt \
  uitools \
  qdbus \
+ build_all \
  debug
 TARGET = ../bin/typotek
 RESOURCES = application.qrc
@@ -29,6 +30,7 @@ INCLUDEPATH += /usr/include/freetype2
 INSTALLS += target
 
 target.path = /usr/bin
+
 
 CONFIG -= release
 

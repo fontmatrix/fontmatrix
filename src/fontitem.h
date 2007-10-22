@@ -25,11 +25,13 @@
 #include <QByteArray>
 #include <QMap>
 #include <QPointF>
+#include <QPainterPath>
+#include <QGraphicsPathItem>
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 class QGraphicsPixmapItem;
-class QGraphicsPathItem;
 class QGraphicsScene;
 
 /**
@@ -78,6 +80,8 @@ public:
 // 		QGraphicsPixmapItem *loremPixmap;
 		
 		bool m_lock;
+		QMap<int,QPainterPath> contourCache;
+		QMap<int,double> advanceCache;
 		
 	public:
 		static FT_Library theLibrary;

@@ -69,6 +69,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		double sampleFontSize;
 		double sampleInterSize;
 		
+		QString renderZoomString;
+		
 	public slots:
 		void slotOrderingChanged ( QString s );
 		void slotfontSelected ( QTreeWidgetItem * item, int column );
@@ -94,6 +96,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString defaultOrd() {return ord[0];};
 		QGraphicsScene* glyphsScene()const{return abcScene;};
 		QGraphicsScene* textScene()const{return loremScene;};
+		QList<FontItem*> curFonts(){return currentFonts;};
 
 };
 

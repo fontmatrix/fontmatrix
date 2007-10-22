@@ -45,7 +45,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
 	
-	
+// 	renderZoomString = "%1 \%";
 
 	tagLayout = new QGridLayout ( tagPage );
 
@@ -54,15 +54,14 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	QRectF pageRect(0,0,597.6,842.4); //TODO find means to smartly decide of page size (here, iso A4)
 	loremScene->setSceneRect(pageRect);
 	QGraphicsRectItem *backp = loremScene->addRect(pageRect,QPen(),Qt::white);
+	backp->setEnabled ( false );
 
 	abcView->setScene ( abcScene );
+	
 	loremView->setScene ( loremScene );
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
-	loremView->setBackgroundBrush(Qt::gray);
-	loremView->scroll(0,-10000);
-// 	loremView->scale(0.5,0.5);
+	loremView->setBackgroundBrush(Qt::lightGray);
 
-	
 	sampleText= "A font is a set of glyphs (images) representing the characters from a particular \ncharacter set in a particular typeface. In professional typography the term typeface is not \ninterchangeable with the word font, which is defined as\n a given alphabet and its associated characters\nin a single size. For example, 8-point Caslon is one font, and 10-point \nCaslon is another. Historically, fonts came in specific sizes determining \nthe size of characters, and in quantities of sorts or number of each letter \nprovided. The design of characters in a font took into account all \nthese factors. As the range of typeface designs increased and requirements \nof publishers broadened over the centuries, fonts of specific \nweight (blackness or lightness) and stylistic variants-most commonly regular \nor roman as distinct to italic, as well as condensed \n -- have led to font families, collections of \nclosely-related typeface designs that can include hundreds of styles. \nA font family is typically a group of related fonts which \nvary only in weight, orientation, width, etc, but not design. For example, Times is a font \nfamily, whereas Times Roman, Times Italic and Times \nBold are individual fonts making up the Times family. Font families \ntypically include several fonts, though some, such as Helvetica, may \nconsist of dozens of fonts. Helvetica, Century Schoolbook, and Courier \nare examples of three widely distributed typefaces."; // from http://en.wikipedia.org/wiki/Typeface
 	sampleFontSize = 11;
 	sampleInterSize = 14;
@@ -79,6 +78,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	tl_tmp.removeAll ( "Activated_Off" );
 
 	tagsCombo->addItems ( tl_tmp );
+	
+	
 
 	connect ( orderingCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotOrderingChanged ( QString ) ) );
 
@@ -106,6 +107,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 
 	slotOrderingChanged(ord[0]);
+	
+	
 }
 
 
@@ -116,6 +119,7 @@ MainViewWidget::~MainViewWidget()
 
 void MainViewWidget::fillTree()
 {
+	qDebug() << "curitemname = " << curItemName;
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
 	for(int i=0; i < fontTree->topLevelItemCount();++i)
@@ -153,7 +157,10 @@ void MainViewWidget::fillTree()
 		fontTree->addTopLevelItem ( ord );
 	}
 	if(curItem)
+	{
+		qDebug() << "get curitem : " << curItem->text(0) << curItem->text(1);
 		fontTree->scrollToItem(curItem);
+	}
 
 }
 
@@ -173,7 +180,7 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 {
 // 	qDebug() << "font select";
 
-	curItemName = item->text(0).isNull() ? item->text(1) : item->text(0);
+	curItemName = item->text(1).isNull() ? item->text(0) : item->text(1);
 	if ( item->childCount() > 0)
 		return;
 
@@ -321,7 +328,10 @@ void MainViewWidget::slotZoom ( int z )
 {
 	QGraphicsView * concernedView;
 	if ( sender()->objectName().contains ( "render" ) )
+	{
 		concernedView = loremView;
+// 		renderZoomLabel->setText(renderZoomString.arg(z));
+	}
 	else
 		concernedView = abcView;
 

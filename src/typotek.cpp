@@ -112,10 +112,10 @@ void typotek::open()
 			pathList <<  fp.absoluteFilePath();
 		}
 	}
-	
+
 	QStringList tali;
 	tali << "Activated_Off";
-	
+
 	QProgressDialog progress ( "Importing font files... ", "cancel", 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 
@@ -135,8 +135,8 @@ void typotek::open()
 
 
 			FontItem *fi = new FontItem ( pathList.at ( i ) );
-			
-			fi->setTags(tali);
+
+			fi->setTags ( tali );
 			fontMap.append ( fi );
 			realFontMap[fi->name() ] = fi;
 		}
@@ -197,6 +197,9 @@ void typotek::createActions()
 	printAct->setStatusTip ( tr ( "Print a specimen of the current font" ) );
 	connect ( printAct, SIGNAL ( triggered() ), this, SLOT ( print() ) );
 
+	fontBookAct = new QAction ( tr ( "Print font book" ),this );
+	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
+
 	exitAct = new QAction ( tr ( "E&xit" ), this );
 	exitAct->setShortcut ( tr ( "Ctrl+Q" ) );
 	exitAct->setStatusTip ( tr ( "Exit the application" ) );
@@ -217,6 +220,7 @@ void typotek::createMenus()
 	fileMenu->addAction ( saveAct );
 	fileMenu->addSeparator();
 	fileMenu->addAction ( printAct );
+	fileMenu->addAction ( fontBookAct );
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
 
@@ -335,7 +339,7 @@ typotek::~typotek()
 
 void typotek::fillTagsList()
 {
-	
+
 }
 
 void typotek::checkOwnDir()
@@ -421,7 +425,7 @@ void typotek::print()
 
 	if ( dialog->exec() != QDialog::Accepted )
 		return;
-
+	thePrinter.setFullPage ( true );
 	QPainter aPainter ( &thePrinter );
 	theMainView->textScene()->render ( &aPainter );
 // 	int maxPages = theMainView->glyphsScene()->sceneRect().height() / 600;
@@ -435,5 +439,106 @@ void typotek::print()
 //
 // 	}
 //
+}
+
+void typotek::fontBook()
+{
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	thePrinter.setOutputFormat ( QPrinter::PdfFormat );
+	thePrinter.setOutputFileName ( "typotek_book.pdf" );
+	thePrinter.setPageSize ( QPrinter::A4 );
+	thePrinter.setFullPage ( true );
+	QGraphicsScene theScene;
+	QRectF pageRect ( 0,0,597.6,842.4 );
+	theScene.setSceneRect ( pageRect );
+	QPainter thePainter ( &thePrinter );
+	QString alorem ( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nUt a sapien. Aliquam aliquet purus molestie dolor.\nInteger quis eros ut erat posuere dictum. Curabitur dignissim.\nInteger orci. Fusce vulputate lacus at ipsum. \nQuisque in libero nec mi laoreet volutpat. Aliquam eros pede, scelerisque quis" );
+	QStringList loremlist = alorem.split ( '\n' );
+	QString styleString ( "color:white;background-color:black;font-family:Helvetica;font-size:16pt" );
+
+	QList<FontItem*> localFontMap = theMainView->curFonts();
+	QMap<QString, QList<FontItem*> > keyList;
+	for ( int i=0; i < localFontMap.count();++i )
+	{
+		keyList[localFontMap[i]->value ( "family" ) ].append ( localFontMap[i] );
+// 		qDebug() << localFontMap[i]->value ( "family" ) ;
+	}
+	
+	QMap<QString, QList<FontItem*> >::const_iterator kit;
+	QProgressDialog progress ( "Creating font book... ", "cancel", 0, keyList.count(), this );
+	progress.setWindowModality ( Qt::WindowModal );
+	int progressindex=0;
+	
+	QList<FontItem*> renderedFont;
+	QPointF pen(0,0);
+	QGraphicsTextItem *title;
+	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
+	{
+// 		qDebug() << "\t" << kit.key();
+		progress.setLabelText ( kit.key() );
+		progress.setValue ( ++progressindex );
+		if ( progress.wasCanceled() )
+			break;
+		
+		pen.rx() = 30;
+		pen.ry() += 30;
+
+		if ( ( pen.y() + 200 ) > 800 )
+		{
+			theScene.render ( &thePainter );
+			thePrinter.newPage();
+			pen.ry() = 30;
+			for ( int  n = 0; n < renderedFont.count(); ++n )
+			{
+				renderedFont[n]->deRenderAll();
+				
+			}
+				renderedFont.clear();
+				theScene.removeItem(theScene.createItemGroup(theScene.items()));
+		}
+		
+		title = theScene.addText ( "" );
+		title->setHtml ( QString ( "<span style=\"%2\">%1</span>" ).arg ( kit.key() ).arg ( styleString ) );
+		title->setPos ( pen );
+		pen.ry() += 50;
+		
+		for ( int  n = 0; n < kit.value().count(); ++n )
+		{
+// 			qDebug() << "\t\t" << kit.value()[n]->variant();
+
+			if ( ( pen.y() + 150 ) > 820 )
+			{
+				theScene.render ( &thePainter );
+				thePrinter.newPage();
+				pen.ry() =30;
+				for ( int  d = 0; d <  renderedFont.count() ; ++d )
+				{
+					renderedFont[d]->deRenderAll();
+					
+				}
+				renderedFont.clear();
+				theScene.removeItem(theScene.createItemGroup(theScene.items()));
+				
+			}
+			pen.rx()=30;
+			FontItem* curfi = kit.value()[n];
+			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
+			renderedFont.append(curfi);
+			curfi->renderLine ( &theScene,curfi->variant(), pen ,14 );
+			pen.rx() = 50;
+			for ( int l=0; l < loremlist.count(); ++l )
+			{
+				pen.ry() +=  14;
+				curfi->renderLine ( &theScene, loremlist[l],pen, 11 );
+			}
+			pen.ry() +=30;
+
+		}
+// 		theScene.render(&thePainter);
+
+
+// 		thePrinter.newPage();
+
+	}
 }
 

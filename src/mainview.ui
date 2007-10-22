@@ -384,8 +384,8 @@
             </property>
             <property name="sizeHint" >
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>91</width>
+              <height>27</height>
              </size>
             </property>
            </spacer>
@@ -424,14 +424,20 @@
              <number>100</number>
             </property>
             <property name="tracking" >
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="orientation" >
              <enum>Qt::Horizontal</enum>
             </property>
+            <property name="tickPosition" >
+             <enum>QSlider::NoTicks</enum>
+            </property>
+            <property name="tickInterval" >
+             <number>0</number>
+            </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="4" >
+          <item row="1" column="0" colspan="5" >
            <widget class="QGraphicsView" name="loremView" />
           </item>
          </layout>

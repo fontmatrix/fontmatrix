@@ -50,6 +50,7 @@ class typotek:public QMainWindow
 		void newFile();
 		void open();
 		void print();
+		void fontBook();
 
 		bool saveAs();
 		void about();
@@ -93,6 +94,7 @@ class typotek:public QMainWindow
 		QAction *aboutAct;
 		QAction *aboutQtAct;
 		QAction *printAct;
+		QAction *fontBookAct;
 
 		MainViewWidget *theMainView;
 

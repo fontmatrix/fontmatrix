@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'mainview.ui'
 **
-** Created: ven. oct. 19 12:38:34 2007
+** Created: dim. oct. 21 12:29:12 2007
 **      by: Qt User Interface Compiler version 4.3.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -327,7 +327,7 @@ public:
 
     gridLayout3->addWidget(textButton, 0, 0, 1, 1);
 
-    spacerItem2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    spacerItem2 = new QSpacerItem(91, 27, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     gridLayout3->addItem(spacerItem2, 0, 1, 1, 1);
 
@@ -344,15 +344,17 @@ public:
     renderZoom->setSizePolicy(sizePolicy3);
     renderZoom->setMaximum(1000);
     renderZoom->setValue(100);
-    renderZoom->setTracking(false);
+    renderZoom->setTracking(true);
     renderZoom->setOrientation(Qt::Horizontal);
+    renderZoom->setTickPosition(QSlider::NoTicks);
+    renderZoom->setTickInterval(0);
 
     gridLayout3->addWidget(renderZoom, 0, 3, 1, 1);
 
     loremView = new QGraphicsView(pageRender);
     loremView->setObjectName(QString::fromUtf8("loremView"));
 
-    gridLayout3->addWidget(loremView, 1, 0, 1, 4);
+    gridLayout3->addWidget(loremView, 1, 0, 1, 5);
 
     toolBox->addItem(pageRender, QApplication::translate("MainView", "Sample text", 0, QApplication::UnicodeUTF8));
     page = new QWidget();

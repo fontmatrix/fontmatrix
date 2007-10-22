@@ -443,16 +443,18 @@ void typotek::print()
 
 void typotek::fontBook()
 {
+	
+	QString theFile = QFileDialog::getSaveFileName ( this, "Save fontBook", QDir::homePath() , "Portable Document Format (*.pdf)");
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	thePrinter.setOutputFormat ( QPrinter::PdfFormat );
-	thePrinter.setOutputFileName ( "typotek_book.pdf" );
+	thePrinter.setOutputFileName ( theFile );
 	thePrinter.setPageSize ( QPrinter::A4 );
 	thePrinter.setFullPage ( true );
 	QGraphicsScene theScene;
 	QRectF pageRect ( 0,0,597.6,842.4 );
 	theScene.setSceneRect ( pageRect );
 	QPainter thePainter ( &thePrinter );
-	QString alorem ( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nUt a sapien. Aliquam aliquet purus molestie dolor.\nInteger quis eros ut erat posuere dictum. Curabitur dignissim.\nInteger orci. Fusce vulputate lacus at ipsum. \nQuisque in libero nec mi laoreet volutpat. Aliquam eros pede, scelerisque quis" );
+	QString alorem ( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nUt a sapien. Aliquam aliquet purus molestie dolor.\nInteger quis eros ut erat posuere dictum. Curabitur dignissim.\nInteger orci. Fusce vulputate lacus at ipsum. \nQuisque in libero nec mi laoreet volutpat." );
 	QStringList loremlist = alorem.split ( '\n' );
 	QString styleString ( "color:white;background-color:black;font-family:Helvetica;font-size:16pt" );
 
@@ -472,6 +474,8 @@ void typotek::fontBook()
 	QList<FontItem*> renderedFont;
 	QPointF pen(0,0);
 	QGraphicsTextItem *title;
+	QGraphicsTextItem *folio;
+	int pageNumber = 0;
 	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 	{
 // 		qDebug() << "\t" << kit.key();
@@ -485,6 +489,9 @@ void typotek::fontBook()
 
 		if ( ( pen.y() + 200 ) > 800 )
 		{
+			folio = theScene.addText ( "" );
+			folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:9pt\">%1</span>").arg(++pageNumber));
+			folio->setPos(theScene.width() / 2.0, theScene.height() - 20.0);
 			theScene.render ( &thePainter );
 			thePrinter.newPage();
 			pen.ry() = 30;
@@ -508,6 +515,9 @@ void typotek::fontBook()
 
 			if ( ( pen.y() + 150 ) > 820 )
 			{
+				folio = theScene.addText ( "" );
+				folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:9pt\">%1</span>").arg(++pageNumber));
+				folio->setPos(theScene.width() / 2.0, theScene.height() - 20.0);
 				theScene.render ( &thePainter );
 				thePrinter.newPage();
 				pen.ry() =30;

@@ -197,7 +197,8 @@ void typotek::createActions()
 	printAct->setStatusTip ( tr ( "Print a specimen of the current font" ) );
 	connect ( printAct, SIGNAL ( triggered() ), this, SLOT ( print() ) );
 
-	fontBookAct = new QAction ( tr ( "Print font book" ),this );
+	fontBookAct = new QAction ( tr ( "Export font book..." ),this );
+	fontBookAct->setStatusTip ( tr ( "Export a pdf that show selected fonts" ) );
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
 
 	exitAct = new QAction ( tr ( "E&xit" ), this );
@@ -457,6 +458,7 @@ void typotek::fontBook()
 	QString alorem ( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nUt a sapien. Aliquam aliquet purus molestie dolor.\nInteger quis eros ut erat posuere dictum. Curabitur dignissim.\nInteger orci. Fusce vulputate lacus at ipsum. \nQuisque in libero nec mi laoreet volutpat." );
 	QStringList loremlist = alorem.split ( '\n' );
 	QString styleString ( "color:white;background-color:black;font-family:Helvetica;font-size:16pt" );
+	QString loremBig("LOREM IPSUM DOLOR");
 
 	QList<FontItem*> localFontMap = theMainView->curFonts();
 	QMap<QString, QList<FontItem*> > keyList;
@@ -476,6 +478,9 @@ void typotek::fontBook()
 	QGraphicsTextItem *title;
 	QGraphicsTextItem *folio;
 	int pageNumber = 0;
+	double familynameTab = 50;
+	double variantnameTab = 380;
+	double sampletextTab = 120;
 	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 	{
 // 		qDebug() << "\t" << kit.key();
@@ -484,7 +489,7 @@ void typotek::fontBook()
 		if ( progress.wasCanceled() )
 			break;
 		
-		pen.rx() = 30;
+		pen.rx() = familynameTab;
 		pen.ry() += 30;
 
 		if ( ( pen.y() + 200 ) > 800 )
@@ -530,12 +535,14 @@ void typotek::fontBook()
 				theScene.removeItem(theScene.createItemGroup(theScene.items()));
 				
 			}
-			pen.rx()=30;
+			pen.rx()=variantnameTab;
 			FontItem* curfi = kit.value()[n];
 			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
 			renderedFont.append(curfi);
 			curfi->renderLine ( &theScene,curfi->variant(), pen ,14 );
-			pen.rx() = 50;
+			pen.rx() = sampletextTab;
+			pen.ry() +=  30;
+			curfi->renderLine ( &theScene, loremBig ,pen, 28 );
 			for ( int l=0; l < loremlist.count(); ++l )
 			{
 				pen.ry() +=  14;
@@ -544,11 +551,14 @@ void typotek::fontBook()
 			pen.ry() +=30;
 
 		}
-// 		theScene.render(&thePainter);
-
-
-// 		thePrinter.newPage();
-
+	}
+	if(renderedFont.count())
+	{
+		folio = theScene.addText ( "" );
+		folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:9pt\">%1</span>").arg(++pageNumber));
+		folio->setPos(theScene.width() / 2.0, theScene.height() - 20.0);
+		theScene.render(&thePainter);
+		
 	}
 }
 

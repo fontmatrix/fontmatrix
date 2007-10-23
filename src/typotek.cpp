@@ -467,13 +467,13 @@ void typotek::fontBook()
 	double topMargin =  bookOption.getPageSize().height() / 10.0;
 	QStringList loremlist = bookOption.getSampleText().split ( '\n' );
 	QString headline = bookOption.getSampleHeadline();
-	
+	QPrinter::PageSize printedPageSize = bookOption.getPageSizeConstant();
 	double parSize = familySize * 3.0 + styleSize * 1.2 + headSize * 1.2 + static_cast<double>(loremlist.count()) * bodySize * 1.2;
 	
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	thePrinter.setOutputFormat ( QPrinter::PdfFormat );
 	thePrinter.setOutputFileName ( theFile );
-	thePrinter.setPageSize ( QPrinter::A4 );
+	thePrinter.setPageSize ( printedPageSize );
 	thePrinter.setFullPage ( true );
 	QGraphicsScene theScene;
 	QRectF pageRect ( 0,0,pageWidth,  pageHeight);
@@ -536,7 +536,7 @@ void typotek::fontBook()
 		title = theScene.addText ( "" );
 		title->setHtml ( QString ( "<span style=\"%2\">%1</span>" ).arg ( kit.key() ).arg ( styleString ) );
 		title->setPos ( pen );
-		pen.ry() += 3.0  * familySize;
+		pen.ry() += 4.0  * familySize;
 		
 		for ( int  n = 0; n < kit.value().count(); ++n )
 		{
@@ -567,7 +567,7 @@ void typotek::fontBook()
 			pen.rx() = sampletextTab;
 			pen.ry() +=  2.0 * styleSize;
 			curfi->renderLine ( &theScene, headline,pen, headSize );
-			pen.ry() += 1.2 * headSize;
+			pen.ry() +=  headSize * 0.5;
 			for ( int l=0; l < loremlist.count(); ++l )
 			{
 				curfi->renderLine ( &theScene, loremlist[l],pen, bodySize );

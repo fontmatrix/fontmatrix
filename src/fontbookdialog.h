@@ -24,6 +24,7 @@
 #include <QDialog>
 #include <QString>
 #include <QSizeF>
+#include <QPrinter>
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -45,6 +46,7 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 		double getTabSampleText();
 		QString getFileName();
 		QSizeF getPageSize();
+		QPrinter::PageSize getPageSizeConstant();
 		double getFontSize(QString s);
 		bool isOk;
 	private slots:
@@ -55,6 +57,7 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 	private:
 		void fillSizeList();
 		QSizeF m_pageSize;
+		QPrinter::PageSize m_pageSizeConstant;
 };
 
 #endif

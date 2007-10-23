@@ -479,8 +479,9 @@ void typotek::fontBook()
 	QGraphicsTextItem *folio;
 	int pageNumber = 0;
 	double familynameTab = 50;
-	double variantnameTab = 380;
-	double sampletextTab = 120;
+	double variantnameTab = 50;
+	double sampletextTab = 150;
+	double topMargin = 70;
 	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 	{
 // 		qDebug() << "\t" << kit.key();
@@ -490,7 +491,7 @@ void typotek::fontBook()
 			break;
 		
 		pen.rx() = familynameTab;
-		pen.ry() += 30;
+		pen.ry() += topMargin;
 
 		if ( ( pen.y() + 200 ) > 800 )
 		{
@@ -499,7 +500,7 @@ void typotek::fontBook()
 			folio->setPos(theScene.width() / 2.0, theScene.height() - 20.0);
 			theScene.render ( &thePainter );
 			thePrinter.newPage();
-			pen.ry() = 30;
+			pen.ry() = topMargin;
 			for ( int  n = 0; n < renderedFont.count(); ++n )
 			{
 				renderedFont[n]->deRenderAll();
@@ -525,7 +526,7 @@ void typotek::fontBook()
 				folio->setPos(theScene.width() / 2.0, theScene.height() - 20.0);
 				theScene.render ( &thePainter );
 				thePrinter.newPage();
-				pen.ry() =30;
+				pen.ry() = topMargin;
 				for ( int  d = 0; d <  renderedFont.count() ; ++d )
 				{
 					renderedFont[d]->deRenderAll();

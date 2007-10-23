@@ -542,7 +542,7 @@ void typotek::fontBook()
 		{
 // 			qDebug() << "\t\t" << kit.value()[n]->variant();
 
-			if ( ( pen.y() + (parSize - 3.0 * familySize) ) > pageHeight * 0.9 )
+			if ( ( pen.y() + (parSize - 4.0 * familySize) ) > pageHeight * 0.9 )
 			{
 				folio = theScene.addText ( "" );
 				folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:6pt\">%1</span>").arg(++pageNumber));

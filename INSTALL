@@ -6,6 +6,10 @@ Run "qmake -o Makefile typotek.pro",
 then "make" (typotek will be in ./bin/),
 then do _not_ run "make install" ;-)
 
+Next step is to move all the content of your ./fonts directory somewhere
+else before you launch Typotek (yes, I know that fontexplorer does it for you,
+and i can consider to do the same). Now, you can import directories in Typotek
+and activate fonts as needed and other cool stuff with yor fonts.
 
 It should work as is with OpenSuse 10.3. For other configurations,
 you might have to alter the pro files (typotek.pro & src/src.pro).

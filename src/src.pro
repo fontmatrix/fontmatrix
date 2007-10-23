@@ -3,12 +3,14 @@ SOURCES += typotek.cpp \
  mainviewwidget.cpp \
  fontitem.cpp \
  fontactionwidget.cpp \
- typotekadaptator.cpp
+ typotekadaptator.cpp \
+ fontbookdialog.cpp
 HEADERS += typotek.h \
  mainviewwidget.h \
  fontitem.h \
  fontactionwidget.h \
- typotekadaptator.h
+ typotekadaptator.h \
+ fontbookdialog.h
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -20,7 +22,8 @@ CONFIG += warn_on \
 TARGET = ../bin/typotek
 RESOURCES = application.qrc
 FORMS += mainview.ui \
- fontaction.ui
+ fontaction.ui \
+ bookexport.ui
 
 LIBS += -L/usr/lib \
 -lfreetype

@@ -24,6 +24,7 @@
 #include "mainviewwidget.h"
 #include "fontitem.h"
 #include "typotekadaptator.h"
+#include "fontbookdialog.h"
 
 #include <QtGui>
 #include <QTextEdit>
@@ -445,21 +446,45 @@ void typotek::print()
 void typotek::fontBook()
 {
 	
-	QString theFile = QFileDialog::getSaveFileName ( this, "Save fontBook", QDir::homePath() , "Portable Document Format (*.pdf)");
+// 	QString theFile = QFileDialog::getSaveFileName ( this, "Save fontBook", QDir::homePath() , "Portable Document Format (*.pdf)");
+	
+	FontBookDialog bookOption(this);
+	bookOption.exec();
+	
+	if(!bookOption.isOk)
+		return;
+	
+	double pageHeight = bookOption.getPageSize().height();
+	double pageWidth = bookOption.getPageSize().width();
+	QString theFile = bookOption.getFileName();
+	double familySize = bookOption.getFontSize("family");
+	double headSize = bookOption.getFontSize("headline");
+	double bodySize = bookOption.getFontSize("body");
+	double styleSize = bookOption.getFontSize("style");
+	double familynameTab = bookOption.getTabFamily();
+	double variantnameTab = bookOption.getTabStyle();
+	double sampletextTab = bookOption.getTabSampleText();
+	double topMargin =  bookOption.getPageSize().height() / 10.0;
+	QStringList loremlist = bookOption.getSampleText().split ( '\n' );
+	QString headline = bookOption.getSampleHeadline();
+	
+	double parSize = familySize * 3.0 + styleSize * 1.2 + headSize * 1.2 + static_cast<double>(loremlist.count()) * bodySize * 1.2;
+	
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	thePrinter.setOutputFormat ( QPrinter::PdfFormat );
 	thePrinter.setOutputFileName ( theFile );
 	thePrinter.setPageSize ( QPrinter::A4 );
 	thePrinter.setFullPage ( true );
 	QGraphicsScene theScene;
-	QRectF pageRect ( 0,0,597.6,842.4 );
+	QRectF pageRect ( 0,0,pageWidth,  pageHeight);
 	theScene.setSceneRect ( pageRect );
 	QPainter thePainter ( &thePrinter );
-	QString alorem ( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nUt a sapien. Aliquam aliquet purus molestie dolor.\nInteger quis eros ut erat posuere dictum. Curabitur dignissim.\nInteger orci. Fusce vulputate lacus at ipsum. \nQuisque in libero nec mi laoreet volutpat." );
-	QStringList loremlist = alorem.split ( '\n' );
-	QString styleString ( "color:white;background-color:black;font-family:Helvetica;font-size:16pt" );
-	QString loremBig("LOREM IPSUM DOLOR");
-
+	
+	
+	QString styleString ( QString("color:white;background-color:black;font-family:Helvetica;font-size:%1pt" ).arg(familySize));
+	
+	
+	
 	QList<FontItem*> localFontMap = theMainView->curFonts();
 	QMap<QString, QList<FontItem*> > keyList;
 	for ( int i=0; i < localFontMap.count();++i )
@@ -478,10 +503,8 @@ void typotek::fontBook()
 	QGraphicsTextItem *title;
 	QGraphicsTextItem *folio;
 	int pageNumber = 0;
-	double familynameTab = 50;
-	double variantnameTab = 50;
-	double sampletextTab = 150;
-	double topMargin = 70;
+	
+	
 	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 	{
 // 		qDebug() << "\t" << kit.key();
@@ -493,11 +516,11 @@ void typotek::fontBook()
 		pen.rx() = familynameTab;
 		pen.ry() += topMargin;
 
-		if ( ( pen.y() + 200 ) > 800 )
+		if ( ( pen.y() + parSize ) > pageHeight * 0.9 )
 		{
 			folio = theScene.addText ( "" );
-			folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:9pt\">%1</span>").arg(++pageNumber));
-			folio->setPos(theScene.width() / 2.0, theScene.height() - 20.0);
+			folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:6pt\">%1</span>").arg(++pageNumber));
+			folio->setPos(theScene.width() / 2.0, theScene.height() - 15.0);
 			theScene.render ( &thePainter );
 			thePrinter.newPage();
 			pen.ry() = topMargin;
@@ -513,17 +536,17 @@ void typotek::fontBook()
 		title = theScene.addText ( "" );
 		title->setHtml ( QString ( "<span style=\"%2\">%1</span>" ).arg ( kit.key() ).arg ( styleString ) );
 		title->setPos ( pen );
-		pen.ry() += 50;
+		pen.ry() += 3.0  * familySize;
 		
 		for ( int  n = 0; n < kit.value().count(); ++n )
 		{
 // 			qDebug() << "\t\t" << kit.value()[n]->variant();
 
-			if ( ( pen.y() + 150 ) > 820 )
+			if ( ( pen.y() + (parSize - 3.0 * familySize) ) > pageHeight * 0.9 )
 			{
 				folio = theScene.addText ( "" );
-				folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:9pt\">%1</span>").arg(++pageNumber));
-				folio->setPos(theScene.width() / 2.0, theScene.height() - 20.0);
+				folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:6pt\">%1</span>").arg(++pageNumber));
+				folio->setPos(theScene.width() / 2.0, theScene.height() - 15.0);
 				theScene.render ( &thePainter );
 				thePrinter.newPage();
 				pen.ry() = topMargin;
@@ -540,24 +563,25 @@ void typotek::fontBook()
 			FontItem* curfi = kit.value()[n];
 			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
 			renderedFont.append(curfi);
-			curfi->renderLine ( &theScene,curfi->variant(), pen ,14 );
+			curfi->renderLine ( &theScene,curfi->variant(), pen ,styleSize );
 			pen.rx() = sampletextTab;
-			pen.ry() +=  30;
-			curfi->renderLine ( &theScene, loremBig ,pen, 28 );
+			pen.ry() +=  2.0 * styleSize;
+			curfi->renderLine ( &theScene, headline,pen, headSize );
+			pen.ry() += 1.2 * headSize;
 			for ( int l=0; l < loremlist.count(); ++l )
 			{
-				pen.ry() +=  14;
-				curfi->renderLine ( &theScene, loremlist[l],pen, 11 );
+				curfi->renderLine ( &theScene, loremlist[l],pen, bodySize );
+				pen.ry() +=  bodySize * 1.2;
 			}
-			pen.ry() +=30;
+			pen.ry() +=styleSize * 2.0;
 
 		}
 	}
 	if(renderedFont.count())
 	{
 		folio = theScene.addText ( "" );
-		folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:9pt\">%1</span>").arg(++pageNumber));
-		folio->setPos(theScene.width() / 2.0, theScene.height() - 20.0);
+		folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:6pt\">%1</span>").arg(++pageNumber));
+		folio->setPos(theScene.width() / 2.0, theScene.height() - 15.0);
 		theScene.render(&thePainter);
 		
 	}

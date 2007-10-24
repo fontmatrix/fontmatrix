@@ -69,7 +69,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		double sampleFontSize;
 		double sampleInterSize;
 		
-		QString renderZoomString;
+		
 		
 	public slots:
 		void slotOrderingChanged ( QString s );

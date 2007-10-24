@@ -57,6 +57,8 @@ class typotek:public QMainWindow
 		void documentWasModified();
 	public slots:
 		bool save();
+	signals:
+		void tagAdded(QString);
 
 	private:
 		void createActions();

@@ -62,7 +62,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush(Qt::lightGray);
 
-	sampleText= "A font is a set of glyphs (images) representing the characters from a particular \ncharacter set in a particular typeface. In professional typography the term typeface is not \ninterchangeable with the word font, which is defined as\n a given alphabet and its associated characters\nin a single size. For example, 8-point Caslon is one font, and 10-point \nCaslon is another. Historically, fonts came in specific sizes determining \nthe size of characters, and in quantities of sorts or number of each letter \nprovided. The design of characters in a font took into account all \nthese factors. As the range of typeface designs increased and requirements \nof publishers broadened over the centuries, fonts of specific \nweight (blackness or lightness) and stylistic variants-most commonly regular \nor roman as distinct to italic, as well as condensed \n -- have led to font families, collections of \nclosely-related typeface designs that can include hundreds of styles. \nA font family is typically a group of related fonts which \nvary only in weight, orientation, width, etc, but not design. For example, Times is a font \nfamily, whereas Times Roman, Times Italic and Times \nBold are individual fonts making up the Times family. Font families \ntypically include several fonts, though some, such as Helvetica, may \nconsist of dozens of fonts. Helvetica, Century Schoolbook, and Courier \nare examples of three widely distributed typefaces."; // from http://en.wikipedia.org/wiki/Typeface
+	sampleText= "A font is a set of glyphs (images) representing the characters from a particular \ncharacter set in a particular typeface. In professional typography the term typeface is not \ninterchangeable with the word font, which is defined as\n a given alphabet and its associated characters\nin a single size. For example, 8-point Caslon is one font, and 10-point.[...]"; // from http://en.wikipedia.org/wiki/Typeface
 	sampleFontSize = 11;
 	sampleInterSize = 14;
 	
@@ -104,6 +104,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( desactivateAllButton,SIGNAL ( released() ),this,SLOT ( slotDesactivateAll() ) );
 
 	connect ( textButton,SIGNAL ( released() ),this,SLOT ( slotSetSampleText() ) );
+	
+	connect(typo,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
 
 
 	slotOrderingChanged(ord[0]);

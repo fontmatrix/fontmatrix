@@ -114,8 +114,18 @@ void typotek::open()
 		}
 	}
 
-	QStringList tali;
-	tali << "Activated_Off";
+	QString inputTags = QInputDialog::getText(this,"Import tags","Initial tags are means to get your fonts easily found.\nThe string you type will be split by \"#\" to obtain a tag list.");
+	QStringList tali = inputTags.split("#");
+	tali << "Activated_Off" ;
+	
+	foreach(QString tas, tali)
+	{
+		if(!tagsList.contains(tas))
+		{
+			tagsList.append(tas);
+			emit tagAdded(tas);
+		}
+	}
 
 	QProgressDialog progress ( "Importing font files... ", "cancel", 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );

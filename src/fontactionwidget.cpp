@@ -34,6 +34,7 @@ FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) : Q
 {
 	setupUi ( this );
 	isOk = false;
+	doConnect();
 
 }
 
@@ -86,13 +87,13 @@ void FontActionWidget::prepare ( QList< FontItem * > fonts )
 			tagsListWidget->addItem ( lit );
 		}
 	}
-	doConnect();
+	
 }
 
 void FontActionWidget::doConnect()
 {
-	connect ( buttonBox,SIGNAL ( accepted() ),this,SLOT ( slotOk() ) );
-	connect ( buttonBox,SIGNAL ( rejected() ),this,SLOT ( slotCancel() ) );
+// 	connect ( buttonBox,SIGNAL ( accepted() ),this,SLOT ( slotOk() ) );
+// 	connect ( buttonBox,SIGNAL ( rejected() ),this,SLOT ( slotCancel() ) );
 
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
@@ -121,6 +122,7 @@ void FontActionWidget::slotCancel()
 void FontActionWidget::slotSwitchCheckState ( QListWidgetItem * item )
 {
 	item->setCheckState ( item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked );
+	slotFinalize();
 }
 
 void FontActionWidget::slotNewTag()
@@ -134,14 +136,15 @@ void FontActionWidget::slotNewTag()
 	QListWidgetItem *lit = new QListWidgetItem ( newTagText->text() );
 	lit->setCheckState ( Qt::Checked );
 	tagsListWidget->addItem ( lit );
+	slotFinalize();
 	emit tagAdded(newTagText->text());
 
 }
 
 void FontActionWidget::slotFinalize()
 {
-	if ( isOk )
-	{
+// 	if ( isOk )
+// 	{
 		QStringList tags;
 		for ( int i=0;i< tagsListWidget->count();++i )
 		{
@@ -152,19 +155,14 @@ void FontActionWidget::slotFinalize()
 		
 		for ( int i=0;i<theFonts.count();++i )
 		{
-			if(theFonts[i]->tags().contains("Acivated_On"))
-				tags << "Acivated_On";
-			if(theFonts[i]->tags().contains("Acivated_Off"))
-				tags << "Acivated_Off";
+			if(theFonts[i]->tags().contains("Activated_On"))
+				tags << "Activated_On";
+			if(theFonts[i]->tags().contains("Activated_Off"))
+				tags << "Atcivated_Off";
 			theFonts[i]->setTags ( tags );
 		}
-	}
-	
-// 	for ( int i=0;i<theFonts.count();++i )
-// 	{
-// 		theFonts[i]->unLock();
 // 	}
-	
+
 	emit cleanMe();
 }
 

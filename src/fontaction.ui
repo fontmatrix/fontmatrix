@@ -81,13 +81,6 @@
        </item>
       </layout>
      </item>
-     <item>
-      <widget class="QDialogButtonBox" name="buttonBox" >
-       <property name="standardButtons" >
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
   </layout>
@@ -96,7 +89,6 @@
   <tabstop>tagsListWidget</tabstop>
   <tabstop>newTagText</tabstop>
   <tabstop>newTagButton</tabstop>
-  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -35,7 +35,9 @@ INSTALLS += target
 
 CONFIG -= release
 
-DISTFILES += ../typotek.spec \
-../typotek.desktop
-target.path = /usr/bin
+desktop.files = ../typotek.desktop
+desktop.path = /usr/share/applications
+INSTALLS += desktop
+
+target.path = /usr/local/bin
 

@@ -37,61 +37,55 @@ FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) : Q
 
 }
 
-void FontActionWidget::prepare(QList< FontItem * > fonts)
+void FontActionWidget::prepare ( QList< FontItem * > fonts )
 {
 
 	slotFinalize();
 	isOk = false;
 	theFonts.clear();
 	theFonts = fonts;
-	for(int i= theFonts.count() - 1; i >= 0; --i)
+	for ( int i= theFonts.count() - 1; i >= 0; --i )
 	{
-		if(theFonts[i]->isLocked())
-			theFonts.removeAt(i);
+		if ( theFonts[i]->isLocked() )
+			theFonts.removeAt ( i );
 	}
-	
+
 	qDebug() << theFonts.count();
-	
+
 	tagsListWidget->clear();
-// 	activatedBox->setCheckState(Qt::Unchecked);
-	
+
+
 	QString tit ( "%1" );
 	QString tot;
 	for ( int i=0;i<theFonts.count();++i )
 	{
-		tot.append("[" + theFonts[i]->name() + "] ");
-// 		theFonts[i]->lock();
+		tot.append ( "[" + theFonts[i]->name() + "] " );
 	}
 	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
 	titleLabel->setText ( tit.arg ( theFonts[0]->name() ) + itsagroup );
-	titleLabel->setToolTip(tot);
+	titleLabel->setToolTip ( tot );
 
 	for ( int i=0; i < typotek::tagsList.count(); ++i )
 	{
 		QString cur_tag = typotek::tagsList[i];
-		qDebug() << cur_tag;
-		if (cur_tag.isEmpty() )
+
+		if ( cur_tag.isEmpty() )
 			continue;
-		
+
 		QListWidgetItem *lit;
 		if ( !cur_tag.contains ( "Activated_" ) )
 		{
 			lit = new QListWidgetItem ( cur_tag );
 			lit->setCheckState ( Qt::Unchecked );
+
+			if ( theFonts.count() == 1 )
+			{
+				if ( theFonts[0]->tags().contains ( cur_tag ) )
+					lit->setCheckState ( Qt::Checked );
+			}
+			tagsListWidget->addItem ( lit );
 		}
-		if ( theFonts.count() == 1 )
-		{
-			if ( theFonts[0]->tags().contains ( cur_tag ) )
-				lit->setCheckState ( Qt::Checked );
-		}
-		tagsListWidget->addItem ( lit );
 	}
-// 	if ( theFonts.count() == 1 )
-// 	{
-// 		if( theFonts[0]->tags().contains( "Activated_On" ) )
-// 			activatedBox->setCheckState ( Qt::Checked );
-// 	}
-	
 	doConnect();
 }
 

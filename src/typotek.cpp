@@ -536,6 +536,7 @@ void typotek::fontBook()
 		title = theScene.addText ( "" );
 		title->setHtml ( QString ( "<span style=\"%2\">%1</span>" ).arg ( kit.key() ).arg ( styleString ) );
 		title->setPos ( pen );
+		title->setZValue(100.0);
 		pen.ry() += 4.0  * familySize;
 		
 		for ( int  n = 0; n < kit.value().count(); ++n )
@@ -585,5 +586,10 @@ void typotek::fontBook()
 		theScene.render(&thePainter);
 		
 	}
+}
+
+QList<FontItem*> typotek::getCurrentFonts()
+{
+	return theMainView->curFonts();
 }
 

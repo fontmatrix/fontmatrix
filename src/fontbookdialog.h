@@ -24,8 +24,11 @@
 #include <QDialog>
 #include <QString>
 #include <QSizeF>
+#include <QRectF>
 #include <QPrinter>
 
+class QGraphicsScene;
+class FontItem;
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
 */
@@ -49,15 +52,22 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 		QPrinter::PageSize getPageSizeConstant();
 		double getFontSize(QString s);
 		bool isOk;
+		
 	private slots:
 		void slotAccept();
 		void slotCancel();
 		void slotFileDialog();
 		void slotPageSize(int index);
+		void slotPreview();
+	signals:
+		void updateView();
 	private:
 		void fillSizeList();
 		QSizeF m_pageSize;
 		QPrinter::PageSize m_pageSizeConstant;
+		QRectF m_pageRect;
+		QGraphicsScene *preScene;
+		QList<FontItem*> renderedFont;
 };
 
 #endif

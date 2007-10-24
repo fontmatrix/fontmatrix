@@ -111,7 +111,7 @@ class typotek:public QMainWindow
 		FontItem* getFont ( QString s ) {return realFontMap.value ( s );};
 		QList<FontItem*> getAllFonts() {return fontMap;};
 		QList<FontItem*> getFonts ( QString pattern, QString field );
-		
+		QList<FontItem*> getCurrentFonts();
 		
 		static QStringList tagsList;
 		TypotekAdaptator *adaptator(){return actAdaptator;};

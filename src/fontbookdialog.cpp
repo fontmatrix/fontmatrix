@@ -18,8 +18,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "fontbookdialog.h"
+#include "fontitem.h"
+#include "typotek.h"
+
 #include <QFileDialog>
 #include <QDebug>
+#include <QGraphicsScene>
 
 
 FontBookDialog::FontBookDialog ( QWidget *parent )
@@ -33,10 +37,38 @@ FontBookDialog::FontBookDialog ( QWidget *parent )
 	QString loremBig ( "LOREM IPSUM DOLOR" );
 	setSampleHeadline ( loremBig );
 	setSampleText ( alorem );
+	
+	m_pageRect = QRectF(0,0,m_pageSize.width(), m_pageSize.height());
+	preScene = new QGraphicsScene(m_pageRect);
+	preView->setScene(preScene);
+	preView->setRenderHint ( QPainter::Antialiasing, true );
+	preView->setBackgroundBrush(Qt::lightGray);
+	
+// 	slotPreview();
+	
 	connect ( okButton,SIGNAL ( accepted () ),this,SLOT ( slotAccept() ) );
 	connect ( okButton,SIGNAL ( rejected() ),this,SLOT ( slotCancel() ) );
 	connect ( fileNameButton,SIGNAL ( released() ),this,SLOT ( slotFileDialog() ) );
 	connect ( paperSizeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPageSize ( int ) ) );
+	connect(this,SIGNAL(updateView()),this,SLOT(slotPreview()));
+	
+	//all Update
+	connect(fileNameEdit,SIGNAL(textChanged( const QString& )),this,SIGNAL(updateView()));
+	QList<QSpinBox*> spinList;
+	spinList << familySpinBox;
+	spinList << styleSpinBox;
+	spinList << sampleSpinBox;
+	spinList << familyFontSizeSpin;
+	spinList << styleFontSizeSpin;
+	spinList << headlineFontSizeSpin;
+	spinList << bodyFontSizeSpin;
+	foreach(QSpinBox *sp, spinList)
+	{
+		connect(sp,SIGNAL(valueChanged ( int  )),this,SIGNAL(updateView()));
+	}
+	connect (sampleTextEdit,SIGNAL(textChanged()),SIGNAL(updateView()));
+	connect (sampleHeadline,SIGNAL(textChanged( const QString&)),SIGNAL(updateView()));
+
 }
 
 
@@ -151,6 +183,8 @@ void FontBookDialog::slotPageSize ( int index )
 	if ( var.isValid() )
 	{
 		m_pageSize = var.toSizeF();
+		m_pageRect = QRectF(0,0,m_pageSize.width(), m_pageSize.height());
+		
 		if(paperSizeCombo->itemText(index)  == "A0")
 		{
 			m_pageSizeConstant = QPrinter::A0;
@@ -175,6 +209,8 @@ void FontBookDialog::slotPageSize ( int index )
 		{
 			m_pageSizeConstant = QPrinter::A5;
 		}
+		emit updateView();
+		
 	}
 	else
 	{
@@ -185,6 +221,110 @@ void FontBookDialog::slotPageSize ( int index )
 QPrinter::PageSize FontBookDialog::getPageSizeConstant()
 {
 	return m_pageSizeConstant;
+}
+
+void FontBookDialog::slotPreview()
+{
+	qDebug() << m_pageRect;
+	preScene->setSceneRect(m_pageRect);
+	for ( int  n = 0; n < renderedFont.count(); ++n )
+	{
+		renderedFont[n]->deRenderAll();
+				
+	}
+	renderedFont.clear();
+	preScene->removeItem(preScene->createItemGroup(preScene->items()));
+	QGraphicsRectItem *backp = preScene->addRect(m_pageRect,QPen(),Qt::white);
+	backp->setEnabled ( false );
+	
+	
+	double pageHeight = getPageSize().height();
+	double pageWidth =getPageSize().width();
+	QString theFile = getFileName();
+	double familySize = getFontSize("family");
+	double headSize = getFontSize("headline");
+	double bodySize = getFontSize("body");
+	double styleSize = getFontSize("style");
+	double familynameTab = getTabFamily();
+	double variantnameTab = getTabStyle();
+	double sampletextTab = getTabSampleText();
+	double topMargin =  getPageSize().height() / 10.0;
+	QStringList loremlist = getSampleText().split ( '\n' );
+	QString headline = getSampleHeadline();
+	QPrinter::PageSize printedPageSize = getPageSizeConstant();
+	double parSize = familySize * 3.0 + styleSize * 1.2 + headSize * 1.2 + static_cast<double>(loremlist.count()) * bodySize * 1.2;
+	
+	
+	QGraphicsScene *theScene = preScene;	
+	QString styleString ( QString("color:white;background-color:black;font-family:Helvetica;font-size:%1pt" ).arg(familySize));	
+	
+	QList<FontItem*> localFontMap = typotek::getInstance()->getCurrentFonts();
+	QMap<QString, QList<FontItem*> > keyList;
+	for ( int i=0; i < localFontMap.count();++i )
+	{
+		keyList[localFontMap[i]->value ( "family" ) ].append ( localFontMap[i] );
+// 		qDebug() << localFontMap[i]->value ( "family" ) ;
+	}
+	
+	QMap<QString, QList<FontItem*> >::const_iterator kit;
+	
+	
+	
+	QPointF pen(0,0);
+	QGraphicsTextItem *title;
+	QGraphicsTextItem *folio;
+	int pageNumber = 0;
+	
+	
+	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
+	{
+
+		pen.rx() = familynameTab;
+		pen.ry() += topMargin;
+
+		if ( ( pen.y() + parSize ) > pageHeight * 0.9 )
+		{
+			preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
+			return;
+		}
+		
+		title = theScene->addText ( "" );
+		title->setHtml ( QString ( "<span style=\"%2\">%1</span>" ).arg ( kit.key() ).arg ( styleString ) );
+		title->setPos ( pen );
+		title->setZValue(100.0);
+		pen.ry() += 4.0  * familySize;
+		
+		for ( int  n = 0; n < kit.value().count(); ++n )
+		{
+// 			qDebug() << "\t\t" << kit.value()[n]->variant();
+
+			if ( ( pen.y() + (parSize - 4.0 * familySize) ) > pageHeight * 0.9 )
+			{
+				preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
+				return;
+				
+			}
+			pen.rx()=variantnameTab;
+			FontItem* curfi = kit.value()[n];
+			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
+			renderedFont.append(curfi);
+			curfi->renderLine ( theScene,curfi->variant(), pen ,styleSize );
+			pen.rx() = sampletextTab;
+			pen.ry() +=  2.0 * styleSize;
+			curfi->renderLine ( theScene, headline,pen, headSize );
+			pen.ry() +=  headSize * 0.5;
+			for ( int l=0; l < loremlist.count(); ++l )
+			{
+				curfi->renderLine ( theScene, loremlist[l],pen, bodySize );
+				pen.ry() +=  bodySize * 1.2;
+			}
+			pen.ry() +=styleSize * 2.0;
+
+		}
+	}
+	
+	preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
+
 }
 
 

@@ -209,6 +209,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 		glyphList.append(glyph);
 		scene->addItem ( glyph);
 		glyph->setPos ( pen );
+		glyph->setZValue(100.0);
 		double scalefactor = sizz / m_face->units_per_EM;
 		pen.rx() += advanceCache[spec.at ( i ).unicode()] * scalefactor;
 	}

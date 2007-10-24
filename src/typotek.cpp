@@ -584,6 +584,11 @@ void typotek::fontBook()
 		folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:6pt\">%1</span>").arg(++pageNumber));
 		folio->setPos(theScene.width() / 2.0, theScene.height() - 15.0);
 		theScene.render(&thePainter);
+		for ( int  d = 0; d <  renderedFont.count() ; ++d )
+		{
+			renderedFont[d]->deRenderAll();
+					
+		}
 		
 	}
 }

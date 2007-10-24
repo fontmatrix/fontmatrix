@@ -158,7 +158,7 @@ void FontActionWidget::slotFinalize()
 			if(theFonts[i]->tags().contains("Activated_On"))
 				tags << "Activated_On";
 			if(theFonts[i]->tags().contains("Activated_Off"))
-				tags << "Atcivated_Off";
+				tags << "Activated_Off";
 			theFonts[i]->setTags ( tags );
 		}
 // 	}

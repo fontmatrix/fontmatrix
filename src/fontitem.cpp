@@ -235,12 +235,14 @@ void FontItem::deRenderAll()
 	qDebug() << m_name  <<" ::deRenderAll()";
 	for ( int i = 0; i < pixList.count(); ++i )
 	{
-		pixList[i]->scene()->removeItem ( pixList[i] );
+		if(pixList[i]->scene())
+			pixList[i]->scene()->removeItem ( pixList[i] );
 	}
 	pixList.clear();
 	for ( int i = 0; i < glyphList.count(); ++i )
 	{
-		glyphList[i]->scene()->removeItem ( glyphList[i] );
+		if(glyphList[i]->scene())
+			glyphList[i]->scene()->removeItem ( glyphList[i] );
 	}
 	glyphList.clear();
 	

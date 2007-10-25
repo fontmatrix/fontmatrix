@@ -268,30 +268,65 @@ void FontBookDialog::slotPreview()
 	
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
 	
-	
+	QFont theFont;// the font for all that is not collected fonts
+	theFont.setPointSize(19);
+	theFont.setFamily("Helvetica");
+	theFont.setBold(true);
+	QPen abigwhitepen;
+	abigwhitepen.setWidth(10);
+	abigwhitepen.setColor(Qt::white);
 	
 	QPointF pen(0,0);
 	QGraphicsTextItem *title;
 	QGraphicsTextItem *folio;
+	QGraphicsTextItem *ABC;
+	QGraphicsTextItem *teteChap;
+	QGraphicsRectItem *titleCartouche;
+	QGraphicsRectItem *edgeCartouche;
+	QString firstLetter;
+	QString pageNumStr;
+	
 	int pageNumber = 0;
 	
-	
+	bool firstKey = true;
 	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 	{
 
 		pen.rx() = familynameTab;
 		pen.ry() += topMargin;
-
+		firstLetter.clear();
+// 		firstLetter.append ( kit.key().at ( 0 ).toUpper() );
+		firstLetter.append(  kit.key().toLower());
+		
+		if(firstKey)
+		{
+			pageNumStr.setNum(1);
+			folio = theScene->addText ( pageNumStr,theFont );
+			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
+			folio->setZValue(9999000.0);
+			ABC = theScene->addText(firstLetter.at(0).toUpper() ,theFont);
+			ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
+// 			ABC->rotate(90);
+			edgeCartouche = theScene->addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
+			
+			edgeCartouche->setZValue(101.0);
+			
+			ABC->setZValue(10000.0);
+			ABC->setDefaultTextColor(Qt::black);
+			firstKey = false;
+		}
 		if ( ( pen.y() + parSize ) > pageHeight * 0.9 )
 		{
 			preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
 			return;
 		}
 		
-		title = theScene->addText ( "" );
-		title->setHtml ( QString ( "<span style=\"%2\">%1</span>" ).arg ( kit.key() ).arg ( styleString ) );
+		title = theScene->addText ( QString ("%1" ).arg ( kit.key().toUpper() ), theFont);
 		title->setPos ( pen );
-		title->setZValue(100.0);
+		title->setDefaultTextColor(Qt::white);
+		title->setZValue ( 100.0 );
+		QRectF cartrect(0,pen.y(),title->sceneBoundingRect().right(), title->sceneBoundingRect().height());
+		titleCartouche = theScene->addRect(cartrect,QPen(Qt::transparent) ,Qt::black);
 		pen.ry() += 4.0  * familySize;
 		
 		for ( int  n = 0; n < kit.value().count(); ++n )

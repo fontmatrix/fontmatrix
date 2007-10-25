@@ -46,6 +46,7 @@ public:
     ~FontItem();
 	private:
 		QString m_path;
+		QString m_afm;
 		QString m_name;
 		// Basically, we collect all infos that are in an FT_FaceRec
 		QString m_faceFlags;
@@ -88,6 +89,7 @@ public:
 		static QMap<FT_Encoding, QString> charsetMap;
 		
 		QString path(){return m_path;};
+		QString afm(){return m_afm;};
 		QString faceFlags(){return m_faceFlags;};
 		QString family(){return m_family;};
 		QString variant(){return m_variant;};

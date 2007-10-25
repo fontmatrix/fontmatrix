@@ -114,16 +114,16 @@ void typotek::open()
 		}
 	}
 
-	QString inputTags = QInputDialog::getText(this,"Import tags","Initial tags are means to get your fonts easily found.\nThe string you type will be split by \"#\" to obtain a tag list.");
-	QStringList tali = inputTags.split("#");
+	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags are means to get your fonts easily found.\nThe string you type will be split by \"#\" to obtain a tag list." );
+	QStringList tali = inputTags.split ( "#" );
 	tali << "Activated_Off" ;
-	
-	foreach(QString tas, tali)
+
+	foreach ( QString tas, tali )
 	{
-		if(!tagsList.contains(tas))
+		if ( !tagsList.contains ( tas ) )
 		{
-			tagsList.append(tas);
-			emit tagAdded(tas);
+			tagsList.append ( tas );
+			emit tagAdded ( tas );
 		}
 	}
 
@@ -455,22 +455,22 @@ void typotek::print()
 
 void typotek::fontBook()
 {
-	
+
 // 	QString theFile = QFileDialog::getSaveFileName ( this, "Save fontBook", QDir::homePath() , "Portable Document Format (*.pdf)");
-	
-	FontBookDialog bookOption(this);
+
+	FontBookDialog bookOption ( this );
 	bookOption.exec();
-	
-	if(!bookOption.isOk)
+
+	if ( !bookOption.isOk )
 		return;
-	
+
 	double pageHeight = bookOption.getPageSize().height();
 	double pageWidth = bookOption.getPageSize().width();
 	QString theFile = bookOption.getFileName();
-	double familySize = bookOption.getFontSize("family");
-	double headSize = bookOption.getFontSize("headline");
-	double bodySize = bookOption.getFontSize("body");
-	double styleSize = bookOption.getFontSize("style");
+	double familySize = bookOption.getFontSize ( "family" );
+	double headSize = bookOption.getFontSize ( "headline" );
+	double bodySize = bookOption.getFontSize ( "body" );
+	double styleSize = bookOption.getFontSize ( "style" );
 	double familynameTab = bookOption.getTabFamily();
 	double variantnameTab = bookOption.getTabStyle();
 	double sampletextTab = bookOption.getTabSampleText();
@@ -478,23 +478,37 @@ void typotek::fontBook()
 	QStringList loremlist = bookOption.getSampleText().split ( '\n' );
 	QString headline = bookOption.getSampleHeadline();
 	QPrinter::PageSize printedPageSize = bookOption.getPageSizeConstant();
-	double parSize = familySize * 3.0 + styleSize * 1.2 + headSize * 1.2 + static_cast<double>(loremlist.count()) * bodySize * 1.2;
-	
+	double parSize = familySize * 3.0 + styleSize * 1.2 + headSize * 1.2 + static_cast<double> ( loremlist.count() ) * bodySize * 1.2;
+
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	thePrinter.setOutputFormat ( QPrinter::PdfFormat );
 	thePrinter.setOutputFileName ( theFile );
 	thePrinter.setPageSize ( printedPageSize );
 	thePrinter.setFullPage ( true );
 	QGraphicsScene theScene;
-	QRectF pageRect ( 0,0,pageWidth,  pageHeight);
+	QRectF pageRect ( 0,0,pageWidth,  pageHeight );
 	theScene.setSceneRect ( pageRect );
 	QPainter thePainter ( &thePrinter );
+
+
+	QString styleString ( QString ( "color:white;background-color:black;font-family:Helvetica;font-size:%1pt" ).arg ( familySize ) );
+
+	QFont theFont;// the font for all that is not collected fonts
+	theFont.setPointSize(19);
+	theFont.setFamily("Helvetica");
+	theFont.setBold(true);
+	
+	QFont myLittleFont(theFont);
+	myLittleFont.setPointSize(10);
+	myLittleFont.setBold(false);
+	myLittleFont.setItalic(true);
 	
 	
-	QString styleString ( QString("color:white;background-color:black;font-family:Helvetica;font-size:%1pt" ).arg(familySize));
+	QPen abigwhitepen;
+	abigwhitepen.setWidth(10);
+	abigwhitepen.setColor(Qt::white);
 	
-	
-	
+
 	QList<FontItem*> localFontMap = theMainView->curFonts();
 	QMap<QString, QList<FontItem*> > keyList;
 	for ( int i=0; i < localFontMap.count();++i )
@@ -502,19 +516,26 @@ void typotek::fontBook()
 		keyList[localFontMap[i]->value ( "family" ) ].append ( localFontMap[i] );
 // 		qDebug() << localFontMap[i]->value ( "family" ) ;
 	}
-	
+
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
 	QProgressDialog progress ( "Creating font book... ", "cancel", 0, keyList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 	int progressindex=0;
-	
+
 	QList<FontItem*> renderedFont;
-	QPointF pen(0,0);
+	QPointF pen ( 0,0 );
 	QGraphicsTextItem *title;
 	QGraphicsTextItem *folio;
+	QGraphicsTextItem *ABC;
+	QGraphicsTextItem *teteChap;
+	QGraphicsRectItem *titleCartouche;
+	QGraphicsRectItem *edgeCartouche;
+	QString firstLetter;
+	QString pageNumStr;
 	int pageNumber = 0;
-	
-	
+
+
+	bool firstKey = true;
 	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 	{
 // 		qDebug() << "\t" << kit.key();
@@ -522,58 +543,109 @@ void typotek::fontBook()
 		progress.setValue ( ++progressindex );
 		if ( progress.wasCanceled() )
 			break;
-		
+
 		pen.rx() = familynameTab;
 		pen.ry() += topMargin;
 
+		firstLetter.clear();
+// 		firstLetter.append ( kit.key().at ( 0 ).toUpper() );
+		firstLetter.append(  kit.key().toLower());
+		
+		if(firstKey)
+		{
+			pageNumStr.setNum(1);
+			folio = theScene.addText ( pageNumStr,theFont );
+			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
+			folio->setZValue(9999000.0);
+			ABC = theScene.addText(firstLetter.at(0).toUpper() ,theFont);
+			ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
+// 			ABC->rotate(90);
+			edgeCartouche = theScene.addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
+			
+			edgeCartouche->setZValue(101.0);
+			
+			ABC->setZValue(10000.0);
+			ABC->setDefaultTextColor(Qt::black);
+			firstKey = false;
+		}
+		
 		if ( ( pen.y() + parSize ) > pageHeight * 0.9 )
 		{
-			folio = theScene.addText ( "" );
-			folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:6pt\">%1</span>").arg(++pageNumber));
-			folio->setPos(theScene.width() / 2.0, theScene.height() - 15.0);
+			pageNumStr.setNum(++pageNumber);
+			folio = theScene.addText ( pageNumStr,theFont );
+			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
+			folio->setZValue(9999000.0);
 			theScene.render ( &thePainter );
 			thePrinter.newPage();
 			pen.ry() = topMargin;
 			for ( int  n = 0; n < renderedFont.count(); ++n )
 			{
 				renderedFont[n]->deRenderAll();
-				
+
 			}
-				renderedFont.clear();
-				theScene.removeItem(theScene.createItemGroup(theScene.items()));
+			renderedFont.clear();
+			theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
+			ABC = theScene.addText(firstLetter.at(0).toUpper() ,theFont);
+			ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
+// 			ABC->rotate(90);
+			edgeCartouche = theScene.addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
+			
+			edgeCartouche->setZValue(101.0);
+			
+			ABC->setZValue(10000.0);
+			ABC->setDefaultTextColor(Qt::black);
+
 		}
-		
-		title = theScene.addText ( "" );
-		title->setHtml ( QString ( "<span style=\"%2\">%1</span>" ).arg ( kit.key() ).arg ( styleString ) );
+
+		title = theScene.addText ( QString ("%1" ).arg ( kit.key().toUpper() ), theFont);
 		title->setPos ( pen );
-		title->setZValue(100.0);
+		title->setDefaultTextColor(Qt::white);
+		title->setZValue ( 100.0 );
+		QRectF cartrect(0,pen.y(),title->sceneBoundingRect().right(), title->sceneBoundingRect().height());
+		titleCartouche = theScene.addRect(cartrect,QPen(Qt::transparent) ,Qt::black);
+// 		titleCartouche->setPos(pen);
 		pen.ry() += 4.0  * familySize;
-		
+
 		for ( int  n = 0; n < kit.value().count(); ++n )
 		{
 // 			qDebug() << "\t\t" << kit.value()[n]->variant();
 
-			if ( ( pen.y() + (parSize - 4.0 * familySize) ) > pageHeight * 0.9 )
+			if ( ( pen.y() + ( parSize - 4.0 * familySize ) ) > pageHeight * 0.9 )
 			{
-				folio = theScene.addText ( "" );
-				folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:6pt\">%1</span>").arg(++pageNumber));
-				folio->setPos(theScene.width() / 2.0, theScene.height() - 15.0);
+				pageNumStr.setNum(++pageNumber);
+				folio = theScene.addText ( pageNumStr,theFont );
+				folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
+				folio->setDefaultTextColor(Qt::black);
+				folio->setZValue(1000.0);
 				theScene.render ( &thePainter );
 				thePrinter.newPage();
 				pen.ry() = topMargin;
 				for ( int  d = 0; d <  renderedFont.count() ; ++d )
 				{
 					renderedFont[d]->deRenderAll();
-					
+
 				}
 				renderedFont.clear();
-				theScene.removeItem(theScene.createItemGroup(theScene.items()));
+				theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
+				ABC = theScene.addText( firstLetter.at(0).toUpper() ,theFont);
+				ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
+// 				ABC->rotate(90);
 				
+				teteChap = theScene.addText(firstLetter, myLittleFont);
+				teteChap->setPos(pageWidth * 0.66, pageHeight * 0.03);
+				teteChap->setDefaultTextColor(Qt::gray);
+				
+				
+				edgeCartouche = theScene.addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
+				edgeCartouche->setZValue(101.0);
+				
+				ABC->setZValue(10000.0);
+				ABC->setDefaultTextColor(Qt::black);
 			}
-			pen.rx()=variantnameTab;
-			FontItem* curfi = kit.value()[n];
+			pen.rx() =variantnameTab;
+			FontItem* curfi = kit.value() [n];
 			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
-			renderedFont.append(curfi);
+			renderedFont.append ( curfi );
 			curfi->renderLine ( &theScene,curfi->variant(), pen ,styleSize );
 			pen.rx() = sampletextTab;
 			pen.ry() +=  2.0 * styleSize;
@@ -588,18 +660,15 @@ void typotek::fontBook()
 
 		}
 	}
-	if(renderedFont.count())
+	if ( renderedFont.count() )
 	{
-		folio = theScene.addText ( "" );
-		folio->setHtml(QString("<span style=\"font-family:Helvetica;font-size:6pt\">%1</span>").arg(++pageNumber));
-		folio->setPos(theScene.width() / 2.0, theScene.height() - 15.0);
-		theScene.render(&thePainter);
+		theScene.render ( &thePainter );
 		for ( int  d = 0; d <  renderedFont.count() ; ++d )
 		{
 			renderedFont[d]->deRenderAll();
-					
+
 		}
-		
+
 	}
 }
 

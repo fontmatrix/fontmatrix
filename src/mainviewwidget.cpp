@@ -61,6 +61,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setScene ( loremScene );
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush(Qt::lightGray);
+	loremView->ensureVisible(loremScene->sceneRect());
 
 	sampleText= "A font is a set of glyphs (images) representing the characters from a particular \ncharacter set in a particular typeface. In professional typography the term typeface is not \ninterchangeable with the word font, which is defined as\n a given alphabet and its associated characters\nin a single size. For example, 8-point Caslon is one font, and 10-point.[...]"; // from http://en.wikipedia.org/wiki/Typeface
 	sampleFontSize = 11;
@@ -107,7 +108,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	connect(typo,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
 
-
+	qDebug() << fontTree->width();
+	
+	
+	
 	slotOrderingChanged(ord[0]);
 	
 	
@@ -138,32 +142,56 @@ void MainViewWidget::fillTree()
 	}
 	
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
-	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
+	for(int i = 'A'; i <= 'Z'; ++i)
 	{
-		QTreeWidgetItem *ord = new QTreeWidgetItem ( fontTree );
-		ord->setText ( 0, kit.key() );
-		if(openKeys.contains(kit.key()))
+		QChar firstChar(i);
+		QTreeWidgetItem *alpha = new QTreeWidgetItem ( fontTree );
+		alpha->setText ( 0, firstChar);
+		bool alphaIsUsed = false;
+		
+		for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 		{
-				 ord->setExpanded(true);
+			if(kit.key().at(0).toUpper() == firstChar)
+			{
+				QTreeWidgetItem *ord = new QTreeWidgetItem ( alpha );
+				ord->setText ( 0, kit.key() );
+				if(openKeys.contains(kit.key()))
+				{
+						ord->setExpanded(true);
+				}
+				for ( int  n = 0; n < kit.value().count(); ++n )
+				{
+					QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
+					entry->setText(0, kit.value()[n]->variant());
+					entry->setText ( 1, kit.value() [n]->name() );
+					bool act = kit.value() [n]->tags().contains ( "Activated_On" );
+					entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
+					if(entry->text(1) == curItemName )
+						curItem = entry;
+				}
+				
+				alphaIsUsed = true;
+			}
 		}
-		for ( int  n = 0; n < kit.value().count(); ++n )
+		if(alphaIsUsed)
 		{
-			QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
-			entry->setText(0, kit.value()[n]->variant());
-			entry->setText ( 1, kit.value() [n]->name() );
-			bool act = kit.value() [n]->tags().contains ( "Activated_On" );
-			entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
-			if(entry->text(1) == curItemName )
-				curItem = entry;
+			fontTree->addTopLevelItem ( alpha);
+			alpha->setExpanded(true);
 		}
-		fontTree->addTopLevelItem ( ord );
+		else
+		{
+			delete alpha;
+		}
 	}
 	if(curItem)
 	{
 		qDebug() << "get curitem : " << curItem->text(0) << curItem->text(1);
-		fontTree->scrollToItem(curItem);
+		fontTree->scrollToItem(curItem, QAbstractItemView::PositionAtCenter);
+// 		curItem->setBackground(1, Qt::green);
+		curItem->setSelected(true);
 	}
-
+	fontTree->resizeColumnToContents ( 0 )  ;
+// 	fontTree->setColumnWidth(0,200);
 }
 
 
@@ -223,18 +251,20 @@ void MainViewWidget::slotView()
 
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	f->renderAll ( abcScene ); // can be rather long depending of the number of glyphs
-	
+	QApplication::restoreOverrideCursor();
 
 	QStringList stl = sampleText.split ( '\n' );
 	QPointF pen(100,80);
+	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	for ( int i=0; i< stl.count(); ++i )
 	{
 		pen.ry() = 100 + sampleInterSize * i;
 		f->renderLine ( loremScene,stl[i],pen, sampleFontSize );
 	}
-	
-	slotInfoFont();
 	QApplication::restoreOverrideCursor();
+	slotInfoFont();
+	
+	
 }
 
 void MainViewWidget::slotglyphInfo()

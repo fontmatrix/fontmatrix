@@ -494,7 +494,7 @@ void typotek::fontBook()
 	QString styleString ( QString ( "color:white;background-color:black;font-family:Helvetica;font-size:%1pt" ).arg ( familySize ) );
 
 	QFont theFont;// the font for all that is not collected fonts
-	theFont.setPointSize(19);
+	theFont.setPointSize(familySize);
 	theFont.setFamily("Helvetica");
 	theFont.setBold(true);
 	
@@ -575,6 +575,7 @@ void typotek::fontBook()
 			folio = theScene.addText ( pageNumStr,theFont );
 			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
 			folio->setZValue(9999000.0);
+			folio->setDefaultTextColor(Qt::black);
 			theScene.render ( &thePainter );
 			thePrinter.newPage();
 			pen.ry() = topMargin;

@@ -69,6 +69,7 @@ public:
 		FT_Face m_face;
 		FT_GlyphSlot m_glyph;
 		QGraphicsPathItem* itemFromChar(int charcode, double size);
+		QGraphicsPathItem* itemFromGindex(int index, double size);
 		bool ensureLibrary();
 		QString testFlag(long flag , long against, QString yes, QString no);
 		QByteArray pixarray(uchar *b, int len);

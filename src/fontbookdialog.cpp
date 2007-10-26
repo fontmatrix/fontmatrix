@@ -256,7 +256,6 @@ void FontBookDialog::slotPreview()
 	
 	
 	QGraphicsScene *theScene = preScene;	
-	QString styleString ( QString("color:white;background-color:black;font-family:Helvetica;font-size:%1pt" ).arg(familySize));	
 	
 	QList<FontItem*> localFontMap = typotek::getInstance()->getCurrentFonts();
 	QMap<QString, QList<FontItem*> > keyList;
@@ -269,9 +268,10 @@ void FontBookDialog::slotPreview()
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
 	
 	QFont theFont;// the font for all that is not collected fonts
-	theFont.setPointSize(19);
+	theFont.setPointSize(familySize);
 	theFont.setFamily("Helvetica");
 	theFont.setBold(true);
+	
 	QPen abigwhitepen;
 	abigwhitepen.setWidth(10);
 	abigwhitepen.setColor(Qt::white);
@@ -303,7 +303,7 @@ void FontBookDialog::slotPreview()
 			pageNumStr.setNum(1);
 			folio = theScene->addText ( pageNumStr,theFont );
 			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
-			folio->setZValue(9999000.0);
+			folio->setZValue(9000.0);
 			ABC = theScene->addText(firstLetter.at(0).toUpper() ,theFont);
 			ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
 // 			ABC->rotate(90);
@@ -324,7 +324,7 @@ void FontBookDialog::slotPreview()
 		title = theScene->addText ( QString ("%1" ).arg ( kit.key().toUpper() ), theFont);
 		title->setPos ( pen );
 		title->setDefaultTextColor(Qt::white);
-		title->setZValue ( 100.0 );
+		title->setZValue ( 100000.0 );
 		QRectF cartrect(0,pen.y(),title->sceneBoundingRect().right(), title->sceneBoundingRect().height());
 		titleCartouche = theScene->addRect(cartrect,QPen(Qt::transparent) ,Qt::black);
 		pen.ry() += 4.0  * familySize;

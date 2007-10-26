@@ -259,6 +259,9 @@
         <property name="textElideMode" >
          <enum>Qt::ElideRight</enum>
         </property>
+        <property name="autoExpandDelay" >
+         <number>1</number>
+        </property>
         <property name="columnCount" >
          <number>2</number>
         </property>
@@ -371,74 +374,82 @@
          </attribute>
          <layout class="QGridLayout" >
           <item row="0" column="0" >
-           <widget class="QPushButton" name="textButton" >
-            <property name="text" >
-             <string>Sample text...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" >
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>91</width>
-              <height>27</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="2" >
-           <widget class="QLabel" name="label" >
-            <property name="text" >
-             <string/>
-            </property>
-            <property name="pixmap" >
-             <pixmap resource="application.qrc" >:/zoom.png</pixmap>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3" >
-           <widget class="QSlider" name="renderZoom" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip" >
-             <string comment="zoom" >zoom</string>
-            </property>
-            <property name="statusTip" >
-             <string>zoom</string>
-            </property>
-            <property name="maximum" >
-             <number>1000</number>
-            </property>
-            <property name="value" >
-             <number>100</number>
-            </property>
-            <property name="tracking" >
-             <bool>true</bool>
-            </property>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="tickPosition" >
-             <enum>QSlider::NoTicks</enum>
-            </property>
-            <property name="tickInterval" >
-             <number>0</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="5" >
-           <widget class="QGraphicsView" name="loremView" />
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QPushButton" name="textButton" >
+                <property name="text" >
+                 <string>Sample text...</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>91</width>
+                  <height>27</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label" >
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="pixmap" >
+                 <pixmap resource="application.qrc" >:/zoom.png</pixmap>
+                </property>
+                <property name="alignment" >
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="renderZoom" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip" >
+                 <string comment="zoom" >zoom</string>
+                </property>
+                <property name="statusTip" >
+                 <string>zoom</string>
+                </property>
+                <property name="maximum" >
+                 <number>1000</number>
+                </property>
+                <property name="value" >
+                 <number>100</number>
+                </property>
+                <property name="tracking" >
+                 <bool>true</bool>
+                </property>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="tickPosition" >
+                 <enum>QSlider::NoTicks</enum>
+                </property>
+                <property name="tickInterval" >
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QGraphicsView" name="loremView" />
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -447,8 +458,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>112</width>
-           <height>238</height>
+           <width>432</width>
+           <height>640</height>
           </rect>
          </property>
          <attribute name="label" >
@@ -456,71 +467,77 @@
          </attribute>
          <layout class="QGridLayout" >
           <item row="0" column="0" >
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="1" >
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="2" >
-           <widget class="QLabel" name="label_2" >
-            <property name="text" >
-             <string/>
-            </property>
-            <property name="pixmap" >
-             <pixmap resource="application.qrc" >:/zoom.png</pixmap>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3" >
-           <widget class="QSlider" name="allZoom" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximum" >
-             <number>1000</number>
-            </property>
-            <property name="value" >
-             <number>100</number>
-            </property>
-            <property name="tracking" >
-             <bool>false</bool>
-            </property>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="4" >
-           <widget class="QGraphicsView" name="abcView" />
-          </item>
-          <item row="2" column="0" colspan="4" >
-           <widget class="QTextBrowser" name="glyphInfo" />
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_2" >
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="pixmap" >
+                 <pixmap resource="application.qrc" >:/zoom.png</pixmap>
+                </property>
+                <property name="alignment" >
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="allZoom" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximum" >
+                 <number>1000</number>
+                </property>
+                <property name="value" >
+                 <number>100</number>
+                </property>
+                <property name="tracking" >
+                 <bool>true</bool>
+                </property>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QGraphicsView" name="abcView" >
+              <property name="rubberBandSelectionMode" >
+               <enum>Qt::IntersectsItemBoundingRect</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="glyphInfo" >
+              <property name="text" >
+               <string>No glyph selected</string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>

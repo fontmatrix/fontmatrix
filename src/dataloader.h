@@ -17,53 +17,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef FONTACTIONWIDGET_H
-#define FONTACTIONWIDGET_H
+#ifndef DATALOADER_H
+#define DATALOADER_H
 
-#include <ui_fontaction.h>
-
-#include <QStringList>
-#include <QList>
+#include <QFile>
 
 
+class typotek;
 
-class FontItem;
-class TypotekAdaptator;
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
-	
-	activtion tag is : Activated_{On,Off}
 */
-class FontActionWidget :  public QWidget, private Ui::FontAction
+class DataLoader
 {
-		Q_OBJECT
-
+		
 	public:
-		FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada, QWidget* parent = 0);
-		FontActionWidget ( TypotekAdaptator* ada, QWidget* parent = 0);
-		void prepare(QList<FontItem*> fonts);
-		void doConnect();
-		void undoConnect();
-		~FontActionWidget();
-		
-		bool isOk;
-		QStringList tags;
-	private:
-		QList<FontItem*> theFonts;
-		TypotekAdaptator *adaptator;
-		
-	private slots:
-		void slotOk();
-		void slotCancel();
-		void slotSwitchCheckState( QListWidgetItem * item );
-		void slotNewTag();
-		
-	public slots:
-		void slotFinalize();
-	signals:
-		void cleanMe();	
-		void tagAdded(QString);
-				
+		DataLoader ( QFile *file );
+
+		~DataLoader();
+		void load();
+	private :
+		QFile *m_file;
+		typotek *m_typo;
 
 
 };

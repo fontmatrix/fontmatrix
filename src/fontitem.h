@@ -91,12 +91,14 @@ public:
 		
 		QString path(){return m_path;};
 		QString afm(){return m_afm;};
+		void setAfm(QString apath){m_afm = apath;};
 		QString faceFlags(){return m_faceFlags;};
 		QString family(){return m_family;};
 		QString variant(){return m_variant;};
 		QStringList tags(){return m_tags;};
 		void setTags(QStringList l){m_tags = l;};
 		QString name();
+		QString fancyName(){return m_family + " " + m_variant;};
 		QString infoText();
 		QString infoGlyph(int index, int code = 0);
 		
@@ -106,6 +108,8 @@ public:
 		void renderAll(QGraphicsScene *scene);
 		void deRender(QGraphicsScene *scene);
 		void deRenderAll();
+		
+		QString toElement();
 		
 		
 		// Relative to fontactionwidget

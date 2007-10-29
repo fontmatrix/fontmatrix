@@ -416,6 +416,13 @@ QString FontItem::infoGlyph ( int index, int code )
 	       ;
 }
 
+QString FontItem::toElement()
+{
+	QString ret;
+	ret = "<fontfile><file>%1</file><tag>%2</tag></fontfile>";
+	return ret.arg(name()).arg(tags().join("</tag><tag>"));
+}
+
 
 
 

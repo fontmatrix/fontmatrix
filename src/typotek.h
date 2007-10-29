@@ -51,6 +51,7 @@ class typotek:public QMainWindow
 		void open();
 		void print();
 		void fontBook();
+		void popupTagsetEditor();
 
 		bool saveAs();
 		void about();
@@ -97,6 +98,7 @@ class typotek:public QMainWindow
 		QAction *aboutQtAct;
 		QAction *printAct;
 		QAction *fontBookAct;
+		QAction *tagsetAct;
 
 		MainViewWidget *theMainView;
 
@@ -104,6 +106,8 @@ class typotek:public QMainWindow
 		QDir ownDir;
 
 		QMap<QString, QStringList> tagsMap;
+		QMap<QString, QStringList> tagSetMap;
+		
 		QList<FontItem*> fontMap;
 		QMap<QString, FontItem*> realFontMap;
 		
@@ -114,6 +118,11 @@ class typotek:public QMainWindow
 		QList<FontItem*> getAllFonts() {return fontMap;};
 		QList<FontItem*> getFonts ( QString pattern, QString field );
 		QList<FontItem*> getCurrentFonts();
+		
+		void addTagMapEntry(QString key, QStringList value){tagsMap[key] = value;};
+		void addTagSetMapEntry(QString key, QStringList value){tagSetMap[key] = value;};
+		QStringList tagsets(){return tagSetMap.keys();};
+		QStringList tagsOfSet(QString set){return tagSetMap[set];};
 		
 		static QStringList tagsList;
 		TypotekAdaptator *adaptator(){return actAdaptator;};

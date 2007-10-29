@@ -17,54 +17,33 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef FONTACTIONWIDGET_H
-#define FONTACTIONWIDGET_H
+#ifndef TAGSETEDITOR_H
+#define TAGSETEDITOR_H
 
-#include <ui_fontaction.h>
+#include <ui_tagset.h>
 
-#include <QStringList>
-#include <QList>
+class typotek;
 
-
-
-class FontItem;
-class TypotekAdaptator;
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
-	
-	activtion tag is : Activated_{On,Off}
 */
-class FontActionWidget :  public QWidget, private Ui::FontAction
+class TagSetEditor :  public QDialog, private Ui::TagSetDialog
 {
 		Q_OBJECT
-
 	public:
-		FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada, QWidget* parent = 0);
-		FontActionWidget ( TypotekAdaptator* ada, QWidget* parent = 0);
-		void prepare(QList<FontItem*> fonts);
-		void doConnect();
-		void undoConnect();
-		~FontActionWidget();
-		
-		bool isOk;
-		QStringList tags;
+		TagSetEditor();
+
+		~TagSetEditor();
 	private:
-		QList<FontItem*> theFonts;
-		TypotekAdaptator *adaptator;
+		typotek *m_typo;
+		
+		void doConnect();
+		void doInitLists();
 		
 	private slots:
-		void slotOk();
-		void slotCancel();
-		void slotSwitchCheckState( QListWidgetItem * item );
-		void slotNewTag();
-		
-	public slots:
-		void slotFinalize();
-	signals:
-		void cleanMe();	
-		void tagAdded(QString);
-				
-
+		void slotAddTagToSet();
+		void slotNewSet();
+		void slotUpdateTagsOfSet(QListWidgetItem* item);
 
 };
 

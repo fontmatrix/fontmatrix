@@ -60,10 +60,10 @@ void FontActionWidget::prepare ( QList< FontItem * > fonts )
 	QString tot;
 	for ( int i=0;i<theFonts.count();++i )
 	{
-		tot.append ( "[" + theFonts[i]->name() + "] " );
+		tot.append (  theFonts[i]->fancyName() + "\n" );
 	}
 	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
-	titleLabel->setText ( tit.arg ( theFonts[0]->name() ) + itsagroup );
+	titleLabel->setText ( tit.arg ( theFonts[0]->fancyName() ) + itsagroup );
 	titleLabel->setToolTip ( tot );
 
 	for ( int i=0; i < typotek::tagsList.count(); ++i )
@@ -165,6 +165,7 @@ void FontActionWidget::slotFinalize()
 
 	emit cleanMe();
 }
+
 
 
 

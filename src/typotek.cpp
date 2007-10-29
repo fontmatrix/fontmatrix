@@ -25,6 +25,8 @@
 #include "fontitem.h"
 #include "typotekadaptator.h"
 #include "fontbookdialog.h"
+#include "dataloader.h"
+#include "tagseteditor.h"
 
 #include <QtGui>
 #include <QTextEdit>
@@ -163,10 +165,25 @@ bool typotek::save()
 		qDebug() << "re-oops";
 	}
 	QTextStream ts ( &fontsdata );
+	ts << "<typotek>\n";
+	
+	//save fonts
 	for ( int i=0;i<fontMap.count();++i )
 	{
-		ts << fontMap[i]->name() << "#" << fontMap[i]->tags().join ( "#" ) << '\n';
+		ts << fontMap[i]->toElement() << '\n';
 	}
+	
+	//save tagsets
+	for(QMap<QString,QStringList>::const_iterator it = tagSetMap.begin(); it != tagSetMap.end(); ++it)
+	{
+		if(!it.key().isEmpty())
+		{
+			QString esportamento("<tagset name =\"%1\"><tag>%2</tag></tagset>");
+			ts << esportamento.arg(it.key()).arg(it.value().join("</tag><tag>"));
+		}
+	}
+	
+	ts << "</typotek>";
 	fontsdata.close();
 }
 
@@ -221,6 +238,10 @@ void typotek::createActions()
 	aboutAct = new QAction ( tr ( "&About" ), this );
 	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
+	
+	tagsetAct = new QAction(tr("&Tag Sets"),this);
+	connect(tagsetAct,SIGNAL(triggered( )),this,SLOT(popupTagsetEditor()));
+	
 
 }
 
@@ -235,6 +256,9 @@ void typotek::createMenus()
 	fileMenu->addAction ( fontBookAct );
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
+	
+	editMenu = menuBar()->addMenu(tr("Edit"));
+	editMenu->addAction(tagsetAct);
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
@@ -261,18 +285,21 @@ void typotek::createStatusBar()
 
 void typotek::readSettings()
 {
-	QSettings settings ( "Trolltech", "Application Example" );
+	QSettings settings ( "Undertype", "typotek" );
 	QPoint pos = settings.value ( "pos", QPoint ( 200, 200 ) ).toPoint();
 	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
 	move ( pos );
+	
+	
 }
 
 void typotek::writeSettings()
 {
-	QSettings settings ( "Trolltech", "Application Example" );
+	QSettings settings (  "Undertype", "typotek"  );
 	settings.setValue ( "pos", pos() );
 	settings.setValue ( "size", size() );
+	
 }
 
 bool typotek::maybeSave()
@@ -369,23 +396,8 @@ void typotek::initDir()
 {
 
 	//load data file
-	if ( !fontsdata.open ( QFile::ReadOnly | QFile::Text ) )
-	{
-		qDebug() << "oops";
-	}
-	QTextStream ts ( &fontsdata );
-	while ( !ts.atEnd() )
-	{
-		QStringList line = ts.readLine().split ( '#' );
-		tagsMap[line[0]] = line.mid ( 1 );
-		for ( int i = 1; i< line.count();++i )
-		{
-			if ( !tagsList.contains ( line[i] ) )
-				tagsList.append ( line[i] );
-		}
-
-	}
-	fontsdata.close();
+	DataLoader loader(&fontsdata);
+	loader.load();
 
 	// load font files
 	QStringList filters;
@@ -676,5 +688,11 @@ void typotek::fontBook()
 QList<FontItem*> typotek::getCurrentFonts()
 {
 	return theMainView->curFonts();
+}
+
+void typotek::popupTagsetEditor()
+{
+	TagSetEditor ed;
+	ed.exec();
 }
 

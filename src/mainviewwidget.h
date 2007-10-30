@@ -84,11 +84,13 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotZoom(int z);
 		void slotAppendTag(QString tag);
 		void slotFilterTag(QString tag);
+		void slotFilterTagset(QString set);
 		void slotDesactivateAll();
 		void slotActivateAll();
 		void slotSetSampleText();
 		void slotActivate(bool act, QTreeWidgetItem * item, int column);
 		void slotReloadFontList();
+		void slotReloadTagsetList();
 	signals:
 		void faceChanged();
 

@@ -138,6 +138,7 @@ void FontActionWidget::slotNewTag()
 	tagsListWidget->addItem ( lit );
 	slotFinalize();
 	emit tagAdded(newTagText->text());
+	newTagText->clear();
 
 }
 

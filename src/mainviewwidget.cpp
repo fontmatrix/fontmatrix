@@ -57,18 +57,20 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	backp->setEnabled ( false );
 
 	abcView->setScene ( abcScene );
+	abcView->setRenderHint ( QPainter::Antialiasing, true );
 	
 	loremView->setScene ( loremScene );
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush(Qt::lightGray);
 	loremView->ensureVisible(loremScene->sceneRect());
 
-	sampleText= "A font is a set of glyphs (images) representing the characters from a particular \ncharacter set in a particular typeface. In professional typography the term typeface is not \ninterchangeable with the word font, which is defined as\n a given alphabet and its associated characters\nin a single size. For example, 8-point Caslon is one font, and 10-point.[...]"; // from http://en.wikipedia.org/wiki/Typeface
+	sampleText= "A font is a set of glyphs (images) \nrepresenting the characters from a particular \ncharacter set in a particular typeface. \nIn professional typography the term \ntypeface is not \ninterchangeable with the word font, \nwhich is defined as\na given alphabet and its associated characters\nin a single size. For example, \n8-point Caslon is one font, and 10-point.[...]"; // from http://en.wikipedia.org/wiki/Typeface
 	sampleFontSize = 11;
 	sampleInterSize = 14;
 	
-	ord << "family" << "variant";
-	orderingCombo->addItems ( ord );
+// 	ord << "family" << "variant";
+// 	orderingCombo->addItems ( ord );
+	tagsetCombo->addItems(typo->tagsets());
 
 	fields << "family" << "variant";
 	searchField->addItems ( fields );
@@ -82,7 +84,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	
 
-	connect ( orderingCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotOrderingChanged ( QString ) ) );
+	connect ( tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset( QString ) ) );
 
 	connect ( fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotfontSelected ( QTreeWidgetItem*, int ) ) );
 
@@ -112,7 +114,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	
 	
-	slotOrderingChanged(ord[0]);
+	slotOrderingChanged("family");
 	
 	
 }
@@ -284,7 +286,7 @@ void MainViewWidget::slotSearch()
 	QString ff ( searchField->currentText() );
 
 	currentFonts = typo->getFonts ( fs,ff ) ;
-	currentOrdering = orderingCombo->currentText();
+	currentOrdering = "family";
 	fillTree();
 }
 
@@ -296,7 +298,30 @@ void MainViewWidget::slotFilterTag ( QString tag )
 	QString ff ( "tag" );
 
 	currentFonts = typo->getFonts ( fs,ff ) ;
-	currentOrdering = orderingCombo->currentText();
+	currentOrdering = "family";
+	fillTree();
+}
+
+void MainViewWidget::slotFilterTagset(QString set)
+{
+	fontTree->clear();
+	QStringList tags = typo->tagsOfSet(set);
+	if(!tags.count())
+		return;
+	
+	currentFonts = typo->getFonts(tags[0],"tag");
+	QList<FontItem*> fontBuffer;
+	
+	foreach(QString curtag, tags)
+	{
+		fontBuffer = typo->getFonts(curtag,"tag");
+		foreach(FontItem* fit, fontBuffer)
+		{
+			if(!currentFonts.contains(fit))
+				currentFonts.removeAll(fit);
+		}
+	}
+	currentOrdering = "family";
 	fillTree();
 }
 
@@ -517,6 +542,13 @@ void MainViewWidget::slotReloadFontList()
 	currentFonts = typo->getAllFonts();
 	fillTree();
 }
+
+void MainViewWidget::slotReloadTagsetList()
+{
+	tagsetCombo->clear();
+	tagsetCombo->addItems(typo->tagsets());
+}
+
 
 
 

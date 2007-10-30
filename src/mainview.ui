@@ -210,14 +210,14 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="Ordering" >
+         <widget class="QLabel" name="setlabel" >
           <property name="text" >
-           <string>Ordering</string>
+           <string>Set</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="orderingCombo" >
+         <widget class="QComboBox" name="tagsetCombo" >
           <property name="sizePolicy" >
            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
             <horstretch>0</horstretch>
@@ -242,7 +242,7 @@
          </font>
         </property>
         <property name="cursor" stdset="0" >
-         <cursorShape>PointingHandCursor</cursorShape>
+         <cursorShape>ArrowCursor</cursorShape>
         </property>
         <property name="autoFillBackground" >
          <bool>false</bool>
@@ -458,8 +458,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>432</width>
-           <height>640</height>
+           <width>128</width>
+           <height>166</height>
           </rect>
          </property>
          <attribute name="label" >
@@ -546,8 +546,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>432</width>
-           <height>640</height>
+           <width>96</width>
+           <height>26</height>
           </rect>
          </property>
          <attribute name="label" >

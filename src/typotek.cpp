@@ -67,6 +67,12 @@ typotek::typotek()
 	}
 }
 
+void typotek::doConnect()
+{
+	// later ?
+}
+
+
 void typotek::closeEvent ( QCloseEvent *event )
 {
 	if ( maybeSave() )
@@ -693,6 +699,9 @@ QList<FontItem*> typotek::getCurrentFonts()
 void typotek::popupTagsetEditor()
 {
 	TagSetEditor ed;
+	connect(&ed,SIGNAL(signalNewTagset()),theMainView,SLOT(slotReloadTagsetList()));
 	ed.exec();
+	disconnect(&ed,SIGNAL(signalNewTagset()),theMainView,SLOT(slotReloadTagsetList()));
 }
+
 

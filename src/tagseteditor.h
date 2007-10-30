@@ -44,6 +44,8 @@ class TagSetEditor :  public QDialog, private Ui::TagSetDialog
 		void slotAddTagToSet();
 		void slotNewSet();
 		void slotUpdateTagsOfSet(QListWidgetItem* item);
+	signals:
+		void signalNewTagset();
 
 };
 

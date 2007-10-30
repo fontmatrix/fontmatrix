@@ -74,6 +74,7 @@ class typotek:public QMainWindow
 		void setCurrentFile ( const QString &fileName );
 		QString strippedName ( const QString &fullFileName );
 		void initDir();
+		void doConnect();
 
 		void checkOwnDir();
 		void fillTagsList();

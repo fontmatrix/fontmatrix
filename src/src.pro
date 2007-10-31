@@ -6,7 +6,8 @@ SOURCES += typotek.cpp \
  typotekadaptator.cpp \
  fontbookdialog.cpp \
  dataloader.cpp \
- tagseteditor.cpp
+ tagseteditor.cpp \
+ savedata.cpp
 HEADERS += typotek.h \
  mainviewwidget.h \
  fontitem.h \
@@ -14,7 +15,8 @@ HEADERS += typotek.h \
  typotekadaptator.h \
  fontbookdialog.h \
  dataloader.h \
- tagseteditor.h
+ tagseteditor.h \
+ savedata.h
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \

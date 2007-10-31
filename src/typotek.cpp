@@ -27,6 +27,7 @@
 #include "fontbookdialog.h"
 #include "dataloader.h"
 #include "tagseteditor.h"
+#include "savedata.h"
 
 #include <QtGui>
 #include <QTextEdit>
@@ -165,32 +166,9 @@ void typotek::open()
 }
 
 bool typotek::save()
-{
-	if ( !fontsdata.open ( QFile::WriteOnly | QIODevice::Truncate| QFile::Text ) )
-	{
-		qDebug() << "re-oops";
-	}
-	QTextStream ts ( &fontsdata );
-	ts << "<typotek>\n";
+{	
+	SaveData saver(&fontsdata, this);
 	
-	//save fonts
-	for ( int i=0;i<fontMap.count();++i )
-	{
-		ts << fontMap[i]->toElement() << '\n';
-	}
-	
-	//save tagsets
-	for(QMap<QString,QStringList>::const_iterator it = tagSetMap.begin(); it != tagSetMap.end(); ++it)
-	{
-		if(!it.key().isEmpty())
-		{
-			QString esportamento("<tagset name =\"%1\"><tag>%2</tag></tagset>");
-			ts << esportamento.arg(it.key()).arg(it.value().join("</tag><tag>"));
-		}
-	}
-	
-	ts << "</typotek>";
-	fontsdata.close();
 }
 
 bool typotek::saveAs()

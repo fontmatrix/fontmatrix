@@ -37,6 +37,7 @@
 #include <QDir>
 #include <QDBusConnection>
 #include <QProgressDialog>
+#include <QDomDocument>
 
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
@@ -171,14 +172,6 @@ bool typotek::save()
 	
 }
 
-bool typotek::saveAs()
-{
-	QString fileName = QFileDialog::getSaveFileName ( this );
-	if ( fileName.isEmpty() )
-		return false;
-
-	return saveFile ( fileName );
-}
 
 void typotek::about()
 {
@@ -186,10 +179,7 @@ void typotek::about()
 	                     tr ( "Typotek is what we all hoped for long time : a font manager for linux" ) );
 }
 
-void typotek::documentWasModified()
-{
-	setWindowModified ( true );
-}
+
 
 void typotek::createActions()
 {
@@ -249,18 +239,6 @@ void typotek::createMenus()
 
 }
 
-void typotek::createToolBars()
-{
-	fileToolBar = addToolBar ( tr ( "File" ) );
-	fileToolBar->addAction ( newAct );
-	fileToolBar->addAction ( openAct );
-	fileToolBar->addAction ( saveAct );
-
-	editToolBar = addToolBar ( tr ( "Edit" ) );
-	editToolBar->addAction ( cutAct );
-	editToolBar->addAction ( copyAct );
-	editToolBar->addAction ( pasteAct );
-}
 
 void typotek::createStatusBar()
 {
@@ -367,6 +345,48 @@ void typotek::fillTagsList()
 
 void typotek::checkOwnDir()
 {
+	//TODO parse ~/.fonts.conf to see if there is the ~/.managed-fonts dir entry
+	// and create it if it does not exist and setup a QDir("~/.managed-fonts") private member
+	managedDir.setPath(QDir::homePath() + "/.fonts-managed");
+	if(!managedDir.exists())
+		managedDir.mkpath(QDir::homePath() + "/.fonts-managed");
+	
+	QFile fcfile(QDir::homePath() + "/.fonts.conf");
+	if ( !fcfile.open ( QFile::ReadWrite ) )
+	{
+		QMessageBox::warning (0, QString ( "typotek" ),
+				      QString ( "Cannot read file %1:\n%2.\nBEFORE ANYTHING, YOU SHOULD CHECK IF FONTCONFIG IS IN USE." )
+						      .arg ( fcfile.fileName() )
+						      .arg ( fcfile.errorString() ) );
+	}
+	else
+	{
+		QDomDocument fc("fontconfig");
+		fc.setContent(&fcfile);
+		
+		bool isconfigured = false;
+		QDomNodeList dirlist = fc.elementsByTagName("dir");
+		for(int i=0;i < dirlist.count();++i)
+		{
+			if(dirlist.at(i).toElement().text() == managedDir.absolutePath())
+				isconfigured = true;
+		}
+		if(!isconfigured)
+		{
+			QDomElement root = fc.documentElement();
+			QDomElement direlem = fc.createElement("dir");
+			QDomText textelem = fc.createTextNode(managedDir.absolutePath());
+			direlem.appendChild(textelem);
+			root.appendChild(direlem);
+			
+			fcfile.resize(0);
+			QTextStream ts(&fcfile);
+			fc.save(ts,4);
+			
+		}
+		fcfile.close();
+	}
+	
 	ownDir.setPath ( QDir::homePath() + "/.typotek" );
 	if ( !ownDir.exists() )
 		ownDir.mkpath ( QDir::homePath() + "/.typotek" );

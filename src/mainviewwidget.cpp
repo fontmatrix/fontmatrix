@@ -421,7 +421,7 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 				fit->setTags ( tl );
 
 				QFileInfo fofi ( fit->path() );
-				if ( !QFile::link ( fit->path() , QDir::home().absolutePath() + "/.fonts/" + fofi.fileName() ) )
+				if ( !QFile::link ( fit->path() , typo->getManagedDir() + "/" + fofi.fileName() ) )
 				{
 					qDebug() << "unable to link " << fofi.fileName();
 				}
@@ -455,7 +455,7 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 				fit->setTags ( tl );
 
 				QFileInfo fofi ( fit->path() );
-				if ( !QFile::remove ( QDir::home().absolutePath() + "/.fonts/" + fofi.fileName() ) )
+				if ( !QFile::remove ( typo->getManagedDir() + "/" + fofi.fileName() ) )
 				{
 					qDebug() << "unable to remove " << fofi.fileName();
 				}

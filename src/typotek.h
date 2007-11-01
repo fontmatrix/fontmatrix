@@ -53,9 +53,9 @@ class typotek:public QMainWindow
 		void fontBook();
 		void popupTagsetEditor();
 
-		bool saveAs();
+// 		bool saveAs();
 		void about();
-		void documentWasModified();
+// 		void documentWasModified();
 	public slots:
 		bool save();
 	signals:
@@ -105,6 +105,7 @@ class typotek:public QMainWindow
 
 		QFile fontsdata;
 		QDir ownDir;
+		QDir managedDir;
 
 		QMap<QString, QStringList> tagsMap;
 		QMap<QString, QStringList> tagSetMap;
@@ -130,6 +131,8 @@ class typotek:public QMainWindow
 		
 		static typotek* instance;
 		static typotek* getInstance(){return instance;};
+		
+		QString getManagedDir(){return managedDir.absolutePath();};
 };
 
 #endif

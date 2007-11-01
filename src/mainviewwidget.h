@@ -58,6 +58,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString sampleText;
 		QGridLayout *tagLayout;
 		QString currentOrdering;
+		FontItem *theVeryFont; 
 		
 		void allActivation(bool act);
 		void activation(FontItem* fit, bool act);
@@ -91,6 +92,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotActivate(bool act, QTreeWidgetItem * item, int column);
 		void slotReloadFontList();
 		void slotReloadTagsetList();
+		void slotShowCodePoint();
 	signals:
 		void faceChanged();
 

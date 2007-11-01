@@ -39,6 +39,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 		: QWidget ( parent )
 {
 	setupUi ( this );
+	theVeryFont = 0;
 
 	typo = reinterpret_cast<typotek*> ( parent );
 
@@ -109,8 +110,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( textButton,SIGNAL ( released() ),this,SLOT ( slotSetSampleText() ) );
 	
 	connect(typo,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
+	
+	connect(codepointSelectText,SIGNAL(returnPressed()),this,SLOT(slotShowCodePoint()));
 
-	qDebug() << fontTree->width();
+// 	qDebug() << fontTree->width();
 	
 	
 	
@@ -223,6 +226,7 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 	{
 		slotFontAction ( item,column );
 		emit faceChanged();
+		theVeryFont = typo->getFont(faceIndex);
 	}
 	
 	if ( item->checkState ( 1 ) == Qt::Checked )
@@ -547,6 +551,25 @@ void MainViewWidget::slotReloadTagsetList()
 {
 	tagsetCombo->clear();
 	tagsetCombo->addItems(typo->tagsets());
+}
+
+void MainViewWidget::slotShowCodePoint()
+{
+	QString codetext = codepointSelectText->text();
+	bool ok;
+	int codepoint = codetext.toInt(&ok, 16);
+	if(!ok)
+		return;
+	if(!theVeryFont)
+		return;
+	QGraphicsPathItem *pit = theVeryFont->hasCodepoint(codepoint);
+	if(!pit)
+		return;
+	
+	abcView->fitInView(pit, Qt::KeepAspectRatio);
+	
+	
+	
 }
 
 

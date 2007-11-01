@@ -204,7 +204,7 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 	int charcode = index + 65536;
 	if ( !contourCache.contains ( charcode ) )
 	{
-		ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
+		ft_error = FT_Load_Glyph ( m_face, charcode  - 65536, FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
 		if ( ft_error )
 		{
 			return 0;
@@ -341,7 +341,7 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 		charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
 	}
 
-	// We want OpenTyped glyphs
+	// We want featured glyphs
 	nl = 0;
 	pen.rx() = 0;
 	pen.ry() += 100;
@@ -356,6 +356,7 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 		QGraphicsPathItem *pitem = itemFromGindex ( m_charLess[gi], sizz );
 		if ( !pitem )
 		{
+			qDebug() << "pitem is null for m_charLess[gi] = "  << m_charLess[gi];
 			continue;
 		}
 		pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
@@ -421,6 +422,16 @@ QString FontItem::toElement()
 	QString ret;
 	ret = "<fontfile><file>%1</file><tag>%2</tag></fontfile>";
 	return ret.arg(name()).arg(tags().join("</tag><tag>"));
+}
+
+QGraphicsPathItem * FontItem::hasCodepoint(int code)
+{
+	for(int i=0;i< glyphList.count();++i)
+	{
+		if(glyphList.at(i)->data(2).toInt() == code)
+			return glyphList.at(i);
+	}
+	return 0;
 }
 
 

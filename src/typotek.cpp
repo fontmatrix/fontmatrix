@@ -345,7 +345,7 @@ void typotek::fillTagsList()
 
 void typotek::checkOwnDir()
 {
-	//TODO parse ~/.fonts.conf to see if there is the ~/.managed-fonts dir entry
+	//DONE parse ~/.fonts.conf to see if there is the ~/.managed-fonts dir entry
 	// and create it if it does not exist and setup a QDir("~/.managed-fonts") private member
 	managedDir.setPath(QDir::homePath() + "/.fonts-managed");
 	if(!managedDir.exists())

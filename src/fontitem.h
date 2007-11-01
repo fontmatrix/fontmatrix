@@ -111,7 +111,8 @@ public:
 		
 		QString toElement();
 		
-		
+		QGraphicsPathItem* hasCodepoint(int code);
+				
 		// Relative to fontactionwidget
 		void lock(){m_lock=true;};
 		void unLock(){m_lock=false;};

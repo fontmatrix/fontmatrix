@@ -458,8 +458,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>128</width>
-           <height>166</height>
+           <width>432</width>
+           <height>640</height>
           </rect>
          </property>
          <attribute name="label" >
@@ -471,6 +471,20 @@
             <item>
              <layout class="QHBoxLayout" >
               <item>
+               <widget class="QLabel" name="label_3" >
+                <property name="text" >
+                 <string>View codepoint U+</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="codepointSelectText" >
+                <property name="maxLength" >
+                 <number>32763</number>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer>
                 <property name="orientation" >
                  <enum>Qt::Horizontal</enum>
@@ -479,6 +493,19 @@
                  <size>
                   <width>40</width>
                   <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>71</width>
+                  <height>23</height>
                  </size>
                 </property>
                </spacer>

@@ -93,6 +93,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotReloadFontList();
 		void slotReloadTagsetList();
 		void slotShowCodePoint();
+		void slotSwitchAntiAlias(bool aa);
 	signals:
 		void faceChanged();
 

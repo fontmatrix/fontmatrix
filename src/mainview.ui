@@ -391,7 +391,7 @@
                 </property>
                 <property name="sizeHint" >
                  <size>
-                  <width>91</width>
+                  <width>71</width>
                   <height>27</height>
                  </size>
                 </property>
@@ -444,6 +444,19 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QToolButton" name="antiAliasButton" >
+                <property name="text" >
+                 <string>AA</string>
+                </property>
+                <property name="checkable" >
+                 <bool>true</bool>
+                </property>
+                <property name="checked" >
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -458,8 +471,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>432</width>
-           <height>640</height>
+           <width>225</width>
+           <height>169</height>
           </rect>
          </property>
          <attribute name="label" >

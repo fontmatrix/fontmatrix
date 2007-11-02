@@ -105,12 +105,25 @@ FontItem::FontItem ( QString path )
 	allIsRendered = false;
 
 	m_path = path;
-	m_name = QFileInfo ( m_path ).fileName();
+	QFileInfo infopath( m_path );
+	m_name = infopath.fileName();
 	if ( ! ensureLibrary() )
 		qDebug() << "Unable to init freetype library" ;
 	ft_error = FT_New_Face ( theLibrary, path.toLocal8Bit() , 0, &m_face );
 	if ( ft_error )
-		qDebug() << "Error loading face";
+		qDebug() << "Error loading face [" << path <<"]";
+	
+	if(infopath.suffix() == "pfb")
+	{
+		if(!ft_error)
+		{
+			m_afm = m_path;
+			m_afm.replace(".pfb",".afm");
+			ft_error = FT_Attach_File(m_face, m_afm.toLocal8Bit());
+			if(ft_error)
+				m_afm ="";
+		}
+	}
 
 	m_type = FT_Get_X11_Font_Format ( m_face );
 	m_family = m_face->family_name;

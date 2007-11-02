@@ -112,6 +112,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect(typo,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
 	
 	connect(codepointSelectText,SIGNAL(returnPressed()),this,SLOT(slotShowCodePoint()));
+	
+	connect(antiAliasButton,SIGNAL(toggled( bool )),this,SLOT(slotSwitchAntiAlias(bool)));
 
 // 	qDebug() << fontTree->width();
 	
@@ -425,12 +427,21 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 				fit->setTags ( tl );
 
 				QFileInfo fofi ( fit->path() );
+				
 				if ( !QFile::link ( fit->path() , typo->getManagedDir() + "/" + fofi.fileName() ) )
 				{
 					qDebug() << "unable to link " << fofi.fileName();
 				}
 				else
 				{
+					if(!fit->afm().isEmpty())
+					{
+						QFileInfo afm(fit->afm());
+						if ( !QFile::link ( fit->afm(), typo->getManagedDir() + "/" + afm.fileName() ) )
+						{
+							qDebug() << "unable to link " << afm.fileName();
+						}
+					}
 					typo->adaptator()->private_signal ( 1, fofi.fileName() );
 				}
 			}
@@ -465,6 +476,14 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 				}
 				else
 				{
+					if(!fit->afm().isEmpty())
+					{
+						QFileInfo afm(fit->afm());
+						if ( !QFile::remove( typo->getManagedDir() + "/" + afm.fileName() ) )
+						{
+							qDebug() << "unable to remove " << afm.fileName();
+						}
+					}
 					typo->adaptator()->private_signal ( 0, fofi.fileName() );
 				}
 			}
@@ -570,6 +589,11 @@ void MainViewWidget::slotShowCodePoint()
 	
 	
 	
+}
+
+void MainViewWidget::slotSwitchAntiAlias(bool aa)
+{
+	loremView->setRenderHint ( QPainter::Antialiasing, aa );
 }
 
 

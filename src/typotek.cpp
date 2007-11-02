@@ -124,7 +124,7 @@ void typotek::open()
 		}
 	}
 
-	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags are means to get your fonts easily found.\nThe string you type will be split by \"#\" to obtain a tag list." );
+	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags are means to get your fonts easily found.\nThe string you type will be split by \"#\" to obtain a tags list." );
 	QStringList tali = inputTags.split ( "#" );
 	tali << "Activated_Off" ;
 
@@ -150,11 +150,18 @@ void typotek::open()
 
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
+		
 
 		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
 		{
 
-
+			if(fi.suffix() == "pfb")
+			{
+				QFile fafm ( QString(pathList.at ( i )).replace(".pfb",".afm") );
+				QFileInfo iafm(QString(pathList.at ( i )).replace(".pfb",".afm"));
+				if(fafm.exists())
+					fafm.copy(ownDir.absolutePath() + "/" + iafm.fileName() );
+			}
 			FontItem *fi = new FontItem ( pathList.at ( i ) );
 
 			fi->setTags ( tali );

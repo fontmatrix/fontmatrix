@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>963</width>
-    <height>773</height>
+    <width>1235</width>
+    <height>763</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -15,588 +15,558 @@
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
-    <widget class="QFrame" name="manageFrame" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Expanding" hsizetype="Minimum" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QSplitter" name="splitter_2" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="minimumSize" >
-      <size>
-       <width>485</width>
-       <height>400</height>
-      </size>
-     </property>
-     <property name="frameShape" >
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow" >
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" >
-         <layout class="QVBoxLayout" >
-          <item>
-           <widget class="QLabel" name="search" >
-            <property name="text" >
-             <string>Search</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="in" >
-            <property name="text" >
-             <string>In</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="1" >
-         <layout class="QVBoxLayout" >
-          <item>
-           <widget class="QLineEdit" name="searchString" />
-          </item>
-          <item>
-           <widget class="QComboBox" name="searchField" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="2" >
-         <layout class="QVBoxLayout" >
-          <item>
-           <widget class="QPushButton" name="searchButton" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize" >
-             <size>
-              <width>120</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="font" >
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text" >
-             <string>Search</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="Line" name="line" >
-        <property name="sizePolicy" >
-         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="orientation" >
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="FontInformations" >
-        <property name="font" >
-         <font>
-          <pointsize>12</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-          <kerning>true</kerning>
-         </font>
-        </property>
-        <property name="text" >
-         <string>Font informations:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTextBrowser" name="fontInfoText" >
-        <property name="sizePolicy" >
-         <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="FontList" >
-        <property name="font" >
-         <font>
-          <pointsize>12</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-          <kerning>true</kerning>
-         </font>
-        </property>
-        <property name="text" >
-         <string>Font list:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="OrderBy" >
-          <property name="font" >
-           <font>
-            <pointsize>9</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="text" >
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="Tags" >
-          <property name="text" >
-           <string>Tags</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="tagsCombo" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="contextMenuPolicy" >
-           <enum>Qt::DefaultContextMenu</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType" >
-           <enum>QSizePolicy::Preferred</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLabel" name="setlabel" >
-          <property name="text" >
-           <string>Set</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="tagsetCombo" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QTreeWidget" name="fontTree" >
-        <property name="sizePolicy" >
-         <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font" >
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="cursor" stdset="0" >
-         <cursorShape>ArrowCursor</cursorShape>
-        </property>
-        <property name="autoFillBackground" >
-         <bool>false</bool>
-        </property>
-        <property name="frameShape" >
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow" >
-         <enum>QFrame::Sunken</enum>
-        </property>
-        <property name="lineWidth" >
-         <number>1</number>
-        </property>
-        <property name="textElideMode" >
-         <enum>Qt::ElideRight</enum>
-        </property>
-        <property name="autoExpandDelay" >
-         <number>1</number>
-        </property>
-        <property name="columnCount" >
-         <number>2</number>
-        </property>
-        <column>
+     <widget class="QFrame" name="manageFrame" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Expanding" hsizetype="Minimum" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize" >
+       <size>
+        <width>485</width>
+        <height>400</height>
+       </size>
+      </property>
+      <property name="frameShape" >
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow" >
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <layout class="QHBoxLayout" >
+         <item>
+          <widget class="QLineEdit" name="searchString" />
+         </item>
+         <item>
+          <widget class="QPushButton" name="searchButton" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize" >
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font" >
+            <font>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text" >
+            <string>Search</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="FontInformations" >
+         <property name="font" >
+          <font>
+           <pointsize>12</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+           <kerning>true</kerning>
+          </font>
+         </property>
          <property name="text" >
-          <string>Names</string>
+          <string>Font informations:</string>
          </property>
-        </column>
-        <column>
-         <property name="text" >
-          <string>Files</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-      <item>
-       <widget class="Line" name="line_2" >
-        <property name="sizePolicy" >
-         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="orientation" >
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QPushButton" name="editAllButton" >
-          <property name="text" >
-           <string>Edit All</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>186</width>
-            <height>26</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="activateAllButton" >
-          <property name="text" >
-           <string>Activate all</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="desactivateAllButton" >
-          <property name="text" >
-           <string>Deactivate all</string>
-          </property>
-          <property name="autoExclusive" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="1" >
-    <widget class="QFrame" name="viewFrame" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize" >
-      <size>
-       <width>350</width>
-       <height>500</height>
-      </size>
-     </property>
-     <property name="frameShape" >
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow" >
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QToolBox" name="toolBox" >
-        <property name="currentIndex" >
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="pageRender" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>432</width>
-           <height>640</height>
-          </rect>
-         </property>
-         <attribute name="label" >
-          <string>Sample text</string>
-         </attribute>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <layout class="QVBoxLayout" >
-            <item>
-             <layout class="QHBoxLayout" >
-              <item>
-               <widget class="QPushButton" name="textButton" >
-                <property name="text" >
-                 <string>Sample text...</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer>
-                <property name="orientation" >
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" >
-                 <size>
-                  <width>71</width>
-                  <height>27</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="label" >
-                <property name="text" >
-                 <string/>
-                </property>
-                <property name="pixmap" >
-                 <pixmap resource="application.qrc" >:/zoom.png</pixmap>
-                </property>
-                <property name="alignment" >
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSlider" name="renderZoom" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="toolTip" >
-                 <string comment="zoom" >zoom</string>
-                </property>
-                <property name="statusTip" >
-                 <string>zoom</string>
-                </property>
-                <property name="maximum" >
-                 <number>1000</number>
-                </property>
-                <property name="value" >
-                 <number>100</number>
-                </property>
-                <property name="tracking" >
-                 <bool>true</bool>
-                </property>
-                <property name="orientation" >
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="tickPosition" >
-                 <enum>QSlider::NoTicks</enum>
-                </property>
-                <property name="tickInterval" >
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="antiAliasButton" >
-                <property name="text" >
-                 <string>AA</string>
-                </property>
-                <property name="checkable" >
-                 <bool>true</bool>
-                </property>
-                <property name="checked" >
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QGraphicsView" name="loremView" />
-            </item>
-           </layout>
-          </item>
-         </layout>
         </widget>
-        <widget class="QWidget" name="page" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>225</width>
-           <height>169</height>
-          </rect>
+       </item>
+       <item row="3" column="0" >
+        <widget class="QSplitter" name="splitter" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
          </property>
-         <attribute name="label" >
-          <string>All glyphs</string>
-         </attribute>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <layout class="QVBoxLayout" >
-            <item>
-             <layout class="QHBoxLayout" >
-              <item>
-               <widget class="QLabel" name="label_3" >
-                <property name="text" >
-                 <string>View codepoint U+</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="codepointSelectText" >
-                <property name="maxLength" >
-                 <number>32763</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer>
-                <property name="orientation" >
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" >
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <spacer>
-                <property name="orientation" >
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" >
-                 <size>
-                  <width>71</width>
-                  <height>23</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_2" >
-                <property name="text" >
-                 <string/>
-                </property>
-                <property name="pixmap" >
-                 <pixmap resource="application.qrc" >:/zoom.png</pixmap>
-                </property>
-                <property name="alignment" >
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSlider" name="allZoom" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximum" >
-                 <number>1000</number>
-                </property>
-                <property name="value" >
-                 <number>100</number>
-                </property>
-                <property name="tracking" >
-                 <bool>true</bool>
-                </property>
-                <property name="orientation" >
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QGraphicsView" name="abcView" >
-              <property name="rubberBandSelectionMode" >
-               <enum>Qt::IntersectsItemBoundingRect</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="glyphInfo" >
+         <widget class="QTextBrowser" name="fontInfoText" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+         <widget class="QWidget" name="layoutWidget" >
+          <layout class="QVBoxLayout" >
+           <item>
+            <widget class="QLabel" name="FontList" >
+             <property name="font" >
+              <font>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="text" >
+              <string>Font list:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLabel" name="OrderBy" >
+               <property name="font" >
+                <font>
+                 <pointsize>9</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text" >
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="Tags" >
+               <property name="text" >
+                <string>Tags</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="tagsCombo" >
+               <property name="sizePolicy" >
+                <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="contextMenuPolicy" >
+                <enum>Qt::DefaultContextMenu</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType" >
+                <enum>QSizePolicy::Preferred</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="setlabel" >
+               <property name="text" >
+                <string>Set</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="tagsetCombo" >
+               <property name="sizePolicy" >
+                <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QTreeWidget" name="fontTree" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font" >
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="cursor" stdset="0" >
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="autoFillBackground" >
+              <bool>false</bool>
+             </property>
+             <property name="frameShape" >
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow" >
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="lineWidth" >
+              <number>1</number>
+             </property>
+             <property name="textElideMode" >
+              <enum>Qt::ElideRight</enum>
+             </property>
+             <property name="autoExpandDelay" >
+              <number>1</number>
+             </property>
+             <property name="columnCount" >
+              <number>2</number>
+             </property>
+             <column>
               <property name="text" >
-               <string>No glyph selected</string>
+               <string>Names</string>
               </property>
-              <property name="alignment" >
-               <set>Qt::AlignCenter</set>
+             </column>
+             <column>
+              <property name="text" >
+               <string>Files</string>
               </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
+             </column>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QPushButton" name="editAllButton" >
+               <property name="text" >
+                <string>Edit All</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>186</width>
+                 <height>26</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="activateAllButton" >
+               <property name="text" >
+                <string>Activate all</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="desactivateAllButton" >
+               <property name="text" >
+                <string>Deactivate all</string>
+               </property>
+               <property name="autoExclusive" >
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
         </widget>
-        <widget class="QWidget" name="tagPage" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>96</width>
-           <height>26</height>
-          </rect>
+       </item>
+       <item row="4" column="0" >
+        <widget class="Line" name="line_2" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <attribute name="label" >
-          <string>Tags</string>
-         </attribute>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
         </widget>
-       </widget>
-      </item>
-     </layout>
+       </item>
+       <item row="1" column="0" >
+        <widget class="Line" name="line" >
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QFrame" name="viewFrame" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize" >
+       <size>
+        <width>350</width>
+        <height>500</height>
+       </size>
+      </property>
+      <property name="frameShape" >
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow" >
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QToolBox" name="toolBox" >
+         <property name="currentIndex" >
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="pageRender" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>685</width>
+            <height>630</height>
+           </rect>
+          </property>
+          <attribute name="label" >
+           <string>Sample text</string>
+          </attribute>
+          <layout class="QGridLayout" >
+           <item row="0" column="0" >
+            <layout class="QVBoxLayout" >
+             <item>
+              <layout class="QHBoxLayout" >
+               <item>
+                <widget class="QPushButton" name="textButton" >
+                 <property name="text" >
+                  <string>Sample text...</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" >
+                  <size>
+                   <width>71</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="label" >
+                 <property name="text" >
+                  <string/>
+                 </property>
+                 <property name="pixmap" >
+                  <pixmap resource="application.qrc" >:/zoom.png</pixmap>
+                 </property>
+                 <property name="alignment" >
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="renderZoom" >
+                 <property name="sizePolicy" >
+                  <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip" >
+                  <string comment="zoom" >zoom</string>
+                 </property>
+                 <property name="statusTip" >
+                  <string>zoom</string>
+                 </property>
+                 <property name="maximum" >
+                  <number>1000</number>
+                 </property>
+                 <property name="value" >
+                  <number>100</number>
+                 </property>
+                 <property name="tracking" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="tickPosition" >
+                  <enum>QSlider::NoTicks</enum>
+                 </property>
+                 <property name="tickInterval" >
+                  <number>0</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="antiAliasButton" >
+                 <property name="text" >
+                  <string>AA</string>
+                 </property>
+                 <property name="checkable" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="checked" >
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QGraphicsView" name="loremView" />
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>225</width>
+            <height>169</height>
+           </rect>
+          </property>
+          <attribute name="label" >
+           <string>All glyphs</string>
+          </attribute>
+          <layout class="QGridLayout" >
+           <item row="0" column="0" >
+            <layout class="QVBoxLayout" >
+             <item>
+              <layout class="QHBoxLayout" >
+               <item>
+                <widget class="QLabel" name="label_3" >
+                 <property name="text" >
+                  <string>View codepoint U+</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="codepointSelectText" >
+                 <property name="maxLength" >
+                  <number>32763</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" >
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" >
+                  <size>
+                   <width>71</width>
+                   <height>23</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_2" >
+                 <property name="text" >
+                  <string/>
+                 </property>
+                 <property name="pixmap" >
+                  <pixmap resource="application.qrc" >:/zoom.png</pixmap>
+                 </property>
+                 <property name="alignment" >
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="allZoom" >
+                 <property name="sizePolicy" >
+                  <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximum" >
+                  <number>1000</number>
+                 </property>
+                 <property name="value" >
+                  <number>100</number>
+                 </property>
+                 <property name="tracking" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QGraphicsView" name="abcView" >
+               <property name="rubberBandSelectionMode" >
+                <enum>Qt::IntersectsItemBoundingRect</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="glyphInfo" >
+               <property name="text" >
+                <string>No glyph selected</string>
+               </property>
+               <property name="alignment" >
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tagPage" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>96</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <attribute name="label" >
+           <string>Tags</string>
+          </attribute>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>

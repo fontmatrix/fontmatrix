@@ -45,36 +45,36 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
-	
+
 // 	renderZoomString = "%1 \%";
 
 	tagLayout = new QGridLayout ( tagPage );
 
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
-	QRectF pageRect(0,0,597.6,842.4); //TODO find means to smartly decide of page size (here, iso A4)
-	loremScene->setSceneRect(pageRect);
-	QGraphicsRectItem *backp = loremScene->addRect(pageRect,QPen(),Qt::white);
+	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
+	loremScene->setSceneRect ( pageRect );
+	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
 	backp->setEnabled ( false );
 
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
-	
+
 	loremView->setScene ( loremScene );
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
-	loremView->setBackgroundBrush(Qt::lightGray);
-	loremView->ensureVisible(loremScene->sceneRect());
+	loremView->setBackgroundBrush ( Qt::lightGray );
+	loremView->ensureVisible ( loremScene->sceneRect() );
 
 	sampleText= "A font is a set of glyphs (images) \nrepresenting the characters from a particular \ncharacter set in a particular typeface. \nIn professional typography the term \ntypeface is not \ninterchangeable with the word font, \nwhich is defined as\na given alphabet and its associated characters\nin a single size. For example, \n8-point Caslon is one font, and 10-point.[...]"; // from http://en.wikipedia.org/wiki/Typeface
 	sampleFontSize = 11;
 	sampleInterSize = 14;
-	
+
 // 	ord << "family" << "variant";
 // 	orderingCombo->addItems ( ord );
-	tagsetCombo->addItems(typo->tagsets());
+	tagsetCombo->addItems ( typo->tagsets() );
 
-	fields << "family" << "variant";
-	searchField->addItems ( fields );
+// 	fields << "family" << "variant";
+// 	searchField->addItems ( fields );
 
 	QStringList tl_tmp = typotek::tagsList;
 	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
@@ -82,22 +82,23 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	tl_tmp.removeAll ( "Activated_Off" );
 
 	tagsCombo->addItems ( tl_tmp );
-	
-	
 
-	connect ( tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset( QString ) ) );
+	//CONNECT
+
+	connect ( tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 
 	connect ( fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotfontSelected ( QTreeWidgetItem*, int ) ) );
 
 	connect ( editAllButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotEditAll() ) );
-	
+
 	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotView() ) );
 // 	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotInfoFont() ) );
-	
+
 
 	connect ( abcScene,SIGNAL ( selectionChanged() ),this,SLOT ( slotglyphInfo() ) );
-	connect ( searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
 
+	connect ( searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
+	connect ( searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 
 	connect ( renderZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 	connect ( allZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
@@ -108,20 +109,20 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( desactivateAllButton,SIGNAL ( released() ),this,SLOT ( slotDesactivateAll() ) );
 
 	connect ( textButton,SIGNAL ( released() ),this,SLOT ( slotSetSampleText() ) );
-	
-	connect(typo,SIGNAL(tagAdded(QString)),this,SLOT(slotAppendTag(QString)));
-	
-	connect(codepointSelectText,SIGNAL(returnPressed()),this,SLOT(slotShowCodePoint()));
-	
-	connect(antiAliasButton,SIGNAL(toggled( bool )),this,SLOT(slotSwitchAntiAlias(bool)));
 
-// 	qDebug() << fontTree->width();
-	
-	
-	
-	slotOrderingChanged("family");
-	
-	
+	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
+
+	connect ( codepointSelectText,SIGNAL ( returnPressed() ),this,SLOT ( slotShowCodePoint() ) );
+
+	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
+
+	// END CONNECT
+
+
+
+	slotOrderingChanged ( "family" );
+
+
 }
 
 
@@ -135,67 +136,67 @@ void MainViewWidget::fillTree()
 	qDebug() << "curitemname = " << curItemName;
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
-	for(int i=0; i < fontTree->topLevelItemCount();++i)
+	for ( int i=0; i < fontTree->topLevelItemCount();++i )
 	{
-		if(fontTree->topLevelItem(i)->isExpanded())
-			openKeys << fontTree->topLevelItem(i)->text(0);
+		if ( fontTree->topLevelItem ( i )->isExpanded() )
+			openKeys << fontTree->topLevelItem ( i )->text ( 0 );
 	}
-	
+
 	fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
 	for ( int i=0; i < currentFonts.count();++i )
 	{
 		keyList[currentFonts[i]->value ( currentOrdering ) ].append ( currentFonts[i] );
 	}
-	
+
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
-	for(int i = 'A'; i <= 'Z'; ++i)
+	for ( int i = 'A'; i <= 'Z'; ++i )
 	{
-		QChar firstChar(i);
+		QChar firstChar ( i );
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( fontTree );
-		alpha->setText ( 0, firstChar);
+		alpha->setText ( 0, firstChar );
 		bool alphaIsUsed = false;
-		
+
 		for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 		{
-			if(kit.key().at(0).toUpper() == firstChar)
+			if ( kit.key().at ( 0 ).toUpper() == firstChar )
 			{
 				QTreeWidgetItem *ord = new QTreeWidgetItem ( alpha );
 				ord->setText ( 0, kit.key() );
-				if(openKeys.contains(kit.key()))
+				if ( openKeys.contains ( kit.key() ) )
 				{
-						ord->setExpanded(true);
+					ord->setExpanded ( true );
 				}
 				for ( int  n = 0; n < kit.value().count(); ++n )
 				{
 					QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
-					entry->setText(0, kit.value()[n]->variant());
+					entry->setText ( 0, kit.value() [n]->variant() );
 					entry->setText ( 1, kit.value() [n]->name() );
 					bool act = kit.value() [n]->tags().contains ( "Activated_On" );
 					entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
-					if(entry->text(1) == curItemName )
+					if ( entry->text ( 1 ) == curItemName )
 						curItem = entry;
 				}
-				
+
 				alphaIsUsed = true;
 			}
 		}
-		if(alphaIsUsed)
+		if ( alphaIsUsed )
 		{
-			fontTree->addTopLevelItem ( alpha);
-			alpha->setExpanded(true);
+			fontTree->addTopLevelItem ( alpha );
+			alpha->setExpanded ( true );
 		}
 		else
 		{
 			delete alpha;
 		}
 	}
-	if(curItem)
+	if ( curItem )
 	{
-		qDebug() << "get curitem : " << curItem->text(0) << curItem->text(1);
-		fontTree->scrollToItem(curItem, QAbstractItemView::PositionAtCenter);
+		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
+		fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 // 		curItem->setBackground(1, Qt::green);
-		curItem->setSelected(true);
+		curItem->setSelected ( true );
 	}
 	fontTree->resizeColumnToContents ( 0 )  ;
 // 	fontTree->setColumnWidth(0,200);
@@ -205,7 +206,7 @@ void MainViewWidget::fillTree()
 void MainViewWidget::slotOrderingChanged ( QString s )
 {
 	//Update "fontTree"
-	
+
 
 // 	currentFonts = typo->getAllFonts();
 	currentOrdering = s;
@@ -217,8 +218,8 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 {
 // 	qDebug() << "font select";
 
-	curItemName = item->text(1).isNull() ? item->text(0) : item->text(1);
-	if ( item->childCount() > 0)
+	curItemName = item->text ( 1 ).isNull() ? item->text ( 0 ) : item->text ( 1 );
+	if ( item->childCount() > 0 )
 		return;
 
 	lastIndex = faceIndex;
@@ -228,9 +229,9 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 	{
 		slotFontAction ( item,column );
 		emit faceChanged();
-		theVeryFont = typo->getFont(faceIndex);
+		theVeryFont = typo->getFont ( faceIndex );
 	}
-	
+
 	if ( item->checkState ( 1 ) == Qt::Checked )
 		slotActivate ( true, item, column );
 	else
@@ -262,7 +263,7 @@ void MainViewWidget::slotView()
 	QApplication::restoreOverrideCursor();
 
 	QStringList stl = sampleText.split ( '\n' );
-	QPointF pen(100,80);
+	QPointF pen ( 100,80 );
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	for ( int i=0; i< stl.count(); ++i )
 	{
@@ -271,8 +272,8 @@ void MainViewWidget::slotView()
 	}
 	QApplication::restoreOverrideCursor();
 	slotInfoFont();
-	
-	
+
+
 }
 
 void MainViewWidget::slotglyphInfo()
@@ -289,11 +290,12 @@ void MainViewWidget::slotSearch()
 	fontTree->clear();
 
 	QString fs ( searchString->text() );
-	QString ff ( searchField->currentText() );
+	QString ff ( "family" );
 
 	currentFonts = typo->getFonts ( fs,ff ) ;
 	currentOrdering = "family";
 	fillTree();
+	searchString->clear();
 }
 
 void MainViewWidget::slotFilterTag ( QString tag )
@@ -308,23 +310,23 @@ void MainViewWidget::slotFilterTag ( QString tag )
 	fillTree();
 }
 
-void MainViewWidget::slotFilterTagset(QString set)
+void MainViewWidget::slotFilterTagset ( QString set )
 {
 	fontTree->clear();
-	QStringList tags = typo->tagsOfSet(set);
-	if(!tags.count())
+	QStringList tags = typo->tagsOfSet ( set );
+	if ( !tags.count() )
 		return;
-	
-	currentFonts = typo->getFonts(tags[0],"tag");
+
+	currentFonts = typo->getFonts ( tags[0],"tag" );
 	QList<FontItem*> fontBuffer;
-	
-	foreach(QString curtag, tags)
+
+	foreach ( QString curtag, tags )
 	{
-		fontBuffer = typo->getFonts(curtag,"tag");
-		foreach(FontItem* fit, fontBuffer)
+		fontBuffer = typo->getFonts ( curtag,"tag" );
+		foreach ( FontItem* fit, fontBuffer )
 		{
-			if(!currentFonts.contains(fit))
-				currentFonts.removeAll(fit);
+			if ( !currentFonts.contains ( fit ) )
+				currentFonts.removeAll ( fit );
 		}
 	}
 	currentOrdering = "family";
@@ -427,16 +429,16 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 				fit->setTags ( tl );
 
 				QFileInfo fofi ( fit->path() );
-				
+
 				if ( !QFile::link ( fit->path() , typo->getManagedDir() + "/" + fofi.fileName() ) )
 				{
 					qDebug() << "unable to link " << fofi.fileName();
 				}
 				else
 				{
-					if(!fit->afm().isEmpty())
+					if ( !fit->afm().isEmpty() )
 					{
-						QFileInfo afm(fit->afm());
+						QFileInfo afm ( fit->afm() );
 						if ( !QFile::link ( fit->afm(), typo->getManagedDir() + "/" + afm.fileName() ) )
 						{
 							qDebug() << "unable to link " << afm.fileName();
@@ -476,10 +478,10 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 				}
 				else
 				{
-					if(!fit->afm().isEmpty())
+					if ( !fit->afm().isEmpty() )
 					{
-						QFileInfo afm(fit->afm());
-						if ( !QFile::remove( typo->getManagedDir() + "/" + afm.fileName() ) )
+						QFileInfo afm ( fit->afm() );
+						if ( !QFile::remove ( typo->getManagedDir() + "/" + afm.fileName() ) )
 						{
 							qDebug() << "unable to remove " << afm.fileName();
 						}
@@ -519,25 +521,25 @@ void MainViewWidget::slotSetSampleText()
 {
 	QDialog dial ( this );
 	QGridLayout lay ( &dial );
-	QTextEdit ted  ( sampleText.replace("\n","<br/>") );
-	QPushButton okButton  ( "Ok" );
-	
-	QLabel labfs("size");
-	QLabel labls("interline");
-	
+	QTextEdit ted ( sampleText.replace ( "\n","<br/>" ) );
+	QPushButton okButton ( "Ok" );
+
+	QLabel labfs ( "size" );
+	QLabel labls ( "interline" );
+
 	QDoubleSpinBox boxfs;
-	boxfs.setRange(1,999);
-	boxfs.setValue(sampleFontSize);
-	
+	boxfs.setRange ( 1,999 );
+	boxfs.setValue ( sampleFontSize );
+
 	QDoubleSpinBox boxls;
-	boxls.setRange(1,999);
-	boxls.setValue(sampleInterSize);
-	
+	boxls.setRange ( 1,999 );
+	boxls.setValue ( sampleInterSize );
+
 	lay.addWidget ( &ted, 0,0,1,-1 );
-	lay.addWidget(&labfs, 1,0);
-	lay.addWidget(&labls, 2,0);
-	lay.addWidget(&boxfs,1,1);
-	lay.addWidget(&boxls,2,1);
+	lay.addWidget ( &labfs, 1,0 );
+	lay.addWidget ( &labls, 2,0 );
+	lay.addWidget ( &boxfs,1,1 );
+	lay.addWidget ( &boxls,2,1 );
 	lay.addWidget ( &okButton,3,1 );
 	connect ( &okButton,SIGNAL ( released() ),&dial,SLOT ( close() ) );
 
@@ -569,29 +571,29 @@ void MainViewWidget::slotReloadFontList()
 void MainViewWidget::slotReloadTagsetList()
 {
 	tagsetCombo->clear();
-	tagsetCombo->addItems(typo->tagsets());
+	tagsetCombo->addItems ( typo->tagsets() );
 }
 
 void MainViewWidget::slotShowCodePoint()
 {
 	QString codetext = codepointSelectText->text();
 	bool ok;
-	int codepoint = codetext.toInt(&ok, 16);
-	if(!ok)
+	int codepoint = codetext.toInt ( &ok, 16 );
+	if ( !ok )
 		return;
-	if(!theVeryFont)
+	if ( !theVeryFont )
 		return;
-	QGraphicsPathItem *pit = theVeryFont->hasCodepoint(codepoint);
-	if(!pit)
+	QGraphicsPathItem *pit = theVeryFont->hasCodepoint ( codepoint );
+	if ( !pit )
 		return;
-	
-	abcView->fitInView(pit, Qt::KeepAspectRatio);
-	
-	
-	
+
+	abcView->fitInView ( pit, Qt::KeepAspectRatio );
+
+
+
 }
 
-void MainViewWidget::slotSwitchAntiAlias(bool aa)
+void MainViewWidget::slotSwitchAntiAlias ( bool aa )
 {
 	loremView->setRenderHint ( QPainter::Antialiasing, aa );
 }

@@ -26,12 +26,14 @@
 #include <QGraphicsPathItem>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QPainter>
 
 #include FT_XFREE86_H
 #include FT_GLYPH_H
 #include FT_OUTLINE_H
 
 FT_Library FontItem::theLibrary = 0;
+QGraphicsScene *FontItem::theOneLineScene = 0;
 QMap<FT_Encoding, QString> FontItem::charsetMap;
 
 /** functions set for decomposition
@@ -96,11 +98,17 @@ void fillCharsetMap()
 	FontItem::charsetMap[FT_ENCODING_MS_JOHAB] = "MS_JOHAB ";
 }
 
+
+		
 FontItem::FontItem ( QString path )
 {
 // 	qDebug() << path;
 	if ( charsetMap.isEmpty() )
 		fillCharsetMap();
+	if(!theOneLineScene)
+	{
+		theOneLineScene = new QGraphicsScene(0,0,32,32);
+	}
 
 	allIsRendered = false;
 
@@ -238,18 +246,21 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 }
 
 
-void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize )
+void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record)
 {
-	sceneList.append ( scene );
+	if(record)
+		sceneList.append ( scene );
 	double sizz = fsize;
 	QPointF pen ( origine );
 	for ( int i=0; i < spec.length(); ++i )
 	{
 		QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
-		glyphList.append ( glyph );
+		if(record)
+			glyphList.append ( glyph );
 		scene->addItem ( glyph );
 		glyph->setPos ( pen );
 		glyph->setZValue ( 100.0 );
+		glyph->setData(1,"glyph");
 		double scalefactor = sizz / m_face->units_per_EM;
 		pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
 	}
@@ -445,6 +456,22 @@ QGraphicsPathItem * FontItem::hasCodepoint(int code)
 			return glyphList.at(i);
 	}
 	return 0;
+}
+
+QIcon  FontItem::oneLinePreview()
+{
+	if(!theOneLinePreview.isNull())
+		return theOneLinePreview;
+	
+	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
+	renderLine(theOneLineScene,"Aa",QPointF(0,32),32,false);
+	QPixmap apix(32,32);
+	apix.fill(Qt::white);
+	QPainter apainter(&apix);
+	apainter.setRenderHint(QPainter::Antialiasing,true);
+	theOneLineScene->render(&apainter);
+	theOneLinePreview .addPixmap(apix);
+	return theOneLinePreview;
 }
 
 

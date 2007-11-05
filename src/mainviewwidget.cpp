@@ -115,6 +115,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( codepointSelectText,SIGNAL ( returnPressed() ),this,SLOT ( slotShowCodePoint() ) );
 
 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
+	
+	connect (fitViewCheck,SIGNAL(stateChanged( int )),this,SLOT(slotFitChanged(int)));
 
 	// END CONNECT
 
@@ -133,15 +135,18 @@ MainViewWidget::~MainViewWidget()
 
 void MainViewWidget::fillTree()
 {
-	qDebug() << "curitemname = " << curItemName;
+// 	qDebug() << "curitemname = " << curItemName;
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
 	for ( int i=0; i < fontTree->topLevelItemCount();++i )
 	{
-		if ( fontTree->topLevelItem ( i )->isExpanded() )
-			openKeys << fontTree->topLevelItem ( i )->text ( 0 );
+		QTreeWidgetItem *topit = fontTree->topLevelItem ( i );
+		for(int j=0;j < topit->childCount();++j)
+		if ( topit->child(j)->isExpanded() )
+				openKeys << topit->child(j)->text ( 0 );
 	}
-
+qDebug() << "openjey : " << openKeys.join("/");
+	
 	fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
 	for ( int i=0; i < currentFonts.count();++i )
@@ -172,6 +177,7 @@ void MainViewWidget::fillTree()
 					QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 					entry->setText ( 0, kit.value() [n]->variant() );
 					entry->setText ( 1, kit.value() [n]->name() );
+					entry->setIcon ( 2, kit.value() [n]->oneLinePreview());
 					bool act = kit.value() [n]->tags().contains ( "Activated_On" );
 					entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
 					if ( entry->text ( 1 ) == curItemName )
@@ -272,6 +278,34 @@ void MainViewWidget::slotView()
 	}
 	QApplication::restoreOverrideCursor();
 	slotInfoFont();
+	if(fitViewCheck->isChecked())
+	{
+		QRectF allrect, firstrect;
+		bool first = true;
+		QList<QGraphicsItem*> lit = loremScene->items();
+		for(int i = 0 ; i <lit.count() ; ++i )
+		{
+			if(lit[i]->data(1).toString() == "glyph")
+			{
+				if(first)
+				{
+					firstrect = lit[i]->sceneBoundingRect();
+					first = false;
+					
+				}
+				if(lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y())
+					allrect = allrect.united(lit[i]->sceneBoundingRect());
+				if(lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x())
+					allrect = allrect.united(lit[i]->sceneBoundingRect());
+		
+			}
+			
+				
+		}
+		
+		qDebug() << allrect;
+		loremView->fitInView(allrect, Qt::KeepAspectRatio);
+	}
 
 
 }
@@ -596,6 +630,15 @@ void MainViewWidget::slotShowCodePoint()
 void MainViewWidget::slotSwitchAntiAlias ( bool aa )
 {
 	loremView->setRenderHint ( QPainter::Antialiasing, aa );
+}
+
+void MainViewWidget::slotFitChanged(int i)
+{
+	if(i == Qt::Unchecked)
+	{
+		loremView->setTransform(QTransform(1,0,0,1,0,0),false);
+	}
+	slotView();
 }
 
 

@@ -24,7 +24,6 @@ CONFIG += warn_on \
  uitools \
  qdbus \
  debug
-TARGET = ../bin/typotek
 RESOURCES = application.qrc
 FORMS += mainview.ui \
  fontaction.ui \
@@ -47,4 +46,6 @@ desktop.path = /usr/share/applications
 INSTALLS += desktop
 
 target.path = /usr/local/bin
+
+TARGET = ../bin/typotek
 

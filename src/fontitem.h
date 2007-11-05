@@ -27,6 +27,7 @@
 #include <QPointF>
 #include <QPainterPath>
 #include <QGraphicsPathItem>
+#include <QIcon>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -85,6 +86,9 @@ public:
 		QMap<int,QPainterPath> contourCache;
 		QMap<int,double> advanceCache;
 		
+		QIcon theOneLinePreview;
+		static QGraphicsScene *theOneLineScene;
+		
 	public:
 		static FT_Library theLibrary;
 		static QMap<FT_Encoding, QString> charsetMap;
@@ -104,7 +108,7 @@ public:
 		
 		QString value(QString k);
 		
-		void renderLine(QGraphicsScene *scene, QString spec,  QPointF origine, double fsize);
+		void renderLine(QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, bool record = true );
 		void renderAll(QGraphicsScene *scene);
 		void deRender(QGraphicsScene *scene);
 		void deRenderAll();
@@ -112,6 +116,8 @@ public:
 		QString toElement();
 		
 		QGraphicsPathItem* hasCodepoint(int code);
+		
+		QIcon oneLinePreview();
 				
 		// Relative to fontactionwidget
 		void lock(){m_lock=true;};

@@ -47,5 +47,5 @@ INSTALLS += desktop
 
 target.path = /usr/local/bin
 
-TARGET = ../bin/typotek
+TARGET = ../bin/fontmatrix
 

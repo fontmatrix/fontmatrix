@@ -65,9 +65,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setBackgroundBrush ( Qt::lightGray );
 	loremView->ensureVisible ( loremScene->sceneRect() );
 
-	sampleText= "A font is a set of glyphs (images) \nrepresenting the characters from a particular \ncharacter set in a particular typeface. \nIn professional typography the term \ntypeface is not \ninterchangeable with the word font, \nwhich is defined as\na given alphabet and its associated characters\nin a single size. For example, \n8-point Caslon is one font, and 10-point.[...]"; // from http://en.wikipedia.org/wiki/Typeface
-	sampleFontSize = 11;
-	sampleInterSize = 14;
+	sampleText= "ABCDEFGHIJKLMNOPQRSTUVXYZ\n\n  abcdefghijklmnopqrstuvxyz\n  0123456789   ,;:!?.";
+	sampleFontSize = 18;
+	sampleInterSize = 20;
 
 // 	ord << "family" << "variant";
 // 	orderingCombo->addItems ( ord );
@@ -137,6 +137,8 @@ MainViewWidget::~MainViewWidget()
 void MainViewWidget::fillTree()
 {
 // 	qDebug() << "curitemname = " << curItemName;
+	if(curItemName.isEmpty() && currentFonts.count())
+		curItemName = currentFonts.first()->name();
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
 	for ( int i=0; i < fontTree->topLevelItemCount();++i )
@@ -220,6 +222,7 @@ qDebug() << "openjey : " << openKeys.join("/");
 		curItem->setBackgroundColor(1,scol);
 	}
 	fontTree->resizeColumnToContents ( 0 )  ;
+	fontTree->resizeColumnToContents ( 1 ) ;
 // 	fontTree->setColumnWidth(0,200);
 }
 

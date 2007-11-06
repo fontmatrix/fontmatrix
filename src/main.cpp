@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 {
       Q_INIT_RESOURCE(application);
       QApplication app(argc, argv);
-      app.setWindowIcon (QIcon(":/typotek.png") );
+      app.setWindowIcon (QIcon(":/fontmatrix.png") );
       
       if(app.arguments().contains("debugfonts"))
       {

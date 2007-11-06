@@ -62,7 +62,7 @@ typotek::typotek()
 
 	{
 		actAdaptator = new TypotekAdaptator ( this );
-		if ( !QDBusConnection::sessionBus().registerService ( "com.typotek.fonts" ) )
+		if ( !QDBusConnection::sessionBus().registerService ( "com.fontmatrix.fonts" ) )
 			qDebug() << "unable to register to DBUS";
 		if ( !QDBusConnection::sessionBus().registerObject ( "/FontActivation", actAdaptator, QDBusConnection::ExportAllContents ) )
 			qDebug() << "unable to register to DBUS";
@@ -254,7 +254,7 @@ void typotek::createStatusBar()
 
 void typotek::readSettings()
 {
-	QSettings settings ( "Undertype", "typotek" );
+	QSettings settings ( "Undertype", "fontmatrix" );
 	QPoint pos = settings.value ( "pos", QPoint ( 200, 200 ) ).toPoint();
 	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
@@ -265,7 +265,7 @@ void typotek::readSettings()
 
 void typotek::writeSettings()
 {
-	QSettings settings (  "Undertype", "typotek"  );
+	QSettings settings (  "Undertype", "fontmatrix"  );
 	settings.setValue ( "pos", pos() );
 	settings.setValue ( "size", size() );
 	
@@ -364,7 +364,7 @@ void typotek::checkOwnDir()
 	QFile fcfile(QDir::homePath() + "/.fonts.conf");
 	if ( !fcfile.open ( QFile::ReadWrite ) )
 	{
-		QMessageBox::warning (0, QString ( "typotek" ),
+		QMessageBox::warning (0, QString ( "fontmatrix" ),
 				      QString ( "Cannot read file %1:\n%2.\nBEFORE ANYTHING, YOU SHOULD CHECK IF FONTCONFIG IS IN USE." )
 						      .arg ( fcfile.fileName() )
 						      .arg ( fcfile.errorString() ) );

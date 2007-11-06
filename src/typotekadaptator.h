@@ -32,7 +32,7 @@ class TypotekAdaptator : public QDBusAbstractAdaptor
 {
 
 		Q_OBJECT
-		Q_CLASSINFO ( "D-Bus Interface", "com.typotek.fonts" )
+		Q_CLASSINFO ( "D-Bus Interface", "com.fontmatrix.fonts" )
 	public:
 		TypotekAdaptator ( QObject *parent );
 

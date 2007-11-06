@@ -416,7 +416,8 @@ void typotek::initDir()
 	ownDir.setNameFilters ( filters );
 
 	QStringList pathList = ownDir.entryList();
-	qDebug() << pathList.join("\n");
+	if(__FM_SHOW_FONTLOADED)
+		qDebug() << pathList.join("\n");
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
 		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );

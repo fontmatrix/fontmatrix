@@ -86,7 +86,9 @@ public:
 		QMap<int,QPainterPath> contourCache;
 		QMap<int,double> advanceCache;
 		
-		QIcon theOneLinePreview;
+		QIcon theOneLinePreviewIcon;
+		QPixmap theOneLinePreviewPixmap;
+		
 		static QGraphicsScene *theOneLineScene;
 		
 	public:
@@ -117,7 +119,8 @@ public:
 		
 		QGraphicsPathItem* hasCodepoint(int code);
 		
-		QIcon oneLinePreview();
+		QIcon oneLinePreviewIcon();
+		QPixmap oneLinePreviewPixmap();
 				
 		// Relative to fontactionwidget
 		void lock(){m_lock=true;};

@@ -35,6 +35,8 @@ class MainViewWidget;
 class FontItem;
 class TypotekAdaptator;
 
+static bool __FM_SHOW_FONTLOADED;
+
 class typotek:public QMainWindow
 {
 		Q_OBJECT
@@ -134,5 +136,7 @@ class typotek:public QMainWindow
 		
 		QString getManagedDir(){return managedDir.absolutePath();};
 };
+
+
 
 #endif

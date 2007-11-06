@@ -118,6 +118,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	connect (fitViewCheck,SIGNAL(stateChanged( int )),this,SLOT(slotFitChanged(int)));
 
+	connect(fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
 	// END CONNECT
 
 
@@ -161,23 +162,33 @@ qDebug() << "openjey : " << openKeys.join("/");
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( fontTree );
 		alpha->setText ( 0, firstChar );
 		bool alphaIsUsed = false;
-
+		
 		for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 		{
+			bool isExpanded = false;
 			if ( kit.key().at ( 0 ).toUpper() == firstChar )
 			{
 				QTreeWidgetItem *ord = new QTreeWidgetItem ( alpha );
 				ord->setText ( 0, kit.key() );
+				ord->setData(0,100,"family");
 				if ( openKeys.contains ( kit.key() ) )
 				{
 					ord->setExpanded ( true );
+					isExpanded = true;
+				}
+				if(kit.value().count())
+				{
+					ord->setIcon(2,kit.value()[0]->oneLinePreviewIcon());
 				}
 				for ( int  n = 0; n < kit.value().count(); ++n )
 				{
 					QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 					entry->setText ( 0, kit.value() [n]->variant() );
 					entry->setText ( 1, kit.value() [n]->name() );
-					entry->setIcon ( 2, kit.value() [n]->oneLinePreview());
+// 					entry->setIcon ( 2, kit.value() [n]->oneLinePreviewIcon());
+					if(isExpanded)
+						entry->setBackground(2,QBrush(kit.value()[n]->oneLinePreviewPixmap()));
+					
 					bool act = kit.value() [n]->tags().contains ( "Activated_On" );
 					entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
 					if ( entry->text ( 1 ) == curItemName )
@@ -199,13 +210,36 @@ qDebug() << "openjey : " << openKeys.join("/");
 	}
 	if ( curItem )
 	{
-		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
+// 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
 		fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
-// 		curItem->setBackground(1, Qt::green);
-		curItem->setSelected ( true );
+		QColor scol(Qt::blue);
+		scol.setAlpha(30);
+		curItem->parent()->setBackgroundColor(0,scol);
+		curItem->parent()->setBackgroundColor(1,scol);
+		curItem->setBackgroundColor(0,scol);
+		curItem->setBackgroundColor(1,scol);
 	}
 	fontTree->resizeColumnToContents ( 0 )  ;
 // 	fontTree->setColumnWidth(0,200);
+}
+
+void MainViewWidget::slotItemOpened(QTreeWidgetItem * item)
+{
+	if(item->data(0,100).toString() == "family")
+	{
+		for(int i=0; i<item->childCount(); ++i)
+		{
+			QString font= item->child(i)->text(1);
+// 			qDebug() << "sIO ("<< i <<"): " ;
+// 			qDebug() << "\t" << font;
+// 			item->setBackgroundColor(0,Qt::green);
+			if(typo->getFont(font))
+			{
+				item->child(i)->setBackground(2, QBrush(typo->getFont(font)->oneLinePreviewPixmap()));
+			}
+		}	
+	}
+	
 }
 
 

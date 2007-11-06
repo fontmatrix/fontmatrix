@@ -107,7 +107,7 @@ FontItem::FontItem ( QString path )
 		fillCharsetMap();
 	if(!theOneLineScene)
 	{
-		theOneLineScene = new QGraphicsScene(0,0,32,32);
+		theOneLineScene = new QGraphicsScene(0,0,320,32);
 	}
 
 	allIsRendered = false;
@@ -458,20 +458,37 @@ QGraphicsPathItem * FontItem::hasCodepoint(int code)
 	return 0;
 }
 
-QIcon  FontItem::oneLinePreview()
+QIcon  FontItem::oneLinePreviewIcon()
 {
-	if(!theOneLinePreview.isNull())
-		return theOneLinePreview;
+	if(!theOneLinePreviewIcon.isNull())
+		return theOneLinePreviewIcon;
 	
 	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
-	renderLine(theOneLineScene,"Aa",QPointF(0,32),32,false);
+	renderLine(theOneLineScene,"a",QPointF(0,32),50,false);
 	QPixmap apix(32,32);
 	apix.fill(Qt::white);
 	QPainter apainter(&apix);
 	apainter.setRenderHint(QPainter::Antialiasing,true);
+	theOneLineScene->render(&apainter,apix.rect(),apix.rect());
+// 	theOneLinePreviewIcon.addPixmap(apix);
+	theOneLinePreviewIcon = apix;
+	return theOneLinePreviewIcon;
+}
+
+QPixmap FontItem::oneLinePreviewPixmap()
+{
+	if(!theOneLinePreviewPixmap.isNull())
+		return theOneLinePreviewPixmap;
+	
+	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
+	renderLine(theOneLineScene,fancyName(),QPointF(0,16),20,false);
+	QPixmap apix(50 * 32,32);
+	apix.fill(Qt::white);
+	QPainter apainter(&apix);
+	apainter.setRenderHint(QPainter::Antialiasing,true);
 	theOneLineScene->render(&apainter);
-	theOneLinePreview .addPixmap(apix);
-	return theOneLinePreview;
+	theOneLinePreviewPixmap = apix;
+	return theOneLinePreviewPixmap;
 }
 
 

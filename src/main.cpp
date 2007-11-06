@@ -28,6 +28,17 @@ int main(int argc, char *argv[])
       Q_INIT_RESOURCE(application);
       QApplication app(argc, argv);
       app.setWindowIcon (QIcon(":/typotek.png") );
+      
+      if(app.arguments().contains("debugfonts"))
+      {
+	      __FM_SHOW_FONTLOADED = true;
+      }
+      else
+      {
+	      __FM_SHOW_FONTLOADED = false;
+      }
+      
+      
       typotek * mw = new typotek();
       mw->show();
       return app.exec();

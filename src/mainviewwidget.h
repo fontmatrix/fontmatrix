@@ -95,6 +95,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotShowCodePoint();
 		void slotSwitchAntiAlias(bool aa);
 		void slotFitChanged(int i);
+		void slotItemOpened(QTreeWidgetItem * item);
 	signals:
 		void faceChanged();
 

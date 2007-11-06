@@ -91,6 +91,11 @@ public:
 		
 		static QGraphicsScene *theOneLineScene;
 		
+		void moreInfo_sfnt();
+		void moreInfo_type1();
+		
+		QMap<QString, QString> moreInfo;
+		
 	public:
 		static FT_Library theLibrary;
 		static QMap<FT_Encoding, QString> charsetMap;

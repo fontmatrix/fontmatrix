@@ -31,6 +31,8 @@
 #include FT_XFREE86_H
 #include FT_GLYPH_H
 #include FT_OUTLINE_H
+#include FT_SFNT_NAMES_H
+#include FT_TYPE1_TABLES_H
 
 FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
@@ -138,15 +140,19 @@ FontItem::FontItem ( QString path )
 	m_variant = m_face->style_name;
 	m_numGlyphs = m_face->num_glyphs;
 	m_numFaces = m_face->num_faces;
-	m_faceFlags = testFlag ( m_face->face_flags, FT_FACE_FLAG_SCALABLE, "Is scalable\n","" );
-	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_FIXED_WIDTH, "Is monospace\n","" );
-	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "Is SFNT based (open or true type)\n","" );
-	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_GLYPH_NAMES, "Has glyphs names\n","Has not glyphs names\n" );
+// 	m_faceFlags = testFlag ( m_face->face_flags, FT_FACE_FLAG_SCALABLE, "Is scalable\n","" );
+// 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_FIXED_WIDTH, "Is monospace\n","" );
+// 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "Is SFNT based (open or true type)\n","" );
+// 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_GLYPH_NAMES, "Has glyphs names\n","Has not glyphs names\n" );
 	for ( int i = 1;i < m_face->num_charmaps; ++i )
 	{
 		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
 	}
 
+// 	if(HERE TEST FOR TYPE1)
+// 	{
+// 		moreInfo_type1();
+// 	}
 	m_glyph = m_face->glyph;
 	m_lock = false;
 	pixList.clear();
@@ -400,8 +406,8 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 
 QString FontItem::infoText()
 {
-	QString ret ( "<h3>%1</h3> <p>filepath : %2</p> <p>font type : %3</p> <p>encodings : %4</p>  <p>%5 glyphs in %6 faces (including %8 glyphs unreachable by character codes)</p><p>TAGS : %7</p>" );
-	return ret.arg ( m_family + " " + m_variant ) //1
+	QString ret ( "<h3>%1</h3> <p><b>filepath  </b> %2</p> <p><b>font type  </b> %3</p> <p><b>encodings  </b> %4</p>  <p>%5 glyphs in %6 faces (including %8 glyphs unreachable by character codes)</p><p><b>Tags  </b> %7</p>" );
+	ret = ret.arg ( m_family + " " + m_variant ) //1
 	       .arg ( m_path ) //2
 	       .arg ( m_type ) //3
 	       .arg ( m_charsets.join ( ", " ) ) //4
@@ -410,7 +416,29 @@ QString FontItem::infoText()
 	       .arg ( m_tags.join ( ", " ) ) //7
 	       .arg ( m_charLess.count() - 1 ) //8
 	       ;
+	if(moreInfo.isEmpty())
+	{
+		if( testFlag(m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0") == "1")
+		{
+			moreInfo_sfnt();
+		}
+		if(m_path.endsWith(".pfb",Qt::CaseInsensitive ))
+		{
+			moreInfo_type1();
+			qDebug() << "TYPE1";
+		}
+	}
+	if(moreInfo.count())
+	{
+		ret += "<p> \n\t- Extra Info -</p>";
+		for(QMap<QString, QString>::const_iterator mit = moreInfo.begin(); mit != moreInfo.end();++mit)
+		{
+			ret += "<p><b>"   + mit.key() + " </b> " + mit.value() + "</p>";
+		};
+	}
+	return ret;
 }
+
 
 QString FontItem::infoGlyph ( int index, int code )
 {
@@ -489,6 +517,79 @@ QPixmap FontItem::oneLinePreviewPixmap()
 	theOneLineScene->render(&apainter);
 	theOneLinePreviewPixmap = apix;
 	return theOneLinePreviewPixmap;
+}
+
+/** reminder
+FT_SfntName::name_id
+Code  	Meaning
+0 	Copyright 
+1 	Font Family 
+2 	Font Subfamily
+3 	Unique font identifier
+4 	Full font name
+5 	Version string
+6 	Postscript name for the font
+7 	Trademark
+8 	Manufacturer Name.
+9 	Designer
+10 	Description
+11 	URL Vendor
+12 	URL Designer
+13 	License Description
+14 	License Info URL
+15 	Reserved; Set to zero.
+16 	Preferred Family
+17 	Preferred Subfamily
+18 	Compatible Full (Macintosh only)
+19 	Sample text
+20 	PostScript CID findfont name
+*/
+void FontItem::moreInfo_sfnt()
+{
+	FT_SfntName tname;
+	static QStringList name_meaning;
+	if(name_meaning.isEmpty())
+	{
+		name_meaning << "Copyright"
+				<< "Font Family"
+				<< "Font Subfamily"
+				<< "Unique font identifier"
+				<< "Full font name"
+				<< "Version string"
+				<< "Postscript name"
+				<< "Trademark"
+				<< "Manufacturer"
+				<< "Designer"
+				<< "Description"
+				<< "URL Vendor"
+				<< "URL Designer"
+				<< "License Description"
+				<< "License Info URL"
+				<< "Reserved"
+				<< "Preferred Family"
+				<< "Preferred Subfamily"
+				<< "Compatible Full (Macintosh only)"
+				<< "Sample text"
+				<< "PostScript CID findfont name";
+	}
+	int tname_count = FT_Get_Sfnt_Name_Count(m_face);
+	for(int i=0; i < tname_count; ++i)
+	{
+		FT_Get_Sfnt_Name(m_face,i,&tname);
+		if(moreInfo.value(name_meaning.at(tname.name_id)).isEmpty() )
+			moreInfo[name_meaning.at(tname.name_id)] = QString::fromUtf8((const char*)tname.string, tname.string_len);		
+	}
+}
+
+void FontItem::moreInfo_type1()
+{
+	PS_FontInfoRec sinfo ;
+	int err = FT_Get_PS_Font_Info(m_face,&sinfo);
+	// full_name version notice
+	moreInfo["full_name"] = sinfo.full_name;
+	moreInfo["version"] = sinfo.version;
+	moreInfo["notice"] = sinfo.notice;
+	
 }
 
 

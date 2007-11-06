@@ -124,7 +124,7 @@ void typotek::open()
 		}
 	}
 
-	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags are means to get your fonts easily found.\nThe string you type will be split by \"#\" to obtain a tags list." );
+	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags are meant to get your fonts easily found.\nThe string you type will be split by \"#\" to obtain a tags list." );
 	QStringList tali = inputTags.split ( "#" );
 	tali << "Activated_Off" ;
 
@@ -162,11 +162,11 @@ void typotek::open()
 				if(fafm.exists())
 					fafm.copy(ownDir.absolutePath() + "/" + iafm.fileName() );
 			}
-			FontItem *fi = new FontItem ( pathList.at ( i ) );
+			FontItem *fitem = new FontItem (  ownDir.absolutePath() + "/" + fi.fileName());
 
-			fi->setTags ( tali );
-			fontMap.append ( fi );
-			realFontMap[fi->name() ] = fi;
+			fitem->setTags ( tali );
+			fontMap.append ( fitem );
+			realFontMap[fitem->name() ] = fitem;
 		}
 	}
 	theMainView->slotReloadFontList();
@@ -354,9 +354,12 @@ void typotek::checkOwnDir()
 {
 	//DONE parse ~/.fonts.conf to see if there is the ~/.managed-fonts dir entry
 	// and create it if it does not exist and setup a QDir("~/.managed-fonts") private member
-	managedDir.setPath(QDir::homePath() + "/.fonts-managed");
+	QString fontmanaged("/.fonts-managed"); // Where activated fonts are sym-linked
+	QString fontreserved("/.fonts-reserved");// Where aknoweldged fonts are stored.
+	
+	managedDir.setPath(QDir::homePath() + fontmanaged);
 	if(!managedDir.exists())
-		managedDir.mkpath(QDir::homePath() + "/.fonts-managed");
+		managedDir.mkpath(QDir::homePath() + fontmanaged );
 	
 	QFile fcfile(QDir::homePath() + "/.fonts.conf");
 	if ( !fcfile.open ( QFile::ReadWrite ) )
@@ -394,9 +397,9 @@ void typotek::checkOwnDir()
 		fcfile.close();
 	}
 	
-	ownDir.setPath ( QDir::homePath() + "/.typotek" );
+	ownDir.setPath ( QDir::homePath() +  fontreserved);
 	if ( !ownDir.exists() )
-		ownDir.mkpath ( QDir::homePath() + "/.typotek" );
+		ownDir.mkpath ( QDir::homePath() + fontreserved );
 
 	fontsdata.setFileName ( ownDir.absolutePath() + "/fonts.data" );
 

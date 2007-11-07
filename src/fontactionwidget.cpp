@@ -50,11 +50,7 @@ void FontActionWidget::prepare ( QList< FontItem * > fonts )
 		if ( theFonts[i]->isLocked() )
 			theFonts.removeAt ( i );
 	}
-
-	qDebug() << theFonts.count();
-
 	tagsListWidget->clear();
-
 
 	QString tit ( "%1" );
 	QString tot;
@@ -70,11 +66,11 @@ void FontActionWidget::prepare ( QList< FontItem * > fonts )
 	{
 		QString cur_tag = typotek::tagsList[i];
 
-		if ( cur_tag.isEmpty() )
+		if ( cur_tag.isEmpty() || cur_tag.contains ( "Activated_" )  )
 			continue;
 
 		QListWidgetItem *lit;
-		if ( !cur_tag.contains ( "Activated_" ) )
+		
 		{
 			lit = new QListWidgetItem ( cur_tag );
 			lit->setCheckState ( Qt::Unchecked );
@@ -153,14 +149,15 @@ void FontActionWidget::slotFinalize()
 				tags.append ( tagsListWidget->item ( i )->text() );
 		}
 		
-		
+		QStringList remtags;
 		for ( int i=0;i<theFonts.count();++i )
 		{
+			remtags = tags;
 			if(theFonts[i]->tags().contains("Activated_On"))
-				tags << "Activated_On";
+				remtags << "Activated_On";
 			if(theFonts[i]->tags().contains("Activated_Off"))
-				tags << "Activated_Off";
-			theFonts[i]->setTags ( tags );
+				remtags << "Activated_Off";
+			theFonts[i]->setTags ( remtags );
 		}
 // 	}
 

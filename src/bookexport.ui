@@ -12,424 +12,431 @@
   <property name="windowTitle" >
    <string>Dialog</string>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" >
-    <layout class="QVBoxLayout" >
-     <item>
-      <layout class="QHBoxLayout" >
-       <item>
+  <widget class="QDialogButtonBox" name="okButton" >
+   <property name="geometry" >
+    <rect>
+     <x>850</x>
+     <y>570</y>
+     <width>218</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="standardButtons" >
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QGraphicsView" name="preView" >
+   <property name="geometry" >
+    <rect>
+     <x>621</x>
+     <y>11</y>
+     <width>449</width>
+     <height>551</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="" >
+   <property name="geometry" >
+    <rect>
+     <x>12</x>
+     <y>12</y>
+     <width>603</width>
+     <height>159</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" >
+    <item>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QLabel" name="label_6" >
+        <property name="font" >
+         <font>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="autoFillBackground" >
+         <bool>false</bool>
+        </property>
+        <property name="frameShape" >
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text" >
+         <string>Font book options </string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>File</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="fileNameEdit" />
+        </item>
+        <item>
+         <widget class="QPushButton" name="fileNameButton" >
+          <property name="text" >
+           <string>Browse...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_2" >
+          <property name="text" >
+           <string>Paper Size</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="paperSizeCombo" />
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox" >
+      <property name="title" >
+       <string>X-Pos</string>
+      </property>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
         <layout class="QVBoxLayout" >
          <item>
           <layout class="QHBoxLayout" >
            <item>
-            <layout class="QVBoxLayout" >
-             <item>
-              <widget class="QLabel" name="label_6" >
-               <property name="font" >
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="frameShape" >
-                <enum>QFrame::Box</enum>
-               </property>
-               <property name="text" >
-                <string>Font book options </string>
-               </property>
-               <property name="alignment" >
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" >
-               <item>
-                <widget class="QLabel" name="label" >
-                 <property name="text" >
-                  <string>File</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="fileNameEdit" />
-               </item>
-               <item>
-                <widget class="QPushButton" name="fileNameButton" >
-                 <property name="text" >
-                  <string>Browse...</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" >
-               <item>
-                <widget class="QLabel" name="label_2" >
-                 <property name="text" >
-                  <string>Paper Size</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="paperSizeCombo" />
-               </item>
-               <item>
-                <spacer>
-                 <property name="orientation" >
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" >
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox" >
-             <property name="title" >
-              <string>X-Pos</string>
+            <widget class="QLabel" name="label_3" >
+             <property name="text" >
+              <string>Family </string>
              </property>
-             <layout class="QGridLayout" >
-              <item row="0" column="0" >
-               <layout class="QVBoxLayout" >
-                <item>
-                 <layout class="QHBoxLayout" >
-                  <item>
-                   <widget class="QLabel" name="label_3" >
-                    <property name="text" >
-                     <string>Family </string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer>
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" >
-                     <size>
-                      <width>16</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="familySpinBox" >
-                    <property name="maximum" >
-                     <number>1000</number>
-                    </property>
-                    <property name="value" >
-                     <number>50</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" >
-                  <item>
-                   <widget class="QLabel" name="label_4" >
-                    <property name="text" >
-                     <string>Style </string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer>
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" >
-                     <size>
-                      <width>21</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="styleSpinBox" >
-                    <property name="maximum" >
-                     <number>1000</number>
-                    </property>
-                    <property name="value" >
-                     <number>50</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" >
-                  <item>
-                   <widget class="QLabel" name="label_5" >
-                    <property name="text" >
-                     <string>Text</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer>
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" >
-                     <size>
-                      <width>21</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="sampleSpinBox" >
-                    <property name="maximum" >
-                     <number>1000</number>
-                    </property>
-                    <property name="value" >
-                     <number>150</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-             </layout>
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="groupBox_2" >
-             <property name="title" >
-              <string>Font size</string>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
              </property>
-             <layout class="QGridLayout" >
-              <item row="0" column="0" >
-               <layout class="QVBoxLayout" >
-                <item>
-                 <layout class="QHBoxLayout" >
-                  <item>
-                   <widget class="QLabel" name="label_7" >
-                    <property name="text" >
-                     <string>Family</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer>
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" >
-                     <size>
-                      <width>21</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="familyFontSizeSpin" >
-                    <property name="value" >
-                     <number>18</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" >
-                  <item>
-                   <widget class="QLabel" name="label_8" >
-                    <property name="text" >
-                     <string>Style</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer>
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" >
-                     <size>
-                      <width>21</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="styleFontSizeSpin" >
-                    <property name="value" >
-                     <number>14</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" >
-                  <item>
-                   <widget class="QLabel" name="label_9" >
-                    <property name="text" >
-                     <string>Headline</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer>
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" >
-                     <size>
-                      <width>21</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="headlineFontSizeSpin" >
-                    <property name="value" >
-                     <number>28</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" >
-                  <item>
-                   <widget class="QLabel" name="label_10" >
-                    <property name="text" >
-                     <string>Body</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer>
-                    <property name="orientation" >
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" >
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="bodyFontSizeSpin" >
-                    <property name="value" >
-                     <number>11</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-             </layout>
+             <property name="sizeHint" >
+              <size>
+               <width>16</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="familySpinBox" >
+             <property name="maximum" >
+              <number>1000</number>
+             </property>
+             <property name="value" >
+              <number>50</number>
+             </property>
             </widget>
            </item>
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" >
+          <layout class="QHBoxLayout" >
            <item>
-            <layout class="QHBoxLayout" >
-             <item>
-              <widget class="QLabel" name="label_11" >
-               <property name="text" >
-                <string>Headline</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="sampleHeadline" />
-             </item>
-            </layout>
+            <widget class="QLabel" name="label_4" >
+             <property name="text" >
+              <string>Style </string>
+             </property>
+            </widget>
            </item>
            <item>
-            <layout class="QHBoxLayout" >
-             <item>
-              <layout class="QVBoxLayout" >
-               <item>
-                <widget class="QLabel" name="label_12" >
-                 <property name="text" >
-                  <string>Sample text</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer>
-                 <property name="orientation" >
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" >
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QTextEdit" name="sampleTextEdit" />
-             </item>
-            </layout>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" >
+              <size>
+               <width>21</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="styleSpinBox" >
+             <property name="maximum" >
+              <number>1000</number>
+             </property>
+             <property name="value" >
+              <number>50</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" >
+           <item>
+            <widget class="QLabel" name="label_5" >
+             <property name="text" >
+              <string>Text</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" >
+              <size>
+               <width>21</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="sampleSpinBox" >
+             <property name="maximum" >
+              <number>1000</number>
+             </property>
+             <property name="value" >
+              <number>150</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
         </layout>
        </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_2" >
+      <property name="title" >
+       <string>Font size</string>
+      </property>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <layout class="QVBoxLayout" >
+         <item>
+          <layout class="QHBoxLayout" >
+           <item>
+            <widget class="QLabel" name="label_7" >
+             <property name="text" >
+              <string>Family</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" >
+              <size>
+               <width>21</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="familyFontSizeSpin" >
+             <property name="value" >
+              <number>18</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" >
+           <item>
+            <widget class="QLabel" name="label_8" >
+             <property name="text" >
+              <string>Style</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" >
+              <size>
+               <width>21</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="styleFontSizeSpin" >
+             <property name="value" >
+              <number>14</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" >
+           <item>
+            <widget class="QLabel" name="label_9" >
+             <property name="text" >
+              <string>Headline</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" >
+              <size>
+               <width>21</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="headlineFontSizeSpin" >
+             <property name="value" >
+              <number>28</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" >
+           <item>
+            <widget class="QLabel" name="label_10" >
+             <property name="text" >
+              <string>Body</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" >
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="bodyFontSizeSpin" >
+             <property name="value" >
+              <number>11</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QSplitter" name="splitter" >
+   <property name="geometry" >
+    <rect>
+     <x>12</x>
+     <y>178</y>
+     <width>603</width>
+     <height>381</height>
+    </rect>
+   </property>
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <widget class="QWidget" name="layoutWidget" >
+    <layout class="QVBoxLayout" >
+     <item>
+      <layout class="QHBoxLayout" >
        <item>
-        <widget class="QGraphicsView" name="preView" />
+        <widget class="QLabel" name="label_11" >
+         <property name="text" >
+          <string>Headline</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="sampleHeadline" />
        </item>
       </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" >
        <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" >
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="QLabel" name="label_12" >
+           <property name="text" >
+            <string>Sample text</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QDialogButtonBox" name="okButton" >
-         <property name="standardButtons" >
-          <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
-         </property>
-        </widget>
+        <widget class="QTextEdit" name="sampleTextEdit" />
        </item>
       </layout>
      </item>
     </layout>
-   </item>
-  </layout>
+   </widget>
+   <widget class="QListWidget" name="selectedFontsList" />
+  </widget>
  </widget>
  <resources/>
  <connections/>

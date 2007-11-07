@@ -35,7 +35,7 @@ class MainViewWidget;
 class FontItem;
 class TypotekAdaptator;
 
-static bool __FM_SHOW_FONTLOADED;
+
 
 class typotek:public QMainWindow
 {

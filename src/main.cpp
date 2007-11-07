@@ -23,6 +23,8 @@
 #include <QIcon>
 #include "typotek.h"
 
+bool __FM_SHOW_FONTLOADED;
+
 int main(int argc, char *argv[])
 {
       Q_INIT_RESOURCE(application);

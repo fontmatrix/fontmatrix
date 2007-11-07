@@ -65,8 +65,18 @@
              <bold>true</bold>
             </font>
            </property>
+           <property name="toolTip" >
+            <string>Search through font informations</string>
+           </property>
            <property name="text" >
             <string>Search</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="sensitivityCheck" >
+           <property name="text" >
+            <string>Case sensitive</string>
            </property>
           </widget>
          </item>
@@ -136,7 +146,7 @@
            <item>
             <widget class="QLabel" name="setlabel" >
              <property name="text" >
-              <string>Set</string>
+              <string>Sets</string>
              </property>
             </widget>
            </item>
@@ -294,7 +304,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>618</width>
+            <width>438</width>
             <height>599</height>
            </rect>
           </property>
@@ -319,8 +329,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>618</width>
-            <height>599</height>
+            <width>337</width>
+            <height>150</height>
            </rect>
           </property>
           <attribute name="label" >
@@ -367,6 +377,9 @@
                    </property>
                    <property name="text" >
                     <string>Fit to view</string>
+                   </property>
+                   <property name="checked" >
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>

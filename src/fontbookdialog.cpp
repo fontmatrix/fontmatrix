@@ -33,6 +33,7 @@ FontBookDialog::FontBookDialog ( QWidget *parent )
 	isOk = false;
 
 	fillSizeList();
+	fillFontsList();
 	QString alorem ( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nUt a sapien. Aliquam aliquet purus molestie dolor.\nInteger quis eros ut erat posuere dictum. Curabitur dignissim.\nInteger orci. Fusce vulputate lacus at ipsum. \nQuisque in libero nec mi laoreet volutpat." );
 	QString loremBig ( "LOREM IPSUM DOLOR" );
 	setSampleHeadline ( loremBig );
@@ -360,6 +361,15 @@ void FontBookDialog::slotPreview()
 	
 	preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
 
+}
+
+void FontBookDialog::fillFontsList()
+{
+	QList<FontItem*>localFontMap = typotek::getInstance()->getCurrentFonts();
+	foreach(FontItem* fit, localFontMap)
+	{
+		selectedFontsList->addItem(fit->fancyName());
+	}
 }
 
 

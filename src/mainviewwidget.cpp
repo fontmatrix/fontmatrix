@@ -92,7 +92,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( editAllButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotEditAll() ) );
 
 	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotView() ) );
-// 	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotInfoFont() ) );
 
 
 	connect ( abcScene,SIGNAL ( selectionChanged() ),this,SLOT ( slotglyphInfo() ) );
@@ -136,9 +135,9 @@ MainViewWidget::~MainViewWidget()
 
 void MainViewWidget::fillTree()
 {
-// 	qDebug() << "curitemname = " << curItemName;
-	if(curItemName.isEmpty() && currentFonts.count())
-		curItemName = currentFonts.first()->name();
+	qDebug() << "curitemname = " << curItemName;
+// 	if(curItemName.isEmpty() && currentFonts.count())
+// 		curItemName = currentFonts.first()->name();
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
 	for ( int i=0; i < fontTree->topLevelItemCount();++i )
@@ -148,7 +147,7 @@ void MainViewWidget::fillTree()
 		if ( topit->child(j)->isExpanded() )
 				openKeys << topit->child(j)->text ( 0 );
 	}
-qDebug() << "openjey : " << openKeys.join("/");
+// qDebug() << "openjey : " << openKeys.join("/");
 	
 	fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
@@ -163,6 +162,7 @@ qDebug() << "openjey : " << openKeys.join("/");
 		QChar firstChar ( i );
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( fontTree );
 		alpha->setText ( 0, firstChar );
+		alpha->setData(0,100,"alpha");
 		bool alphaIsUsed = false;
 		
 		for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
@@ -173,6 +173,9 @@ qDebug() << "openjey : " << openKeys.join("/");
 				QTreeWidgetItem *ord = new QTreeWidgetItem ( alpha );
 				ord->setText ( 0, kit.key() );
 				ord->setData(0,100,"family");
+				ord->setCheckState(0,Qt::Unchecked);
+				bool chekno = false;
+				bool checkyes = false;
 				if ( openKeys.contains ( kit.key() ) )
 				{
 					ord->setExpanded ( true );
@@ -187,15 +190,33 @@ qDebug() << "openjey : " << openKeys.join("/");
 					QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 					entry->setText ( 0, kit.value() [n]->variant() );
 					entry->setText ( 1, kit.value() [n]->name() );
+					entry->setData ( 0, 100, "fontfile");
+					entry->setData(0,200,entry->checkState(1));
 // 					entry->setIcon ( 2, kit.value() [n]->oneLinePreviewIcon());
 					if(isExpanded)
 						entry->setBackground(2,QBrush(kit.value()[n]->oneLinePreviewPixmap()));
 					
 					bool act = kit.value() [n]->tags().contains ( "Activated_On" );
+					if(act)
+					{
+						checkyes = true;
+					}
+					else
+					{
+						chekno = true;
+					}
 					entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
 					if ( entry->text ( 1 ) == curItemName )
 						curItem = entry;
 				}
+				if(checkyes && chekno)
+					ord->setCheckState(0,Qt::PartiallyChecked);
+				else if(checkyes)
+					ord->setCheckState(0,Qt::Checked);
+				// track checkState
+				ord->setData(0,200,ord->checkState(0));
+				ord->setText(1,QString::number( ord->childCount() ));
+				
 
 				alphaIsUsed = true;
 			}
@@ -212,7 +233,7 @@ qDebug() << "openjey : " << openKeys.join("/");
 	}
 	if ( curItem )
 	{
-// 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
+		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
 		fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 		QColor scol(Qt::blue);
 		scol.setAlpha(30);
@@ -221,8 +242,12 @@ qDebug() << "openjey : " << openKeys.join("/");
 		curItem->setBackgroundColor(0,scol);
 		curItem->setBackgroundColor(1,scol);
 	}
+	else
+	{
+		qDebug() << "NO CURITEM";
+	}
 	fontTree->resizeColumnToContents ( 0 )  ;
-	fontTree->resizeColumnToContents ( 1 ) ;
+// 	fontTree->resizeColumnToContents ( 1 ) ;
 // 	fontTree->setColumnWidth(0,200);
 }
 
@@ -233,9 +258,6 @@ void MainViewWidget::slotItemOpened(QTreeWidgetItem * item)
 		for(int i=0; i<item->childCount(); ++i)
 		{
 			QString font= item->child(i)->text(1);
-// 			qDebug() << "sIO ("<< i <<"): " ;
-// 			qDebug() << "\t" << font;
-// 			item->setBackgroundColor(0,Qt::green);
 			if(typo->getFont(font))
 			{
 				item->child(i)->setBackground(2, QBrush(typo->getFont(font)->oneLinePreviewPixmap()));
@@ -261,24 +283,79 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 {
 // 	qDebug() << "font select";
 
-	curItemName = item->text ( 1 ).isNull() ? item->text ( 0 ) : item->text ( 1 );
-	if ( item->childCount() > 0 )
-		return;
-
-	lastIndex = faceIndex;
-	faceIndex = item->text ( 1 );
-
-	if ( faceIndex.count() && faceIndex != lastIndex )
+// 	curItemName = item->text ( 1 ).isNull() ? item->text ( 0 ) : item->text ( 1 );
+	
+	
+	if ( item->data(0,100).toString() == "alpha" )
 	{
-		slotFontAction ( item,column );
-		emit faceChanged();
-		theVeryFont = typo->getFont ( faceIndex );
+		qDebug() << "Item is an alpha";
+		return;
+		fillTree();
 	}
-
-	if ( item->checkState ( 1 ) == Qt::Checked )
-		slotActivate ( true, item, column );
-	else
-		slotActivate ( false, item, column );
+	
+	if(item->data(0,100).toString() == "family")
+	{
+		qDebug() << "Item is a family";
+		curItemName = item->child(0)->text(1);
+// 		qDebug() << curItemName;
+		int oldc = item->data(0,200).toInt();
+		if(oldc == item->checkState(0))
+		{
+			fillTree();
+			return;
+			
+		}
+		if(item->checkState(0) != Qt::PartiallyChecked)
+		{
+			
+			bool cs = item->checkState(0) == Qt::Checked ? true : false;
+			
+			QList<FontItem*> todo;
+			for(int i=0; i<item->childCount(); ++i)
+			{
+				todo << typo->getFont(item->child(i)->text(1));		
+			}
+			foreach(FontItem* afont, todo)
+			{
+				activation(afont, cs);
+			}
+			
+		}
+		else
+		{
+			qDebug() << "Something wrong djhgjksdhgjdsh_grepstring";
+			
+		}
+		fillTree();
+		return;
+	}
+	
+	if(item->data(0,100).toString() == "fontfile")
+	{
+		qDebug() << "Item is a fontfile";
+		lastIndex = faceIndex;
+		faceIndex = item->text ( 1 );
+		curItemName = faceIndex;
+	
+		if ( faceIndex.count() && faceIndex != lastIndex )
+		{
+			qDebug() << "\tFont has changed";
+			slotFontAction ( item,column );
+			emit faceChanged();
+			theVeryFont = typo->getFont ( faceIndex );
+		}
+	
+		if(item->data(0,200).toInt() != item->checkState(1))
+		{
+			if ( item->checkState ( 1 ) == Qt::Checked )
+				slotActivate ( true, item, column );
+			else
+				slotActivate ( false, item, column );
+		}
+		fillTree();
+		return;
+	}
+	return;
 
 }
 
@@ -361,9 +438,14 @@ void MainViewWidget::slotSearch()
 	fontTree->clear();
 
 	QString fs ( searchString->text() );
-	QString ff ( "family" );
+	QString ff ( "search_%1" );
+	QString sensitivity("INSENS");
+	if(sensitivityCheck->isChecked())
+	{
+		sensitivity = "SENS";
+	}
 
-	currentFonts = typo->getFonts ( fs,ff ) ;
+	currentFonts = typo->getFonts ( fs,ff.arg(sensitivity) ) ;
 	currentOrdering = "family";
 	fillTree();
 	searchString->clear();
@@ -414,6 +496,7 @@ void MainViewWidget::slotFilterTagset ( QString set )
 
 void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 {
+	if(column >2 )return;
 	if ( !currentFaction )
 	{
 		currentFaction = new FontActionWidget ( typo->adaptator() );
@@ -571,7 +654,7 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 		}
 	}
 	fillTree();
-	typo->save();
+// 	typo->save();
 }
 
 
@@ -632,6 +715,7 @@ void MainViewWidget::slotSetSampleText()
 
 void MainViewWidget::slotActivate ( bool act, QTreeWidgetItem * item, int column )
 {
+	if(column >2 )return;
 	FontItem * FoIt = typo->getFont ( item->text ( 1 ) );
 	if ( FoIt )
 	{

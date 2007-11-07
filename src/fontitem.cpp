@@ -316,7 +316,7 @@ QByteArray FontItem::pixarray ( uchar * b, int len )
 	uchar *imgdata =  b ;
 	QByteArray buffer ( len * 4, 255 );
 	QDataStream stream ( &buffer,QIODevice::WriteOnly );
-	for ( uint i = 0 ; i < len; ++i )
+	for ( int i = 0 ; i < len; ++i )
 	{
 
 		stream << ( quint8 ) ~imgdata[i];
@@ -391,7 +391,7 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 		}
 		pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
 		pitem->setData ( 1,m_charLess[gi] );
-		uint ucharcode = charcode;
+// 		uint ucharcode = charcode;
 		pitem->setData ( 2,0 );
 		glyphList.append ( pitem );
 		scene->addItem ( pitem );
@@ -573,6 +573,7 @@ void FontItem::moreInfo_sfnt()
 				<< "PostScript CID findfont name";
 	}
 	int tname_count = FT_Get_Sfnt_Name_Count(m_face);
+	//TODO check encodings and platforms
 	for(int i=0; i < tname_count; ++i)
 	{
 		FT_Get_Sfnt_Name(m_face,i,&tname);
@@ -585,6 +586,11 @@ void FontItem::moreInfo_type1()
 {
 	PS_FontInfoRec sinfo ;
 	int err = FT_Get_PS_Font_Info(m_face,&sinfo);
+	if(err)
+	{
+		qDebug() <<"FT_Get_PS_Font_Info("<< m_name <<")"<<" failed :" << err;
+		return;
+	}
 	// full_name version notice
 	moreInfo["full_name"] = sinfo.full_name;
 	moreInfo["version"] = sinfo.version;

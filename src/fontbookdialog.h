@@ -63,6 +63,7 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 		void updateView();
 	private:
 		void fillSizeList();
+		void fillFontsList();
 		QSizeF m_pageSize;
 		QPrinter::PageSize m_pageSizeConstant;
 		QRectF m_pageRect;

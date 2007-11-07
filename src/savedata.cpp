@@ -47,7 +47,7 @@ SaveData::~SaveData()
 void SaveData::doSave()
 {
 	writeStartDocument();
-	writeStartElement("typotek");
+	writeStartElement("fontmatrix");
 	writeAttribute("version", "1.0");
 	
 	//save fonts

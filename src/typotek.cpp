@@ -41,6 +41,7 @@
 
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
+extern bool __FM_SHOW_FONTLOADED;
 
 typotek::typotek()
 {
@@ -176,6 +177,7 @@ void typotek::open()
 bool typotek::save()
 {	
 	SaveData saver(&fontsdata, this);
+	return true;
 	
 }
 
@@ -447,6 +449,16 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 				if ( tl[ii].contains ( pattern,Qt::CaseInsensitive ) )
 					ret.append ( fontMap[i] );
 			}
+		}
+		else if(field == "search_INSENS")
+		{
+			if(fontMap[i]->infoText().contains(pattern,Qt::CaseInsensitive))
+				ret.append ( fontMap[i] );
+		}
+		else if(field == "search_SENS")
+		{
+			if(fontMap[i]->infoText().contains(pattern,Qt::CaseSensitive))
+				ret.append ( fontMap[i] );
 		}
 		else
 		{

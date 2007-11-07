@@ -81,14 +81,28 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="removeToSetButton" >
+           <property name="font" >
+            <font>
+             <pointsize>13</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text" >
+            <string>&lt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer>
            <property name="orientation" >
             <enum>Qt::Vertical</enum>
            </property>
            <property name="sizeHint" >
             <size>
-             <width>20</width>
-             <height>40</height>
+             <width>75</width>
+             <height>111</height>
             </size>
            </property>
           </spacer>

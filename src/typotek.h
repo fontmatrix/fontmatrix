@@ -125,6 +125,7 @@ class typotek:public QMainWindow
 		
 		void addTagMapEntry(QString key, QStringList value){tagsMap[key] = value;};
 		void addTagSetMapEntry(QString key, QStringList value){tagSetMap[key] = value;};
+		void removeTagFromSet(QString set, QString tag){tagSetMap[set].removeAll(tag);};
 		QStringList tagsets(){return tagSetMap.keys();};
 		QStringList tagsOfSet(QString set){return tagSetMap[set];};
 		

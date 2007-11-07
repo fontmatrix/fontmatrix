@@ -71,6 +71,7 @@ void SaveData::doSave()
 	
 	//save tagsets
 	QStringList tlist = m_typo->tagsets();
+	qDebug() << "SAVE_TAGSET "<< tlist.join("/");
 	foreach(QString tagset, tlist)
 	{
 		writeStartElement("tagset");

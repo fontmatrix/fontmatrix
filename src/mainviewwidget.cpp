@@ -384,22 +384,28 @@ void MainViewWidget::slotFilterTag ( QString tag )
 void MainViewWidget::slotFilterTagset ( QString set )
 {
 	fontTree->clear();
+	currentFonts.clear();
 	QStringList tags = typo->tagsOfSet ( set );
 	if ( !tags.count() )
 		return;
-
-	currentFonts = typo->getFonts ( tags[0],"tag" );
-	QList<FontItem*> fontBuffer;
-
-	foreach ( QString curtag, tags )
+	
+	for(int i = 0;i < tags.count(); ++i)
 	{
-		fontBuffer = typo->getFonts ( curtag,"tag" );
-		foreach ( FontItem* fit, fontBuffer )
-		{
-			if ( !currentFonts.contains ( fit ) )
-				currentFonts.removeAll ( fit );
-		}
+		currentFonts += typo->getFonts ( tags[i],"tag" );
 	}
+	int count_req = tags.count();
+	QSet<FontItem*> setOfTags(currentFonts.toSet());
+	foreach(FontItem * it, setOfTags)
+	{
+// 		qDebug() << it->name();
+		if(currentFonts.count(it) != count_req)
+			currentFonts.removeAll(it);
+		else
+			qDebug() << count_req<<currentFonts.count(it);
+	}
+	
+
+	
 	currentOrdering = "family";
 	fillTree();
 }

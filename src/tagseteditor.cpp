@@ -20,6 +20,8 @@
 #include "tagseteditor.h"
 #include "typotek.h"
 
+#include <QDebug>
+
 TagSetEditor::TagSetEditor()
 {
 	setupUi(this);
@@ -36,8 +38,10 @@ TagSetEditor::~TagSetEditor()
 void TagSetEditor::doConnect()
 {
 	connect(closeButton,SIGNAL(released()),this,SLOT(close()));
+	connect(closeButton,SIGNAL(released()),m_typo,SLOT(save()));
 	connect(newSetButton,SIGNAL(released()),this,SLOT(slotNewSet()));
 	connect(addToSetButton,SIGNAL(released()),this,SLOT(slotAddTagToSet()));
+	connect(removeToSetButton,SIGNAL(released()),this,SLOT(slotRemoveToSet()));
 	connect(setList,SIGNAL(itemPressed( QListWidgetItem* )),this,SLOT(slotUpdateTagsOfSet( QListWidgetItem*)));
 }
 
@@ -104,6 +108,37 @@ void TagSetEditor::slotAddTagToSet()
 	}
 	m_typo->addTagSetMapEntry(curSet, sel);
 }
+
+void TagSetEditor::slotRemoveToSet()
+{
+	QString curSet;
+	for(int i = 0; i < setList->count();++i)
+	{
+		if(setList->item(i)->isSelected())
+			curSet = setList->item(i)->text();
+	}
+	
+	if(curSet.isEmpty())
+		return;
+	
+	QList<QListWidgetItem*> sel;
+	QStringList rest;
+	for(int i = 0; i < tagsOfSetList->count();++i)
+	{
+		QListWidgetItem *it = tagsOfSetList->item(i);
+		if(it->isSelected())
+			sel << it;
+		else
+			rest << it->text();
+	}
+	foreach(QListWidgetItem * it, sel)
+	{	
+			m_typo->removeTagFromSet(curSet, it->text());
+	}
+	tagsOfSetList->clear();
+	tagsOfSetList->addItems(rest);
+}
+
 
 void TagSetEditor::slotUpdateTagsOfSet( QListWidgetItem* item )
 {

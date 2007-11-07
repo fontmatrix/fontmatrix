@@ -125,8 +125,10 @@ void typotek::open()
 		}
 	}
 
-	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags are meant to get your fonts easily found.\nThe string you type will be split by \"#\" to obtain a tags list." );
-	QStringList tali = inputTags.split ( "#" );
+	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." );
+	QStringList tali;
+	if(!inputTags.isEmpty())
+		tali = inputTags.split ( "#" );
 	tali << "Activated_Off" ;
 
 	foreach ( QString tas, tali )
@@ -184,8 +186,8 @@ bool typotek::save()
 
 void typotek::about()
 {
-	QMessageBox::about ( this, tr ( "About Typotek" ),
-	                     tr ( "Typotek is what we all hoped for long time : a font manager for linux" ) );
+	QMessageBox::about ( this, tr ( "About Fontmatrix" ),
+	                     tr ( "Fontmatrix, a font manager for Linux.\nwww.fontmatrix.net" ) );
 }
 
 

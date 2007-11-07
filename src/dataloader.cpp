@@ -105,7 +105,7 @@ void DataLoader::load()
 		
 		qDebug() << set << tl.join(":");
 	}
-	
+	collectedTags.removeAll("");
 	typotek::tagsList = collectedTags.toSet().toList();
 }
 

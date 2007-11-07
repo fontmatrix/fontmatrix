@@ -407,6 +407,7 @@ void MainViewWidget::slotFilterTagset ( QString set )
 
 	
 	currentOrdering = "family";
+	currentFonts = currentFonts.toSet().toList();
 	fillTree();
 }
 

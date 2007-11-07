@@ -81,6 +81,7 @@ void TagSetEditor::slotNewSet()
 
 void TagSetEditor::slotAddTagToSet()
 {
+	
 	QString curSet;
 	for(int i = 0; i < setList->count();++i)
 	{
@@ -90,7 +91,7 @@ void TagSetEditor::slotAddTagToSet()
 	
 	if(curSet.isEmpty())
 		return;
-	
+		
 	QStringList sel;
 	for(int i = 0; i < tagList->count();++i)
 	{
@@ -104,9 +105,10 @@ void TagSetEditor::slotAddTagToSet()
 		if(!m_typo->tagsOfSet(curSet).contains(it))
 		{
 			tagsOfSetList->addItem(it);
+			m_typo->addTagToSet(curSet,it);
 		}
 	}
-	m_typo->addTagSetMapEntry(curSet, sel);
+
 }
 
 void TagSetEditor::slotRemoveToSet()

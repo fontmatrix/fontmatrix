@@ -406,7 +406,7 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 
 QString FontItem::infoText()
 {
-	QString ret ( "<h3>%1</h3> <p><b>filepath  </b> %2</p> <p><b>font type  </b> %3</p> <p><b>encodings  </b> %4</p>  <p>%5 glyphs in %6 faces (including %8 glyphs unreachable by character codes)</p><p><b>Tags  </b> %7</p>" );
+	QString ret ( "<h2>%1</h2> <p><b>filepath  </b> %2</p> <p><b>font type  </b> %3</p> <p><b>encodings  </b> %4</p>  <p>%5 glyphs in %6 faces (including %8 glyphs unreachable by character codes)</p><p><b>Tags  </b> %7</p>" );
 	ret = ret.arg ( m_family + " " + m_variant ) //1
 	       .arg ( m_path ) //2
 	       .arg ( m_type ) //3

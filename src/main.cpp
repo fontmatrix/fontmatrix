@@ -21,6 +21,7 @@
 
 #include <QApplication>
 #include <QIcon>
+#include <QSplashScreen>
 #include "typotek.h"
 
 bool __FM_SHOW_FONTLOADED;
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
 {
       Q_INIT_RESOURCE(application);
       QApplication app(argc, argv);
-      app.setWindowIcon (QIcon(":/fontmatrix.png") );
+      app.setWindowIcon (QIcon(":/fontmatrix_icon.png") );
       
       if(app.arguments().contains("debugfonts"))
       {
@@ -39,10 +40,18 @@ int main(int argc, char *argv[])
       {
 	      __FM_SHOW_FONTLOADED = false;
       }
+      typotek * mw;
+      QPixmap theSplashPix(":/fontmatrix_splash.png");
+      QSplashScreen theSplash(theSplashPix);  
+      theSplash.show();
+      mw = new typotek();
+//       QObject::connect(mw,SIGNAL(relayStartingStep(QString)),&theSplash,SLOT(showMessage( const QString&, int, const QColor& )));
       
       
-      typotek * mw = new typotek();
+    
       mw->show();
+      theSplash.finish(mw);
+      
       return app.exec();
 }
 

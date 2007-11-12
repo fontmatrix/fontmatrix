@@ -427,10 +427,12 @@ void typotek::initDir()
 		qDebug() << pathList.join("\n");
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
+		
 		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
 		fontMap.append ( fi );
 		realFontMap[fi->name() ] = fi;
 		fi->setTags ( tagsMap.value ( fi->name() ) );
+		emit relayStartingStep( fi->name() );
 	}
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 

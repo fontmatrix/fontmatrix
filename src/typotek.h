@@ -62,6 +62,7 @@ class typotek:public QMainWindow
 		bool save();
 	signals:
 		void tagAdded(QString);
+		void relayStartingStep(QString);
 
 	private:
 		void createActions();

@@ -20,58 +20,83 @@
 
 
 #include <QApplication>
+#include <QDesktopWidget>
+
 #include <QIcon>
 #include <QSplashScreen>
 #include <QPixmap>
 #include <QBitmap>
+#include <QDebug>
 #include "typotek.h"
 
 bool __FM_SHOW_FONTLOADED;
 
 /**
- * 
- * @param argc 
- * @param argv[] 
- * @return 
+ *
+ * @param argc
+ * @param argv[]
+ * @return
  */
-int main(int argc, char *argv[])
+int main ( int argc, char *argv[] )
 {
-      Q_INIT_RESOURCE(application);
-      QApplication app(argc, argv);
-      app.setWindowIcon (QIcon(":/fontmatrix_icon.png") );
-      
-      if(app.arguments().contains("debugfonts"))
-      {
-	      __FM_SHOW_FONTLOADED = true;
-      }
-      else
-      {
-	      __FM_SHOW_FONTLOADED = false;
-      }
-      typotek * mw;
-      QPixmap theSplashPix(":/fontmatrix_splash.png");
-      QSplashScreen theSplash(theSplashPix);
-        mw = new typotek;
-	QObject::connect(mw,SIGNAL(relayStartingStep(QString, int, QColor)),&theSplash,SLOT(showMessage( const QString&, int, const QColor& )));
-      // Many splash transparency tests
-	if(app.arguments().contains("alpha1_splash"))
+	Q_INIT_RESOURCE ( application );
+	QApplication app ( argc, argv );
+	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );
+
+	if ( app.arguments().contains ( "debugfonts" ) )
 	{
-      		theSplash.setMask(theSplashPix.mask());
+		__FM_SHOW_FONTLOADED = true;
 	}
-	else if(app.arguments().contains("alpha2_splash"))
+	else
 	{
-//       theSplash.setAttribute(Qt::WA_NoBackground);
-      QPalette spalette;
-      spalette.setBrush ( QPalette::Window, Qt::transparent );
-      theSplash.setPalette(spalette);
-//       theSplash.setAutoFillBackground(true);
+		__FM_SHOW_FONTLOADED = false;
 	}
-      theSplash.show();
-	mw->initMatrix();	
-      mw->show();
-      theSplash.finish(mw);
-      
-      
-      return app.exec();
+	typotek * mw;
+	QPixmap theSplashPix ( ":/fontmatrix_splash.png" );
+	QSplashScreen theSplash ( theSplashPix );
+	mw = new typotek;
+	QObject::connect ( mw,SIGNAL ( relayStartingStep ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
+	// Many splash transparency tests
+	if ( app.arguments().contains ( "alpha1_splash" ) )
+	{
+		qDebug() << "alpha1_splash in use";
+		theSplash.setMask ( theSplashPix.mask() );
+	}
+	else if ( app.arguments().contains ( "alpha2_splash" ) )
+	{
+		qDebug() << "alpha2_splash in use";
+		QImage rootW = QPixmap::grabWindow ( QApplication::desktop()->winId(),
+		                                      ( QApplication::desktop()->rect().width()-theSplashPix.rect().width() ) /2,
+		                                      ( QApplication::desktop()->rect().height()-theSplashPix.rect().height() ) /2,
+		                                      theSplashPix.rect().width(),
+		                                      theSplashPix.rect().height() ).toImage();
+		QImage splashImg = theSplashPix.toImage();
+		
+		for(int posx = 0; posx < rootW.width() ;++posx)
+		{
+			for(int posy =0;posy < rootW.height();++posy)
+			{
+				QRgb splashC(splashImg.pixel(posx,posy));
+				QRgb rootC(rootW.pixel(posx,posy));
+				uint Salpha(qAlpha(splashC));
+				uint resRed ((qRed(splashC) * Salpha / 255) +
+						(qRed(rootC) * (255 - Salpha) / 255));
+				uint resGreen((qGreen(splashC) * Salpha / 255) +
+						(qGreen(rootC) * (255 - Salpha) / 255));
+				uint resBlue((qBlue(splashC) * Salpha / 255) +
+						(qBlue(rootC) * (255 - Salpha) / 255));
+				uint resRGB(qRgb ( resRed, resGreen, resBlue ));
+				splashImg.setPixel(posx,posy,resRGB);
+			}
+		}
+		theSplash.setPixmap(QPixmap::fromImage(splashImg));
+	}
+	theSplash.show();
+	mw->initMatrix();
+	mw->show();
+	theSplash.finish ( mw );
+
+
+	return app.exec();
 }
 

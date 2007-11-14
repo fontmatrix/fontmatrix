@@ -18,12 +18,16 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "fmsampletextview.h"
+#include <QMouseEvent>
+#include <QGraphicsRectItem>
+#include <QDebug>
 
 FMSampleTextView::FMSampleTextView(QWidget* parent)
  : QGraphicsView(parent)
 {
 	setInteractive(true);
-	setDragMode(QGraphicsView::RubberBandDrag);
+	theRect = 0;
+	isSelecting = false;
 }
 
 
@@ -34,6 +38,54 @@ FMSampleTextView::~FMSampleTextView()
 void FMSampleTextView::resizeEvent(QResizeEvent * event)
 {
 	emit refit();
+}
+
+void FMSampleTextView::mousePressEvent(QMouseEvent * e)
+{
+	if(!scene())
+		return;
+	if(locker)
+		return;
+	
+	ensureTheRect();
+	mouseStartPoint = mapToScene( e->pos() );
+	qDebug() << "start mouse "<< mouseStartPoint;
+	isSelecting = true;
+	QRectF arect(mouseStartPoint, QSizeF());
+	theRect->setRect(arect);
+	
+}
+
+void FMSampleTextView::mouseReleaseEvent(QMouseEvent * e)
+{
+	if(!isSelecting)
+		return;
+	QRect zoomRect(mouseStartPoint.toPoint(),mapToScene( e->pos()).toPoint());
+	ensureVisible(zoomRect);
+	isSelecting = false;
+// 	qDebug() << "release " << theRect->scenePos();
+	fitInView(theRect->sceneBoundingRect(), Qt::KeepAspectRatio);
+	theRect->setRect(QRectF());
+	
+	
+	
+}
+
+void FMSampleTextView::mouseMoveEvent(QMouseEvent * e)
+{
+	if(!isSelecting)
+		return;
+	
+	QRect r(mouseStartPoint.toPoint(),mapToScene(e->pos()).toPoint());
+	theRect->setRect(r);
+}
+
+void FMSampleTextView::ensureTheRect()
+{
+	if(theRect)
+		return;
+	theRect = scene()->addRect(QRectF(),QPen ( QColor(10,10,200)), QColor(10,10,200,100));
+	theRect->setZValue(1000.0);
 }
 
 

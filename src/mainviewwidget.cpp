@@ -63,6 +63,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setScene ( loremScene );
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush ( Qt::lightGray );
+	loremView->locker = true;
 // 	loremView->ensureVisible ( loremScene->sceneRect() );
 
 	sampleText= "ABCDEFGHIJKLMNOPQRSTUVXYZ\n\n  abcdefghijklmnopqrstuvxyz\n  0123456789   ,;:!?.";
@@ -769,11 +770,13 @@ void MainViewWidget::slotFitChanged(int i)
 		renderZoom->setDisabled(false);
 		renderZoom->setStatusTip("zoom is enabled");
 		loremView->setTransform(QTransform(1,0,0,1,0,0),false);
+		loremView->locker = false;
 	}
 	else
 	{
 		renderZoom->setDisabled(true);
 		renderZoom->setStatusTip("zoom is disabled, uncheck fit to view to enable zoom");
+		loremView->locker = true;
 	}
 	slotView();
 }

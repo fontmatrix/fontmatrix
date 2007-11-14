@@ -21,6 +21,8 @@
 #define FMSAMPLETEXTVIEW_H
 
 #include <QGraphicsView>
+#include <QPointF>
+
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -33,12 +35,25 @@ class FMSampleTextView : public QGraphicsView
 		FMSampleTextView ( QWidget* parent );
 
 		~FMSampleTextView();
+		
+		bool locker;
 
 	protected:
 		void resizeEvent ( QResizeEvent * event );
+		void mousePressEvent ( QMouseEvent * e ) ;
+		void mouseReleaseEvent ( QMouseEvent * e )  ;
+		void mouseMoveEvent ( QMouseEvent * e ) ;
+		
 
 	signals:
 		void refit();
+		
+	private:
+		QPointF mouseStartPoint;
+		QGraphicsRectItem *theRect;
+		bool isSelecting;
+		
+		void ensureTheRect();
 
 };
 

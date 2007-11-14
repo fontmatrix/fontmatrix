@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1235</width>
-    <height>763</height>
+    <width>1095</width>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
-    <widget class="QSplitter" name="splitter_2" >
+    <widget class="QSplitter" name="splitter" >
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
@@ -295,21 +295,13 @@
       </property>
       <layout class="QGridLayout" >
        <item row="0" column="0" >
-        <widget class="QToolBox" name="toolBox" >
+        <widget class="QTabWidget" name="tabView" >
          <property name="currentIndex" >
           <number>0</number>
          </property>
-         <widget class="QWidget" name="page_2" >
-          <property name="geometry" >
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>438</width>
-            <height>599</height>
-           </rect>
-          </property>
-          <attribute name="label" >
-           <string>Font Informations</string>
+         <widget class="QWidget" name="tab" >
+          <attribute name="title" >
+           <string>Font Info</string>
           </attribute>
           <layout class="QGridLayout" >
            <item row="0" column="0" >
@@ -324,16 +316,8 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="pageRender" >
-          <property name="geometry" >
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>337</width>
-            <height>150</height>
-           </rect>
-          </property>
-          <attribute name="label" >
+         <widget class="QWidget" name="tab_2" >
+          <attribute name="title" >
            <string>Sample text</string>
           </attribute>
           <layout class="QGridLayout" >
@@ -468,17 +452,9 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="page" >
-          <property name="geometry" >
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>225</width>
-            <height>169</height>
-           </rect>
-          </property>
-          <attribute name="label" >
-           <string>All glyphs</string>
+         <widget class="QWidget" name="Glyphs" >
+          <attribute name="title" >
+           <string>Glyphs</string>
           </attribute>
           <layout class="QGridLayout" >
            <item row="0" column="0" >
@@ -584,15 +560,7 @@
           </layout>
          </widget>
          <widget class="QWidget" name="tagPage" >
-          <property name="geometry" >
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>96</width>
-            <height>26</height>
-           </rect>
-          </property>
-          <attribute name="label" >
+          <attribute name="title" >
            <string>Tags</string>
           </attribute>
          </widget>

@@ -33,6 +33,9 @@
 #include FT_OUTLINE_H
 #include FT_SFNT_NAMES_H
 #include FT_TYPE1_TABLES_H
+#include FT_TRUETYPE_TABLES_H
+#include FT_TRUETYPE_IDS_H 
+
 
 FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
@@ -577,8 +580,58 @@ void FontItem::moreInfo_sfnt()
 	for(int i=0; i < tname_count; ++i)
 	{
 		FT_Get_Sfnt_Name(m_face,i,&tname);
-		if(moreInfo.value(name_meaning.at(tname.name_id)).isEmpty() )
-			moreInfo[name_meaning.at(tname.name_id)] = QString::fromUtf8((const char*)tname.string, tname.string_len);		
+		if(tname.name_id > name_meaning.count() || tname.name_id < 0)
+		{
+			qDebug() << name() <<" has a name id out of range ->" << tname.name_id;
+			continue;
+		}
+		QString akey(name_meaning.at(tname.name_id));
+		if(!moreInfo.contains(akey) )
+		{
+			QString avalue;
+			if(tname.platform_id == TT_PLATFORM_APPLE_UNICODE)//just catch for the moment
+			{
+				qDebug() << "Platform id is TT_PLATFORM_APPLE_UNICODE";
+			}
+			else if(tname.platform_id == TT_PLATFORM_MICROSOFT)//freetype reports it is the most used, we than focus on it at first
+			{
+				if(tname.encoding_id == TT_MS_ID_SYMBOL_CS )
+				{
+					qDebug() << "encoding is symbol";
+				}
+				else if(tname.encoding_id == TT_MS_ID_UNICODE_CS )
+				{
+// 					QList<QChar> tstring;
+					for(int c=0; c < tname.string_len; ++c)
+					{
+						avalue.append( QChar(tname.string[c]) );
+					}
+// 					QByteArray tar((const char *)tname.string, ); 
+// 					value = QString::fromUtf16(tar.data());
+				}
+				else
+				{
+					qDebug() << "Not handled encoding";
+				}
+			}
+			else if(TT_PLATFORM_MACINTOSH == tname.platform_id)
+			{
+				
+				QByteArray anar((char*)tname.string, tname.string_len);
+				avalue = anar;
+// 				qDebug() << "TT_PLATFORM_MACINTOSH\n" << "\t"<< tname.string_len <<"\t"<<avalue;
+			}
+			else
+			{
+				qDebug() << "Platform id ("<< tname.platform_id <<")is unhandled now";
+			}
+			if(!avalue.isEmpty())
+			{
+				qDebug()<<akey ;
+				moreInfo[akey] = avalue;
+				qDebug()<< "\t\t"<<avalue;
+			}
+		}		
 	}
 }
 

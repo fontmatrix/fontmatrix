@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
       typotek * mw;
       QPixmap theSplashPix(":/fontmatrix_splash.png");
       QSplashScreen theSplash(theSplashPix);  
+      
       theSplash.show();
       mw = new typotek();
 //       QObject::connect(mw,SIGNAL(relayStartingStep(QString)),&theSplash,SLOT(showMessage( const QString&, int, const QColor& )));

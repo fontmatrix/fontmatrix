@@ -41,7 +41,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	setupUi ( this );
 	theVeryFont = 0;
 
-	typo = reinterpret_cast<typotek*> ( parent );
+	typo = typotek::getInstance();
 
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
@@ -63,7 +63,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setScene ( loremScene );
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush ( Qt::lightGray );
-	loremView->ensureVisible ( loremScene->sceneRect() );
+// 	loremView->ensureVisible ( loremScene->sceneRect() );
 
 	sampleText= "ABCDEFGHIJKLMNOPQRSTUVXYZ\n\n  abcdefghijklmnopqrstuvxyz\n  0123456789   ,;:!?.";
 	sampleFontSize = 18;
@@ -77,7 +77,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	searchField->addItems ( fields );
 
 	QStringList tl_tmp = typotek::tagsList;
-	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
+// 	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
 // 	tl_tmp.removeAll ( "Activated_On" );
 // 	tl_tmp.removeAll ( "Activated_Off" );
 
@@ -765,7 +765,14 @@ void MainViewWidget::slotFitChanged(int i)
 {
 	if(i == Qt::Unchecked)
 	{
+		renderZoom->setDisabled(false);
+		renderZoom->setStatusTip("zoom is enabled");
 		loremView->setTransform(QTransform(1,0,0,1,0,0),false);
+	}
+	else
+	{
+		renderZoom->setDisabled(true);
+		renderZoom->setStatusTip("zoom is disabled, uncheck fit to view to enable zoom");
 	}
 	slotView();
 }

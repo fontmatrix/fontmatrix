@@ -54,12 +54,18 @@ int main(int argc, char *argv[])
         mw = new typotek;
 	QObject::connect(mw,SIGNAL(relayStartingStep(QString, int, QColor)),&theSplash,SLOT(showMessage( const QString&, int, const QColor& )));
       // Many splash transparency tests
-      theSplash.setMask(theSplashPix.mask());
+	if(app.arguments().contains("alpha1_splash"))
+	{
+      		theSplash.setMask(theSplashPix.mask());
+	}
+	else if(app.arguments().contains("alpha2_splash"))
+	{
 //       theSplash.setAttribute(Qt::WA_NoBackground);
-//       QPalette spalette;
-//       spalette.setBrush ( QPalette::Window, Qt::transparent );
-//       theSplash.setPalette(spalette);
+      QPalette spalette;
+      spalette.setBrush ( QPalette::Window, Qt::transparent );
+      theSplash.setPalette(spalette);
 //       theSplash.setAutoFillBackground(true);
+	}
       theSplash.show();
 	mw->initMatrix();	
       mw->show();

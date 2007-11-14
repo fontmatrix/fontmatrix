@@ -389,6 +389,9 @@
                  </item>
                  <item>
                   <widget class="QSlider" name="renderZoom" >
+                   <property name="enabled" >
+                    <bool>false</bool>
+                   </property>
                    <property name="sizePolicy" >
                     <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
                      <horstretch>0</horstretch>
@@ -399,7 +402,7 @@
                     <string comment="zoom" >zoom</string>
                    </property>
                    <property name="statusTip" >
-                    <string>zoom</string>
+                    <string>zoom is disabled, uncheck fit to view to enable zoom</string>
                    </property>
                    <property name="maximum" >
                     <number>1000</number>

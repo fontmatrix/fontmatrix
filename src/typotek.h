@@ -43,6 +43,7 @@ class typotek:public QMainWindow
 
 	public:
 		typotek();
+		void initMatrix();
 		~typotek();
 
 	protected:
@@ -62,7 +63,7 @@ class typotek:public QMainWindow
 		bool save();
 	signals:
 		void tagAdded(QString);
-		void relayStartingStep(QString);
+		void relayStartingStep(QString, int, QColor);
 
 	private:
 		void createActions();

@@ -22,10 +22,18 @@
 #include <QApplication>
 #include <QIcon>
 #include <QSplashScreen>
+#include <QPixmap>
+#include <QBitmap>
 #include "typotek.h"
 
 bool __FM_SHOW_FONTLOADED;
 
+/**
+ * 
+ * @param argc 
+ * @param argv[] 
+ * @return 
+ */
 int main(int argc, char *argv[])
 {
       Q_INIT_RESOURCE(application);
@@ -42,16 +50,21 @@ int main(int argc, char *argv[])
       }
       typotek * mw;
       QPixmap theSplashPix(":/fontmatrix_splash.png");
-      QSplashScreen theSplash(theSplashPix);  
-      
+      QSplashScreen theSplash(theSplashPix);
+        mw = new typotek;
+	QObject::connect(mw,SIGNAL(relayStartingStep(QString, int, QColor)),&theSplash,SLOT(showMessage( const QString&, int, const QColor& )));
+      // Many splash transparency tests
+      theSplash.setMask(theSplashPix.mask());
+//       theSplash.setAttribute(Qt::WA_NoBackground);
+//       QPalette spalette;
+//       spalette.setBrush ( QPalette::Window, Qt::transparent );
+//       theSplash.setPalette(spalette);
+//       theSplash.setAutoFillBackground(true);
       theSplash.show();
-      mw = new typotek();
-//       QObject::connect(mw,SIGNAL(relayStartingStep(QString)),&theSplash,SLOT(showMessage( const QString&, int, const QColor& )));
-      
-      
-    
+	mw->initMatrix();	
       mw->show();
       theSplash.finish(mw);
+      
       
       return app.exec();
 }

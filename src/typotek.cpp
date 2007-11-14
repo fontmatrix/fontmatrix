@@ -46,7 +46,32 @@ extern bool __FM_SHOW_FONTLOADED;
 typotek::typotek()
 {
 	instance = this;
+/* See initMatrix()
+	checkOwnDir();
+	readSettings();
+	fillTagsList();
+	initDir();
 
+
+	theMainView = new MainViewWidget ( this );
+	setCentralWidget ( theMainView );
+
+	createActions();
+	createMenus();
+	createStatusBar();
+
+
+	{
+		actAdaptator = new TypotekAdaptator ( this );
+		if ( !QDBusConnection::sessionBus().registerService ( "com.fontmatrix.fonts" ) )
+			qDebug() << "unable to register to DBUS";
+		if ( !QDBusConnection::sessionBus().registerObject ( "/FontActivation", actAdaptator, QDBusConnection::ExportAllContents ) )
+			qDebug() << "unable to register to DBUS";
+	}*/
+}
+
+void typotek::initMatrix()
+{
 	checkOwnDir();
 	readSettings();
 	fillTagsList();
@@ -69,6 +94,9 @@ typotek::typotek()
 			qDebug() << "unable to register to DBUS";
 	}
 }
+
+
+
 
 void typotek::doConnect()
 {
@@ -425,14 +453,19 @@ void typotek::initDir()
 	QStringList pathList = ownDir.entryList();
 	if(__FM_SHOW_FONTLOADED)
 		qDebug() << pathList.join("\n");
-	for ( int i = 0 ; i < pathList.count(); ++i )
+	int fontnr = pathList.count();
+	int starnr = 2;
+	for ( int i = 0 ; i < fontnr ; ++i )
 	{
-		
+		if(i==starnr * 100)
+			++starnr;
 		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
 		fontMap.append ( fi );
 		realFontMap[fi->name() ] = fi;
 		fi->setTags ( tagsMap.value ( fi->name() ) );
-		emit relayStartingStep( fi->name() );
+		QString stars(starnr - 1, QChar(0x2a));// I banned faked apostrophe from my keyboard layout :(
+		
+		emit relayStartingStep(  fi->family() /*+ "\n"+fi->variant()*/ +"\n"+ stars , Qt::AlignCenter, Qt::white);
 	}
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 
@@ -729,5 +762,4 @@ void typotek::popupTagsetEditor()
 	ed.exec();
 	disconnect(&ed,SIGNAL(signalNewTagset()),theMainView,SLOT(slotReloadTagsetList()));
 }
-
 

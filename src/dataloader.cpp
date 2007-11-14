@@ -69,7 +69,7 @@ void DataLoader::load()
 	{
 		m_typo->statusBar()->showMessage ( QString ( "WARNING: no fontfile in %1" ).arg ( m_file->fileName() ),3000 );
 	}
-	qDebug() << colList.length();
+// 	qDebug() << colList.length();
 	for ( uint i = 0; i < colList.length(); ++i )
 	{
 		QDomNode col = colList.item ( i );
@@ -103,7 +103,7 @@ void DataLoader::load()
 		m_typo->addTagSetMapEntry(set,tl);
 		collectedTags << tl;
 		
-		qDebug() << set << tl.join(":");
+// 		qDebug() << set << tl.join(":");
 	}
 	collectedTags.removeAll("");
 	typotek::tagsList = collectedTags.toSet().toList();

@@ -344,6 +344,7 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 			slotFontAction ( item,column );
 			emit faceChanged();
 			theVeryFont = typo->getFont ( faceIndex );
+			typo->setWindowTitle(theVeryFont->fancyName());
 		}
 	
 		if(item->data(0,200).toInt() != item->checkState(1))

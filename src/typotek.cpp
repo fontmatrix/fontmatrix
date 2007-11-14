@@ -455,18 +455,22 @@ void typotek::initDir()
 	if(__FM_SHOW_FONTLOADED)
 		qDebug() << pathList.join("\n");
 	int fontnr = pathList.count();
-	int starnr = 2;
+	QChar fl;//A
 	for ( int i = 0 ; i < fontnr ; ++i )
 	{
-		if(i==starnr * 100)
-			++starnr;
+		
 		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
 		fontMap.append ( fi );
 		realFontMap[fi->name() ] = fi;
 		fi->setTags ( tagsMap.value ( fi->name() ) );
-		QString stars(starnr - 1, QChar(0x2a));// I banned faked apostrophe from my keyboard layout :(
 		
-		emit relayStartingStep(  fi->family() /*+ "\n"+fi->variant()*/ +"\n"+ stars , Qt::AlignCenter, Qt::white);
+		QChar vl(fi->family().at(0).toUpper());
+		if(vl != fl)
+		{
+			fl = vl;
+			QString stars(fl);
+			emit relayStartingStep(  stars , Qt::AlignRight, Qt::black);
+		}
 	}
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 

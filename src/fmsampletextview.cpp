@@ -22,6 +22,8 @@
 FMSampleTextView::FMSampleTextView(QWidget* parent)
  : QGraphicsView(parent)
 {
+	setInteractive(true);
+	setDragMode(QGraphicsView::RubberBandDrag);
 }
 
 

@@ -54,8 +54,14 @@ int main ( int argc, char *argv[] )
 	typotek * mw;
 	QPixmap theSplashPix ( ":/fontmatrix_splash.png" );
 	QSplashScreen theSplash ( theSplashPix );
+	QFont spFont;
+	spFont.setPointSize(42);
+	theSplash.setFont(spFont);
 	mw = new typotek;
-	QObject::connect ( mw,SIGNAL ( relayStartingStep ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
+	if(app.arguments().contains ( "show_loading" ))
+	{
+		QObject::connect ( mw,SIGNAL ( relayStartingStep ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
+	}
 	// Many splash transparency tests
 	if ( app.arguments().contains ( "alpha1_splash" ) )
 	{

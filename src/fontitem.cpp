@@ -409,16 +409,23 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 
 QString FontItem::infoText()
 {
-	QString ret ( "<h2>%1</h2> <p><b>filepath  </b> %2</p> <p><b>font type  </b> %3</p> <p><b>encodings  </b> %4</p>  <p>%5 glyphs in %6 faces (including %8 glyphs unreachable by character codes)</p><p><b>Tags  </b> %7</p>" );
-	ret = ret.arg ( m_family + " " + m_variant ) //1
-	       .arg ( m_path ) //2
-	       .arg ( m_type ) //3
-	       .arg ( m_charsets.join ( ", " ) ) //4
-	       .arg ( m_numGlyphs ) //5
-	       .arg ( m_numFaces ) //6
-	       .arg ( m_tags.join ( ", " ) ) //7
-	       .arg ( m_charLess.count() - 1 ) //8
-	       ;
+// 	QString ret ( "<h2>%1</h2> <p><b>filepath  </b> %2</p> <p><b>font type  </b> %3</p> <p><b>encodings  </b> %4</p>  <p>%5 glyphs in %6 faces (including %8 glyphs unreachable by character codes)</p><p><b>Tags  </b> %7</p>" );
+// 	ret = ret.arg ( m_family + " " + m_variant ) //1
+// 	       .arg ( m_path ) //2
+// 	       .arg ( m_type ) //3
+// 	       .arg ( m_charsets.join ( ", " ) ) //4
+// 	       .arg ( m_numGlyphs ) //5
+// 	       .arg ( m_numFaces ) //6
+// 	       .arg ( m_tags.join ( ", " ) ) //7
+// 	       .arg ( m_charLess.count() - 1 ) //8
+// 	       ;
+	QString ret("<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n");
+	ret += "<p>"+ QString::number(m_numGlyphs) + " glyphs; " + m_charsets.join ( ", " )+"</p>";
+	ret += "<p style=\"background-color:#aaa;\"><b>Tags  </b>"+ m_tags.join ( ", " ) +"</p>";
+// 	
+// 	ret += "<p>"+  +"</p>";
+// 	ret += "<p>"+  +"</p>";
+// 	ret += "<p>"+  +"</p>";
 	if(moreInfo.isEmpty())
 	{
 		if( testFlag(m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0") == "1")
@@ -433,7 +440,7 @@ QString FontItem::infoText()
 	}
 	if(moreInfo.count())
 	{
-		ret += "<p> \n\t- Extra Info -</p>";
+// 		ret += "<p> \n\t- Extra Info -</p>";
 		for(QMap<QString, QString>::const_iterator mit = moreInfo.begin(); mit != moreInfo.end();++mit)
 		{
 			ret += "<p><b>"   + mit.key() + " </b> " + mit.value() + "</p>";
@@ -580,12 +587,30 @@ void FontItem::moreInfo_sfnt()
 	for(int i=0; i < tname_count; ++i)
 	{
 		FT_Get_Sfnt_Name(m_face,i,&tname);
-		if(tname.name_id > name_meaning.count() || tname.name_id < 0)
+		QString akey;
+		if(tname.name_id >  255)
 		{
-			qDebug() << name() <<" has a name id out of range ->" << tname.name_id;
+// 			qDebug() << name() <<" has vendor’s specific name id ->" << tname.name_id;
+			if(tname.string_len > 0)
+			{
+				akey = "VendorKey_" + QString::number(tname.name_id);
+			}
+			else
+			{
+				continue;
+			}
+			
+		}
+		else if(tname.name_id <= name_meaning.count())
+		{
+			akey = name_meaning.at(tname.name_id);
+		}
+		else
+		{
+			qDebug() << "It seems there are new name IDs in TT spec, please say FontMatrix’s team to stay up to dat.";
 			continue;
 		}
-		QString akey(name_meaning.at(tname.name_id));
+		
 		if(!moreInfo.contains(akey) )
 		{
 			QString avalue;
@@ -627,9 +652,9 @@ void FontItem::moreInfo_sfnt()
 			}
 			if(!avalue.isEmpty())
 			{
-				qDebug()<<akey ;
+// 				qDebug()<<akey ;
 				moreInfo[akey] = avalue;
-				qDebug()<< "\t\t"<<avalue;
+// 				qDebug()<< "\t\t"<<avalue;
 			}
 		}		
 	}

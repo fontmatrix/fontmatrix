@@ -116,6 +116,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
 	
 	connect (fitViewCheck,SIGNAL(stateChanged( int )),this,SLOT(slotFitChanged(int)));
+	connect (loremView, SIGNAL(refit()),this,SLOT(slotRefitSample()));
 
 	connect(fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
 	// END CONNECT
@@ -767,6 +768,12 @@ void MainViewWidget::slotFitChanged(int i)
 		loremView->setTransform(QTransform(1,0,0,1,0,0),false);
 	}
 	slotView();
+}
+
+void MainViewWidget::slotRefitSample()
+{
+	if(fitViewCheck->isChecked())
+		slotView();
 }
 
 

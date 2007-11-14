@@ -152,11 +152,12 @@ void typotek::open()
 			pathList <<  fp.absoluteFilePath();
 		}
 	}
-
-	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." );
 	QStringList tali;
+/* Everybody say it’s useless...
+	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." );
+	
 	if(!inputTags.isEmpty())
-		tali = inputTags.split ( "#" );
+		tali = inputTags.split ( "#" );*/
 	tali << "Activated_Off" ;
 
 	foreach ( QString tas, tali )

@@ -422,7 +422,7 @@ QString FontItem::infoText()
 	QString ret("<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n");
 	ret += "<p>"+ QString::number(m_numGlyphs) + " glyphs; " + m_charsets.join ( ", " )+"</p>";
 	ret += "<p style=\"background-color:#aaa;\"><b>Tags  </b>"+ m_tags.join ( ", " ) +"</p>";
-// 	
+// 	Some place to add things
 // 	ret += "<p>"+  +"</p>";
 // 	ret += "<p>"+  +"</p>";
 // 	ret += "<p>"+  +"</p>";

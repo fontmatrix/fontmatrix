@@ -297,7 +297,7 @@
        <item row="0" column="0" >
         <widget class="QTabWidget" name="tabView" >
          <property name="currentIndex" >
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab" >
           <attribute name="title" >
@@ -446,7 +446,7 @@
               </layout>
              </item>
              <item>
-              <widget class="QGraphicsView" name="loremView" />
+              <widget class="FMSampleTextView" name="loremView" />
              </item>
             </layout>
            </item>
@@ -572,6 +572,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FMSampleTextView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global" >fmsampletextview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="application.qrc" />
  </resources>

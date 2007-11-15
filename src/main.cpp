@@ -54,12 +54,13 @@ int main ( int argc, char *argv[] )
 	
 	typotek * mw = new typotek;
 	
-	QPixmap theSplashPix;
+	QSplashScreen theSplash;
+	QPixmap theSplashPix ( ":/fontmatrix_splash.png" );
 	bool splash = false;
 	if(app.arguments().contains ( "splash" ))
 	{
-		theSplashPix.setPixmap ( ":/fontmatrix_splash.png" );
-		QSplashScreen theSplash ( theSplashPix );
+		
+		theSplash.setPixmap ( theSplashPix );
 		QFont spFont;
 		spFont.setPointSize(42);
 		theSplash.setFont(spFont);

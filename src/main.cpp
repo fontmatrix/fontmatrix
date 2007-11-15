@@ -51,24 +51,33 @@ int main ( int argc, char *argv[] )
 	{
 		__FM_SHOW_FONTLOADED = false;
 	}
-	typotek * mw;
-	QPixmap theSplashPix ( ":/fontmatrix_splash.png" );
-	QSplashScreen theSplash ( theSplashPix );
-	QFont spFont;
-	spFont.setPointSize(42);
-	theSplash.setFont(spFont);
-	mw = new typotek;
-	if(app.arguments().contains ( "show_loading" ))
+	
+	typotek * mw = new typotek;
+	
+	QPixmap theSplashPix;
+	bool splash = false;
+	if(app.arguments().contains ( "splash" ))
+	{
+		theSplashPix.setPixmap ( ":/fontmatrix_splash.png" );
+		QSplashScreen theSplash ( theSplashPix );
+		QFont spFont;
+		spFont.setPointSize(42);
+		theSplash.setFont(spFont);
+		splash = true;
+	}
+	
+	if(app.arguments().contains ( "show_loading" ) && splash)
 	{
 		QObject::connect ( mw,SIGNAL ( relayStartingStep ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
 	}
+	
 	// Many splash transparency tests
-	if ( app.arguments().contains ( "alpha1_splash" ) )
+	if ( app.arguments().contains ( "alpha1_splash" ) && splash)
 	{
 		qDebug() << "alpha1_splash in use";
 		theSplash.setMask ( theSplashPix.mask() );
 	}
-	else if ( app.arguments().contains ( "alpha2_splash" ) )
+	else if ( app.arguments().contains ( "alpha2_splash" ) && splash)
 	{
 		qDebug() << "alpha2_splash in use";
 		QImage rootW = QPixmap::grabWindow ( QApplication::desktop()->winId(),
@@ -97,10 +106,15 @@ int main ( int argc, char *argv[] )
 		}
 		theSplash.setPixmap(QPixmap::fromImage(splashImg));
 	}
-	theSplash.show();
+	
+	if(splash)
+		theSplash.show();
+	
 	mw->initMatrix();
 	mw->show();
-	theSplash.finish ( mw );
+	
+	if(splash)
+		theSplash.finish ( mw );
 
 
 	return app.exec();

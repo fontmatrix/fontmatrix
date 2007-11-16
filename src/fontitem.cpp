@@ -108,6 +108,9 @@ void fillCharsetMap()
 FontItem::FontItem ( QString path )
 {
 // 	qDebug() << path;
+	
+	m_face = 0;
+	
 	if ( charsetMap.isEmpty() )
 		fillCharsetMap();
 	if(!theOneLineScene)
@@ -120,11 +123,12 @@ FontItem::FontItem ( QString path )
 	m_path = path;
 	QFileInfo infopath( m_path );
 	m_name = infopath.fileName();
-	if ( ! ensureLibrary() )
-		qDebug() << "Unable to init freetype library" ;
-	ft_error = FT_New_Face ( theLibrary, path.toLocal8Bit() , 0, &m_face );
-	if ( ft_error )
-		qDebug() << "Error loading face [" << path <<"]";
+	
+	if ( ! ensureFace())
+	{
+		
+		return;
+	}
 	
 	if(infopath.suffix() == "pfb")
 	{
@@ -143,23 +147,21 @@ FontItem::FontItem ( QString path )
 	m_variant = m_face->style_name;
 	m_numGlyphs = m_face->num_glyphs;
 	m_numFaces = m_face->num_faces;
-// 	m_faceFlags = testFlag ( m_face->face_flags, FT_FACE_FLAG_SCALABLE, "Is scalable\n","" );
-// 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_FIXED_WIDTH, "Is monospace\n","" );
-// 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "Is SFNT based (open or true type)\n","" );
-// 	m_faceFlags += testFlag ( m_face->face_flags, FT_FACE_FLAG_GLYPH_NAMES, "Has glyphs names\n","Has not glyphs names\n" );
+	
 	for ( int i = 1;i < m_face->num_charmaps; ++i )
 	{
 		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
 	}
 
-// 	if(HERE TEST FOR TYPE1)
-// 	{
-// 		moreInfo_type1();
-// 	}
-	m_glyph = m_face->glyph;
+	
 	m_lock = false;
 	pixList.clear();
 	sceneList.clear();
+	
+	//fill cache and avoid a further call to ensureface
+	infoText();
+	
+	releaseFace();
 
 }
 
@@ -174,9 +176,42 @@ bool FontItem::ensureLibrary()
 		return true;
 	ft_error = FT_Init_FreeType ( &theLibrary );
 	if ( ft_error )
+	{
+		qDebug() << "Error loading ft_library ";
 		return false;
+	}
 	return true;
 }
+
+bool FontItem::ensureFace()
+{
+// 	qDebug("ENSUREFACE") ;
+	if(ensureLibrary())
+	{
+		if(m_face)
+			return true;
+		ft_error = FT_New_Face ( theLibrary, m_path.toLocal8Bit() , 0, &m_face );
+		if ( ft_error )
+		{
+			qDebug() << "Error loading face [" << m_path <<"]";
+			return false;
+		}
+		m_glyph = m_face->glyph;
+		return true;
+	}
+	return false;
+}
+
+void FontItem::releaseFace()
+{
+// 	qDebug("\t\tRELEASEFACE") ;
+	if(m_face)
+	{
+		FT_Done_Face(m_face);
+		m_face = 0;
+	}
+}
+
 
 QString FontItem::testFlag ( long flag, long against, QString yes, QString no )
 {
@@ -205,7 +240,8 @@ QString FontItem::name()
 
 QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 {
-
+	
+	
 	if ( !contourCache.contains ( charcode ) )
 	{
 		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
@@ -213,9 +249,9 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 		{
 			return 0;
 		}
-		FT_Outline *outline = &m_glyph->outline;
+// 		FT_Outline *outline = &m_glyph->outline;
 		QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
-		FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
+		FT_Outline_Decompose ( &m_glyph->outline, &outline_funcs, &glyphPath );
 		contourCache[charcode] = glyphPath;
 		advanceCache[charcode] =  m_glyph->metrics.horiAdvance;
 	}
@@ -226,6 +262,8 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 	double scalefactor = size / m_face->units_per_EM;
 	glyph->scale ( scalefactor,-scalefactor );
 	return glyph;
+	
+	
 
 }
 
@@ -257,6 +295,7 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 
 void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record)
 {
+	ensureFace();
 	if(record)
 		sceneList.append ( scene );
 	double sizz = fsize;
@@ -273,6 +312,8 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 		double scalefactor = sizz / m_face->units_per_EM;
 		pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
 	}
+	
+	releaseFace();
 }
 
 //deprecated
@@ -340,6 +381,8 @@ QByteArray FontItem::pixarray ( uchar * b, int len )
 
 void FontItem::renderAll ( QGraphicsScene * scene )
 {
+	ensureFace();
+	
 	if ( allIsRendered )
 		return;
 	deRender ( scene );
@@ -412,12 +455,16 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 
 	qDebug() << m_name <<m_charLess.count();
 	allIsRendered = true;
+	
+	releaseFace();
 }
 
 QString FontItem::infoText()
 {
 	if(!m_cacheInfo.isEmpty())
 		return m_cacheInfo;
+	
+	ensureFace();
 
 	QString ret("<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n");
 	ret += "<p>"+ QString::number(m_numGlyphs) + " glyphs; " + m_charsets.join ( ", " )+"</p>";
@@ -435,7 +482,7 @@ QString FontItem::infoText()
 		if(m_path.endsWith(".pfb",Qt::CaseInsensitive ))
 		{
 			moreInfo_type1();
-			qDebug() << "TYPE1";
+// 			qDebug() << "TYPE1";
 		}
 	}
 	if(moreInfo.count())
@@ -447,6 +494,8 @@ QString FontItem::infoText()
 		};
 	}
 	m_cacheInfo = ret;
+	
+	releaseFace();
 	return ret;
 }
 
@@ -687,6 +736,8 @@ int FontItem::debug_size()
 		ret+=cit->elementCount();
 	
 }
+
+
 
 
 

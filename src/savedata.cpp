@@ -50,14 +50,10 @@ void SaveData::doSave()
 	writeStartElement("fontmatrix");
 	writeAttribute("version", "1.0");
 	
-	int debug_size =0;
-	
 	//save fonts
 	QList<FontItem*> flist = m_typo->getAllFonts();
 	foreach ( FontItem* fitem,flist )
 	{
-		debug_size += fitem->debug_size();
-		
 		writeStartElement("fontfile");
 		writeStartElement("file");
 		writeCharacters(fitem->name());
@@ -71,12 +67,10 @@ void SaveData::doSave()
 		}
 		writeEndElement();
 	}
-	
-	qDebug() << "SIZE_ = " << debug_size;
+
 	
 	//save tagsets
 	QStringList tlist = m_typo->tagsets();
-// 	qDebug() << "SAVE_TAGSET "<< tlist.join("/");
 	foreach(QString tagset, tlist)
 	{
 		
@@ -92,7 +86,7 @@ void SaveData::doSave()
 		}
 		writeEndElement();
 	}
-	writeEndElement();//typotek
+	writeEndElement();//fontmatrix
 	writeEndDocument();
 }
 

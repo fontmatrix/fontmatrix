@@ -275,6 +275,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 	}
 }
 
+//deprecated
 void FontItem::deRender ( QGraphicsScene *scene )
 {
 	QList<int> rem;
@@ -292,17 +293,23 @@ void FontItem::deRender ( QGraphicsScene *scene )
 
 void FontItem::deRenderAll()
 {
-	qDebug() << m_name  <<" ::deRenderAll()";
+	qDebug() << m_name  <<"::deRenderAll()";
 	for ( int i = 0; i < pixList.count(); ++i )
 	{
 		if ( pixList[i]->scene() )
+		{
 			pixList[i]->scene()->removeItem ( pixList[i] );
+			delete pixList[i];
+		}
 	}
 	pixList.clear();
 	for ( int i = 0; i < glyphList.count(); ++i )
 	{
 		if ( glyphList[i]->scene() )
+		{
 			glyphList[i]->scene()->removeItem ( glyphList[i] );
+			delete glyphList[i];
+		}
 	}
 	glyphList.clear();
 
@@ -409,16 +416,9 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 
 QString FontItem::infoText()
 {
-// 	QString ret ( "<h2>%1</h2> <p><b>filepath  </b> %2</p> <p><b>font type  </b> %3</p> <p><b>encodings  </b> %4</p>  <p>%5 glyphs in %6 faces (including %8 glyphs unreachable by character codes)</p><p><b>Tags  </b> %7</p>" );
-// 	ret = ret.arg ( m_family + " " + m_variant ) //1
-// 	       .arg ( m_path ) //2
-// 	       .arg ( m_type ) //3
-// 	       .arg ( m_charsets.join ( ", " ) ) //4
-// 	       .arg ( m_numGlyphs ) //5
-// 	       .arg ( m_numFaces ) //6
-// 	       .arg ( m_tags.join ( ", " ) ) //7
-// 	       .arg ( m_charLess.count() - 1 ) //8
-// 	       ;
+	if(!m_cacheInfo.isEmpty())
+		return m_cacheInfo;
+
 	QString ret("<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n");
 	ret += "<p>"+ QString::number(m_numGlyphs) + " glyphs; " + m_charsets.join ( ", " )+"</p>";
 	ret += "<p style=\"background-color:#aaa;\"><b>Tags  </b>"+ m_tags.join ( ", " ) +"</p>";
@@ -446,6 +446,7 @@ QString FontItem::infoText()
 			ret += "<p><b>"   + mit.key() + " </b> " + mit.value() + "</p>";
 		};
 	}
+	m_cacheInfo = ret;
 	return ret;
 }
 
@@ -479,6 +480,7 @@ QString FontItem::infoGlyph ( int index, int code )
 	       ;
 }
 
+//deprecated
 QString FontItem::toElement()
 {
 	QString ret;
@@ -675,6 +677,18 @@ void FontItem::moreInfo_type1()
 	moreInfo["notice"] = sinfo.notice;
 	
 }
+
+///return size of dynamic structures
+
+int FontItem::debug_size()
+{
+	int ret=0;
+	for(QMap<int,QPainterPath>::const_iterator cit = contourCache.begin(); cit != contourCache.end();++cit)
+		ret+=cit->elementCount();
+	
+}
+
+
 
 
 

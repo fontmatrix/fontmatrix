@@ -79,8 +79,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	QStringList tl_tmp = typotek::tagsList;
 // 	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
-// 	tl_tmp.removeAll ( "Activated_On" );
-// 	tl_tmp.removeAll ( "Activated_Off" );
+	tl_tmp.removeAll ( "Activated_On" );
+	tl_tmp.removeAll ( "Activated_Off" );
 
 	tagsCombo->addItems ( tl_tmp );
 
@@ -90,23 +90,25 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotfontSelected ( QTreeWidgetItem*, int ) ) );
 
-	connect ( editAllButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotEditAll() ) );
+// 	connect ( editAllButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotEditAll() ) );
 
-	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotView() ) );
+// 	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotView() ) );
 
 
 	connect ( abcScene,SIGNAL ( selectionChanged() ),this,SLOT ( slotglyphInfo() ) );
 
 	connect ( searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
 	connect ( searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+	connect (viewAllButton,SIGNAL(released()),this,SLOT(slotViewAll()));
+	connect(viewActivatedButton,SIGNAL(released()),this,SLOT(slotViewActivated()));
 
 	connect ( renderZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 	connect ( allZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 
 	connect ( tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 
-	connect ( activateAllButton,SIGNAL ( released() ),this,SLOT ( slotActivateAll() ) );
-	connect ( desactivateAllButton,SIGNAL ( released() ),this,SLOT ( slotDesactivateAll() ) );
+// 	connect ( activateAllButton,SIGNAL ( released() ),this,SLOT ( slotActivateAll() ) );
+// 	connect ( desactivateAllButton,SIGNAL ( released() ),this,SLOT ( slotDesactivateAll() ) );
 
 	connect ( textButton,SIGNAL ( released() ),this,SLOT ( slotSetSampleText() ) );
 
@@ -343,7 +345,8 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 		{
 			qDebug() << "\tFont has changed";
 			slotFontAction ( item,column );
-			emit faceChanged();
+// 			emit faceChanged();
+			slotView(true);
 			theVeryFont = typo->getFont ( faceIndex );
 			typo->setWindowTitle(theVeryFont->fancyName());
 		}
@@ -371,15 +374,18 @@ void MainViewWidget::slotInfoFont()
 
 }
 
-void MainViewWidget::slotView()
+void MainViewWidget::slotView(bool needDeRendering)
 {
 	FontItem *l = typo->getFont ( lastIndex );
 	FontItem *f = typo->getFont ( faceIndex );
 	if ( !f )
 		return;
-	if ( l )
-		l->deRenderAll();
-	f->deRenderAll();
+	if(needDeRendering)
+	{
+		if ( l )
+			l->deRenderAll();
+		f->deRenderAll();
+	}
 
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	f->renderAll ( abcScene ); // can be rather long depending of the number of glyphs
@@ -549,8 +555,8 @@ void MainViewWidget::slotEditAll()
 
 void MainViewWidget::slotCleanFontAction()
 {
-	typo->save();
-	qDebug() << " FontActionWidget  saved";
+// 	typo->save();
+// 	qDebug() << " FontActionWidget  saved";
 }
 
 void MainViewWidget::slotZoom ( int z )
@@ -712,7 +718,7 @@ void MainViewWidget::slotSetSampleText()
 	sampleInterSize = boxls.value();
 	sampleFontSize = boxfs.value();
 
-	slotView();
+	slotView(true);
 
 }
 
@@ -785,6 +791,17 @@ void MainViewWidget::slotRefitSample()
 {
 	if(fitViewCheck->isChecked())
 		slotView();
+}
+
+void MainViewWidget::slotViewAll()
+{
+	currentFonts = typo->getAllFonts();
+	fillTree();
+}
+
+void MainViewWidget::slotViewActivated()
+{
+	slotFilterTag ( "Activated_On" );
 }
 
 

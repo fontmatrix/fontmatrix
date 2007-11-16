@@ -108,6 +108,7 @@ void typotek::closeEvent ( QCloseEvent *event )
 {
 	if ( maybeSave() )
 	{
+		save();
 		writeSettings();
 		event->accept();
 	}

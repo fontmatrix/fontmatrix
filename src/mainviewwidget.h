@@ -76,7 +76,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotOrderingChanged ( QString s );
 		void slotfontSelected ( QTreeWidgetItem * item, int column );
 		void slotInfoFont();
-		void slotView();
+		void slotView(bool needDeRendering = false);
 		void slotglyphInfo();
 		void slotSearch();
 		void slotFontAction(QTreeWidgetItem * item, int column );
@@ -97,6 +97,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotFitChanged(int i);
 		void slotRefitSample();
 		void slotItemOpened(QTreeWidgetItem * item);
+		void slotViewAll();
+		void slotViewActivated();
 	signals:
 		void faceChanged();
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1095</width>
-    <height>666</height>
+    <width>1254</width>
+    <height>828</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
-    <widget class="QSplitter" name="splitter" >
+    <widget class="QSplitter" name="splitter_2" >
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
@@ -219,39 +219,16 @@
          <item>
           <layout class="QHBoxLayout" >
            <item>
-            <widget class="QPushButton" name="editAllButton" >
+            <widget class="QPushButton" name="viewAllButton" >
              <property name="text" >
-              <string>Edit All</string>
+              <string>View all</string>
              </property>
             </widget>
            </item>
            <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" >
-              <size>
-               <width>186</width>
-               <height>26</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="activateAllButton" >
+            <widget class="QPushButton" name="viewActivatedButton" >
              <property name="text" >
-              <string>Activate all</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="desactivateAllButton" >
-             <property name="text" >
-              <string>Deactivate all</string>
-             </property>
-             <property name="autoExclusive" >
-              <bool>false</bool>
+              <string>View activated</string>
              </property>
             </widget>
            </item>
@@ -295,217 +272,199 @@
       </property>
       <layout class="QGridLayout" >
        <item row="0" column="0" >
-        <widget class="QTabWidget" name="tabView" >
-         <property name="currentIndex" >
-          <number>0</number>
+        <widget class="QSplitter" name="splitter" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
          </property>
-         <widget class="QWidget" name="tab" >
-          <attribute name="title" >
-           <string>Font Info</string>
-          </attribute>
-          <layout class="QGridLayout" >
-           <item row="0" column="0" >
-            <widget class="QTextBrowser" name="fontInfoText" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-          </layout>
+         <widget class="QTabWidget" name="tabView" >
+          <property name="currentIndex" >
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab" >
+           <attribute name="title" >
+            <string>Font Info</string>
+           </attribute>
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <widget class="QTextBrowser" name="fontInfoText" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Glyphs" >
+           <attribute name="title" >
+            <string>Glyphs</string>
+           </attribute>
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <layout class="QVBoxLayout" >
+              <item>
+               <layout class="QHBoxLayout" >
+                <item>
+                 <widget class="QLabel" name="label_3" >
+                  <property name="text" >
+                   <string>View codepoint U+</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="codepointSelectText" >
+                  <property name="maxLength" >
+                   <number>32763</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer>
+                  <property name="orientation" >
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" >
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <spacer>
+                  <property name="orientation" >
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" >
+                   <size>
+                    <width>71</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_2" >
+                  <property name="text" >
+                   <string/>
+                  </property>
+                  <property name="pixmap" >
+                   <pixmap resource="application.qrc" >:/zoom.png</pixmap>
+                  </property>
+                  <property name="alignment" >
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSlider" name="allZoom" >
+                  <property name="sizePolicy" >
+                   <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximum" >
+                   <number>1000</number>
+                  </property>
+                  <property name="value" >
+                   <number>100</number>
+                  </property>
+                  <property name="tracking" >
+                   <bool>true</bool>
+                  </property>
+                  <property name="orientation" >
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QGraphicsView" name="abcView" >
+                <property name="rubberBandSelectionMode" >
+                 <enum>Qt::IntersectsItemBoundingRect</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="glyphInfo" >
+                <property name="text" >
+                 <string>No glyph selected</string>
+                </property>
+                <property name="alignment" >
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tagPage" >
+           <attribute name="title" >
+            <string>Tags</string>
+           </attribute>
+          </widget>
          </widget>
-         <widget class="QWidget" name="tab_2" >
-          <attribute name="title" >
-           <string>Sample text</string>
-          </attribute>
-          <layout class="QGridLayout" >
-           <item row="0" column="0" >
-            <layout class="QVBoxLayout" >
+         <widget class="QWidget" name="" >
+          <layout class="QVBoxLayout" >
+           <item>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QPushButton" name="textButton" >
+               <property name="text" >
+                <string>Sample text...</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>111</width>
+                 <height>27</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item>
               <layout class="QHBoxLayout" >
                <item>
-                <widget class="QPushButton" name="textButton" >
+                <widget class="Line" name="line_3" >
+                 <property name="orientation" >
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="fitViewCheck" >
+                 <property name="layoutDirection" >
+                  <enum>Qt::RightToLeft</enum>
+                 </property>
                  <property name="text" >
-                  <string>Sample text...</string>
+                  <string>Fit to view</string>
+                 </property>
+                 <property name="checked" >
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
                <item>
-                <spacer>
+                <widget class="Line" name="line_4" >
                  <property name="orientation" >
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" >
-                  <size>
-                   <width>111</width>
-                   <height>27</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" >
-                 <item>
-                  <widget class="Line" name="line_3" >
-                   <property name="orientation" >
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="fitViewCheck" >
-                   <property name="layoutDirection" >
-                    <enum>Qt::RightToLeft</enum>
-                   </property>
-                   <property name="text" >
-                    <string>Fit to view</string>
-                   </property>
-                   <property name="checked" >
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="Line" name="line_4" >
-                   <property name="orientation" >
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label" >
-                   <property name="text" >
-                    <string/>
-                   </property>
-                   <property name="pixmap" >
-                    <pixmap resource="application.qrc" >:/zoom.png</pixmap>
-                   </property>
-                   <property name="alignment" >
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSlider" name="renderZoom" >
-                   <property name="enabled" >
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="toolTip" >
-                    <string comment="zoom" >zoom</string>
-                   </property>
-                   <property name="statusTip" >
-                    <string>zoom is disabled, uncheck fit to view to enable zoom</string>
-                   </property>
-                   <property name="maximum" >
-                    <number>1000</number>
-                   </property>
-                   <property name="value" >
-                    <number>100</number>
-                   </property>
-                   <property name="tracking" >
-                    <bool>true</bool>
-                   </property>
-                   <property name="orientation" >
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="tickPosition" >
-                    <enum>QSlider::NoTicks</enum>
-                   </property>
-                   <property name="tickInterval" >
-                    <number>0</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="Line" name="line_5" >
-                   <property name="orientation" >
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QToolButton" name="antiAliasButton" >
-                   <property name="text" >
-                    <string>AA</string>
-                   </property>
-                   <property name="checkable" >
-                    <bool>true</bool>
-                   </property>
-                   <property name="checked" >
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="FMSampleTextView" name="loremView" />
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="Glyphs" >
-          <attribute name="title" >
-           <string>Glyphs</string>
-          </attribute>
-          <layout class="QGridLayout" >
-           <item row="0" column="0" >
-            <layout class="QVBoxLayout" >
-             <item>
-              <layout class="QHBoxLayout" >
-               <item>
-                <widget class="QLabel" name="label_3" >
-                 <property name="text" >
-                  <string>View codepoint U+</string>
+                  <enum>Qt::Vertical</enum>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="codepointSelectText" >
-                 <property name="maxLength" >
-                  <number>32763</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer>
-                 <property name="orientation" >
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" >
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <spacer>
-                 <property name="orientation" >
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" >
-                  <size>
-                   <width>71</width>
-                   <height>23</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_2" >
+                <widget class="QLabel" name="label" >
                  <property name="text" >
                   <string/>
                  </property>
@@ -518,12 +477,21 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="allZoom" >
+                <widget class="QSlider" name="renderZoom" >
+                 <property name="enabled" >
+                  <bool>false</bool>
+                 </property>
                  <property name="sizePolicy" >
                   <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="toolTip" >
+                  <string comment="zoom" >zoom</string>
+                 </property>
+                 <property name="statusTip" >
+                  <string>zoom is disabled, uncheck fit to view to enable zoom</string>
                  </property>
                  <property name="maximum" >
                   <number>1000</number>
@@ -537,35 +505,42 @@
                  <property name="orientation" >
                   <enum>Qt::Horizontal</enum>
                  </property>
+                 <property name="tickPosition" >
+                  <enum>QSlider::NoTicks</enum>
+                 </property>
+                 <property name="tickInterval" >
+                  <number>0</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="line_5" >
+                 <property name="orientation" >
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="antiAliasButton" >
+                 <property name="text" >
+                  <string>AA</string>
+                 </property>
+                 <property name="checkable" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="checked" >
+                  <bool>true</bool>
+                 </property>
                 </widget>
                </item>
               </layout>
              </item>
-             <item>
-              <widget class="QGraphicsView" name="abcView" >
-               <property name="rubberBandSelectionMode" >
-                <enum>Qt::IntersectsItemBoundingRect</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="glyphInfo" >
-               <property name="text" >
-                <string>No glyph selected</string>
-               </property>
-               <property name="alignment" >
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
+           <item>
+            <widget class="FMSampleTextView" name="loremView" />
+           </item>
           </layout>
-         </widget>
-         <widget class="QWidget" name="tagPage" >
-          <attribute name="title" >
-           <string>Tags</string>
-          </attribute>
          </widget>
         </widget>
        </item>

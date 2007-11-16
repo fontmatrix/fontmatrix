@@ -65,6 +65,7 @@ public:
 		QString m_foundry;
 		
 		QStringList m_tags;
+		QString m_cacheInfo;
 		
 		FT_Error      ft_error;
 		FT_Face m_face;
@@ -131,6 +132,8 @@ public:
 		void lock(){m_lock=true;};
 		void unLock(){m_lock=false;};
 		bool isLocked(){return m_lock;};
+		
+		int debug_size();
 		
 		
 		

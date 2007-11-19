@@ -45,11 +45,23 @@ INSTALLS += target
 
 CONFIG -= release
 
-desktop.files = ../typotek.desktop
-desktop.path = /usr/share/applications
+desktop.files = ../fontmatrix.desktop
+desktop.path = /usr/local/share/applications
+
+
 INSTALLS += desktop
 
 target.path = /usr/local/bin
 
 TARGET = ../bin/fontmatrix
 
+
+icons.files = ./icons/application-fontmatrix_16.png \
+ application-fontmatrix_22.png \ 
+ application-fontmatrix_32.png \
+ application-fontmatrix_48.png \ 
+ application-fontmatrix_64.png \
+ application-fontmatrix_126.png
+icons.path = /usr/local/share/fontmatrix/icons/
+
+INSTALLS += icons

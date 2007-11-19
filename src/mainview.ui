@@ -236,19 +236,6 @@
          </item>
         </layout>
        </item>
-       <item row="3" column="0" >
-        <widget class="Line" name="line_2" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QFrame" name="viewFrame" >

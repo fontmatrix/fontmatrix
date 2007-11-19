@@ -45,6 +45,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
+	
+	fontTree->setIconSize(QSize(32,32));
 
 	fillUniPlanes();
 // 	uniPlaneCombo->addItems(uniPlanes.keys());
@@ -126,7 +128,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect (fitViewCheck,SIGNAL(stateChanged( int )),this,SLOT(slotFitChanged(int)));
 	connect (loremView, SIGNAL(refit()),this,SLOT(slotRefitSample()));
 
-	connect(fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
+// 	connect(fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
 	// END CONNECT
 
 
@@ -202,8 +204,8 @@ void MainViewWidget::fillTree()
 					entry->setData ( 0, 100, "fontfile");
 					entry->setData(0,200,entry->checkState(1));
 // 					entry->setIcon ( 2, kit.value() [n]->oneLinePreviewIcon());
-					if(isExpanded)
-						entry->setBackground(2,QBrush(kit.value()[n]->oneLinePreviewPixmap()));
+// 					if(isExpanded)
+// 						entry->setBackground(2,QBrush(kit.value()[n]->oneLinePreviewPixmap()));
 					
 					bool act = kit.value() [n]->tags().contains ( "Activated_On" );
 					if(act)
@@ -244,12 +246,13 @@ void MainViewWidget::fillTree()
 	{
 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
 		fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
-		QColor scol(Qt::blue);
-		scol.setAlpha(30);
-		curItem->parent()->setBackgroundColor(0,scol);
-		curItem->parent()->setBackgroundColor(1,scol);
-		curItem->setBackgroundColor(0,scol);
-		curItem->setBackgroundColor(1,scol);
+// 		QColor scol(Qt::blue);
+// 		scol.setAlpha(30);
+// 		curItem->parent()->setBackgroundColor(0,scol);
+// 		curItem->parent()->setBackgroundColor(1,scol);
+// 		curItem->setBackgroundColor(0,scol);
+// 		curItem->setBackgroundColor(1,scol);
+		curItem->setSelected(true);
 	}
 	else
 	{

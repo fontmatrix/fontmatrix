@@ -115,7 +115,7 @@ FontItem::FontItem ( QString path )
 		fillCharsetMap();
 	if(!theOneLineScene)
 	{
-		theOneLineScene = new QGraphicsScene(0,0,320,32);
+		theOneLineScene = new QGraphicsScene;
 	}
 
 	allIsRendered = false;
@@ -576,16 +576,20 @@ QIcon  FontItem::oneLinePreviewIcon()
 {
 	if(!theOneLinePreviewIcon.isNull())
 		return theOneLinePreviewIcon;
+	QRectF savedRect = theOneLineScene->sceneRect();
+	theOneLineScene->setSceneRect(0,0,64,64);
 	
-	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
-	renderLine(theOneLineScene,"a",QPointF(0,32),50,false);
-	QPixmap apix(32,32);
+	renderLine(theOneLineScene,"a",QPointF(10,50),64,false);
+	QPixmap apix(64,64);
 	apix.fill(Qt::white);
 	QPainter apainter(&apix);
 	apainter.setRenderHint(QPainter::Antialiasing,true);
 	theOneLineScene->render(&apainter,apix.rect(),apix.rect());
 // 	theOneLinePreviewIcon.addPixmap(apix);
 	theOneLinePreviewIcon = apix;
+	
+	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
+	theOneLineScene->setSceneRect(savedRect);
 	return theOneLinePreviewIcon;
 }
 
@@ -593,8 +597,9 @@ QPixmap FontItem::oneLinePreviewPixmap()
 {
 	if(!theOneLinePreviewPixmap.isNull())
 		return theOneLinePreviewPixmap;
+	QRectF savedRect = theOneLineScene->sceneRect();
+	theOneLineScene->setSceneRect(0,0,320,32);
 	
-	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
 	renderLine(theOneLineScene,fancyName(),QPointF(0,16),20,false);
 	QPixmap apix(50 * 32,32);
 	apix.fill(Qt::white);
@@ -602,6 +607,10 @@ QPixmap FontItem::oneLinePreviewPixmap()
 	apainter.setRenderHint(QPainter::Antialiasing,true);
 	theOneLineScene->render(&apainter);
 	theOneLinePreviewPixmap = apix;
+	
+	theOneLineScene->setSceneRect(savedRect);
+	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
+	
 	return theOneLinePreviewPixmap;
 }
 

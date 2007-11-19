@@ -121,7 +121,8 @@ public:
 		QString value(QString k);
 		
 		void renderLine(QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, bool record = true );
-		void renderAll(QGraphicsScene *scene);
+		void renderAll(QGraphicsScene *scene, int begin_code, int end_code);
+		int countCoverage( int begin_code, int end_code);
 		void deRender(QGraphicsScene *scene);
 		void deRenderAll();
 		

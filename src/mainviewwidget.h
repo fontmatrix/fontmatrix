@@ -70,6 +70,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		double sampleFontSize;
 		double sampleInterSize;
 		
+		QMap<QString, QPair<int,int> > uniPlanes;
+		void fillUniPlanes();
+		void fillUniPlanesCombo(FontItem* item);
 		
 		
 	public slots:
@@ -99,6 +102,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotItemOpened(QTreeWidgetItem * item);
 		void slotViewAll();
 		void slotViewActivated();
+		void slotPlaneSelected(int);
+		
 	signals:
 		void faceChanged();
 

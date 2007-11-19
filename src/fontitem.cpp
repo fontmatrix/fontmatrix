@@ -355,6 +355,8 @@ void FontItem::deRenderAll()
 	glyphList.clear();
 
 	allIsRendered = false;
+	contourCache.clear();
+	advanceCache.clear();
 }
 
 QByteArray FontItem::pixarray ( uchar * b, int len )
@@ -379,7 +381,27 @@ QByteArray FontItem::pixarray ( uchar * b, int len )
 	return buffer;
 }
 
-void FontItem::renderAll ( QGraphicsScene * scene )
+//Render all is dangerous ;)
+// We now render langs
+
+int FontItem::countCoverage(int begin_code, int end_code)
+{
+	ensureFace();
+	FT_ULong  charcode = begin_code ;
+	FT_UInt   gindex = 0;
+	int count = 0;
+	while ( charcode <= end_code )
+	{
+		charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
+		if(!gindex)
+			break;
+		++count;
+	}
+	releaseFace();
+	return count - 1;//something weird with freetype which put a valid glyph at the beginning of each lang ??? Or a bug here...
+}
+
+void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code)
 {
 	ensureFace();
 	
@@ -395,65 +417,70 @@ void FontItem::renderAll ( QGraphicsScene * scene )
 		m_charLess.append ( i );
 
 	FT_ULong  charcode;
-	FT_UInt   gindex;
+	FT_UInt   gindex = 1;
 	double sizz = 50;
 	FT_Set_Char_Size ( m_face, sizz * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
 
-	charcode = FT_Get_First_Char ( m_face, &gindex );
-	while ( gindex != 0 )
+// 	charcode = FT_Get_First_Char ( m_face, &gindex );
+	charcode = begin_code;
+	qDebug() << "INTER " << begin_code << end_code;
+	while ( charcode <= end_code && gindex)
 	{
-		if ( nl == 6 )
+		if ( nl == 10 )
 		{
 			nl = 0;
 			pen.rx() = 0;
 			pen.ry() += 100;
 		}
 		QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
-		pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
-		pitem->setData ( 1,gindex );
-		uint ucharcode = charcode;
-		pitem->setData ( 2,ucharcode );
-		glyphList.append ( pitem );
-		scene->addItem ( pitem );
-		pitem->setPos ( pen );
-		pen.rx() += 100;
-
-		++glyph_count;
-		m_charLess.removeAll ( gindex );
-		++nl;
+		if(pitem)
+		{
+			pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
+			pitem->setData ( 1,gindex );
+			uint ucharcode = charcode;
+			pitem->setData ( 2,ucharcode );
+			glyphList.append ( pitem );
+			scene->addItem ( pitem );
+			pitem->setPos ( pen );
+			pen.rx() += 100;
+	
+			++glyph_count;
+			m_charLess.removeAll ( gindex );
+			++nl;
+		}
 		charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
 	}
 
 	// We want featured glyphs
-	nl = 0;
-	pen.rx() = 0;
-	pen.ry() += 100;
-	for ( int gi=0;gi<m_charLess.count(); ++gi )
-	{
-		if ( nl == 6 )
-		{
-			nl = 0;
-			pen.rx() = 0;
-			pen.ry() += 100;
-		}
-		QGraphicsPathItem *pitem = itemFromGindex ( m_charLess[gi], sizz );
-		if ( !pitem )
-		{
-			qDebug() << "pitem is null for m_charLess[gi] = "  << m_charLess[gi];
-			continue;
-		}
-		pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
-		pitem->setData ( 1,m_charLess[gi] );
-// 		uint ucharcode = charcode;
-		pitem->setData ( 2,0 );
-		glyphList.append ( pitem );
-		scene->addItem ( pitem );
-		pitem->setPos ( pen );
-		pen.rx() += 100;
-		++nl;
-	}
-
-	qDebug() << m_name <<m_charLess.count();
+// 	nl = 0;
+// 	pen.rx() = 0;
+// 	pen.ry() += 100;
+// 	for ( int gi=0;gi<m_charLess.count(); ++gi )
+// 	{
+// 		if ( nl == 6 )
+// 		{
+// 			nl = 0;
+// 			pen.rx() = 0;
+// 			pen.ry() += 100;
+// 		}
+// 		QGraphicsPathItem *pitem = itemFromGindex ( m_charLess[gi], sizz );
+// 		if ( !pitem )
+// 		{
+// 			qDebug() << "pitem is null for m_charLess[gi] = "  << m_charLess[gi];
+// 			continue;
+// 		}
+// 		pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
+// 		pitem->setData ( 1,m_charLess[gi] );
+// // 		uint ucharcode = charcode;
+// 		pitem->setData ( 2,0 );
+// 		glyphList.append ( pitem );
+// 		scene->addItem ( pitem );
+// 		pitem->setPos ( pen );
+// 		pen.rx() += 100;
+// 		++nl;
+// 	}
+// 
+// 	qDebug() << m_name <<m_charLess.count();
 	allIsRendered = true;
 	
 	releaseFace();
@@ -502,31 +529,29 @@ QString FontItem::infoText()
 
 QString FontItem::infoGlyph ( int index, int code )
 {
-	QString key;
+	ensureFace();
+	
+	QByteArray key(1001,0);
 	if ( FT_HAS_GLYPH_NAMES ( m_face ) )
 	{
-		char buf[256];
-		FT_Get_Glyph_Name ( m_face, index, buf, 255 );
-		if ( buf[0] != 0 )
+// 		char buf[1001];
+		FT_Get_Glyph_Name ( m_face, index, key.data() , 1000 );
+		if ( key[0] == char(0))
 		{
-			key = buf;
-		}
-		else
-		{
-			key = "noname" + index;
+			key = "noname";
 		}
 	}
 	else
 	{
-		key = "noname" + index;
+		key = "noname";
 	}
 
-	QString ret ( "%1 \t(from %2), U+%3 at index %4" );
-	return ret.arg ( key )
-	       .arg ( m_name )
-	       .arg ( code, 4, 16,QLatin1Char ( '0' ) )
-	       .arg ( index )
-	       ;
+	QString ret( key );
+	ret += ", from " + m_name;//( "%1 \t(from %2), U+%3 " );
+	ret += ", pointcode " + QString::number(code, 16);
+	
+	releaseFace();
+	return ret;
 }
 
 //deprecated
@@ -736,6 +761,7 @@ int FontItem::debug_size()
 		ret+=cit->elementCount();
 	
 }
+
 
 
 

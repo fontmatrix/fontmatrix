@@ -46,22 +46,18 @@ INSTALLS += target
 CONFIG -= release
 
 desktop.files = ../fontmatrix.desktop
-desktop.path = /usr/local/share/applications
+desktop.path = /usr/share/applications
 
 
 INSTALLS += desktop
 
-target.path = /usr/local/bin
+target.path = /usr/bin
 
 TARGET = ../bin/fontmatrix
 
+#VLADA: This is the pattern I should follow for this application to be visible in both GNOME and KDE (possibly other WMs); right now the only installed icon is 48x48
 
-icons.files = ./icons/application-fontmatrix_16.png \
- application-fontmatrix_22.png \ 
- application-fontmatrix_32.png \
- application-fontmatrix_48.png \ 
- application-fontmatrix_64.png \
- application-fontmatrix_126.png
-icons.path = /usr/local/share/fontmatrix/icons/
+icons.files = ../fontmatrix.png
+icons.path = /usr/share/icons/hicolor/48x48/apps
 
 INSTALLS += icons

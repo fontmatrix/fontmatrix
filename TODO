@@ -1,0 +1,20 @@
+_PIERRE_
+
+pop up!
+
+
+
+_VLADA_
+
+* MISC:
+  - tweak fontmatrix.desktop file to make correct menu entery
+  - the same goes for src.pro (need help here Pierre). I can't figure out how to install various size icons
+  - decide wether 'splash' shoud be turned on (Pierre...?)
+
+* UI:
+  - draw nice icons for zoom
+  - make Info, Tags, Glyphs etc. icons
+
+* WEB:
+  - mockup site
+  - make it!

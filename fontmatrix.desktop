@@ -1,13 +1,10 @@
 [Desktop Entry]
-Encoding=UTF-8
-Version=0.2svn
-Type=Application
 
+Encoding=UTF-8
+Version=1.0
+Type=Application
 Name=Fontmatrix
 Comment=A fonts manager
-
-Categories=Application;Graphics;
-
-TryExec=fontmatrix
+Categories=Graphics;VectorGraphics;
 Exec=fontmatrix
-Icon=application-fontmatrix_64
+Icon=fontmatrix.png

@@ -207,7 +207,7 @@
                 <number>1</number>
                </property>
                <property name="columnCount" >
-                <number>3</number>
+                <number>2</number>
                </property>
                <column>
                 <property name="text" >
@@ -217,11 +217,6 @@
                <column>
                 <property name="text" >
                  <string>Files</string>
-                </property>
-               </column>
-               <column>
-                <property name="text" >
-                 <string>Preview</string>
                 </property>
                </column>
               </widget>

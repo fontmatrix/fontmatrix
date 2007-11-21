@@ -237,16 +237,16 @@ void MainViewWidget::fillTree()
 				}
 
 				// try to give the most sensitive icon
-				if ( variantMap.contains ( "Regular" ) )
-					ord->setIcon ( 2,kit.value() [ variantMap["Regular"] ]->oneLinePreviewIcon ( "a" ) );
-				else if ( variantMap.contains ( "Roman" ) )
-					ord->setIcon ( 2,kit.value() [ variantMap["Roman"] ]->oneLinePreviewIcon ( "a" ) );
-				else if ( variantMap.contains ( "Medium" ) )
-					ord->setIcon ( 2,kit.value() [ variantMap["Medium"] ]->oneLinePreviewIcon ( "a" ) );
-				else if ( variantMap.contains ( "Book" ) )
-					ord->setIcon ( 2,kit.value() [ variantMap["Book"] ]->oneLinePreviewIcon ( "a" ) );
-				else
-					ord->setIcon ( 2,kit.value() [0]->oneLinePreviewIcon("a") );
+// 				if ( variantMap.contains ( "Regular" ) )
+// 					ord->setIcon ( 2,kit.value() [ variantMap["Regular"] ]->oneLinePreviewIcon ( "a" ) );
+// 				else if ( variantMap.contains ( "Roman" ) )
+// 					ord->setIcon ( 2,kit.value() [ variantMap["Roman"] ]->oneLinePreviewIcon ( "a" ) );
+// 				else if ( variantMap.contains ( "Medium" ) )
+// 					ord->setIcon ( 2,kit.value() [ variantMap["Medium"] ]->oneLinePreviewIcon ( "a" ) );
+// 				else if ( variantMap.contains ( "Book" ) )
+// 					ord->setIcon ( 2,kit.value() [ variantMap["Book"] ]->oneLinePreviewIcon ( "a" ) );
+// 				else
+// 					ord->setIcon ( 2,kit.value() [0]->oneLinePreviewIcon("a") );
 
 				if ( checkyes && chekno )
 					ord->setCheckState ( 0,Qt::PartiallyChecked );
@@ -293,17 +293,17 @@ void MainViewWidget::fillTree()
 
 void MainViewWidget::slotItemOpened(QTreeWidgetItem * item)
 {
-	if(item->data(0,100).toString() == "family")
-	{
-		for(int i=0; i<item->childCount(); ++i)
-		{
-			QString font= item->child(i)->text(1);
-			if(typo->getFont(font))
-			{
-				item->child(i)->setBackground(2, QBrush(typo->getFont(font)->oneLinePreviewPixmap()));
-			}
-		}	
-	}
+// 	if(item->data(0,100).toString() == "family")
+// 	{
+// 		for(int i=0; i<item->childCount(); ++i)
+// 		{
+// 			QString font= item->child(i)->text(1);
+// 			if(typo->getFont(font))
+// 			{
+// 				item->child(i)->setBackground(2, QBrush(typo->getFont(font)->oneLinePreviewPixmap()));
+// 			}
+// 		}	
+// 	}
 	
 }
 

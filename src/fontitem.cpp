@@ -598,10 +598,10 @@ QPixmap FontItem::oneLinePreviewPixmap()
 	if(!theOneLinePreviewPixmap.isNull())
 		return theOneLinePreviewPixmap;
 	QRectF savedRect = theOneLineScene->sceneRect();
-	theOneLineScene->setSceneRect(0,0,200,32);
+	theOneLineScene->setSceneRect(0,0,320,32);
 	
-	renderLine(theOneLineScene,fancyName(),QPointF(0,16),20,false);
-	QPixmap apix(50 * 32,32);
+	renderLine(theOneLineScene,fancyName(),QPointF(10,24),20,false);
+	QPixmap apix(320,32);
 	apix.fill(Qt::white);
 	QPainter apainter(&apix);
 	apainter.setRenderHint(QPainter::Antialiasing,true);

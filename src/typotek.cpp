@@ -470,7 +470,7 @@ void typotek::initDir()
 		{
 			fl = vl;
 			QString stars(fl);
-			emit relayStartingStep(  stars , Qt::AlignRight, Qt::black);
+			emit relayStartingStep(  stars , Qt::AlignCenter, Qt::black);
 		}
 	}
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );

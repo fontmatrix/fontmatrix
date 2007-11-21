@@ -46,10 +46,8 @@ void DataLoader::load()
 
 	if ( !m_file->open ( QFile::ReadOnly ) )
 	{
-		QMessageBox::warning (0, QString ( "Application" ),
-				       QString ( "Cannot read file %1:\n%2." )
-						       .arg ( m_file->fileName() )
-						       .arg ( m_file->errorString() ) );
+		QMessageBox::warning (0, QString ( "Fontmatrix" ),
+				       QString ( "Seems that’s the first time you run Fontmatrix, if not there’s a problem loading the data file %1." ).arg(m_file->fileName()) );
 		return;
 	}
 	if ( !doc.setContent ( m_file ) )

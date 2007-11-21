@@ -572,14 +572,14 @@ QGraphicsPathItem * FontItem::hasCodepoint(int code)
 	return 0;
 }
 
-QIcon  FontItem::oneLinePreviewIcon()
+QIcon  FontItem::oneLinePreviewIcon(QString oneline)
 {
 	if(!theOneLinePreviewIcon.isNull())
 		return theOneLinePreviewIcon;
 	QRectF savedRect = theOneLineScene->sceneRect();
 	theOneLineScene->setSceneRect(0,0,64,64);
 	
-	renderLine(theOneLineScene,"a",QPointF(10,50),64,false);
+	renderLine(theOneLineScene,oneline,QPointF(10,55),80,false);
 	QPixmap apix(64,64);
 	apix.fill(Qt::white);
 	QPainter apainter(&apix);

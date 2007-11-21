@@ -1,7 +1,18 @@
 _PIERRE_
 
-pop up!
+* FIXES:
+  - performance issues
+  - usability issues
+  - ugly code
+   
+* BACKEND:
+  - replace fontmatrix backend (activation / deactivation,
+    tags database, etc.) with a third party one or even write 
+    this more general purpose font management library in order
+    to focus on presentation in fontmatrix itself.
 
+* FEATURES:
+  - continue to listen Vlada!
 
 
 _VLADA_

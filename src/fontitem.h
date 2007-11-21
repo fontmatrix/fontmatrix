@@ -130,7 +130,7 @@ public:
 		
 		QGraphicsPathItem* hasCodepoint(int code);
 		
-		QIcon oneLinePreviewIcon();
+		QIcon oneLinePreviewIcon(QString oneline);
 		QPixmap oneLinePreviewPixmap();
 				
 		// Relative to fontactionwidget

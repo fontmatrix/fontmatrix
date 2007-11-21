@@ -108,6 +108,7 @@ int main ( int argc, char *argv[] )
 		theSplash.setPixmap(QPixmap::fromImage(splashImg));
 	}
 	
+	
 	if(splash)
 		theSplash.show();
 	

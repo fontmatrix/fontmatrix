@@ -8,8 +8,9 @@ SOURCES += typotek.cpp \
  dataloader.cpp \
  tagseteditor.cpp \
  savedata.cpp \
-fmsampletextview.cpp
- 
+fmsampletextview.cpp \
+ fmpreviewlist.cpp
+
 HEADERS += typotek.h \
  mainviewwidget.h \
  fontitem.h \
@@ -19,8 +20,9 @@ HEADERS += typotek.h \
  dataloader.h \
  tagseteditor.h \
  savedata.h \
- fmsampletextview.h
- 
+ fmsampletextview.h \
+ fmpreviewlist.h
+
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \

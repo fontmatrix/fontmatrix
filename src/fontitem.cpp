@@ -598,7 +598,7 @@ QPixmap FontItem::oneLinePreviewPixmap()
 	if(!theOneLinePreviewPixmap.isNull())
 		return theOneLinePreviewPixmap;
 	QRectF savedRect = theOneLineScene->sceneRect();
-	theOneLineScene->setSceneRect(0,0,320,32);
+	theOneLineScene->setSceneRect(0,0,200,32);
 	
 	renderLine(theOneLineScene,fancyName(),QPointF(0,16),20,false);
 	QPixmap apix(50 * 32,32);

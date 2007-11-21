@@ -77,12 +77,14 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 	public slots:
 		void slotOrderingChanged ( QString s );
-		void slotfontSelected ( QTreeWidgetItem * item, int column );
+		void slotFontSelected ( QTreeWidgetItem * item, int column );
+		void slotFontSelectedByName(QString fname);
 		void slotInfoFont();
 		void slotView(bool needDeRendering = false);
 		void slotglyphInfo();
 		void slotSearch();
 		void slotFontAction(QTreeWidgetItem * item, int column );
+		void slotFontActionByName(QString fname);
 		void slotEditAll();
 		void slotCleanFontAction();
 		void slotZoom(int z);

@@ -163,57 +163,81 @@
           </layout>
          </item>
          <item>
-          <widget class="QTreeWidget" name="fontTree" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <widget class="QTabWidget" name="tabWidget" >
+           <property name="currentIndex" >
+            <number>0</number>
            </property>
-           <property name="font" >
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="cursor" stdset="0" >
-            <cursorShape>ArrowCursor</cursorShape>
-           </property>
-           <property name="autoFillBackground" >
-            <bool>false</bool>
-           </property>
-           <property name="frameShape" >
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow" >
-            <enum>QFrame::Sunken</enum>
-           </property>
-           <property name="lineWidth" >
-            <number>1</number>
-           </property>
-           <property name="textElideMode" >
-            <enum>Qt::ElideRight</enum>
-           </property>
-           <property name="autoExpandDelay" >
-            <number>1</number>
-           </property>
-           <property name="columnCount" >
-            <number>3</number>
-           </property>
-           <column>
-            <property name="text" >
+           <widget class="QWidget" name="tab_2" >
+            <attribute name="title" >
              <string>Names</string>
-            </property>
-           </column>
-           <column>
-            <property name="text" >
-             <string>Files</string>
-            </property>
-           </column>
-           <column>
-            <property name="text" >
-             <string>Preview</string>
-            </property>
-           </column>
+            </attribute>
+            <layout class="QGridLayout" >
+             <item row="0" column="0" >
+              <widget class="QTreeWidget" name="fontTree" >
+               <property name="sizePolicy" >
+                <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font" >
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="cursor" stdset="0" >
+                <cursorShape>ArrowCursor</cursorShape>
+               </property>
+               <property name="autoFillBackground" >
+                <bool>false</bool>
+               </property>
+               <property name="frameShape" >
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow" >
+                <enum>QFrame::Sunken</enum>
+               </property>
+               <property name="lineWidth" >
+                <number>1</number>
+               </property>
+               <property name="textElideMode" >
+                <enum>Qt::ElideRight</enum>
+               </property>
+               <property name="autoExpandDelay" >
+                <number>1</number>
+               </property>
+               <property name="columnCount" >
+                <number>3</number>
+               </property>
+               <column>
+                <property name="text" >
+                 <string>Names</string>
+                </property>
+               </column>
+               <column>
+                <property name="text" >
+                 <string>Files</string>
+                </property>
+               </column>
+               <column>
+                <property name="text" >
+                 <string>Preview</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tab_3" >
+            <attribute name="title" >
+             <string>preview</string>
+            </attribute>
+            <layout class="QGridLayout" >
+             <item row="0" column="0" >
+              <widget class="FMPreviewList" name="previewList" />
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
          <item>
@@ -532,6 +556,11 @@
    <class>FMSampleTextView</class>
    <extends>QGraphicsView</extends>
    <header location="global" >fmsampletextview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FMPreviewList</class>
+   <extends>QGraphicsView</extends>
+   <header>fmpreviewlist.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -22,6 +22,7 @@
 #include "fontitem.h"
 #include "fontactionwidget.h"
 #include "typotekadaptator.h"
+#include "fmpreviewlist.h"
 
 #include <QString>
 #include <QDebug>
@@ -89,12 +90,13 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	tagsCombo->addItems ( tl_tmp );
 	
 	rightSplitter->setOpaqueResize(false);
+	previewList->setRefWidget(this);
 
 	//CONNECT
 
 	connect ( tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 
-	connect ( fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotfontSelected ( QTreeWidgetItem*, int ) ) );
+	connect ( fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 
 // 	connect ( editAllButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotEditAll() ) );
 
@@ -162,6 +164,8 @@ void MainViewWidget::fillTree()
 				openKeys << topit->child ( j )->text ( 0 );
 	}
 // qDebug() << "openjey : " << openKeys.join("/");
+	
+	previewList->slotRefill(currentFonts);
 
 	fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
@@ -213,7 +217,7 @@ void MainViewWidget::fillTree()
 // 						fakeFont.setPointSizeF(100);
 // 						entry->setFont(2, fakeFont);
 // 						entry->setText(2, "A");
-						entry->setBackground ( 2,QBrush ( kit.value() [n]->oneLinePreviewPixmap() ) );
+// 						entry->setBackground ( 2,QBrush ( kit.value() [n]->oneLinePreviewPixmap() ) );
 						
 					}
 
@@ -315,7 +319,7 @@ void MainViewWidget::slotOrderingChanged ( QString s )
 
 }
 
-void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
+void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 {
 // 	qDebug() << "font select";	
 	if ( item->data(0,100).toString() == "alpha" )
@@ -413,6 +417,28 @@ void MainViewWidget::slotfontSelected ( QTreeWidgetItem * item, int column )
 	return;
 
 }
+
+void MainViewWidget::slotFontSelectedByName(QString fname)
+{
+	lastIndex = faceIndex;
+	faceIndex = fname;
+	curItemName = faceIndex;
+	
+	if ( faceIndex.count() && faceIndex != lastIndex )
+	{
+		qDebug() << "\tFont has changed";
+		slotFontActionByName(fname);
+// 			emit faceChanged();
+		theVeryFont = typo->getFont ( faceIndex );
+		fillUniPlanesCombo(theVeryFont); // has to be called before view, may I should come back to the faceChanged signal idea
+		slotView(true);
+		typo->setWindowTitle(theVeryFont->fancyName());
+	}
+	
+	fillTree();
+	return;
+}
+
 
 void MainViewWidget::slotInfoFont()
 {
@@ -580,6 +606,31 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 
 	}
 }
+
+void MainViewWidget::slotFontActionByName(QString fname)
+{
+	if ( !currentFaction )
+	{
+		currentFaction = new FontActionWidget ( typo->adaptator() );
+		tagLayout->addWidget ( currentFaction );
+		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
+		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
+		currentFaction->show();
+	}
+
+	FontItem * FoIt = typo->getFont ( fname);
+	if ( FoIt/* && (!FoIt->isLocked())*/ )
+	{
+// 		currentFaction->slotFinalize();
+		QList<FontItem*> fl;
+		fl.append ( FoIt );
+		currentFaction->prepare ( fl );
+
+
+	}
+}
+
+
 
 void MainViewWidget::slotEditAll()
 {

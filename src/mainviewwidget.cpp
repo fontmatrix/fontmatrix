@@ -235,6 +235,8 @@ void MainViewWidget::fillTree()
 				// try to give the most sensitive icon
 				if ( variantMap.contains ( "Regular" ) )
 					ord->setIcon ( 2,kit.value() [ variantMap["Regular"] ]->oneLinePreviewIcon ( "a" ) );
+				else if ( variantMap.contains ( "Roman" ) )
+					ord->setIcon ( 2,kit.value() [ variantMap["Roman"] ]->oneLinePreviewIcon ( "a" ) );
 				else if ( variantMap.contains ( "Medium" ) )
 					ord->setIcon ( 2,kit.value() [ variantMap["Medium"] ]->oneLinePreviewIcon ( "a" ) );
 				else if ( variantMap.contains ( "Book" ) )

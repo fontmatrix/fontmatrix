@@ -46,6 +46,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
+	fontsetHasChanged = true;
 	
 	fontTree->setIconSize(QSize(32,32));
 
@@ -151,9 +152,7 @@ MainViewWidget::~MainViewWidget()
 
 void MainViewWidget::fillTree()
 {
-	qDebug() << "curitemname = " << curItemName;
-// 	if(curItemName.isEmpty() && currentFonts.count())
-// 		curItemName = currentFonts.first()->name();
+
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
 	for ( int i=0; i < fontTree->topLevelItemCount();++i )
@@ -165,7 +164,7 @@ void MainViewWidget::fillTree()
 	}
 // qDebug() << "openjey : " << openKeys.join("/");
 	
-	previewList->slotRefill(currentFonts);
+	
 
 	fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
@@ -270,6 +269,8 @@ void MainViewWidget::fillTree()
 			delete alpha;
 		}
 	}
+	
+	previewList->slotRefill(currentFonts, fontsetHasChanged);
 	if ( curItem )
 	{
 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
@@ -280,6 +281,8 @@ void MainViewWidget::fillTree()
 		curItem->parent()->setBackgroundColor(1,scol);
 		curItem->setBackgroundColor(0,scol);
 		curItem->setBackgroundColor(1,scol);
+		
+		
 // 		curItem->setSelected ( true );
 	}
 	else
@@ -289,22 +292,17 @@ void MainViewWidget::fillTree()
 	fontTree->resizeColumnToContents ( 0 )  ;
 // 	fontTree->resizeColumnToContents ( 1 ) ;
 // 	fontTree->setColumnWidth(0,200);
+	
+	fontsetHasChanged = false;
 }
 
 void MainViewWidget::slotItemOpened(QTreeWidgetItem * item)
 {
 // 	if(item->data(0,100).toString() == "family")
 // 	{
-// 		for(int i=0; i<item->childCount(); ++i)
-// 		{
-// 			QString font= item->child(i)->text(1);
-// 			if(typo->getFont(font))
-// 			{
-// 				item->child(i)->setBackground(2, QBrush(typo->getFont(font)->oneLinePreviewPixmap()));
-// 			}
-// 		}	
+// 		slotFontSelected (item, 0);
 // 	}
-	
+// 	
 }
 
 
@@ -333,12 +331,14 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	{
 // 		qDebug() << "Item is a family";
 		bool wantView = true;
+		bool hasChild = false;
 		for(int i=0; i < item->childCount(); ++i)
 		{
+			hasChild = true;
 			if(item->child(i)->text(1) == curItemName)
 				wantView = false; 
 		}
-		if(wantView)
+		if(wantView && hasChild)
 		{
 			lastIndex = faceIndex;
 			faceIndex = item->child(0)->text(1);
@@ -351,6 +351,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 				fillUniPlanesCombo(theVeryFont); 
 				slotView(true);
 				typo->setWindowTitle(theVeryFont->fancyName());
+				previewList->searchAndSelect(theVeryFont->name());
 			}
 		}
 // 		qDebug() << curItemName;
@@ -395,13 +396,14 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	
 		if ( faceIndex.count() && faceIndex != lastIndex )
 		{
-			qDebug() << "\tFont has changed";
+			qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 			slotFontAction ( item,column );
 // 			emit faceChanged();
 			theVeryFont = typo->getFont ( faceIndex );
 			fillUniPlanesCombo(theVeryFont); // has to be called before view, may I should come back to the faceChanged signal idea
 			slotView(true);
 			typo->setWindowTitle(theVeryFont->fancyName());
+			previewList->searchAndSelect(theVeryFont->name());
 		}
 	
 		if(item->data(0,200).toInt() != item->checkState(1))
@@ -426,11 +428,10 @@ void MainViewWidget::slotFontSelectedByName(QString fname)
 	
 	if ( faceIndex.count() && faceIndex != lastIndex )
 	{
-		qDebug() << "\tFont has changed";
+		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 		slotFontActionByName(fname);
-// 			emit faceChanged();
 		theVeryFont = typo->getFont ( faceIndex );
-		fillUniPlanesCombo(theVeryFont); // has to be called before view, may I should come back to the faceChanged signal idea
+		fillUniPlanesCombo(theVeryFont); 
 		slotView(true);
 		typo->setWindowTitle(theVeryFont->fancyName());
 	}
@@ -525,6 +526,7 @@ void MainViewWidget::slotglyphInfo()
 void MainViewWidget::slotSearch()
 {
 	fontTree->clear();
+	fontsetHasChanged = true;
 
 	QString fs ( searchString->text() );
 	QString ff ( "search_%1" );
@@ -543,7 +545,7 @@ void MainViewWidget::slotSearch()
 void MainViewWidget::slotFilterTag ( QString tag )
 {
 	fontTree->clear();
-
+	fontsetHasChanged = true;
 	QString fs ( tag );
 	QString ff ( "tag" );
 
@@ -555,6 +557,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 void MainViewWidget::slotFilterTagset ( QString set )
 {
 	fontTree->clear();
+	fontsetHasChanged = true;
 	currentFonts.clear();
 	QStringList tags = typo->tagsOfSet ( set );
 	if ( !tags.count() )
@@ -900,6 +903,7 @@ void MainViewWidget::slotRefitSample()
 
 void MainViewWidget::slotViewAll()
 {
+	fontsetHasChanged = true;
 	currentFonts = typo->getAllFonts();
 	fillTree();
 }
@@ -1074,6 +1078,19 @@ void MainViewWidget::fillUniPlanesCombo(FontItem* item)
 	}
 	uniPlaneCombo->setCurrentIndex(0);
 	
+}
+
+void MainViewWidget::keyPressEvent(QKeyEvent * event)
+{
+	qDebug() << " MainViewWidget::keyPressEvent(QKeyEvent * "<<event<<")";
+	if(event->key() == Qt::Key_Space &&  event->modifiers().testFlag ( Qt::ControlModifier ))
+	{
+		// Switch list view
+		if(fontlistTab->currentIndex() == 0)
+			fontlistTab->setCurrentIndex(1);
+		else
+			fontlistTab->setCurrentIndex(0);
+	}
 }
 
 

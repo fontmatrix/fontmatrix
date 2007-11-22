@@ -769,3 +769,8 @@ void typotek::popupTagsetEditor()
 	disconnect(&ed,SIGNAL(signalNewTagset()),theMainView,SLOT(slotReloadTagsetList()));
 }
 
+void typotek::keyPressEvent(QKeyEvent * event)
+{
+	qDebug() << "typotek::keyPressEvent(QKeyEvent * "<<event<<")";
+}
+

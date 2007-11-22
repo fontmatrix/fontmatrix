@@ -28,6 +28,7 @@
 #include <QGraphicsPixmapItem>
 #include <QMouseEvent>
 #include <QGraphicsRectItem>
+#include <QScrollBar>
 
 
 FMPreviewList::FMPreviewList(QWidget* parent)
@@ -38,8 +39,7 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 	m_select = m_scene->addRect(QRectF(), QPen(Qt::blue ), QColor(0,0,120,60));
 	m_select->setZValue(100.0);
 	
-	connect( (QObject*)verticalScrollBar(), SIGNAL(valueChanged( int )),
-		this, SLOT(slotChanged(int)) );
+	connect( verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotChanged(int)) );
 	
 }
 
@@ -48,37 +48,40 @@ FMPreviewList::~FMPreviewList()
 {
 }
 
-void FMPreviewList::slotRefill(QList<FontItem*> fonts)
+void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 {
-	
-// 	typotek *typo = typotek::getInstance();
-	if(!isVisible())
-		return;
-	for(int i= 0;i<m_pixItemList.count(); ++i)
+	qDebug() << "FMPreviewList::slotRefill(QList<FontItem*> "<<&fonts<<", bool "<<setChanged<<")";
+	if(setChanged)
 	{
-		QGraphicsPixmapItem *pit = m_pixItemList.at(i);
-		if(pit)
+		slotClearSelect();
+	}
+	
+	
+
+	for(int i = 0; i < m_pixItemList.count(); ++i)
+	{
+		
+		if(m_pixItemList[i].item && m_pixItemList[i].visible)
 		{
-			m_scene->removeItem(pit);
-			delete pit;
+			m_scene->removeItem(m_pixItemList[i].item);
+			delete m_pixItemList[i].item;
 		}
 	}
 	m_pixItemList.clear();
+	
 	QRect vvrect(visibleRegion().boundingRect());
 	QRect vrect = mapToScene( vvrect ).boundingRect().toRect();
 	int beginPos= vrect.top();
 	int endPos = vrect.bottom();
-// 	qDebug()<< beginPos <<beginPos / 32 << endPos;
 	if(beginPos <0)
 	{
 		endPos += beginPos * -1;
 		beginPos = 0;
-// 		qDebug()<< beginPos <<beginPos / 32 << endPos;
 	}
 	
 	QPixmap padPix(1,1);
 	QGraphicsPixmapItem *padPixItem = m_scene->addPixmap(padPix);
-	m_pixItemList.append(padPixItem);
+// 	m_pixItemList.append(FontPreviewItem("NONE",QPointF(),false,padPixItem));
 	for(int i= 0 ; i < fonts.count() ; ++i)
 	{
 		if((i + 1)*32 >= beginPos && i*32 <= endPos)
@@ -86,45 +89,124 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts)
 			FontItem *fit = fonts.at(i);
 			if(fit)
 			{
-				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap());
+				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap("hamburgefonstiv"));
 				pit->setPos(10,32*i);
 				pit->setData(1,fit->name());
+				pit->setData(2,"preview");
+// 				pit->setZValue(1000);
+				pit->setToolTip(fit->fancyName());
 				pit->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
 	// 			pit->setZValue(10);
-				m_pixItemList.append(pit);
+				m_pixItemList.append(FontPreviewItem(fit->name(), pit->pos(), true, pit));
 				
 			}
 		}
 		else
 		{
 			padPixItem->setPos(10,32*i);
+			m_pixItemList.append(FontPreviewItem(fonts.at(i)->name(),padPixItem->pos(),false,padPixItem));
 		}
 	}
 }
 
 void FMPreviewList::showEvent(QShowEvent * event)
 {
-	slotRefill(mvw->curFonts());
+	slotRefill(mvw->curFonts(), false);
 }
 
 void FMPreviewList::slotChanged(int )
 {
-	slotRefill(mvw->curFonts());
+	slotRefill(mvw->curFonts(), false);
 }
 
 void FMPreviewList::mousePressEvent(QMouseEvent * e)
 {
-	QGraphicsItem *item = m_scene->itemAt(mapToScene( e->pos() ));
-	if(!item)
+	qDebug() << "FMPreviewList::mousePressEvent(QMouseEvent * "<<e<<")";
+	QList<QGraphicsItem*> items = m_scene->items(mapToScene( e->pos() ));
+	
+	if(items.isEmpty())
 		return;
 	
-	QString fname(item->data(1).toString());
-	item->setSelected(true);
-	m_select->setRect(item->boundingRect());
-	m_select->setPos(item->pos());
+	QGraphicsItem* it = 0;;
+	for(int i = 0; i < items.count();++i)
+	{
+		if(items[i]->data(2).toString() == "preview")
+		{
+			it = items[i];
+			break;
+		}
+	}
+	if(it == 0)
+		return;
 	
-	qDebug() << fname;
-	mvw->slotFontSelectedByName(fname);
+	if(it == m_currentItem)
+		return;
+
+	
+	
+	
+	slotSelect(it);
+	
+}
+
+void FMPreviewList::slotSelect(QGraphicsItem * it)
+{
+	qDebug() << "FMPreviewList::slotSelect(QGraphicsItem * "<<it<<")";
+	if(!it)
+		return;
+	it->setSelected(true);
+	m_currentItem = it;
+	m_select->setRect(it->boundingRect());
+	m_select->setPos(it->pos());
+	ensureVisible(it);
+	if(isVisible())
+		mvw->slotFontSelectedByName(it->data(1).toString());
+}
+
+void FMPreviewList::slotClearSelect()
+{
+	m_currentItem = 0;
+	m_select->setRect(QRectF());
+	verticalScrollBar()->setValue(0);
+}
+
+void FMPreviewList::searchAndSelect(QString fname)
+{
+	qDebug() << "FMPreviewList::searchAndSelect(QString "<<fname<<")";
+	QGraphicsItem *it = 0;
+	for(int i = 0 ; i < m_pixItemList.count() ; ++i)
+	{
+// 		qDebug() << m_pixItemList[i].name;
+		if(m_pixItemList[i].name == fname)
+		{
+			if(m_pixItemList[i].visible)
+			{
+				it = m_pixItemList[i].item;
+				break;
+			}
+			else
+			{
+				FontItem *fit = typotek::getInstance()->getFont(fname);
+				if(fit)
+				{
+					QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap("hamburgefonstiv"));
+					pit->setPos(m_pixItemList[i].pos);
+					pit->setData(1,fit->name());
+					pit->setData(2,"preview");
+					pit->setToolTip(fit->fancyName());
+					pit->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
+					m_pixItemList[i].visible = true;
+					m_pixItemList[i].item = pit;
+				
+				}
+				it = m_pixItemList[i].item;
+				break;
+			}
+		}
+	}
+	if(!it)
+		return;
+	slotSelect(it);
 }
 
 

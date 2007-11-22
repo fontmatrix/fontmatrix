@@ -131,7 +131,7 @@ public:
 		QGraphicsPathItem* hasCodepoint(int code);
 		
 		QIcon oneLinePreviewIcon(QString oneline);
-		QPixmap oneLinePreviewPixmap();
+		QPixmap oneLinePreviewPixmap(QString oneline);
 				
 		// Relative to fontactionwidget
 		void lock(){m_lock=true;};

@@ -593,14 +593,14 @@ QIcon  FontItem::oneLinePreviewIcon(QString oneline)
 	return theOneLinePreviewIcon;
 }
 
-QPixmap FontItem::oneLinePreviewPixmap()
+QPixmap FontItem::oneLinePreviewPixmap(QString oneline)
 {
 	if(!theOneLinePreviewPixmap.isNull())
 		return theOneLinePreviewPixmap;
 	QRectF savedRect = theOneLineScene->sceneRect();
 	theOneLineScene->setSceneRect(0,0,320,32);
 	
-	renderLine(theOneLineScene,fancyName(),QPointF(10,24),20,false);
+	renderLine(theOneLineScene,oneline ,QPointF(10,24),20,false);
 	QPixmap apix(320,32);
 	apix.fill(Qt::white);
 	QPainter apainter(&apix);
@@ -692,7 +692,7 @@ void FontItem::moreInfo_sfnt()
 		}
 		else
 		{
-			qDebug() << "It seems there are new name IDs in TT spec, please say FontMatrix’s team to stay up to dat.";
+			qDebug() << name() <<"\nIt seems there are new name IDs in TT spec, please say FontMatrix team to stay up to date.";
 			continue;
 		}
 		

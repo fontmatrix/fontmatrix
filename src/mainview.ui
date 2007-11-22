@@ -75,6 +75,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="sensitivityCheck" >
+           <property name="focusPolicy" >
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="text" >
             <string>Case sensitive</string>
            </property>
@@ -163,7 +166,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QTabWidget" name="tabWidget" >
+          <widget class="QTabWidget" name="fontlistTab" >
            <property name="currentIndex" >
             <number>0</number>
            </property>
@@ -188,6 +191,9 @@
                <property name="cursor" stdset="0" >
                 <cursorShape>ArrowCursor</cursorShape>
                </property>
+               <property name="focusPolicy" >
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="autoFillBackground" >
                 <bool>false</bool>
                </property>
@@ -199,6 +205,9 @@
                </property>
                <property name="lineWidth" >
                 <number>1</number>
+               </property>
+               <property name="alternatingRowColors" >
+                <bool>false</bool>
                </property>
                <property name="textElideMode" >
                 <enum>Qt::ElideRight</enum>
@@ -299,6 +308,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="focusPolicy" >
+               <enum>Qt::NoFocus</enum>
+              </property>
              </widget>
             </item>
            </layout>
@@ -381,6 +393,9 @@
               </item>
               <item>
                <widget class="QGraphicsView" name="abcView" >
+                <property name="focusPolicy" >
+                 <enum>Qt::NoFocus</enum>
+                </property>
                 <property name="rubberBandSelectionMode" >
                  <enum>Qt::IntersectsItemBoundingRect</enum>
                 </property>
@@ -534,7 +549,11 @@
             </layout>
            </item>
            <item>
-            <widget class="FMSampleTextView" name="loremView" />
+            <widget class="FMSampleTextView" name="loremView" >
+             <property name="focusPolicy" >
+              <enum>Qt::NoFocus</enum>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>

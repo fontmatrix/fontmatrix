@@ -59,6 +59,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGridLayout *tagLayout;
 		QString currentOrdering;
 		FontItem *theVeryFont; 
+		bool fontsetHasChanged;
 		
 		void allActivation(bool act);
 		void activation(FontItem* fit, bool act);
@@ -114,6 +115,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsScene* glyphsScene()const{return abcScene;};
 		QGraphicsScene* textScene()const{return loremScene;};
 		QList<FontItem*> curFonts(){return currentFonts;};
+		
+	protected:
+		void keyPressEvent ( QKeyEvent * event ) ;
 
 };
 

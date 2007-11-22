@@ -27,6 +27,17 @@ class QGraphicsScene;
 class FontItem;
 class MainViewWidget;
 class QGraphicsRectItem;
+class QGraphicsItem;
+
+struct FontPreviewItem
+{
+	QString name;
+	QPointF pos;
+	bool visible;
+	QGraphicsPixmapItem* item;
+	FontPreviewItem(QString n, QPointF p, bool v, QGraphicsPixmapItem* i)
+	:name(n), pos(p), visible(v), item(i) {};
+};
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -40,16 +51,23 @@ class FMPreviewList : public QGraphicsView
 
 		~FMPreviewList();
 		void setRefWidget(MainViewWidget* m){mvw = m;};
+		void searchAndSelect(QString fname);
+		
 	public slots:
-		void slotRefill ( QList<FontItem*> fonts );
+		void slotRefill ( QList<FontItem*> fonts , bool setChanged );
+		void slotSelect ( QGraphicsItem* it );
+		void slotClearSelect();
 	private slots:
 		void slotChanged(int);
 		
 	private:
+		
+		
 		QGraphicsScene *m_scene;
-		QList<QGraphicsPixmapItem*> m_pixItemList;
+		QList<FontPreviewItem> m_pixItemList;
 		QGraphicsRectItem* m_select;
 		MainViewWidget *mvw;
+		QGraphicsItem *m_currentItem;
 		
 	protected:
 		void showEvent ( QShowEvent * event ) ;

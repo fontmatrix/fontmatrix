@@ -39,7 +39,8 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 	m_select = m_scene->addRect(QRectF(), QPen(Qt::blue ), QColor(0,0,120,60));
 	m_select->setZValue(100.0);
 	
-	connect( verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotChanged(int)) );
+	connect( verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotChanged()) );
+	connect( verticalScrollBar(), SIGNAL(sliderReleased()),this,SLOT(slotChanged()));
 	
 }
 
@@ -50,7 +51,7 @@ FMPreviewList::~FMPreviewList()
 
 void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 {
-	qDebug() << "FMPreviewList::slotRefill(QList<FontItem*> "<<&fonts<<", bool "<<setChanged<<")";
+// 	qDebug() << "FMPreviewList::slotRefill(QList<FontItem*> "<<&fonts<<", bool "<<setChanged<<")";
 	if(setChanged)
 	{
 		slotClearSelect();
@@ -114,8 +115,10 @@ void FMPreviewList::showEvent(QShowEvent * event)
 	slotRefill(mvw->curFonts(), false);
 }
 
-void FMPreviewList::slotChanged(int )
+void FMPreviewList::slotChanged( )
 {
+	if(verticalScrollBar()->isSliderDown())
+		return;
 	slotRefill(mvw->curFonts(), false);
 }
 

@@ -58,7 +58,7 @@ class FMPreviewList : public QGraphicsView
 		void slotSelect ( QGraphicsItem* it );
 		void slotClearSelect();
 	private slots:
-		void slotChanged(int);
+		void slotChanged();
 		
 	private:
 		

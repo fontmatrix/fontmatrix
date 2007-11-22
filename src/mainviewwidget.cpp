@@ -33,6 +33,7 @@
 #include <QGraphicsRectItem>
 #include <QDoubleSpinBox>
 #include <QLabel>
+#include <QScrollBar>
 
 
 
@@ -916,6 +917,7 @@ void MainViewWidget::slotViewActivated()
 void MainViewWidget::slotPlaneSelected(int i)
 {
 	slotView(true);
+	abcView->verticalScrollBar()->setValue(0);
 }
 
 void MainViewWidget::fillUniPlanes()

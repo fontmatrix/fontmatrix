@@ -353,6 +353,15 @@ void FontItem::deRenderAll()
 		}
 	}
 	glyphList.clear();
+	for ( int i = 0; i < labList.count(); ++i )
+	{
+		if ( labList[i]->scene() )
+		{
+			labList[i]->scene()->removeItem ( labList[i] );
+			delete labList[i];
+		}
+	}
+	labList.clear();
 
 	allIsRendered = false;
 	contourCache.clear();
@@ -426,7 +435,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	qDebug() << "INTER " << begin_code << end_code;
 	while ( charcode <= end_code && gindex)
 	{
-		if ( nl == 10 )
+		if ( nl == 8 )
 		{
 			nl = 0;
 			pen.rx() = 0;
@@ -442,8 +451,12 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 			glyphList.append ( pitem );
 			scene->addItem ( pitem );
 			pitem->setPos ( pen );
+			
+			QGraphicsTextItem *tit= scene->addText(QString("%1").arg(charcode,4,16,QLatin1Char( '0' )));
+			tit->setPos(pen.x(),pen.y() + 15);
+			labList.append(tit);
+			
 			pen.rx() += 100;
-	
 			++glyph_count;
 			m_charLess.removeAll ( gindex );
 			++nl;

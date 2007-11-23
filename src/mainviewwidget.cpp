@@ -200,12 +200,12 @@ void MainViewWidget::fillTree()
 					isExpanded = true;
 				}
 
-				QMap<QString,int> variantMap;
+// 				QMap<QString,int> variantMap;
 				for ( int  n = 0; n < kit.value().count(); ++n )
 				{
 					QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 					QString variant = kit.value() [n]->variant();
-					variantMap[variant] = n;
+// 					variantMap[variant] = n;
 					entry->setText ( 0,  variant );
 					entry->setText ( 1, kit.value() [n]->name() );
 					entry->setData ( 0, 100, "fontfile" );
@@ -347,7 +347,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	
 			if ( faceIndex.count() && faceIndex != lastIndex )
 			{
-				slotFontAction ( item,column );
+				slotFontActionByName( faceIndex );
 				theVeryFont = typo->getFont ( faceIndex );
 				fillUniPlanesCombo(theVeryFont); 
 				slotView(true);

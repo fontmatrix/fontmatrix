@@ -46,28 +46,7 @@ extern bool __FM_SHOW_FONTLOADED;
 typotek::typotek()
 {
 	instance = this;
-/* See initMatrix()
-	checkOwnDir();
-	readSettings();
-	fillTagsList();
-	initDir();
-
-
-	theMainView = new MainViewWidget ( this );
-	setCentralWidget ( theMainView );
-
-	createActions();
-	createMenus();
-	createStatusBar();
-
-
-	{
-		actAdaptator = new TypotekAdaptator ( this );
-		if ( !QDBusConnection::sessionBus().registerService ( "com.fontmatrix.fonts" ) )
-			qDebug() << "unable to register to DBUS";
-		if ( !QDBusConnection::sessionBus().registerObject ( "/FontActivation", actAdaptator, QDBusConnection::ExportAllContents ) )
-			qDebug() << "unable to register to DBUS";
-	}*/
+	setWindowTitle("Fontmatrix");
 }
 
 void typotek::initMatrix()

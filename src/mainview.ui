@@ -299,6 +299,9 @@
            <attribute name="title" >
             <string>Font Info</string>
            </attribute>
+           <attribute name="icon" >
+            <iconset resource="application.qrc" >:/fontmatrix_info.png</iconset>
+           </attribute>
            <layout class="QGridLayout" >
             <item row="0" column="0" >
              <widget class="QTextBrowser" name="fontInfoText" >
@@ -318,6 +321,9 @@
           <widget class="QWidget" name="Glyphs" >
            <attribute name="title" >
             <string>Glyphs</string>
+           </attribute>
+           <attribute name="icon" >
+            <iconset resource="application.qrc" >:/fontmatrix_glypg.png</iconset>
            </attribute>
            <layout class="QGridLayout" >
             <item row="0" column="0" >
@@ -418,6 +424,9 @@
           <widget class="QWidget" name="tagPage" >
            <attribute name="title" >
             <string>Tags</string>
+           </attribute>
+           <attribute name="icon" >
+            <iconset resource="application.qrc" >:/fontmatrix_tags.png</iconset>
            </attribute>
           </widget>
          </widget>

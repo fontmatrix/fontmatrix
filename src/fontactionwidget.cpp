@@ -141,7 +141,7 @@ void FontActionWidget::slotSwitchCheckState ( QListWidgetItem * item )
 			
 			if(typo->tagsOfSet(sets[i]).contains(item->text()))
 			{
-				QAction *entry = menu.addAction(QString("Remove to %1").arg(sets[i]));
+				QAction *entry = menu.addAction(QString("Remove from %1").arg(sets[i]));
 				entry->setData(sets[i]);
 // 				entry->setEnabled(false);
 // 				QAction ent(sets[i], mTitle);

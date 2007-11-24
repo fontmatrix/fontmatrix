@@ -418,7 +418,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 		return;
 	deRender ( scene );
 
-	QPointF pen ( 0,0 );
+	QPointF pen ( 0,35 );
 	int glyph_count = 0;
 	int nl = 0;
 

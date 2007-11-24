@@ -27,6 +27,8 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QMenu>
+#include <QAction>
 
 
 
@@ -34,6 +36,10 @@ FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) : Q
 {
 	setupUi ( this );
 	isOk = false;
+	contextMenuReq = false;
+	
+	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+	
 	doConnect();
 
 }
@@ -91,8 +97,12 @@ void FontActionWidget::doConnect()
 // 	connect ( buttonBox,SIGNAL ( accepted() ),this,SLOT ( slotOk() ) );
 // 	connect ( buttonBox,SIGNAL ( rejected() ),this,SLOT ( slotCancel() ) );
 
+	connect(tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
+	
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
+	
+	
 }
 
 FontActionWidget::~FontActionWidget()
@@ -117,7 +127,47 @@ void FontActionWidget::slotCancel()
 
 void FontActionWidget::slotSwitchCheckState ( QListWidgetItem * item )
 {
-	item->setCheckState ( item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked );
+	qDebug() << "FontActionWidget::slotSwitchCheckState ( QListWidgetItem * "<<item<<" )";
+// 	item->setCheckState ( item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked );
+	
+	if(contextMenuReq)
+	{
+		typotek *typo = typotek::getInstance();
+		QStringList sets = typo->tagsets();
+		QMenu menu(tagsListWidget);
+// 		QAction *mTitle = menu.addAction("Add To Set");
+		for(int i=0; i< sets.count(); ++i)
+		{
+			
+			if(typo->tagsOfSet(sets[i]).contains(item->text()))
+			{
+				QAction *entry = menu.addAction(QString("Remove to %1").arg(sets[i]));
+				entry->setData(sets[i]);
+// 				entry->setEnabled(false);
+// 				QAction ent(sets[i], mTitle);
+			}
+			else
+			{
+				QAction *entry = menu.addAction(QString("Add to %1").arg(sets[i]));
+				entry->setData(sets[i]);
+			}
+		}
+		QAction *sel = menu.exec(contextMenuPos);
+		if(sel /*&& sel != mTitle*/)
+		{
+			if(sel->text().startsWith("Add"))
+			{
+				typo->addTagToSet(sel->data().toString(), item->text());
+			}
+			else
+			{
+				typo->removeTagFromSet(sel->data().toString(), item->text());
+			}
+		}
+		contextMenuReq = false;
+		return;
+	}
+	
 	slotFinalize();
 }
 
@@ -162,6 +212,13 @@ void FontActionWidget::slotFinalize()
 // 	}
 
 	emit cleanMe();
+}
+
+void FontActionWidget::slotContextMenu(QPoint pos)
+{
+	qDebug() << "FontActionWidget::slotContextMenu("<<pos<<")";
+	contextMenuReq = true;
+	contextMenuPos = tagsListWidget->mapToGlobal( pos );
 }
 
 

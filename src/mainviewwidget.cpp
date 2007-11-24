@@ -415,6 +415,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 				slotActivate ( false, item, column );
 		}
 		fillTree();
+		abcView->verticalScrollBar()->setValue(0);
 		return;
 	}
 	return;
@@ -438,6 +439,7 @@ void MainViewWidget::slotFontSelectedByName(QString fname)
 	}
 	
 	fillTree();
+	abcView->verticalScrollBar()->setValue(0);
 	return;
 }
 

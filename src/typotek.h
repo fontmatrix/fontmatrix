@@ -56,6 +56,8 @@ class typotek:public QMainWindow
 		void print();
 		void fontBook();
 		void popupTagsetEditor();
+		void slotActivateCurrents();
+		void slotDeactivateCurrents();
 
 // 		bool saveAs();
 		void about();
@@ -105,6 +107,8 @@ class typotek:public QMainWindow
 		QAction *printAct;
 		QAction *fontBookAct;
 		QAction *tagsetAct;
+		QAction *activCurAct;
+		QAction *deactivCurAct;
 
 		MainViewWidget *theMainView;
 

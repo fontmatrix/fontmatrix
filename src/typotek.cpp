@@ -257,6 +257,12 @@ void typotek::createActions()
 	tagsetAct = new QAction(tr("&Tag Sets"),this);
 	connect(tagsetAct,SIGNAL(triggered( )),this,SLOT(popupTagsetEditor()));
 	
+	activCurAct = new QAction(tr("Activate all currents"),this);
+	connect(activCurAct,SIGNAL(triggered( )),this,SLOT(slotActivateCurrents()));
+	
+	deactivCurAct = new QAction(tr("Deactivate all currents"),this);
+	connect(deactivCurAct,SIGNAL(triggered( )),this,SLOT(slotDeactivateCurrents()));
+	
 
 }
 
@@ -274,6 +280,8 @@ void typotek::createMenus()
 	
 	editMenu = menuBar()->addMenu(tr("Edit"));
 	editMenu->addAction(tagsetAct);
+	editMenu->addAction(activCurAct);
+	editMenu->addAction(deactivCurAct);
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
@@ -772,5 +780,17 @@ void typotek::popupTagsetEditor()
 void typotek::keyPressEvent(QKeyEvent * event)
 {
 	qDebug() << "typotek::keyPressEvent(QKeyEvent * "<<event<<")";
+}
+
+void typotek::slotActivateCurrents()
+{
+	if(QMessageBox::question(this,"Fontmatrix care","You are about to activate a bunch of fonts,\nit is time to cancel if it was not your intent", QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::Ok)
+		theMainView->slotActivateAll();
+}
+
+void typotek::slotDeactivateCurrents()
+{
+	if(QMessageBox::question(this,"Fontmatrix care","You are about to deactivate a bunch of fonts,\nit is time to cancel if it was not your intent",QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::Ok)
+		theMainView->slotDesactivateAll();
 }
 

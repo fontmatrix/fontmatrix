@@ -34,6 +34,7 @@
 
 class QGraphicsPixmapItem;
 class QGraphicsScene;
+class QGraphicsRectItem;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -84,6 +85,7 @@ public:
 		QList<QGraphicsPixmapItem *> pixList;
 		QList<QGraphicsPathItem*> glyphList;
 		QList<QGraphicsTextItem*> labList;
+		QList<QGraphicsRectItem*> selList;
 		QList<QGraphicsScene *> sceneList;
 		bool allIsRendered;
 // 		QGraphicsPixmapItem *loremPixmap;

@@ -34,6 +34,7 @@
 #include <QDoubleSpinBox>
 #include <QLabel>
 #include <QScrollBar>
+#include <QGraphicsRectItem>
 
 
 
@@ -48,6 +49,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
 	fontsetHasChanged = true;
+	
+	curGlyph = 0;
 	
 	fontTree->setIconSize(QSize(32,32));
 
@@ -464,6 +467,8 @@ void MainViewWidget::slotView(bool needDeRendering)
 		if ( l )
 			l->deRenderAll();
 		f->deRenderAll();
+		
+		curGlyph = 0;
 	}
 
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
@@ -521,9 +526,15 @@ void MainViewWidget::slotglyphInfo()
 	if ( abcScene->selectedItems().isEmpty() )
 		return;
 	glyphInfo->clear();
-	QString is = typo->getFont ( faceIndex )->infoGlyph ( abcScene->selectedItems() [0]->data ( 1 ).toInt(), abcScene->selectedItems() [0]->data ( 2 ).toInt() );
+	QString is = typo->getFont ( faceIndex )->infoGlyph ( abcScene->selectedItems() [0]->data ( 2 ).toInt(), abcScene->selectedItems() [0]->data ( 3  ).toInt() );
 	glyphInfo->setText ( is );
-	codepointSelectText->setText(QString::number(abcScene->selectedItems() [0]->data ( 2 ).toInt(), 16) );
+	codepointSelectText->setText(QString::number(abcScene->selectedItems() [0]->data ( 3 ).toInt(), 16) );
+	if(curGlyph)
+	{
+		curGlyph->setBrush(QColor(255,255,255,0));
+	}
+	curGlyph = reinterpret_cast<QGraphicsRectItem*>(abcScene->selectedItems().first());
+	curGlyph->setBrush(QColor(0,0,0,80));
 }
 
 void MainViewWidget::slotSearch()

@@ -31,7 +31,7 @@ class FontActionWidget;
 class QTextEdit;
 class QGridLayout;
 class QTreeWidgetItem;
-
+class QGraphicsRectItem;
 /**
 MainViewWidget inherits from an ui designed.
 
@@ -60,6 +60,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString currentOrdering;
 		FontItem *theVeryFont; 
 		bool fontsetHasChanged;
+		QGraphicsRectItem *curGlyph;
 		
 		void allActivation(bool act);
 		void activation(FontItem* fit, bool act);

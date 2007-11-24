@@ -24,6 +24,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsPathItem>
+#include <QGraphicsRectItem>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPainter>
@@ -362,7 +363,15 @@ void FontItem::deRenderAll()
 		}
 	}
 	labList.clear();
-
+	for ( int i = 0; i < selList.count(); ++i )
+	{
+		if ( selList[i]->scene() )
+		{
+			selList[i]->scene()->removeItem ( selList[i] );
+			delete selList[i];
+		}
+	}
+	selList.clear();
 	allIsRendered = false;
 	contourCache.clear();
 	advanceCache.clear();
@@ -433,6 +442,8 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 // 	charcode = FT_Get_First_Char ( m_face, &gindex );
 	charcode = begin_code;
 	qDebug() << "INTER " << begin_code << end_code;
+	QPen selPen(Qt::gray);
+	QBrush selBrush(QColor(255,255,255,0));
 	while ( charcode <= end_code && gindex)
 	{
 		if ( nl == 8 )
@@ -444,17 +455,30 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 		QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
 		if(pitem)
 		{
-			pitem->setFlag ( QGraphicsItem::ItemIsSelectable,true );
-			pitem->setData ( 1,gindex );
+			pitem->setData(1,"glyph");
+			pitem->setData ( 2,gindex );
 			uint ucharcode = charcode;
-			pitem->setData ( 2,ucharcode );
+			pitem->setData ( 3,ucharcode );
 			glyphList.append ( pitem );
 			scene->addItem ( pitem );
 			pitem->setPos ( pen );
+			pitem->setZValue(10);
 			
 			QGraphicsTextItem *tit= scene->addText(QString("%1").arg(charcode,4,16,QLatin1Char( '0' )));
 			tit->setPos(pen.x(),pen.y() + 15);
+			tit->setData(1,"label");
+			tit->setData(2,gindex);
+			tit->setData(3,ucharcode);
 			labList.append(tit);
+			tit->setZValue(1);
+			
+			QGraphicsRectItem *rit = scene->addRect(pen.x() -30,pen.y() -50,100,100,selPen,selBrush);
+			rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
+			rit->setData(1,"select");
+			rit->setData(2,gindex);
+			rit->setData(3,ucharcode);
+			rit->setZValue(100);
+			selList.append(rit);
 			
 			pen.rx() += 100;
 			++glyph_count;
@@ -561,7 +585,7 @@ QString FontItem::infoGlyph ( int index, int code )
 
 	QString ret( key );
 	ret += ", from " + m_name;//( "%1 \t(from %2), U+%3 " );
-	ret += ", pointcode " + QString::number(code, 16);
+// 	ret += ", pointcode " + QString::number(code, 16);
 	
 	releaseFace();
 	return ret;

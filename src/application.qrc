@@ -3,7 +3,10 @@
         <file>fileopen.xpm</file>
         <file>filesave.xpm</file>
         <file>zoom.png</file>
-    	<file alias="fontmatrix_icon.png">icons/application-fontmatrix_128.png</file>
-    	<file alias="fontmatrix_splash.png">graphic-resources/splashscreen-670x470.png</file>
+        <file alias="fontmatrix_icon.png">icons/application-fontmatrix_128.png</file>
+        <file alias="fontmatrix_splash.png">graphic-resources/splashscreen-670x470.png</file>
+        <file alias="fontmatrix_info.png">graphic-resources/font-info.png</file>
+        <file alias="fontmatrix_glypg.png">graphic-resources/font-glyph.png</file>
+        <file alias="fontmatrix_tags.png">graphic-resources/font-tag.png</file>
     </qresource>
 </RCC>

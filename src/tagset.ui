@@ -12,6 +12,9 @@
   <property name="windowTitle" >
    <string>TagSet editor</string>
   </property>
+  <property name="windowIcon" >
+   <iconset resource="application.qrc" >:/fontmatrix_tagseteditor.png</iconset>
+  </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
     <layout class="QVBoxLayout" >
@@ -176,6 +179,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="application.qrc" />
+ </resources>
  <connections/>
 </ui>

@@ -234,7 +234,7 @@ void typotek::createActions()
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
 	
 	tagsetAct = new QAction(tr("&Tag Sets"),this);
-	tagsetAct->setIcon(QIcon(":/fontmatrix_tagseteditor.png"));
+	tagsetAct->setIcon(QIcon(":/fontmatrix_tagseteditor_icon.png"));
 	connect(tagsetAct,SIGNAL(triggered( )),this,SLOT(popupTagsetEditor()));
 	
 	activCurAct = new QAction(tr("Activate all currents"),this);

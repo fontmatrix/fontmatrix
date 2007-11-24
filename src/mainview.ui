@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1066</width>
+    <width>997</width>
     <height>828</height>
    </rect>
   </property>
@@ -78,6 +78,9 @@
            <property name="focusPolicy" >
             <enum>Qt::NoFocus</enum>
            </property>
+           <property name="toolTip" >
+            <string>Respect entered text case when searching</string>
+           </property>
            <property name="text" >
             <string>Case sensitive</string>
            </property>
@@ -113,7 +116,7 @@
            <item>
             <widget class="QLabel" name="Tags" >
              <property name="text" >
-              <string>Tags</string>
+              <string>Tag</string>
              </property>
             </widget>
            </item>
@@ -127,6 +130,9 @@
              </property>
              <property name="contextMenuPolicy" >
               <enum>Qt::DefaultContextMenu</enum>
+             </property>
+             <property name="toolTip" >
+              <string>Filter view by chosing tag</string>
              </property>
             </widget>
            </item>
@@ -149,7 +155,7 @@
            <item>
             <widget class="QLabel" name="setlabel" >
              <property name="text" >
-              <string>Sets</string>
+              <string>TagSet</string>
              </property>
             </widget>
            </item>
@@ -161,6 +167,9 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="toolTip" >
+              <string>Show only fonts that belong to chosen tagset</string>
+             </property>
             </widget>
            </item>
           </layout>
@@ -168,7 +177,7 @@
          <item>
           <widget class="QTabWidget" name="fontlistTab" >
            <property name="currentIndex" >
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="tab_2" >
             <attribute name="title" >
@@ -234,7 +243,7 @@
            </widget>
            <widget class="QWidget" name="tab_3" >
             <attribute name="title" >
-             <string>preview</string>
+             <string>Preview</string>
             </attribute>
             <layout class="QGridLayout" >
              <item row="0" column="0" >
@@ -248,6 +257,9 @@
           <layout class="QHBoxLayout" >
            <item>
             <widget class="QPushButton" name="viewAllButton" >
+             <property name="statusTip" >
+              <string>Show complete collection of available fonts</string>
+             </property>
              <property name="text" >
               <string>View all</string>
              </property>
@@ -255,6 +267,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="viewActivatedButton" >
+             <property name="statusTip" >
+              <string>Show all activated fonts</string>
+             </property>
              <property name="text" >
               <string>View activated</string>
              </property>
@@ -292,8 +307,14 @@
           <enum>Qt::Vertical</enum>
          </property>
          <widget class="QTabWidget" name="tabView" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Expanding" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="currentIndex" >
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab" >
            <attribute name="title" >
@@ -341,22 +362,38 @@
                   </item>
                   <item>
                    <widget class="QLineEdit" name="codepointSelectText" >
+                    <property name="sizePolicy" >
+                     <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="maxLength" >
                      <number>32763</number>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QComboBox" name="uniPlaneCombo" />
+                   <widget class="QComboBox" name="uniPlaneCombo" >
+                    <property name="sizePolicy" >
+                     <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                   </widget>
                   </item>
                   <item>
                    <spacer>
                     <property name="orientation" >
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType" >
+                     <enum>QSizePolicy::Preferred</enum>
+                    </property>
                     <property name="sizeHint" >
                      <size>
-                      <width>31</width>
+                      <width>26</width>
                       <height>23</height>
                      </size>
                     </property>
@@ -387,6 +424,9 @@
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
+                    <property name="statusTip" >
+                     <string>Zooming in/out glyph previews</string>
+                    </property>
                     <property name="maximum" >
                      <number>1000</number>
                     </property>
@@ -409,6 +449,9 @@
                <widget class="QGraphicsView" name="abcView" >
                 <property name="focusPolicy" >
                  <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="statusTip" >
+                 <string>Clicking on a glyph will show details about it</string>
                 </property>
                 <property name="rubberBandSelectionMode" >
                  <enum>Qt::IntersectsItemBoundingRect</enum>
@@ -444,6 +487,9 @@
             <layout class="QHBoxLayout" >
              <item>
               <widget class="QPushButton" name="textButton" >
+               <property name="statusTip" >
+                <string>Customising text used for preview rendering</string>
+               </property>
                <property name="text" >
                 <string>Sample text...</string>
                </property>
@@ -507,10 +553,10 @@
                 </sizepolicy>
                </property>
                <property name="toolTip" >
-                <string comment="zoom" >zoom</string>
+                <string comment="zoom" />
                </property>
                <property name="statusTip" >
-                <string>zoom is disabled, uncheck fit to view to enable zoom</string>
+                <string>Zoom is disabled, uncheck fit to view to enable zoom</string>
                </property>
                <property name="layoutDirection" >
                 <enum>Qt::LeftToRight</enum>

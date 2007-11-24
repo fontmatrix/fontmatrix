@@ -11,5 +11,6 @@
         <file alias="fontmatrix_antialias.png">graphic-resources/fontmatrix-AA.png</file>
 
         <file alias="fontmatrix_tagseteditor.png">graphic-resources/fontmatrix-tagseteditor.png</file>
+        <file alias="fontmatrix_tagseteditor_icon.png">graphic-resources/fontmatrix-tagseteditor-icon.png</file>
     </qresource>
 </RCC>

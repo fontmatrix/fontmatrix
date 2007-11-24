@@ -7,4 +7,4 @@ Name=Fontmatrix
 Comment=A fonts manager
 Categories=Graphics;VectorGraphics;
 Exec=fontmatrix
-Icon=fontmatrix.png
+Icon=fontmatrix

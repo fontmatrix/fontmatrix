@@ -5,40 +5,75 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>404</height>
+    <width>410</width>
+    <height>538</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>TagSet editor</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="application.qrc" >:/fontmatrix_tagseteditor.png</iconset>
+   <iconset resource="application.qrc" >:/fontmatrix_tagseteditor_icon.png</iconset>
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
-    <layout class="QVBoxLayout" >
-     <item>
+    <layout class="QGridLayout" >
+     <item row="0" column="0" >
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QLabel" name="label_3" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+         <property name="pixmap" >
+          <pixmap resource="application.qrc" >:/fontmatrix_tagseteditor.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4" >
+         <property name="font" >
+          <font>
+           <pointsize>14</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+           <stylestrategy>PreferDefault</stylestrategy>
+           <kerning>true</kerning>
+          </font>
+         </property>
+         <property name="text" >
+          <string>Collections of Tags</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0" >
       <layout class="QHBoxLayout" >
        <item>
         <layout class="QVBoxLayout" >
          <item>
-          <layout class="QVBoxLayout" >
-           <item>
-            <widget class="QLabel" name="label" >
-             <property name="text" >
-              <string>Available tags</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="tagList" >
-             <property name="selectionMode" >
-              <enum>QAbstractItemView::ExtendedSelection</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="label" >
+           <property name="text" >
+            <string>Available tags</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="tagList" >
+           <property name="selectionMode" >
+            <enum>QAbstractItemView::ExtendedSelection</enum>
+           </property>
+          </widget>
          </item>
          <item>
           <layout class="QHBoxLayout" >
@@ -50,13 +85,19 @@
              <property name="sizeHint" >
               <size>
                <width>40</width>
-               <height>20</height>
+               <height>23</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
             <widget class="QPushButton" name="addToSetButton" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="font" >
               <font>
                <pointsize>11</pointsize>
@@ -151,7 +192,7 @@
        </item>
       </layout>
      </item>
-     <item>
+     <item row="2" column="0" >
       <layout class="QHBoxLayout" >
        <item>
         <spacer>

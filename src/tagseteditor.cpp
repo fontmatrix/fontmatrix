@@ -43,6 +43,7 @@ void TagSetEditor::doConnect()
 	connect(addToSetButton,SIGNAL(released()),this,SLOT(slotAddTagToSet()));
 	connect(removeToSetButton,SIGNAL(released()),this,SLOT(slotRemoveToSet()));
 	connect(setList,SIGNAL(itemPressed( QListWidgetItem* )),this,SLOT(slotUpdateTagsOfSet( QListWidgetItem*)));
+	connect(deleteTagsetButton,SIGNAL(released()),this,SLOT(slotDeleteSet()));
 }
 
 void TagSetEditor::doInitLists()
@@ -149,3 +150,20 @@ void TagSetEditor::slotUpdateTagsOfSet( QListWidgetItem* item )
 }
 
 
+
+
+void TagSetEditor::slotDeleteSet()
+{
+	QListWidgetItem* item = setList->currentItem();
+	if(!item)
+		return;
+	
+	QString ts = item->text();
+	if(ts.isEmpty())
+		return;
+	
+	setList->clear();
+	tagsOfSetList->clear();
+	m_typo->removeTagset(ts);
+	setList->addItems(m_typo->tagsets());
+}

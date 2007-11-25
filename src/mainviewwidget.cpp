@@ -277,7 +277,7 @@ void MainViewWidget::fillTree()
 	previewList->slotRefill(currentFonts, fontsetHasChanged);
 	if ( curItem )
 	{
-		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
+// 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
 		fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 		QColor scol(Qt::blue);
 		scol.setAlpha(30);
@@ -400,7 +400,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	
 		if ( faceIndex.count() && faceIndex != lastIndex )
 		{
-			qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
+// 			qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 			slotFontAction ( item,column );
 // 			emit faceChanged();
 			theVeryFont = typo->getFont ( faceIndex );
@@ -427,13 +427,16 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 void MainViewWidget::slotFontSelectedByName(QString fname)
 {
+	qDebug() << "MainViewWidget::slotFontSelectedByName("<<fname<<")";
+	if(fname.isEmpty())
+		return;
 	lastIndex = faceIndex;
 	faceIndex = fname;
 	curItemName = faceIndex;
 	
 	if ( faceIndex.count() && faceIndex != lastIndex )
 	{
-		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
+// 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 		slotFontActionByName(fname);
 		theVeryFont = typo->getFont ( faceIndex );
 		fillUniPlanesCombo(theVeryFont); 
@@ -464,18 +467,30 @@ void MainViewWidget::slotView(bool needDeRendering)
 		return;
 	if(needDeRendering)
 	{
+		qDebug() << "neeedDerender (faceIndex = "<< faceIndex <<")";
 		if ( l )
+		{
+			qDebug() << "last to derender (lastindex = "<< lastIndex <<")";
 			l->deRenderAll();
+		}
+		else
+		{
+			qDebug() << "NO last to derender (lastindex = "<< lastIndex <<")";
+		}
 		f->deRenderAll();
 		
 		curGlyph = 0;
+	}
+	else
+	{
+		qDebug() << "dontNeedDerender (faceIndex = "<< faceIndex <<")";
 	}
 
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	
 	QString pkey = uniPlaneCombo->itemData( uniPlaneCombo->currentIndex() ).toString();
 	QPair<int,int> uniPair(uniPlanes[pkey + uniPlaneCombo->currentText()]);
-	qDebug() <<  pkey << uniPlaneCombo->currentText() <<  uniPair.first << uniPair.second;
+// 	qDebug() <<  pkey << uniPlaneCombo->currentText() <<  uniPair.first << uniPair.second;
 	f->renderAll ( abcScene , uniPair.first, uniPair.second); 
 	QApplication::restoreOverrideCursor();
 
@@ -514,7 +529,7 @@ void MainViewWidget::slotView(bool needDeRendering)
 				
 		}
 		
-		qDebug() << allrect;
+// 		qDebug() << allrect;
 		loremView->fitInView(allrect, Qt::KeepAspectRatio);
 	}
 
@@ -534,7 +549,9 @@ void MainViewWidget::slotglyphInfo()
 		curGlyph->setBrush(QColor(255,255,255,0));
 	}
 	curGlyph = reinterpret_cast<QGraphicsRectItem*>(abcScene->selectedItems().first());
-	curGlyph->setBrush(QColor(0,0,0,80));
+	curGlyph->setBrush(QColor(0,0,0,60));
+// 	QGraphicsPathItem * gitem = theVeryFont->hasCodepoint(curGlyph->data(3).toInt());
+// 	gitem->setBrush( QColor(200,200,200) );
 }
 
 void MainViewWidget::slotSearch()
@@ -701,13 +718,13 @@ void MainViewWidget::slotZoom ( int z )
 
 void MainViewWidget::slotAppendTag ( QString tag )
 {
-	qDebug() << "add tag to combo " << tag;
+// 	qDebug() << "add tag to combo " << tag;
 	tagsCombo->addItem ( tag );
 }
 
 void MainViewWidget::activation ( FontItem* fit , bool act )
 {
-	qDebug() << "Activation of " << fit->name() << act;
+// 	qDebug() << "Activation of " << fit->name() << act;
 	if ( act )
 	{
 
@@ -1087,7 +1104,7 @@ void MainViewWidget::fillUniPlanesCombo(FontItem* item)
 		int codecount = item->countCoverage(begin,end);
 		if( codecount > 0)
 		{
-			qDebug() << p << codecount;
+// 			qDebug() << p << codecount;
 			uniPlaneCombo->addItem(p.mid(3), p.mid(0,3));
 		}
 	}
@@ -1097,7 +1114,7 @@ void MainViewWidget::fillUniPlanesCombo(FontItem* item)
 
 void MainViewWidget::keyPressEvent(QKeyEvent * event)
 {
-	qDebug() << " MainViewWidget::keyPressEvent(QKeyEvent * "<<event<<")";
+// 	qDebug() << " MainViewWidget::keyPressEvent(QKeyEvent * "<<event<<")";
 	if(event->key() == Qt::Key_Space &&  event->modifiers().testFlag ( Qt::ControlModifier ))
 	{
 		// Switch list view

@@ -55,6 +55,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	if(setChanged)
 	{
 		slotClearSelect();
+		trackedFonts = fonts;
 	}
 	
 	
@@ -128,8 +129,10 @@ void FMPreviewList::mousePressEvent(QMouseEvent * e)
 	QList<QGraphicsItem*> items = m_scene->items(mapToScene( e->pos() ));
 	
 	if(items.isEmpty())
+	{
+		qDebug() << "\t No item under  "<<e->pos()<<")";
 		return;
-	
+	}
 	QGraphicsItem* it = 0;;
 	for(int i = 0; i < items.count();++i)
 	{
@@ -154,7 +157,8 @@ void FMPreviewList::mousePressEvent(QMouseEvent * e)
 
 void FMPreviewList::slotSelect(QGraphicsItem * it)
 {
-	qDebug() << "FMPreviewList::slotSelect(QGraphicsItem * "<<it<<")";
+	QString fontname = it->data(1).toString();
+	qDebug() << "FMPreviewList::slotSelect(QGraphicsItem * "<<fontname<<")";
 	if(!it)
 		return;
 	it->setSelected(true);
@@ -163,7 +167,7 @@ void FMPreviewList::slotSelect(QGraphicsItem * it)
 	m_select->setPos(it->pos());
 	ensureVisible(it);
 	if(isVisible())
-		mvw->slotFontSelectedByName(it->data(1).toString());
+		mvw->slotFontSelectedByName(fontname);
 }
 
 void FMPreviewList::slotClearSelect()
@@ -210,6 +214,11 @@ void FMPreviewList::searchAndSelect(QString fname)
 	if(!it)
 		return;
 	slotSelect(it);
+}
+
+void FMPreviewList::resizeEvent(QResizeEvent * event)
+{
+	slotRefill(trackedFonts, false);
 }
 
 

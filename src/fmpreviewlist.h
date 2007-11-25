@@ -62,7 +62,7 @@ class FMPreviewList : public QGraphicsView
 		
 	private:
 		
-		
+		QList<FontItem*> trackedFonts;
 		QGraphicsScene *m_scene;
 		QList<FontPreviewItem> m_pixItemList;
 		QGraphicsRectItem* m_select;
@@ -72,7 +72,7 @@ class FMPreviewList : public QGraphicsView
 	protected:
 		void showEvent ( QShowEvent * event ) ;
 		void mousePressEvent ( QMouseEvent * e );
-
+		void resizeEvent ( QResizeEvent * event );
 };
 
 #endif

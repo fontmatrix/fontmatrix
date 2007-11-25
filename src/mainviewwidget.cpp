@@ -94,7 +94,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	tagsCombo->addItems ( tl_tmp );
 	
-	rightSplitter->setOpaqueResize(false);
+// 	rightSplitter->setOpaqueResize(false);
 	previewList->setRefWidget(this);
 
 	//CONNECT

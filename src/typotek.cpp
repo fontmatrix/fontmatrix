@@ -48,7 +48,7 @@ extern bool __FM_SHOW_FONTLOADED;
 typotek::typotek()
 {
 	instance = this;
-	setWindowTitle("Fontmatrix");
+	setWindowTitle ( "Fontmatrix" );
 }
 
 void typotek::initMatrix()
@@ -135,11 +135,11 @@ void typotek::open()
 		}
 	}
 	QStringList tali;
-/* Everybody say it’s useless...
-	QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." );
-	
-	if(!inputTags.isEmpty())
-		tali = inputTags.split ( "#" );*/
+	/* Everybody say it’s useless...
+		QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." );
+
+		if(!inputTags.isEmpty())
+			tali = inputTags.split ( "#" );*/
 	tali << "Activated_Off" ;
 
 	foreach ( QString tas, tali )
@@ -164,19 +164,19 @@ void typotek::open()
 
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
-		
+
 
 		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
 		{
 
-			if(fi.suffix() == "pfb")
+			if ( fi.suffix() == "pfb" )
 			{
-				QFile fafm ( QString(pathList.at ( i )).replace(".pfb",".afm") );
-				QFileInfo iafm(QString(pathList.at ( i )).replace(".pfb",".afm"));
-				if(fafm.exists())
-					fafm.copy(ownDir.absolutePath() + "/" + iafm.fileName() );
+				QFile fafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
+				QFileInfo iafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
+				if ( fafm.exists() )
+					fafm.copy ( ownDir.absolutePath() + "/" + iafm.fileName() );
 			}
-			FontItem *fitem = new FontItem (  ownDir.absolutePath() + "/" + fi.fileName());
+			FontItem *fitem = new FontItem ( ownDir.absolutePath() + "/" + fi.fileName() );
 
 			fitem->setTags ( tali );
 			fontMap.append ( fitem );
@@ -188,10 +188,10 @@ void typotek::open()
 }
 
 bool typotek::save()
-{	
-	SaveData saver(&fontsdata, this);
+{
+	SaveData saver ( &fontsdata, this );
 	return true;
-	
+
 }
 
 
@@ -234,22 +234,22 @@ void typotek::createActions()
 	aboutAct = new QAction ( tr ( "&About" ), this );
 	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
-	
+
 	helpAct = new QAction ( tr ( "Help" ), this );
-	connect(helpAct,SIGNAL(triggered( )),this,SLOT(help()));
-	
-	tagsetAct = new QAction(tr("&Tag Sets"),this);
-	tagsetAct->setIcon(QIcon(":/fontmatrix_tagseteditor_icon.png"));
-	connect(tagsetAct,SIGNAL(triggered( )),this,SLOT(popupTagsetEditor()));
-	
-	activCurAct = new QAction(tr("Activate all currents"),this);
-	connect(activCurAct,SIGNAL(triggered( )),this,SLOT(slotActivateCurrents()));
-	
-	deactivCurAct = new QAction(tr("Deactivate all currents"),this);
-	connect(deactivCurAct,SIGNAL(triggered( )),this,SLOT(slotDeactivateCurrents()));
-	
-	
-	
+	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( help() ) );
+
+	tagsetAct = new QAction ( tr ( "&Tag Sets" ),this );
+	tagsetAct->setIcon ( QIcon ( ":/fontmatrix_tagseteditor_icon.png" ) );
+	connect ( tagsetAct,SIGNAL ( triggered( ) ),this,SLOT ( popupTagsetEditor() ) );
+
+	activCurAct = new QAction ( tr ( "Activate all currents" ),this );
+	connect ( activCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotActivateCurrents() ) );
+
+	deactivCurAct = new QAction ( tr ( "Deactivate all currents" ),this );
+	connect ( deactivCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotDeactivateCurrents() ) );
+
+
+
 
 }
 
@@ -264,15 +264,16 @@ void typotek::createMenus()
 	fileMenu->addAction ( fontBookAct );
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
-	
-	editMenu = menuBar()->addMenu(tr("Edit"));
-	editMenu->addAction(tagsetAct);
-	editMenu->addAction(activCurAct);
-	editMenu->addAction(deactivCurAct);
+
+	editMenu = menuBar()->addMenu ( tr ( "Edit" ) );
+	editMenu->addAction ( tagsetAct );
+	editMenu->addSeparator();
+	editMenu->addAction ( activCurAct );
+	editMenu->addAction ( deactivCurAct );
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
-	helpMenu->addAction(helpAct);
+	helpMenu->addAction ( helpAct );
 
 }
 
@@ -289,16 +290,16 @@ void typotek::readSettings()
 	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
 	move ( pos );
-	
-	
+
+
 }
 
 void typotek::writeSettings()
 {
-	QSettings settings (  "Undertype", "fontmatrix"  );
+	QSettings settings ( "Undertype", "fontmatrix" );
 	settings.setValue ( "pos", pos() );
 	settings.setValue ( "size", size() );
-	
+
 }
 
 bool typotek::maybeSave()
@@ -384,50 +385,50 @@ void typotek::checkOwnDir()
 {
 	//DONE parse ~/.fonts.conf to see if there is the ~/.managed-fonts dir entry
 	// and create it if it does not exist and setup a QDir("~/.managed-fonts") private member
-	QString fontmanaged("/.fonts-managed"); // Where activated fonts are sym-linked
-	QString fontreserved("/.fonts-reserved");// Where aknoweldged fonts are stored.
-	
-	managedDir.setPath(QDir::homePath() + fontmanaged);
-	if(!managedDir.exists())
-		managedDir.mkpath(QDir::homePath() + fontmanaged );
-	
-	QFile fcfile(QDir::homePath() + "/.fonts.conf");
+	QString fontmanaged ( "/.fonts-managed" ); // Where activated fonts are sym-linked
+	QString fontreserved ( "/.fonts-reserved" );// Where aknoweldged fonts are stored.
+
+	managedDir.setPath ( QDir::homePath() + fontmanaged );
+	if ( !managedDir.exists() )
+		managedDir.mkpath ( QDir::homePath() + fontmanaged );
+
+	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
 	if ( !fcfile.open ( QFile::ReadWrite ) )
 	{
-		QMessageBox::warning (0, QString ( "fontmatrix" ),
-				      QString ( "Cannot read file %1:\n%2.\nBEFORE ANYTHING, YOU SHOULD CHECK IF FONTCONFIG IS IN USE." )
-						      .arg ( fcfile.fileName() )
-						      .arg ( fcfile.errorString() ) );
+		QMessageBox::warning ( 0, QString ( "fontmatrix" ),
+		                       QString ( "Cannot read file %1:\n%2.\nBEFORE ANYTHING, YOU SHOULD CHECK IF FONTCONFIG IS IN USE." )
+		                       .arg ( fcfile.fileName() )
+		                       .arg ( fcfile.errorString() ) );
 	}
 	else
 	{
-		QDomDocument fc("fontconfig");
-		fc.setContent(&fcfile);
-		
+		QDomDocument fc ( "fontconfig" );
+		fc.setContent ( &fcfile );
+
 		bool isconfigured = false;
-		QDomNodeList dirlist = fc.elementsByTagName("dir");
-		for(int i=0;i < dirlist.count();++i)
+		QDomNodeList dirlist = fc.elementsByTagName ( "dir" );
+		for ( int i=0;i < dirlist.count();++i )
 		{
-			if(dirlist.at(i).toElement().text() == managedDir.absolutePath())
+			if ( dirlist.at ( i ).toElement().text() == managedDir.absolutePath() )
 				isconfigured = true;
 		}
-		if(!isconfigured)
+		if ( !isconfigured )
 		{
 			QDomElement root = fc.documentElement();
-			QDomElement direlem = fc.createElement("dir");
-			QDomText textelem = fc.createTextNode(managedDir.absolutePath());
-			direlem.appendChild(textelem);
-			root.appendChild(direlem);
-			
-			fcfile.resize(0);
-			QTextStream ts(&fcfile);
-			fc.save(ts,4);
-			
+			QDomElement direlem = fc.createElement ( "dir" );
+			QDomText textelem = fc.createTextNode ( managedDir.absolutePath() );
+			direlem.appendChild ( textelem );
+			root.appendChild ( direlem );
+
+			fcfile.resize ( 0 );
+			QTextStream ts ( &fcfile );
+			fc.save ( ts,4 );
+
 		}
 		fcfile.close();
 	}
-	
-	ownDir.setPath ( QDir::homePath() +  fontreserved);
+
+	ownDir.setPath ( QDir::homePath() +  fontreserved );
 	if ( !ownDir.exists() )
 		ownDir.mkpath ( QDir::homePath() + fontreserved );
 
@@ -440,7 +441,7 @@ void typotek::initDir()
 {
 
 	//load data file
-	DataLoader loader(&fontsdata);
+	DataLoader loader ( &fontsdata );
 	loader.load();
 
 	// load font files
@@ -449,24 +450,24 @@ void typotek::initDir()
 	ownDir.setNameFilters ( filters );
 
 	QStringList pathList = ownDir.entryList();
-	if(__FM_SHOW_FONTLOADED)
-		qDebug() << pathList.join("\n");
+	if ( __FM_SHOW_FONTLOADED )
+		qDebug() << pathList.join ( "\n" );
 	int fontnr = pathList.count();
 	QChar fl;//A
 	for ( int i = 0 ; i < fontnr ; ++i )
 	{
-		
+
 		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
 		fontMap.append ( fi );
 		realFontMap[fi->name() ] = fi;
 		fi->setTags ( tagsMap.value ( fi->name() ) );
-		
-		QChar vl(fi->family().at(0).toUpper());
-		if(vl != fl)
+
+		QChar vl ( fi->family().at ( 0 ).toUpper() );
+		if ( vl != fl )
 		{
 			fl = vl;
-			QString stars(fl);
-			emit relayStartingStep(  stars , Qt::AlignCenter, Qt::black);
+			QString stars ( fl );
+			emit relayStartingStep ( stars , Qt::AlignCenter, Qt::black );
 		}
 	}
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
@@ -489,14 +490,14 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 					ret.append ( fontMap[i] );
 			}
 		}
-		else if(field == "search_INSENS")
+		else if ( field == "search_INSENS" )
 		{
-			if(fontMap[i]->infoText().contains(pattern,Qt::CaseInsensitive))
+			if ( fontMap[i]->infoText().contains ( pattern,Qt::CaseInsensitive ) )
 				ret.append ( fontMap[i] );
 		}
-		else if(field == "search_SENS")
+		else if ( field == "search_SENS" )
 		{
-			if(fontMap[i]->infoText().contains(pattern,Qt::CaseSensitive))
+			if ( fontMap[i]->infoText().contains ( pattern,Qt::CaseSensitive ) )
 				ret.append ( fontMap[i] );
 		}
 		else
@@ -573,20 +574,20 @@ void typotek::fontBook()
 	QString styleString ( QString ( "color:white;background-color:black;font-family:Helvetica;font-size:%1pt" ).arg ( familySize ) );
 
 	QFont theFont;// the font for all that is not collected fonts
-	theFont.setPointSize(familySize);
-	theFont.setFamily("Helvetica");
-	theFont.setBold(true);
-	
-	QFont myLittleFont(theFont);
-	myLittleFont.setPointSize(10);
-	myLittleFont.setBold(false);
-	myLittleFont.setItalic(true);
-	
-	
+	theFont.setPointSize ( familySize );
+	theFont.setFamily ( "Helvetica" );
+	theFont.setBold ( true );
+
+	QFont myLittleFont ( theFont );
+	myLittleFont.setPointSize ( 10 );
+	myLittleFont.setBold ( false );
+	myLittleFont.setItalic ( true );
+
+
 	QPen abigwhitepen;
-	abigwhitepen.setWidth(10);
-	abigwhitepen.setColor(Qt::white);
-	
+	abigwhitepen.setWidth ( 10 );
+	abigwhitepen.setColor ( Qt::white );
+
 
 	QList<FontItem*> localFontMap = theMainView->curFonts();
 	QMap<QString, QList<FontItem*> > keyList;
@@ -628,33 +629,33 @@ void typotek::fontBook()
 
 		firstLetter.clear();
 // 		firstLetter.append ( kit.key().at ( 0 ).toUpper() );
-		firstLetter.append(  kit.key().toLower());
-		
-		if(firstKey)
+		firstLetter.append ( kit.key().toLower() );
+
+		if ( firstKey )
 		{
-			pageNumStr.setNum(1);
+			pageNumStr.setNum ( 1 );
 			folio = theScene.addText ( pageNumStr,theFont );
 			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
-			folio->setZValue(9999000.0);
-			ABC = theScene.addText(firstLetter.at(0).toUpper() ,theFont);
-			ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
+			folio->setZValue ( 9999000.0 );
+			ABC = theScene.addText ( firstLetter.at ( 0 ).toUpper() ,theFont );
+			ABC->setPos ( pageWidth *0.9,pageHeight * 0.05 );
 // 			ABC->rotate(90);
-			edgeCartouche = theScene.addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
-			
-			edgeCartouche->setZValue(101.0);
-			
-			ABC->setZValue(10000.0);
-			ABC->setDefaultTextColor(Qt::black);
+			edgeCartouche = theScene.addRect ( pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray );
+
+			edgeCartouche->setZValue ( 101.0 );
+
+			ABC->setZValue ( 10000.0 );
+			ABC->setDefaultTextColor ( Qt::black );
 			firstKey = false;
 		}
-		
+
 		if ( ( pen.y() + parSize ) > pageHeight * 0.9 )
 		{
-			pageNumStr.setNum(++pageNumber);
+			pageNumStr.setNum ( ++pageNumber );
 			folio = theScene.addText ( pageNumStr,theFont );
 			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
-			folio->setZValue(9999000.0);
-			folio->setDefaultTextColor(Qt::black);
+			folio->setZValue ( 9999000.0 );
+			folio->setDefaultTextColor ( Qt::black );
 			theScene.render ( &thePainter );
 			thePrinter.newPage();
 			pen.ry() = topMargin;
@@ -665,24 +666,24 @@ void typotek::fontBook()
 			}
 			renderedFont.clear();
 			theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
-			ABC = theScene.addText(firstLetter.at(0).toUpper() ,theFont);
-			ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
+			ABC = theScene.addText ( firstLetter.at ( 0 ).toUpper() ,theFont );
+			ABC->setPos ( pageWidth *0.9,pageHeight * 0.05 );
 // 			ABC->rotate(90);
-			edgeCartouche = theScene.addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
-			
-			edgeCartouche->setZValue(101.0);
-			
-			ABC->setZValue(10000.0);
-			ABC->setDefaultTextColor(Qt::black);
+			edgeCartouche = theScene.addRect ( pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray );
+
+			edgeCartouche->setZValue ( 101.0 );
+
+			ABC->setZValue ( 10000.0 );
+			ABC->setDefaultTextColor ( Qt::black );
 
 		}
 
-		title = theScene.addText ( QString ("%1" ).arg ( kit.key().toUpper() ), theFont);
+		title = theScene.addText ( QString ( "%1" ).arg ( kit.key().toUpper() ), theFont );
 		title->setPos ( pen );
-		title->setDefaultTextColor(Qt::white);
+		title->setDefaultTextColor ( Qt::white );
 		title->setZValue ( 100.0 );
-		QRectF cartrect(0,pen.y(),title->sceneBoundingRect().right(), title->sceneBoundingRect().height());
-		titleCartouche = theScene.addRect(cartrect,QPen(Qt::transparent) ,Qt::black);
+		QRectF cartrect ( 0,pen.y(),title->sceneBoundingRect().right(), title->sceneBoundingRect().height() );
+		titleCartouche = theScene.addRect ( cartrect,QPen ( Qt::transparent ) ,Qt::black );
 // 		titleCartouche->setPos(pen);
 		pen.ry() += 4.0  * familySize;
 
@@ -692,11 +693,11 @@ void typotek::fontBook()
 
 			if ( ( pen.y() + ( parSize - 4.0 * familySize ) ) > pageHeight * 0.9 )
 			{
-				pageNumStr.setNum(++pageNumber);
+				pageNumStr.setNum ( ++pageNumber );
 				folio = theScene.addText ( pageNumStr,theFont );
 				folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
-				folio->setDefaultTextColor(Qt::black);
-				folio->setZValue(1000.0);
+				folio->setDefaultTextColor ( Qt::black );
+				folio->setZValue ( 1000.0 );
 				theScene.render ( &thePainter );
 				thePrinter.newPage();
 				pen.ry() = topMargin;
@@ -707,20 +708,20 @@ void typotek::fontBook()
 				}
 				renderedFont.clear();
 				theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
-				ABC = theScene.addText( firstLetter.at(0).toUpper() ,theFont);
-				ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
+				ABC = theScene.addText ( firstLetter.at ( 0 ).toUpper() ,theFont );
+				ABC->setPos ( pageWidth *0.9,pageHeight * 0.05 );
 // 				ABC->rotate(90);
-				
-				teteChap = theScene.addText(firstLetter, myLittleFont);
-				teteChap->setPos(pageWidth * 0.66, pageHeight * 0.03);
-				teteChap->setDefaultTextColor(Qt::gray);
-				
-				
-				edgeCartouche = theScene.addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
-				edgeCartouche->setZValue(101.0);
-				
-				ABC->setZValue(10000.0);
-				ABC->setDefaultTextColor(Qt::black);
+
+				teteChap = theScene.addText ( firstLetter, myLittleFont );
+				teteChap->setPos ( pageWidth * 0.66, pageHeight * 0.03 );
+				teteChap->setDefaultTextColor ( Qt::gray );
+
+
+				edgeCartouche = theScene.addRect ( pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray );
+				edgeCartouche->setZValue ( 101.0 );
+
+				ABC->setZValue ( 10000.0 );
+				ABC->setDefaultTextColor ( Qt::black );
 			}
 			pen.rx() =variantnameTab;
 			FontItem* curfi = kit.value() [n];
@@ -760,31 +761,52 @@ QList<FontItem*> typotek::getCurrentFonts()
 void typotek::popupTagsetEditor()
 {
 	TagSetEditor ed;
-	connect(&ed,SIGNAL(signalNewTagset()),theMainView,SLOT(slotReloadTagsetList()));
+	connect ( &ed,SIGNAL ( signalNewTagset() ),theMainView,SLOT ( slotReloadTagsetList() ) );
 	ed.exec();
-	disconnect(&ed,SIGNAL(signalNewTagset()),theMainView,SLOT(slotReloadTagsetList()));
+	disconnect ( &ed,SIGNAL ( signalNewTagset() ),theMainView,SLOT ( slotReloadTagsetList() ) );
 }
 
-void typotek::keyPressEvent(QKeyEvent * event)
+void typotek::keyPressEvent ( QKeyEvent * event )
 {
 	qDebug() << "typotek::keyPressEvent(QKeyEvent * "<<event<<")";
 }
 
 void typotek::slotActivateCurrents()
 {
-	if(QMessageBox::question(this,"Fontmatrix care","You are about to activate a bunch of fonts,\nit is time to cancel if it was not your intent", QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::Ok)
+	if ( QMessageBox::question ( this,"Fontmatrix care","You are about to activate a bunch of fonts,\nit is time to cancel if it was not your intent", QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel ) == QMessageBox::Ok )
 		theMainView->slotActivateAll();
 }
 
 void typotek::slotDeactivateCurrents()
 {
-	if(QMessageBox::question(this,"Fontmatrix care","You are about to deactivate a bunch of fonts,\nit is time to cancel if it was not your intent",QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::Ok)
+	if ( QMessageBox::question ( this,"Fontmatrix care","You are about to deactivate a bunch of fonts,\nit is time to cancel if it was not your intent",QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel ) == QMessageBox::Ok )
 		theMainView->slotDesactivateAll();
 }
 
 void typotek::help()
 {
-	HelpWidget theHelp(this);
+	HelpWidget theHelp ( this );
 	theHelp.exec();
+}
+
+FontItem* typotek::getFont ( QString s )
+{
+	if ( realFontMap.contains ( s ) )
+	{
+		return realFontMap.value ( s );
+	}
+	return 0;
+}
+
+FontItem* typotek::getFont ( int i )
+{
+	if ( i < fontMap.count() && i >= 0)
+	{
+		return fontMap.at ( i );
+	}
+	else
+	{
+		return 0;
+	}
 }
 

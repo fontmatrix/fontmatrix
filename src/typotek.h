@@ -126,8 +126,8 @@ class typotek:public QMainWindow
 		
 		TypotekAdaptator *actAdaptator;
 	public:
-		FontItem* getFont ( int i ) {return fontMap.at ( i );};
-		FontItem* getFont ( QString s ) {return realFontMap.value ( s );};
+		FontItem* getFont ( int i ) ;
+		FontItem* getFont ( QString s );
 		QList<FontItem*> getAllFonts() {return fontMap;};
 		QList<FontItem*> getFonts ( QString pattern, QString field );
 		QList<FontItem*> getCurrentFonts();

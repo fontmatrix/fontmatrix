@@ -125,6 +125,8 @@ class typotek:public QMainWindow
 		QMap<QString, FontItem*> realFontMap;
 		
 		TypotekAdaptator *actAdaptator;
+		
+		QString m_sampleText;
 	public:
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );
@@ -146,6 +148,9 @@ class typotek:public QMainWindow
 		static typotek* getInstance(){return instance;};
 		
 		QString getManagedDir(){return managedDir.absolutePath();};
+		
+		void setSampleText(QString s){m_sampleText = s;};
+		QString sampleText(){return m_sampleText;};
 };
 
 

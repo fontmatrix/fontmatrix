@@ -105,6 +105,26 @@ void DataLoader::load()
 	}
 	collectedTags.removeAll("");
 	typotek::tagsList = collectedTags.toSet().toList();
+	
+	//loading sample text
+	QString sampleText;
+	QDomNodeList sampleList = doc.elementsByTagName ( "sampleline" );
+	if ( sampleList.length() == 0 )
+	{
+		m_typo->statusBar()->showMessage ( QString ( "WARNING: no sample text in %1" ).arg ( m_file->fileName() ),3000 );
+		sampleText =  "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.";
+	}
+	else
+	{
+		QStringList sampleLines;
+		for ( uint i = 0; i < sampleList.length(); ++i )
+		{
+			QDomNode col = sampleList.item ( i );
+			sampleLines << col.toElement().text();
+		}
+		sampleText = sampleLines.join("\n");
+	}
+	m_typo->setSampleText(sampleText);
 }
 
 

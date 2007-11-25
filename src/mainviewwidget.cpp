@@ -74,9 +74,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush ( Qt::lightGray );
 	loremView->locker = true;
+	loremView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	loremView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 // 	loremView->ensureVisible ( loremScene->sceneRect() );
 
-	sampleText= "ABCDEFGHIJKLMNOPQRSTUVXYZ\n\n  abcdefghijklmnopqrstuvxyz\n  0123456789   ,;:!?.";
+	sampleText= typo->sampleText();
 	sampleFontSize = 18;
 	sampleInterSize = 20;
 
@@ -856,7 +858,8 @@ void MainViewWidget::slotSetSampleText()
 	sampleText = ted.toPlainText () ;
 	sampleInterSize = boxls.value();
 	sampleFontSize = boxfs.value();
-
+	
+	typo->setSampleText(sampleText);
 	slotView(true);
 
 }
@@ -916,12 +919,16 @@ void MainViewWidget::slotFitChanged(int i)
 		renderZoom->setStatusTip("zoom is enabled");
 		loremView->setTransform(QTransform(1,0,0,1,0,0),false);
 		loremView->locker = false;
+		loremView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+		loremView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	}
 	else
 	{
 		renderZoom->setDisabled(true);
 		renderZoom->setStatusTip("zoom is disabled, uncheck fit to view to enable zoom");
 		loremView->locker = true;
+		loremView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+		loremView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	}
 	slotView();
 }

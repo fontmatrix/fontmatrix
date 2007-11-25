@@ -77,7 +77,7 @@ void SaveData::doSave()
 		writeStartElement("tagset");
 		writeAttribute("name", tagset);
 		QStringList tl = m_typo->tagsOfSet(tagset);
-		qDebug()<<tagset <<" : "<< tl.join("+");
+// 		qDebug()<<tagset <<" : "<< tl.join("+");
 		foreach(QString tag, tl)
 		{
 			writeStartElement("tag");
@@ -86,6 +86,16 @@ void SaveData::doSave()
 		}
 		writeEndElement();
 	}
+	
+	//save sample text
+	QStringList sampleT= m_typo->sampleText().split("\n");
+	foreach(QString sline, sampleT)
+	{
+		writeStartElement("sampleline");
+		writeCharacters( sline );
+		writeEndElement();
+	}
+	
 	writeEndElement();//fontmatrix
 	writeEndDocument();
 }

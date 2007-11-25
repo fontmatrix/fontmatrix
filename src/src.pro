@@ -71,5 +71,6 @@ icons.path = /usr/share/icons/hicolor/48x48/apps
 INSTALLS += icons
 DISTFILES += messages/about.html \
  messages/about_fr.html \
- messages/help.html
+ messages/help.html \
+ messages/sample_text.txt
 

@@ -61,6 +61,7 @@ class typotek:public QMainWindow
 
 // 		bool saveAs();
 		void about();
+		void help();
 // 		void documentWasModified();
 	public slots:
 		bool save();
@@ -109,6 +110,7 @@ class typotek:public QMainWindow
 		QAction *tagsetAct;
 		QAction *activCurAct;
 		QAction *deactivCurAct;
+		QAction *helpAct;
 
 		MainViewWidget *theMainView;
 

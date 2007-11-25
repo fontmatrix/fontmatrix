@@ -16,6 +16,7 @@
     
     <qresource prefix="/texts" >
     <file alias="about.html">messages/about.html</file>
+    <file alias="help.html">messages/help.html</file>
 	</qresource>
 	
     <qresource prefix="/texts" lang="fr" >

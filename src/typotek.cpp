@@ -29,6 +29,7 @@
 #include "tagseteditor.h"
 #include "savedata.h"
 #include "aboutwidget.h"
+#include "helpwidget.h"
 
 #include <QtGui>
 #include <QTextEdit>
@@ -234,6 +235,9 @@ void typotek::createActions()
 	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
 	
+	helpAct = new QAction ( tr ( "Help" ), this );
+	connect(helpAct,SIGNAL(triggered( )),this,SLOT(help()));
+	
 	tagsetAct = new QAction(tr("&Tag Sets"),this);
 	tagsetAct->setIcon(QIcon(":/fontmatrix_tagseteditor_icon.png"));
 	connect(tagsetAct,SIGNAL(triggered( )),this,SLOT(popupTagsetEditor()));
@@ -243,6 +247,8 @@ void typotek::createActions()
 	
 	deactivCurAct = new QAction(tr("Deactivate all currents"),this);
 	connect(deactivCurAct,SIGNAL(triggered( )),this,SLOT(slotDeactivateCurrents()));
+	
+	
 	
 
 }
@@ -266,6 +272,7 @@ void typotek::createMenus()
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
+	helpMenu->addAction(helpAct);
 
 }
 
@@ -773,5 +780,11 @@ void typotek::slotDeactivateCurrents()
 {
 	if(QMessageBox::question(this,"Fontmatrix care","You are about to deactivate a bunch of fonts,\nit is time to cancel if it was not your intent",QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::Ok)
 		theMainView->slotDesactivateAll();
+}
+
+void typotek::help()
+{
+	HelpWidget theHelp(this);
+	theHelp.exec();
 }
 

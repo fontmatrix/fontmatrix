@@ -10,7 +10,8 @@ SOURCES += typotek.cpp \
  savedata.cpp \
 fmsampletextview.cpp \
  fmpreviewlist.cpp \
- aboutwidget.cpp
+ aboutwidget.cpp \
+ helpwidget.cpp
 
 HEADERS += typotek.h \
  mainviewwidget.h \
@@ -23,7 +24,8 @@ HEADERS += typotek.h \
  savedata.h \
  fmsampletextview.h \
  fmpreviewlist.h \
- aboutwidget.h
+ aboutwidget.h \
+ helpwidget.h
 
 TEMPLATE = app
 CONFIG += warn_on \
@@ -37,7 +39,8 @@ FORMS += mainview.ui \
  fontaction.ui \
  bookexport.ui \
  tagset.ui \
- about.ui
+ about.ui \
+ help.ui
 
 LIBS += -L/usr/lib \
 -lfreetype
@@ -67,5 +70,6 @@ icons.path = /usr/share/icons/hicolor/48x48/apps
 
 INSTALLS += icons
 DISTFILES += messages/about.html \
- messages/about_fr.html
+ messages/about_fr.html \
+ messages/help.html
 

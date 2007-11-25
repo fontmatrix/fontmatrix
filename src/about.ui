@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>449</width>
-    <height>601</height>
+    <width>459</width>
+    <height>149</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -24,30 +24,48 @@
   <widget class="QLabel" name="label" >
    <property name="geometry" >
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>10</y>
-     <width>431</width>
-     <height>281</height>
+     <width>131</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="text" >
     <string/>
    </property>
    <property name="pixmap" >
-    <pixmap resource="application.qrc" >:/fontmatrix_splash.png</pixmap>
+    <pixmap resource="application.qrc" >:/fontmatrix_icon.png</pixmap>
    </property>
    <property name="scaledContents" >
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QTextBrowser" name="theText" >
    <property name="geometry" >
     <rect>
-     <x>10</x>
-     <y>300</y>
-     <width>431</width>
-     <height>291</height>
+     <x>150</x>
+     <y>10</y>
+     <width>301</width>
+     <height>131</height>
     </rect>
+   </property>
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="focusPolicy" >
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="acceptDrops" >
+    <bool>false</bool>
+   </property>
+   <property name="frameShape" >
+    <enum>QFrame::Panel</enum>
+   </property>
+   <property name="frameShadow" >
+    <enum>QFrame::Plain</enum>
    </property>
   </widget>
  </widget>

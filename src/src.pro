@@ -9,7 +9,8 @@ SOURCES += typotek.cpp \
  tagseteditor.cpp \
  savedata.cpp \
 fmsampletextview.cpp \
- fmpreviewlist.cpp
+ fmpreviewlist.cpp \
+ aboutwidget.cpp
 
 HEADERS += typotek.h \
  mainviewwidget.h \
@@ -21,7 +22,8 @@ HEADERS += typotek.h \
  tagseteditor.h \
  savedata.h \
  fmsampletextview.h \
- fmpreviewlist.h
+ fmpreviewlist.h \
+ aboutwidget.h
 
 TEMPLATE = app
 CONFIG += warn_on \
@@ -34,7 +36,8 @@ RESOURCES = application.qrc
 FORMS += mainview.ui \
  fontaction.ui \
  bookexport.ui \
- tagset.ui
+ tagset.ui \
+ about.ui
 
 LIBS += -L/usr/lib \
 -lfreetype
@@ -63,3 +66,6 @@ icons.files = ../fontmatrix.png
 icons.path = /usr/share/icons/hicolor/48x48/apps
 
 INSTALLS += icons
+DISTFILES += messages/about.html \
+ messages/about_fr.html
+

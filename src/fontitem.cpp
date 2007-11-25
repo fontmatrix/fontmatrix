@@ -427,7 +427,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 		return;
 	deRender ( scene );
 
-	QPointF pen ( 0,35 );
+	QPointF pen ( 0,50 );
 	int glyph_count = 0;
 	int nl = 0;
 
@@ -603,7 +603,7 @@ QGraphicsPathItem * FontItem::hasCodepoint(int code)
 {
 	for(int i=0;i< glyphList.count();++i)
 	{
-		if(glyphList.at(i)->data(2).toInt() == code)
+		if(glyphList.at(i)->data(3).toInt() == code)
 			return glyphList.at(i);
 	}
 	return 0;

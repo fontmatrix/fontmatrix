@@ -13,4 +13,13 @@
         <file alias="fontmatrix_tagseteditor.png">graphic-resources/fontmatrix-tagseteditor.png</file>
         <file alias="fontmatrix_tagseteditor_icon.png">graphic-resources/fontmatrix-tagseteditor-icon.png</file>
     </qresource>
+    
+    <qresource prefix="/texts" >
+    <file alias="about.html">messages/about.html</file>
+	</qresource>
+	
+    <qresource prefix="/texts" lang="fr" >
+	    <file alias="about.html">messages/about_fr.html</file>
+</qresource>
+
 </RCC>

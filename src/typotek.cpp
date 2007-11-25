@@ -28,6 +28,7 @@
 #include "dataloader.h"
 #include "tagseteditor.h"
 #include "savedata.h"
+#include "aboutwidget.h"
 
 #include <QtGui>
 #include <QTextEdit>
@@ -195,8 +196,8 @@ bool typotek::save()
 
 void typotek::about()
 {
-	QMessageBox::about ( this, tr ( "About Fontmatrix" ),
-	                     tr ( "Fontmatrix, a font manager for Linux.\nwww.fontmatrix.net" ) );
+	AboutWidget aabout;
+	aabout.exec();
 }
 
 

@@ -309,8 +309,11 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="statusTip" >
+          <string>Right mouse click on a tag to add it or remove it from TagSet</string>
+         </property>
          <property name="currentIndex" >
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tab" >
           <attribute name="title" >
@@ -338,6 +341,9 @@
          <widget class="QWidget" name="tab_4" >
           <attribute name="title" >
            <string>Sample text</string>
+          </attribute>
+          <attribute name="icon" >
+           <iconset resource="application.qrc" >:/fontmatrix_sampletext.png</iconset>
           </attribute>
           <layout class="QGridLayout" >
            <item row="0" column="0" >

@@ -34,7 +34,7 @@
     <string/>
    </property>
    <property name="pixmap" >
-    <pixmap resource="application.qrc" >:/fontmatrix_icon.png</pixmap>
+    <pixmap resource="application.qrc" >:/fontmatrix_about.png</pixmap>
    </property>
    <property name="scaledContents" >
     <bool>false</bool>

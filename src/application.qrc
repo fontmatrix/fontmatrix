@@ -1,26 +1,30 @@
 <RCC>
     <qresource prefix="/" >
-        <file>fileopen.xpm</file>
-        <file>filesave.xpm</file>
         <file alias="fontmatrix_icon.png">icons/application-fontmatrix_128.png</file>
+
         <file alias="fontmatrix_splash.png">graphic-resources/splashscreen-670x470.png</file>
+        <file alias="fontmatrix_about.png">graphic-resources/about-graphic.png</file>
+
         <file alias="fontmatrix_info.png">graphic-resources/font-info.png</file>
         <file alias="fontmatrix_glypg.png">graphic-resources/font-glyph.png</file>
         <file alias="fontmatrix_tags.png">graphic-resources/font-tag.png</file>
+        <file alias="fontmatrix_sampletext.png">graphic-resources/font-sampletext.png</file>
+
         <file alias="fontmatrix_zoom.png">graphic-resources/fontmatrix-zoom.png</file>
         <file alias="fontmatrix_antialias.png">graphic-resources/fontmatrix-AA.png</file>
 
         <file alias="fontmatrix_tagseteditor.png">graphic-resources/fontmatrix-tagseteditor.png</file>
         <file alias="fontmatrix_tagseteditor_icon.png">graphic-resources/fontmatrix-tagseteditor-icon.png</file>
+        <file alias="fontmatrix_fontbookexport_icon.png">graphic-resources/fontmatrix-fontbookexport-icon.png</file>
+        <file alias="fontmatrix_import_icon.png">graphic-resources/fontmatrix-import-icon.png</file>
     </qresource>
-    
-    <qresource prefix="/texts" >
-    <file alias="about.html">messages/about.html</file>
-    <file alias="help.html">messages/help.html</file>
-	</qresource>
-	
-    <qresource prefix="/texts" lang="fr" >
-	    <file alias="about.html">messages/about_fr.html</file>
-</qresource>
 
+    <qresource prefix="/texts" >
+        <file alias="about.html">messages/about.html</file>
+        <file alias="help.html">messages/help.html</file>
+    </qresource>
+
+    <qresource prefix="/texts" lang="fr" >
+        <file alias="about.html">messages/about_fr.html</file>
+    </qresource>
 </RCC>

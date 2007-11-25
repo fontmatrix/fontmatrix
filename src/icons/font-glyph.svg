@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64px"
+   height="64px"
+   id="svg2310"
+   sodipodi:version="0.32"
+   inkscape:version="0.45+devel"
+   sodipodi:docname="font-glyph.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.5"
+     inkscape:cx="56.051239"
+     inkscape:cy="32.042975"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     inkscape:window-width="860"
+     inkscape:window-height="658"
+     inkscape:window-x="0"
+     inkscape:window-y="337" />
+  <defs
+     id="defs2312">
+    <filter
+       inkscape:collect="always"
+       id="filter2935">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.6769485"
+         id="feGaussianBlur2937" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata2315">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       style="opacity:1;fill:#9c0f0f;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2318"
+       width="64"
+       height="64"
+       x="4.181818"
+       y="5.4545455"
+       transform="matrix(0.7900766,0.2117004,-0.2117004,0.7900766,11.433643,-5.1607564)" />
+    <path
+       transform="matrix(2.023597,0,0,2.023597,30.428395,-36.185969)"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:end;line-height:125%;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Penumbra Flare Std"
+       d="M 8.7894171,21.441763 L 12.031605,21.441763 L 8.4186792,34.087002 C 8.2493896,34.646906 7.9824628,35.525811 7.617898,36.723721 C 8.112671,38.728933 8.4837643,39.926849 8.7311792,40.317471 C 9.1999095,41.033618 9.7923568,41.391691 10.508523,41.391689 C 11.029335,41.391691 11.511105,41.176847 11.953835,40.747158 C 12.396521,40.317473 12.689489,39.646901 12.832742,38.735439 L 13.613992,38.735439 C 13.431676,40.610442 13.034541,41.906013 12.422585,42.622158 C 11.823605,43.338304 11.126991,43.696376 10.332742,43.696377 C 9.5905341,43.696376 8.9134514,43.383877 8.3014917,42.758877 C 7.7025151,42.133878 7.1621511,40.792733 6.680398,38.735439 C 6.1074646,39.868255 5.5475694,40.727629 5.0007105,41.313564 C 4.2324665,42.120857 3.399134,42.719815 2.5007105,43.110439 C 1.6022608,43.514085 0.58012641,43.715907 -0.56569576,43.715908 C -3.4433071,43.715907 -5.5591904,42.758877 -6.913352,40.844814 C -8.267521,38.930756 -8.9446037,36.749769 -8.944602,34.301846 C -8.9446037,31.437274 -8.1503336,29.119568 -6.5617895,27.348721 C -4.9732535,25.564884 -3.1112762,24.672958 -0.97585201,24.672939 C 0.50851189,24.672958 1.8171043,25.128686 2.9499292,26.040127 C 4.0827271,26.93858 5.1113719,28.618266 6.0358667,31.079189 L 8.7894171,21.441763 M 5.352273,33.266689 C 4.6491328,30.58441 3.7441857,28.715922 2.6374292,27.661221 C 1.5306463,26.593529 0.40434533,26.059675 -0.74147701,26.059658 C -2.0175272,26.059675 -3.0787241,26.762799 -3.9250708,28.169033 C -4.7714307,29.562276 -5.1946074,31.788836 -5.194602,34.848721 C -5.1946074,36.658623 -5.0123159,38.084403 -4.647727,39.126064 C -4.28315,40.154713 -3.7362755,40.955494 -3.007102,41.528408 C -2.2649228,42.088305 -1.4836736,42.368253 -0.66335201,42.368252 C 0.33924123,42.368253 1.2572091,41.906013 2.0905542,40.981533 C 3.2233529,39.731536 4.3105914,37.159924 5.352273,33.266689"
+       id="text2454" />
+  </g>
+</svg>

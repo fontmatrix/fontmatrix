@@ -207,12 +207,12 @@ void typotek::createActions()
 {
 
 
-	openAct = new QAction ( QIcon ( ":/fileopen.xpm" ), tr ( "&Import..." ), this );
+	openAct = new QAction ( QIcon ( ":/fontmatrix_import_icon" ), tr ( "&Import..." ), this );
 	openAct->setShortcut ( tr ( "Ctrl+O" ) );
 	openAct->setStatusTip ( tr ( "Import a directory" ) );
 	connect ( openAct, SIGNAL ( triggered() ), this, SLOT ( open() ) );
 
-	saveAct = new QAction ( QIcon ( ":/filesave.xpm" ), tr ( "&Save" ), this );
+	saveAct = new QAction ( tr ( "&Save" ), this );
 	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
 	saveAct->setStatusTip ( tr ( "Save the document to disk" ) );
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
@@ -221,7 +221,7 @@ void typotek::createActions()
 	printAct->setStatusTip ( tr ( "Print a specimen of the current font" ) );
 	connect ( printAct, SIGNAL ( triggered() ), this, SLOT ( print() ) );
 
-	fontBookAct = new QAction ( tr ( "Export font book..." ),this );
+	fontBookAct = new QAction ( QIcon ( ":/fontmatrix_fontbookexport_icon.png" ), tr ( "Export font book..." ),this );
 	fontBookAct->setStatusTip ( tr ( "Export a pdf that show selected fonts" ) );
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
 

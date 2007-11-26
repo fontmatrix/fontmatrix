@@ -34,7 +34,7 @@
 FMPreviewList::FMPreviewList(QWidget* parent)
  : QGraphicsView(parent)
 {
-	m_scene = new QGraphicsScene(0,0,300,300);
+	m_scene = new QGraphicsScene;
 	setScene(m_scene);
 	m_select = m_scene->addRect(QRectF(), QPen(Qt::blue ), QColor(0,0,120,60));
 	m_select->setZValue(100.0);

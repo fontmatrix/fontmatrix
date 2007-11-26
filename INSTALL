@@ -1,20 +1,32 @@
+Here is a quick overview of what you need to do in order
+to have fontmatrix up an running. You’ll see mentions of
+"typotek" here and there, it was the first name of this
+project, and some files had kept the name.
+
 Requirements :
 	-- Qt 4.3
-	-- Freetype2
+	-- Freetype2 [We don’t search for it, but just assert it
+	is in /usr/include/freetype2. If your installation differs,
+	just change path accordingly at line 47 of src/src.pro file]
 	
-Run "qmake -o Makefile typotek.pro",
-then "make" (typotek will be in ./bin/),
-then do _not_ run "make install" ;-)
+Run "qmake -o Makefile typotek.pro" (be sure you use the qmake
+from Qt4 (for OpenSuse users, it means you just run qmake if
+Qt4 is installed)),
+then "make" (fontmatrix binary will be in ./bin/),
+then do _not_ run "make install" ;-)[NOTE: Vlada made efforts
+to improve a lot the way it installs, so you should give
+it a try (maybe with checkinstall?) and thus report any issue.
+Default installation directory is /usr/bin and if all went
+right, you should see a new entry somewhere in your app. menu
+as we provide a .desktop file.]
 
-Next step is to move all the content of your ./fonts directory somewhere
-else before you launch Typotek (yes, I know that fontexplorer does it for you,
-and i can consider to do the same). Now, you can import directories in Typotek
-and activate fonts as needed and other cool stuff with yor fonts.
+Now, you can run Fontmatrix and read the help in help->help.
 
-It should work as is with OpenSuse 10.3. For other configurations,
-you might have to alter the pro files (typotek.pro & src/src.pro).
-If you are familiar with cmake and interesting in this project,
+If you are familiar with cmake and interested this project,
 a reliable cmakelist.txt would be very much appreciated! 
+
 If you encounter problems or just have questions or if you have 
 suggestions, please take time to suscribe to the undertype-users
 mailing list ( https://mail.gna.org/listinfo/undertype-users ).
+Otherwise, there is a chance that you see us as vlada or pierremarc
+on #scribus IRC channel or ##fonts.

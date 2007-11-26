@@ -395,16 +395,27 @@ void typotek::checkOwnDir()
 	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
 	if ( !fcfile.open ( QFile::ReadWrite ) )
 	{
-		QMessageBox::warning ( 0, QString ( "fontmatrix" ),
-		                       QString ( "Cannot read file %1:\n%2.\nBEFORE ANYTHING, YOU SHOULD CHECK IF FONTCONFIG IS IN USE." )
-		                       .arg ( fcfile.fileName() )
-		                       .arg ( fcfile.errorString() ) );
+// 		QMessageBox::warning ( 0, QString ( "fontmatrix" ),
+// 		                       QString ( "Cannot read file %1:\n%2.\nBEFORE ANYTHING, YOU SHOULD CHECK IF FONTCONFIG IS IN USE." )
+// 		                       .arg ( fcfile.fileName() )
+// 		                       .arg ( fcfile.errorString() ) );
 	}
 	else
 	{
 		QDomDocument fc ( "fontconfig" );
-		fc.setContent ( &fcfile );
-
+		
+		// .fonts.conf is empty, it seems that we just created it.
+		// Wed have to populate it a bit
+		if ( fcfile.size() == 0 )
+		{
+			QString ds( "<?xml version='1.0'?><!DOCTYPE fontconfig SYSTEM 'fonts.dtd'><fontconfig></fontconfig>");
+			fc.setContent(ds);
+		}
+		else
+		{
+			fc.setContent ( &fcfile );
+		}
+		
 		bool isconfigured = false;
 		QDomNodeList dirlist = fc.elementsByTagName ( "dir" );
 		for ( int i=0;i < dirlist.count();++i )
@@ -421,6 +432,7 @@ void typotek::checkOwnDir()
 			root.appendChild ( direlem );
 
 			fcfile.resize ( 0 );
+			
 			QTextStream ts ( &fcfile );
 			fc.save ( ts,4 );
 

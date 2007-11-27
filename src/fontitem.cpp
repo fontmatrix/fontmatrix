@@ -304,6 +304,11 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 	for ( int i=0; i < spec.length(); ++i )
 	{
 		QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
+		if(!glyph)
+		{
+			qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+			continue;
+		}
 		if(record)
 			glyphList.append ( glyph );
 		scene->addItem ( glyph );

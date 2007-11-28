@@ -180,7 +180,7 @@ void MainViewWidget::fillTree()
 	}
 
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
-	for ( int i = 'A'; i <= 'Z'; ++i )
+	for ( int i = 0x21 /* ! */; i <= 0x7e /* ~ */; ++i )
 	{
 		QChar firstChar ( i );
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( fontTree );

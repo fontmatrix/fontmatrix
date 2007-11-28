@@ -734,7 +734,7 @@ void FontItem::moreInfo_sfnt()
 		}
 		else
 		{
-			qDebug() << name() <<"\nIt seems there are new name IDs in TT spec, please say FontMatrix team to stay up to date.";
+			qDebug() << name() <<"\nIt seems there are new name IDs in TT spec ("<< tname.name_id <<")!";
 			continue;
 		}
 		

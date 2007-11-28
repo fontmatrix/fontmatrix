@@ -30,6 +30,7 @@
 #include "savedata.h"
 #include "aboutwidget.h"
 #include "helpwidget.h"
+#include "importedfontsdialog.h"
 
 #include <QtGui>
 #include <QTextEdit>
@@ -113,6 +114,7 @@ void typotek::open()
 {
 
 	QStringList pathList;
+	QStringList nameList;
 	QStringList dirList;
 	QString dir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), QDir::homePath ()  ,  QFileDialog::ShowDirsOnly );
 	QDir theDir ( dir );
@@ -154,6 +156,7 @@ void typotek::open()
 
 	QProgressDialog progress ( "Importing font files... ", "cancel", 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
+	progress.setAutoReset(false);
 
 	QString importstring ( "Import %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
@@ -182,9 +185,19 @@ void typotek::open()
 			fitem->setTags ( tali );
 			fontMap.append ( fitem );
 			realFontMap[fitem->name() ] = fitem;
+			nameList << fitem->fancyName();
 		}
 	}
+	
+	progress.close();
+	
+	// The User needs and deserves to know what fonts hve been imported
+	ImportedFontsDialog ifd(nameList);
+	ifd.exec();
+	
 	theMainView->slotReloadFontList();
+	
+// 	QMessageBox::information(this,"Fontmatrix info","List of imported fonts :\n" + nameList.join("\n"));
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 }
 

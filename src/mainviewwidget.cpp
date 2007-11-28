@@ -24,6 +24,7 @@
 #include "typotekadaptator.h"
 #include "fmpreviewlist.h"
 
+
 #include <QString>
 #include <QDebug>
 #include <QGraphicsItem>

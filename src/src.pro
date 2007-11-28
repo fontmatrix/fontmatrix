@@ -11,7 +11,8 @@ SOURCES += typotek.cpp \
 fmsampletextview.cpp \
  fmpreviewlist.cpp \
  aboutwidget.cpp \
- helpwidget.cpp
+ helpwidget.cpp \
+ importedfontsdialog.cpp
 
 HEADERS += typotek.h \
  mainviewwidget.h \
@@ -25,7 +26,8 @@ HEADERS += typotek.h \
  fmsampletextview.h \
  fmpreviewlist.h \
  aboutwidget.h \
- helpwidget.h
+ helpwidget.h \
+ importedfontsdialog.h
 
 TEMPLATE = app
 CONFIG += warn_on \
@@ -40,7 +42,8 @@ FORMS += mainview.ui \
  bookexport.ui \
  tagset.ui \
  about.ui \
- help.ui
+ help.ui \
+ importedfonts.ui
 
 LIBS += -L/usr/lib \
 -lfreetype

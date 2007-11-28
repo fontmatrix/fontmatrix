@@ -58,6 +58,7 @@ class typotek:public QMainWindow
 		void popupTagsetEditor();
 		void slotActivateCurrents();
 		void slotDeactivateCurrents();
+		void slotEditFont();
 
 // 		bool saveAs();
 		void about();
@@ -111,6 +112,7 @@ class typotek:public QMainWindow
 		QAction *activCurAct;
 		QAction *deactivCurAct;
 		QAction *helpAct;
+		QAction *fonteditorAct;
 
 		MainViewWidget *theMainView;
 

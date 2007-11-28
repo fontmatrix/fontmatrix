@@ -116,6 +116,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsScene* glyphsScene()const{return abcScene;};
 		QGraphicsScene* textScene()const{return loremScene;};
 		QList<FontItem*> curFonts(){return currentFonts;};
+		FontItem* selectedFont(){return theVeryFont;};
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

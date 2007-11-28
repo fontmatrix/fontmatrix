@@ -40,6 +40,7 @@
 #include <QDBusConnection>
 #include <QProgressDialog>
 #include <QDomDocument>
+#include <QProcess>
 
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
@@ -247,10 +248,10 @@ void typotek::createActions()
 
 	deactivCurAct = new QAction ( tr ( "Deactivate all currents" ),this );
 	connect ( deactivCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotDeactivateCurrents() ) );
-
-
-
-
+	
+	fonteditorAct = new QAction( tr ( "Edit current font" ),this );
+	fonteditorAct->setStatusTip ( tr ( "Try to run Fontforge with the selected font as argument" ) );
+	connect (fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont()) );
 }
 
 void typotek::createMenus()
@@ -270,6 +271,8 @@ void typotek::createMenus()
 	editMenu->addSeparator();
 	editMenu->addAction ( activCurAct );
 	editMenu->addAction ( deactivCurAct );
+	editMenu->addSeparator();
+	editMenu->addAction ( fonteditorAct );
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
@@ -821,5 +824,22 @@ FontItem* typotek::getFont ( int i )
 	{
 		return 0;
 	}
+}
+
+void typotek::slotEditFont()
+{
+	FontItem *item = theMainView->selectedFont();
+	if(!item)
+	{
+		statusBar()->showMessage ( tr ( "There is no font selected" ), 5000 );
+		return;
+	}
+	
+	QString program = "/usr/bin/fontforge";
+	QStringList arguments;
+	arguments << "-nosplash" << item->path() ;
+
+	QProcess *myProcess = new QProcess(this);
+	myProcess->start(program, arguments);
 }
 

@@ -112,6 +112,7 @@ FontItem::FontItem ( QString path )
 // 	qDebug() << path;
 	
 	m_face = 0;
+	m_glyphsPerRow = 7;
 	
 	if ( charsetMap.isEmpty() )
 		fillCharsetMap();
@@ -460,12 +461,12 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 
 // 	charcode = FT_Get_First_Char ( m_face, &gindex );
 	charcode = begin_code;
-	qDebug() << "INTER " << begin_code << end_code;
+// 	qDebug() << "INTER " << begin_code << end_code;
 	QPen selPen(Qt::gray);
 	QBrush selBrush(QColor(255,255,255,0));
 	while ( charcode <= end_code && gindex)
 	{
-		if ( nl == 8 )
+		if ( nl == m_glyphsPerRow )
 		{
 			nl = 0;
 			pen.rx() = 0;
@@ -822,7 +823,6 @@ void FontItem::moreInfo_type1()
 }
 
 ///return size of dynamic structures
-
 int FontItem::debug_size()
 {
 	int ret=0;
@@ -836,6 +836,19 @@ void FontItem::setTags(QStringList l)
 	m_tags = l;
 	// overwrite cached info
 	infoText(false);
+}
+
+/// When glyphsView is resized we wantto adjust the number of columns
+void FontItem::adjustGlyphsPerRow(int width)
+{
+	m_glyphsPerRow = 1;
+	for(int i = 1; i < 11 ; ++i)
+	{
+		if(i*100 > width)
+			return;
+		else
+			m_glyphsPerRow = i;
+	}
 }
 
 

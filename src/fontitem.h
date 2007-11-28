@@ -87,8 +87,10 @@ public:
 		QList<QGraphicsTextItem*> labList;
 		QList<QGraphicsRectItem*> selList;
 		QList<QGraphicsScene *> sceneList;
+		
+		
 		bool allIsRendered;
-// 		QGraphicsPixmapItem *loremPixmap;
+		int m_glyphsPerRow;
 		
 		bool m_lock;
 		QMap<int,QPainterPath> contourCache;
@@ -142,6 +144,8 @@ public:
 		bool isLocked(){return m_lock;};
 		
 		int debug_size();
+		
+		void adjustGlyphsPerRow(int width);
 		
 		
 		

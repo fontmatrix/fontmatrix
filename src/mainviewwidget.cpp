@@ -1138,7 +1138,11 @@ void MainViewWidget::keyPressEvent(QKeyEvent * event)
 
 void MainViewWidget::slotAdjustGlyphView(int width)
 {
-	
+	if(!theVeryFont)
+		return;
+		
+	theVeryFont->adjustGlyphsPerRow(width);
+	slotView(true);
 }
 
 

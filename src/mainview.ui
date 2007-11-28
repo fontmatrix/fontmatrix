@@ -588,7 +588,7 @@
               </layout>
              </item>
              <item>
-              <widget class="QGraphicsView" name="abcView" >
+              <widget class="FMGlyphsView" name="abcView" >
                <property name="focusPolicy" >
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -640,6 +640,11 @@
    <class>FMPreviewList</class>
    <extends>QGraphicsView</extends>
    <header>fmpreviewlist.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FMGlyphsView</class>
+   <extends>QGraphicsView</extends>
+   <header>fmglyphsview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

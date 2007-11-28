@@ -83,7 +83,8 @@ FT_Outline_Funcs outline_funcs=
 
 void fillCharsetMap()
 {
-	FontItem::charsetMap[FT_ENCODING_UNICODE] = "UNICODE ";
+	FontItem::charsetMap[FT_ENCODING_NONE] = "NONE";
+	FontItem::charsetMap[FT_ENCODING_UNICODE] = "UNICODE";
 
 	FontItem::charsetMap[FT_ENCODING_MS_SYMBOL] = "MS_SYMBOL";
 	FontItem::charsetMap[FT_ENCODING_SJIS] = "SJIS .";
@@ -149,10 +150,12 @@ FontItem::FontItem ( QString path )
 	m_numGlyphs = m_face->num_glyphs;
 	m_numFaces = m_face->num_faces;
 	
-	for ( int i = 1;i < m_face->num_charmaps; ++i )
+	for ( int i = 0 ;i < m_face->num_charmaps; ++i )
 	{
 		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
 	}
+	
+	m_charsets = m_charsets.toSet().toList();
 
 	
 	m_lock = false;
@@ -196,6 +199,17 @@ bool FontItem::ensureFace()
 		{
 			qDebug() << "Error loading face [" << m_path <<"]";
 			return false;
+		}
+		ft_error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
+		if(ft_error)
+		{
+			
+			QStringList charmaps;
+			for(int i=0; i < m_face->num_charmaps;++i)
+			{
+				charmaps << charsetMap[ m_face->charmaps[i]->encoding ];
+			}
+			qDebug() << "Unable to select Unicode for [" << m_name <<"]";
 		}
 		m_glyph = m_face->glyph;
 		return true;
@@ -528,16 +542,19 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	releaseFace();
 }
 
-QString FontItem::infoText()
+QString FontItem::infoText(bool fromcache )
 {
-	if(!m_cacheInfo.isEmpty())
+	if(!m_cacheInfo.isEmpty() && fromcache)
 		return m_cacheInfo;
 	
 	ensureFace();
-
+	
+	QStringList tagsStr = m_tags;
+	tagsStr.removeAll("Activated_On");
+	tagsStr.removeAll("Activated_Off");
 	QString ret("<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n");
-	ret += "<p>"+ QString::number(m_numGlyphs) + " glyphs; " + m_charsets.join ( ", " )+"</p>";
-	ret += "<p style=\"background-color:#aaa;\"><b>Tags  </b>"+ m_tags.join ( ", " ) +"</p>";
+	ret += "<p>"+ QString::number(m_numGlyphs) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " )+"</p>";
+	ret += "<p style=\"background-color:#aaa;\"><b>Tags  </b>"+ tagsStr.join(" ; ") +"</p>";
 // 	Some place to add things
 // 	ret += "<p>"+  +"</p>";
 // 	ret += "<p>"+  +"</p>";
@@ -734,7 +751,7 @@ void FontItem::moreInfo_sfnt()
 		}
 		else
 		{
-			qDebug() << name() <<"\nIt seems there are new name IDs in TT spec ("<< tname.name_id <<")!";
+			qDebug() << name() <<" : It seems there are new name IDs in TT spec ("<< tname.name_id <<")!";
 			continue;
 		}
 		
@@ -743,7 +760,8 @@ void FontItem::moreInfo_sfnt()
 			QString avalue;
 			if(tname.platform_id == TT_PLATFORM_APPLE_UNICODE)//just catch for the moment
 			{
-				qDebug() << "Platform id is TT_PLATFORM_APPLE_UNICODE";
+// 				qDebug() << "Platform id is TT_PLATFORM_APPLE_UNICODE";
+				avalue = QString::fromUtf16((const ushort*)tname.string, tname.string_len);
 			}
 			else if(tname.platform_id == TT_PLATFORM_MICROSOFT)//freetype reports it is the most used, we than focus on it at first
 			{
@@ -753,13 +771,13 @@ void FontItem::moreInfo_sfnt()
 				}
 				else if(tname.encoding_id == TT_MS_ID_UNICODE_CS )
 				{
-// 					QList<QChar> tstring;
+
 					for(int c=0; c < tname.string_len; ++c)
 					{
 						avalue.append( QChar(tname.string[c]) );
 					}
-// 					QByteArray tar((const char *)tname.string, ); 
-// 					value = QString::fromUtf16(tar.data());
+// 					avalue = QString::fromUtf16((const ushort*)tname.string, tname.string_len);
+
 				}
 				else
 				{
@@ -811,6 +829,13 @@ int FontItem::debug_size()
 	for(QMap<int,QPainterPath>::const_iterator cit = contourCache.begin(); cit != contourCache.end();++cit)
 		ret+=cit->elementCount();
 	
+}
+
+void FontItem::setTags(QStringList l)
+{
+	m_tags = l;
+	// overwrite cached info
+	infoText(false);
 }
 
 

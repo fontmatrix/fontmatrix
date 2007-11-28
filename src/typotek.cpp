@@ -101,14 +101,6 @@ void typotek::closeEvent ( QCloseEvent *event )
 	}
 }
 
-void typotek::newFile()
-{
-	if ( maybeSave() )
-	{
-		textEdit->clear();
-		setCurrentFile ( "" );
-	}
-}
 
 void typotek::open()
 {
@@ -322,69 +314,6 @@ bool typotek::maybeSave()
 {
 
 	return true;
-}
-
-void typotek::loadFile ( const QString &fileName )
-{
-	QFile file ( fileName );
-	if ( !file.open ( QFile::ReadOnly | QFile::Text ) )
-	{
-		QMessageBox::warning ( this, tr ( "Application" ),
-		                       tr ( "Cannot read file %1:\n%2." )
-		                       .arg ( fileName )
-		                       .arg ( file.errorString() ) );
-		return;
-	}
-
-	QTextStream in ( &file );
-	QApplication::setOverrideCursor ( Qt::WaitCursor );
-	textEdit->setPlainText ( in.readAll() );
-	QApplication::restoreOverrideCursor();
-
-	setCurrentFile ( fileName );
-	statusBar()->showMessage ( tr ( "File loaded" ), 2000 );
-}
-
-bool typotek::saveFile ( const QString &fileName )
-{
-	QFile file ( fileName );
-	if ( !file.open ( QFile::WriteOnly | QFile::Text ) )
-	{
-		QMessageBox::warning ( this, tr ( "Application" ),
-		                       tr ( "Cannot write file %1:\n%2." )
-		                       .arg ( fileName )
-		                       .arg ( file.errorString() ) );
-		return false;
-	}
-
-	QTextStream out ( &file );
-	QApplication::setOverrideCursor ( Qt::WaitCursor );
-	out << textEdit->toPlainText();
-	QApplication::restoreOverrideCursor();
-
-	setCurrentFile ( fileName );
-	statusBar()->showMessage ( tr ( "File saved" ), 2000 );
-	return true;
-}
-
-void typotek::setCurrentFile ( const QString &fileName )
-{
-	curFile = fileName;
-	textEdit->document()->setModified ( false );
-	setWindowModified ( false );
-
-	QString shownName;
-	if ( curFile.isEmpty() )
-		shownName = "untitled.txt";
-	else
-		shownName = strippedName ( curFile );
-
-	setWindowTitle ( tr ( "%1[*] - %2" ).arg ( shownName ).arg ( tr ( "Application" ) ) );
-}
-
-QString typotek::strippedName ( const QString &fullFileName )
-{
-	return QFileInfo ( fullFileName ).fileName();
 }
 
 typotek::~typotek()

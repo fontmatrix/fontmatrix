@@ -115,10 +115,10 @@ public:
 		QString family(){return m_family;};
 		QString variant(){return m_variant;};
 		QStringList tags(){return m_tags;};
-		void setTags(QStringList l){m_tags = l;};
+		void setTags(QStringList l);
 		QString name();
 		QString fancyName(){return m_family + " " + m_variant;};
-		QString infoText();
+		QString infoText(bool fromcache = true);
 		QString infoGlyph(int index, int code = 0);
 		
 		QString value(QString k);

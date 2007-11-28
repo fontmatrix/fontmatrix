@@ -23,6 +23,7 @@
 #include "fontactionwidget.h"
 #include "typotekadaptator.h"
 #include "fmpreviewlist.h"
+#include "fmglyphsview.h"
 
 
 #include <QString>
@@ -141,6 +142,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect (loremView, SIGNAL(refit()),this,SLOT(slotRefitSample()));
 
 	connect(fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
+	
+	connect(abcView,SIGNAL(refit(int)),this,SLOT(slotAdjustGlyphView(int)));
 	// END CONNECT
 
 
@@ -1131,6 +1134,11 @@ void MainViewWidget::keyPressEvent(QKeyEvent * event)
 		else
 			fontlistTab->setCurrentIndex(0);
 	}
+}
+
+void MainViewWidget::slotAdjustGlyphView(int width)
+{
+	
 }
 
 

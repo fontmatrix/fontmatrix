@@ -12,7 +12,8 @@ fmsampletextview.cpp \
  fmpreviewlist.cpp \
  aboutwidget.cpp \
  helpwidget.cpp \
- importedfontsdialog.cpp
+ importedfontsdialog.cpp \
+ fmglyphsview.cpp
 
 HEADERS += typotek.h \
  mainviewwidget.h \
@@ -27,7 +28,8 @@ HEADERS += typotek.h \
  fmpreviewlist.h \
  aboutwidget.h \
  helpwidget.h \
- importedfontsdialog.h
+ importedfontsdialog.h \
+ fmglyphsview.h
 
 TEMPLATE = app
 CONFIG += warn_on \

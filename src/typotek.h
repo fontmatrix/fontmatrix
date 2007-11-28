@@ -51,7 +51,7 @@ class typotek:public QMainWindow
 		void keyPressEvent ( QKeyEvent * event ) ;
 
 	private slots:
-		void newFile();
+		
 		void open();
 		void print();
 		void fontBook();
@@ -59,13 +59,12 @@ class typotek:public QMainWindow
 		void slotActivateCurrents();
 		void slotDeactivateCurrents();
 		void slotEditFont();
-
-// 		bool saveAs();
 		void about();
 		void help();
-// 		void documentWasModified();
+		
 	public slots:
 		bool save();
+		
 	signals:
 		void tagAdded(QString);
 		void relayStartingStep(QString, int, QColor);
@@ -78,10 +77,6 @@ class typotek:public QMainWindow
 		void readSettings();
 		void writeSettings();
 		bool maybeSave();
-		void loadFile ( const QString &fileName );
-		bool saveFile ( const QString &fileName );
-		void setCurrentFile ( const QString &fileName );
-		QString strippedName ( const QString &fullFileName );
 		void initDir();
 		void doConnect();
 

@@ -122,7 +122,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect(viewActivatedButton,SIGNAL(released()),this,SLOT(slotViewActivated()));
 
 	connect ( renderZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
-	connect ( allZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
+// 	connect ( allZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 
 	connect ( tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 
@@ -133,7 +133,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 
-	connect ( codepointSelectText,SIGNAL ( returnPressed() ),this,SLOT ( slotShowCodePoint() ) );
+// 	connect ( codepointSelectText,SIGNAL ( returnPressed() ),this,SLOT ( slotShowCodePoint() ) );
 	connect ( uniPlaneCombo,SIGNAL(activated(int)),this,SLOT(slotPlaneSelected(int)));
 
 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
@@ -549,7 +549,7 @@ void MainViewWidget::slotglyphInfo()
 	glyphInfo->clear();
 	QString is = typo->getFont ( faceIndex )->infoGlyph ( abcScene->selectedItems() [0]->data ( 2 ).toInt(), abcScene->selectedItems() [0]->data ( 3  ).toInt() );
 	glyphInfo->setText ( is );
-	codepointSelectText->setText(QString::number(abcScene->selectedItems() [0]->data ( 3 ).toInt(), 16) );
+// 	codepointSelectText->setText(QString::number(abcScene->selectedItems() [0]->data ( 3 ).toInt(), 16) );
 	if(curGlyph)
 	{
 		curGlyph->setBrush(QColor(255,255,255,0));
@@ -891,24 +891,24 @@ void MainViewWidget::slotReloadTagsetList()
 	tagsetCombo->addItems ( typo->tagsets() );
 }
 
-void MainViewWidget::slotShowCodePoint()
-{
-	QString codetext = codepointSelectText->text();
-	bool ok;
-	int codepoint = codetext.toInt ( &ok, 16 );
-	if ( !ok )
-		return;
-	if ( !theVeryFont )
-		return;
-	QGraphicsPathItem *pit = theVeryFont->hasCodepoint ( codepoint );
-	if ( !pit )
-		return;
-
-	abcView->fitInView ( pit, Qt::KeepAspectRatio );
-
-
-
-}
+// void MainViewWidget::slotShowCodePoint()
+// {
+// // 	QString codetext = codepointSelectText->text();
+// 	bool ok;
+// // 	int codepoint = codetext.toInt ( &ok, 16 );
+// 	if ( !ok )
+// 		return;
+// 	if ( !theVeryFont )
+// 		return;
+// // 	QGraphicsPathItem *pit = theVeryFont->hasCodepoint ( codepoint );
+// 	if ( !pit )
+// 		return;
+// 
+// 	abcView->fitInView ( pit, Qt::KeepAspectRatio );
+// 
+// 
+// 
+// }
 
 void MainViewWidget::slotSwitchAntiAlias ( bool aa )
 {

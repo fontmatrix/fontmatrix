@@ -99,7 +99,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotActivate(bool act, QTreeWidgetItem * item, int column);
 		void slotReloadFontList();
 		void slotReloadTagsetList();
-		void slotShowCodePoint();
+// 		void slotShowCodePoint();
 		void slotSwitchAntiAlias(bool aa);
 		void slotFitChanged(int i);
 		void slotRefitSample();

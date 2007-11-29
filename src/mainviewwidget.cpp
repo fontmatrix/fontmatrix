@@ -174,7 +174,7 @@ void MainViewWidget::fillTree()
 	}
 // qDebug() << "openjey : " << openKeys.join("/");
 	
-	
+	QFont alphaFont("helvetica",14,QFont::Bold,false);
 
 	fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
@@ -189,6 +189,7 @@ void MainViewWidget::fillTree()
 		QChar firstChar ( i );
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( fontTree );
 		alpha->setText ( 0, firstChar );
+		alpha->setFont(0,alphaFont);
 		alpha->setData ( 0,100,"alpha" );
 		bool alphaIsUsed = false;
 
@@ -1092,7 +1093,7 @@ void MainViewWidget::fillUniPlanes()
 	uniPlanes[ "124Arabic Presentation Forms-B" ] = qMakePair(0xFE70,0xFEFF);
 	uniPlanes[ "125Halfwidth and Fullwidth Forms" ] = qMakePair(0xFF00,0xFFEF);
 	uniPlanes[ "126Specials" ] = qMakePair(0xFFF0,0xFFFF);
-
+	// TODO split planes into at least scripts
 	uniPlanes["127Supplementary Multilingual Plane (SMP)"] = qMakePair(0x10000,0x1FFFF) ;
 	uniPlanes["128Supplementary Ideographic Plane (SIP)"] = qMakePair(0x20000,0x2FFFF) ;
 	uniPlanes["129unassigned"] = qMakePair(0x30000,0xDFFFF) ;

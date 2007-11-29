@@ -36,8 +36,11 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 {
 	m_scene = new QGraphicsScene;
 	setScene(m_scene);
+// 	m_scene->setBackgroundBrush(Qt::lightGray);
 	m_select = m_scene->addRect(QRectF(), QPen(Qt::blue ), QColor(0,0,120,60));
 	m_select->setZValue(100.0);
+	
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
 	
 	connect( verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotChanged()) );
 	connect( verticalScrollBar(), SIGNAL(sliderReleased()),this,SLOT(slotChanged()));
@@ -58,8 +61,6 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 		trackedFonts = fonts;
 	}
 	
-	
-
 	for(int i = 0; i < m_pixItemList.count(); ++i)
 	{
 		
@@ -92,7 +93,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 			if(fit)
 			{
 				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap("hamburgefonstiv"));
-				pit->setPos(10,32*i);
+				pit->setPos(50,32*i);
 				pit->setData(1,fit->name());
 				pit->setData(2,"preview");
 // 				pit->setZValue(1000);
@@ -126,7 +127,10 @@ void FMPreviewList::slotChanged( )
 void FMPreviewList::mousePressEvent(QMouseEvent * e)
 {
 	qDebug() << "FMPreviewList::mousePressEvent(QMouseEvent * "<<e<<")";
-	QList<QGraphicsItem*> items = m_scene->items(mapToScene( e->pos() ));
+	
+	QPointF inListPos = mapToScene( e->pos() );
+	inListPos.rx() = 100;
+	QList<QGraphicsItem*> items = m_scene->items(inListPos);
 	
 	if(items.isEmpty())
 	{

@@ -830,49 +830,17 @@ void FontItem::moreInfo_sfnt()
 		
 		if(!moreInfo.contains(akey) )
 		{
-			QString avalue;
-			if(tname.platform_id == TT_PLATFORM_APPLE_UNICODE)//just catch for the moment
+			QString avalue;		
+			///This seems to work
+			for(int c=0; c < tname.string_len; ++c)
 			{
-// 				qDebug() << "Platform id is TT_PLATFORM_APPLE_UNICODE";
-				avalue = QString::fromUtf16((const ushort*)tname.string, tname.string_len);
-			}
-			else if(tname.platform_id == TT_PLATFORM_MICROSOFT)//freetype reports it is the most used, we than focus on it at first
-			{
-				if(tname.encoding_id == TT_MS_ID_SYMBOL_CS )
-				{
-					qDebug() << "encoding is symbol";
-				}
-				else if(tname.encoding_id == TT_MS_ID_UNICODE_CS )
-				{
-
-					for(int c=0; c < tname.string_len; ++c)
-					{
-						avalue.append( QChar(tname.string[c]) );
-					}
-// 					avalue = QString::fromUtf16((const ushort*)tname.string, tname.string_len);
-
-				}
-				else
-				{
-					qDebug() << "Not handled encoding";
-				}
-			}
-			else if(TT_PLATFORM_MACINTOSH == tname.platform_id)
-			{
-				
-				QByteArray anar((char*)tname.string, tname.string_len);
-				avalue = anar;
-// 				qDebug() << "TT_PLATFORM_MACINTOSH\n" << "\t"<< tname.string_len <<"\t"<<avalue;
-			}
-			else
-			{
-				qDebug() << "Platform id ("<< tname.platform_id <<")is unhandled now";
+				QChar achar(QChar(tname.string[c]));
+				if(achar.isPrint())
+					avalue.append( achar );
 			}
 			if(!avalue.isEmpty())
 			{
-// 				qDebug()<<akey ;
 				moreInfo[akey] = avalue;
-// 				qDebug()<< "\t\t"<<avalue;
 			}
 		}		
 	}

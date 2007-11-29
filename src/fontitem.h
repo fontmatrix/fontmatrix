@@ -91,6 +91,7 @@ public:
 		
 		bool allIsRendered;
 		int m_glyphsPerRow;
+		bool hasUnicode;
 		
 		bool m_lock;
 		QMap<int,QPainterPath> contourCache;

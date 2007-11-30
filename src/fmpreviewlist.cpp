@@ -110,6 +110,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 			m_pixItemList.append(FontPreviewItem(fonts.at(i)->name(),padPixItem->pos(),false,padPixItem));
 		}
 	}
+	horizontalScrollBar()->setValue(0);
 }
 
 void FMPreviewList::showEvent(QShowEvent * event)

@@ -51,6 +51,7 @@ typotek::typotek()
 {
 	instance = this;
 	setWindowTitle ( "Fontmatrix" );
+	setupDrop();
 }
 
 void typotek::initMatrix()
@@ -192,6 +193,68 @@ void typotek::open()
 // 	QMessageBox::information(this,"Fontmatrix info","List of imported fonts :\n" + nameList.join("\n"));
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 }
+
+void typotek::open(QStringList files)
+{
+	QStringList pathList = files;
+	QStringList nameList;
+	QStringList tali;
+	tali << "Activated_Off" ;
+
+	foreach ( QString tas, tali )
+	{
+		if ( !tagsList.contains ( tas ) )
+		{
+			tagsList.append ( tas );
+			emit tagAdded ( tas );
+		}
+	}
+
+	QProgressDialog progress ( "Importing font files... ", "cancel", 0, pathList.count(), this );
+	progress.setWindowModality ( Qt::WindowModal );
+	progress.setAutoReset(false);
+
+	QString importstring ( "Import %1" );
+	for ( int i = 0 ; i < pathList.count(); ++i )
+	{
+		progress.setLabelText ( importstring.arg ( pathList.at ( i ) ) );
+		progress.setValue ( i );
+		if ( progress.wasCanceled() )
+			break;
+
+		QFile ff ( pathList.at ( i ) );
+		QFileInfo fi ( pathList.at ( i ) );
+
+
+		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
+		{
+
+			if ( fi.suffix() == "pfb" )
+			{
+				QFile fafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
+				QFileInfo iafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
+				if ( fafm.exists() )
+					fafm.copy ( ownDir.absolutePath() + "/" + iafm.fileName() );
+			}
+			FontItem *fitem = new FontItem ( ownDir.absolutePath() + "/" + fi.fileName() );
+
+			fitem->setTags ( tali );
+			fontMap.append ( fitem );
+			realFontMap[fitem->name() ] = fitem;
+			nameList << fitem->fancyName();
+		}
+	}
+	
+	progress.close();
+	
+	// The User needs and deserves to know what fonts hve been imported
+	ImportedFontsDialog ifd(nameList);
+	ifd.exec();
+	
+	theMainView->slotReloadFontList();
+	
+}
+
 
 bool typotek::save()
 {
@@ -784,4 +847,56 @@ void typotek::slotEditFont()
 	QProcess *myProcess = new QProcess(this);
 	myProcess->start(program, arguments);
 }
+
+void typotek::setupDrop()
+{
+	setAcceptDrops(true);
+	// was pretty hard!
+}
+
+void typotek::dropEvent ( QDropEvent * event )
+{
+	
+	qDebug() << "typotek::dropEvent ("<< event->mimeData()->text() <<")";
+// 	event->acceptProposedAction();
+	QStringList uris = event->mimeData()->text().split ( "\n" );
+	QStringList ret;
+	for ( int i = 0; i < uris.count() ; ++i )
+	{
+// 		qDebug() << "typotek::dropEvent -> "<< uris[i];
+		if ( uris[i].endsWith ( "ttf",Qt::CaseInsensitive ) )
+		{
+			ret << QUrl ( uris[i] ).path();
+		}
+		else if ( uris[i].endsWith ( "otf",Qt::CaseInsensitive ) )
+		{
+			ret << QUrl ( uris[i] ).path();
+		}
+		else if( uris[i].endsWith ( "pfb",Qt::CaseInsensitive ) )
+		{
+			ret << QUrl ( uris[i] ).path();
+		}
+	}
+	
+// 	qDebug() << ret.join("||");
+	if(ret.count())
+		open(ret);
+
+}
+
+void typotek::dragEnterEvent(QDragEnterEvent * event)
+{
+	qDebug() << event->mimeData()->formats().join("|");
+	if (event->mimeData()->hasFormat("text/uri-list"))
+	{
+		event->acceptProposedAction();
+		qDebug() << "dragEnterEvent accepted " ;
+	}
+	else
+	{
+		qDebug() << "dragEnterEvent refused";
+		statusBar()->showMessage ( tr ( "You bring something over me I can’t handle" ), 2000 );
+	}
+}
+
 

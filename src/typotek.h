@@ -27,6 +27,7 @@
 #include <QMap>
 #include <QFile>
 #include <QDir>
+#include <QStringList>
 
 class QAction;
 class QMenu;
@@ -53,6 +54,7 @@ class typotek:public QMainWindow
 	private slots:
 		
 		void open();
+		void open(QStringList files);
 		void print();
 		void fontBook();
 		void popupTagsetEditor();
@@ -79,6 +81,7 @@ class typotek:public QMainWindow
 		bool maybeSave();
 		void initDir();
 		void doConnect();
+		void setupDrop();
 
 		void checkOwnDir();
 		void fillTagsList();
@@ -149,6 +152,10 @@ class typotek:public QMainWindow
 		
 		void setSampleText(QString s){m_sampleText = s;};
 		QString sampleText(){return m_sampleText;};
+		
+	protected:
+		void dragEnterEvent(QDragEnterEvent *event);
+		void dropEvent ( QDropEvent * event );
 };
 
 

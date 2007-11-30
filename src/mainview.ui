@@ -247,7 +247,11 @@
             </attribute>
             <layout class="QGridLayout" >
              <item row="0" column="0" >
-              <widget class="FMPreviewList" name="previewList" />
+              <widget class="FMPreviewList" name="previewList" >
+               <property name="acceptDrops" >
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

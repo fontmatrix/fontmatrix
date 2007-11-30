@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>997</width>
-    <height>828</height>
+    <width>719</width>
+    <height>706</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -19,27 +19,9 @@
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QFrame" name="manageFrame" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Expanding" hsizetype="Minimum" >
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize" >
-       <size>
-        <width>485</width>
-        <height>400</height>
-       </size>
-      </property>
-      <property name="frameShape" >
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow" >
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" >
-       <item row="0" column="0" >
+     <widget class="QWidget" name="" >
+      <layout class="QVBoxLayout" >
+       <item>
         <layout class="QHBoxLayout" >
          <item>
           <widget class="QLineEdit" name="searchString" />
@@ -47,20 +29,20 @@
          <item>
           <widget class="QPushButton" name="searchButton" >
            <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize" >
             <size>
-             <width>120</width>
+             <width>40</width>
              <height>0</height>
             </size>
            </property>
            <property name="font" >
             <font>
-             <pointsize>12</pointsize>
+             <pointsize>9</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
@@ -86,200 +68,202 @@
            </property>
           </widget>
          </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </item>
-       <item row="1" column="0" >
-        <widget class="Line" name="line" >
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" >
-        <layout class="QVBoxLayout" >
+       <item>
+        <layout class="QHBoxLayout" >
          <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <widget class="QLabel" name="OrderBy" >
-             <property name="font" >
-              <font>
-               <pointsize>9</pointsize>
-               <weight>50</weight>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="text" >
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="Tags" >
-             <property name="text" >
-              <string>Tag</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="tagsCombo" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="contextMenuPolicy" >
-              <enum>Qt::DefaultContextMenu</enum>
-             </property>
-             <property name="toolTip" >
-              <string>Filter view by chosing tag</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType" >
-              <enum>QSizePolicy::Preferred</enum>
-             </property>
-             <property name="sizeHint" >
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QLabel" name="setlabel" >
-             <property name="text" >
-              <string>TagSet</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="tagsetCombo" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip" >
-              <string>Show only fonts that belong to chosen tagset</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QTabWidget" name="fontlistTab" >
-           <property name="currentIndex" >
-            <number>1</number>
+          <widget class="QLabel" name="OrderBy" >
+           <property name="font" >
+            <font>
+             <pointsize>9</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
            </property>
-           <widget class="QWidget" name="tab_2" >
-            <attribute name="title" >
-             <string>Names</string>
-            </attribute>
-            <layout class="QGridLayout" >
-             <item row="0" column="0" >
-              <widget class="QTreeWidget" name="fontTree" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font" >
-                <font>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="cursor" stdset="0" >
-                <cursorShape>ArrowCursor</cursorShape>
-               </property>
-               <property name="focusPolicy" >
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="autoFillBackground" >
-                <bool>false</bool>
-               </property>
-               <property name="frameShape" >
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow" >
-                <enum>QFrame::Sunken</enum>
-               </property>
-               <property name="lineWidth" >
-                <number>1</number>
-               </property>
-               <property name="alternatingRowColors" >
-                <bool>false</bool>
-               </property>
-               <property name="textElideMode" >
-                <enum>Qt::ElideRight</enum>
-               </property>
-               <property name="autoExpandDelay" >
-                <number>1</number>
-               </property>
-               <property name="columnCount" >
-                <number>2</number>
-               </property>
-               <column>
-                <property name="text" >
-                 <string>Names</string>
-                </property>
-               </column>
-               <column>
-                <property name="text" >
-                 <string>Files</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_3" >
-            <attribute name="title" >
-             <string>Preview</string>
-            </attribute>
-            <layout class="QGridLayout" >
-             <item row="0" column="0" >
-              <widget class="FMPreviewList" name="previewList" >
-               <property name="acceptDrops" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+           <property name="text" >
+            <string/>
+           </property>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" >
-           <item>
-            <widget class="QPushButton" name="viewAllButton" >
-             <property name="statusTip" >
-              <string>Show complete collection of available fonts</string>
+          <widget class="QLabel" name="Tags" >
+           <property name="text" >
+            <string>Tag</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="tagsCombo" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="contextMenuPolicy" >
+            <enum>Qt::DefaultContextMenu</enum>
+           </property>
+           <property name="toolTip" >
+            <string>Filter view by chosing tag</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType" >
+            <enum>QSizePolicy::Preferred</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="setlabel" >
+           <property name="text" >
+            <string>TagSet</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="tagsetCombo" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip" >
+            <string>Show only fonts that belong to chosen tagset</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTabWidget" name="fontlistTab" >
+         <property name="currentIndex" >
+          <number>1</number>
+         </property>
+         <widget class="QWidget" name="tab_2" >
+          <attribute name="title" >
+           <string>Names</string>
+          </attribute>
+          <layout class="QGridLayout" >
+           <item row="0" column="0" >
+            <widget class="QTreeWidget" name="fontTree" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <property name="text" >
-              <string>View all</string>
+             <property name="font" >
+              <font>
+               <pointsize>9</pointsize>
+              </font>
              </property>
+             <property name="cursor" stdset="0" >
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="focusPolicy" >
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="autoFillBackground" >
+              <bool>false</bool>
+             </property>
+             <property name="frameShape" >
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow" >
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="lineWidth" >
+              <number>1</number>
+             </property>
+             <property name="alternatingRowColors" >
+              <bool>false</bool>
+             </property>
+             <property name="textElideMode" >
+              <enum>Qt::ElideRight</enum>
+             </property>
+             <property name="autoExpandDelay" >
+              <number>1</number>
+             </property>
+             <property name="columnCount" >
+              <number>2</number>
+             </property>
+             <column>
+              <property name="text" >
+               <string>Names</string>
+              </property>
+             </column>
+             <column>
+              <property name="text" >
+               <string>Files</string>
+              </property>
+             </column>
             </widget>
            </item>
-           <item>
-            <widget class="QPushButton" name="viewActivatedButton" >
-             <property name="statusTip" >
-              <string>Show all activated fonts</string>
-             </property>
-             <property name="text" >
-              <string>View activated</string>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_3" >
+          <attribute name="title" >
+           <string>Preview</string>
+          </attribute>
+          <layout class="QGridLayout" >
+           <item row="0" column="0" >
+            <widget class="FMPreviewList" name="previewList" >
+             <property name="acceptDrops" >
+              <bool>false</bool>
              </property>
             </widget>
            </item>
           </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" >
+         <item>
+          <widget class="QPushButton" name="viewAllButton" >
+           <property name="statusTip" >
+            <string>Show complete collection of available fonts</string>
+           </property>
+           <property name="text" >
+            <string>View all</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="viewActivatedButton" >
+           <property name="statusTip" >
+            <string>Show all activated fonts</string>
+           </property>
+           <property name="text" >
+            <string>View activated</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

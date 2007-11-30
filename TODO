@@ -4,6 +4,7 @@ _PIERRE_
   - performance issues
   - usability issues
   - ugly code
+  - render glyphs with Freetype, Qt doesn’t handle it very well :(
    
 * BACKEND:
   - replace fontmatrix backend (activation / deactivation,

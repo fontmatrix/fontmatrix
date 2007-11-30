@@ -191,6 +191,8 @@ void MainViewWidget::fillTree()
 		alpha->setText ( 0, firstChar );
 		alpha->setFont(0,alphaFont);
 		alpha->setData ( 0,100,"alpha" );
+		alpha->setBackgroundColor(0,Qt::lightGray);
+		alpha->setBackgroundColor(1,Qt::lightGray);
 		bool alphaIsUsed = false;
 
 		for ( kit = keyList.begin(); kit != keyList.end(); ++kit )

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>719</width>
-    <height>706</height>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -19,7 +19,7 @@
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="" >
+     <widget class="QWidget" name="layoutWidget" >
       <layout class="QVBoxLayout" >
        <item>
         <layout class="QHBoxLayout" >

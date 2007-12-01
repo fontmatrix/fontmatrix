@@ -891,6 +891,43 @@ void FontItem::adjustGlyphsPerRow(int width)
 	}
 }
 
+bool FontItem::isActivated()
+{
+	if(m_tags.contains("Activated_Off"))
+		  return false;
+	return true;
+}
+
+void FontItem::setActivated(bool act)
+{
+	if(act)
+	{
+		if(isActivated())
+		{
+			return;
+		}
+		else
+		{
+			m_tags.removeAll("Activated_Off");
+			m_tags << "Activated_On";
+		}
+	}
+	else
+	{
+		if(!isActivated())
+		{
+			return;
+		}
+		else
+		{
+			m_tags.removeAll("Activated_On");
+			m_tags << "Activated_Off";
+		}
+	}
+}
+
+
+
 
 
 

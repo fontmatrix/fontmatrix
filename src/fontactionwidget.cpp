@@ -31,8 +31,20 @@
 #include <QAction>
 
 
+FontActionWidget::FontActionWidget(QWidget * parent)
+	: QWidget ( parent )
+{
+	setupUi ( this );
+	isOk = false;
+	contextMenuReq = false;
+	
+	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+	
+	doConnect();
+}
 
-FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) : QWidget ( parent ), adaptator(ada)
+FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) 
+	: QWidget ( parent ), adaptator(ada)
 {
 	setupUi ( this );
 	isOk = false;
@@ -58,14 +70,22 @@ void FontActionWidget::prepare ( QList< FontItem * > fonts )
 	}
 	tagsListWidget->clear();
 
-	QString tit ( "%1" );
 	QString tot;
 	for ( int i=0;i<theFonts.count();++i )
 	{
-		tot.append (  theFonts[i]->fancyName() + "\n" );
+		bool last = i == theFonts.count() - 1;
+		tot.append (  theFonts[i]->fancyName() + (last ? "" : "\n") );
 	}
-	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
-	titleLabel->setText ( tit.arg ( theFonts[0]->fancyName() ) + itsagroup );
+// 	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
+// 	titleLabel->setText ( tit.arg ( theFonts[0]->fancyName() ) + itsagroup );
+	if(theFonts.count() > 1)
+	{
+		titleLabel->setText ( theFonts[0]->family() + " (family)");
+	}
+	else
+	{
+		titleLabel->setText ( theFonts[0]->fancyName() );
+	}
 	titleLabel->setToolTip ( tot );
 
 	for ( int i=0; i < typotek::tagsList.count(); ++i )
@@ -80,12 +100,17 @@ void FontActionWidget::prepare ( QList< FontItem * > fonts )
 		{
 			lit = new QListWidgetItem ( cur_tag );
 			lit->setCheckState ( Qt::Unchecked );
-
-			if ( theFonts.count() == 1 )
+			int YesState = 0;
+			for ( int i=0;i<theFonts.count();++i )
 			{
-				if ( theFonts[0]->tags().contains ( cur_tag ) )
-					lit->setCheckState ( Qt::Checked );
+					if ( theFonts[i]->tags().contains ( cur_tag ) )
+						++YesState;
 			}
+			if(YesState == theFonts.count())
+				lit->setCheckState ( Qt::Checked );
+			else if(YesState > 0 && YesState < theFonts.count())
+				lit->setCheckState ( Qt::PartiallyChecked);
+			
 			tagsListWidget->addItem ( lit );
 		}
 	}
@@ -192,22 +217,28 @@ void FontActionWidget::slotFinalize()
 {
 // 	if ( isOk )
 // 	{
-		QStringList tags;
+		QStringList plusTags;
+		QStringList noTags;
 		for ( int i=0;i< tagsListWidget->count();++i )
 		{
 			if ( tagsListWidget->item ( i )->checkState() == Qt::Checked )
-				tags.append ( tagsListWidget->item ( i )->text() );
+				plusTags.append ( tagsListWidget->item ( i )->text() );
+			if( tagsListWidget->item ( i )->checkState() == Qt::Unchecked )
+				noTags.append ( tagsListWidget->item ( i )->text() );
 		}
 		
-		QStringList remtags;
+		QStringList sourceTags;
 		for ( int i=0;i<theFonts.count();++i )
 		{
-			remtags = tags;
-			if(theFonts[i]->tags().contains("Activated_On"))
-				remtags << "Activated_On";
-			if(theFonts[i]->tags().contains("Activated_Off"))
-				remtags << "Activated_Off";
-			theFonts[i]->setTags ( remtags );
+			sourceTags = theFonts[i]->tags();
+			// sourceTags -= noTags;
+			for(int t = 0; t < noTags.count(); ++t)
+			{
+				sourceTags.removeAll(noTags[t]);
+			}
+			sourceTags += plusTags;
+			sourceTags = sourceTags.toSet().toList();
+			theFonts[i]->setTags ( sourceTags );
 		}
 // 	}
 
@@ -220,6 +251,8 @@ void FontActionWidget::slotContextMenu(QPoint pos)
 	contextMenuReq = true;
 	contextMenuPos = tagsListWidget->mapToGlobal( pos );
 }
+
+
 
 
 

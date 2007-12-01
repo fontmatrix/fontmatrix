@@ -41,6 +41,7 @@ class FontActionWidget :  public QWidget, private Ui::FontAction
 	public:
 		FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada, QWidget* parent = 0);
 		FontActionWidget ( TypotekAdaptator* ada, QWidget* parent = 0);
+		FontActionWidget ( QWidget* parent = 0);
 		void prepare(QList<FontItem*> fonts);
 		void doConnect();
 		void undoConnect();

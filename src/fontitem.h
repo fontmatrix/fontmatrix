@@ -138,6 +138,9 @@ public:
 		
 		QIcon oneLinePreviewIcon(QString oneline);
 		QPixmap oneLinePreviewPixmap(QString oneline);
+		
+		bool isActivated();
+		void setActivated(bool act);
 				
 		// Relative to fontactionwidget
 		void lock(){m_lock=true;};

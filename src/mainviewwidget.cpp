@@ -217,7 +217,7 @@ void MainViewWidget::fillTree()
 					entry->setText ( 0,  variant );
 					entry->setText ( 1, kit.value() [n]->name() );
 					entry->setData ( 0, 100, "fontfile" );
-					entry->setData ( 0,200,entry->checkState ( 1 ) );
+					
 
 					if ( isExpanded )
 					{
@@ -230,7 +230,7 @@ void MainViewWidget::fillTree()
 					}
 
 
-					bool act = kit.value() [n]->tags().contains ( "Activated_On" );
+					bool act = kit.value() [n]->isActivated();
 					if ( act )
 					{
 						checkyes = true;
@@ -240,6 +240,8 @@ void MainViewWidget::fillTree()
 						chekno = true;
 					}
 					entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
+					entry->setData ( 0,200,entry->checkState ( 1 ) );
+					
 					if ( entry->text ( 1 ) == curItemName )
 						curItem = entry;
 				}
@@ -326,6 +328,7 @@ void MainViewWidget::slotOrderingChanged ( QString s )
 
 }
 
+/// Should be renamed in slotNameItemSelected
 void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 {
 // 	qDebug() << "font select";	
@@ -341,12 +344,16 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 // 		qDebug() << "Item is a family";
 		bool wantView = true;
 		bool hasChild = false;
+		QStringList names;
 		for(int i=0; i < item->childCount(); ++i)
 		{
 			hasChild = true;
 			if(item->child(i)->text(1) == curItemName)
 				wantView = false; 
+			names << item->child(i)->text(1) ;
 		}
+		slotFontActionByNames(names);
+		
 		if(wantView && hasChild)
 		{
 			lastIndex = faceIndex;
@@ -355,7 +362,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	
 			if ( faceIndex.count() && faceIndex != lastIndex )
 			{
-				slotFontActionByName( faceIndex );
+// 				slotFontActionByName( faceIndex );
 				theVeryFont = typo->getFont ( faceIndex );
 				fillUniPlanesCombo(theVeryFont); 
 				slotView(true);
@@ -414,7 +421,6 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			typo->setWindowTitle(theVeryFont->fancyName() + " - Fontmatrix");
 			m_lists->previewList->searchAndSelect(theVeryFont->name());
 		}
-	
 		if(item->data(0,200).toInt() != item->checkState(1))
 		{
 			if ( item->checkState ( 1 ) == Qt::Checked )
@@ -627,7 +633,7 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 	if(column >2 )return;
 	if ( !currentFaction )
 	{
-		currentFaction = new FontActionWidget ( typo->adaptator() );
+		currentFaction = new FontActionWidget (/* typo->adaptator()*/ );
 		tagLayout->addWidget ( currentFaction );
 		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
 		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
@@ -650,7 +656,7 @@ void MainViewWidget::slotFontActionByName(QString fname)
 {
 	if ( !currentFaction )
 	{
-		currentFaction = new FontActionWidget ( typo->adaptator() );
+		currentFaction = new FontActionWidget ( /*typo->adaptator()*/ );
 		tagLayout->addWidget ( currentFaction );
 		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
 		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
@@ -669,13 +675,32 @@ void MainViewWidget::slotFontActionByName(QString fname)
 	}
 }
 
+void MainViewWidget::slotFontActionByNames(QStringList fnames)
+{
+	if ( !currentFaction )
+	{
+		currentFaction = new FontActionWidget ( /*typo->adaptator()*/ );
+		tagLayout->addWidget ( currentFaction );
+		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
+		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
+		currentFaction->show();
+	}
+
+	QList<FontItem*> FoIt;// = typo->getFont ( fname);
+	for(int i= 0; i < fnames.count() ; ++i)
+	{
+		FoIt.append(typo->getFont(fnames[i]));
+	}
+	if ( FoIt.count() )
+		currentFaction->prepare ( FoIt );
+}
 
 
 void MainViewWidget::slotEditAll()
 {
 	if ( !currentFaction )
 	{
-		currentFaction = new FontActionWidget ( typo->adaptator() );
+		currentFaction = new FontActionWidget (/* typo->adaptator()*/ );
 		tagLayout->addWidget ( currentFaction );
 		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
 		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
@@ -735,12 +760,9 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 
 		if ( !fit->isLocked() )
 		{
-			QStringList tl = fit->tags();
-			if ( !tl.contains ( "Activated_On" ) )
+			if ( !fit->isActivated() )
 			{
-				tl.removeAll ( "Activated_Off" );
-				tl << "Activated_On";
-				fit->setTags ( tl );
+				fit->setActivated(true);
 
 				QFileInfo fofi ( fit->path() );
 
@@ -758,7 +780,7 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 							qDebug() << "unable to link " << afm.fileName();
 						}
 					}
-					typo->adaptator()->private_signal ( 1, fofi.fileName() );
+// 					typo->adaptator()->private_signal ( 1, fofi.fileName() );
 				}
 			}
 			else
@@ -778,13 +800,9 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 
 		if ( !fit->isLocked() )
 		{
-			QStringList tl = fit->tags();
-			if ( !tl.contains ( "Activated_Off" ) )
+			if ( fit->isActivated() )
 			{
-				tl.removeAll ( "Activated_On" );
-				tl << "Activated_Off";
-				fit->setTags ( tl );
-
+				fit->setActivated(false);
 				QFileInfo fofi ( fit->path() );
 				if ( !QFile::remove ( typo->getManagedDir() + "/" + fofi.fileName() ) )
 				{
@@ -800,10 +818,14 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 							qDebug() << "unable to remove " << afm.fileName();
 						}
 					}
-					typo->adaptator()->private_signal ( 0, fofi.fileName() );
+// 					typo->adaptator()->private_signal ( 0, fofi.fileName() );
 				}
 			}
 
+		}
+		else
+		{
+			qDebug() << "\tIs Locked";
 		}
 	}
 	fillTree();

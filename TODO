@@ -6,7 +6,7 @@ _PIERRE_
   - ugly code
   - render glyphs with Freetype, Qt doesn’t handle it very well :(
   - split main window into View and Data (or whatever it’s called by actual developers;-)
-  - change left pane into a docked widget
+  - change left pane into a docked widget (DONE 0.3 but I dont like it - Vlada)
    
 * BACKEND:
   - replace fontmatrix backend (activation / deactivation,
@@ -27,9 +27,17 @@ _VLADA_
   - decide wether 'splash' shoud be turned on (Pierre...?)
 
 * UI:
-  - draw nice icons for zoom
-  - make Info, Tags, Glyphs etc. icons
+  - draw nice icons for zoom [DONE 0.2]
+  - make Info, Tags, Glyphs etc. icons [DONE 0.2]
 
 * WEB:
   - mockup site
   - make it!
+
+----------------
+
+_MASA_ (my girlfriend :) )
+
+* allow browsing through fontlist tab using arrow keys
+* fit character width into glyph cell (good candidate is the font Blackoak Std Regular)
+* move font name above Info, Glyph, etc. tabs so it's always visible

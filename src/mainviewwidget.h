@@ -32,6 +32,7 @@ class QTextEdit;
 class QGridLayout;
 class QTreeWidgetItem;
 class QGraphicsRectItem;
+class ListDockWidget;
 /**
 MainViewWidget inherits from an ui designed.
 
@@ -51,6 +52,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QStringList ord;
 		QStringList fields;
 		typotek *typo;
+		ListDockWidget *m_lists;
 		QString faceIndex;
 		QString lastIndex;
 		QList<FontItem*> currentFonts;

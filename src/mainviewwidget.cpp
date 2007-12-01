@@ -24,6 +24,7 @@
 #include "typotekadaptator.h"
 #include "fmpreviewlist.h"
 #include "fmglyphsview.h"
+#include "listdockwidget.h"
 
 
 #include <QString>
@@ -47,6 +48,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	theVeryFont = 0;
 
 	typo = typotek::getInstance();
+	m_lists = ListDockWidget::getInstance();
 
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
@@ -54,7 +56,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	curGlyph = 0;
 	
-	fontTree->setIconSize(QSize(32,32));
+	
 
 	fillUniPlanes();
 // 	uniPlaneCombo->addItems(uniPlanes.keys());
@@ -86,26 +88,20 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 // 	ord << "family" << "variant";
 // 	orderingCombo->addItems ( ord );
-	tagsetCombo->addItems ( typo->tagsets() );
+
 
 // 	fields << "family" << "variant";
 // 	searchField->addItems ( fields );
 
-	QStringList tl_tmp = typotek::tagsList;
-// 	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
-	tl_tmp.removeAll ( "Activated_On" );
-	tl_tmp.removeAll ( "Activated_Off" );
-
-	tagsCombo->addItems ( tl_tmp );
 	
 // 	rightSplitter->setOpaqueResize(false);
-	previewList->setRefWidget(this);
+	m_lists->previewList->setRefWidget(this);
 
 	//CONNECT
 
-	connect ( tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
+	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 
-	connect ( fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
+	connect (  m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 
 // 	connect ( editAllButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotEditAll() ) );
 
@@ -116,15 +112,15 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( abcScene,SIGNAL ( selectionChanged() ),this,SLOT ( slotglyphInfo() ) );
 
-	connect ( searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
-	connect ( searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
-	connect (viewAllButton,SIGNAL(released()),this,SLOT(slotViewAll()));
-	connect(viewActivatedButton,SIGNAL(released()),this,SLOT(slotViewActivated()));
+	connect (  m_lists->searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
+	connect (  m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+	connect ( m_lists->viewAllButton,SIGNAL(released()),this,SLOT(slotViewAll()));
+	connect( m_lists->viewActivatedButton,SIGNAL(released()),this,SLOT(slotViewActivated()));
 
 	connect ( renderZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 // 	connect ( allZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 
-	connect ( tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
+	connect (  m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 
 // 	connect ( activateAllButton,SIGNAL ( released() ),this,SLOT ( slotActivateAll() ) );
 // 	connect ( desactivateAllButton,SIGNAL ( released() ),this,SLOT ( slotDesactivateAll() ) );
@@ -141,7 +137,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect (fitViewCheck,SIGNAL(stateChanged( int )),this,SLOT(slotFitChanged(int)));
 	connect (loremView, SIGNAL(refit()),this,SLOT(slotRefitSample()));
 
-	connect(fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
+	connect( m_lists->fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
 	
 	connect(abcView,SIGNAL(refit(int)),this,SLOT(slotAdjustGlyphView(int)));
 	// END CONNECT
@@ -165,9 +161,9 @@ void MainViewWidget::fillTree()
 
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
-	for ( int i=0; i < fontTree->topLevelItemCount();++i )
+	for ( int i=0; i < m_lists->fontTree->topLevelItemCount();++i )
 	{
-		QTreeWidgetItem *topit = fontTree->topLevelItem ( i );
+		QTreeWidgetItem *topit = m_lists->fontTree->topLevelItem ( i );
 		for ( int j=0;j < topit->childCount();++j )
 			if ( topit->child ( j )->isExpanded() )
 				openKeys << topit->child ( j )->text ( 0 );
@@ -176,7 +172,7 @@ void MainViewWidget::fillTree()
 	
 	QFont alphaFont("helvetica",14,QFont::Bold,false);
 
-	fontTree->clear();
+	m_lists->fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
 	for ( int i=0; i < currentFonts.count();++i )
 	{
@@ -187,7 +183,7 @@ void MainViewWidget::fillTree()
 	for ( int i = 0x21 /* ! */; i <= 0x7e /* ~ */; ++i )
 	{
 		QChar firstChar ( i );
-		QTreeWidgetItem *alpha = new QTreeWidgetItem ( fontTree );
+		QTreeWidgetItem *alpha = new QTreeWidgetItem ( m_lists->fontTree );
 		alpha->setText ( 0, firstChar );
 		alpha->setFont(0,alphaFont);
 		alpha->setData ( 0,100,"alpha" );
@@ -274,7 +270,7 @@ void MainViewWidget::fillTree()
 		}
 		if ( alphaIsUsed )
 		{
-			fontTree->addTopLevelItem ( alpha );
+			m_lists->fontTree->addTopLevelItem ( alpha );
 			alpha->setExpanded ( true );
 		}
 		else
@@ -283,11 +279,11 @@ void MainViewWidget::fillTree()
 		}
 	}
 	
-	previewList->slotRefill(currentFonts, fontsetHasChanged);
+	m_lists->previewList->slotRefill(currentFonts, fontsetHasChanged);
 	if ( curItem )
 	{
 // 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
-		fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
+		m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 		QColor scol(Qt::blue);
 		scol.setAlpha(30);
 		curItem->parent()->setBackgroundColor(0,scol);
@@ -302,9 +298,9 @@ void MainViewWidget::fillTree()
 	{
 		qDebug() << "NO CURITEM";
 	}
-	fontTree->resizeColumnToContents ( 0 )  ;
-// 	fontTree->resizeColumnToContents ( 1 ) ;
-// 	fontTree->setColumnWidth(0,200);
+	m_lists->fontTree->resizeColumnToContents ( 0 )  ;
+// 	m_lists->fontTree->resizeColumnToContents ( 1 ) ;
+// 	m_lists->fontTree->setColumnWidth(0,200);
 	
 	fontsetHasChanged = false;
 }
@@ -321,7 +317,7 @@ void MainViewWidget::slotItemOpened(QTreeWidgetItem * item)
 
 void MainViewWidget::slotOrderingChanged ( QString s )
 {
-	//Update "fontTree"
+	//Update "m_lists->fontTree"
 
 
 // 	currentFonts = typo->getAllFonts();
@@ -364,7 +360,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 				fillUniPlanesCombo(theVeryFont); 
 				slotView(true);
 				typo->setWindowTitle(theVeryFont->fancyName()+ " - Fontmatrix");
-				previewList->searchAndSelect(theVeryFont->name());
+				m_lists->previewList->searchAndSelect(theVeryFont->name());
 			}
 		}
 // 		qDebug() << curItemName;
@@ -416,7 +412,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			fillUniPlanesCombo(theVeryFont); // has to be called before view, may I should come back to the faceChanged signal idea
 			slotView(true);
 			typo->setWindowTitle(theVeryFont->fancyName() + " - Fontmatrix");
-			previewList->searchAndSelect(theVeryFont->name());
+			m_lists->previewList->searchAndSelect(theVeryFont->name());
 		}
 	
 		if(item->data(0,200).toInt() != item->checkState(1))
@@ -565,13 +561,13 @@ void MainViewWidget::slotglyphInfo()
 
 void MainViewWidget::slotSearch()
 {
-	fontTree->clear();
+	m_lists->fontTree->clear();
 	fontsetHasChanged = true;
 
-	QString fs ( searchString->text() );
+	QString fs ( m_lists->searchString->text() );
 	QString ff ( "search_%1" );
 	QString sensitivity("INSENS");
-	if(sensitivityCheck->isChecked())
+	if(m_lists->sensitivityCheck->isChecked())
 	{
 		sensitivity = "SENS";
 	}
@@ -579,12 +575,12 @@ void MainViewWidget::slotSearch()
 	currentFonts = typo->getFonts ( fs,ff.arg(sensitivity) ) ;
 	currentOrdering = "family";
 	fillTree();
-	searchString->clear();
+	m_lists->searchString->clear();
 }
 
 void MainViewWidget::slotFilterTag ( QString tag )
 {
-	fontTree->clear();
+	m_lists->fontTree->clear();
 	fontsetHasChanged = true;
 	QString fs ( tag );
 	QString ff ( "tag" );
@@ -596,7 +592,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 
 void MainViewWidget::slotFilterTagset ( QString set )
 {
-	fontTree->clear();
+	m_lists->fontTree->clear();
 	fontsetHasChanged = true;
 	currentFonts.clear();
 	QStringList tags = typo->tagsOfSet ( set );
@@ -728,7 +724,7 @@ void MainViewWidget::slotZoom ( int z )
 void MainViewWidget::slotAppendTag ( QString tag )
 {
 // 	qDebug() << "add tag to combo " << tag;
-	tagsCombo->addItem ( tag );
+	m_lists->tagsCombo->addItem ( tag );
 }
 
 void MainViewWidget::activation ( FontItem* fit , bool act )
@@ -890,8 +886,8 @@ void MainViewWidget::slotReloadFontList()
 
 void MainViewWidget::slotReloadTagsetList()
 {
-	tagsetCombo->clear();
-	tagsetCombo->addItems ( typo->tagsets() );
+	m_lists->tagsetCombo->clear();
+	m_lists->tagsetCombo->addItems ( typo->tagsets() );
 }
 
 // void MainViewWidget::slotShowCodePoint()
@@ -1132,10 +1128,10 @@ void MainViewWidget::keyPressEvent(QKeyEvent * event)
 	if(event->key() == Qt::Key_Space &&  event->modifiers().testFlag ( Qt::ControlModifier ))
 	{
 		// Switch list view
-		if(fontlistTab->currentIndex() == 0)
-			fontlistTab->setCurrentIndex(1);
+		if(m_lists->fontlistTab->currentIndex() == 0)
+			m_lists->fontlistTab->setCurrentIndex(1);
 		else
-			fontlistTab->setCurrentIndex(0);
+			m_lists->fontlistTab->setCurrentIndex(0);
 	}
 }
 

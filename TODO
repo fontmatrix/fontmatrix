@@ -5,6 +5,8 @@ _PIERRE_
   - usability issues
   - ugly code
   - render glyphs with Freetype, Qt doesn’t handle it very well :(
+  - split main window into View and Data (or whatever it’s called by actual developers;-)
+  - change left pane into a docked widget
    
 * BACKEND:
   - replace fontmatrix backend (activation / deactivation,
@@ -14,6 +16,7 @@ _PIERRE_
 
 * FEATURES:
   - continue to listen Vlada!
+  - Write an up to date help page
 
 
 _VLADA_

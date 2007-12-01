@@ -13,7 +13,8 @@ fmsampletextview.cpp \
  aboutwidget.cpp \
  helpwidget.cpp \
  importedfontsdialog.cpp \
- fmglyphsview.cpp
+ fmglyphsview.cpp \
+ listdockwidget.cpp
 
 HEADERS += typotek.h \
  mainviewwidget.h \
@@ -29,7 +30,8 @@ HEADERS += typotek.h \
  aboutwidget.h \
  helpwidget.h \
  importedfontsdialog.h \
- fmglyphsview.h
+ fmglyphsview.h \
+ listdockwidget.h
 
 TEMPLATE = app
 CONFIG += warn_on \
@@ -45,7 +47,8 @@ FORMS += mainview.ui \
  tagset.ui \
  about.ui \
  help.ui \
- importedfonts.ui
+ importedfonts.ui \
+ listsdock.ui
 
 LIBS += -L/usr/lib \
 -lfreetype

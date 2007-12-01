@@ -35,6 +35,7 @@ class QTextEdit;
 class MainViewWidget;
 class FontItem;
 class TypotekAdaptator;
+class QDockWidget;
 
 
 
@@ -88,7 +89,8 @@ class typotek:public QMainWindow
 
 		QTextEdit *textEdit;
 		QString curFile;
-
+		
+		QDockWidget *mainDock;
 		QMenu *fileMenu;
 		QMenu *editMenu;
 		QMenu *helpMenu;

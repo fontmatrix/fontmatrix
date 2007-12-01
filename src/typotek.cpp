@@ -31,6 +31,7 @@
 #include "aboutwidget.h"
 #include "helpwidget.h"
 #include "importedfontsdialog.h"
+#include "listdockwidget.h"
 
 #include <QtGui>
 #include <QTextEdit>
@@ -42,6 +43,7 @@
 #include <QProgressDialog>
 #include <QDomDocument>
 #include <QProcess>
+#include <QDockWidget>
 
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
@@ -64,7 +66,11 @@ void typotek::initMatrix()
 
 	theMainView = new MainViewWidget ( this );
 	setCentralWidget ( theMainView );
-
+	
+	mainDock = new QDockWidget("Lists");
+	mainDock->setWidget(ListDockWidget::getInstance());
+	addDockWidget(Qt::LeftDockWidgetArea, mainDock);
+	
 	createActions();
 	createMenus();
 	createStatusBar();
@@ -864,17 +870,26 @@ void typotek::dropEvent ( QDropEvent * event )
 	for ( int i = 0; i < uris.count() ; ++i )
 	{
 // 		qDebug() << "typotek::dropEvent -> "<< uris[i];
-		if ( uris[i].endsWith ( "ttf",Qt::CaseInsensitive ) )
+		QUrl url(uris[i]);
+		if(url.scheme() == "file")
 		{
-			ret << QUrl ( uris[i] ).path();
+			if ( uris[i].endsWith ( "ttf",Qt::CaseInsensitive ) )
+			{
+				ret << url.path();
+			}
+			else if ( uris[i].endsWith ( "otf",Qt::CaseInsensitive ) )
+			{
+				ret << url.path();
+			}
+			else if( uris[i].endsWith ( "pfb",Qt::CaseInsensitive ) )
+			{
+				ret << url.path();
+			}
 		}
-		else if ( uris[i].endsWith ( "otf",Qt::CaseInsensitive ) )
+		else if(url.scheme() == "http")
 		{
-			ret << QUrl ( uris[i] ).path();
-		}
-		else if( uris[i].endsWith ( "pfb",Qt::CaseInsensitive ) )
-		{
-			ret << QUrl ( uris[i] ).path();
+			// TODO Get fonts over http
+			statusBar()->showMessage ( tr ( "Support of DragNDrop over http is sheduled but not yet effective" ), 5000 );
 		}
 	}
 	

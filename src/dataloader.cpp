@@ -48,6 +48,8 @@ void DataLoader::load()
 	{
 		QMessageBox::warning (0, QString ( "Fontmatrix" ),
 				       QString ( "Seems that is the first time you run Fontmatrix, if not there is a problem loading the data file %1." ).arg(m_file->fileName()) );
+		
+		m_typo->setSampleText( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.");	
 		return;
 	}
 	if ( !doc.setContent ( m_file ) )

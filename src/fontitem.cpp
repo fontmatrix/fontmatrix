@@ -895,7 +895,11 @@ bool FontItem::isActivated()
 {
 	if(m_tags.contains("Activated_Off"))
 		  return false;
-	return true;
+	else if(m_tags.contains("Activated_On"))
+		return true;
+	else
+		m_tags << "Activated_Off";
+	return false;
 }
 
 void FontItem::setActivated(bool act)

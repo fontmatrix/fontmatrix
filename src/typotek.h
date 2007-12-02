@@ -28,6 +28,7 @@
 #include <QFile>
 #include <QDir>
 #include <QStringList>
+#include <QLabel>
 
 class QAction;
 class QMenu;
@@ -129,6 +130,8 @@ class typotek:public QMainWindow
 		TypotekAdaptator *actAdaptator;
 		
 		QString m_sampleText;
+		
+		QLabel *curFontPresentation;
 	public:
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );
@@ -154,6 +157,8 @@ class typotek:public QMainWindow
 		
 		void setSampleText(QString s){m_sampleText = s;};
 		QString sampleText(){return m_sampleText;};
+		
+		void presentFontName(QString s){curFontPresentation->setText(s);};
 		
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

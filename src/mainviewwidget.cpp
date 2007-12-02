@@ -367,6 +367,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 				fillUniPlanesCombo(theVeryFont); 
 				slotView(true);
 				typo->setWindowTitle(theVeryFont->fancyName()+ " - Fontmatrix");
+				typo->presentFontName(theVeryFont->fancyName());
 				m_lists->previewList->searchAndSelect(theVeryFont->name());
 			}
 		}
@@ -419,6 +420,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			fillUniPlanesCombo(theVeryFont); // has to be called before view, may I should come back to the faceChanged signal idea
 			slotView(true);
 			typo->setWindowTitle(theVeryFont->fancyName() + " - Fontmatrix");
+			typo->presentFontName(theVeryFont->fancyName());
 			m_lists->previewList->searchAndSelect(theVeryFont->name());
 		}
 		if(item->data(0,200).toInt() != item->checkState(1))
@@ -453,6 +455,7 @@ void MainViewWidget::slotFontSelectedByName(QString fname)
 		fillUniPlanesCombo(theVeryFont); 
 		slotView(true);
 		typo->setWindowTitle(theVeryFont->fancyName()+ " - Fontmatrix");
+		typo->presentFontName(theVeryFont->fancyName());
 	}
 	
 	fillTree();

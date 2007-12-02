@@ -45,6 +45,7 @@
 #include <QProcess>
 #include <QDockWidget>
 
+
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
 extern bool __FM_SHOW_FONTLOADED;
@@ -70,6 +71,10 @@ void typotek::initMatrix()
 	mainDock = new QDockWidget("Lists");
 	mainDock->setWidget(ListDockWidget::getInstance());
 	addDockWidget(Qt::LeftDockWidgetArea, mainDock);
+	
+	curFontPresentation = new QLabel("nothing selected");
+	curFontPresentation->setAlignment(Qt::AlignRight);
+	statusBar()->addPermanentWidget(curFontPresentation);
 	
 	createActions();
 	createMenus();

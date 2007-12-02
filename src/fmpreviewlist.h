@@ -73,6 +73,7 @@ class FMPreviewList : public QGraphicsView
 		void showEvent ( QShowEvent * event ) ;
 		void mousePressEvent ( QMouseEvent * e );
 		void resizeEvent ( QResizeEvent * event );
+		void keyPressEvent ( QKeyEvent * e );
 };
 
 #endif

@@ -40,6 +40,7 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 	m_select = m_scene->addRect(QRectF(), QPen(Qt::blue ), QColor(0,0,120,60));
 	m_select->setZValue(100.0);
 	
+	m_currentItem = 0;
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
 	
 	connect( verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotChanged()) );
@@ -224,6 +225,45 @@ void FMPreviewList::searchAndSelect(QString fname)
 void FMPreviewList::resizeEvent(QResizeEvent * event)
 {
 	slotRefill(trackedFonts, false);
+}
+
+void FMPreviewList::keyPressEvent(QKeyEvent * e)
+{
+
+	QString ref ( mvw->selectedFont()->name() ) ;
+	
+	if(e->key() == Qt::Key_Up)
+	{
+// 		verticalScrollBar()->setValue(verticalScrollBar()->value() - 32);
+		
+		QString target;
+		for(int i = 1; i < trackedFonts.count(); ++i)
+		{
+			if(trackedFonts[i]->name() == ref)
+			{
+				target = trackedFonts[i-1]->name();
+				break;
+			}
+		}
+		if(!target.isEmpty())
+			searchAndSelect(target);
+		
+	}
+	else if(e->key() == Qt::Key_Down)
+	{
+// 		verticalScrollBar()->setValue(verticalScrollBar()->value() + 32);	
+		QString target;
+		for(int i = 0; i < trackedFonts.count() - 1; ++i)
+		{
+			if(trackedFonts[i]->name() == ref)
+			{
+				target = trackedFonts[i+1]->name();
+				break;
+			}
+		}
+		if(!target.isEmpty())
+			searchAndSelect(target);
+	}
 }
 
 

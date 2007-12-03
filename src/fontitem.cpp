@@ -114,6 +114,7 @@ FontItem::FontItem ( QString path )
 	m_face = 0;
 	m_glyphsPerRow = 7;
 	hasUnicode = false;
+	currentChar = -1;
 	
 	if ( charsetMap.isEmpty() )
 		fillCharsetMap();
@@ -262,27 +263,40 @@ QString FontItem::name()
 QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 {
 	
-	
-	if ( !contourCache.contains ( charcode ) )
-	{
-		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
-		if ( ft_error )
+	uint glyphIndex = 0;
+	currentChar = charcode;
+// 	if ( !contourCache.contains ( charcode ) )
+// 	{
+// 		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
+		glyphIndex = FT_Get_Char_Index(m_face, charcode );
+		if(glyphIndex == 0)
 		{
 			return 0;
 		}
-// 		FT_Outline *outline = &m_glyph->outline;
-		QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
-		FT_Outline_Decompose ( &m_glyph->outline, &outline_funcs, &glyphPath );
-		contourCache[charcode] = glyphPath;
-		advanceCache[charcode] =  m_glyph->metrics.horiAdvance;
-	}
-
-	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
-	glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
-	glyph->setPath ( contourCache[charcode] );
-	double scalefactor = size / m_face->units_per_EM;
-	glyph->scale ( scalefactor,-scalefactor );
-	return glyph;
+		else
+		{
+			return itemFromGindex (glyphIndex,size );
+		}
+// 	}
+// 		if ( ft_error )
+// 		{
+// 			qDebug() << "FAILED - FT_Load_Char ( "<<m_name<<","<<charcode<<" )";
+// 			return 0;
+// 		}
+// // 		FT_Outline *outline = &m_glyph->outline;
+// 		QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
+// 		FT_Outline_Decompose ( &m_glyph->outline, &outline_funcs, &glyphPath );
+// 		contourCache[charcode] = glyphPath;
+// 		advanceCache[charcode] =  m_glyph->metrics.horiAdvance;
+// 	}
+// 
+// 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
+// 	glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
+// 	glyph->setPath ( contourCache[charcode] );
+// 	double scalefactor = size / m_face->units_per_EM;
+// 	glyph->scale ( scalefactor,-scalefactor );
+// 	return glyph;
+		return 0;
 	
 	
 
@@ -290,10 +304,10 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 
 QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 {
-	int charcode = index + 65536;
-	if ( !contourCache.contains ( charcode ) )
+	int charcode = index /*+ 65536*/;
+	if ( !contourCache.contains ( currentChar ) )
 	{
-		ft_error = FT_Load_Glyph ( m_face, charcode  - 65536, FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
+		ft_error = FT_Load_Glyph ( m_face, charcode  /*- 65536*/, FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
 		if ( ft_error )
 		{
 			return 0;
@@ -301,13 +315,14 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		FT_Outline *outline = &m_glyph->outline;
 		QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
 		FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
-		contourCache[charcode] = glyphPath;
-		advanceCache[charcode] =  m_glyph->metrics.horiAdvance;
+		contourCache[currentChar] = glyphPath;
+		advanceCache[currentChar] =  m_glyph->metrics.horiAdvance;
+// 		qDebug() << "glyph " <<charcode<<" stocked in "<<currentChar;
 	}
 
 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 	glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
-	glyph->setPath ( contourCache[charcode] );
+	glyph->setPath ( contourCache[currentChar] );
 	double scalefactor = size / m_face->units_per_EM;
 	glyph->scale ( scalefactor,-scalefactor );
 	return glyph;

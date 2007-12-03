@@ -693,9 +693,12 @@ QString FontItem::infoGlyph ( int index, int code )
 		key = "noname";
 	}
 
-	QString ret( key );
-	ret += ", from " + m_name;//( "%1 \t(from %2), U+%3 " );
-// 	ret += ", pointcode " + QString::number(code, 16);
+	QString ret;
+// 	ret += "[" + code + "] ";
+	ret += /*QObject::tr("name is ") +*/ key ;
+	ret += ", " + QObject::tr("codepoint is U+") ;
+	ret += QString("%1").arg(code, 4, 16, QChar(0x0030)) ;
+	ret += " (int"+ QString::number( code )+")";
 	
 	releaseFace();
 	return ret;

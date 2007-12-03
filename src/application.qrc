@@ -20,11 +20,12 @@
     </qresource>
 
     <qresource prefix="/texts" >
-        <file alias="about.html">messages/about.html</file>
-        <file alias="help.html">messages/help.html</file>
+        <file alias="about">messages/about.html</file>
+        <file alias="help">messages/help.html</file>
+       <file alias="welcome">messages/welcome.html</file> 
     </qresource>
 
     <qresource prefix="/texts" lang="fr" >
-        <file alias="about.html">messages/about_fr.html</file>
+        <file alias="about">messages/about_fr.html</file>
     </qresource>
 </RCC>

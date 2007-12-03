@@ -56,7 +56,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	curGlyph = 0;
 	
+		
 	
+	fontInfoText->setSource(QUrl("qrc:/texts/welcome"));
 
 	fillUniPlanes();
 // 	uniPlaneCombo->addItems(uniPlanes.keys());

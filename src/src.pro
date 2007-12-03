@@ -80,5 +80,6 @@ INSTALLS += icons
 DISTFILES += messages/about.html \
  messages/about_fr.html \
  messages/help.html \
- messages/sample_text.txt
+ messages/sample_text.txt \
+ messages/welcome.html
 

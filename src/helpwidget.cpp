@@ -24,7 +24,7 @@ HelpWidget::HelpWidget(QWidget *parent)
 {
 	setupUi(this);
 	theText->setOpenExternalLinks ( true );
-	theText->setSource(QUrl("qrc:/texts/help.html"));
+	theText->setSource(QUrl("qrc:/texts/help"));
 }
 
 

@@ -157,6 +157,7 @@ void FontActionWidget::slotSwitchCheckState ( QListWidgetItem * item )
 	
 	if(contextMenuReq)
 	{
+		qDebug() << "\tWant contextual popup menu";
 		typotek *typo = typotek::getInstance();
 		QStringList sets = typo->tagsets();
 		QMenu menu(tagsListWidget);

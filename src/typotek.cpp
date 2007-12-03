@@ -72,8 +72,10 @@ void typotek::initMatrix()
 	mainDock->setWidget(ListDockWidget::getInstance());
 	addDockWidget(Qt::LeftDockWidgetArea, mainDock);
 	
+	QFont statusFontFont("sans-serif",8,QFont::Bold,false);
 	curFontPresentation = new QLabel("nothing selected");
 	curFontPresentation->setAlignment(Qt::AlignRight);
+	curFontPresentation->setFont(statusFontFont);
 	statusBar()->addPermanentWidget(curFontPresentation);
 	
 	createActions();

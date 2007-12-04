@@ -106,7 +106,9 @@ public:
 		void moreInfo_sfnt();
 		void moreInfo_type1();
 		
-		QMap<QString, QString> moreInfo;
+		QMap<int,QMap<QString, QString> > moreInfo;
+		void fillLangIdMap();
+		
 		
 	public:
 		static FT_Library theLibrary;
@@ -151,6 +153,8 @@ public:
 		int debug_size();
 		
 		void adjustGlyphsPerRow(int width);
+		
+		static QMap<int, QString> langIdMap;
 		
 		
 		

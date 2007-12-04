@@ -28,6 +28,8 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPainter>
+#include <QLocale>
+#include <QTextCodec>
 
 #include FT_XFREE86_H
 #include FT_GLYPH_H
@@ -35,12 +37,13 @@
 #include FT_SFNT_NAMES_H
 #include FT_TYPE1_TABLES_H
 #include FT_TRUETYPE_TABLES_H
-#include FT_TRUETYPE_IDS_H 
+#include FT_TRUETYPE_IDS_H
 
 
 FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
 QMap<FT_Encoding, QString> FontItem::charsetMap;
+QMap<int, QString> FontItem::langIdMap;
 
 /** functions set for decomposition
  */
@@ -105,20 +108,22 @@ void fillCharsetMap()
 	FontItem::charsetMap[FT_ENCODING_MS_JOHAB] = "MS_JOHAB ";
 }
 
+// sfnt names
+static QStringList name_meaning;
 
-		
 FontItem::FontItem ( QString path )
 {
 // 	qDebug() << path;
-	
+
 	m_face = 0;
 	m_glyphsPerRow = 7;
 	hasUnicode = false;
 	currentChar = -1;
-	
+	fillLangIdMap();
+
 	if ( charsetMap.isEmpty() )
 		fillCharsetMap();
-	if(!theOneLineScene)
+	if ( !theOneLineScene )
 	{
 		theOneLineScene = new QGraphicsScene;
 	}
@@ -126,23 +131,23 @@ FontItem::FontItem ( QString path )
 	allIsRendered = false;
 
 	m_path = path;
-	QFileInfo infopath( m_path );
+	QFileInfo infopath ( m_path );
 	m_name = infopath.fileName();
-	
-	if ( ! ensureFace())
+
+	if ( ! ensureFace() )
 	{
-		
+
 		return;
 	}
-	
-	if(infopath.suffix() == "pfb")
+
+	if ( infopath.suffix() == "pfb" )
 	{
-		if(!ft_error)
+		if ( !ft_error )
 		{
 			m_afm = m_path;
-			m_afm.replace(".pfb",".afm");
-			ft_error = FT_Attach_File(m_face, m_afm.toLocal8Bit());
-			if(ft_error)
+			m_afm.replace ( ".pfb",".afm" );
+			ft_error = FT_Attach_File ( m_face, m_afm.toLocal8Bit() );
+			if ( ft_error )
 				m_afm ="";
 		}
 	}
@@ -152,22 +157,22 @@ FontItem::FontItem ( QString path )
 	m_variant = m_face->style_name;
 	m_numGlyphs = m_face->num_glyphs;
 	m_numFaces = m_face->num_faces;
-	
+
 	for ( int i = 0 ;i < m_face->num_charmaps; ++i )
 	{
 		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
 	}
-	
+
 	m_charsets = m_charsets.toSet().toList();
 
-	
+
 	m_lock = false;
 	pixList.clear();
 	sceneList.clear();
-	
+
 	//fill cache and avoid a further call to ensureface
 	infoText();
-	
+
 	releaseFace();
 
 }
@@ -193,9 +198,9 @@ bool FontItem::ensureLibrary()
 bool FontItem::ensureFace()
 {
 // 	qDebug("ENSUREFACE") ;
-	if(ensureLibrary())
+	if ( ensureLibrary() )
 	{
-		if(m_face)
+		if ( m_face )
 			return true;
 		ft_error = FT_New_Face ( theLibrary, m_path.toLocal8Bit() , 0, &m_face );
 		if ( ft_error )
@@ -203,8 +208,8 @@ bool FontItem::ensureFace()
 			qDebug() << "Error loading face [" << m_path <<"]";
 			return false;
 		}
-		ft_error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
-		if(ft_error)
+		ft_error = FT_Select_Charmap ( m_face, FT_ENCODING_UNICODE );
+		if ( ft_error )
 		{
 			hasUnicode = false;
 // 			QStringList charmaps;
@@ -227,9 +232,9 @@ bool FontItem::ensureFace()
 void FontItem::releaseFace()
 {
 // 	qDebug("\t\tRELEASEFACE") ;
-	if(m_face)
+	if ( m_face )
 	{
-		FT_Done_Face(m_face);
+		FT_Done_Face ( m_face );
 		m_face = 0;
 	}
 }
@@ -262,21 +267,21 @@ QString FontItem::name()
 
 QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 {
-	
+
 	uint glyphIndex = 0;
 	currentChar = charcode;
 // 	if ( !contourCache.contains ( charcode ) )
 // 	{
 // 		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
-		glyphIndex = FT_Get_Char_Index(m_face, charcode );
-		if(glyphIndex == 0)
-		{
-			return 0;
-		}
-		else
-		{
-			return itemFromGindex (glyphIndex,size );
-		}
+	glyphIndex = FT_Get_Char_Index ( m_face, charcode );
+	if ( glyphIndex == 0 )
+	{
+		return 0;
+	}
+	else
+	{
+		return itemFromGindex ( glyphIndex,size );
+	}
 // 	}
 // 		if ( ft_error )
 // 		{
@@ -289,16 +294,16 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 // 		contourCache[charcode] = glyphPath;
 // 		advanceCache[charcode] =  m_glyph->metrics.horiAdvance;
 // 	}
-// 
+//
 // 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 // 	glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
 // 	glyph->setPath ( contourCache[charcode] );
 // 	double scalefactor = size / m_face->units_per_EM;
 // 	glyph->scale ( scalefactor,-scalefactor );
 // 	return glyph;
-		return 0;
-	
-	
+	return 0;
+
+
 
 }
 
@@ -329,31 +334,31 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 }
 
 
-void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record)
+void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record )
 {
 	ensureFace();
-	if(record)
+	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
 	QPointF pen ( origine );
 	for ( int i=0; i < spec.length(); ++i )
 	{
 		QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
-		if(!glyph)
+		if ( !glyph )
 		{
 			qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 			continue;
 		}
-		if(record)
+		if ( record )
 			glyphList.append ( glyph );
 		scene->addItem ( glyph );
 		glyph->setPos ( pen );
 		glyph->setZValue ( 100.0 );
-		glyph->setData(1,"glyph");
+		glyph->setData ( 1,"glyph" );
 		double scalefactor = sizz / m_face->units_per_EM;
 		pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
 	}
-	
+
 	releaseFace();
 }
 
@@ -442,18 +447,18 @@ QByteArray FontItem::pixarray ( uchar * b, int len )
 //Render all is dangerous ;)
 // We now render langs
 
-int FontItem::countCoverage(int begin_code, int end_code)
+int FontItem::countCoverage ( int begin_code, int end_code )
 {
 	ensureFace();
 	FT_ULong  charcode = begin_code ;
 	FT_UInt   gindex = 0;
 	int count = 0;
-	if(hasUnicode)
+	if ( hasUnicode )
 	{
 		while ( charcode <= end_code )
 		{
 			charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
-			if(!gindex)
+			if ( !gindex )
 				break;
 			++count;
 		}
@@ -462,7 +467,7 @@ int FontItem::countCoverage(int begin_code, int end_code)
 	{
 		while ( charcode <= end_code )
 		{
-			if(charcode < m_numGlyphs)
+			if ( charcode < m_numGlyphs )
 			{
 				++charcode;
 				++count;
@@ -475,10 +480,10 @@ int FontItem::countCoverage(int begin_code, int end_code)
 	return count - 1;//something weird with freetype which put a valid glyph at the beginning of each lang ??? Or a bug here...
 }
 
-void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code)
+void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code )
 {
 	ensureFace();
-	
+
 	if ( allIsRendered )
 		return;
 	deRender ( scene );
@@ -498,11 +503,11 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 // 	charcode = FT_Get_First_Char ( m_face, &gindex );
 	charcode = begin_code;
 // 	qDebug() << "INTER " << begin_code << end_code;
-	QPen selPen(Qt::gray);
-	QBrush selBrush(QColor(255,255,255,0));
-	if(hasUnicode)
+	QPen selPen ( Qt::gray );
+	QBrush selBrush ( QColor ( 255,255,255,0 ) );
+	if ( hasUnicode )
 	{
-		while ( charcode <= end_code && gindex)
+		while ( charcode <= end_code && gindex )
 		{
 			if ( nl == m_glyphsPerRow )
 			{
@@ -511,33 +516,33 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				pen.ry() += 100;
 			}
 			QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
-			if(pitem)
+			if ( pitem )
 			{
-				pitem->setData(1,"glyph");
+				pitem->setData ( 1,"glyph" );
 				pitem->setData ( 2,gindex );
 				uint ucharcode = charcode;
 				pitem->setData ( 3,ucharcode );
 				glyphList.append ( pitem );
 				scene->addItem ( pitem );
 				pitem->setPos ( pen );
-				pitem->setZValue(10);
-				
-				QGraphicsTextItem *tit= scene->addText(QString("%1").arg(charcode,4,16,QLatin1Char( '0' )));
-				tit->setPos(pen.x(),pen.y() + 15);
-				tit->setData(1,"label");
-				tit->setData(2,gindex);
-				tit->setData(3,ucharcode);
-				labList.append(tit);
-				tit->setZValue(1);
-				
-				QGraphicsRectItem *rit = scene->addRect(pen.x() -30,pen.y() -50,100,100,selPen,selBrush);
+				pitem->setZValue ( 10 );
+
+				QGraphicsTextItem *tit= scene->addText ( QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) ) );
+				tit->setPos ( pen.x(),pen.y() + 15 );
+				tit->setData ( 1,"label" );
+				tit->setData ( 2,gindex );
+				tit->setData ( 3,ucharcode );
+				labList.append ( tit );
+				tit->setZValue ( 1 );
+
+				QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
 				rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
-				rit->setData(1,"select");
-				rit->setData(2,gindex);
-				rit->setData(3,ucharcode);
-				rit->setZValue(100);
-				selList.append(rit);
-				
+				rit->setData ( 1,"select" );
+				rit->setData ( 2,gindex );
+				rit->setData ( 3,ucharcode );
+				rit->setZValue ( 100 );
+				selList.append ( rit );
+
 				pen.rx() += 100;
 				++glyph_count;
 				m_charLess.removeAll ( gindex );
@@ -557,33 +562,33 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				pen.rx() = 0;
 				pen.ry() += 100;
 			}
-			QGraphicsPathItem *pitem = itemFromGindex( charcode , sizz );
-			if(pitem)
+			QGraphicsPathItem *pitem = itemFromGindex ( charcode , sizz );
+			if ( pitem )
 			{
-				pitem->setData(1,"glyph");
+				pitem->setData ( 1,"glyph" );
 				pitem->setData ( 2,gindex );
 				pitem->setData ( 3,0 );
 				glyphList.append ( pitem );
 				scene->addItem ( pitem );
 				pitem->setPos ( pen );
-				pitem->setZValue(10);
-				
-				QGraphicsTextItem *tit= scene->addText(QString("%1").arg(charcode,4,16,QLatin1Char( '0' )));
-				tit->setPos(pen.x(),pen.y() + 15);
-				tit->setData(1,"label");
-				tit->setData(2,gindex);
-				tit->setData(3,0);
-				labList.append(tit);
-				tit->setZValue(1);
-				
-				QGraphicsRectItem *rit = scene->addRect(pen.x() -30,pen.y() -50,100,100,selPen,selBrush);
+				pitem->setZValue ( 10 );
+
+				QGraphicsTextItem *tit= scene->addText ( QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) ) );
+				tit->setPos ( pen.x(),pen.y() + 15 );
+				tit->setData ( 1,"label" );
+				tit->setData ( 2,gindex );
+				tit->setData ( 3,0 );
+				labList.append ( tit );
+				tit->setZValue ( 1 );
+
+				QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
 				rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
-				rit->setData(1,"select");
-				rit->setData(2,gindex);
-				rit->setData(3,0);
-				rit->setZValue(100);
-				selList.append(rit);
-				
+				rit->setData ( 1,"select" );
+				rit->setData ( 2,gindex );
+				rit->setData ( 3,0 );
+				rit->setZValue ( 100 );
+				selList.append ( rit );
+
 				pen.rx() += 100;
 				++nl;
 			}
@@ -623,52 +628,90 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 // 		pen.rx() += 100;
 // 		++nl;
 // 	}
-// 
+//
 // 	qDebug() << m_name <<m_charLess.count();
 	allIsRendered = true;
-	
+
 	releaseFace();
 }
 
-QString FontItem::infoText(bool fromcache )
+QString FontItem::infoText ( bool fromcache )
 {
-	if(!m_cacheInfo.isEmpty() && fromcache)
+	if ( !m_cacheInfo.isEmpty() && fromcache )
 		return m_cacheInfo;
-	
+
 	ensureFace();
-	
+
 	QStringList tagsStr = m_tags;
-	tagsStr.removeAll("Activated_On");
-	tagsStr.removeAll("Activated_Off");
-	QString ret("<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n");
-	ret += "<p>"+ QString::number(m_numGlyphs) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " )+"</p>";
-	ret += "<p style=\"background-color:#aaa;\"><b>Tags  </b>"+ tagsStr.join(" ; ") +"</p>";
-// 	Some place to add things
-// 	ret += "<p>"+  +"</p>";
-// 	ret += "<p>"+  +"</p>";
-// 	ret += "<p>"+  +"</p>";
-	if(moreInfo.isEmpty())
+	tagsStr.removeAll ( "Activated_On" );
+	tagsStr.removeAll ( "Activated_Off" );
+	QString ret ( "<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n" );
+	ret += "<p>"+ QString::number ( m_numGlyphs ) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " ) +"</p>";
+	ret += "<p style=\"background-color:#aaa;\"><b>Tags  </b>"+ tagsStr.join ( " ; " ) +"</p>";
+
+	if ( moreInfo.isEmpty() )
 	{
-		if( testFlag(m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0") == "1")
+		if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
 		{
 			moreInfo_sfnt();
 		}
-		if(m_path.endsWith(".pfb",Qt::CaseInsensitive ))
+		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )
 		{
 			moreInfo_type1();
-// 			qDebug() << "TYPE1";
 		}
 	}
-	if(moreInfo.count())
+
+	QString sysLang = QLocale::languageToString ( QLocale::system ().language() ).toUpper();
+	QString sysCountry = QLocale::countryToString ( QLocale::system ().country() ).toUpper();
+	QString sysLoc = sysLang + "_"+ sysCountry;
+
+	QMap<QString, QStringList> orderedInfo;
+
+	if ( moreInfo.count() )
 	{
 // 		ret += "<p> \n\t- Extra Info -</p>";
-		for(QMap<QString, QString>::const_iterator mit = moreInfo.begin(); mit != moreInfo.end();++mit)
+		QString styleLangMatch;
+		for ( QMap<int, QMap<QString, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
 		{
-			ret += "<p><b>"   + mit.key() + " </b> " + mit.value() + "</p>";
-		};
+// 			if ( lit.key() == 0 )
+// 				continue;
+			if ( langIdMap[ lit.key() ].contains ( sysLang ) )
+			{
+				styleLangMatch = " style=\"background-color:#aae;\" ";
+			}
+			else if(langIdMap[ lit.key() ] == "DEFAULT")
+			{
+				styleLangMatch = "style=\"font-style:italic;\"";
+			}
+			else
+			{
+				styleLangMatch = "";
+			}
+			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
+			{
+// 				ret += "<p"+ styleLangMatch +"><b>"   + mit.key() + " </b> " + mit.value() + "</p>";
+				orderedInfo[ mit.key() ] << "<span "+ styleLangMatch +">" + mit.value() +"</span>";
+				if ( langIdMap[ lit.key() ].contains ( sysLang ) && mit.key() == "Font Subfamily")
+				{
+					m_variant = mit.value();
+				}
+			}
+		}
 	}
+
+
+	for ( int i = 1; i < name_meaning.count(); ++i )
+	{
+		if ( orderedInfo.contains ( name_meaning[i] ) )
+			ret += "<p>"/*+QString::number(i)+*/"<b>"+name_meaning[i] +"</b> "+orderedInfo[name_meaning[i]].join ( " " ) +"</p>";
+		if ( i == 7 ) //trademark
+			i = -1;
+		if ( i == 0 ) //Copyright
+			i = 7;
+	}
+
 	m_cacheInfo = ret;
-	
+
 	releaseFace();
 	return ret;
 }
@@ -677,13 +720,13 @@ QString FontItem::infoText(bool fromcache )
 QString FontItem::infoGlyph ( int index, int code )
 {
 	ensureFace();
-	
-	QByteArray key(1001,0);
+
+	QByteArray key ( 1001,0 );
 	if ( FT_HAS_GLYPH_NAMES ( m_face ) )
 	{
 // 		char buf[1001];
 		FT_Get_Glyph_Name ( m_face, index, key.data() , 1000 );
-		if ( key[0] == char(0))
+		if ( key[0] == char ( 0 ) )
 		{
 			key = "noname";
 		}
@@ -696,10 +739,10 @@ QString FontItem::infoGlyph ( int index, int code )
 	QString ret;
 // 	ret += "[" + code + "] ";
 	ret += /*QObject::tr("name is ") +*/ key ;
-	ret += ", " + QObject::tr("codepoint is U+") ;
-	ret += QString("%1").arg(code, 4, 16, QChar(0x0030)) ;
-	ret += " (int"+ QString::number( code )+")";
-	
+	ret += ", " + QObject::tr ( "codepoint is U+" ) ;
+	ret += QString ( "%1" ).arg ( code, 4, 16, QChar ( 0x0030 ) ) ;
+	ret += " (int"+ QString::number ( code ) +")";
+
 	releaseFace();
 	return ret;
 }
@@ -709,66 +752,66 @@ QString FontItem::toElement()
 {
 	QString ret;
 	ret = "<fontfile><file>%1</file><tag>%2</tag></fontfile>";
-	return ret.arg(name()).arg(tags().join("</tag><tag>"));
+	return ret.arg ( name() ).arg ( tags().join ( "</tag><tag>" ) );
 }
 
-QGraphicsPathItem * FontItem::hasCodepoint(int code)
+QGraphicsPathItem * FontItem::hasCodepoint ( int code )
 {
-	for(int i=0;i< glyphList.count();++i)
+	for ( int i=0;i< glyphList.count();++i )
 	{
-		if(glyphList.at(i)->data(3).toInt() == code)
-			return glyphList.at(i);
+		if ( glyphList.at ( i )->data ( 3 ).toInt() == code )
+			return glyphList.at ( i );
 	}
 	return 0;
 }
 
-QIcon  FontItem::oneLinePreviewIcon(QString oneline)
+QIcon  FontItem::oneLinePreviewIcon ( QString oneline )
 {
-	if(!theOneLinePreviewIcon.isNull())
+	if ( !theOneLinePreviewIcon.isNull() )
 		return theOneLinePreviewIcon;
 	QRectF savedRect = theOneLineScene->sceneRect();
-	theOneLineScene->setSceneRect(0,0,64,64);
-	
-	renderLine(theOneLineScene,oneline,QPointF(10,55),80,false);
-	QPixmap apix(64,64);
-	apix.fill(Qt::white);
-	QPainter apainter(&apix);
-	apainter.setRenderHint(QPainter::Antialiasing,true);
-	theOneLineScene->render(&apainter,apix.rect(),apix.rect());
+	theOneLineScene->setSceneRect ( 0,0,64,64 );
+
+	renderLine ( theOneLineScene,oneline,QPointF ( 10,55 ),80,false );
+	QPixmap apix ( 64,64 );
+	apix.fill ( Qt::white );
+	QPainter apainter ( &apix );
+	apainter.setRenderHint ( QPainter::Antialiasing,true );
+	theOneLineScene->render ( &apainter,apix.rect(),apix.rect() );
 // 	theOneLinePreviewIcon.addPixmap(apix);
 	theOneLinePreviewIcon = apix;
-	
-	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
-	theOneLineScene->setSceneRect(savedRect);
+
+	theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
+	theOneLineScene->setSceneRect ( savedRect );
 	return theOneLinePreviewIcon;
 }
 
-QPixmap FontItem::oneLinePreviewPixmap(QString oneline)
+QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 {
-	if(!theOneLinePreviewPixmap.isNull())
+	if ( !theOneLinePreviewPixmap.isNull() )
 		return theOneLinePreviewPixmap;
 	QRectF savedRect = theOneLineScene->sceneRect();
-	theOneLineScene->setSceneRect(0,0,320,32);
-	
-	renderLine(theOneLineScene,oneline ,QPointF(10,24),20,false);
-	QPixmap apix(320,32);
-	apix.fill(Qt::white);
-	QPainter apainter(&apix);
-	apainter.setRenderHint(QPainter::Antialiasing,true);
-	theOneLineScene->render(&apainter);
+	theOneLineScene->setSceneRect ( 0,0,320,32 );
+
+	renderLine ( theOneLineScene,oneline ,QPointF ( 10,24 ),20,false );
+	QPixmap apix ( 320,32 );
+	apix.fill ( Qt::white );
+	QPainter apainter ( &apix );
+	apainter.setRenderHint ( QPainter::Antialiasing,true );
+	theOneLineScene->render ( &apainter );
 	theOneLinePreviewPixmap = apix;
-	
-	theOneLineScene->setSceneRect(savedRect);
-	theOneLineScene->removeItem(theOneLineScene->createItemGroup(theOneLineScene->items()));
-	
+
+	theOneLineScene->setSceneRect ( savedRect );
+	theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
+
 	return theOneLinePreviewPixmap;
 }
 
 /** reminder
 FT_SfntName::name_id
 Code  	Meaning
-0 	Copyright 
-1 	Font Family 
+0 	Copyright
+1 	Font Family
 2 	Font Subfamily
 3 	Unique font identifier
 4 	Full font name
@@ -792,117 +835,157 @@ Code  	Meaning
 void FontItem::moreInfo_sfnt()
 {
 	FT_SfntName tname;
-	static QStringList name_meaning;
-	if(name_meaning.isEmpty())
+
+	if ( name_meaning.isEmpty() )
 	{
 		name_meaning << "Copyright"
-				<< "Font Family"
-				<< "Font Subfamily"
-				<< "Unique font identifier"
-				<< "Full font name"
-				<< "Version string"
-				<< "Postscript name"
-				<< "Trademark"
-				<< "Manufacturer"
-				<< "Designer"
-				<< "Description"
-				<< "URL Vendor"
-				<< "URL Designer"
-				<< "License Description"
-				<< "License Info URL"
-				<< "Reserved"
-				<< "Preferred Family"
-				<< "Preferred Subfamily"
-				<< "Compatible Full (Macintosh only)"
-				<< "Sample text"
-				<< "PostScript CID findfont name";
+		<< "Font Family"
+		<< "Font Subfamily"
+		<< "Unique font identifier"
+		<< "Full font name"
+		<< "Version string"
+		<< "Postscript name"
+		<< "Trademark"
+		<< "Manufacturer"
+		<< "Designer"
+		<< "Description"
+		<< "URL Vendor"
+		<< "URL Designer"
+		<< "License Description"
+		<< "License Info URL"
+		<< "Reserved"
+		<< "Preferred Family"
+		<< "Preferred Subfamily"
+		<< "Compatible Full (Macintosh only)"
+		<< "Sample text"
+		<< "PostScript CID findfont name";
 	}
-	int tname_count = FT_Get_Sfnt_Name_Count(m_face);
+	int tname_count = FT_Get_Sfnt_Name_Count ( m_face );
 	//TODO check encodings and platforms
-	for(int i=0; i < tname_count; ++i)
+	for ( int i=0; i < tname_count; ++i )
 	{
-		FT_Get_Sfnt_Name(m_face,i,&tname);
+		FT_Get_Sfnt_Name ( m_face,i,&tname );
 		QString akey;
-		if(tname.name_id >  255)
+		if ( tname.name_id >  255 )
 		{
 // 			qDebug() << name() <<" has vendor’s specific name id ->" << tname.name_id;
-			if(tname.string_len > 0)
+			if ( tname.string_len > 0 )
 			{
-				akey = "VendorKey_" + QString::number(tname.name_id);
+				akey = "VendorKey_" + QString::number ( tname.name_id );
 			}
 			else
 			{
 				continue;
 			}
-			
+
 		}
-		else if(tname.name_id <= name_meaning.count())
+		else if ( tname.name_id <= name_meaning.count() )
 		{
-			akey = name_meaning.at(tname.name_id);
+			akey = name_meaning.at ( tname.name_id );
 		}
 		else
 		{
-			qDebug() << name() <<" : It seems there are new name IDs in TT spec ("<< tname.name_id <<")!";
+// 			qDebug() << name() <<" : It seems there are new name IDs in TT spec ("<< tname.name_id <<")!";
 			continue;
 		}
+
+// 		if(!moreInfo.contains(akey) )
+// 		{
+		QString avalue;
+
+		///This seems to work
 		
-		if(!moreInfo.contains(akey) )
+// 		if(m_family == "Arial Unicode MS" && tname.name_id == 2)
+// 		{
+// 			qDebug()<< tname.platform_id<< tname.encoding_id <<QString::number(sizeof(uint)) << QString::number(sizeof(ushort)) ;
+// 				
+// 			
+// 		}
 		{
-			QString avalue;		
-			///This seems to work
-			for(int c=0; c < tname.string_len; ++c)
+// 			for ( int c=0; c < tname.string_len; ++c )
+// 			{
+// 				
+// 				QChar achar (tname.string[c] );
+// 				if ( achar.isPrint() )
+// 					avalue.append ( achar.unicode() );
+// 			}
+// 			avalue = QString::fromUtf8((const char*)tname.string, tname.string_len);
+// 			avalue = QString::fromUtf16((ushort*)tname.string, tname.string_len/ sizeof(ushort));
+// 			avalue = QString::fromUcs4((uint*)tname.string, tname.string_len/ sizeof(uint));
+			if(tname.language_id != 0)
 			{
-				QChar achar(QChar(tname.string[c]));
-				if(achar.isPrint())
-					avalue.append( achar );
+				QByteArray array((const char*)tname.string, tname.string_len);
+				QTextCodec *codec = QTextCodec::codecForName("UTF-16BE");
+				avalue = codec->toUnicode(array);
 			}
-			if(!avalue.isEmpty())
+			else
 			{
-				moreInfo[akey] = avalue;
+				QByteArray array((const char*)tname.string, tname.string_len);
+				QTextCodec *codec = QTextCodec::codecForName("ISO 8859-1");
+				avalue = codec->toUnicode(array);
 			}
-		}		
+		}
+// 		QByteArray array((const char*)tname.string, tname.string_len);
+// 		QTextCodec *codec;
+// 		if(m_family == "Arial Unicode MS" && tname.name_id == 2)
+// 		{
+// 			QList<QByteArray> codecs;
+// 			codecs <<"Apple Roman"<<"Big5"<<"Big5-HKSCS"<<"EUC-JP"<<"EUC-KR"/*<<"GB18030-0"*/<<" IBM 850"<<" IBM 866"<<" IBM 874"<<" ISO 2022-JP"/*<<" JIS X 0201"*//*<<" JIS X 0208"*/<<" KOI8-R"<<" KOI8-U"<<" MuleLao-1"<<" ROMAN8"<<" Shift-JIS"<<" TIS-620"<<" TSCII"<<" UTF-8"<<" UTF-16"<<" UTF-16BE"<<" UTF-16LE"<<" WINSAMI2";
+// 
+// 			for (int co = 0; co < codecs.count();++co)
+// 			{
+// 			QTextCodec *codec = QTextCodec::codecForName(codecs[co]);
+// 			qDebug() << codecs[co] << codec->toUnicode(array);
+// 			}
+// 		}
+		
+		if ( !avalue.isEmpty() )
+		{
+			moreInfo[tname.language_id][akey] = avalue;
+		}
+// 		}
 	}
 }
 
 void FontItem::moreInfo_type1()
 {
 	PS_FontInfoRec sinfo ;
-	int err = FT_Get_PS_Font_Info(m_face,&sinfo);
-	if(err)
+	int err = FT_Get_PS_Font_Info ( m_face,&sinfo );
+	if ( err )
 	{
 		qDebug() <<"FT_Get_PS_Font_Info("<< m_name <<")"<<" failed :" << err;
 		return;
 	}
 	// full_name version notice
-	moreInfo["full_name"] = sinfo.full_name;
-	moreInfo["version"] = sinfo.version;
-	moreInfo["notice"] = sinfo.notice;
-	
+	moreInfo[1033]["Full font name"] = sinfo.full_name;
+	moreInfo[1033]["Version string"] = sinfo.version;
+	moreInfo[1033]["Description"] = sinfo.notice;
+
 }
 
-///return size of dynamic structures
+///return size of dynamic structuresttnameid.h
 int FontItem::debug_size()
 {
 	int ret=0;
-	for(QMap<int,QPainterPath>::const_iterator cit = contourCache.begin(); cit != contourCache.end();++cit)
+	for ( QMap<int,QPainterPath>::const_iterator cit = contourCache.begin(); cit != contourCache.end();++cit )
 		ret+=cit->elementCount();
-	
+
 }
 
-void FontItem::setTags(QStringList l)
+void FontItem::setTags ( QStringList l )
 {
 	m_tags = l;
 	// overwrite cached info
-	infoText(false);
+	infoText ( false );
 }
 
 /// When glyphsView is resized we wantto adjust the number of columns
-void FontItem::adjustGlyphsPerRow(int width)
+void FontItem::adjustGlyphsPerRow ( int width )
 {
 	m_glyphsPerRow = 1;
-	for(int i = 1; i < 11 ; ++i)
+	for ( int i = 1; i < 11 ; ++i )
 	{
-		if(i*100 > width)
+		if ( i*100 > width )
 			return;
 		else
 			m_glyphsPerRow = i;
@@ -911,44 +994,304 @@ void FontItem::adjustGlyphsPerRow(int width)
 
 bool FontItem::isActivated()
 {
-	if(m_tags.contains("Activated_Off"))
-		  return false;
-	else if(m_tags.contains("Activated_On"))
+	if ( m_tags.contains ( "Activated_Off" ) )
+		return false;
+	else if ( m_tags.contains ( "Activated_On" ) )
 		return true;
 	else
 		m_tags << "Activated_Off";
 	return false;
 }
 
-void FontItem::setActivated(bool act)
+void FontItem::setActivated ( bool act )
 {
-	if(act)
+	if ( act )
 	{
-		if(isActivated())
+		if ( isActivated() )
 		{
 			return;
 		}
 		else
 		{
-			m_tags.removeAll("Activated_Off");
+			m_tags.removeAll ( "Activated_Off" );
 			m_tags << "Activated_On";
 		}
 	}
 	else
 	{
-		if(!isActivated())
+		if ( !isActivated() )
 		{
 			return;
 		}
 		else
 		{
-			m_tags.removeAll("Activated_On");
+			m_tags.removeAll ( "Activated_On" );
 			m_tags << "Activated_Off";
 		}
 	}
 }
 
 
+void FontItem::fillLangIdMap()
+{
+	if ( langIdMap.count() )
+		return;
+	langIdMap[0x0000] = "DEFAULT";
+	langIdMap[0x0001] = "ARABIC_GENERAL                   ";
+	langIdMap[0x0401] = "ARABIC_SAUDI_ARABIA              ";
+	langIdMap[0x0801] = "ARABIC_IRAQ                      ";
+	langIdMap[0x0c01] = "ARABIC_EGYPT                     ";
+	langIdMap[0x1001] = "ARABIC_LIBYA                     ";
+	langIdMap[0x1401] = "ARABIC_ALGERIA                   ";
+	langIdMap[0x1801] = "ARABIC_MOROCCO                   ";
+	langIdMap[0x1c01] = "ARABIC_TUNISIA                   ";
+	langIdMap[0x2001] = "ARABIC_OMAN                      ";
+	langIdMap[0x2401] = "ARABIC_YEMEN                     ";
+	langIdMap[0x2801] = "ARABIC_SYRIA                     ";
+	langIdMap[0x2c01] = "ARABIC_JORDAN                    ";
+	langIdMap[0x3001] = "ARABIC_LEBANON                   ";
+	langIdMap[0x3401] = "ARABIC_KUWAIT                    ";
+	langIdMap[0x3801] = "ARABIC_UAE                       ";
+	langIdMap[0x3c01] = "ARABIC_BAHRAIN                   ";
+	langIdMap[0x4001] = "ARABIC_QATAR                     ";
+	langIdMap[0x0402] = "BULGARIAN_BULGARIA               ";
+	langIdMap[0x0403] = "CATALAN_SPAIN                    ";
+	langIdMap[0x0004] = "CHINESE_GENERAL                  ";
+	langIdMap[0x0404] = "CHINESE_TAIWAN                   ";
+	langIdMap[0x0804] = "CHINESE_PRC                      ";
+	langIdMap[0x0c04] = "CHINESE_HONG_KONG                ";
+	langIdMap[0x1004] = "CHINESE_SINGAPORE                ";
+	langIdMap[0x1404] = "CHINESE_MACAU                    ";
+	langIdMap[TT_MS_LANGID_CHINESE_HONG_KONG] = "CHINESE_MACAU ";
+	langIdMap[0x7C04] = "CHINESE_TRADITIONAL              ";
+	langIdMap[0x0405] = "CZECH_CZECH_REPUBLIC             ";
+	langIdMap[0x0406] = "DANISH_DENMARK                   ";
+	langIdMap[0x0407] = "GERMAN_GERMANY                   ";
+	langIdMap[0x0807] = "GERMAN_SWITZERLAND               ";
+	langIdMap[0x0c07] = "GERMAN_AUSTRIA                   ";
+	langIdMap[0x1007] = "GERMAN_LUXEMBOURG                ";
+	langIdMap[0x1407] = "GERMAN_LIECHTENSTEI              ";
+	langIdMap[0x0408] = "GREEK_GREECE                     ";
+	langIdMap[0x2008] = "GREEK_GREECE2                    ";
+	langIdMap[0x0009] = "ENGLISH_GENERAL                  ";
+	langIdMap[0x0409] = "ENGLISH_UNITED_STATES            ";
+	langIdMap[0x0809] = "ENGLISH_UNITED_KINGDOM           ";
+	langIdMap[0x0c09] = "ENGLISH_AUSTRALIA                ";
+	langIdMap[0x1009] = "ENGLISH_CANADA                   ";
+	langIdMap[0x1409] = "ENGLISH_NEW_ZEALAND              ";
+	langIdMap[0x1809] = "ENGLISH_IRELAND                  ";
+	langIdMap[0x1c09] = "ENGLISH_SOUTH_AFRICA             ";
+	langIdMap[0x2009] = "ENGLISH_JAMAICA                  ";
+	langIdMap[0x2409] = "ENGLISH_CARIBBEAN                ";
+	langIdMap[0x2809] = "ENGLISH_BELIZE                   ";
+	langIdMap[0x2c09] = "ENGLISH_TRINIDAD                 ";
+	langIdMap[0x3009] = "ENGLISH_ZIMBABWE                 ";
+	langIdMap[0x3409] = "ENGLISH_PHILIPPINES              ";
+	langIdMap[0x3809] = "ENGLISH_INDONESIA                ";
+	langIdMap[0x3c09] = "ENGLISH_HONG_KONG                ";
+	langIdMap[0x4009] = "ENGLISH_INDIA                    ";
+	langIdMap[0x4409] = "ENGLISH_MALAYSIA                 ";
+	langIdMap[0x4809] = "ENGLISH_SINGAPORE                ";
+	langIdMap[0x040a] = "SPANISH_SPAIN_TRADITIONAL_SORT   ";
+	langIdMap[0x080a] = "SPANISH_MEXICO                   ";
+	langIdMap[0x0c0a] = "SPANISH_SPAIN_INTERNATIONAL_SORT ";
+	langIdMap[0x100a] = "SPANISH_GUATEMALA                ";
+	langIdMap[0x140a] = "SPANISH_COSTA_RICA               ";
+	langIdMap[0x180a] = "SPANISH_PANAMA                   ";
+	langIdMap[0x1c0a] = "SPANISH_DOMINICAN_REPUBLIC       ";
+	langIdMap[0x200a] = "SPANISH_VENEZUELA                ";
+	langIdMap[0x240a] = "SPANISH_COLOMBIA                 ";
+	langIdMap[0x280a] = "SPANISH_PERU                     ";
+	langIdMap[0x2c0a] = "SPANISH_ARGENTINA                ";
+	langIdMap[0x300a] = "SPANISH_ECUADOR                  ";
+	langIdMap[0x340a] = "SPANISH_CHILE                    ";
+	langIdMap[0x380a] = "SPANISH_URUGUAY                  ";
+	langIdMap[0x3c0a] = "SPANISH_PARAGUAY                 ";
+	langIdMap[0x400a] = "SPANISH_BOLIVIA                  ";
+	langIdMap[0x440a] = "SPANISH_EL_SALVADOR              ";
+	langIdMap[0x480a] = "SPANISH_HONDURAS                 ";
+	langIdMap[0x4c0a] = "SPANISH_NICARAGUA                ";
+	langIdMap[0x500a] = "SPANISH_PUERTO_RICO              ";
+	langIdMap[0x540a] = "SPANISH_UNITED_STATES            ";
+	langIdMap[0xE40a] = "SPANISH_LATIN_AMERICA            ";
+	langIdMap[0x040b] = "FINNISH_FINLAND                  ";
+	langIdMap[0x040c] = "FRENCH_FRANCE                    ";
+	langIdMap[0x080c] = "FRENCH_BELGIUM                   ";
+	langIdMap[0x0c0c] = "FRENCH_CANADA                    ";
+	langIdMap[0x100c] = "FRENCH_SWITZERLAND               ";
+	langIdMap[0x140c] = "FRENCH_LUXEMBOURG                ";
+	langIdMap[0x180c] = "FRENCH_MONACO                    ";
+	langIdMap[0x1c0c] = "FRENCH_WEST_INDIES               ";
+	langIdMap[0x200c] = "FRENCH_REUNION                   ";
+	langIdMap[0x240c] = "FRENCH_CONGO                     ";
+	langIdMap[TT_MS_LANGID_FRENCH_CONGO] = "FRENCH_ZAIRE ";
+	langIdMap[0x280c] = "FRENCH_SENEGAL                   ";
+	langIdMap[0x2c0c] = "FRENCH_CAMEROON                  ";
+	langIdMap[0x300c] = "FRENCH_COTE_D_IVOIRE             ";
+	langIdMap[0x340c] = "FRENCH_MALI                      ";
+	langIdMap[0x380c] = "FRENCH_MOROCCO                   ";
+	langIdMap[0x3c0c] = "FRENCH_HAITI                     ";
+	langIdMap[0xE40c] = "FRENCH_NORTH_AFRICA              ";
+	langIdMap[0x040d] = "HEBREW_ISRAEL                    ";
+	langIdMap[0x040e] = "HUNGARIAN_HUNGARY                ";
+	langIdMap[0x040f] = "ICELANDIC_ICELAND                ";
+	langIdMap[0x0410] = "ITALIAN_ITALY                    ";
+	langIdMap[0x0810] = "ITALIAN_SWITZERLAND              ";
+	langIdMap[0x0411] = "JAPANESE_JAPAN                   ";
+	langIdMap[0x0412] = "KOREAN_EXTENDED_WANSUNG_KOREA    ";
+	langIdMap[0x0812] = "KOREAN_JOHAB_KOREA               ";
+	langIdMap[0x0413] = "DUTCH_NETHERLANDS                ";
+	langIdMap[0x0813] = "DUTCH_BELGIUM                    ";
+	langIdMap[0x0414] = "NORWEGIAN_NORWAY_BOKMAL          ";
+	langIdMap[0x0814] = "NORWEGIAN_NORWAY_NYNORSK         ";
+	langIdMap[0x0415] = "POLISH_POLAND                    ";
+	langIdMap[0x0416] = "PORTUGUESE_BRAZIL                ";
+	langIdMap[0x0816] = "PORTUGUESE_PORTUGAL              ";
+	langIdMap[0x0417] = "RHAETO_ROMANIC_SWITZERLAND       ";
+	langIdMap[0x0418] = "ROMANIAN_ROMANIA                 ";
+	langIdMap[0x0818] = "MOLDAVIAN_MOLDAVIA               ";
+	langIdMap[0x0419] = "RUSSIAN_RUSSIA                   ";
+	langIdMap[0x0819] = "RUSSIAN_MOLDAVIA                 ";
+	langIdMap[0x041a] = "CROATIAN_CROATIA                 ";
+	langIdMap[0x081a] = "SERBIAN_SERBIA_LATIN             ";
+	langIdMap[0x0c1a] = "SERBIAN_SERBIA_CYRILLIC          ";
+	langIdMap[0x101a] = "BOSNIAN_BOSNIA_HERZEGOVINA       ";
+	langIdMap[0x101a] = "CROATIAN_BOSNIA_HERZEGOVINA      ";
+	langIdMap[0x141a] = "BOSNIAN_BOSNIA_HERZEGOVINA       ";
+	langIdMap[0x181a] = "SERBIAN_BOSNIA_HERZ_LATIN        ";
+	langIdMap[0x181a] = "SERBIAN_BOSNIA_HERZ_CYRILLIC     ";
+	langIdMap[0x041b] = "SLOVAK_SLOVAKIA                  ";
+	langIdMap[0x041c] = "ALBANIAN_ALBANIA                 ";
+	langIdMap[0x041d] = "SWEDISH_SWEDEN                   ";
+	langIdMap[0x081d] = "SWEDISH_FINLAND                  ";
+	langIdMap[0x041e] = "THAI_THAILAND                    ";
+	langIdMap[0x041f] = "TURKISH_TURKEY                   ";
+	langIdMap[0x0420] = "URDU_PAKISTAN                    ";
+	langIdMap[0x0820] = "URDU_INDIA                       ";
+	langIdMap[0x0421] = "INDONESIAN_INDONESIA             ";
+	langIdMap[0x0422] = "UKRAINIAN_UKRAINE                ";
+	langIdMap[0x0423] = "BELARUSIAN_BELARUS               ";
+	langIdMap[0x0424] = "SLOVENE_SLOVENIA                 ";
+	langIdMap[0x0425] = "ESTONIAN_ESTONIA                 ";
+	langIdMap[0x0426] = "LATVIAN_LATVIA                   ";
+	langIdMap[0x0427] = "LITHUANIAN_LITHUANIA             ";
+	langIdMap[0x0827] = "CLASSIC_LITHUANIAN_LITHUANIA     ";
+	langIdMap[0x0428] = "TAJIK_TAJIKISTAN                 ";
+	langIdMap[0x0429] = "FARSI_IRAN                       ";
+	langIdMap[0x042a] = "VIETNAMESE_VIET_NAM              ";
+	langIdMap[0x042b] = "ARMENIAN_ARMENIA                 ";
+	langIdMap[0x042c] = "AZERI_AZERBAIJAN_LATIN           ";
+	langIdMap[0x082c] = "AZERI_AZERBAIJAN_CYRILLIC        ";
+	langIdMap[0x042d] = "BASQUE_SPAIN                     ";
+	langIdMap[0x042e] = "SORBIAN_GERMANY                  ";
+	langIdMap[0x042f] = "MACEDONIAN_MACEDONIA             ";
+	langIdMap[0x0430] = "SUTU_SOUTH_AFRICA                ";
+	langIdMap[0x0431] = "TSONGA_SOUTH_AFRICA              ";
+	langIdMap[0x0432] = "TSWANA_SOUTH_AFRICA              ";
+	langIdMap[0x0433] = "VENDA_SOUTH_AFRICA               ";
+	langIdMap[0x0434] = "XHOSA_SOUTH_AFRICA               ";
+	langIdMap[0x0435] = "ZULU_SOUTH_AFRICA                ";
+	langIdMap[0x0436] = "AFRIKAANS_SOUTH_AFRICA           ";
+	langIdMap[0x0437] = "GEORGIAN_GEORGIA                 ";
+	langIdMap[0x0438] = "FAEROESE_FAEROE_ISLANDS          ";
+	langIdMap[0x0439] = "HINDI_INDIA                      ";
+	langIdMap[0x043a] = "MALTESE_MALTA                    ";
+	langIdMap[0x043b] = "SAMI_NORTHERN_NORWAY             ";
+	langIdMap[0x083b] = "SAMI_NORTHERN_SWEDEN             ";
+	langIdMap[0x0C3b] = "SAMI_NORTHERN_FINLAND            ";
+	langIdMap[0x103b] = "SAMI_LULE_NORWAY                 ";
+	langIdMap[0x143b] = "SAMI_LULE_SWEDEN                 ";
+	langIdMap[0x183b] = "SAMI_SOUTHERN_NORWAY             ";
+	langIdMap[0x1C3b] = "SAMI_SOUTHERN_SWEDEN             ";
+	langIdMap[0x203b] = "SAMI_SKOLT_FINLAND               ";
+	langIdMap[0x243b] = "SAMI_INARI_FINLAND               ";
+	langIdMap[0x043b] = "SAAMI_LAPONIA                    ";
+	langIdMap[0x043c] = "IRISH_GAELIC_IRELAND             ";
+	langIdMap[0x083c] = "SCOTTISH_GAELIC_UNITED_KINGDOM   ";
+	langIdMap[0x083c] = "SCOTTISH_GAELIC_UNITED_KINGDOM   ";
+	langIdMap[0x043c] = "IRISH_GAELIC_IRELAND             ";
+	langIdMap[0x043d] = "YIDDISH_GERMANY                  ";
+	langIdMap[0x043e] = "MALAY_MALAYSIA                   ";
+	langIdMap[0x083e] = "MALAY_BRUNEI_DARUSSALAM          ";
+	langIdMap[0x043f] = "KAZAK_KAZAKSTAN                  ";
+	langIdMap[0x0440] = "KIRGHIZ_KIRGHIZSTAN";
+	langIdMap[0x0441] = "SWAHILI_KENYA                    ";
+	langIdMap[0x0442] = "TURKMEN_TURKMENISTAN             ";
+	langIdMap[0x0443] = "UZBEK_UZBEKISTAN_LATIN           ";
+	langIdMap[0x0843] = "UZBEK_UZBEKISTAN_CYRILLIC        ";
+	langIdMap[0x0444] = "TATAR_TATARSTAN                  ";
+	langIdMap[0x0445] = "BENGALI_INDIA                    ";
+	langIdMap[0x0845] = "BENGALI_BANGLADESH               ";
+	langIdMap[0x0446] = "PUNJABI_INDIA                    ";
+	langIdMap[0x0846] = "PUNJABI_ARABIC_PAKISTAN          ";
+	langIdMap[0x0447] = "GUJARATI_INDIA                   ";
+	langIdMap[0x0448] = "ORIYA_INDIA                      ";
+	langIdMap[0x0449] = "TAMIL_INDIA                      ";
+	langIdMap[0x044a] = "TELUGU_INDIA                     ";
+	langIdMap[0x044b] = "KANNADA_INDIA                    ";
+	langIdMap[0x044c] = "MALAYALAM_INDIA                  ";
+	langIdMap[0x044d] = "ASSAMESE_INDIA                   ";
+	langIdMap[0x044e] = "MARATHI_INDIA                    ";
+	langIdMap[0x044f] = "SANSKRIT_INDIA                   ";
+	langIdMap[0x0450] = "MONGOLIAN_MONGOLIA /* Cyrillic */";
+	langIdMap[0x0850] = "MONGOLIAN_MONGOLIA_MONGOLIAN     ";
+	langIdMap[0x0451] = "TIBETAN_CHINA                    ";
+	/* TT_MS_LANGID_TIBETAN_BHUTAN is correct, BTW.    */
+	langIdMap[0x0851] = "DZONGHKA_BHUTAN                  ";
+	langIdMap[0x0451] = "TIBETAN_BHUTAN                   ";
+	langIdMap[TT_MS_LANGID_DZONGHKA_BHUTAN] = "TIBETAN_BHUTAN  ";
+	langIdMap[0x0452] = "WELSH_WALES                      ";
+	langIdMap[0x0453] = "KHMER_CAMBODIA                   ";
+	langIdMap[0x0454] = "LAO_LAOS                         ";
+	langIdMap[0x0455] = "BURMESE_MYANMAR                  ";
+	langIdMap[0x0456] = "GALICIAN_SPAIN                   ";
+	langIdMap[0x0457] = "KONKANI_INDIA                    ";
+	langIdMap[0x0458] = "MANIPURI_INDIA  /* Bengali */    ";
+	langIdMap[0x0459] = "SINDHI_INDIA /* Arabic */        ";
+	langIdMap[0x0859] = "SINDHI_PAKISTAN                  ";
+	langIdMap[0x045a] = "SYRIAC_SYRIA                     ";
+	langIdMap[0x045b] = "SINHALESE_SRI_LANKA              ";
+	langIdMap[0x045c] = "CHEROKEE_UNITED_STATES           ";
+	langIdMap[0x045d] = "INUKTITUT_CANADA                 ";
+	langIdMap[0x045e] = "AMHARIC_ETHIOPIA                 ";
+	langIdMap[0x045f] = "TAMAZIGHT_MOROCCO /* Arabic */   ";
+	langIdMap[0x085f] = "TAMAZIGHT_MOROCCO_LATIN          ";
+	langIdMap[0x0460] = "KASHMIRI_PAKISTAN /* Arabic */   ";
+	langIdMap[0x0860] = "KASHMIRI_SASIA                   ";
+	langIdMap[TT_MS_LANGID_KASHMIRI_SASIA] = "KASHMIRI_INDIA";
+	langIdMap[0x0461] = "NEPALI_NEPAL                     ";
+	langIdMap[0x0861] = "NEPALI_INDIA                     ";
+	langIdMap[0x0462] = "FRISIAN_NETHERLANDS              ";
+	langIdMap[0x0463] = "PASHTO_AFGHANISTAN               ";
+	langIdMap[0x0464] = "FILIPINO_PHILIPPINES             ";
+	langIdMap[0x0465] = "DHIVEHI_MALDIVES                 ";
+	langIdMap[TT_MS_LANGID_DHIVEHI_MALDIVES] = "DIVEHI_MALDIVES ";
+	langIdMap[0x0466] = "EDO_NIGERIA                      ";
+	langIdMap[0x0467] = "FULFULDE_NIGERIA                 ";
+	langIdMap[0x0468] = "HAUSA_NIGERIA                    ";
+	langIdMap[0x0469] = "IBIBIO_NIGERIA                   ";
+	langIdMap[0x046a] = "YORUBA_NIGERIA                   ";
+	langIdMap[0x046b] = "QUECHUA_BOLIVIA                  ";
+	langIdMap[0x086b] = "QUECHUA_ECUADOR                  ";
+	langIdMap[0x0c6b] = "QUECHUA_PERU                     ";
+	langIdMap[0x046c] = "SEPEDI_SOUTH_AFRICA              ";
+	langIdMap[0x0470] = "IGBO_NIGERIA                     ";
+	langIdMap[0x0471] = "KANURI_NIGERIA                   ";
+	langIdMap[0x0472] = "OROMO_ETHIOPIA                   ";
+	langIdMap[0x0473] = "TIGRIGNA_ETHIOPIA                ";
+	langIdMap[0x0873] = "TIGRIGNA_ERYTHREA                ";
+	langIdMap[TT_MS_LANGID_TIGRIGNA_ERYTHREA] = "TIGRIGNA_ERYTREA ";
+	langIdMap[0x0474] = "GUARANI_PARAGUAY                 ";
+	langIdMap[0x0475] = "HAWAIIAN_UNITED_STATES           ";
+	langIdMap[0x0476] = "LATIN                            ";
+	langIdMap[0x0477] = "SOMALI_SOMALIA                   ";
+	langIdMap[0x0478] = "YI_CHINA                         ";
+	langIdMap[0x0479] = "PAPIAMENTU_NETHERLANDS_ANTILLES  ";
+	langIdMap[0x0480] = "UIGHUR_CHINA                     ";
+	langIdMap[0x0481] = "MAORI_NEW_ZEALAND                ";
+	langIdMap[0x04ff] = "HUMAN_INTERFACE_DEVICE           ";
+
+}
 
 
 

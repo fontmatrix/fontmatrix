@@ -642,6 +642,7 @@ QString FontItem::infoText ( bool fromcache )
 
 	ensureFace();
 
+	QMap<QString, QStringList> orderedInfo;
 	QStringList tagsStr = m_tags;
 	tagsStr.removeAll ( "Activated_On" );
 	tagsStr.removeAll ( "Activated_Off" );
@@ -660,28 +661,22 @@ QString FontItem::infoText ( bool fromcache )
 			moreInfo_type1();
 		}
 	}
-
+// 	if ( !moreInfo.isEmpty() ) // moreInfo.isNotEmpty 
+	{
 	QString sysLang = QLocale::languageToString ( QLocale::system ().language() ).toUpper();
 	QString sysCountry = QLocale::countryToString ( QLocale::system ().country() ).toUpper();
-	QString sysLoc = sysLang + "_"+ sysCountry;
+	QString sysLoc = sysLang + "_"+ sysCountry;	
 
-	QMap<QString, QStringList> orderedInfo;
-
-	if ( moreInfo.count() )
-	{
-// 		ret += "<p> \n\t- Extra Info -</p>";
 		QString styleLangMatch;
 		for ( QMap<int, QMap<QString, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
 		{
-// 			if ( lit.key() == 0 )
-// 				continue;
 			if ( langIdMap[ lit.key() ].contains ( sysLang ) )
 			{
 				styleLangMatch = " style=\"background-color:#aae;\" ";
 			}
-			else if(langIdMap[ lit.key() ] == "DEFAULT")
+			else if ( langIdMap[ lit.key() ] == "DEFAULT" )
 			{
-				styleLangMatch = "style=\"font-style:italic;\"";
+				styleLangMatch = "style=\"font-style:normal;\"";
 			}
 			else
 			{
@@ -689,11 +684,11 @@ QString FontItem::infoText ( bool fromcache )
 			}
 			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
-// 				ret += "<p"+ styleLangMatch +"><b>"   + mit.key() + " </b> " + mit.value() + "</p>";
-				orderedInfo[ mit.key() ] << "<span "+ styleLangMatch +">" + mit.value() +"</span>";
-				if ( langIdMap[ lit.key() ].contains ( sysLang ) && mit.key() == "Font Subfamily")
+				if ( langIdMap[ lit.key() ].contains ( sysLang ) || langIdMap[ lit.key() ] == "DEFAULT" )
 				{
-					m_variant = mit.value();
+					orderedInfo[ mit.key() ] << "<span "+ styleLangMatch +">" + mit.value() +"</span>";
+					if ( mit.key() == "Font Subfamily" )
+						m_variant = mit.value();
 				}
 			}
 		}
@@ -703,7 +698,11 @@ QString FontItem::infoText ( bool fromcache )
 	for ( int i = 1; i < name_meaning.count(); ++i )
 	{
 		if ( orderedInfo.contains ( name_meaning[i] ) )
-			ret += "<p>"/*+QString::number(i)+*/"<b>"+name_meaning[i] +"</b> "+orderedInfo[name_meaning[i]].join ( " " ) +"</p>";
+		{
+// 			qDebug() << orderedInfo[name_meaning[i]].join("|");
+			QStringList entries(orderedInfo[name_meaning[i]].toSet().toList());
+			ret += "<p>"/*+QString::number(i)+*/"<b>"+name_meaning[i] +"</b> "+entries.join ( " " ) +"</p>";
+		}
 		if ( i == 7 ) //trademark
 			i = -1;
 		if ( i == 0 ) //Copyright
@@ -889,61 +888,52 @@ void FontItem::moreInfo_sfnt()
 			continue;
 		}
 
-// 		if(!moreInfo.contains(akey) )
-// 		{
 		QString avalue;
-
-		///This seems to work
-		
-// 		if(m_family == "Arial Unicode MS" && tname.name_id == 2)
-// 		{
-// 			qDebug()<< tname.platform_id<< tname.encoding_id <<QString::number(sizeof(uint)) << QString::number(sizeof(ushort)) ;
-// 				
-// 			
-// 		}
+		///New plan, we’ll put here _user contributed_ statements!
+		if ( tname.platform_id ==TT_PLATFORM_MICROSOFT && tname.encoding_id == TT_MS_ID_UNICODE_CS ) // Corresponds to a Microsoft WGL4 charmap, matching Unicode.
 		{
-// 			for ( int c=0; c < tname.string_len; ++c )
-// 			{
-// 				
-// 				QChar achar (tname.string[c] );
-// 				if ( achar.isPrint() )
-// 					avalue.append ( achar.unicode() );
-// 			}
-// 			avalue = QString::fromUtf8((const char*)tname.string, tname.string_len);
-// 			avalue = QString::fromUtf16((ushort*)tname.string, tname.string_len/ sizeof(ushort));
-// 			avalue = QString::fromUcs4((uint*)tname.string, tname.string_len/ sizeof(uint));
-			if(tname.language_id != 0)
-			{
-				QByteArray array((const char*)tname.string, tname.string_len);
-				QTextCodec *codec = QTextCodec::codecForName("UTF-16BE");
-				avalue = codec->toUnicode(array);
-			}
-			else
-			{
-				QByteArray array((const char*)tname.string, tname.string_len);
-				QTextCodec *codec = QTextCodec::codecForName("ISO 8859-1");
-				avalue = codec->toUnicode(array);
-			}
+			QByteArray array ( ( const char* ) tname.string, tname.string_len );
+			QTextCodec *codec = QTextCodec::codecForName ( "UTF-16BE" );
+			avalue = codec->toUnicode ( array );
 		}
-// 		QByteArray array((const char*)tname.string, tname.string_len);
-// 		QTextCodec *codec;
-// 		if(m_family == "Arial Unicode MS" && tname.name_id == 2)
-// 		{
-// 			QList<QByteArray> codecs;
-// 			codecs <<"Apple Roman"<<"Big5"<<"Big5-HKSCS"<<"EUC-JP"<<"EUC-KR"/*<<"GB18030-0"*/<<" IBM 850"<<" IBM 866"<<" IBM 874"<<" ISO 2022-JP"/*<<" JIS X 0201"*//*<<" JIS X 0208"*/<<" KOI8-R"<<" KOI8-U"<<" MuleLao-1"<<" ROMAN8"<<" Shift-JIS"<<" TIS-620"<<" TSCII"<<" UTF-8"<<" UTF-16"<<" UTF-16BE"<<" UTF-16LE"<<" WINSAMI2";
-// 
-// 			for (int co = 0; co < codecs.count();++co)
-// 			{
-// 			QTextCodec *codec = QTextCodec::codecForName(codecs[co]);
-// 			qDebug() << codecs[co] << codec->toUnicode(array);
-// 			}
-// 		}
-		
+		else if ( tname.platform_id ==TT_PLATFORM_MICROSOFT && tname.encoding_id == TT_MS_ID_SYMBOL_CS ) // Corresponds to Microsoft symbol encoding. PM - don(t understand what it does here? seen in StandardSym.ttf
+		{
+			avalue = "Here, imagine some nice symbols!";
+		}
+		else if(tname.platform_id == TT_PLATFORM_MACINTOSH  && tname.encoding_id == TT_APPLE_ID_DEFAULT ) // Unicode version 1.0
+		{
+			QByteArray array ( ( const char* ) tname.string, tname.string_len );
+			QTextCodec *codec = QTextCodec::codecForName ( "ISO 8859-15" ); // ### give better result than UTF ???
+			avalue = codec->toUnicode ( array );
+		}
+		else if(tname.platform_id == TT_PLATFORM_APPLE_UNICODE  && tname.encoding_id == TT_APPLE_ID_DEFAULT  ) // Unicode version 1.0
+		{
+			QByteArray array ( ( const char* ) tname.string, tname.string_len );
+			QTextCodec *codec = QTextCodec::codecForName ( "ISO 8859-15" ); // ### give better result than UTF ???
+			avalue = codec->toUnicode ( array );
+		}
+		else 
+		{
+			avalue = "Unexpected platform - encoding pair ("
+					+ QString::number(tname.platform_id) 
+					+ "," + QString::number(tname.encoding_id) 
+					+ ")\nPlease contact Fontmatrix team\nrun Fontmatrix in console to see more info";
+			
+			qDebug() << m_name 
+					<< "platform_id("
+					<< tname.platform_id 
+					<<") - encoding_id("
+					<< tname.encoding_id 
+					<<") - "
+					<< QString::number(tname.language_id) 
+					<< langIdMap[tname.language_id]; 
+		}
+
+
 		if ( !avalue.isEmpty() )
 		{
 			moreInfo[tname.language_id][akey] = avalue;
 		}
-// 		}
 	}
 }
 
@@ -957,10 +947,9 @@ void FontItem::moreInfo_type1()
 		return;
 	}
 	// full_name version notice
-	moreInfo[1033]["Full font name"] = sinfo.full_name;
-	moreInfo[1033]["Version string"] = sinfo.version;
-	moreInfo[1033]["Description"] = sinfo.notice;
-
+	moreInfo[0]["Full font name"] = sinfo.full_name;
+	moreInfo[0]["Version string"] = sinfo.version;
+	moreInfo[0]["Description"] = sinfo.notice;
 }
 
 ///return size of dynamic structuresttnameid.h

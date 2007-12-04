@@ -27,6 +27,9 @@
 #include <QPixmap>
 #include <QBitmap>
 #include <QDebug>
+#include <QLocale>
+#include <QTranslator>
+
 #include "typotek.h"
 
 bool __FM_SHOW_FONTLOADED;
@@ -42,6 +45,15 @@ int main ( int argc, char *argv[] )
 	Q_INIT_RESOURCE ( application );
 	QApplication app ( argc, argv );
 	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );
+	
+	
+	QTranslator translator;
+	if(!
+		   translator.load(QString("fontmatrix_") + QLocale::system().name(),"/home/pierre/system/src/undertype/tools/typotek/src/messages") ) // TODO Where’s the normal location ?
+	{
+		qDebug() << "unable to load translation";
+	}
+	app.installTranslator(&translator);
 
 	if ( app.arguments().contains ( "debugfonts" ) )
 	{

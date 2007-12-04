@@ -38,14 +38,17 @@ class QGraphicsRectItem;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
-	
+
 	(reminder) glyph data -> 1 = index, 2 = charcode
 */
-class FontItem{
-public:
-    FontItem(QString path);
+class FontItem : public QObject
+{
 
-    ~FontItem();
+		Q_OBJECT
+	public:
+		FontItem ( QString path );
+
+		~FontItem();
 	private:
 		QString m_path;
 		QString m_afm;
@@ -61,104 +64,104 @@ public:
 		int m_numFaces;
 		QStringList m_charsets;
 		QList<int> m_charLess;
-		
+
 		QString m_author;
 		QString m_foundry;
-		
+
 		QStringList m_tags;
 		QString m_cacheInfo;
-		
+
 		FT_Error      ft_error;
 		FT_Face m_face;
 		FT_GlyphSlot m_glyph;
-		QGraphicsPathItem* itemFromChar(int charcode, double size);
-		QGraphicsPathItem* itemFromGindex(int index, double size);
-		
+		QGraphicsPathItem* itemFromChar ( int charcode, double size );
+		QGraphicsPathItem* itemFromGindex ( int index, double size );
+
 		bool ensureLibrary();
 		bool ensureFace();
 		void releaseFace();
-		
-		QString testFlag(long flag , long against, QString yes, QString no);
-		QByteArray pixarray(uchar *b, int len);
-		
-		
+
+		QString testFlag ( long flag , long against, QString yes, QString no );
+		QByteArray pixarray ( uchar *b, int len );
+
+
 		QList<QGraphicsPixmapItem *> pixList;
 		QList<QGraphicsPathItem*> glyphList;
 		QList<QGraphicsTextItem*> labList;
 		QList<QGraphicsRectItem*> selList;
 		QList<QGraphicsScene *> sceneList;
-		
-		
+
+
 		bool allIsRendered;
 		int m_glyphsPerRow;
 		bool hasUnicode;
 		int currentChar;
-		
+
 		bool m_lock;
 		QMap<int,QPainterPath> contourCache;
 		QMap<int,double> advanceCache;
-		
+
 		QIcon theOneLinePreviewIcon;
 		QPixmap theOneLinePreviewPixmap;
-		
+
 		static QGraphicsScene *theOneLineScene;
-		
+
 		void moreInfo_sfnt();
 		void moreInfo_type1();
-		
+
 		QMap<int,QMap<QString, QString> > moreInfo;
 		void fillLangIdMap();
-		
-		
+
+
 	public:
 		static FT_Library theLibrary;
 		static QMap<FT_Encoding, QString> charsetMap;
-		
-		QString path(){return m_path;};
-		QString afm(){return m_afm;};
-		void setAfm(QString apath){m_afm = apath;};
-		QString faceFlags(){return m_faceFlags;};
-		QString family(){return m_family;};
-		QString variant(){return m_variant;};
-		QStringList tags(){return m_tags;};
-		void setTags(QStringList l);
+
+		QString path() {return m_path;};
+		QString afm() {return m_afm;};
+		void setAfm ( QString apath ) {m_afm = apath;};
+		QString faceFlags() {return m_faceFlags;};
+		QString family() {return m_family;};
+		QString variant() {return m_variant;};
+		QStringList tags() {return m_tags;};
+		void setTags ( QStringList l );
 		QString name();
-		QString fancyName(){return m_family + " " + m_variant;};
-		QString infoText(bool fromcache = true);
-		QString infoGlyph(int index, int code = 0);
-		
-		QString value(QString k);
-		
-		void renderLine(QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, bool record = true );
-		void renderAll(QGraphicsScene *scene, int begin_code, int end_code);
-		int countCoverage( int begin_code, int end_code);
-		void deRender(QGraphicsScene *scene);
+		QString fancyName() {return m_family + " " + m_variant;};
+		QString infoText ( bool fromcache = true );
+		QString infoGlyph ( int index, int code = 0 );
+
+		QString value ( QString k );
+
+		void renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, bool record = true );
+		void renderAll ( QGraphicsScene *scene, int begin_code, int end_code );
+		int countCoverage ( int begin_code, int end_code );
+		void deRender ( QGraphicsScene *scene );
 		void deRenderAll();
-		
+
 		QString toElement();
-		
-		QGraphicsPathItem* hasCodepoint(int code);
-		
-		QIcon oneLinePreviewIcon(QString oneline);
-		QPixmap oneLinePreviewPixmap(QString oneline);
-		
+
+		QGraphicsPathItem* hasCodepoint ( int code );
+
+		QIcon oneLinePreviewIcon ( QString oneline );
+		QPixmap oneLinePreviewPixmap ( QString oneline );
+
 		bool isActivated();
-		void setActivated(bool act);
-				
+		void setActivated ( bool act );
+
 		// Relative to fontactionwidget
-		void lock(){m_lock=true;};
-		void unLock(){m_lock=false;};
-		bool isLocked(){return m_lock;};
-		
+		void lock() {m_lock=true;};
+		void unLock() {m_lock=false;};
+		bool isLocked() {return m_lock;};
+
 		int debug_size();
-		
-		void adjustGlyphsPerRow(int width);
-		
+
+		void adjustGlyphsPerRow ( int width );
+
 		static QMap<int, QString> langIdMap;
-		
-		
-		
-		
+
+
+
+
 };
 
 #endif

@@ -83,3 +83,5 @@ DISTFILES += messages/about.html \
  messages/sample_text.txt \
  messages/welcome.html
 
+TRANSLATIONS += messages/fontmatrix_fr.ts \
+messages/fontmatrix_sr.ts

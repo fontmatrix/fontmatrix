@@ -68,6 +68,7 @@ class FMPreviewList : public QGraphicsView
 		QGraphicsRectItem* m_select;
 		MainViewWidget *mvw;
 		QGraphicsItem *m_currentItem;
+		QString theWord;
 		
 	protected:
 		void showEvent ( QShowEvent * event ) ;

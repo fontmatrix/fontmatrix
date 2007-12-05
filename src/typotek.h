@@ -65,6 +65,7 @@ class typotek:public QMainWindow
 		void slotEditFont();
 		void about();
 		void help();
+		void slotWord();
 		
 	public slots:
 		bool save();
@@ -72,6 +73,7 @@ class typotek:public QMainWindow
 	signals:
 		void tagAdded(QString);
 		void relayStartingStep(QString, int, QColor);
+// 		void wordHasChanged(QString);
 
 	private:
 		void createActions();
@@ -114,6 +116,7 @@ class typotek:public QMainWindow
 		QAction *deactivCurAct;
 		QAction *helpAct;
 		QAction *fonteditorAct;
+		QAction *wordAction;
 
 		MainViewWidget *theMainView;
 
@@ -130,6 +133,7 @@ class typotek:public QMainWindow
 // 		TypotekAdaptator *actAdaptator;
 		
 		QString m_sampleText;
+		QString m_theWord;
 		
 		QLabel *curFontPresentation;
 	public:
@@ -157,6 +161,9 @@ class typotek:public QMainWindow
 		
 		void setSampleText(QString s){m_sampleText = s;};
 		QString sampleText(){return m_sampleText;};
+		
+		void setWord(QString s){m_theWord = s;};
+		QString word(){return m_theWord;};
 		
 		void presentFontName(QString s){curFontPresentation->setText(s);};
 		

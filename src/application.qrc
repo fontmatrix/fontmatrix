@@ -32,4 +32,13 @@
     <qresource prefix="/texts" lang="sr" >
         <file alias="fontmatrix">messages/fontmatrix_sr.qm</file>
     </qresource>
+    <qresource prefix="/texts" lang="no" >
+        <file alias="fontmatrix">messages/fontmatrix_no.qm</file>
+    </qresource>
+    <qresource prefix="/texts" lang="da" >
+        <file alias="fontmatrix">messages/fontmatrix_da.qm</file>
+    </qresource>
+    <qresource prefix="/texts" lang="sv" >
+        <file alias="fontmatrix">messages/fontmatrix_sv.qm</file>
+    </qresource>
 </RCC>

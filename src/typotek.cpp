@@ -333,6 +333,9 @@ void typotek::createActions()
 	fonteditorAct = new QAction( tr ( "Edit current font" ),this );
 	fonteditorAct->setStatusTip ( tr ( "Try to run Fontforge with the selected font as argument" ) );
 	connect (fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont()) );
+	
+	wordAction = new QAction( tr ( "Edit preview word" ),this );
+	connect(wordAction,SIGNAL(triggered( )),this,SLOT(slotWord()));
 }
 
 void typotek::createMenus()
@@ -354,6 +357,8 @@ void typotek::createMenus()
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( fonteditorAct );
+	editMenu->addSeparator();
+	editMenu->addAction (wordAction);
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
@@ -918,6 +923,16 @@ void typotek::dragEnterEvent(QDragEnterEvent * event)
 	{
 		qDebug() << "dragEnterEvent refused";
 		statusBar()->showMessage ( tr ( "You bring something over me I can’t handle" ), 2000 );
+	}
+}
+
+void typotek::slotWord()
+{
+	QString aword = QInputDialog::getText(this,tr("Fontmatrix wants a word"),tr("Give a preview word"));
+	if(!aword.isEmpty())
+	{
+		m_theWord = aword;
+// 		emit wordHasChanged(aword);
 	}
 }
 

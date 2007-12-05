@@ -43,6 +43,8 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 	m_currentItem = 0;
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
 	
+	theWord = typotek::getInstance()->word();
+	
 	connect( verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotChanged()) );
 	connect( verticalScrollBar(), SIGNAL(sliderReleased()),this,SLOT(slotChanged()));
 	
@@ -55,6 +57,7 @@ FMPreviewList::~FMPreviewList()
 
 void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 {
+	theWord = typotek::getInstance()->word();
 // 	qDebug() << "FMPreviewList::slotRefill(QList<FontItem*> "<<&fonts<<", bool "<<setChanged<<")";
 	if(setChanged)
 	{
@@ -93,7 +96,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 			FontItem *fit = fonts.at(i);
 			if(fit)
 			{
-				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap("hamburgefonstiv"));
+				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
 				pit->setPos(50,32*i);
 				pit->setData(1,fit->name());
 				pit->setData(2,"preview");
@@ -186,6 +189,7 @@ void FMPreviewList::slotClearSelect()
 void FMPreviewList::searchAndSelect(QString fname)
 {
 	qDebug() << "FMPreviewList::searchAndSelect(QString "<<fname<<")";
+	theWord = typotek::getInstance()->word();
 	QGraphicsItem *it = 0;
 	for(int i = 0 ; i < m_pixItemList.count() ; ++i)
 	{
@@ -202,7 +206,7 @@ void FMPreviewList::searchAndSelect(QString fname)
 				FontItem *fit = typotek::getInstance()->getFont(fname);
 				if(fit)
 				{
-					QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap("hamburgefonstiv"));
+					QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
 					pit->setPos(m_pixItemList[i].pos);
 					pit->setData(1,fit->name());
 					pit->setData(2,"preview");
@@ -229,8 +233,14 @@ void FMPreviewList::resizeEvent(QResizeEvent * event)
 
 void FMPreviewList::keyPressEvent(QKeyEvent * e)
 {
-
-	QString ref ( mvw->selectedFont()->name() ) ;
+	QString ref;
+	if( mvw->selectedFont())
+		ref = mvw->selectedFont()->name() ;
+	else
+	{
+		searchAndSelect(trackedFonts[0]->name());
+		return;
+	}
 	
 	if(e->key() == Qt::Key_Up)
 	{

@@ -49,7 +49,9 @@ void DataLoader::load()
 		QMessageBox::warning (0, QString ( "Fontmatrix" ),
 				       QString ( "Seems that is the first time you run Fontmatrix, if not there is a problem loading the data file %1." ).arg(m_file->fileName()) );
 		
+		// Ensure that there are default samples and preview text
 		m_typo->setSampleText( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.");	
+		m_typo->setWord("hamburgefonstiv");
 		return;
 	}
 	if ( !doc.setContent ( m_file ) )
@@ -127,6 +129,21 @@ void DataLoader::load()
 		sampleText = sampleLines.join("\n");
 	}
 	m_typo->setSampleText(sampleText);
+	
+	//loading preview word
+	QString pWord;
+	QDomNodeList previewList = doc.elementsByTagName ( "previewword" );
+	if ( previewList.length() == 0 )
+	{
+		m_typo->statusBar()->showMessage ( QString ( "WARNING: no preview word in %1" ).arg ( m_file->fileName() ),3000 );
+		pWord =  "hamburgefonstiv";
+	}
+	else
+	{
+		QDomNode col = previewList.item ( 0 );
+		pWord = col.toElement().text();
+	}
+	m_typo->setWord(pWord);
 }
 
 

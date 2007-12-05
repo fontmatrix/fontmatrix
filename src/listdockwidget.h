@@ -34,6 +34,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		~ListDockWidget();
 		static ListDockWidget* getInstance();
 		static ListDockWidget* instance;
+		
 
 };
 

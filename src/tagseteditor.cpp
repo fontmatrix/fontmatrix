@@ -167,3 +167,4 @@ void TagSetEditor::slotDeleteSet()
 	m_typo->removeTagset(ts);
 	setList->addItems(m_typo->tagsets());
 }
+

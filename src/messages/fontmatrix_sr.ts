@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1">
+<!DOCTYPE TS><TS version="1.1" language="sr">
+<defaultcodec></defaultcodec>
 <context>
     <name>About</name>
     <message>
         <location filename="../about.ui" line="19"/>
         <source>About Fontmatrix</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontmatrix</translation>
     </message>
 </context>
 <context>

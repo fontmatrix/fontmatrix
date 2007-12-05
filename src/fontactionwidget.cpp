@@ -20,7 +20,7 @@
 #include "fontactionwidget.h"
 #include "fontitem.h"
 #include "typotek.h"
-#include "typotekadaptator.h"
+// #include "typotekadaptator.h"
 
 #include <QDebug>
 #include <QListWidgetItem>

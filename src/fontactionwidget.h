@@ -28,7 +28,7 @@
 
 
 class FontItem;
-class TypotekAdaptator;
+// class TypotekAdaptator;
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
 	
@@ -39,8 +39,8 @@ class FontActionWidget :  public QWidget, private Ui::FontAction
 		Q_OBJECT
 
 	public:
-		FontActionWidget ( QList<FontItem*> fonts, TypotekAdaptator* ada, QWidget* parent = 0);
-		FontActionWidget ( TypotekAdaptator* ada, QWidget* parent = 0);
+// 		FontActionWidget ( QList<FontItem*> fonts, /*TypotekAdaptator* ada,*/ QWidget* parent = 0);
+// 		FontActionWidget ( /*TypotekAdaptator* ada,*/ QWidget* parent = 0);
 		FontActionWidget ( QWidget* parent = 0);
 		void prepare(QList<FontItem*> fonts);
 		void doConnect();
@@ -51,7 +51,7 @@ class FontActionWidget :  public QWidget, private Ui::FontAction
 		QStringList tags;
 	private:
 		QList<FontItem*> theFonts;
-		TypotekAdaptator *adaptator;
+// 		TypotekAdaptator *adaptator;
 		
 		bool contextMenuReq;
 		QPoint contextMenuPos;

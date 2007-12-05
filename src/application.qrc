@@ -27,5 +27,9 @@
 
     <qresource prefix="/texts" lang="fr" >
         <file alias="about">messages/about_fr.html</file>
+        <file alias="fontmatrix">messages/fontmatrix_fr.qm</file>
+    </qresource>
+    <qresource prefix="/texts" lang="sr" >
+        <file alias="fontmatrix">messages/fontmatrix_sr.qm</file>
     </qresource>
 </RCC>

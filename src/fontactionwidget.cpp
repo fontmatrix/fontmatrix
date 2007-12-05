@@ -43,18 +43,18 @@ FontActionWidget::FontActionWidget(QWidget * parent)
 	doConnect();
 }
 
-FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) 
-	: QWidget ( parent ), adaptator(ada)
-{
-	setupUi ( this );
-	isOk = false;
-	contextMenuReq = false;
-	
-	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-	
-	doConnect();
-
-}
+// FontActionWidget::FontActionWidget ( TypotekAdaptator* ada,QWidget* parent ) 
+// 	: QWidget ( parent ), adaptator(ada)
+// {
+// 	setupUi ( this );
+// 	isOk = false;
+// 	contextMenuReq = false;
+// 	
+// 	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+// 	
+// 	doConnect();
+// 
+// }
 
 void FontActionWidget::prepare ( QList< FontItem * > fonts )
 {

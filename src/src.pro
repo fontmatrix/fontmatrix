@@ -3,7 +3,6 @@ SOURCES += typotek.cpp \
  mainviewwidget.cpp \
  fontitem.cpp \
  fontactionwidget.cpp \
- typotekadaptator.cpp \
  fontbookdialog.cpp \
  dataloader.cpp \
  tagseteditor.cpp \
@@ -20,7 +19,6 @@ HEADERS += typotek.h \
  mainviewwidget.h \
  fontitem.h \
  fontactionwidget.h \
- typotekadaptator.h \
  fontbookdialog.h \
  dataloader.h \
  tagseteditor.h \

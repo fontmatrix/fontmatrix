@@ -46,14 +46,12 @@ int main ( int argc, char *argv[] )
 	QApplication app ( argc, argv );
 	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );
 	
-	
 	QTranslator translator;
-	if(!
-		   translator.load(QString("fontmatrix_") + QLocale::system().name(),"/home/pierre/system/src/undertype/tools/typotek/src/messages") ) // TODO Where’s the normal location ?
+	if(translator.load(":/texts/fontmatrix"))
 	{
-		qDebug() << "unable to load translation";
+		app.installTranslator(&translator);
 	}
-	app.installTranslator(&translator);
+
 
 	if ( app.arguments().contains ( "debugfonts" ) )
 	{

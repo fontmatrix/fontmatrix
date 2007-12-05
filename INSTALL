@@ -9,16 +9,26 @@ Requirements :
 	is in /usr/include/freetype2. If your installation differs,
 	just change path accordingly at line 47 of src/src.pro file]
 	
-Run "qmake -o Makefile typotek.pro" (be sure you use the qmake
-from Qt4 (for OpenSuse users, it means you just run qmake if
-Qt4 is installed)),
-then "make" (fontmatrix binary will be in ./bin/),
-then do _not_ run "make install" ;-)[NOTE: Vlada made efforts
-to improve a lot the way it installs, so you should give
-it a try (maybe with checkinstall?) and thus report any issue.
-Default installation directory is /usr/bin and if all went
-right, you should see a new entry somewhere in your app. menu
-as we provide a .desktop file.]
+ ---OLD---------------------------------------------------------
+|Run "qmake -o Makefile typotek.pro" (be sure you use the qmake |
+|from Qt4 (for OpenSuse users, it means you just run qmake if   |
+|Qt4 is installed)),                                            |
+|then "make" (fontmatrix binary will be in ./bin/),             |
+|then do _not_ run "make install" ;-)[NOTE: Vlada made efforts  |
+|to improve a lot the way it installs, so you should give       |
+|it a try (maybe with checkinstall?) and thus report any issue. |
+|Default installation directory is /usr/bin and if all went     |
+|right, you should see a new entry somewhere in your app. menu  |
+|as we provide a .desktop file.]                                |
+ ---------------------------------------------------------------
+
+Switched to CMake, so build instructions are now - assuming
+you’re in fontmatrix source tree and want to build out source:
+ $ mkdir ../fontmatrix-build
+ $ cd ../fontmatrix-build
+ $ cmake ../fontmatrix
+ $ make
+ # make install DESTDIR="/where/you/want"
 
 Now, you can run Fontmatrix and read the help in help->help.
 

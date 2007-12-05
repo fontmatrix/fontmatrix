@@ -21,7 +21,7 @@
 #include "typotek.h"
 #include "fontitem.h"
 #include "fontactionwidget.h"
-#include "typotekadaptator.h"
+// #include "typotekadaptator.h"
 #include "fmpreviewlist.h"
 #include "fmglyphsview.h"
 #include "listdockwidget.h"

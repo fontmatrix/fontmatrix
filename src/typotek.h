@@ -35,7 +35,7 @@ class QMenu;
 class QTextEdit;
 class MainViewWidget;
 class FontItem;
-class TypotekAdaptator;
+// class TypotekAdaptator;
 class QDockWidget;
 
 
@@ -127,7 +127,7 @@ class typotek:public QMainWindow
 		QList<FontItem*> fontMap;
 		QMap<QString, FontItem*> realFontMap;
 		
-		TypotekAdaptator *actAdaptator;
+// 		TypotekAdaptator *actAdaptator;
 		
 		QString m_sampleText;
 		
@@ -148,7 +148,7 @@ class typotek:public QMainWindow
 		QStringList tagsOfSet(QString set){return tagSetMap[set];};
 		
 		static QStringList tagsList;
-		TypotekAdaptator *adaptator(){return actAdaptator;};
+// 		TypotekAdaptator *adaptator(){return actAdaptator;};
 		
 		static typotek* instance;
 		static typotek* getInstance(){return instance;};

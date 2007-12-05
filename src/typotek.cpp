@@ -23,7 +23,7 @@
 #include "typotek.h"
 #include "mainviewwidget.h"
 #include "fontitem.h"
-#include "typotekadaptator.h"
+// #include "typotekadaptator.h"
 #include "fontbookdialog.h"
 #include "dataloader.h"
 #include "tagseteditor.h"

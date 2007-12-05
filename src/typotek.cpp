@@ -39,7 +39,7 @@
 #include <QCloseEvent>
 #include <QFileDialog>
 #include <QDir>
-#include <QDBusConnection>
+// #include <QDBusConnection>
 #include <QProgressDialog>
 #include <QDomDocument>
 #include <QProcess>

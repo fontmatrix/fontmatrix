@@ -11,6 +11,7 @@ SET (VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${VERSION_SUFFIX}
 MESSAGE(STATUS "Building Fontmatrix ${VERSION}")
 
 
+
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # A lot from Scribus
 #<< Qt 
@@ -48,7 +49,12 @@ SET(CFLAGS "${LIBFREETYPE_CFLAGS}")
 #>> FreeType2
 
 # tell cmake to process CMakeLists.txt in that subdirectory
-add_subdirectory(src)
+
+SET(HARFBUZZ_DIR harfbuzz/src)
+ADD_SUBDIRECTORY(${HARFBUZZ_DIR})
+SET(HARFBUZZ_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/harfbuzz/src)
+
+ADD_SUBDIRECTORY(src)
 
 # Installation
 

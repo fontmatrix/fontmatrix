@@ -20,6 +20,9 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <widget class="QTabWidget" name="tabView" >
+      <property name="enabled" >
+       <bool>true</bool>
+      </property>
       <property name="sizePolicy" >
        <sizepolicy vsizetype="Minimum" hsizetype="Expanding" >
         <horstretch>0</horstretch>
@@ -28,6 +31,12 @@
       </property>
       <property name="statusTip" >
        <string>Right mouse click on a tag to add it or remove it from TagSet</string>
+      </property>
+      <property name="tabPosition" >
+       <enum>QTabWidget::North</enum>
+      </property>
+      <property name="tabShape" >
+       <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex" >
        <number>0</number>
@@ -41,22 +50,37 @@
        </attribute>
        <layout class="QGridLayout" >
         <item row="0" column="0" >
-         <widget class="QTextBrowser" name="fontInfoText" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QSplitter" name="splitter_2" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="focusPolicy" >
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="html" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+          <widget class="QTextBrowser" name="fontInfoText" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="focusPolicy" >
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="html" >
+            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
-          </property>
+           </property>
+          </widget>
+          <widget class="QTreeWidget" name="OpenTypeTree" >
+           <property name="alternatingRowColors" >
+            <bool>true</bool>
+           </property>
+           <column>
+            <property name="text" >
+             <string>OpenType Features</string>
+            </property>
+           </column>
+          </widget>
          </widget>
         </item>
        </layout>

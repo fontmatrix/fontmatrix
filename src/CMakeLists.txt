@@ -1,6 +1,5 @@
 # Fontmatrix src/CMakeLists.txt v1
 
-# the variable "qtproject_SRCS" contains all .cpp files of this project
 set(fontmatrix_SRCS
 aboutwidget.cpp
 dataloader.cpp
@@ -18,6 +17,7 @@ mainviewwidget.cpp
 savedata.cpp
 tagseteditor.cpp
 typotek.cpp
+fmotf.cpp
 )
 
 SET(fontmatrix_MOC_HDRS
@@ -29,7 +29,6 @@ fontactionwidget.h
 fontbookdialog.h
 fontitem.h
 helpwidget.h
-# importedfontsdialog.h
 listdockwidget.h
 mainviewwidget.h
 tagseteditor.h
@@ -60,6 +59,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}
 ${CMAKE_CURRENT_BINARY_DIR}
 ${QT_INCLUDE_DIR}
 ${FREETYPE_INCLUDE_DIR}
+${HARFBUZZ_INCLUDE_DIR}
 )
 
 add_executable(fontmatrix 
@@ -69,10 +69,14 @@ ${fontmatrix_UIS_H}
 ${fontmatrix_RCC_SRCS}
 )
 
+# MESSAGE(STATUS ${QT_LIBRARIES})
+# MESSAGE(STATUS ${FREETYPE_LIBRARIES})
+# MESSAGE(STATUS ${HARFBUZZ_LIBRARIES})
 
 target_link_libraries(fontmatrix 
 ${QT_LIBRARIES}
-${FREETYPE_LIBRARY}
+${FREETYPE_LIBRARIES}
+harfbuzz
 )
 
 INSTALL(TARGETS fontmatrix

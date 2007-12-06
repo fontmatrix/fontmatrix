@@ -25,6 +25,7 @@
 #include "fmpreviewlist.h"
 #include "fmglyphsview.h"
 #include "listdockwidget.h"
+#include "fmotf.h"
 
 
 #include <QString>
@@ -366,6 +367,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			{
 // 				slotFontActionByName( faceIndex );
 				theVeryFont = typo->getFont ( faceIndex );
+				fillOTTree();
 				fillUniPlanesCombo(theVeryFont); 
 				slotView(true);
 				typo->setWindowTitle(theVeryFont->fancyName()+ " - Fontmatrix");
@@ -419,6 +421,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			slotFontAction ( item,column );
 // 			emit faceChanged();
 			theVeryFont = typo->getFont ( faceIndex );
+			fillOTTree();
 			fillUniPlanesCombo(theVeryFont); // has to be called before view, may I should come back to the faceChanged signal idea
 			slotView(true);
 			typo->setWindowTitle(theVeryFont->fancyName() + " - Fontmatrix");
@@ -454,6 +457,7 @@ void MainViewWidget::slotFontSelectedByName(QString fname)
 // 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 		slotFontActionByName(fname);
 		theVeryFont = typo->getFont ( faceIndex );
+		fillOTTree();
 		fillUniPlanesCombo(theVeryFont); 
 		slotView(true);
 		typo->setWindowTitle(theVeryFont->fancyName()+ " - Fontmatrix");
@@ -1169,6 +1173,35 @@ void MainViewWidget::slotAdjustGlyphView(int width)
 		
 	theVeryFont->adjustGlyphsPerRow(width);
 	slotView(true);
+}
+
+void MainViewWidget::fillOTTree()
+{
+	if(theVeryFont && theVeryFont->isOpenType())
+	{
+		OpenTypeTree->clear();
+		FmOtf * otf = theVeryFont->OTFInstance();
+		foreach(QString table, otf->get_tables())
+		{
+			otf->set_table(table);
+			QTreeWidgetItem *tab_item = new QTreeWidgetItem(OpenTypeTree,QStringList(table));
+			
+			foreach(QString script, otf->get_scripts())
+			{
+				otf->set_script(script);
+				QTreeWidgetItem *script_item = new QTreeWidgetItem(tab_item, QStringList(script));
+				foreach(QString lang, otf->get_langs())
+				{
+					otf->set_lang(lang);
+					QTreeWidgetItem *lang_item = new QTreeWidgetItem(script_item, QStringList(lang));
+					foreach(QString feature, otf->get_features())
+					{
+						QTreeWidgetItem *feature_item = new QTreeWidgetItem(lang_item, QStringList(feature));
+					}
+				}
+			}
+		}
+	}
 }
 
 

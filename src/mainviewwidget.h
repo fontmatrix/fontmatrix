@@ -78,6 +78,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void fillUniPlanes();
 		void fillUniPlanesCombo(FontItem* item);
 		
+		void fillOTTree();
+		
 		
 	public slots:
 		void slotOrderingChanged ( QString s );

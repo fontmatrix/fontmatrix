@@ -35,6 +35,7 @@
 class QGraphicsPixmapItem;
 class QGraphicsScene;
 class QGraphicsRectItem;
+class FmOtf;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -64,6 +65,9 @@ class FontItem : public QObject
 		int m_numFaces;
 		QStringList m_charsets;
 		QList<int> m_charLess;
+		
+		bool m_isOpenType;
+		FmOtf *otf;
 
 		QString m_author;
 		QString m_foundry;
@@ -158,6 +162,9 @@ class FontItem : public QObject
 		void adjustGlyphsPerRow ( int width );
 
 		static QMap<int, QString> langIdMap;
+		
+		bool isOpenType(){return m_isOpenType;};
+		FmOtf *OTFInstance()const{return otf;};
 
 
 

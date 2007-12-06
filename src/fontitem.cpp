@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "fontitem.h"
+#include "fmotf.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -119,6 +120,7 @@ FontItem::FontItem ( QString path )
 	m_glyphsPerRow = 7;
 	hasUnicode = false;
 	currentChar = -1;
+	m_isOpenType = false;
 	fillLangIdMap();
 
 	if ( charsetMap.isEmpty() )
@@ -151,6 +153,11 @@ FontItem::FontItem ( QString path )
 				m_afm ="";
 		}
 	}
+	if ( infopath.suffix() == "otf" ||  infopath.suffix() == "OTF")
+	{
+		m_isOpenType = true; // A bit rough, perhaps!
+		otf = new FmOtf(m_face);
+	}
 
 	m_type = FT_Get_X11_Font_Format ( m_face );
 	m_family = m_face->family_name;
@@ -180,6 +187,10 @@ FontItem::FontItem ( QString path )
 
 FontItem::~FontItem()
 {
+	if(m_isOpenType)
+	{
+		delete otf;
+	}
 }
 
 bool FontItem::ensureLibrary()

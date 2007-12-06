@@ -96,6 +96,12 @@ void SaveData::doSave()
 		writeEndElement();
 	}
 	
+	// save preview word
+	writeStartElement("previewword");
+	writeCharacters( m_typo->word() );
+	writeEndElement();
+	
+	
 	writeEndElement();//fontmatrix
 	writeEndDocument();
 }

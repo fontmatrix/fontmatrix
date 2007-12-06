@@ -26,6 +26,7 @@
 #include "fmglyphsview.h"
 #include "listdockwidget.h"
 #include "fmotf.h"
+#include "opentypetags.h"
 
 
 #include <QString>
@@ -1196,7 +1197,9 @@ void MainViewWidget::fillOTTree()
 					QTreeWidgetItem *lang_item = new QTreeWidgetItem(script_item, QStringList(lang));
 					foreach(QString feature, otf->get_features())
 					{
-						QTreeWidgetItem *feature_item = new QTreeWidgetItem(lang_item, QStringList(feature));
+						QStringList f(feature);
+						f << OTTagMeans(feature);
+						QTreeWidgetItem *feature_item = new QTreeWidgetItem(lang_item, f);
 					}
 				}
 			}

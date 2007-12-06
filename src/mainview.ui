@@ -75,9 +75,17 @@ p, li { white-space: pre-wrap; }
            <property name="alternatingRowColors" >
             <bool>true</bool>
            </property>
+           <property name="columnCount" >
+            <number>2</number>
+           </property>
            <column>
             <property name="text" >
              <string>OpenType Features</string>
+            </property>
+           </column>
+           <column>
+            <property name="text" >
+             <string>Friendly Name</string>
             </property>
            </column>
           </widget>

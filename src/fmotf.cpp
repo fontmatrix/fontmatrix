@@ -450,6 +450,7 @@ FmOtf::get_langs ()
 {
 	QStringList ret;
 
+	ret << "default";
 	if ( curTable == "GSUB" && GSUB )
 	{
 

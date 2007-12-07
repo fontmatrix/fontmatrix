@@ -216,17 +216,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="30"/>
+        <location filename="../mainview.ui" line="33"/>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="37"/>
+        <location filename="../mainview.ui" line="46"/>
         <source>Font Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="55"/>
+        <location filename="../mainview.ui" line="68"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -234,55 +234,70 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="66"/>
+        <location filename="../mainview.ui" line="143"/>
         <source>Sample text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="79"/>
+        <location filename="../mainview.ui" line="156"/>
         <source>Customising text used for preview rendering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="82"/>
+        <location filename="../mainview.ui" line="159"/>
         <source>Sample text...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="112"/>
+        <location filename="../mainview.ui" line="189"/>
         <source>Fit to view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="147"/>
+        <location filename="../mainview.ui" line="224"/>
         <source>Zoom is disabled, uncheck fit to view to enable zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="209"/>
+        <location filename="../mainview.ui" line="286"/>
         <source>Glyphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="271"/>
+        <location filename="../mainview.ui" line="348"/>
         <source>No glyph selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="286"/>
+        <location filename="../mainview.ui" line="363"/>
         <source>Clicking on a glyph will show details about it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="299"/>
+        <location filename="../mainview.ui" line="376"/>
         <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="101"/>
+        <source>OpenType Features</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="106"/>
+        <source>Friendly Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="129"/>
+        <source>Apply features</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../fontitem.cpp" line="741"/>
+        <location filename="../fontitem.cpp" line="796"/>
         <source>codepoint is U+</source>
         <translation type="unfinished"></translation>
     </message>
@@ -453,43 +468,58 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="340"/>
+        <location filename="../typotek.cpp" line="343"/>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="350"/>
+        <location filename="../typotek.cpp" line="353"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="358"/>
+        <location filename="../typotek.cpp" line="363"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="367"/>
+        <location filename="../typotek.cpp" line="372"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="549"/>
+        <location filename="../typotek.cpp" line="554"/>
         <source>Print specimen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="852"/>
+        <location filename="../typotek.cpp" line="857"/>
         <source>There is no font selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="899"/>
+        <location filename="../typotek.cpp" line="904"/>
         <source>Support of DragNDrop over http is sheduled but not yet effective</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="920"/>
+        <location filename="../typotek.cpp" line="925"/>
         <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="337"/>
+        <source>Edit preview word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="931"/>
+        <source>Fontmatrix wants a word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="931"/>
+        <source>Give a preview word</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

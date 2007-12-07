@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="fr">
+<defaultcodec></defaultcodec>
 <context>
     <name>About</name>
     <message>
@@ -216,17 +217,17 @@
         <translation>composant vue principale</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="30"/>
+        <location filename="../mainview.ui" line="33"/>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
         <translation>Un clic droit sur une étiquette vous donne l’ocaasion de l’ajouter ou la retirer d’une collection</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="37"/>
+        <location filename="../mainview.ui" line="46"/>
         <source>Font Info</source>
         <translation>Informations</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="55"/>
+        <location filename="../mainview.ui" line="68"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -235,55 +236,70 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;(new line)&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="66"/>
+        <location filename="../mainview.ui" line="143"/>
         <source>Sample text</source>
         <translation>Texte insensé</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="79"/>
+        <location filename="../mainview.ui" line="156"/>
         <source>Customising text used for preview rendering</source>
         <translation>Écrire le texte insensé</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="82"/>
+        <location filename="../mainview.ui" line="159"/>
         <source>Sample text...</source>
         <translation>Texte insensé...</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="112"/>
+        <location filename="../mainview.ui" line="189"/>
         <source>Fit to view</source>
         <translation>Ajuster à la vue</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="147"/>
+        <location filename="../mainview.ui" line="224"/>
         <source>Zoom is disabled, uncheck fit to view to enable zoom</source>
         <translation>Le zoom est exclusif de l’ajustement</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="209"/>
+        <location filename="../mainview.ui" line="286"/>
         <source>Glyphs</source>
         <translation>Dessins</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="271"/>
+        <location filename="../mainview.ui" line="348"/>
         <source>No glyph selected</source>
         <translation>Aucun dessin sélectionné</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="286"/>
+        <location filename="../mainview.ui" line="363"/>
         <source>Clicking on a glyph will show details about it</source>
         <translation>Pointer un dessin montre des données qui lui sont associées</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="299"/>
+        <location filename="../mainview.ui" line="376"/>
         <source>Tags</source>
         <translation>Étiquettes</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="101"/>
+        <source>OpenType Features</source>
+        <translation>Fonctionnalités OpenType</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="106"/>
+        <source>Friendly Name</source>
+        <translation>Appellation complète</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="129"/>
+        <source>Apply features</source>
+        <translation>Appliquer</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../fontitem.cpp" line="741"/>
+        <location filename="../fontitem.cpp" line="796"/>
         <source>codepoint is U+</source>
         <translation>le point de code est U+</translation>
     </message>
@@ -454,44 +470,59 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
         <translation>Essaie de lancer Fontforge avec la fontes sélectionnée comme argument</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="340"/>
+        <location filename="../typotek.cpp" line="343"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="350"/>
+        <location filename="../typotek.cpp" line="353"/>
         <source>Edit</source>
         <translation>Édition</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="358"/>
+        <location filename="../typotek.cpp" line="363"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="367"/>
+        <location filename="../typotek.cpp" line="372"/>
         <source>Ready</source>
         <translation>Prêt</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="549"/>
+        <location filename="../typotek.cpp" line="554"/>
         <source>Print specimen</source>
         <translation>Imprime un specimen</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="852"/>
+        <location filename="../typotek.cpp" line="857"/>
         <source>There is no font selected</source>
         <translation>Il n’y a pas de fonte sélectionnée</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="899"/>
+        <location filename="../typotek.cpp" line="904"/>
         <source>Support of DragNDrop over http is sheduled but not yet effective</source>
         <translation>Le &quot;drag’n drop&quot; ne marche pas encore pour des ressources sur le web</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="920"/>
+        <location filename="../typotek.cpp" line="925"/>
         <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
         <translation>Je gère pas çà</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="337"/>
+        <source>Edit preview word</source>
+        <translation>Éditer le mot aperçu</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="931"/>
+        <source>Fontmatrix wants a word</source>
+        <translation>Entrez un mot</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="931"/>
+        <source>Give a preview word</source>
+        <translation>Entrez un mot</translation>
     </message>
 </context>
 </TS>

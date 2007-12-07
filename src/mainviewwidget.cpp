@@ -347,19 +347,33 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 		bool wantView = true;
 		bool hasChild = false;
 		QStringList names;
+		QMap<QString, QString> variantMap;
 		for(int i=0; i < item->childCount(); ++i)
 		{
 			hasChild = true;
 			if(item->child(i)->text(1) == curItemName)
 				wantView = false; 
 			names << item->child(i)->text(1) ;
+			variantMap[item->child(i)->text(0)] = item->child(i)->text(1) ;
 		}
 		slotFontActionByNames(names);
 		
 		if(wantView && hasChild)
 		{
 			lastIndex = faceIndex;
-			faceIndex = item->child(0)->text(1);
+
+				if ( variantMap.contains ( "Regular" ) )
+					faceIndex =  variantMap["Regular"];
+				else if ( variantMap.contains ( "Roman" ) )
+					faceIndex =  variantMap["Roman"];
+				else if ( variantMap.contains ( "Medium" ) )
+					faceIndex =  variantMap["Medium"];
+				else if ( variantMap.contains ( "Book" ) )
+					faceIndex =  variantMap["Book"];
+				else
+					faceIndex =  *(variantMap.begin());
+
+// 			faceIndex = item->child(0)->text(1);
 			curItemName = faceIndex;
 	
 			if ( faceIndex.count() && faceIndex != lastIndex )

@@ -156,7 +156,6 @@ FontItem::FontItem ( QString path )
 	if ( infopath.suffix() == "otf" ||  infopath.suffix() == "OTF")
 	{
 		m_isOpenType = true; // A bit rough, perhaps!
-		otf = new FmOtf(m_face);
 	}
 
 	m_type = FT_Get_X11_Font_Format ( m_face );
@@ -321,8 +320,8 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 {
 	int charcode = index /*+ 65536*/;
-	if ( !contourCache.contains ( currentChar ) )
-	{
+// 	if ( !contourCache.contains ( currentChar ) )
+// 	{
 		ft_error = FT_Load_Glyph ( m_face, charcode  /*- 65536*/, FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
 		if ( ft_error )
 		{
@@ -331,14 +330,14 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		FT_Outline *outline = &m_glyph->outline;
 		QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
 		FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
-		contourCache[currentChar] = glyphPath;
+// 		contourCache[currentChar] = glyphPath;
 		advanceCache[currentChar] =  m_glyph->metrics.horiAdvance;
-// 		qDebug() << "glyph " <<charcode<<" stocked in "<<currentChar;
-	}
+// // 		qDebug() << "glyph " <<charcode<<" stocked in "<<currentChar;
+// 	}
 
 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 	glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
-	glyph->setPath ( contourCache[currentChar] );
+	glyph->setPath ( glyphPath  );
 	double scalefactor = size / m_face->units_per_EM;
 	glyph->scale ( scalefactor,-scalefactor );
 	return glyph;
@@ -372,6 +371,51 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 
 	releaseFace();
 }
+
+void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPointF origine, double fsize, bool record)
+{
+	if(!m_isOpenType)
+		return;
+	ensureFace();
+	
+	otf = new FmOtf(m_face);
+	if(!otf)
+		return;
+	if ( record )
+		sceneList.append ( scene );
+	double sizz = fsize;
+	
+	QList<RenderedGlyph> refGlyph = otf->procstring(spec, set);
+	if( refGlyph.count() == 0)
+	{
+		qDebug() << "Ooops";
+		return;
+	}
+	QPointF pen ( origine );
+	 
+	for ( int i=0; i < refGlyph.count(); ++i )
+	{
+// 		qDebug() <<  refGlyph[i].glyph;
+		QGraphicsPathItem *glyph = itemFromGindex( refGlyph[i].glyph , sizz );
+		if ( !glyph )
+		{
+			qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+			continue;
+		}
+		if ( record )
+			glyphList.append ( glyph );
+		scene->addItem ( glyph );
+		double scalefactor = sizz / m_face->units_per_EM;
+		glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor), pen.y() + (refGlyph[i].yoffset * scalefactor) );
+		glyph->setZValue ( 100.0 );
+		glyph->setData ( 1,"glyph" );
+		pen.rx() += refGlyph[i].xadvance * scalefactor;
+	}
+	
+	delete otf;
+	releaseFace();
+}
+
 
 //deprecated
 void FontItem::deRender ( QGraphicsScene *scene )
@@ -429,7 +473,7 @@ void FontItem::deRenderAll()
 	}
 	selList.clear();
 	allIsRendered = false;
-	contourCache.clear();
+// 	contourCache.clear();
 	advanceCache.clear();
 }
 
@@ -964,13 +1008,13 @@ void FontItem::moreInfo_type1()
 }
 
 ///return size of dynamic structuresttnameid.h
-int FontItem::debug_size()
-{
-	int ret=0;
-	for ( QMap<int,QPainterPath>::const_iterator cit = contourCache.begin(); cit != contourCache.end();++cit )
-		ret+=cit->elementCount();
-
-}
+// int FontItem::debug_size()
+// {
+// // 	int ret=0;
+// // 	for ( QMap<int,QPainterPath>::const_iterator cit = contourCache.begin(); cit != contourCache.end();++cit )
+// // 		ret+=cit->elementCount();
+// 
+// }
 
 void FontItem::setTags ( QStringList l )
 {
@@ -1292,6 +1336,26 @@ void FontItem::fillLangIdMap()
 	langIdMap[0x04ff] = "HUMAN_INTERFACE_DEVICE           ";
 
 }
+
+FmOtf * FontItem::takeOTFInstance()
+{
+	ensureFace();
+	if(m_isOpenType)
+		otf = new FmOtf(m_face);
+	return otf;
+	
+	// It is a case where we don’t release face, thr caller have to call releaseOTFInstance;
+}
+
+void FontItem::releaseOTFInstance(FmOtf * rotf )
+{
+	if(rotf == otf)
+		delete otf;
+	releaseFace();
+}
+
+
+
 
 
 

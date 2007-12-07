@@ -33,6 +33,8 @@ class QGridLayout;
 class QTreeWidgetItem;
 class QGraphicsRectItem;
 class ListDockWidget;
+struct OTFSet;
+
 /**
 MainViewWidget inherits from an ui designed.
 
@@ -79,6 +81,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void fillUniPlanesCombo(FontItem* item);
 		
 		void fillOTTree();
+		OTFSet deFillOTTree();
+		
+		bool renderingLock;
+		
 		
 		
 	public slots:
@@ -113,6 +119,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotViewActivated();
 		void slotPlaneSelected(int);
 		void slotAdjustGlyphView(int width);
+		void slotFeatureChanged();
 		
 	signals:
 		void faceChanged();

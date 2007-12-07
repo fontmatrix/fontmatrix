@@ -56,9 +56,9 @@
           </property>
           <widget class="QTextBrowser" name="fontInfoText" >
            <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
              <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
+             <verstretch>3</verstretch>
             </sizepolicy>
            </property>
            <property name="focusPolicy" >
@@ -71,23 +71,68 @@ p, li { white-space: pre-wrap; }
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
            </property>
           </widget>
-          <widget class="QTreeWidget" name="OpenTypeTree" >
-           <property name="alternatingRowColors" >
-            <bool>true</bool>
+          <widget class="QWidget" native="1" name="widget" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+             <horstretch>0</horstretch>
+             <verstretch>1</verstretch>
+            </sizepolicy>
            </property>
-           <property name="columnCount" >
-            <number>2</number>
-           </property>
-           <column>
-            <property name="text" >
-             <string>OpenType Features</string>
-            </property>
-           </column>
-           <column>
-            <property name="text" >
-             <string>Friendly Name</string>
-            </property>
-           </column>
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <widget class="QTreeWidget" name="OpenTypeTree" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+                <horstretch>0</horstretch>
+                <verstretch>1</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy" >
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="alternatingRowColors" >
+               <bool>true</bool>
+              </property>
+              <property name="columnCount" >
+               <number>2</number>
+              </property>
+              <column>
+               <property name="text" >
+                <string>OpenType Features</string>
+               </property>
+              </column>
+              <column>
+               <property name="text" >
+                <string>Friendly Name</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item row="0" column="1" >
+             <layout class="QVBoxLayout" >
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="OTFeaturesButton" >
+                <property name="text" >
+                 <string>Apply features</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>

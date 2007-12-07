@@ -35,6 +35,7 @@
 class QGraphicsPixmapItem;
 class QGraphicsScene;
 class QGraphicsRectItem;
+struct OTFSet;
 class FmOtf;
 
 /**
@@ -102,7 +103,7 @@ class FontItem : public QObject
 		int currentChar;
 
 		bool m_lock;
-		QMap<int,QPainterPath> contourCache;
+// 		QMap<int,QPainterPath> contourCache;
 		QMap<int,double> advanceCache;
 
 		QIcon theOneLinePreviewIcon;
@@ -137,6 +138,7 @@ class FontItem : public QObject
 		QString value ( QString k );
 
 		void renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, bool record = true );
+		void renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, bool record = true );
 		void renderAll ( QGraphicsScene *scene, int begin_code, int end_code );
 		int countCoverage ( int begin_code, int end_code );
 		void deRender ( QGraphicsScene *scene );
@@ -157,14 +159,15 @@ class FontItem : public QObject
 		void unLock() {m_lock=false;};
 		bool isLocked() {return m_lock;};
 
-		int debug_size();
+// 		int debug_size();
 
 		void adjustGlyphsPerRow ( int width );
 
 		static QMap<int, QString> langIdMap;
 		
 		bool isOpenType(){return m_isOpenType;};
-		FmOtf *OTFInstance()const{return otf;};
+		FmOtf *takeOTFInstance();
+		void releaseOTFInstance(FmOtf * rotf);
 
 
 

@@ -108,12 +108,12 @@ typedef enum {
 
 
 typedef struct {
-    /*HB_LineBreakType*/ hb_uint8 lineBreakType  :2;
-    /*HB_Bool*/ hb_uint8 whiteSpace              :1;     /* A unicode whitespace character, except NBSP, ZWNBSP */
-    /*HB_Bool*/ hb_uint8 charStop                :1;     /* Valid cursor position (for left/right arrow) */
-    /*HB_Bool*/ hb_uint8 wordBoundary            :1;
-    /*HB_Bool*/ hb_uint8 sentenceBoundary        :1;
-    hb_uint8 unused                  :2;
+    /*HB_LineBreakType*/ unsigned lineBreakType  :2;
+    /*HB_Bool*/ unsigned whiteSpace              :1;     /* A unicode whitespace character, except NBSP, ZWNBSP */
+    /*HB_Bool*/ unsigned charStop                :1;     /* Valid cursor position (for left/right arrow) */
+    /*HB_Bool*/ unsigned wordBoundary            :1;
+    /*HB_Bool*/ unsigned sentenceBoundary        :1;
+    unsigned unused                  :2;
 } HB_CharAttributes;
 
 void HB_GetCharAttributes(const HB_UChar16 *string, hb_uint32 stringLength,
@@ -166,12 +166,12 @@ typedef enum {
  * it like that. If this is a problem please tell Trolltech :)
  */
 typedef struct {
-    unsigned short justification   :4;  /* Justification class */
-    unsigned short clusterStart    :1;  /* First glyph of representation of cluster */
-    unsigned short mark            :1;  /* needs to be positioned around base char */
-    unsigned short zeroWidth       :1;  /* ZWJ, ZWNJ etc, with no width */
-    unsigned short dontPrint       :1;
-    unsigned short combiningClass  :8;
+    unsigned justification   :4;  /* Justification class */
+    unsigned clusterStart    :1;  /* First glyph of representation of cluster */
+    unsigned mark            :1;  /* needs to be positioned around base char */
+    unsigned zeroWidth       :1;  /* ZWJ, ZWNJ etc, with no width */
+    unsigned dontPrint       :1;
+    unsigned combiningClass  :8;
 } HB_GlyphAttributes;
 
 typedef struct HB_FaceRec_ {

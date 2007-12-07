@@ -104,23 +104,20 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	//CONNECT
 
 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
-
 	connect (  m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
-
-// 	connect ( editAllButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotEditAll() ) );
-
-// 	connect ( this,SIGNAL ( faceChanged() ),this,SLOT ( slotView() ) );
+	connect (  m_lists->searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
+	connect (  m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+	connect ( m_lists->viewAllButton,SIGNAL(released()),this,SLOT(slotViewAll()));
+	connect ( m_lists->viewActivatedButton,SIGNAL(released()),this,SLOT(slotViewActivated()));
+	connect( m_lists->fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
 	
+
 	
 
 
 	connect ( abcScene,SIGNAL ( selectionChanged() ),this,SLOT ( slotglyphInfo() ) );
 
-	connect (  m_lists->searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
-	connect (  m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
-	connect ( m_lists->viewAllButton,SIGNAL(released()),this,SLOT(slotViewAll()));
-	connect( m_lists->viewActivatedButton,SIGNAL(released()),this,SLOT(slotViewActivated()));
-
+	
 	connect ( renderZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 // 	connect ( allZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 
@@ -141,9 +138,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect (fitViewCheck,SIGNAL(stateChanged( int )),this,SLOT(slotFitChanged(int)));
 	connect (loremView, SIGNAL(refit()),this,SLOT(slotRefitSample()));
 
-	connect( m_lists->fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
 	
 	connect(abcView,SIGNAL(refit(int)),this,SLOT(slotAdjustGlyphView(int)));
+	
+	connect(OTFeaturesButton, SIGNAL(clicked()), this, SLOT(slotFeatureChanged()));
 	// END CONNECT
 
 
@@ -486,7 +484,7 @@ void MainViewWidget::slotView(bool needDeRendering)
 	FontItem *f = typo->getFont ( faceIndex );
 	if ( !f )
 		return;
-	if(needDeRendering)
+	if(needDeRendering )
 	{
 		qDebug() << "neeedDerender (faceIndex = "<< faceIndex <<")";
 		if ( l )
@@ -507,6 +505,10 @@ void MainViewWidget::slotView(bool needDeRendering)
 		qDebug() << "dontNeedDerender (faceIndex = "<< faceIndex <<")";
 	}
 
+// 	if(renderingLock == true)
+// 		return;
+// 	renderingLock = true;
+	
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	
 	QString pkey = uniPlaneCombo->itemData( uniPlaneCombo->currentIndex() ).toString();
@@ -521,7 +523,17 @@ void MainViewWidget::slotView(bool needDeRendering)
 	for ( int i=0; i< stl.count(); ++i )
 	{
 		pen.ry() = 100 + sampleInterSize * i;
-		f->renderLine ( loremScene,stl[i],pen, sampleFontSize );
+		bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
+		if( processFeatures )
+		{
+			OTFSet aSet = deFillOTTree();
+			qDebug() << aSet.dump();
+			f->renderLine(aSet, loremScene,stl[i],pen, sampleFontSize );
+		}
+		else
+		{
+			f->renderLine ( loremScene,stl[i],pen, sampleFontSize );
+		}
 	}
 	QApplication::restoreOverrideCursor();
 	slotInfoFont();
@@ -554,6 +566,7 @@ void MainViewWidget::slotView(bool needDeRendering)
 		loremView->fitInView(allrect, Qt::KeepAspectRatio);
 	}
 
+// 	renderingLock = false;
 
 }
 
@@ -1178,33 +1191,92 @@ void MainViewWidget::slotAdjustGlyphView(int width)
 
 void MainViewWidget::fillOTTree()
 {
+	OpenTypeTree->clear();
 	if(theVeryFont && theVeryFont->isOpenType())
 	{
-		OpenTypeTree->clear();
-		FmOtf * otf = theVeryFont->OTFInstance();
+		
+		FmOtf * otf = theVeryFont->takeOTFInstance();
 		foreach(QString table, otf->get_tables())
 		{
 			otf->set_table(table);
 			QTreeWidgetItem *tab_item = new QTreeWidgetItem(OpenTypeTree,QStringList(table));
-			
+			tab_item->setExpanded(true);
 			foreach(QString script, otf->get_scripts())
 			{
 				otf->set_script(script);
 				QTreeWidgetItem *script_item = new QTreeWidgetItem(tab_item, QStringList(script));
+				script_item->setExpanded(true);
 				foreach(QString lang, otf->get_langs())
 				{
 					otf->set_lang(lang);
 					QTreeWidgetItem *lang_item = new QTreeWidgetItem(script_item, QStringList(lang));
+					lang_item->setExpanded(true);
 					foreach(QString feature, otf->get_features())
 					{
 						QStringList f(feature);
 						f << OTTagMeans(feature);
 						QTreeWidgetItem *feature_item = new QTreeWidgetItem(lang_item, f);
+						feature_item->setCheckState(0, Qt::Unchecked);
+					}
+				}
+			}
+		}
+		OpenTypeTree->resizeColumnToContents ( 0 ) ;
+		theVeryFont->releaseOTFInstance(otf);
+	}
+}
+
+OTFSet MainViewWidget::deFillOTTree()
+{
+	qDebug() << "MainViewWidget::deFillOTTree()";
+	OTFSet ret;
+// 	qDebug() << OpenTypeTree->topLevelItemCount();
+	for(int table_index = 0; table_index < OpenTypeTree->topLevelItemCount(); ++table_index)//tables
+	{
+// 		qDebug() << "table_index = " << table_index;
+		QTreeWidgetItem * table_item = OpenTypeTree->topLevelItem ( table_index ) ;
+// 		qDebug() <<  table_item->text(0);
+		for(int script_index = 0; script_index < table_item->childCount();++script_index)//scripts
+		{
+			QTreeWidgetItem * script_item = table_item->child(script_index);
+// 			qDebug() << "\tscript_index = " <<  script_index << script_item->text(0);
+			for(int lang_index = 0; lang_index < script_item->childCount(); ++lang_index)//langs
+			{
+				QTreeWidgetItem * lang_item = script_item->child(lang_index);
+// 				qDebug() << "\t\tlang_index = "<< lang_index << lang_item->text(0);
+				for(int feature_index = 0; feature_index < lang_item->childCount(); ++feature_index)//features
+				{
+// 					qDebug() << lang_item->childCount() <<" / "<<  feature_index;
+					QTreeWidgetItem * feature_item = lang_item->child(feature_index);
+// 					qDebug() << "\t\t\tfeature_item -> "<< feature_item->text(0);
+					if(feature_item->checkState(0) == Qt::Checked)
+					{
+						if(table_item->text(0) == "GPOS")
+						{
+							ret.script = script_item->text(0);
+							ret.lang = lang_item->text(0);
+							ret.gpos_features.append(feature_item->text(0));
+						}
+						if(table_item->text(0) == "GSUB")
+						{
+							ret.script = script_item->text(0);
+							ret.lang = lang_item->text(0);
+							ret.gsub_features.append(feature_item->text(0));
+						}
 					}
 				}
 			}
 		}
 	}
+// 	qDebug() << "endOf";
+	return ret;
+	
+}
+
+void MainViewWidget::slotFeatureChanged()
+{
+// 	OTFSet ret = deFillOTTree();
+	slotView(true); 
 }
 
 

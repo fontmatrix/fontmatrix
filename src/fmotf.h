@@ -34,10 +34,35 @@ extern "C"
 #include <QString>
 #include <QStringList>
 #include <QMap>
+#include <QList>
 
 
 using namespace std;
 
+struct OTFSet
+{
+	QString script;
+	QString lang;
+	QStringList gpos_features;
+	QStringList gsub_features;
+	OTFSet() {};
+	OTFSet ( const OTFSet& os )
+			: script ( os.script )
+			,lang ( os.lang ) ,
+			gpos_features ( os.gpos_features ),
+			gsub_features ( os.gsub_features ) {};
+	QString dump() {return script + "|" +lang+ "|"+ gpos_features.join ( "|" ) + gsub_features.join ( "|" );}
+	bool isEmpty(){ return script.isEmpty() && lang.isEmpty() && gpos_features.isEmpty() &&  gsub_features.isEmpty() ;};
+};
+
+struct RenderedGlyph
+{
+	int glyph;
+	double xadvance;
+	double yadvance;
+	double xoffset;
+	double yoffset;
+};
 
 class FmOtf
 {
@@ -88,8 +113,11 @@ class FmOtf
 		/*
 		 * These members functions apply features currently set
 		 */
+	private:
 		int procstring ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos );
 		int procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos );
+	public:
+		QList<RenderedGlyph> procstring ( QString s, OTFSet set );
 		/*
 		  * These functions give access to informations contained in the fontfile
 		 */
@@ -108,6 +136,7 @@ class FmOtf
 
 //   uint get_position(int,GlyphLayout *);
 //   uint presentAlternates(HB_UInt, HB_UShort, QList<HB_UShort>);
+		QList<RenderedGlyph> get_position ( /*int g*/ );
 
 
 };

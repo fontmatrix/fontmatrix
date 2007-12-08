@@ -43,6 +43,7 @@ class FMSampleTextView : public QGraphicsView
 		void mousePressEvent ( QMouseEvent * e ) ;
 		void mouseReleaseEvent ( QMouseEvent * e )  ;
 		void mouseMoveEvent ( QMouseEvent * e ) ;
+		void wheelEvent ( QWheelEvent * e );
 		
 
 	signals:

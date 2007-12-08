@@ -20,6 +20,7 @@
 #include "fmsampletextview.h"
 #include <QMouseEvent>
 #include <QGraphicsRectItem>
+#include <QScrollBar>
 #include <QDebug>
 
 FMSampleTextView::FMSampleTextView(QWidget* parent)
@@ -89,3 +90,14 @@ void FMSampleTextView::ensureTheRect()
 }
 
 
+
+
+void FMSampleTextView::wheelEvent(QWheelEvent * e)
+{
+// 	qDebug() << "log wheel event " << e->delta();
+// 	QGraphicsView::wheelEvent(e);
+	if(e->orientation() == Qt::Vertical )
+		verticalScrollBar()->setValue(verticalScrollBar()->value() - e->delta());
+	if(e->orientation() == Qt::Horizontal)
+		horizontalScrollBar()->setValue(horizontalScrollBar()->value() - e->delta());
+}

@@ -1,13 +1,16 @@
 Here is a quick overview of what you need to do in order
-to have fontmatrix up an running. You’ll see mentions of
-"typotek" here and there, it was the first name of this
-project, and some files had kept the name.
+to have fontmatrix up an running.
+ ---OLD---------------------------------------------------------
+|                                 You’ll see mentions of        |
+|"typotek" here and there, it was the first name of this        |
+|project, and some files had kept the name - don’t worry.       |
+ -----------------------------text kept for historians----------
 
 Requirements :
-	-- Qt 4.3
-	-- Freetype2 [We don’t search for it, but just assert it
-	is in /usr/include/freetype2. If your installation differs,
-	just change path accordingly at line 47 of src/src.pro file]
+	- Qt 4.3
+	- Freetype2
+*not to mention that you need the devel- packages.
+	
 	
  ---OLD---------------------------------------------------------
 |Run "qmake -o Makefile typotek.pro" (be sure you use the qmake |
@@ -20,7 +23,7 @@ Requirements :
 |Default installation directory is /usr/bin and if all went     |
 |right, you should see a new entry somewhere in your app. menu  |
 |as we provide a .desktop file.]                                |
- ---------------------------------------------------------------
+ -----------------------------text kept for historians----------
 
 Switched to CMake, so build instructions are now - assuming
 you’re in fontmatrix source tree and want to build out source:
@@ -28,15 +31,38 @@ you’re in fontmatrix source tree and want to build out source:
  $ cd ../fontmatrix-build
  $ cmake ../fontmatrix
  $ make
+ 
+At this point, the fontmatrix binary is in fontmatrix-build/src/
+directory, if you want, you can try to install it.
+Two methods here :
+
+1/ the most common (which can fail sometimes because, as Fm is at 
+its baby state, "install" target is not what we mostly pay attention for)
  # make install DESTDIR="/where/you/want"
+
+2/ build a binary archive (tar.gz) that one can check with
+"tar tvzf fontmatrix.x.x.x.tagr.gz" or his prefered archive manager 
+(here it’s ark under KDE.). Then extract it where you want.
+ $ make package
+
+(note) all resources are now built into the binary, so you can
+run fontmatrix without bother to the search path for icons,
+help files, etc. In near future, it will change as of growing
+resources would make the binary a fatty one. In other words :
+"stay tuned!"
 
 Now, you can run Fontmatrix and read the help in help->help.
 
-If you are familiar with cmake and interested this project,
-a reliable cmakelist.txt would be very much appreciated! 
+ ---OLD---------------------------------------------------------
+|If you are familiar with cmake and interested in this project, |
+|a reliable cmakelist.txt would be very much appreciated!       |
+ -----------------------------text kept for historians----------
+
+I made it myself ;-) but if you’re quite the cmake (wo)man, it’d be
+great if you’d check what I wrote.
 
 If you encounter problems or just have questions or if you have 
 suggestions, please take time to suscribe to the undertype-users
 mailing list ( https://mail.gna.org/listinfo/undertype-users ).
 Otherwise, there is a chance that you see us as vlada or pierremarc
-on #scribus IRC channel or ##fonts.
+on #scribus IRC channel or ##fonts or even #fontmatrix.

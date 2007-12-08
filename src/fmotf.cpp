@@ -257,7 +257,7 @@ FmOtf::FmOtf ( FT_Face f )
 
 	if ( !FT_Load_Sfnt_Table ( _face, OTF_name_tag ( "GDEF" ), 0, NULL, &length ) )
 	{
-		qDebug() << QString ( "length of GDEF table is %1" ).arg ( length ) ;
+// 		qDebug() << QString ( "length of GDEF table is %1" ).arg ( length ) ;
 		if ( length > 0 )
 		{
 			_memgdef.resize ( length );
@@ -284,7 +284,7 @@ FmOtf::FmOtf ( FT_Face f )
 	length = 0;
 	if ( !FT_Load_Sfnt_Table ( _face, OTF_name_tag ( "GSUB" ), 0, NULL, &length ) )
 	{
-		qDebug()<< QString ( "length of GSUB table is %1" ).arg ( length ) ;
+// 		qDebug()<< QString ( "length of GSUB table is %1" ).arg ( length ) ;
 		if ( length > 32 ) //Some font files seem to have a fake table that is just 32 words long and make harbuzz confused
 		{
 			_memgsub.resize ( length );
@@ -313,7 +313,7 @@ FmOtf::FmOtf ( FT_Face f )
 	length = 0;
 	if ( !FT_Load_Sfnt_Table ( _face, OTF_name_tag ( "GPOS" ), 0, NULL, &length ) )
 	{
-		qDebug () << QString ( "length of GPOS table is %1" ).arg ( length  );
+// 		qDebug () << QString ( "length of GPOS table is %1" ).arg ( length  );
 		if ( length > 32 )
 		{
 			_memgpos.resize ( length );
@@ -368,9 +368,9 @@ QList<RenderedGlyph> FmOtf::procstring(QString s, OTFSet set)
 	curString = s;
 	regAltGlyphs.clear();
 	int numR = procstring1 ( s, set.script, set.lang, set.gsub_features, set.gpos_features );
-	qDebug() <<"Get a bufferString of "<< numR <<" glyphs";
+// 	qDebug() <<"Get a bufferString of "<< numR <<" glyphs";
 	QList<RenderedGlyph> ret = get_position();
-	qDebug() <<"Get a renderedString of "<< ret.count() <<" glyphs";
+// 	qDebug() <<"Get a renderedString of "<< ret.count() <<" glyphs";
 	return ret;
 }
 
@@ -393,32 +393,32 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 		                              i );
 		if(error !=  HB_Err_Ok)
 			qDebug() << "hb_buffer_add_glyph ("<< s[i] <<") failed";
-		else
-			qDebug() << "hb_buffer_add_glyph ("<< s[i] <<") success";
+// 		else
+// 			qDebug() << "hb_buffer_add_glyph ("<< s[i] <<") success";
 
 	}
 	
-	if ( _buffer->in_length > 0 )
-	{
-		qDebug() << "_buffer->in_length = " <<_buffer->in_length;
-			
-	}
-	else
-		qDebug() << "_buffer->in_length = " <<_buffer->in_length;
-		
+// 	if ( _buffer->in_length > 0 )
+// 	{
+// 		qDebug() << "_buffer->in_length = " <<_buffer->in_length;
+// 			
+// 	}
+// 	else
+// 		qDebug() << "_buffer->in_length = " <<_buffer->in_length;
+// 		
 
 
 	if ( ! gsub.isEmpty() )
 	{
-		qDebug() <<"Process GSUB";
+// 		qDebug() <<"Process GSUB";
 		
 		HB_GSUB_Clear_Features ( _gsub );
 		
-		qDebug() <<"Set GSUB";
+// 		qDebug() <<"Set GSUB";
 		set_table ( "GSUB" );
 		set_script ( script );
 		set_lang ( lang );
-		qDebug() <<"GSUB set";
+// 		qDebug() <<"GSUB set";
 
 		for ( QStringList::iterator ife = gsub.begin (); ife != gsub.end (); ife++ )
 		{
@@ -429,23 +429,23 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 			if ( !error )
 			{
 				HB_GSUB_Add_Feature ( _gsub, fidx, ~all );
-				qDebug()<< QString("adding gsub feature [%1] success : %2").arg(*ife).arg(fidx );
+// 				qDebug()<< QString("adding gsub feature [%1] success : %2").arg(*ife).arg(fidx );
 			}
 			 else
 			qDebug()<< QString("adding gsub feature [%1] failed : %2").arg(*ife).arg(error );
 		}
 		
-		qDebug() << "APPLY";
+// 		qDebug() << "APPLY";
 		error = HB_GSUB_Apply_String ( _gsub, _buffer );
-		qDebug() << "YLPPA";
-		
+// 		qDebug() << "YLPPA";
+// 		
 		if ( error && error != HB_Err_Not_Covered )
 			qDebug ()<< QString ( "applying gsub features to string \"%1\" returned %2" ).arg ( s ).arg ( error  );
 
 	}
 	if ( !gpos.isEmpty() )
 	{
-		qDebug() <<"Process GPOS";
+// 		qDebug() <<"Process GPOS";
 		
 		HB_GPOS_Clear_Features ( _gpos );
 		set_table ( "GPOS" );
@@ -464,7 +464,7 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 			if ( !error )
 			{
 				HB_GPOS_Add_Feature ( _gpos, fidx,fprop );
-				qDebug()<< QString("GPOS [%2] feature.lookupcount = %1").arg(_gpos->FeatureList.FeatureRecord[fidx].Feature.LookupListCount).arg(*ife);
+// 				qDebug()<< QString("GPOS [%2] feature.lookupcount = %1").arg(_gpos->FeatureList.FeatureRecord[fidx].Feature.LookupListCount).arg(*ife);
 			}
 			else
 				qDebug ()<< QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error ) ;
@@ -477,7 +477,7 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 
 	}
 
- 	qDebug() << "END_PROCSTRING"; 
+//  	qDebug() << "END_PROCSTRING"; 
 	return _buffer->in_length;
 }
 
@@ -684,12 +684,12 @@ Dump all the "uneasy" HB_Buffer into a user-friendy QList :)
 */
 QList<RenderedGlyph> FmOtf::get_position ( /*int g*/ ) // g is(was!) a pos in the _source_ string
 {
-	qDebug() << "FmOtf::get_position ()";
+// 	qDebug() << "FmOtf::get_position ()";
 	QList<RenderedGlyph> renderedString;
 	bool wantPos = true;
 	for ( uint bIndex = 0 ; bIndex < _buffer->in_length; ++bIndex )
 	{
-		qDebug() << "bIndex = "<< bIndex;
+// 		qDebug() << "bIndex = "<< bIndex;
 		RenderedGlyph gl;
 		
 		gl.glyph = _buffer->in_string[bIndex].gindex;
@@ -703,7 +703,7 @@ QList<RenderedGlyph> FmOtf::get_position ( /*int g*/ ) // g is(was!) a pos in th
 		if(wantPos)
 		{
 			p = &_buffer->positions[bIndex] ;
-			qDebug() << "p = "<< p;
+// 			qDebug() << "p = "<< p;
 			if(!p)
 				wantPos = false;
 		}
@@ -741,7 +741,7 @@ QList<RenderedGlyph> FmOtf::get_position ( /*int g*/ ) // g is(was!) a pos in th
 		}
 		
 		renderedString << gl;
-		qDebug() << gl.glyph<<" rendered";
+// 		qDebug() << gl.glyph<<" rendered";
 	}
 
 	return renderedString;

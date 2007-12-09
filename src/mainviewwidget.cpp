@@ -48,26 +48,16 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 {
 	setupUi ( this );
 	theVeryFont = 0;
-
 	typo = typotek::getInstance();
 	m_lists = ListDockWidget::getInstance();
-
 	currentFonts = typo->getAllFonts();
 	currentFaction =0;
 	fontsetHasChanged = true;
-	
 	curGlyph = 0;
-	
-		
-	
 	fontInfoText->setSource(QUrl("qrc:/texts/welcome"));
-
 	fillUniPlanes();
-// 	uniPlaneCombo->addItems(uniPlanes.keys());
-// 	renderZoomString = "%1 \%";
-
+	
 	tagLayout = new QGridLayout ( tagPage );
-
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
 	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
@@ -84,21 +74,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->locker = true;
 	loremView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	loremView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-// 	loremView->ensureVisible ( loremScene->sceneRect() );
 
 	sampleText= typo->sampleText();
 	sampleFontSize = 18;
 	sampleInterSize = 20;
-
-// 	ord << "family" << "variant";
-// 	orderingCombo->addItems ( ord );
-
-
-// 	fields << "family" << "variant";
-// 	searchField->addItems ( fields );
-
-	
-// 	rightSplitter->setOpaqueResize(false);
 	m_lists->previewList->setRefWidget(this);
 
 	//CONNECT
@@ -110,41 +89,23 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->viewAllButton,SIGNAL(released()),this,SLOT(slotViewAll()));
 	connect ( m_lists->viewActivatedButton,SIGNAL(released()),this,SLOT(slotViewActivated()));
 	connect( m_lists->fontTree,SIGNAL(itemExpanded( QTreeWidgetItem* )),this,SLOT(slotItemOpened(QTreeWidgetItem*)));
-	
-
-	
-
-
+		
 	connect ( abcScene,SIGNAL ( selectionChanged() ),this,SLOT ( slotglyphInfo() ) );
-
-	
 	connect ( renderZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 // 	connect ( allZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
-
 	connect (  m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
-
 // 	connect ( activateAllButton,SIGNAL ( released() ),this,SLOT ( slotActivateAll() ) );
 // 	connect ( desactivateAllButton,SIGNAL ( released() ),this,SLOT ( slotDesactivateAll() ) );
-
 	connect ( textButton,SIGNAL ( released() ),this,SLOT ( slotSetSampleText() ) );
-
 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
-
 // 	connect ( codepointSelectText,SIGNAL ( returnPressed() ),this,SLOT ( slotShowCodePoint() ) );
 	connect ( uniPlaneCombo,SIGNAL(activated(int)),this,SLOT(slotPlaneSelected(int)));
-
 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
-	
 	connect (fitViewCheck,SIGNAL(stateChanged( int )),this,SLOT(slotFitChanged(int)));
 	connect (loremView, SIGNAL(refit()),this,SLOT(slotRefitSample()));
-
-	
 	connect(abcView,SIGNAL(refit(int)),this,SLOT(slotAdjustGlyphView(int)));
-	
 	connect(OTFeaturesButton, SIGNAL(clicked()), this, SLOT(slotFeatureChanged()));
 	// END CONNECT
-
-
 
 	currentOrdering = "family" ;
 	fillTree();
@@ -527,7 +488,10 @@ void MainViewWidget::slotView(bool needDeRendering)
 	
 	QString pkey = uniPlaneCombo->itemData( uniPlaneCombo->currentIndex() ).toString();
 	QPair<int,int> uniPair(uniPlanes[pkey + uniPlaneCombo->currentText()]);
-// 	qDebug() <<  pkey << uniPlaneCombo->currentText() <<  uniPair.first << uniPair.second;
+	int coverage = theVeryFont->countCoverage(uniPair.first, uniPair.second);
+	int interval = uniPair.second - uniPair.first;
+	coverage = coverage * 100 / interval;
+	unicodeCoverageStat->setText( QString::number(coverage) + "\%");
 	f->renderAll ( abcScene , uniPair.first, uniPair.second); 
 	QApplication::restoreOverrideCursor();
 

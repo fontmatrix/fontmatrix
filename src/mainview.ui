@@ -321,30 +321,25 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
+             <widget class="QLabel" name="label_2" >
+              <property name="text" >
+               <string>Coverage of unicode interval :</string>
               </property>
-              <property name="sizeHint" >
-               <size>
-                <width>51</width>
-                <height>23</height>
-               </size>
-              </property>
-             </spacer>
+             </widget>
             </item>
             <item>
-             <spacer>
+             <widget class="QLabel" name="unicodeCoverageStat" >
+              <property name="text" >
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line" >
               <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Vertical</enum>
               </property>
-              <property name="sizeHint" >
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
+             </widget>
             </item>
             <item>
              <spacer>
@@ -362,7 +357,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QLabel" name="glyphInfo" >
               <property name="text" >
-               <string>No glyph selected</string>
+               <string>nothing selected</string>
               </property>
               <property name="alignment" >
                <set>Qt::AlignCenter</set>

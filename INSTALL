@@ -8,8 +8,10 @@ to have fontmatrix up an running.
 
 Requirements :
 	- Qt 4.3
-	- Freetype2
-*not to mention that you need the devel- packages.
+	- Freetype2 (it works for sure with 2.3.5, if gcc complains
+	about prototypes mismatch at line ~84 of fontitem.cpp,
+ 	please upgrade)
+*not to mention that you need the developpement packages.
 	
 	
  ---OLD---------------------------------------------------------

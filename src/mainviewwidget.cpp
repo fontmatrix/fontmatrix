@@ -1194,7 +1194,7 @@ void MainViewWidget::fillOTTree()
 
 OTFSet MainViewWidget::deFillOTTree()
 {
-	qDebug() << "MainViewWidget::deFillOTTree()";
+// 	qDebug() << "MainViewWidget::deFillOTTree()";
 	OTFSet ret;
 // 	qDebug() << OpenTypeTree->topLevelItemCount();
 	for(int table_index = 0; table_index < OpenTypeTree->topLevelItemCount(); ++table_index)//tables

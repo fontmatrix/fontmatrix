@@ -371,7 +371,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record )
 {
 	ensureFace();
-	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
+	FT_Set_Char_Size ( m_face, fsize  * 64 , 0,72,72);
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
@@ -432,7 +432,7 @@ void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPoi
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
-	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
+	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, 72, 72 );
 	QList<RenderedGlyph> refGlyph = otf->procstring(spec, set);
 	if( refGlyph.count() == 0)
 	{
@@ -454,8 +454,8 @@ void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPoi
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
 			double scalefactor = sizz / m_face->units_per_EM  ;
-			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * QApplication::desktop()->logicalDpiX() * scalefactor) + glyph->data(1).toInt()  ,
-					pen.y() + (refGlyph[i].yoffset *  QApplication::desktop()->logicalDpiY() * scalefactor) - glyph->data(2).toInt());
+			glyph->setPos ( pen.x() + (refGlyph[i].xoffset  * scalefactor) + glyph->data(1).toInt()  ,
+					pen.y() + (refGlyph[i].yoffset  * scalefactor) - glyph->data(2).toInt());
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
 			pen.rx() += glyph->data(3).toInt();

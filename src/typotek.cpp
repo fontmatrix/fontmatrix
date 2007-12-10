@@ -32,6 +32,7 @@
 #include "helpwidget.h"
 #include "importedfontsdialog.h"
 #include "listdockwidget.h"
+#include "prefspaneldialog.h"
 
 #include <QtGui>
 #include <QTextEdit>
@@ -336,6 +337,9 @@ void typotek::createActions()
 	
 	wordAction = new QAction( tr ( "Edit preview word" ),this );
 	connect(wordAction,SIGNAL(triggered( )),this,SLOT(slotWord()));
+	
+	prefsAction = new QAction( tr ( "Preferences" ),this );
+	connect(prefsAction,SIGNAL(triggered()),this,SLOT(slotPrefsPanel()));
 }
 
 void typotek::createMenus()
@@ -359,6 +363,7 @@ void typotek::createMenus()
 	editMenu->addAction ( fonteditorAct );
 	editMenu->addSeparator();
 	editMenu->addAction (wordAction);
+	editMenu->addAction(prefsAction);
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
@@ -934,6 +939,18 @@ void typotek::slotWord()
 		m_theWord = aword;
 // 		emit wordHasChanged(aword);
 	}
+}
+
+void typotek::slotPrefsPanel()
+{
+	qDebug()<< "typotek::slotPrefsPanel()";
+	PrefsPanelDialog pp(this);
+	pp.exec();
+}
+
+void typotek::forwardUpdateView()
+{
+	theMainView->slotView(true);
 }
 
 

@@ -18,6 +18,7 @@ savedata.cpp
 tagseteditor.cpp
 typotek.cpp
 fmotf.cpp
+prefspaneldialog.cpp
 )
 
 SET(fontmatrix_MOC_HDRS
@@ -33,6 +34,7 @@ listdockwidget.h
 mainviewwidget.h
 tagseteditor.h
 typotek.h
+prefspaneldialog.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 
@@ -46,6 +48,7 @@ importedfonts.ui
 listsdock.ui
 mainview.ui
 tagset.ui
+prefs_panel.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
 

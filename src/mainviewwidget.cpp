@@ -98,7 +98,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect (  m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 // 	connect ( activateAllButton,SIGNAL ( released() ),this,SLOT ( slotActivateAll() ) );
 // 	connect ( desactivateAllButton,SIGNAL ( released() ),this,SLOT ( slotDesactivateAll() ) );
-	connect ( textButton,SIGNAL ( released() ),this,SLOT ( slotSetSampleText() ) );
+// 	connect ( textButton,SIGNAL ( released() ),this,SLOT ( slotSetSampleText() ) );
 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 // 	connect ( codepointSelectText,SIGNAL ( returnPressed() ),this,SLOT ( slotShowCodePoint() ) );
 	connect ( uniPlaneCombo,SIGNAL(activated(int)),this,SLOT(slotPlaneSelected(int)));
@@ -497,7 +497,7 @@ void MainViewWidget::slotView(bool needDeRendering)
 	f->renderAll ( abcScene , uniPair.first, uniPair.second); 
 	QApplication::restoreOverrideCursor();
 
-	QStringList stl = sampleText.split ( '\n' );
+	QStringList stl = typo->sampleText().split ( '\n' );
 	QPointF pen ( 100,80 );
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	for ( int i=0; i< stl.count(); ++i )
@@ -868,38 +868,9 @@ void MainViewWidget::slotActivateAll()
 	allActivation ( true );
 }
 
-void MainViewWidget::slotSetSampleText()
+void MainViewWidget::slotSetSampleText(QString s)
 {
-	QDialog dial ( this );
-	QGridLayout lay ( &dial );
-	QTextEdit ted ( sampleText.replace ( "\n","<br/>" ) );
-	QPushButton okButton ( "Ok" );
-
-	QLabel labfs ( "size" );
-	QLabel labls ( "interline" );
-
-	QDoubleSpinBox boxfs;
-	boxfs.setRange ( 1,999 );
-	boxfs.setValue ( sampleFontSize );
-
-	QDoubleSpinBox boxls;
-	boxls.setRange ( 1,999 );
-	boxls.setValue ( sampleInterSize );
-
-	lay.addWidget ( &ted, 0,0,1,-1 );
-	lay.addWidget ( &labfs, 1,0 );
-	lay.addWidget ( &labls, 2,0 );
-	lay.addWidget ( &boxfs,1,1 );
-	lay.addWidget ( &boxls,2,1 );
-	lay.addWidget ( &okButton,3,1 );
-	connect ( &okButton,SIGNAL ( released() ),&dial,SLOT ( close() ) );
-
-	dial.exec();
-	sampleText = ted.toPlainText () ;
-	sampleInterSize = boxls.value();
-	sampleFontSize = boxfs.value();
-	
-	typo->setSampleText(sampleText);
+	sampleText = s ;
 	slotView(true);
 
 }

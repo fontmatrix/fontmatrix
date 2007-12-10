@@ -106,7 +106,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotFilterTagset(QString set);
 		void slotDesactivateAll();
 		void slotActivateAll();
-		void slotSetSampleText();
+		void slotSetSampleText(QString);
 		void slotActivate(bool act, QTreeWidgetItem * item, int column);
 		void slotReloadFontList();
 		void slotReloadTagsetList();

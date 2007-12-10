@@ -66,6 +66,7 @@ class typotek:public QMainWindow
 		void about();
 		void help();
 		void slotWord();
+		void slotPrefsPanel();
 		
 	public slots:
 		bool save();
@@ -117,6 +118,7 @@ class typotek:public QMainWindow
 		QAction *helpAct;
 		QAction *fonteditorAct;
 		QAction *wordAction;
+		QAction *prefsAction;
 
 		MainViewWidget *theMainView;
 
@@ -166,6 +168,8 @@ class typotek:public QMainWindow
 		QString word(){return m_theWord;};
 		
 		void presentFontName(QString s){curFontPresentation->setText(s);};
+		
+		void forwardUpdateView();
 		
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

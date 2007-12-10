@@ -101,16 +101,6 @@ p, li { white-space: pre-wrap; }
               <item>
                <layout class="QHBoxLayout" >
                 <item>
-                 <widget class="QPushButton" name="textButton" >
-                  <property name="statusTip" >
-                   <string>Customising text used for preview rendering</string>
-                  </property>
-                  <property name="text" >
-                   <string>Sample text...</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <spacer>
                   <property name="orientation" >
                    <enum>Qt::Horizontal</enum>

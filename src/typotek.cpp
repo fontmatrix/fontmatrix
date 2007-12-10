@@ -32,7 +32,9 @@
 #include "helpwidget.h"
 #include "importedfontsdialog.h"
 #include "listdockwidget.h"
+#include "systray.h"
 #include "prefspaneldialog.h"
+
 
 #include <QtGui>
 #include <QTextEdit>
@@ -78,7 +80,12 @@ void typotek::initMatrix()
 	curFontPresentation->setAlignment(Qt::AlignRight);
 	curFontPresentation->setFont(statusFontFont);
 	statusBar()->addPermanentWidget(curFontPresentation);
-	
+
+	if (QSystemTrayIcon::isSystemTrayAvailable())
+		systray = new Systray();
+	else
+		systray = 0;
+
 	createActions();
 	createMenus();
 	createStatusBar();
@@ -945,6 +952,11 @@ void typotek::slotPrefsPanel()
 {
 	qDebug()<< "typotek::slotPrefsPanel()";
 	PrefsPanelDialog pp(this);
+	pp.initSystrayPrefs(QSystemTrayIcon::isSystemTrayAvailable(),
+                        systray->isVisible(),
+                        systray->hasActivateAll(),
+                        systray->allConfirmation(),
+                        systray->tagsConfirmation());
 	pp.exec();
 }
 
@@ -968,6 +980,25 @@ void typotek::addNamedSample(QString name, QString sample)
 	}
 	m_namedSamples[name] = sample;
 }
+void typotek::setSystrayVisible(bool isVisible)
+{
+	systray->slotSetVisible(isVisible);
+}
+
+void typotek::showActivateAllSystray(bool isVisible)
+{
+	systray->slotSetActivateAll(isVisible);
+}
+
+void typotek::systrayAllConfirmation(bool isEnabled)
+{
+	systray->requireAllConfirmation(isEnabled);
+}
+
+void typotek::systrayTagsConfirmation(bool isEnabled)
+{
+	systray->requireTagsConfirmation(isEnabled);
+}
 
 void typotek::addNamedSampleFragment(QString name, QString sampleFragment)
 {
@@ -987,5 +1018,4 @@ void typotek::setSampleText(QString s)
 {
 	m_namedSamples["default"] += s;
 }
-
 

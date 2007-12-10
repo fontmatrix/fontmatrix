@@ -37,6 +37,7 @@ class MainViewWidget;
 class FontItem;
 // class TypotekAdaptator;
 class QDockWidget;
+class Systray;
 
 
 
@@ -139,6 +140,9 @@ class typotek:public QMainWindow
 		QString m_theWord;
 		
 		QLabel *curFontPresentation;
+
+		Systray *systray;
+
 	public:
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );
@@ -170,14 +174,22 @@ class typotek:public QMainWindow
 		void presentFontName(QString s){curFontPresentation->setText(s);};
 		
 		void forwardUpdateView();
+
+		void setSystrayVisible(bool);
+		void showActivateAllSystray(bool);
+		void systrayAllConfirmation(bool);
+		void systrayTagsConfirmation(bool);
+
 		QString namedSample(QString name);
 		QStringList namedSamplesNames(){return m_namedSamples.uniqueKeys();};
 		void addNamedSample(QString name, QString sample);
 		void addNamedSampleFragment(QString name, QString sampleFragment);
-		
+
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dropEvent ( QDropEvent * event );
+
+	friend class Systray; // a bit ugly but i'll need access to privates
 };
 
 

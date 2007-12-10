@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>604</width>
-    <height>607</height>
+    <width>584</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -15,159 +15,58 @@
   <property name="windowIcon" >
    <iconset resource="application.qrc" >:/fontmatrix_icon.png</iconset>
   </property>
-  <widget class="QTabWidget" name="mainTab" >
-   <property name="geometry" >
-    <rect>
-     <x>9</x>
-     <y>9</y>
-     <width>586</width>
-     <height>589</height>
-    </rect>
-   </property>
-   <property name="currentIndex" >
-    <number>0</number>
-   </property>
-   <widget class="QWidget" name="tab" >
-    <attribute name="title" >
-     <string>General</string>
-    </attribute>
-    <widget class="QCheckBox" name="checkBox" >
-     <property name="geometry" >
-      <rect>
-       <x>190</x>
-       <y>250</y>
-       <width>251</width>
-       <height>22</height>
-      </rect>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QTabWidget" name="mainTab" >
+     <property name="currentIndex" >
+      <number>0</number>
      </property>
-     <property name="text" >
-      <string>Fontmatrix goes in systray</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="applyGeneralButton" >
-     <property name="geometry" >
-      <rect>
-       <x>470</x>
-       <y>510</y>
-       <width>80</width>
-       <height>27</height>
-      </rect>
-     </property>
-     <property name="text" >
-      <string>Apply</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_2" >
-    <attribute name="title" >
-     <string>Sample text</string>
-    </attribute>
-    <layout class="QGridLayout" >
-     <item row="0" column="0" >
-      <widget class="QGroupBox" name="groupBox" >
-       <property name="title" >
-        <string>Default sample text</string>
-       </property>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" >
-         <widget class="QTextEdit" name="sampleTextDefaultText" >
-          <property name="toolTip" >
-           <string>Keep in mind that Fontmatrix does NOT provide (yet) 
-justification nor even breaks lines. 
-Consequently, you’ll have to break the lines yourself.</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item row="1" column="0" >
-      <widget class="QGroupBox" name="groupBox_2" >
-       <property name="toolTip" >
-        <string>NOT IMPLEMENTED YET</string>
-       </property>
-       <property name="title" >
-        <string>Named sample texts</string>
-       </property>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" colspan="2" >
-         <widget class="QListWidget" name="sampleTextNamesList" />
-        </item>
-        <item row="0" column="2" colspan="2" >
-         <widget class="QTextEdit" name="namedSampleTextText" />
-        </item>
-        <item row="1" column="0" >
-         <widget class="QLineEdit" name="newSampleTextNameText" />
-        </item>
-        <item row="1" column="1" >
-         <widget class="QPushButton" name="addSampleTextNameButton" >
-          <property name="text" >
-           <string>Add</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2" >
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="3" >
-         <widget class="QPushButton" name="validateNamedSampleTextButton" >
-          <property name="text" >
-           <string>Validate</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item row="2" column="0" >
-      <layout class="QHBoxLayout" >
+     <widget class="QWidget" name="tab" >
+      <attribute name="title" >
+       <string>General</string>
+      </attribute>
+      <layout class="QVBoxLayout" >
        <item>
-        <widget class="QGroupBox" name="groupBox_3" >
+        <widget class="QGroupBox" name="systrayFrame" >
          <property name="title" >
-          <string>Layout</string>
+          <string>Show Fontmatrix in system tray</string>
          </property>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QLabel" name="label_2" >
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <property name="checked" >
+          <bool>false</bool>
+         </property>
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QGroupBox" name="activateAllFrame" >
+            <property name="title" >
+             <string>Show Activate all and Deactivate all in system tray menu</string>
+            </property>
+            <property name="flat" >
+             <bool>true</bool>
+            </property>
+            <property name="checkable" >
+             <bool>true</bool>
+            </property>
+            <layout class="QVBoxLayout" >
+             <item>
+              <widget class="QCheckBox" name="activateAllConfirmation" >
+               <property name="text" >
+                <string>Ask confirmation when activating or deactivating all fonts</string>
+               </property>
+               <property name="checked" >
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="tagsConfirmation" >
             <property name="text" >
-             <string>Font size </string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" >
-           <widget class="QDoubleSpinBox" name="fontSizeSpin" >
-            <property name="suffix" >
-             <string> pt</string>
-            </property>
-            <property name="minimum" >
-             <double>1.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="label_3" >
-            <property name="text" >
-             <string>Interline </string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" >
-           <widget class="QDoubleSpinBox" name="interLineSpin" >
-            <property name="suffix" >
-             <string> pt</string>
-            </property>
-            <property name="minimum" >
-             <double>1.000000000000000</double>
+             <string>Ask confirmation when activating or deactivating tags</string>
             </property>
            </widget>
           </item>
@@ -175,77 +74,210 @@ Consequently, you’ll have to break the lines yourself.</string>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>544</width>
+           <height>261</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Sample text</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Default sample text</string>
+         </property>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QTextEdit" name="sampleTextDefaultText" >
+            <property name="toolTip" >
+             <string>Keep in mind that Fontmatrix does NOT provide (yet) 
+justification nor even breaks lines. 
+Consequently, you’ll have to break the lines yourself.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="toolTip" >
+          <string>NOT IMPLEMENTED YET</string>
+         </property>
+         <property name="title" >
+          <string>Named sample texts</string>
+         </property>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" colspan="2" >
+           <widget class="QListWidget" name="sampleTextNamesList" />
+          </item>
+          <item row="0" column="2" colspan="2" >
+           <widget class="QTextEdit" name="namedSampleTextText" />
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLineEdit" name="newSampleTextNameText" />
+          </item>
+          <item row="1" column="1" >
+           <widget class="QPushButton" name="addSampleTextNameButton" >
+            <property name="text" >
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" >
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="3" >
+           <widget class="QPushButton" name="validateNamedSampleTextButton" >
+            <property name="text" >
+             <string>Validate</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <layout class="QHBoxLayout" >
          <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
+          <widget class="QGroupBox" name="groupBox_3" >
+           <property name="title" >
+            <string>Layout</string>
            </property>
-           <property name="sizeHint" >
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <widget class="QLabel" name="label_2" >
+              <property name="text" >
+               <string>Font size </string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" >
+             <widget class="QDoubleSpinBox" name="fontSizeSpin" >
+              <property name="suffix" >
+               <string> pt</string>
+              </property>
+              <property name="minimum" >
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" >
+             <widget class="QLabel" name="label_3" >
+              <property name="text" >
+               <string>Interline </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" >
+             <widget class="QDoubleSpinBox" name="interLineSpin" >
+              <property name="suffix" >
+               <string> pt</string>
+              </property>
+              <property name="minimum" >
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" >
+          <layout class="QVBoxLayout" >
            <item>
             <spacer>
              <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" >
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="applySampleTextButton" >
-             <property name="text" >
-              <string>Apply</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" >
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="applySampleTextButton" >
+               <property name="text" >
+                <string>Apply</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
            <item>
             <spacer>
              <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" >
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
            </item>
           </layout>
          </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </item>
       </layout>
-     </item>
-    </layout>
-   </widget>
-  </widget>
+     </widget>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources>
   <include location="application.qrc" />

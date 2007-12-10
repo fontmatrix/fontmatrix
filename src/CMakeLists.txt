@@ -15,6 +15,7 @@ listdockwidget.cpp
 main.cpp
 mainviewwidget.cpp
 savedata.cpp
+systray.cpp
 tagseteditor.cpp
 typotek.cpp
 fmotf.cpp
@@ -32,6 +33,7 @@ fontitem.h
 helpwidget.h
 listdockwidget.h
 mainviewwidget.h
+systray.h
 tagseteditor.h
 typotek.h
 prefspaneldialog.h

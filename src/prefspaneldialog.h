@@ -27,10 +27,16 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 
 		~PrefsPanelDialog();
 
+		void initSystrayPrefs(bool hasSystray, bool isVisible, bool hasActivateAll, bool allConfirmation, bool tagConfirmation);
+
 	private:
 		void doConnect();
 	private slots:
 		void applySampleText();
+		void setSystrayVisible(bool);
+		void setSystrayActivateAll(bool);
+		void setSystrayAllConfirmation(bool);
+		void setSystrayTagsConfirmation(bool);
 
 };
 

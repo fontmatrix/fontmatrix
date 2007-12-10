@@ -39,6 +39,16 @@
          </property>
          <layout class="QVBoxLayout" >
           <item>
+           <widget class="QCheckBox" name="closeToSystray" >
+            <property name="text" >
+             <string>Close to system tray</string>
+            </property>
+            <property name="checked" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QGroupBox" name="activateAllFrame" >
             <property name="title" >
              <string>Show Activate all and Deactivate all in system tray menu</string>

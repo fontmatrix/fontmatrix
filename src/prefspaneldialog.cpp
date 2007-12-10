@@ -13,6 +13,7 @@
 #include "typotek.h"
 #include <QDebug>
 #include <QToolTip>
+#include <QSettings>
 
 PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
  : QDialog(parent)
@@ -39,6 +40,8 @@ void PrefsPanelDialog::initSystrayPrefs(bool hasSystray, bool isVisible, bool ha
 	activateAllFrame->setChecked(hasActivateAll);
 	activateAllConfirmation->setChecked(allConfirmation);
 	tagsConfirmation->setChecked(tagConfirmation);
+	QSettings settings ( "Undertype", "fontmatrix" );
+	closeToSystray->setChecked(settings.value("SystrayCloseToTray", true).toBool());
 }
 
 void PrefsPanelDialog::initSampleTextPrefs()
@@ -60,8 +63,9 @@ void PrefsPanelDialog::doConnect()
 	connect(activateAllFrame, SIGNAL(clicked(bool)), this, SLOT(setSystrayActivateAll(bool)));
 	connect(activateAllConfirmation, SIGNAL(clicked(bool)), this, SLOT(setSystrayAllConfirmation(bool)));
 	connect(tagsConfirmation, SIGNAL(clicked(bool)), this, SLOT(setSystrayTagsConfirmation(bool)));
-	
+	connect(closeToSystray, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotCloseToSystray(bool)));
 	connect(previewWord, SIGNAL(textChanged ( const QString  ) ), this, SLOT(updateWord(QString)));
+
 }
 
 void PrefsPanelDialog::applySampleText()

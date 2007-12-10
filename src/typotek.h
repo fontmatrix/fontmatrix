@@ -71,6 +71,7 @@ class typotek:public QMainWindow
 		
 	public slots:
 		bool save();
+		void slotCloseToSystray(bool isEnabled);
 		
 	signals:
 		void tagAdded(QString);

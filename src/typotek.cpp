@@ -111,6 +111,21 @@ void typotek::doConnect()
 
 void typotek::closeEvent ( QCloseEvent *event )
 {
+	QSettings settings ( "Undertype", "fontmatrix" );
+	if (systray->isVisible() && settings.value("SystrayCloseToTray", true).toBool()) {
+		if (!settings.value("SystrayCloseNoteShown", false).toBool()) {
+			QMessageBox::information(this, tr("Fontmatrix"),
+				tr("The program will keep running in the "
+					"system tray. To terminate the program, "
+					"choose <b>Exit</b> in the context menu "
+					"of the system tray entry."));
+			settings.setValue("SystrayCloseNoteShown", true);
+		}
+		hide();
+		event->ignore();
+		return;
+	}
+
 	if ( maybeSave() )
 	{
 		save();
@@ -986,6 +1001,13 @@ void typotek::systrayAllConfirmation(bool isEnabled)
 void typotek::systrayTagsConfirmation(bool isEnabled)
 {
 	systray->requireTagsConfirmation(isEnabled);
+}
+
+void typotek::slotCloseToSystray(bool isEnabled)
+{
+	QSettings settings ( "Undertype", "fontmatrix" );
+	settings.setValue("SystrayCloseToTray", isEnabled);
+	settings.setValue("SystrayCloseNoteShown", false);
 }
 
 void typotek::addNamedSampleFragment(QString name, QString sampleFragment)

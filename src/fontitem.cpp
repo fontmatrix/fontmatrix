@@ -117,7 +117,8 @@ FontItem::FontItem ( QString path )
 // 	qDebug() << path;
 
 	m_face = 0;
-	m_glyphsPerRow = 7;
+	facesRef = 0;
+	m_glyphsPerRow = 5;
 	hasUnicode = false;
 	currentChar = -1;
 	m_isOpenType = false;
@@ -211,7 +212,10 @@ bool FontItem::ensureFace()
 	if ( ensureLibrary() )
 	{
 		if ( m_face )
+		{
+			++facesRef;
 			return true;
+		}
 		ft_error = FT_New_Face ( theLibrary, m_path.toLocal8Bit() , 0, &m_face );
 		if ( ft_error )
 		{
@@ -222,18 +226,13 @@ bool FontItem::ensureFace()
 		if ( ft_error )
 		{
 			hasUnicode = false;
-// 			QStringList charmaps;
-// 			for(int i=0; i < m_face->num_charmaps;++i)
-// 			{
-// 				charmaps << charsetMap[ m_face->charmaps[i]->encoding ];
-// 			}
-// 			qDebug() << "Unable to select Unicode for [" << m_name <<"]";
 		}
 		else
 		{
 			hasUnicode = true;
 		}
 		m_glyph = m_face->glyph;
+		++facesRef;
 		return true;
 	}
 	return false;
@@ -244,8 +243,12 @@ void FontItem::releaseFace()
 // 	qDebug("\t\tRELEASEFACE") ;
 	if ( m_face )
 	{
-		FT_Done_Face ( m_face );
-		m_face = 0;
+		--facesRef;
+		if(facesRef == 0)
+		{
+			FT_Done_Face ( m_face );
+			m_face = 0;
+		}
 	}
 }
 
@@ -479,11 +482,6 @@ void FontItem::deRenderAll()
 
 QByteArray FontItem::pixarray ( uchar * b, int len )
 {
-// 	QByteArray ar(len * 4);
-// 	for(i = 0; i<len;)
-// 		ar[i] = qRgb(b[i],b[i],b[i]);
-// 	return ar;
-//
 	uchar *imgdata =  b ;
 	QByteArray buffer ( len * 4, 255 );
 	QDataStream stream ( &buffer,QIODevice::WriteOnly );
@@ -559,6 +557,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	charcode = begin_code;
 // 	qDebug() << "INTER " << begin_code << end_code;
 	QPen selPen ( Qt::gray );
+	QFont infoFont("Helvetica",8);
 	QBrush selBrush ( QColor ( 255,255,255,0 ) );
 	if ( hasUnicode )
 	{
@@ -582,8 +581,8 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				pitem->setPos ( pen );
 				pitem->setZValue ( 10 );
 
-				QGraphicsTextItem *tit= scene->addText ( QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) ) );
-				tit->setPos ( pen.x(),pen.y() + 15 );
+				QGraphicsTextItem *tit= scene->addText (glyphName(charcode)  + "\nU+" + QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) )  +" ("+ QString::number(charcode) +")"  , infoFont);
+				tit->setPos ( pen.x()-10,pen.y() + 15 );
 				tit->setData ( 1,"label" );
 				tit->setData ( 2,gindex );
 				tit->setData ( 3,ucharcode );
@@ -771,15 +770,19 @@ QString FontItem::infoText ( bool fromcache )
 	return ret;
 }
 
-
-QString FontItem::infoGlyph ( int index, int code )
+QString FontItem::glyphName(int codepoint)
 {
 	ensureFace();
-
+	
+	int index = FT_Get_Char_Index ( m_face, codepoint );
+	if ( index== 0 )
+	{
+		return "noname";
+	}
+	
 	QByteArray key ( 1001,0 );
 	if ( FT_HAS_GLYPH_NAMES ( m_face ) )
 	{
-// 		char buf[1001];
 		FT_Get_Glyph_Name ( m_face, index, key.data() , 1000 );
 		if ( key[0] == char ( 0 ) )
 		{
@@ -790,10 +793,16 @@ QString FontItem::infoGlyph ( int index, int code )
 	{
 		key = "noname";
 	}
+	return QString(key);
+	releaseFace();
+}
 
+
+QString FontItem::infoGlyph ( int index, int code )
+{
+	ensureFace();
 	QString ret;
-// 	ret += "[" + code + "] ";
-	ret += /*QObject::tr("name is ") +*/ key ;
+	ret += glyphName(code) ;
 	ret += ", " + QObject::tr ( "codepoint is U+" ) ;
 	ret += QString ( "%1" ).arg ( code, 4, 16, QChar ( 0x0030 ) ) ;
 	ret += " (int"+ QString::number ( code ) +")";

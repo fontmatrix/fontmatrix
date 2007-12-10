@@ -335,13 +335,6 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <widget class="Line" name="line" >
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer>
               <property name="orientation" >
                <enum>Qt::Horizontal</enum>
@@ -353,16 +346,6 @@ p, li { white-space: pre-wrap; }
                </size>
               </property>
              </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="glyphInfo" >
-              <property name="text" >
-               <string>nothing selected</string>
-              </property>
-              <property name="alignment" >
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
             </item>
            </layout>
           </item>

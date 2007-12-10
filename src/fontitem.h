@@ -78,6 +78,7 @@ class FontItem : public QObject
 
 		FT_Error      ft_error;
 		FT_Face m_face;
+		int facesRef;
 		FT_GlyphSlot m_glyph;
 		QGraphicsPathItem* itemFromChar ( int charcode, double size );
 		QGraphicsPathItem* itemFromGindex ( int index, double size );
@@ -134,6 +135,7 @@ class FontItem : public QObject
 		QString fancyName() {return m_family + " " + m_variant;};
 		QString infoText ( bool fromcache = true );
 		QString infoGlyph ( int index, int code = 0 );
+		QString glyphName(int codepoint);
 
 		QString value ( QString k );
 

@@ -58,6 +58,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	curGlyph = 0;
 	fontInfoText->setSource(QUrl("qrc:/texts/welcome"));
 	fillUniPlanes();
+	sampleTextCombo->addItems(typo->namedSamplesNames());
 	
 	tagLayout = new QGridLayout ( tagPage );
 	abcScene = new QGraphicsScene;
@@ -77,7 +78,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	loremView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-	sampleText= typo->sampleText();
+	sampleText= typo->namedSample("default");
 	sampleFontSize = 18;
 	sampleInterSize = 20;
 	m_lists->previewList->setRefWidget(this);
@@ -497,7 +498,7 @@ void MainViewWidget::slotView(bool needDeRendering)
 	f->renderAll ( abcScene , uniPair.first, uniPair.second); 
 	QApplication::restoreOverrideCursor();
 
-	QStringList stl = typo->sampleText().split ( '\n' );
+	QStringList stl = typo->namedSample(sampleTextCombo->currentText()).split ( '\n' );
 	QPointF pen ( 100,80 );
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	for ( int i=0; i< stl.count(); ++i )
@@ -541,8 +542,6 @@ void MainViewWidget::slotView(bool needDeRendering)
 			
 				
 		}
-		
-// 		qDebug() << allrect;
 		loremView->fitInView(allrect, Qt::KeepAspectRatio);
 	}
 

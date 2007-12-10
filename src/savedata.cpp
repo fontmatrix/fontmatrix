@@ -88,12 +88,16 @@ void SaveData::doSave()
 	}
 	
 	//save sample text
-	QStringList sampleT= m_typo->sampleText().split("\n");
-	foreach(QString sline, sampleT)
+	foreach(QString samplename, m_typo->namedSamplesNames())
 	{
-		writeStartElement("sampleline");
-		writeCharacters( sline );
-		writeEndElement();
+		QStringList sampleT= m_typo->namedSample(samplename).split("\n");
+		foreach(QString sline, sampleT)
+		{
+			writeStartElement("sampleline");
+			writeAttribute("name", samplename);
+			writeCharacters( sline );
+			writeEndElement();
+		}
 	}
 	
 	// save preview word

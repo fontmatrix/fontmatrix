@@ -17,7 +17,7 @@ PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
  : QDialog(parent)
 {
 	setupUi(this);
-	QString st = typotek::getInstance()->sampleText();
+	QString st = typotek::getInstance()->namedSample("default");
 // 	qDebug()<< st;
 	sampleTextDefaultText->setPlainText(st);
 	doConnect();

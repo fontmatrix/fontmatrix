@@ -135,6 +135,7 @@ class typotek:public QMainWindow
 // 		TypotekAdaptator *actAdaptator;
 		
 		QString m_sampleText;
+		QMap<QString,QString> m_namedSamples;
 		QString m_theWord;
 		
 		QLabel *curFontPresentation;
@@ -161,15 +162,18 @@ class typotek:public QMainWindow
 		
 		QString getManagedDir(){return managedDir.absolutePath();};
 		
-		void setSampleText(QString s){m_sampleText = s;};
-		QString sampleText(){return m_sampleText;};
-		
+		void setSampleText(QString s);
+				
 		void setWord(QString s){m_theWord = s;};
 		QString word(){return m_theWord;};
 		
 		void presentFontName(QString s){curFontPresentation->setText(s);};
 		
 		void forwardUpdateView();
+		QString namedSample(QString name);
+		QStringList namedSamplesNames(){return m_namedSamples.uniqueKeys();};
+		void addNamedSample(QString name, QString sample);
+		void addNamedSampleFragment(QString name, QString sampleFragment);
 		
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

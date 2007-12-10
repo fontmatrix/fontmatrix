@@ -953,4 +953,39 @@ void typotek::forwardUpdateView()
 	theMainView->slotView(true);
 }
 
+void typotek::addNamedSample(QString name, QString sample)
+{
+	if(name.isEmpty() || sample.isEmpty())
+	{
+		statusBar()->showMessage(tr("You provided an empty string, it’s not fair"), 3000);
+		return;
+	}
+	
+	if(name == "default" )
+	{
+		statusBar()->showMessage(tr("\"default\" is a reserved keyword"), 3000);
+		return;
+	}
+	m_namedSamples[name] = sample;
+}
+
+void typotek::addNamedSampleFragment(QString name, QString sampleFragment)
+{
+	// No need to check, it’s just for the loader
+	m_namedSamples[name] += sampleFragment + "\n";
+}
+
+
+QString typotek::namedSample(QString name)
+{
+	if(name.isEmpty())
+		return m_namedSamples["default"];
+	return m_namedSamples[name];
+}
+
+void typotek::setSampleText(QString s)
+{
+	m_namedSamples["default"] += s;
+}
+
 

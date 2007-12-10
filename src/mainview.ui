@@ -24,7 +24,7 @@
        <bool>true</bool>
       </property>
       <property name="sizePolicy" >
-       <sizepolicy vsizetype="Minimum" hsizetype="Expanding" >
+       <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -101,13 +101,16 @@ p, li { white-space: pre-wrap; }
               <item>
                <layout class="QHBoxLayout" >
                 <item>
+                 <widget class="QComboBox" name="sampleTextCombo" />
+                </item>
+                <item>
                  <spacer>
                   <property name="orientation" >
                    <enum>Qt::Horizontal</enum>
                   </property>
                   <property name="sizeHint" >
                    <size>
-                    <width>71</width>
+                    <width>211</width>
                     <height>27</height>
                    </size>
                   </property>

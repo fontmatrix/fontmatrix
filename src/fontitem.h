@@ -80,9 +80,15 @@ class FontItem : public QObject
 		FT_Face m_face;
 		int facesRef;
 		FT_GlyphSlot m_glyph;
+		
 		QGraphicsPathItem* itemFromChar ( int charcode, double size );
 		QGraphicsPathItem* itemFromGindex ( int index, double size );
-
+		
+		QGraphicsPixmapItem* itemFromCharPix ( int charcode, double size );
+		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
+		
+		bool m_rasterFreetype;
+		
 		bool ensureLibrary();
 		bool ensureFace();
 		void releaseFace();
@@ -170,9 +176,9 @@ class FontItem : public QObject
 		bool isOpenType(){return m_isOpenType;};
 		FmOtf *takeOTFInstance();
 		void releaseOTFInstance(FmOtf * rotf);
-
-
-
+		
+		void setFTRaster(bool f){m_rasterFreetype = f;};
+		bool rasterFreetype(){return m_rasterFreetype;};
 
 };
 

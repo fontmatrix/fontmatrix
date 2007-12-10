@@ -51,7 +51,7 @@ void DataLoader::load()
 		
 		// Ensure that there are default samples and preview text
 		m_typo->setSampleText( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.");	
-		m_typo->setWord("hamburgefonstiv");
+		m_typo->setWord("hamburgefonstiv", false);
 		return;
 	}
 	if ( !doc.setContent ( m_file ) )
@@ -143,7 +143,7 @@ void DataLoader::load()
 		QDomNode col = previewList.item ( 0 );
 		pWord = col.toElement().text();
 	}
-	m_typo->setWord(pWord);
+	m_typo->setWord(pWord, false);
 }
 
 

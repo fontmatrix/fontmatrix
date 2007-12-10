@@ -66,7 +66,7 @@ class typotek:public QMainWindow
 		void slotEditFont();
 		void about();
 		void help();
-		void slotWord();
+// 		void slotWord();
 		void slotPrefsPanel();
 		
 	public slots:
@@ -118,7 +118,6 @@ class typotek:public QMainWindow
 		QAction *deactivCurAct;
 		QAction *helpAct;
 		QAction *fonteditorAct;
-		QAction *wordAction;
 		QAction *prefsAction;
 
 		MainViewWidget *theMainView;
@@ -135,7 +134,6 @@ class typotek:public QMainWindow
 		
 // 		TypotekAdaptator *actAdaptator;
 		
-		QString m_sampleText;
 		QMap<QString,QString> m_namedSamples;
 		QString m_theWord;
 		
@@ -168,7 +166,7 @@ class typotek:public QMainWindow
 		
 		void setSampleText(QString s);
 				
-		void setWord(QString s){m_theWord = s;};
+		void setWord(QString s, bool updateView);
 		QString word(){return m_theWord;};
 		
 		void presentFontName(QString s){curFontPresentation->setText(s);};
@@ -184,6 +182,8 @@ class typotek:public QMainWindow
 		QStringList namedSamplesNames(){return m_namedSamples.uniqueKeys();};
 		void addNamedSample(QString name, QString sample);
 		void addNamedSampleFragment(QString name, QString sampleFragment);
+
+		void changeSample(QString name, QString text);
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

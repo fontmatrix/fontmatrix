@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>584</width>
-    <height>468</height>
+    <height>477</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -25,8 +25,8 @@
       <attribute name="title" >
        <string>General</string>
       </attribute>
-      <layout class="QVBoxLayout" >
-       <item>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
         <widget class="QGroupBox" name="systrayFrame" >
          <property name="title" >
           <string>Show Fontmatrix in system tray</string>
@@ -73,7 +73,32 @@
          </layout>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0" >
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Preview word</string>
+         </property>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLineEdit" name="previewWord" />
+          </item>
+          <item row="0" column="1" >
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" >
         <spacer>
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -81,7 +106,7 @@
          <property name="sizeHint" >
           <size>
            <width>544</width>
-           <height>261</height>
+           <height>101</height>
           </size>
          </property>
         </spacer>
@@ -93,28 +118,10 @@
        <string>Sample text</string>
       </attribute>
       <layout class="QGridLayout" >
-       <item row="0" column="0" >
-        <widget class="QGroupBox" name="groupBox" >
-         <property name="title" >
-          <string>Default sample text</string>
-         </property>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QTextEdit" name="sampleTextDefaultText" >
-            <property name="toolTip" >
-             <string>Keep in mind that Fontmatrix does NOT provide (yet) 
-justification nor even breaks lines. 
-Consequently, you’ll have to break the lines yourself.</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="1" column="0" >
         <widget class="QGroupBox" name="groupBox_2" >
          <property name="toolTip" >
-          <string>NOT IMPLEMENTED YET</string>
+          <string/>
          </property>
          <property name="title" >
           <string>Named sample texts</string>

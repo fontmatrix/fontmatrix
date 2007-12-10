@@ -108,6 +108,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect (loremView, SIGNAL(refit()),this,SLOT(slotRefitSample()));
 	connect(abcView,SIGNAL(refit(int)),this,SLOT(slotAdjustGlyphView(int)));
 	connect(OTFeaturesButton, SIGNAL(clicked()), this, SLOT(slotFeatureChanged()));
+	connect(sampleTextCombo,SIGNAL(activated( int )),this,SLOT(slotSampleChanged()));
+	connect(freetypeButton,SIGNAL(released()),this,SLOT(slotFTRasterChanged()));
 	// END CONNECT
 
 	currentOrdering = "family" ;
@@ -464,28 +466,30 @@ void MainViewWidget::slotView(bool needDeRendering)
 		return;
 	if(needDeRendering )
 	{
-		qDebug() << "neeedDerender (faceIndex = "<< faceIndex <<")";
+// 		qDebug() << "neeedDerender (faceIndex = "<< faceIndex <<")";
 		if ( l )
 		{
-			qDebug() << "last to derender (lastindex = "<< lastIndex <<")";
+// 			qDebug() << "last to derender (lastindex = "<< lastIndex <<")";
 			l->deRenderAll();
 		}
-		else
-		{
-			qDebug() << "NO last to derender (lastindex = "<< lastIndex <<")";
-		}
+// 		else
+// 		{
+// 			qDebug() << "NO last to derender (lastindex = "<< lastIndex <<")";
+// 		}
 		f->deRenderAll();
 		
 		curGlyph = 0;
 	}
-	else
-	{
-		qDebug() << "dontNeedDerender (faceIndex = "<< faceIndex <<")";
-	}
+// 	else
+// 	{
+// 		qDebug() << "dontNeedDerender (faceIndex = "<< faceIndex <<")";
+// 	}
 
 // 	if(renderingLock == true)
 // 		return;
 // 	renderingLock = true;
+	
+	theVeryFont->setFTRaster(freetypeButton->isChecked());
 	
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	
@@ -1241,4 +1245,23 @@ void MainViewWidget::slotFeatureChanged()
 	slotView(true); 
 }
 
+void MainViewWidget::slotSampleChanged()
+{
+	slotView(true); 
+}
 
+void MainViewWidget::refillSampleList()
+{
+	sampleTextCombo->clear();
+	sampleTextCombo->addItems(typo->namedSamplesNames());
+}
+
+void MainViewWidget::slotFTRasterChanged()
+{
+// 	if(theVeryFont)
+// 	{
+// 		theVeryFont->setFTRaster(freetypeButton->isChecked());
+		slotView(true);
+// 	}
+
+}

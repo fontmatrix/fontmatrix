@@ -342,9 +342,6 @@ void typotek::createActions()
 	fonteditorAct->setStatusTip ( tr ( "Try to run Fontforge with the selected font as argument" ) );
 	connect (fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont()) );
 	
-	wordAction = new QAction( tr ( "Edit preview word" ),this );
-	connect(wordAction,SIGNAL(triggered( )),this,SLOT(slotWord()));
-	
 	prefsAction = new QAction( tr ( "Preferences" ),this );
 	connect(prefsAction,SIGNAL(triggered()),this,SLOT(slotPrefsPanel()));
 }
@@ -369,7 +366,6 @@ void typotek::createMenus()
 	editMenu->addSeparator();
 	editMenu->addAction ( fonteditorAct );
 	editMenu->addSeparator();
-	editMenu->addAction (wordAction);
 	editMenu->addAction(prefsAction);
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
@@ -938,25 +934,16 @@ void typotek::dragEnterEvent(QDragEnterEvent * event)
 	}
 }
 
-void typotek::slotWord()
-{
-	QString aword = QInputDialog::getText(this,tr("Fontmatrix wants a word"),tr("Give a preview word"));
-	if(!aword.isEmpty())
-	{
-		m_theWord = aword;
-// 		emit wordHasChanged(aword);
-	}
-}
 
 void typotek::slotPrefsPanel()
 {
-	qDebug()<< "typotek::slotPrefsPanel()";
 	PrefsPanelDialog pp(this);
 	pp.initSystrayPrefs(QSystemTrayIcon::isSystemTrayAvailable(),
                         systray->isVisible(),
                         systray->hasActivateAll(),
                         systray->allConfirmation(),
                         systray->tagsConfirmation());
+	pp.initSampleTextPrefs();
 	pp.exec();
 }
 
@@ -979,6 +966,7 @@ void typotek::addNamedSample(QString name, QString sample)
 		return;
 	}
 	m_namedSamples[name] = sample;
+	theMainView->refillSampleList();
 }
 void typotek::setSystrayVisible(bool isVisible)
 {
@@ -1003,7 +991,9 @@ void typotek::systrayTagsConfirmation(bool isEnabled)
 void typotek::addNamedSampleFragment(QString name, QString sampleFragment)
 {
 	// No need to check, it’s just for the loader
-	m_namedSamples[name] += sampleFragment + "\n";
+	QStringList lines = m_namedSamples[name].split("\n");
+	lines << sampleFragment;
+	m_namedSamples[name] = lines.join("\n");
 }
 
 
@@ -1018,4 +1008,20 @@ void typotek::setSampleText(QString s)
 {
 	m_namedSamples["default"] += s;
 }
+
+
+void typotek::changeSample(QString name, QString text)
+{
+	if(!m_namedSamples.contains(name))
+		return;
+	m_namedSamples[name] = text;
+}
+
+void typotek::setWord(QString s, bool updateView)
+{
+	m_theWord = s;
+	if (updateView)
+		theMainView->slotView(true);
+}
+
 

@@ -122,6 +122,7 @@ FontItem::FontItem ( QString path )
 	hasUnicode = false;
 	currentChar = -1;
 	m_isOpenType = false;
+	m_rasterFreetype = false;
 	fillLangIdMap();
 
 	if ( charsetMap.isEmpty() )
@@ -283,9 +284,6 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 
 	uint glyphIndex = 0;
 	currentChar = charcode;
-// 	if ( !contourCache.contains ( charcode ) )
-// 	{
-// 		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
 	glyphIndex = FT_Get_Char_Index ( m_face, charcode );
 	if ( glyphIndex == 0 )
 	{
@@ -295,49 +293,21 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 	{
 		return itemFromGindex ( glyphIndex,size );
 	}
-// 	}
-// 		if ( ft_error )
-// 		{
-// 			qDebug() << "FAILED - FT_Load_Char ( "<<m_name<<","<<charcode<<" )";
-// 			return 0;
-// 		}
-// // 		FT_Outline *outline = &m_glyph->outline;
-// 		QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
-// 		FT_Outline_Decompose ( &m_glyph->outline, &outline_funcs, &glyphPath );
-// 		contourCache[charcode] = glyphPath;
-// 		advanceCache[charcode] =  m_glyph->metrics.horiAdvance;
-// 	}
-//
-// 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
-// 	glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
-// 	glyph->setPath ( contourCache[charcode] );
-// 	double scalefactor = size / m_face->units_per_EM;
-// 	glyph->scale ( scalefactor,-scalefactor );
-// 	return glyph;
 	return 0;
-
-
-
 }
 
 QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 {
-	int charcode = index /*+ 65536*/;
-// 	if ( !contourCache.contains ( currentChar ) )
-// 	{
-		ft_error = FT_Load_Glyph ( m_face, charcode  /*- 65536*/, FT_LOAD_NO_SCALE );//spec.at ( i ).unicode()
-		if ( ft_error )
-		{
-			return 0;
-		}
-		FT_Outline *outline = &m_glyph->outline;
-		QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
-		FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
-// 		contourCache[currentChar] = glyphPath;
-		advanceCache[currentChar] =  m_glyph->metrics.horiAdvance;
-// // 		qDebug() << "glyph " <<charcode<<" stocked in "<<currentChar;
-// 	}
-
+	int charcode = index ;
+	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_NO_SCALE );
+	if ( ft_error )
+	{
+		return 0;
+	}
+	FT_Outline *outline = &m_glyph->outline;
+	QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
+	FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
+	advanceCache[currentChar] =  m_glyph->metrics.horiAdvance;
 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 	glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
 	glyph->setPath ( glyphPath  );
@@ -346,30 +316,105 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 	return glyph;
 }
 
+QGraphicsPixmapItem * FontItem::itemFromCharPix(int charcode, double size)
+{
+	uint glyphIndex = 0;
+	currentChar = charcode;
+	glyphIndex = FT_Get_Char_Index ( m_face, charcode );
+	if ( glyphIndex == 0 )
+	{
+		return 0;
+	}
+	else
+	{
+		return itemFromGindexPix ( glyphIndex,size );
+	}
+	return 0;
+}
+
+QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
+{
+	int charcode = index ;
+	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT );
+	if ( ft_error )
+	{
+		return 0;
+	}
+	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
+	if ( ft_error )
+	{
+		return 0;
+	}
+
+	QVector<QRgb> palette;
+	for(int i = 0; i < m_face->glyph->bitmap.num_grays; ++i)
+	{
+		palette << qRgba ( 0,0,0, i);
+	}
+	QImage img ( m_face->glyph->bitmap.buffer,
+	             m_face->glyph->bitmap.width,
+	             m_face->glyph->bitmap.rows,
+	             m_face->glyph->bitmap.pitch,
+	             QImage::Format_Indexed8 );
+	img.setColorTable(palette);
+	
+	advanceCache[currentChar] =  m_glyph->advance.x >> 6;
+	QGraphicsPixmapItem *glyph = new  QGraphicsPixmapItem;
+	glyph->setPixmap( QPixmap::fromImage(img) );
+	// we need to transport more data
+	glyph->setData(1,m_face->glyph->bitmap_left);
+	glyph->setData(2,m_face->glyph->bitmap_top );
+	glyph->setData(3,(uint)m_glyph->advance.x >> 6);
+	return glyph;
+}
 
 void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record )
 {
 	ensureFace();
+	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
 	QPointF pen ( origine );
-	for ( int i=0; i < spec.length(); ++i )
+	if(m_rasterFreetype)
 	{
-		QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
-		if ( !glyph )
+		for ( int i=0; i < spec.length(); ++i )
 		{
-			qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
-			continue;
+			QGraphicsPixmapItem *glyph = itemFromCharPix ( spec.at ( i ).unicode(), sizz );
+			if ( !glyph )
+			{
+				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+				continue;
+			}
+			if ( record )
+				pixList.append ( glyph );
+			scene->addItem ( glyph );
+			glyph->setPos ( pen.x() + glyph->data(1).toInt(),
+					pen.y() - glyph->data(2).toInt() );
+			glyph->setZValue ( 100.0 );
+			glyph->setData ( 1,"glyph" );
+			pen.rx() +=  glyph->data(3).toInt();
 		}
-		if ( record )
-			glyphList.append ( glyph );
-		scene->addItem ( glyph );
-		glyph->setPos ( pen );
-		glyph->setZValue ( 100.0 );
-		glyph->setData ( 1,"glyph" );
-		double scalefactor = sizz / m_face->units_per_EM;
-		pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+	}
+	else
+	{
+		for ( int i=0; i < spec.length(); ++i )
+		{
+			QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
+			if ( !glyph )
+			{
+				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+				continue;
+			}
+			if ( record )
+				glyphList.append ( glyph );
+			scene->addItem ( glyph );
+			glyph->setPos ( pen );
+			glyph->setZValue ( 100.0 );
+			glyph->setData ( 1,"glyph" );
+			double scalefactor = sizz / m_face->units_per_EM;
+			pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+		}
 	}
 
 	releaseFace();
@@ -387,32 +432,54 @@ void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPoi
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
-	
+	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
 	QList<RenderedGlyph> refGlyph = otf->procstring(spec, set);
 	if( refGlyph.count() == 0)
 	{
-		qDebug() << "Ooops";
 		return;
 	}
 	QPointF pen ( origine );
 	 
-	for ( int i=0; i < refGlyph.count(); ++i )
+	if(m_rasterFreetype)
 	{
-// 		qDebug() <<  refGlyph[i].glyph;
-		QGraphicsPathItem *glyph = itemFromGindex( refGlyph[i].glyph , sizz );
-		if ( !glyph )
+		for ( int i=0; i < refGlyph.count(); ++i )
 		{
-			qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
-			continue;
+			QGraphicsPixmapItem *glyph = itemFromGindexPix( refGlyph[i].glyph , sizz );
+			if ( !glyph )
+			{
+				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+				continue;
+			}
+			if ( record )
+				pixList.append ( glyph );
+			scene->addItem ( glyph );
+			double scalefactor = sizz / m_face->units_per_EM  ;
+			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * QApplication::desktop()->logicalDpiX() * scalefactor) + glyph->data(1).toInt()  ,
+					pen.y() + (refGlyph[i].yoffset *  QApplication::desktop()->logicalDpiY() * scalefactor) - glyph->data(2).toInt());
+			glyph->setZValue ( 100.0 );
+			glyph->setData ( 1,"glyph" );
+			pen.rx() += glyph->data(3).toInt();
 		}
-		if ( record )
-			glyphList.append ( glyph );
-		scene->addItem ( glyph );
-		double scalefactor = sizz / m_face->units_per_EM;
-		glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor), pen.y() + (refGlyph[i].yoffset * scalefactor) );
-		glyph->setZValue ( 100.0 );
-		glyph->setData ( 1,"glyph" );
-		pen.rx() += refGlyph[i].xadvance * scalefactor;
+	}
+	else
+	{
+		for ( int i=0; i < refGlyph.count(); ++i )
+		{
+			QGraphicsPathItem *glyph = itemFromGindex( refGlyph[i].glyph , sizz );
+			if ( !glyph )
+			{
+				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+				continue;
+			}
+			if ( record )
+				glyphList.append ( glyph );
+			scene->addItem ( glyph );
+			double scalefactor = sizz / m_face->units_per_EM;
+			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor), pen.y() + (refGlyph[i].yoffset * scalefactor) );
+			glyph->setZValue ( 100.0 );
+			glyph->setData ( 1,"glyph" );
+			pen.rx() += refGlyph[i].xadvance * scalefactor;
+		}
 	}
 	
 	delete otf;
@@ -551,7 +618,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	FT_ULong  charcode;
 	FT_UInt   gindex = 1;
 	double sizz = 50;
-	FT_Set_Char_Size ( m_face, sizz * 64 , 0, QApplication::desktop()->logicalDpiX(), QApplication::desktop()->logicalDpiY() );
+	
 
 // 	charcode = FT_Get_First_Char ( m_face, &gindex );
 	charcode = begin_code;
@@ -1363,6 +1430,8 @@ void FontItem::releaseOTFInstance(FmOtf * rotf )
 		delete otf;
 	releaseFace();
 }
+
+
 
 
 

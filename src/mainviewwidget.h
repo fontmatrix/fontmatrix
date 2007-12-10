@@ -120,6 +120,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotPlaneSelected(int);
 		void slotAdjustGlyphView(int width);
 		void slotFeatureChanged();
+		void slotSampleChanged();
+		void slotFTRasterChanged();
 		
 	signals:
 		void faceChanged();
@@ -130,6 +132,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsScene* textScene()const{return loremScene;};
 		QList<FontItem*> curFonts(){return currentFonts;};
 		FontItem* selectedFont(){return theVeryFont;};
+		
+		void refillSampleList();
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

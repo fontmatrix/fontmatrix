@@ -768,6 +768,7 @@ void MainViewWidget::slotAppendTag ( QString tag )
 {
 // 	qDebug() << "add tag to combo " << tag;
 	m_lists->tagsCombo->addItem ( tag );
+	emit newTag(tag);
 }
 
 void MainViewWidget::activation ( FontItem* fit , bool act )

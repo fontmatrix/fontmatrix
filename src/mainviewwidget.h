@@ -125,6 +125,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 	signals:
 		void faceChanged();
+		void newTag(QString);
 
 	public:
 		QString defaultOrd() {return ord[0];};

@@ -359,6 +359,9 @@ void typotek::createActions()
 	
 	prefsAction = new QAction( tr ( "Preferences" ),this );
 	connect(prefsAction,SIGNAL(triggered()),this,SLOT(slotPrefsPanel()));
+
+	if (systray)
+		connect(theMainView, SIGNAL(newTag(QString)), systray, SLOT(newTag(QString)));
 }
 
 void typotek::createMenus()

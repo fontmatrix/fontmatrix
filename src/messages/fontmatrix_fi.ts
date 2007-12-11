@@ -1,666 +1,545 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="fi">
-<defaultcodec></defaultcodec>
-<context>
+<!DOCTYPE TS>
+<TS>
+  <context>
     <name>About</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>About Fontmatrix</source>
-        <translation>Tietoja Fontmatrixista</translation>
+      <source>About Fontmatrix</source>
+      <translation>Tietoja Fontmatrixista</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>BookExportDialog</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+      <source>Dialog</source>
+      <translation>Valintaikkuna</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Font book options </source>
-        <translation>Fonttiesittelyn asetukset</translation>
+      <source>Font book options </source>
+      <translation>Fonttiesittelyn asetukset</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>File</source>
-        <translation>Tiedosto</translation>
+      <source>File</source>
+      <translation>Tiedosto</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Browse...</source>
-        <translation>Selaa...</translation>
+      <source>Browse...</source>
+      <translation>Selaa...</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Paper Size</source>
-        <translation>Paperin koko</translation>
+      <source>Paper Size</source>
+      <translation>Paperin koko</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>X-Pos</source>
-        <translation>X-sijainti</translation>
+      <source>X-Pos</source>
+      <translation>X-sijainti</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Family </source>
-        <translation>Perhe </translation>
+      <source>Family </source>
+      <translation>Perhe </translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Style </source>
-        <translation>Tyyli </translation>
+      <source>Style </source>
+      <translation>Tyyli </translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Text</source>
-        <translation>Teksti</translation>
+      <source>Text</source>
+      <translation>Teksti</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Font size</source>
-        <translation>Fonttikoko</translation>
+      <source>Font size</source>
+      <translation>Fonttikoko</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Family</source>
-        <translation>Perhe</translation>
+      <source>Family</source>
+      <translation>Perhe</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Style</source>
-        <translation>Tyyli</translation>
+      <source>Style</source>
+      <translation>Tyyli</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Headline</source>
-        <translation>Otsikko</translation>
+      <source>Headline</source>
+      <translation>Otsikko</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Body</source>
-        <translation>Leipäteksti</translation>
+      <source>Body</source>
+      <translation>Leipäteksti</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Sample text</source>
-        <translation>Esimerkkiteksti</translation>
+      <source>Sample text</source>
+      <translation>Esimerkkiteksti</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>FontAction</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <source>Form</source>
+      <translation>Lomake</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>action</source>
-        <translation type="unfinished">toiminto</translation>
+      <source>action</source>
+      <translation>toiminto</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Add Tag</source>
-        <translation>Lisää merkintä</translation>
+      <source>Add Tag</source>
+      <translation>Lisää luokka</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Help</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Fontmatrix Help</source>
-        <translation>Fontmatrixin ohje</translation>
+      <source>Fontmatrix Help</source>
+      <translation>Fontmatrixin ohje</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ImportedFonts</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+      <source>Dialog</source>
+      <translation>Valintaikkuna</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Imported fonts</source>
-        <translation>Tuodut fontit</translation>
+      <source>Imported fonts</source>
+      <translation>Tuodut fontit</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ListDock</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+      <source>Form</source>
+      <translation>Lomake</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Search through font informations</source>
-        <translation>Etsi fonttien tiedoista</translation>
+      <source>Search through font informations</source>
+      <translation>Etsi fonttien tiedoista</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Search</source>
-        <translation>Etsi</translation>
+      <source>Search</source>
+      <translation>Etsi</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Respect entered text case when searching</source>
-        <translation>Etsintä on merkkikokoherkkä</translation>
+      <source>Respect entered text case when searching</source>
+      <translation>Etsintä on merkkikokoherkkä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Case sensitive</source>
-        <translation>Merkkikokoherkkä</translation>
+      <source>Case sensitive</source>
+      <translation>Merkkikokoherkkä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Tag</source>
-        <translation>Merkintä</translation>
+      <source>Tag</source>
+      <translation>Luokka</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Filter view by chosing tag</source>
-        <translation>Suodata merkinnällä</translation>
+      <source>Filter view by chosing tag</source>
+      <translation>Suodata valitulla luokalla</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>TagSet</source>
-        <translation>Kokoelma</translation>
+      <source>TagSet</source>
+      <translation>Kokoelma</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Show only fonts that belong to chosen tagset</source>
-        <translation>Näytä ainoastaan fontit jotka kuuluvat valittuun kokoelmaan</translation>
+      <source>Show only fonts that belong to chosen tagset</source>
+      <translation>Näytä ainoastaan fontit, jotka kuuluvat valittuun kokoelmaan</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Names</source>
-        <translation>Nimet</translation>
+      <source>Names</source>
+      <translation>Nimet</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Files</source>
-        <translation>Tiedostot</translation>
+      <source>Files</source>
+      <translation>Tiedostot</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Preview</source>
-        <translation>Esikatselu</translation>
+      <source>Preview</source>
+      <translation>Esikatselu</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Show complete collection of available fonts</source>
-        <translation type="unfinished"></translation>
+      <source>Show complete collection of available fonts</source>
+      <translation>Näytä täydellinen fonttikokoelma</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>View all</source>
-        <translation>Näytä kaikki</translation>
+      <source>View all</source>
+      <translation>Näytä kaikki</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Show all activated fonts</source>
-        <translation>Näyttä kaikki aktivoidut fontit</translation>
+      <source>Show all activated fonts</source>
+      <translation>Näyttä kaikki käytössä olevat fontit</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>View activated</source>
-        <translation>Näytä aktivoidut</translation>
+      <source>View activated</source>
+      <translation>Näytä käytössä olevat</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MainView</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>main view widget</source>
-        <translation>pääikkuna</translation>
+      <source>main view widget</source>
+      <translation>pääikkuna</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Right mouse click on a tag to add it or remove it from TagSet</source>
-        <translation>Poista ja lisää merkintä kokoelmasta oikealla hiiren painikkeella</translation>
+      <source>Right mouse click on a tag to add it or remove it from TagSet</source>
+      <translation>Poista tai lisää luokka kokoelmasta oikealla hiiren painikkeella</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Font Info</source>
-        <translation>Fontin tiedot</translation>
+      <source>Font Info</source>
+      <translation>Fontin tiedot</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+      <source>&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>&lt;/p>&lt;/body>&lt;/html></source>
+      <translation>&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>&lt;/p>&lt;/body>&lt;/html></translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Sample text</source>
-        <translation>Esimerkkiteksti</translation>
+      <source>Sample text</source>
+      <translation>Esimerkkiteksti</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Fit to view</source>
-        <translation>Sovita alueelle</translation>
+      <source>Fit to view</source>
+      <translation>Sovita alueelle</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Zoom is disabled, uncheck fit to view to enable zoom</source>
-        <translation>Koon muutos on pois käytöstä. Saat sen käyttöön poistamalla Sovita alueelle käytöstä</translation>
+      <source>Zoom is disabled, uncheck fit to view to enable zoom</source>
+      <translation>Koon muutos on pois käytöstä. Saat sen käyttöön poistamalla Sovita alueelle käytöstä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>FT</source>
-        <translation type="unfinished"></translation>
+      <source>FT</source>
+      <translation>FT</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>OpenType Features</source>
-        <translation>OpenType-ominaisuudet</translation>
+      <source>OpenType Features</source>
+      <translation>OpenType-ominaisuudet</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Friendly Name</source>
-        <translation type="unfinished"></translation>
+      <source>Friendly Name</source>
+      <translation>Kuvaus</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Apply features</source>
-        <translation type="unfinished"></translation>
+      <source>Apply features</source>
+      <translation>Käytä ominaisuuksia</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Glyphs</source>
-        <translation type="unfinished"></translation>
+      <source>Glyphs</source>
+      <translation>Merkit</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Coverage of unicode interval :</source>
-        <translation type="unfinished"></translation>
+      <source>Coverage of unicode interval :</source>
+      <translation>Unicode-alueen kattavuus: </translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Clicking on a glyph will show details about it</source>
-        <translation type="unfinished"></translation>
+      <source>Clicking on a glyph will show details about it</source>
+      <translation>Näet merkin yksityiskohdat, kun napsautat sitä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Tags</source>
-        <translation type="unfinished"></translation>
+      <source>Tags</source>
+      <translation>Luokat</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PrefsPanel</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Preferences Panel</source>
-        <translation type="unfinished"></translation>
+      <source>Preferences Panel</source>
+      <translation>Ominaisuudet</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
+      <source>General</source>
+      <translation>Yleiset</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Show Fontmatrix in system tray</source>
-        <translation type="unfinished"></translation>
+      <source>Show Fontmatrix in system tray</source>
+      <translation>Näytä Fontmatrix ilmoitusalueella</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Close to system tray</source>
-        <translation type="unfinished"></translation>
+      <source>Close to system tray</source>
+      <translation>Sulje ilmoitusalueelle</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Show Activate all and Deactivate all in system tray menu</source>
-        <translation type="unfinished"></translation>
+      <source>Show Activate all and Deactivate all in system tray menu</source>
+      <translation>Näytä Ota kaikki käyttöön ja Poista kaikki käytöstä ilmoitusalueen valikossa</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Ask confirmation when activating or deactivating all fonts</source>
-        <translation type="unfinished"></translation>
+      <source>Ask confirmation when activating or deactivating all fonts</source>
+      <translation>Kysy varmistus, kun kaikki fontit otetaan käyttöön tai poistetaan käytöstä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Ask confirmation when activating or deactivating tags</source>
-        <translation type="unfinished"></translation>
+      <source>Ask confirmation when activating or deactivating tags</source>
+      <translation>Kysy varmistus, kun fontit otetaan käyttöön tai poistetaan käytöstä merkintöjen perusteella</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Preview word</source>
-        <translation type="unfinished"></translation>
+      <source>Preview word</source>
+      <translation>Esimerkkisana</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Sample text</source>
-        <translation type="unfinished"></translation>
+      <source>Sample text</source>
+      <translation>Esimerkkiteksti</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Named sample texts</source>
-        <translation type="unfinished"></translation>
+      <source>Named sample texts</source>
+      <translation>Esimerkkitekstit</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
+      <source>Add</source>
+      <translation>Lisää</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Validate</source>
-        <translation type="unfinished"></translation>
+      <source>Validate</source>
+      <translation>Tarkasta</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Layout</source>
-        <translation type="unfinished"></translation>
+      <source>Layout</source>
+      <translation>Asettelu</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Font size </source>
-        <translation type="unfinished"></translation>
+      <source>Font size </source>
+      <translation>Fonttikoko</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source> pt</source>
-        <translation type="unfinished"></translation>
+      <source> pt</source>
+      <translation> pt</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Interline </source>
-        <translation type="unfinished"></translation>
+      <source>Interline </source>
+      <translation>Sovita väliin
+</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
+      <source>Apply</source>
+      <translation>Käytä</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PrefsPanelDialog</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Looks like your setup does not have a system tray available.</source>
-        <translation type="unfinished"></translation>
+      <source>Looks like your setup does not have a system tray available.</source>
+      <translation>Järjestelmästäsi ei löydy ilmoitusaluetta.</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>A text</source>
-        <translation type="unfinished"></translation>
+      <source>A text</source>
+      <translation>Teksti</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>QObject</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>codepoint is U+</source>
-        <translation type="unfinished"></translation>
+      <source>codepoint is U+</source>
+      <translation>merkkikoodi on U+</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Systray</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Activate all</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Activate all</source>
+      <translation>Ot&amp;a kaikki käyttöön</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Deactivate all</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Deactivate all</source>
+      <translation>&amp;Poista kaikki käytöstä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Mi&amp;nimize</source>
-        <translation type="unfinished"></translation>
+      <source>Mi&amp;nimize</source>
+      <translation>Pie&amp;nennä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Restore</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Restore</source>
+      <translation>P&amp;alauta</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Exit</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Exit</source>
+      <translation>&amp;Poistu</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Tags</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Tags</source>
+      <translation>Luoka&amp;t</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TagSetDialog</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>TagSet editor</source>
-        <translation type="unfinished"></translation>
+      <source>TagSet editor</source>
+      <translation>Muokkaa kokoelmia</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Collections of Tags</source>
-        <translation type="unfinished"></translation>
+      <source>Collections of Tags</source>
+      <translation>Luokkakokoelmat</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Available tags</source>
-        <translation type="unfinished"></translation>
+      <source>Available tags</source>
+      <translation>Käytössä olevat luokat</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Add selected tag to current set.</source>
-        <translation type="unfinished"></translation>
+      <source>Add selected tag to current set.</source>
+      <translation>Lisää valittu luokka kokoelmaan</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>add</source>
-        <translation type="unfinished"></translation>
+      <source>add</source>
+      <translation>lisää</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Collections</source>
-        <translation type="unfinished"></translation>
+      <source>Collections</source>
+      <translation>Kokoelmat</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>New</source>
-        <translation type="unfinished"></translation>
+      <source>New</source>
+      <translation>Uusi</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>delete</source>
-        <translation type="unfinished"></translation>
+      <source>delete</source>
+      <translation>poista</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>remove</source>
-        <translation type="unfinished"></translation>
+      <source>remove</source>
+      <translation>poista</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
+      <source>Close</source>
+      <translation>Sulje</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>typotek</name>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Fontmatrix</source>
-        <translation type="unfinished"></translation>
+      <source>Fontmatrix</source>
+      <translation>Fontmatrix</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>The program will keep running in the system tray. To terminate the program, choose &lt;b&gt;Exit&lt;/b&gt; in the context menu of the system tray entry.</source>
-        <translation type="unfinished"></translation>
+      <source>The program will keep running in the system tray. To terminate the program, choose &lt;b>Exit&lt;/b> in the context menu of the system tray entry.</source>
+      <translation>Ohjelmaa ei suljeta vaan se pienennetään ilmoitusalueelle. Voit sulkea ohjelman ilmoitusalueella olevan kuvakkeen valikon kohdasta Poistu.</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Add Directory</source>
-        <translation type="unfinished"></translation>
+      <source>Add Directory</source>
+      <translation>Lisää hakemisto</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Import...</source>
+      <translation>T&amp;uo...</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+      <source>Ctrl+O</source>
+      <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Import a directory</source>
-        <translation type="unfinished"></translation>
+      <source>Import a directory</source>
+      <translation>Tuo hakemisto</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Save</source>
+      <translation>&amp;Tallenna</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+      <source>Ctrl+S</source>
+      <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Save the document to disk</source>
-        <translation type="unfinished"></translation>
+      <source>Save the document to disk</source>
+      <translation>Tallenna muutokset levylle</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Print...</source>
-        <translation type="unfinished"></translation>
+      <source>Print...</source>
+      <translation>Tulosta...</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Print a specimen of the current font</source>
-        <translation type="unfinished"></translation>
+      <source>Print a specimen of the current font</source>
+      <translation>Tulosta näyte valitusta fontista</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Export font book...</source>
-        <translation type="unfinished"></translation>
+      <source>Export font book...</source>
+      <translation>Tallenna fonttikirja...</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Export a pdf that show selected fonts</source>
-        <translation type="unfinished"></translation>
+      <source>Export a pdf that show selected fonts</source>
+      <translation>Tallenna esimerkkitekstit valituista fonteista pdf-tiedostoon</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+      <source>E&amp;xit</source>
+      <translation>&amp;Poistu</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+      <source>Ctrl+Q</source>
+      <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Exit the application</source>
-        <translation type="unfinished"></translation>
+      <source>Exit the application</source>
+      <translation>Poistu ohjelmasta</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;About</source>
+      <translation>&amp;Tietoja</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Show the Typotek&apos;s About box</source>
-        <translation type="unfinished"></translation>
+      <source>Show the Typotek's About box</source>
+      <translation>Näytä Fontmatrixin tietoja-ikkuna</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Help</source>
-        <translation type="unfinished"></translation>
+      <source>Help</source>
+      <translation>Ohje</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Tag Sets</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Tag Sets</source>
+      <translation>&amp;Kokoelmat</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Activate all currents</source>
-        <translation type="unfinished"></translation>
+      <source>Activate all currents</source>
+      <translation>Ota kaikki listatut käyttöön</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Deactivate all currents</source>
-        <translation type="unfinished"></translation>
+      <source>Deactivate all currents</source>
+      <translation>Poista kaikki listatut käytöstä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Edit current font</source>
-        <translation type="unfinished"></translation>
+      <source>Edit current font</source>
+      <translation>Muokkaa valittua fonttia</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Try to run Fontforge with the selected font as argument</source>
-        <translation type="unfinished"></translation>
+      <source>Try to run Fontforge with the selected font as argument</source>
+      <translation>Yrittää ajaa Fontforgen valitulla fontilla</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
+      <source>Preferences</source>
+      <translation>Asetukset</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;File</source>
+      <translation>&amp;Tiedosto</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
+      <source>Edit</source>
+      <translation>Muokkaa</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+      <source>&amp;Help</source>
+      <translation>&amp;Ohje</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Ready</source>
-        <translation type="unfinished"></translation>
+      <source>Ready</source>
+      <translation>Valmis</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Print specimen</source>
-        <translation type="unfinished"></translation>
+      <source>Print specimen</source>
+      <translation>Tulosta näyte</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>There is no font selected</source>
-        <translation type="unfinished"></translation>
+      <source>There is no font selected</source>
+      <translation>Fontteja ei ole valittuna</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>Support of DragNDrop over http is sheduled but not yet effective</source>
-        <translation type="unfinished"></translation>
+      <source>Support of DragNDrop over http is sheduled but not yet effective</source>
+      <translation>Raahaa ja pudota -tuki http:lle on kehitteillä, muttei vielä toiminnassa</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
-        <translation type="unfinished"></translation>
+      <source>You bring something over me I canât handle</source>
+      <translation>Pudotit jotain, jota en osaa käsitellä</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>You provided an empty string, it&#xe2;&#x80;&#x99;s not fair</source>
-        <translation type="unfinished"></translation>
+      <source>You provided an empty string, itâs not fair</source>
+      <translation>Merkkijono on tyhjä.</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
-        <source>&quot;default&quot; is a reserved keyword</source>
-        <translation type="unfinished"></translation>
+      <source>&quot;default&quot; is a reserved keyword</source>
+      <translation>&quot;default&quot; on varattu sana</translation>
     </message>
-</context>
+  </context>
 </TS>

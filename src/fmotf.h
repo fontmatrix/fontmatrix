@@ -137,6 +137,9 @@ class FmOtf
 //   uint get_position(int,GlyphLayout *);
 //   uint presentAlternates(HB_UInt, HB_UShort, QList<HB_UShort>);
 		QList<RenderedGlyph> get_position ( /*int g*/ );
+		
+		friend class FontItem;
+		
 
 
 };

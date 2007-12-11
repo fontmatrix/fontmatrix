@@ -1014,6 +1014,8 @@ void typotek::addNamedSampleFragment(QString name, QString sampleFragment)
 {
 	// No need to check, it’s just for the loader
 	QStringList lines = m_namedSamples[name].split("\n");
+	if(lines[0].isEmpty())
+		lines.removeAt(0);
 	lines << sampleFragment;
 	m_namedSamples[name] = lines.join("\n");
 }

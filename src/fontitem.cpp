@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "fontitem.h"
 #include "fmotf.h"
+#include "fmshaper.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -487,6 +488,90 @@ void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPoi
 }
 
 
+void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, QPointF origine, double fsize, bool record)
+{
+	if(!m_isOpenType)
+		return;
+	ensureFace();
+	
+	otf = new FmOtf(m_face);
+	if(!otf)
+	{
+		releaseFace();
+		return;
+	}
+	if ( record )
+		sceneList.append ( scene );
+	double sizz = fsize;
+	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, 72, 72 );
+	
+	FmShaper shaper;
+	shaper.setFont(&otf->hbFont);
+	if(shaper.setScript(script))
+	{
+		delete otf;
+		releaseFace();
+		return;
+	}
+	shaper.doShape(spec);
+	// Here we make something really dirty!
+	otf->_buffer = shaper.out_buffer();
+	QList<RenderedGlyph> refGlyph = otf->get_position();
+	if( refGlyph.count() == 0)
+	{
+		releaseFace();
+		return;
+	}
+	QPointF pen ( origine );
+	 
+	if(m_rasterFreetype)
+	{
+		for ( int i=0; i < refGlyph.count(); ++i )
+		{
+			QGraphicsPixmapItem *glyph = itemFromGindexPix( refGlyph[i].glyph , sizz );
+			if ( !glyph )
+			{
+				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+				continue;
+			}
+			if ( record )
+				pixList.append ( glyph );
+			scene->addItem ( glyph );
+			double scalefactor = sizz / m_face->units_per_EM  ;
+			glyph->setPos ( pen.x() + (refGlyph[i].xoffset  * scalefactor) + glyph->data(1).toInt()  ,
+					pen.y() + (refGlyph[i].yoffset  * scalefactor) - glyph->data(2).toInt());
+			glyph->setZValue ( 100.0 );
+			glyph->setData ( 1,"glyph" );
+			pen.rx() += glyph->data(3).toInt();
+		}
+	}
+	else
+	{
+		for ( int i=0; i < refGlyph.count(); ++i )
+		{
+			QGraphicsPathItem *glyph = itemFromGindex( refGlyph[i].glyph , sizz );
+			if ( !glyph )
+			{
+				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+				continue;
+			}
+			if ( record )
+				glyphList.append ( glyph );
+			scene->addItem ( glyph );
+			double scalefactor = sizz / m_face->units_per_EM;
+			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor), pen.y() + (refGlyph[i].yoffset * scalefactor) );
+			glyph->setZValue ( 100.0 );
+			glyph->setData ( 1,"glyph" );
+			pen.rx() += refGlyph[i].xadvance * scalefactor;
+		}
+	}
+	
+	delete otf;
+	releaseFace();
+}
+
+
+
 //deprecated
 void FontItem::deRender ( QGraphicsScene *scene )
 {
@@ -505,7 +590,7 @@ void FontItem::deRender ( QGraphicsScene *scene )
 
 void FontItem::deRenderAll()
 {
-	qDebug() << m_name  <<"::deRenderAll()";
+// 	qDebug() << m_name  <<"::deRenderAll()";
 	for ( int i = 0; i < pixList.count(); ++i )
 	{
 		if ( pixList[i]->scene() )
@@ -612,8 +697,8 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	int glyph_count = 0;
 	int nl = 0;
 
-	for ( int i=1;i<=m_numGlyphs; ++i )
-		m_charLess.append ( i );
+// 	for ( int i=1;i<=m_numGlyphs; ++i )
+// 		m_charLess.append ( i );
 
 	FT_ULong  charcode;
 	FT_UInt   gindex = 1;
@@ -924,17 +1009,76 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	QRectF savedRect = theOneLineScene->sceneRect();
 	theOneLineScene->setSceneRect ( 0,0,320,32 );
 
-	renderLine ( theOneLineScene,oneline ,QPointF ( 10,24 ),20,false );
-	QPixmap apix ( 320,32 );
-	apix.fill ( Qt::white );
-	QPainter apainter ( &apix );
-	apainter.setRenderHint ( QPainter::Antialiasing,true );
-	theOneLineScene->render ( &apainter );
-	theOneLinePreviewPixmap = apix;
+	if ( !m_rasterFreetype )
+	{
+		renderLine ( theOneLineScene,oneline ,QPointF ( 10,24 ),20,false );
+		QPixmap apix ( 320,32 );
+		apix.fill ( Qt::white );
+		QPainter apainter ( &apix );
+		apainter.setRenderHint ( QPainter::Antialiasing,true );
+		theOneLineScene->render ( &apainter );
+		theOneLinePreviewPixmap = apix;
+		
+		theOneLineScene->setSceneRect ( savedRect );
+		theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
+		
+	}
+	else
+	{
+// 		qDebug()<< m_name << "renders " << oneline;
+		ensureFace();
+		FT_Set_Char_Size ( m_face, 20  * 64 , 0, 72, 72 );
+		QPointF pen(10,0);
+		QPixmap linePixmap( 320,32 );
+		linePixmap.fill(Qt::white);
+		QPainter apainter( &linePixmap );
+		QVector<QRgb> palette;
+		for(int i =0;i < oneline.count() ; ++i)
+		{
+			int glyphIndex = FT_Get_Char_Index ( m_face, oneline[i].unicode() );
+			if ( glyphIndex == 0 )
+			{
+				continue;
+			}
+			ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
+			if ( ft_error )
+			{
+				continue;
+			}
+			ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
+			if ( ft_error )
+			{
+				continue;
+			}
 
-	theOneLineScene->setSceneRect ( savedRect );
-	theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
-
+			palette.clear();
+			for ( int i = 0; i < m_face->glyph->bitmap.num_grays; ++i )
+			{
+				palette << qRgba ( 0,0,0, i );
+			}
+			QImage img ( m_face->glyph->bitmap.buffer,
+			             m_face->glyph->bitmap.width,
+			             m_face->glyph->bitmap.rows,
+			             m_face->glyph->bitmap.pitch,
+			             QImage::Format_Indexed8 );
+			img.setColorTable ( palette );
+// 			apainter.drawImage(pen.x(), pen.y() - m_face->glyph->bitmap_top, img);
+			pen.ry() = 26 - m_face->glyph->bitmap_top;
+			pen.rx() += m_face->glyph->bitmap_left;
+			apainter.drawImage(pen, img);
+			pen.rx() +=  m_glyph->advance.x >> 6 ;
+		}
+		apainter.end();
+		releaseFace();
+		
+		theOneLinePreviewPixmap = linePixmap;
+	}
+	
+	if ( !theOneLinePreviewPixmap.isNull() )
+		return theOneLinePreviewPixmap;
+	
+	theOneLinePreviewPixmap = QPixmap(320,32);
+	theOneLinePreviewPixmap.fill(Qt::lightGray);
 	return theOneLinePreviewPixmap;
 }
 
@@ -1430,7 +1574,6 @@ void FontItem::releaseOTFInstance(FmOtf * rotf )
 		delete otf;
 	releaseFace();
 }
-
 
 
 

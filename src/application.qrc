@@ -19,28 +19,40 @@
         <file alias="fontmatrix_import_icon.png">graphic-resources/fontmatrix-import-icon.png</file>
     </qresource>
 
+
+<!-- DEFAULT -->
     <qresource prefix="/texts" >
         <file alias="about">messages/about.html</file>
         <file alias="help">messages/help.html</file>
        <file alias="welcome">messages/welcome.html</file> 
+        <file alias="fontmatrix">messages/fontmatrix_en.qm</file>
     </qresource>
 
+<!-- We’ll try to keep these items alphabetically order by language -->
+    <qresource prefix="/texts" lang="da" >
+        <file alias="fontmatrix">messages/fontmatrix_da.qm</file>
+    </qresource>
+        
+    <qresource prefix="/texts" lang="en" >
+	    <file alias="fontmatrix">messages/fontmatrix_en.qm</file>
+    </qresource>
+    
+    <qresource prefix="/texts" lang="fi" >
+	    <file alias="fontmatrix">messages/fontmatrix_fi.qm</file>
+    </qresource>
+    
     <qresource prefix="/texts" lang="fr" >
         <file alias="about">messages/about_fr.html</file>
         <file alias="help">messages/help_fr.html</file>
         <file alias="fontmatrix">messages/fontmatrix_fr.qm</file>
     </qresource>
     
-    <qresource prefix="/texts" lang="sr" >
-        <file alias="fontmatrix">messages/fontmatrix_sr.qm</file>
-    </qresource>
-    
-    <qresource prefix="/texts" lang="no" >
+   <qresource prefix="/texts" lang="no" >
         <file alias="fontmatrix">messages/fontmatrix_no.qm</file>
     </qresource>
     
-    <qresource prefix="/texts" lang="da" >
-        <file alias="fontmatrix">messages/fontmatrix_da.qm</file>
+    <qresource prefix="/texts" lang="sr" >
+        <file alias="fontmatrix">messages/fontmatrix_sr.qm</file>
     </qresource>
     
     <qresource prefix="/texts" lang="sv" >

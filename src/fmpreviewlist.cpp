@@ -96,7 +96,10 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 			FontItem *fit = fonts.at(i);
 			if(fit)
 			{
+				bool oldRaster = fit->rasterFreetype();
+				fit->setFTRaster("true");
 				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
+				fit->setFTRaster(oldRaster);
 				pit->setPos(50,32*i);
 				pit->setData(1,fit->name());
 				pit->setData(2,"preview");

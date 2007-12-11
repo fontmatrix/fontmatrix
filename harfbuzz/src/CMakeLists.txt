@@ -17,6 +17,7 @@ harfbuzz-indic.cpp
 harfbuzz-shaper-all.cpp
 harfbuzz-shaper.cpp
 harfbuzz-thai.cpp
+harfbuzz-impl.c
 )
 
 

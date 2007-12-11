@@ -1158,9 +1158,10 @@ void MainViewWidget::slotAdjustGlyphView(int width)
 void MainViewWidget::fillOTTree()
 {
 	OpenTypeTree->clear();
+	langCombo->setEnabled(false);
+	QStringList scripts;
 	if(theVeryFont && theVeryFont->isOpenType())
 	{
-		
 		FmOtf * otf = theVeryFont->takeOTFInstance();
 		foreach(QString table, otf->get_tables())
 		{
@@ -1169,6 +1170,7 @@ void MainViewWidget::fillOTTree()
 			tab_item->setExpanded(true);
 			foreach(QString script, otf->get_scripts())
 			{
+				scripts << script;
 				otf->set_script(script);
 				QTreeWidgetItem *script_item = new QTreeWidgetItem(tab_item, QStringList(script));
 				script_item->setExpanded(true);
@@ -1189,6 +1191,13 @@ void MainViewWidget::fillOTTree()
 		}
 		OpenTypeTree->resizeColumnToContents ( 0 ) ;
 		theVeryFont->releaseOTFInstance(otf);
+	}
+	scripts = scripts.toSet().toList();
+// 	scripts.removeAll("latn");
+	if(scripts.count() > 1)
+	{
+		langCombo->setEnabled(true);
+		langCombo->addItems(scripts);
 	}
 }
 

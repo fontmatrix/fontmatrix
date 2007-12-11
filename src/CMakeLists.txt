@@ -20,6 +20,7 @@ tagseteditor.cpp
 typotek.cpp
 fmotf.cpp
 prefspaneldialog.cpp
+fmshaper.cpp
 )
 
 SET(fontmatrix_MOC_HDRS

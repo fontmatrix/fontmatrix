@@ -394,7 +394,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 					pen.y() - glyph->data(2).toInt() );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			pen.rx() +=  glyph->data(3).toInt();
+			pen.rx() += glyph->data(3).toInt();
 		}
 	}
 	else
@@ -459,7 +459,7 @@ void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPoi
 					pen.y() + (refGlyph[i].yoffset  * scalefactor) - glyph->data(2).toInt());
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			pen.rx() += glyph->data(3).toInt();
+			pen.rx() += refGlyph[i].xadvance * scalefactor ;//We’ll have some "rounded" related wrong display but...
 		}
 	}
 	else

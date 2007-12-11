@@ -191,6 +191,9 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <widget class="QToolButton" name="freetypeButton" >
+                <property name="toolTip" >
+                 <string>Simulate screen rendering (FreeType inside)</string>
+                </property>
                 <property name="text" >
                  <string>FT</string>
                 </property>

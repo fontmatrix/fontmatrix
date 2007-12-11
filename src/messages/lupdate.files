@@ -4,6 +4,7 @@
 ../fmotf.cpp
 ../fmpreviewlist.cpp
 ../fmsampletextview.cpp
+../fmshaper.cpp
 ../fontactionwidget.cpp
 ../fontbookdialog.cpp
 ../fontitem.cpp
@@ -12,9 +13,10 @@
 ../listdockwidget.cpp
 ../main.cpp
 ../mainviewwidget.cpp
-../moc_typotekadaptator.cpp
+../prefspaneldialog.cpp
 ../qmake_image_collection.cpp
 ../savedata.cpp
+../systray.cpp
 ../tagseteditor.cpp
 ../typotekadaptator.cpp
 ../typotek.cpp
@@ -25,4 +27,5 @@
 ../importedfonts.ui
 ../listsdock.ui
 ../mainview.ui
+../prefs_panel.ui
 ../tagset.ui

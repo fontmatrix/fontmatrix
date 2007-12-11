@@ -51,7 +51,7 @@
           <item>
            <widget class="QGroupBox" name="activateAllFrame" >
             <property name="title" >
-             <string>Show Activate all and Deactivate all in system tray menu</string>
+             <string>Show Activate all and Deactivate all in the system tray menu</string>
             </property>
             <property name="flat" >
              <bool>true</bool>
@@ -76,7 +76,7 @@
           <item>
            <widget class="QCheckBox" name="tagsConfirmation" >
             <property name="text" >
-             <string>Ask confirmation when activating or deactivating tags</string>
+             <string>Ask confirmation when activating or deactivating fonts by tags</string>
             </property>
            </widget>
           </item>

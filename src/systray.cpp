@@ -117,6 +117,13 @@ void Systray::slotActivateAll()
 			ttek->hide();
 	} else
 		ttek->theMainView->slotActivateAll();
+
+	disconnect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
+	QList<QAction*> tags = tagActions.values();
+	foreach (QAction* a, tags) {
+		a->setChecked(true);
+	}
+	connect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
 }
 
 void Systray::slotDeactivateAll()
@@ -131,6 +138,12 @@ void Systray::slotDeactivateAll()
 			ttek->hide();
 	} else
 		ttek->theMainView->slotDesactivateAll();
+	disconnect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
+	QList<QAction*> tags = tagActions.values();
+	foreach (QAction* a, tags) {
+		a->setChecked(false);
+	}
+	connect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
 }
 
 void Systray::slotTagMenuClicked(QAction *action)
@@ -216,7 +229,7 @@ void Systray::createActions()
     restoreAction = new QAction(tr("&Restore"), this);
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(slotRestore()));
 
-    quitAction = new QAction(tr("&Exit"), this);
+    quitAction = new QAction(tr("E&xit"), this);
     connect(quitAction, SIGNAL(triggered()), this, SLOT(slotQuit()));
 }
 

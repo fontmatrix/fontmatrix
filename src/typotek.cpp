@@ -169,11 +169,14 @@ void typotek::open()
 	}
 	QStringList tali;
 	/* Everybody say it’s useless...
-		QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." );
-
-		if(!inputTags.isEmpty())
-			tali = inputTags.split ( "#" );*/
-	tali << "Activated_Off" ;
+		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
+	if (useInitialTags) {
+			QString inputTags = QInputDialog::getText ( this,"Import tags","Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." );
+	
+			if(!inputTags.isEmpty())
+				tali = inputTags.split ( "#" );
+		tali << "Activated_Off" ;
+	}
 
 	foreach ( QString tas, tali )
 	{
@@ -412,6 +415,7 @@ void typotek::readSettings()
 	resize ( size );
 	move ( pos );
 	fonteditorPath = settings.value("FontEditor", "/usr/bin/fontforge").toString();
+	useInitialTags = settings.value("UseInitialTags", false).toBool();
 }
 
 void typotek::writeSettings()
@@ -1069,4 +1073,9 @@ void typotek::setFontEditorPath(const QString &path)
 	settings.setValue("FontEditor", fonteditorPath);
 }
 
-
+void typotek::slotUseInitialTags(bool isEnabled)
+{
+	useInitialTags = isEnabled;
+	QSettings settings("Undertype", "fontmatrix");
+	settings.setValue("UseInitialTags", isEnabled);
+}

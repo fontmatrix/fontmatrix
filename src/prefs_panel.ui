@@ -158,6 +158,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="initTagBox" >
+         <property name="text" >
+          <string>Ask for tag names when importing fonts</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer>
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -165,7 +172,7 @@
          <property name="sizeHint" >
           <size>
            <width>544</width>
-           <height>91</height>
+           <height>51</height>
           </size>
          </property>
         </spacer>

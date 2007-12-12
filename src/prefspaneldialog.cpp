@@ -24,6 +24,7 @@ PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
 	doConnect();
 	systrayFrame->setCheckable(true);
 	previewWord->setText(typotek::getInstance()->word());
+	initTagBox->setChecked(typotek::getInstance()->initialTags());
 }
 
 
@@ -69,6 +70,7 @@ void PrefsPanelDialog::doConnect()
 	connect(previewWord, SIGNAL(textChanged ( const QString  ) ), this, SLOT(updateWord(QString)));
 	connect(fontEditorPath, SIGNAL(textChanged(QString)), this, SLOT(setupFontEditor(QString)));
 	connect(fontEditorBrowse, SIGNAL(clicked()), this, SLOT(slotFontEditorBrowse()));
+	connect(initTagBox, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotUseInitialTags(bool)));
 
 }
 

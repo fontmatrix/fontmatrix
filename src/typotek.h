@@ -72,6 +72,7 @@ class typotek:public QMainWindow
 	public slots:
 		bool save();
 		void slotCloseToSystray(bool isEnabled);
+		void slotUseInitialTags(bool isEnabled);
 		
 	signals:
 		void tagAdded(QString);
@@ -142,6 +143,7 @@ class typotek:public QMainWindow
 
 		Systray *systray;
 
+		bool useInitialTags;
 		static QString fonteditorPath;
 
 	public:
@@ -190,6 +192,8 @@ class typotek:public QMainWindow
 
 		void setFontEditorPath(const QString &path);
 		QString fontEditorPath() {return fonteditorPath;};
+
+		bool initialTags() { return useInitialTags;};
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

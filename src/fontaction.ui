@@ -29,7 +29,7 @@
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="text" >
-          <string>action</string>
+          <string>Action</string>
          </property>
          <property name="alignment" >
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

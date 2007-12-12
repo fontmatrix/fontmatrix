@@ -43,7 +43,7 @@
       </property>
       <widget class="QWidget" name="tab" >
        <attribute name="title" >
-        <string>Font Info</string>
+        <string>Font Information</string>
        </attribute>
        <attribute name="icon" >
         <iconset resource="application.qrc" >:/fontmatrix_info.png</iconset>
@@ -77,7 +77,7 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_4" >
        <attribute name="title" >
-        <string>Sample text</string>
+        <string>Sample Text</string>
        </attribute>
        <attribute name="icon" >
         <iconset resource="application.qrc" >:/fontmatrix_sampletext.png</iconset>
@@ -107,7 +107,7 @@ p, li { white-space: pre-wrap; }
                  <enum>Qt::RightToLeft</enum>
                 </property>
                 <property name="text" >
-                 <string>Fit to view</string>
+                 <string>Fit to View</string>
                 </property>
                 <property name="checked" >
                  <bool>true</bool>
@@ -301,7 +301,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QLabel" name="label_2" >
               <property name="text" >
-               <string>Coverage of unicode interval :</string>
+               <string>Coverage of Unicode Interval :</string>
               </property>
              </widget>
             </item>

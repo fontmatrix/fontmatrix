@@ -77,7 +77,7 @@ void typotek::initMatrix()
 	addDockWidget(Qt::LeftDockWidgetArea, mainDock);
 	
 	QFont statusFontFont("sans-serif",8,QFont::Bold,false);
-	curFontPresentation = new QLabel("nothing selected");
+	curFontPresentation = new QLabel("Nothing Selected");
 	curFontPresentation->setAlignment(Qt::AlignRight);
 	curFontPresentation->setFont(statusFontFont);
 	statusBar()->addPermanentWidget(curFontPresentation);
@@ -351,10 +351,10 @@ void typotek::createActions()
 	tagsetAct->setIcon ( QIcon ( ":/fontmatrix_tagseteditor_icon.png" ) );
 	connect ( tagsetAct,SIGNAL ( triggered( ) ),this,SLOT ( popupTagsetEditor() ) );
 
-	activCurAct = new QAction ( tr ( "Activate all currents" ),this );
+	activCurAct = new QAction ( tr ( "Activate all current" ),this );
 	connect ( activCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotActivateCurrents() ) );
 
-	deactivCurAct = new QAction ( tr ( "Deactivate all currents" ),this );
+	deactivCurAct = new QAction ( tr ( "Deactivate all current" ),this );
 	connect ( deactivCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotDeactivateCurrents() ) );
 	
 	fonteditorAct = new QAction( tr ( "Edit current font" ),this );

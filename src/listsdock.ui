@@ -58,7 +58,7 @@
           <string>Respect entered text case when searching</string>
          </property>
          <property name="text" >
-          <string>Case sensitive</string>
+          <string>Case Sensitive</string>
          </property>
         </widget>
        </item>
@@ -96,7 +96,7 @@
        <item>
         <widget class="QLabel" name="Tags" >
          <property name="text" >
-          <string>Tag</string>
+          <string>Tag:</string>
          </property>
         </widget>
        </item>
@@ -135,7 +135,7 @@
        <item>
         <widget class="QLabel" name="setlabel" >
          <property name="text" >
-          <string>TagSet</string>
+          <string>Tag Set:</string>
          </property>
         </widget>
        </item>
@@ -157,7 +157,7 @@
      <item>
       <widget class="QTabWidget" name="fontlistTab" >
        <property name="currentIndex" >
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_2" >
         <attribute name="title" >
@@ -245,7 +245,7 @@
           <string>Show complete collection of available fonts</string>
          </property>
          <property name="text" >
-          <string>View all</string>
+          <string>View All</string>
          </property>
         </widget>
        </item>
@@ -255,7 +255,7 @@
           <string>Show all activated fonts</string>
          </property>
          <property name="text" >
-          <string>View activated</string>
+          <string>View Activated</string>
          </property>
         </widget>
        </item>

@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Dialog</string>
+   <string>Export Font Book</string>
   </property>
   <widget class="QDialogButtonBox" name="okButton" >
    <property name="geometry" >
@@ -35,7 +35,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="" >
+  <widget class="QWidget" name="layoutWidget" >
    <property name="geometry" >
     <rect>
      <x>12</x>
@@ -63,7 +63,7 @@
          <enum>QFrame::Box</enum>
         </property>
         <property name="text" >
-         <string>Font book options </string>
+         <string>Font Book Options </string>
         </property>
         <property name="alignment" >
          <set>Qt::AlignCenter</set>
@@ -75,7 +75,7 @@
         <item>
          <widget class="QLabel" name="label" >
           <property name="text" >
-           <string>File</string>
+           <string>File:</string>
           </property>
          </widget>
         </item>
@@ -96,7 +96,7 @@
         <item>
          <widget class="QLabel" name="label_2" >
           <property name="text" >
-           <string>Paper Size</string>
+           <string>Paper Size:</string>
           </property>
          </widget>
         </item>
@@ -123,7 +123,7 @@
     <item>
      <widget class="QGroupBox" name="groupBox" >
       <property name="title" >
-       <string>X-Pos</string>
+       <string>X Position</string>
       </property>
       <layout class="QGridLayout" >
        <item row="0" column="0" >
@@ -133,7 +133,7 @@
            <item>
             <widget class="QLabel" name="label_3" >
              <property name="text" >
-              <string>Family </string>
+              <string>Family:</string>
              </property>
             </widget>
            </item>
@@ -167,7 +167,7 @@
            <item>
             <widget class="QLabel" name="label_4" >
              <property name="text" >
-              <string>Style </string>
+              <string>Style:</string>
              </property>
             </widget>
            </item>
@@ -201,7 +201,7 @@
            <item>
             <widget class="QLabel" name="label_5" >
              <property name="text" >
-              <string>Text</string>
+              <string>Text:</string>
              </property>
             </widget>
            </item>
@@ -238,7 +238,7 @@
     <item>
      <widget class="QGroupBox" name="groupBox_2" >
       <property name="title" >
-       <string>Font size</string>
+       <string>Font Size</string>
       </property>
       <layout class="QGridLayout" >
        <item row="0" column="0" >
@@ -248,7 +248,7 @@
            <item>
             <widget class="QLabel" name="label_7" >
              <property name="text" >
-              <string>Family</string>
+              <string>Family:</string>
              </property>
             </widget>
            </item>
@@ -279,7 +279,7 @@
            <item>
             <widget class="QLabel" name="label_8" >
              <property name="text" >
-              <string>Style</string>
+              <string>Style:</string>
              </property>
             </widget>
            </item>
@@ -310,7 +310,7 @@
            <item>
             <widget class="QLabel" name="label_9" >
              <property name="text" >
-              <string>Headline</string>
+              <string>Headline:</string>
              </property>
             </widget>
            </item>
@@ -341,7 +341,7 @@
            <item>
             <widget class="QLabel" name="label_10" >
              <property name="text" >
-              <string>Body</string>
+              <string>Body:</string>
              </property>
             </widget>
            </item>
@@ -393,7 +393,7 @@
        <item>
         <widget class="QLabel" name="label_11" >
          <property name="text" >
-          <string>Headline</string>
+          <string>Headline:</string>
          </property>
         </widget>
        </item>
@@ -409,7 +409,7 @@
          <item>
           <widget class="QLabel" name="label_12" >
            <property name="text" >
-            <string>Sample text</string>
+            <string>Sample Text:</string>
            </property>
           </widget>
          </item>

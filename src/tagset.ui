@@ -77,7 +77,7 @@
           <item>
            <widget class="QLabel" name="label" >
             <property name="text" >
-             <string>Available tags</string>
+             <string>Available Tags</string>
             </property>
            </widget>
           </item>
@@ -115,7 +115,7 @@
                <string>Add selected tag to current set.</string>
               </property>
               <property name="text" >
-               <string>add</string>
+               <string>Add</string>
               </property>
              </widget>
             </item>
@@ -184,7 +184,7 @@
             <item>
              <widget class="QPushButton" name="removeToSetButton" >
               <property name="text" >
-               <string>remove</string>
+               <string>Remove</string>
               </property>
              </widget>
             </item>

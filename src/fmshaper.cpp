@@ -13,6 +13,7 @@
 
 #include <QList>
 #include <QMap>
+#include <QDebug>
 
 
 HB_GraphemeClass HB_GetGraphemeClass(HB_UChar32 ch)
@@ -33,199 +34,58 @@ void HB_GetGraphemeAndLineBreakClass(HB_UChar32 ch, HB_GraphemeClass *grapheme, 
 	//###
 }
 
-/***************** UTILS ************/
-HB_Script script2script ( QString script )
+static HB_Error hb_getSFntTable(void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length)
 {
-	static QMap<QString, HB_Script> hbscmap;
-	hbscmap["arab"] = HB_Script_Arabic ;
-	hbscmap["armn"] = HB_Script_Armenian ;
-	hbscmap["beng"] = HB_Script_Bengali ;
-	hbscmap["cyrl"] = HB_Script_Cyrillic ;
-	hbscmap["deva"] = HB_Script_Devanagari ;
-	hbscmap["geor"] = HB_Script_Georgian ;
-	hbscmap["grek"] = HB_Script_Greek ;
-	hbscmap["gujr"] = HB_Script_Gujarati ;
-	hbscmap["guru"] = HB_Script_Gurmukhi ;
-	hbscmap["hang"] = HB_Script_Hangul ;
-	hbscmap["hebr"] = HB_Script_Hebrew ;
-	hbscmap["knda"] = HB_Script_Kannada ;
-	hbscmap["khmr"] = HB_Script_Khmer ;
-	hbscmap["lao "] = HB_Script_Lao ;
-	hbscmap["mlym"] = HB_Script_Malayalam ;
-	hbscmap["mymr"] = HB_Script_Myanmar ;
-	hbscmap["ogam"] = HB_Script_Ogham ;
-	hbscmap["orya"] = HB_Script_Oriya ;
-	hbscmap["runr"] = HB_Script_Runic ;
-	hbscmap["sinh"] = HB_Script_Sinhala ;
-	hbscmap["syrc"] = HB_Script_Syriac ;
-	hbscmap["taml"] = HB_Script_Tamil ;
-	hbscmap["telu"] = HB_Script_Telugu ;
-	hbscmap["thaa"] = HB_Script_Thaana ;
-	hbscmap["thai"] = HB_Script_Thai ;
-	hbscmap["tibt"] = HB_Script_Tibetan ;
-	if ( hbscmap.keys().contains ( script ) )
-		return hbscmap[script];
-	return HB_Script_Common;
+	FT_Face face = (FT_Face)font;
+	FT_ULong ftlen = *length;
+	FT_Error error = 0;
+
+	if (!FT_IS_SFNT(face))
+		return HB_Err_Invalid_Argument;
+
+	error = FT_Load_Sfnt_Table(face, tableTag, 0, buffer, &ftlen);
+	*length = ftlen;
+	return (HB_Error)error;
 }
 
+/***************** UTILS ************/
+namespace 
+{	
+	HB_Script script2script ( QString script )
+	{
+		QMap<QString, HB_Script> hbscmap;
+		hbscmap["arab"] = HB_Script_Arabic ;
+		hbscmap["armn"] = HB_Script_Armenian ;
+		hbscmap["beng"] = HB_Script_Bengali ;
+		hbscmap["cyrl"] = HB_Script_Cyrillic ;
+		hbscmap["deva"] = HB_Script_Devanagari ;
+		hbscmap["geor"] = HB_Script_Georgian ;
+		hbscmap["grek"] = HB_Script_Greek ;
+		hbscmap["gujr"] = HB_Script_Gujarati ;
+		hbscmap["guru"] = HB_Script_Gurmukhi ;
+		hbscmap["hang"] = HB_Script_Hangul ;
+		hbscmap["hebr"] = HB_Script_Hebrew ;
+		hbscmap["knda"] = HB_Script_Kannada ;
+		hbscmap["khmr"] = HB_Script_Khmer ;
+		hbscmap["lao "] = HB_Script_Lao ;
+		hbscmap["mlym"] = HB_Script_Malayalam ;
+		hbscmap["mymr"] = HB_Script_Myanmar ;
+		hbscmap["ogam"] = HB_Script_Ogham ;
+		hbscmap["orya"] = HB_Script_Oriya ;
+		hbscmap["runr"] = HB_Script_Runic ;
+		hbscmap["sinh"] = HB_Script_Sinhala ;
+		hbscmap["syrc"] = HB_Script_Syriac ;
+		hbscmap["taml"] = HB_Script_Tamil ;
+		hbscmap["telu"] = HB_Script_Telugu ;
+		hbscmap["thaa"] = HB_Script_Thaana ;
+		hbscmap["thai"] = HB_Script_Thai ;
+		hbscmap["tibt"] = HB_Script_Tibetan ;
+	
+		HB_Script ret = hbscmap.contains ( script ) ? hbscmap[script] : HB_Script_Common;
+		return   ret;
+	}
 
-
-
-// static HB_UChar32 getChar ( const HB_UChar16 *string, hb_uint32 length, hb_uint32 &i )
-// {
-// 	HB_UChar32 ch;
-// 	if ( HB_IsHighSurrogate ( string[i] )
-// 	        && i < length - 1
-// 	        && HB_IsLowSurrogate ( string[i + 1] ) )
-// 	{
-// 		ch = HB_SurrogateToUcs4 ( string[i], string[i + 1] );
-// 		++i;
-// 	}
-// 	else
-// 	{
-// 		ch = string[i];
-// 	}
-// 	return ch;
-// }
-// 
-// static HB_Bool hb_stringToGlyphs ( HB_Font font, const HB_UChar16 *string, hb_uint32 length, HB_Glyph *glyphs, hb_uint32 *numGlyphs, HB_Bool /*rightToLeft*/ )
-// {
-// 	FT_Face face = ( FT_Face ) font->userData;
-// 	if ( length > *numGlyphs )
-// 		return false;
-// 
-// 	int glyph_pos = 0;
-// 	for ( hb_uint32 i = 0; i < length; ++i )
-// 	{
-// 		glyphs[glyph_pos] = FT_Get_Char_Index ( face, getChar ( string, length, i ) );
-// 		++glyph_pos;
-// 	}
-// 
-// 	*numGlyphs = glyph_pos;
-// 
-// 	return true;
-// }
-// 
-// static void hb_getAdvances ( HB_Font font, const HB_Glyph * glyphs, hb_uint32 numGlyphs, HB_Fixed *advances, int flags )
-// {
-// 	FT_Face face = ( FT_Face ) font->userData;
-// 	FT_Glyph_Metrics m;
-// 	for ( hb_uint32 i = 0; i < numGlyphs; ++i )
-// 	{
-// 
-// 		if ( !FT_Load_Glyph ( face, glyphs[i], FT_LOAD_NO_SCALE ) )
-// 		{
-// 			m = face->glyph->metrics;
-// 			advances[i] = m.horiAdvance; // ### not tested right now
-// 		}
-// 		else
-// 		{
-// // 			qDebug ( QString ( "unable to load glyph %1" ).arg ( glyphs[i] ) );
-// 			advances[i] = 0;
-// 		}
-// 	}
-// }
-// 
-// static HB_Bool hb_canRender ( HB_Font font, const HB_UChar16 *string, hb_uint32 length )
-// {
-// 	FT_Face face = ( FT_Face ) font->userData;
-// 
-// 	for ( hb_uint32 i = 0; i < length; ++i )
-// 		if ( !FT_Get_Char_Index ( face, getChar ( string, length, i ) ) )
-// 			return false;
-// 
-// 	return true;
-// }
-// 
-// static HB_Error hb_getSFntTable ( void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length )
-// {
-// 	FT_Face face = ( FT_Face ) font;
-// 	FT_ULong ftlen = *length;
-// 	FT_Error error = 0;
-// 
-// 	if ( !FT_IS_SFNT ( face ) )
-// 		return HB_Err_Invalid_Argument;
-// 
-// 	error = FT_Load_Sfnt_Table ( face, tableTag, 0, buffer, &ftlen );
-// 	if ( ftlen > 32 )
-// 		*length = ftlen;
-// 	else
-// 	{
-// 		length = 0;
-// 		return ( HB_Error ) HB_Err_Invalid_SubTable;
-// 	}
-// 	return ( HB_Error ) error;
-// }
-// 
-// HB_Error hb_getPointInOutline ( HB_Font font, HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints )
-// {
-// 	HB_Error error = HB_Err_Ok;
-// 	FT_Face face = ( FT_Face ) font->userData;
-// 
-// 	int load_flags = ( flags & HB_ShaperFlag_UseDesignMetrics ) ? FT_LOAD_NO_HINTING : FT_LOAD_DEFAULT;
-// 
-// 	if ( ( error = ( HB_Error ) FT_Load_Glyph ( face, glyph, load_flags ) ) )
-// 		return error;
-// 
-// 	if ( face->glyph->format != ft_glyph_format_outline )
-// 		return ( HB_Error )HB_Err_Invalid_SubTable ;
-// 
-// 	*nPoints = face->glyph->outline.n_points;
-// 	if ( ! ( *nPoints ) )
-// 		return HB_Err_Ok;
-// 
-// 	if ( point > *nPoints )
-// 		return ( HB_Error ) HB_Err_Invalid_SubTable;
-// 
-// 	*xpos = face->glyph->outline.points[point].x;
-// 	*ypos = face->glyph->outline.points[point].y;
-// 
-// 	return HB_Err_Ok;
-// }
-// 
-// void hb_getGlyphMetrics ( HB_Font font, HB_Glyph glyph, HB_GlyphMetrics *metrics )
-// {
-// 	// ###
-// 	qDebug ( "hb_getGlyphMetrics" );
-// 	metrics->x = metrics->y = metrics->width = metrics->height = metrics->xOffset = metrics->yOffset = 0;
-// 	FT_Face _face = ( FT_Face ) font;
-// 
-// 	if ( !FT_Load_Glyph ( _face, glyph, FT_LOAD_NO_SCALE ) )
-// 	{
-// 		FT_Glyph_Metrics m = _face->glyph->metrics;
-// 		metrics->x = m.horiAdvance;
-// 		metrics->y = m.vertAdvance;
-// 		metrics->width = m.width;
-// 		metrics->height = m.height;
-// 		metrics->xOffset = m.horiBearingX;
-// 		metrics->yOffset = m.horiBearingY;
-// 	}
-// 
-// 
-// }
-// 
-// HB_Fixed hb_getFontMetric ( HB_Font font, HB_FontMetric metric )
-// {
-// 	FT_Face _face = ( FT_Face ) font;
-// 	return _face->height; // ####
-// }
-
-/***********************************/
-
-
-// FmShaper::FmShaper(FT_Face ftface, QString lang)
-// {
-// 	faceisset = langisset = false;
-// 	setFace(ftface);
-// 	setLang(lang);
-// }
-//
-//
-// FmShaper::FmShaper(FT_Face ftface)
-// {
-// 	faceisset = langisset = false;
-// 	setFace(ftface);
-// }
+}
 
 FmShaper::FmShaper()
 {
@@ -234,11 +94,26 @@ FmShaper::FmShaper()
 
 FmShaper::~ FmShaper()
 {
+	if (faceisset)
+	{
+		delete m.font;
+		HB_FreeFace(m.face);
+	}
 }
-bool FmShaper::setFont (HB_Font hbfont  )
+
+bool FmShaper::setFont (FT_Face face, HB_Font font  )
 {
+	HB_Face hbFace = HB_NewFace(face, hb_getSFntTable);
+	HB_Font hbFont = new HB_FontRec;
 	
-	m.font = &hbFont;
+	hbFont->klass = font->klass ;
+	hbFont->userData = font->userData;
+	hbFont->x_ppem  = font->x_ppem;
+	hbFont->y_ppem  = font->y_ppem;
+	hbFont->x_scale = font->x_scale;
+	hbFont->y_scale = font->y_scale;
+	m.font = hbFont;
+	m.face = hbFace;
 	faceisset = true;
 	return faceisset;
 }

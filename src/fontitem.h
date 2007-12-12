@@ -108,6 +108,8 @@ class FontItem : public QObject
 		int m_glyphsPerRow;
 		bool hasUnicode;
 		int currentChar;
+		
+		bool m_RTL;
 
 		bool m_lock;
 // 		QMap<int,QPainterPath> contourCache;
@@ -180,6 +182,9 @@ class FontItem : public QObject
 		
 		void setFTRaster(bool f){m_rasterFreetype = f;};
 		bool rasterFreetype(){return m_rasterFreetype;};
+		
+		void setRTL(bool rtl){m_RTL=rtl;}
+		bool RTL(){return m_RTL;}
 
 };
 

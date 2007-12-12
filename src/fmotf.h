@@ -47,12 +47,12 @@ struct OTFSet
 	QStringList gsub_features;
 	OTFSet() {};
 	OTFSet ( const OTFSet& os )
-			: script ( os.script )
-			,lang ( os.lang ) ,
+			: script ( os.script ),
+			lang ( os.lang ),
 			gpos_features ( os.gpos_features ),
 			gsub_features ( os.gsub_features ) {};
 	QString dump() {return script + "|" +lang+ "|"+ gpos_features.join ( "|" ) + gsub_features.join ( "|" );}
-	bool isEmpty(){ return script.isEmpty() && lang.isEmpty() && gpos_features.isEmpty() &&  gsub_features.isEmpty() ;};
+	bool isEmpty() { return script.isEmpty() && lang.isEmpty() && gpos_features.isEmpty() &&  gsub_features.isEmpty() ;};
 };
 
 struct RenderedGlyph
@@ -62,12 +62,21 @@ struct RenderedGlyph
 	double yadvance;
 	double xoffset;
 	double yoffset;
+	QString dump()
+	{
+		return QString ( "Rendered Glyph(%1) : XA=%2 XO=%3 YA=%4 YO=%5" )
+		       .arg ( glyph )
+		       .arg ( xadvance )
+		       .arg ( xoffset )
+		       .arg ( yadvance )
+		       .arg ( yoffset );
+	}
 };
 
 class FmOtf
 {
 	public:
-		FmOtf ( FT_Face );
+		FmOtf ( FT_Face, double scale = 0.0 );
 		~FmOtf ();
 
 		enum altPolicy{TAKE_FIRST, ASK_ONCE, ASK_EACH};
@@ -136,10 +145,10 @@ class FmOtf
 
 //   uint get_position(int,GlyphLayout *);
 //   uint presentAlternates(HB_UInt, HB_UShort, QList<HB_UShort>);
-		QList<RenderedGlyph> get_position ( /*int g*/ );
-		
+		QList<RenderedGlyph> get_position ( HB_Buffer abuffer = 0 );
+
 		friend class FontItem;
-		
+
 
 
 };

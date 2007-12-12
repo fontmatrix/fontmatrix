@@ -52,72 +52,46 @@ HB_UChar16 HB_GetMirroredChar ( HB_UChar16 ch )
 {
 	return QChar ( ch ).mirroredChar().unicode();
 }
-///
+
 HB_UShort  AltFunc ( HB_UInt    pos,
                      HB_UShort   glyphID,
                      HB_UShort   num_alternates,
                      HB_UShort*  alternates,
                      void*       data )
 {
-	// todo
-// 	qDebug(QString("%1 alternate glyphs available for glyph %2").arg(num_alternates).arg(glyphID));
-// 	FmOtf* ot = (FmOtf*) data;
-// 	if(ot->altGlyphsPolicy == FmOtf::TAKE_FIRST)
-// 	{
-// 		return (HB_UShort)0;
-// 	}
-// 	if(ot->altGlyphsPolicy == FmOtf::ASK_ONCE)
-// 	{
-// 		if(ot->regAltGlyphs.contains(glyphID))
-// 			return ot->regAltGlyphs[glyphID];
-// 		else
-// 		{
-// 			QList<HB_UShort> tmp;
-// 			for(int i=0;i < num_alternates; ++i)
-// 			{
-// 				tmp.append(alternates[i]);
-// 			}
-// 			ot->regAltGlyphs[glyphID] = ot->presentAlternates(pos, glyphID, tmp);
-// 			return ot->regAltGlyphs[glyphID];
-// 		}
-// 	}
-// 	if(ot->altGlyphsPolicy == FmOtf::ASK_EACH)
-// 	{
-// 		QList<HB_UShort> tmp;
-// 		for(int i=0;i < num_alternates; ++i)
-// 		{
-// 			tmp.append(alternates[i]);
-// 		}
-// 		return ot->presentAlternates(pos, glyphID, tmp);
-// 	}
+
 	return ( HB_UShort ) 0;
 }
 
-static HB_UChar32 getChar(const HB_UChar16 *string, hb_uint32 length, hb_uint32 &i)
+static HB_UChar32 getChar ( const HB_UChar16 *string, hb_uint32 length, hb_uint32 &i )
 {
 	qDebug() << "HB_UChar32 getChar";
 	HB_UChar32 ch;
-	if (HB_IsHighSurrogate(string[i])
-		   && i < length - 1
-		   && HB_IsLowSurrogate(string[i + 1])) {
-		ch = HB_SurrogateToUcs4(string[i], string[i + 1]);
+	if ( HB_IsHighSurrogate ( string[i] )
+	        && i < length - 1
+	        && HB_IsLowSurrogate ( string[i + 1] ) )
+	{
+		ch = HB_SurrogateToUcs4 ( string[i], string[i + 1] );
 		++i;
-		   } else {
-			   ch = string[i];
-		   }
-		   return ch;
+	}
+	else
+	{
+		ch = string[i];
+	}
+	return ch;
 }
 
-static HB_Bool hb_stringToGlyphs(HB_Font font, const HB_UChar16 *string, hb_uint32 length, HB_Glyph *glyphs, hb_uint32 *numGlyphs, HB_Bool /*rightToLeft*/)
+HB_Bool hb_stringToGlyphs ( HB_Font font, const HB_UChar16 *string, hb_uint32 length, HB_Glyph *glyphs, hb_uint32 *numGlyphs, HB_Bool /*rightToLeft*/ )
 {
 	qDebug() << "HB_Bool hb_stringToGlyphs";
-	FT_Face face = (FT_Face)font->userData;
-	if (length > *numGlyphs)
+	FT_Face face = ( FT_Face ) font->userData;
+	if ( length > *numGlyphs )
 		return false;
 
 	int glyph_pos = 0;
-	for (hb_uint32 i = 0; i < length; ++i) {
-		glyphs[glyph_pos] = FT_Get_Char_Index(face, getChar(string, length, i));
+	for ( hb_uint32 i = 0; i < length; ++i )
+	{
+		glyphs[glyph_pos] = FT_Get_Char_Index ( face, getChar ( string, length, i ) );
 		++glyph_pos;
 	}
 
@@ -126,60 +100,60 @@ static HB_Bool hb_stringToGlyphs(HB_Font font, const HB_UChar16 *string, hb_uint
 	return true;
 }
 
-static void hb_getAdvances(HB_Font /*font*/, const HB_Glyph * /*glyphs*/, hb_uint32 numGlyphs, HB_Fixed *advances, int /*flags*/)
+void hb_getAdvances ( HB_Font /*font*/, const HB_Glyph * /*glyphs*/, hb_uint32 numGlyphs, HB_Fixed *advances, int /*flags*/ )
 {
 	qDebug() << "void hb_getAdvances";
-	for (hb_uint32 i = 0; i < numGlyphs; ++i)
+	for ( hb_uint32 i = 0; i < numGlyphs; ++i )
 		advances[i] = 0; // ### not tested right now
 }
 
-static HB_Bool hb_canRender(HB_Font font, const HB_UChar16 *string, hb_uint32 length)
+HB_Bool hb_canRender ( HB_Font font, const HB_UChar16 *string, hb_uint32 length )
 {
 	qDebug() << "HB_Bool hb_canRender";
-	FT_Face face = (FT_Face)font->userData;
+	FT_Face face = ( FT_Face ) font->userData;
 
-	for (hb_uint32 i = 0; i < length; ++i)
-		if (!FT_Get_Char_Index(face, getChar(string, length, i)))
+	for ( hb_uint32 i = 0; i < length; ++i )
+		if ( !FT_Get_Char_Index ( face, getChar ( string, length, i ) ) )
 			return false;
 
 	return true;
 }
 
-static HB_Error hb_getSFntTable(void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length)
+HB_Error hb_getSFntTable ( void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length )
 {
 	qDebug() << "HB_Error hb_getSFntTable";
-	FT_Face face = (FT_Face)font;
+	FT_Face face = ( FT_Face ) font;
 	FT_ULong ftlen = *length;
 	FT_Error error = 0;
 
-	if (!FT_IS_SFNT(face))
+	if ( !FT_IS_SFNT ( face ) )
 		return HB_Err_Invalid_Argument;
 
-	error = FT_Load_Sfnt_Table(face, tableTag, 0, buffer, &ftlen);
+	error = FT_Load_Sfnt_Table ( face, tableTag, 0, buffer, &ftlen );
 	*length = ftlen;
-	return (HB_Error)error;
+	return ( HB_Error ) error;
 }
 
-HB_Error hb_getPointInOutline(HB_Font font, HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
+HB_Error hb_getPointInOutline ( HB_Font font, HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints )
 {
 	qDebug() << "HB_Error hb_getPointInOutline";
 	HB_Error error = HB_Err_Ok;
-	FT_Face face = (FT_Face)font->userData;
+	FT_Face face = ( FT_Face ) font->userData;
 
-	int load_flags = (flags & HB_ShaperFlag_UseDesignMetrics) ? FT_LOAD_NO_HINTING : FT_LOAD_DEFAULT;
+	int load_flags = ( flags & HB_ShaperFlag_UseDesignMetrics ) ? FT_LOAD_NO_HINTING : FT_LOAD_DEFAULT;
 
-	if ((error = (HB_Error)FT_Load_Glyph(face, glyph, load_flags)))
+	if ( ( error = ( HB_Error ) FT_Load_Glyph ( face, glyph, load_flags ) ) )
 		return error;
 
-	if (face->glyph->format != ft_glyph_format_outline)
-		return (HB_Error)HB_Err_Invalid_SubTable;//HB_Err_Invalid_GPOS_SubTable;
+	if ( face->glyph->format != ft_glyph_format_outline )
+		return ( HB_Error ) HB_Err_Invalid_SubTable;//HB_Err_Invalid_GPOS_SubTable;
 
 	*nPoints = face->glyph->outline.n_points;
-	if (!(*nPoints))
+	if ( ! ( *nPoints ) )
 		return HB_Err_Ok;
 
-	if (point > *nPoints)
-		return (HB_Error)HB_Err_Invalid_SubTable;//HB_Err_Invalid_GPOS_SubTable;
+	if ( point > *nPoints )
+		return ( HB_Error ) HB_Err_Invalid_SubTable;//HB_Err_Invalid_GPOS_SubTable;
 
 	*xpos = face->glyph->outline.points[point].x;
 	*ypos = face->glyph->outline.points[point].y;
@@ -187,22 +161,27 @@ HB_Error hb_getPointInOutline(HB_Font font, HB_Glyph glyph, int flags, hb_uint32
 	return HB_Err_Ok;
 }
 
-void hb_getGlyphMetrics(HB_Font font, HB_Glyph glyph, HB_GlyphMetrics *metrics)
+void hb_getGlyphMetrics ( HB_Font font, HB_Glyph glyph, HB_GlyphMetrics *metrics )
 {
-	qDebug()<< "void hb_getGlyphMetrics";
-    // ###
+	qDebug() << "void hb_getGlyphMetrics";
+	// ###
 	metrics->x = metrics->y = metrics->width = metrics->height = metrics->xOffset = metrics->yOffset = 0;
 }
 
-HB_Fixed hb_getFontMetric(HB_Font font, HB_FontMetric metric)
+HB_Fixed hb_getFontMetric ( HB_Font font, HB_FontMetric metric )
 {
 	qDebug() << "HB_Fixed hb_getFontMetric";
 	return 0; // ####
 }
 
-const HB_FontClass hb_fontClass = {
-	hb_stringToGlyphs, hb_getAdvances, hb_canRender,
- hb_getPointInOutline, hb_getGlyphMetrics, hb_getFontMetric
+const HB_FontClass hb_fontClass =
+{
+	hb_stringToGlyphs,
+	hb_getAdvances,
+	hb_canRender,
+	hb_getPointInOutline,
+	hb_getGlyphMetrics,
+	hb_getFontMetric
 };
 
 QString
@@ -235,22 +214,25 @@ int FmOtf::get_glyph ( int index )
 }
 
 
-FmOtf::FmOtf ( FT_Face f )
+FmOtf::FmOtf ( FT_Face f , double scale)
 {
 
 	_face = f;
-	altGlyphsPolicy = ASK_ONCE;
-	// Give a try to the shaper;
-// 	shaper = new ScShaper();
-// 	useShaper = shaper->setFace ( _face );
-//	qDebug(QString("shaper->setFace returns : %1").arg(useShaper ? "TRUE" : "FALSE"));
 
-	hbFont.klass = &hb_fontClass;		/* Hope it will work without more code */
+	hbFont.klass = &hb_fontClass;		
 	hbFont.userData = _face ;
 	hbFont.x_ppem = _face->size->metrics.x_ppem;
 	hbFont.y_ppem = _face->size->metrics.y_ppem;
-	hbFont.x_scale = 0x10000;//_face->size->metrics.x_scale;
-	hbFont.y_scale = 0x10000;//_face->size->metrics.y_scale;
+	if(scale == 0.0)
+	{
+		hbFont.x_scale = _face->size->metrics.x_scale;
+		hbFont.y_scale = _face->size->metrics.y_scale;
+	}
+	else
+	{
+		hbFont.x_scale = scale;
+		hbFont.y_scale = scale;
+	}
 
 	glyphAlloc = false;
 	FT_ULong length = 0;
@@ -362,7 +344,7 @@ int FmOtf::procstring ( QString s, QString script, QString lang, QStringList gsu
 
 }
 
-QList<RenderedGlyph> FmOtf::procstring(QString s, OTFSet set)
+QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
 {
 // 	qDebug()<<"FmOtf::procstring(QString "<<s<<", OTFSet "<<set.dump()<<")";
 	curString = s;
@@ -377,7 +359,7 @@ QList<RenderedGlyph> FmOtf::procstring(QString s, OTFSet set)
 int
 FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
 {
-	qDebug()<<"FmOtf::procstring1 ( "<<s<<","<<script<<", "<<lang<<", "<<gsub.join(".")<<", " <<gpos.join(".")<<" )";
+	qDebug() <<"FmOtf::procstring1 ( "<<s<<","<<script<<", "<<lang<<", "<<gsub.join ( "." ) <<", " <<gpos.join ( "." ) <<" )";
 	hb_buffer_clear ( _buffer );
 	int n = s.length ();
 	HB_Error           error;
@@ -391,29 +373,29 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 		                              FT_Get_Char_Index ( _face, s[i].unicode() ),
 		                              prop,
 		                              i );
-		if(error !=  HB_Err_Ok)
+		if ( error !=  HB_Err_Ok )
 			qDebug() << "hb_buffer_add_glyph ("<< s[i] <<") failed";
 // 		else
 // 			qDebug() << "hb_buffer_add_glyph ("<< s[i] <<") success";
 
 	}
-	
+
 // 	if ( _buffer->in_length > 0 )
 // 	{
 // 		qDebug() << "_buffer->in_length = " <<_buffer->in_length;
-// 			
+//
 // 	}
 // 	else
 // 		qDebug() << "_buffer->in_length = " <<_buffer->in_length;
-// 		
+//
 
 
 	if ( ! gsub.isEmpty() )
 	{
 // 		qDebug() <<"Process GSUB";
-		
+
 		HB_GSUB_Clear_Features ( _gsub );
-		
+
 // 		qDebug() <<"Set GSUB";
 		set_table ( "GSUB" );
 		set_script ( script );
@@ -431,22 +413,22 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 				HB_GSUB_Add_Feature ( _gsub, fidx, ~all );
 // 				qDebug()<< QString("adding gsub feature [%1] success : %2").arg(*ife).arg(fidx );
 			}
-			 else
-			qDebug()<< QString("adding gsub feature [%1] failed : %2").arg(*ife).arg(error );
+			else
+				qDebug() << QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error );
 		}
-		
+
 // 		qDebug() << "APPLY";
 		error = HB_GSUB_Apply_String ( _gsub, _buffer );
 // 		qDebug() << "YLPPA";
-// 		
+//
 		if ( error && error != HB_Err_Not_Covered )
-			qDebug ()<< QString ( "applying gsub features to string \"%1\" returned %2" ).arg ( s ).arg ( error  );
+			qDebug () << QString ( "applying gsub features to string \"%1\" returned %2" ).arg ( s ).arg ( error );
 
 	}
 	if ( !gpos.isEmpty() )
 	{
 // 		qDebug() <<"Process GPOS";
-		
+
 		HB_GPOS_Clear_Features ( _gpos );
 		set_table ( "GPOS" );
 		set_script ( script );
@@ -467,17 +449,17 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 // 				qDebug()<< QString("GPOS [%2] feature.lookupcount = %1").arg(_gpos->FeatureList.FeatureRecord[fidx].Feature.LookupListCount).arg(*ife);
 			}
 			else
-				qDebug ()<< QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error ) ;
+				qDebug () << QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error ) ;
 		}
 		error = HB_GPOS_Apply_String ( &hbFont, _gpos, FT_LOAD_NO_SCALE, _buffer,
 		                               /*while dvi is true font klass is not used */ true,
 		                               /*r2l */ true );
 		if ( error && error != HB_Err_Not_Covered )
-			qDebug ()<< QString ( "applying gpos features to string \"%1\" returned %2" ).arg ( s ).arg ( error ) ;
+			qDebug () << QString ( "applying gpos features to string \"%1\" returned %2" ).arg ( s ).arg ( error ) ;
 
 	}
 
-//  	qDebug() << "END_PROCSTRING"; 
+//  	qDebug() << "END_PROCSTRING";
 	return _buffer->in_length;
 }
 
@@ -551,7 +533,7 @@ FmOtf::set_script ( QString s )
 	{
 		if ( HB_GSUB_Select_Script
 		        ( _gsub, OTF_name_tag ( curScriptName ), &curScript ) )
-			qDebug (  "Unable to set script index "  );
+			qDebug ( "Unable to set script index " );
 	}
 	if ( curTable == "GPOS" && GPOS )
 	{
@@ -682,32 +664,37 @@ FmOtf::set_features ( QStringList ls )
 /**
 Dump all the "uneasy" HB_Buffer into a user-friendy QList :)
 */
-QList<RenderedGlyph> FmOtf::get_position ( /*int g*/ ) // g is(was!) a pos in the _source_ string
+QList<RenderedGlyph> FmOtf::get_position ( HB_Buffer abuffer ) 
 {
-// 	qDebug() << "FmOtf::get_position ()";
+// 	qDebug() << "FmOtf::get_position () for buffer : " << _buffer;
+	HB_Buffer bak_buf = _buffer ;
+	if(abuffer)
+	{
+		_buffer = abuffer;
+	}
 	QList<RenderedGlyph> renderedString;
 	bool wantPos = true;
 	for ( uint bIndex = 0 ; bIndex < _buffer->in_length; ++bIndex )
 	{
 // 		qDebug() << "bIndex = "<< bIndex;
 		RenderedGlyph gl;
-		
+
 		gl.glyph = _buffer->in_string[bIndex].gindex;
 		if ( gl.glyph == 0 )
 		{
 			qDebug() << "glyph skipped";
 			continue;
 		}
-		
+
 		HB_Position p = 0;
-		if(wantPos)
+		if ( wantPos )
 		{
 			p = &_buffer->positions[bIndex] ;
 // 			qDebug() << "p = "<< p;
-			if(!p)
+			if ( !p )
 				wantPos = false;
 		}
-		if ( !p )// applyGPOS has not been called?
+		if ( !p ) // applyGPOS has not been called?
 		{
 			FT_GlyphSlot slot = _face->glyph;
 			if ( !FT_Load_Glyph ( _face, gl.glyph , FT_LOAD_NO_SCALE ) )
@@ -720,6 +707,7 @@ QList<RenderedGlyph> FmOtf::get_position ( /*int g*/ ) // g is(was!) a pos in th
 		}
 		else
 		{
+// 			qDebug() << p->back;
 			if ( p->new_advance )
 			{
 				gl.xadvance = p->x_advance;
@@ -739,67 +727,16 @@ QList<RenderedGlyph> FmOtf::get_position ( /*int g*/ ) // g is(was!) a pos in th
 				}
 			}
 		}
+
 		
 		renderedString << gl;
-// 		qDebug() << gl.glyph<<" rendered";
+// 		qDebug() << gl.dump();
 	}
 
+	_buffer = bak_buf;
 	return renderedString;
 }
 
 
 
-
-// uint FmOtf::presentAlternates(HB_UInt pos , HB_UShort glyph, QValueList<HB_UShort> altglyphs)
-// {
-// 	QString contextString ;
-// 	for(uint i=0; i < _buffer->in_length; ++i)
-// 	{
-// 		if(i != pos)
-// 			contextString += curString[_buffer->in_string[i].cluster];
-// 		else
-// 		{
-// 			contextString += " [";
-// 			contextString += curString[_buffer->in_string[i].cluster];
-// 			contextString += "] ";
-// 		}
-// 	}
-//
-//
-// 	QValueList<QPixmap*> pix;
-// 	QPainter p;
-// 	int row;
-// 	for(uint i = 0; i < altglyphs.count(); ++i)
-// 	{
-// 		qDebug(QString("render glyph %1").arg(altglyphs[i]));
-// 		if(!FT_Load_Glyph(_face, altglyphs[i], FT_LOAD_RENDER))
-// 		{
-// 			qDebug(QString("append pixmap w = %1, h = %2").arg(_face->glyph->bitmap.pitch).arg(_face->glyph->bitmap.rows));
-// 			pix.append(new QPixmap());
-// 			pix.last()->resize(_face->glyph->bitmap.pitch / 10 ,_face->glyph->bitmap.rows / 10);
-// 			row = _face->glyph->bitmap.pitch;
-// 			p.begin(pix.last());
-// 			for( int y=0; y < _face->glyph->bitmap.rows; y += 10)
-// 			{
-// 				for(int x= 0; x < _face->glyph->bitmap.pitch; x += 10)
-// 				{
-// 					p.setPen(QColor (_face->glyph->bitmap.buffer[(y * row) + x],
-// 							_face->glyph->bitmap.buffer[(y * row) + x],
-// 							_face->glyph->bitmap.buffer[(y * row) + x]));
-// 					p.drawPoint(x/10,y/10);
-// 				}
-// 			}
-// 			p.end();
-//
-// 			//pix.last().loadFromData((const uchar *)(_face->glyph->bitmap.buffer),_face->glyph->bitmap.width *  _face->glyph->bitmap.pitch);
-// 		}
-// 	}
-// 	if(pix.count())
-// 	{
-// 		altBox ab(contextString, pix);
-// 		ab.exec();
-// 		return ab.value;
-// 	}
-// 	return 0;
-// }
 

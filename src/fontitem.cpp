@@ -33,6 +33,8 @@
 #include <QLocale>
 #include <QTextCodec>
 
+
+
 #include FT_XFREE86_H
 #include FT_GLYPH_H
 #include FT_OUTLINE_H
@@ -369,6 +371,8 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	return glyph;
 }
 
+
+/// Nature line
 void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record )
 {
 	ensureFace();
@@ -414,13 +418,17 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
 			double scalefactor = sizz / m_face->units_per_EM;
-			pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+			if(!m_RTL)
+				pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+			else
+				pen.rx() -= advanceCache[spec.at ( i ).unicode() ] * scalefactor;
 		}
 	}
 
 	releaseFace();
 }
 
+/// Featured line
 void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPointF origine, double fsize, bool record)
 {
 	if(!m_isOpenType)
@@ -476,7 +484,8 @@ void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPoi
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
 			double scalefactor = sizz / m_face->units_per_EM;
-			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor), pen.y() + (refGlyph[i].yoffset * scalefactor) );
+			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor),
+					pen.y() + (refGlyph[i].yoffset * scalefactor) );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
 			pen.rx() += refGlyph[i].xadvance * scalefactor;
@@ -487,12 +496,16 @@ void FontItem::renderLine(OTFSet set, QGraphicsScene * scene, QString spec, QPoi
 	releaseFace();
 }
 
-
+/// Shaped line
 void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, QPointF origine, double fsize, bool record)
 {
 	if(!m_isOpenType)
 		return;
 	ensureFace();
+	
+	double sizz = fsize;
+	double scalefactor = sizz / m_face->units_per_EM;
+	qDebug() << scalefactor;
 	
 	otf = new FmOtf(m_face);
 	if(!otf)
@@ -502,28 +515,36 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 	}
 	if ( record )
 		sceneList.append ( scene );
-	double sizz = fsize;
+	
 	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, 72, 72 );
 	
-	FmShaper shaper;
-	shaper.setFont(&otf->hbFont);
-	if(shaper.setScript(script))
+	FmShaper *shaper = new FmShaper;
+	if(!shaper)
 	{
 		delete otf;
 		releaseFace();
 		return;
 	}
-	shaper.doShape(spec);
-	// Here we make something really dirty!
-	otf->_buffer = shaper.out_buffer();
-	QList<RenderedGlyph> refGlyph = otf->get_position();
+	shaper->setFont(m_face ,&otf->hbFont);
+	if(!shaper->setScript(script))
+	{
+		qDebug()<< "Can not set script "<<script<< " for " << m_name;
+		delete otf;
+		releaseFace();
+		return;
+	}
+	shaper->doShape(spec);
+	
+	QList<RenderedGlyph> refGlyph = otf->get_position(shaper->out_buffer());
+	
+	delete shaper;
+	
 	if( refGlyph.count() == 0)
 	{
 		releaseFace();
 		return;
 	}
 	QPointF pen ( origine );
-	 
 	if(m_rasterFreetype)
 	{
 		for ( int i=0; i < refGlyph.count(); ++i )
@@ -536,13 +557,16 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 			}
 			if ( record )
 				pixList.append ( glyph );
+			if(m_RTL)
+				pen.rx() -= refGlyph[i].xadvance * scalefactor * 10;
 			scene->addItem ( glyph );
-			double scalefactor = sizz / m_face->units_per_EM  ;
 			glyph->setPos ( pen.x() + (refGlyph[i].xoffset  * scalefactor) + glyph->data(1).toInt()  ,
 					pen.y() + (refGlyph[i].yoffset  * scalefactor) - glyph->data(2).toInt());
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			pen.rx() += glyph->data(3).toInt();
+			
+			if(!m_RTL)
+				pen.rx() += refGlyph[i].xadvance * scalefactor;
 		}
 	}
 	else
@@ -558,11 +582,26 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
-			double scalefactor = sizz / m_face->units_per_EM;
-			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor), pen.y() + (refGlyph[i].yoffset * scalefactor) );
+			
+			if(m_RTL)
+			{
+				pen.rx() -= refGlyph[i].xadvance *  scalefactor;
+				
+				int col = i*255/refGlyph.count();
+				glyph->setBrush(QColor(col,col,col));
+				qDebug()<< refGlyph[i].dump();
+				glyph->setPos ( pen.x() - (refGlyph[i].xoffset * scalefactor),
+					pen.y() + (refGlyph[i].yoffset * scalefactor) );
+			}
+			else
+			{
+				glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor),
+					pen.y() + (refGlyph[i].yoffset * scalefactor) );
+			}
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			pen.rx() += refGlyph[i].xadvance * scalefactor;
+			if(!m_RTL)
+				pen.rx() += refGlyph[i].xadvance * scalefactor;
 		}
 	}
 	

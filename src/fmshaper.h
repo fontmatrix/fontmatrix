@@ -31,7 +31,7 @@ class FmShaper
 
 		~FmShaper();
 		/* Will return false if there is no GSUB nor GPOS table */
-		bool setFont ( HB_Font hbfont );
+		bool setFont (FT_Face face, HB_Font font );
 
 		bool setScript ( QString script );
 

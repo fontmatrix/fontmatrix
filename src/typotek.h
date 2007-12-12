@@ -142,6 +142,8 @@ class typotek:public QMainWindow
 
 		Systray *systray;
 
+		static QString fontforgePath;
+
 	public:
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );

@@ -51,6 +51,7 @@
 
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
+QString typotek::fontforgePath = "/usr/bin/fontforge";
 extern bool __FM_SHOW_FONTLOADED;
 
 typotek::typotek()
@@ -354,8 +355,13 @@ void typotek::createActions()
 	connect ( deactivCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotDeactivateCurrents() ) );
 	
 	fonteditorAct = new QAction( tr ( "Edit current font" ),this );
-	fonteditorAct->setStatusTip ( tr ( "Try to run Fontforge with the selected font as argument" ) );
-	connect (fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont()) );
+	if (QFile::exists(fontforgePath)) {
+		fonteditorAct->setStatusTip ( tr ( "Try to run Fontforge with the selected font as argument" ) );
+		connect (fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont()) );
+	} else {
+		fonteditorAct->setEnabled(false);
+		fonteditorAct->setStatusTip ( tr ( "You don't seem to have Fontforge installed" ) );
+	}
 	
 	prefsAction = new QAction( tr ( "Preferences" ),this );
 	connect(prefsAction,SIGNAL(triggered()),this,SLOT(slotPrefsPanel()));
@@ -884,12 +890,11 @@ void typotek::slotEditFont()
 		return;
 	}
 	
-	QString program = "/usr/bin/fontforge";
 	QStringList arguments;
 	arguments << "-nosplash" << item->path() ;
 
 	QProcess *myProcess = new QProcess(this);
-	myProcess->start(program, arguments);
+	myProcess->start(fontforgePath, arguments);
 }
 
 void typotek::setupDrop()

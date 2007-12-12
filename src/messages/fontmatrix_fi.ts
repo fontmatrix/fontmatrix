@@ -238,6 +238,10 @@ p, li { white-space: pre-wrap; }
       <source>Tags</source>
       <translation>Luokat</translation>
     </message>
+    <message>
+      <source>Simulate screen rendering (FreeType inside)</source>
+      <translation>Jäljittele näytön piirtotapaa (FreeType)</translation>
+    </message>
   </context>
   <context>
     <name>PrefsPanel</name>
@@ -258,16 +262,8 @@ p, li { white-space: pre-wrap; }
       <translation>Sulje ilmoitusalueelle</translation>
     </message>
     <message>
-      <source>Show Activate all and Deactivate all in system tray menu</source>
-      <translation>Näytä Ota kaikki käyttöön ja Poista kaikki käytöstä ilmoitusalueen valikossa</translation>
-    </message>
-    <message>
       <source>Ask confirmation when activating or deactivating all fonts</source>
       <translation>Kysy varmistus, kun kaikki fontit otetaan käyttöön tai poistetaan käytöstä</translation>
-    </message>
-    <message>
-      <source>Ask confirmation when activating or deactivating tags</source>
-      <translation>Kysy varmistus, kun fontit otetaan käyttöön tai poistetaan käytöstä merkintöjen perusteella</translation>
     </message>
     <message>
       <source>Preview word</source>
@@ -310,6 +306,14 @@ p, li { white-space: pre-wrap; }
       <source>Apply</source>
       <translation>Käytä</translation>
     </message>
+    <message>
+      <source>Show Activate all and Deactivate all in the system tray menu</source>
+      <translation>Näytä Ota kaikki käyttöön ja Poista kaikki käytöstä ilmoitusalueen valikossa</translation>
+    </message>
+    <message>
+      <source>Ask confirmation when activating or deactivating fonts by tags</source>
+      <translation>Kysy vahvistus, kun fontit otetaan käyttöön tai poistetaan käytöstä luokan perusteella</translation>
+    </message>
   </context>
   <context>
     <name>PrefsPanelDialog</name>
@@ -337,7 +341,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
       <source>&amp;Deactivate all</source>
-      <translation>&amp;Poista kaikki käytöstä</translation>
+      <translation>Poista &amp;kaikki käytöstä</translation>
     </message>
     <message>
       <source>Mi&amp;nimize</source>
@@ -348,12 +352,12 @@ p, li { white-space: pre-wrap; }
       <translation>P&amp;alauta</translation>
     </message>
     <message>
-      <source>&amp;Exit</source>
-      <translation>&amp;Poistu</translation>
-    </message>
-    <message>
       <source>&amp;Tags</source>
       <translation>Luoka&amp;t</translation>
+    </message>
+    <message>
+      <source>E&amp;xit</source>
+      <translation>&amp;Poistu</translation>
     </message>
   </context>
   <context>
@@ -407,7 +411,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
       <source>The program will keep running in the system tray. To terminate the program, choose &lt;b>Exit&lt;/b> in the context menu of the system tray entry.</source>
-      <translation>Ohjelmaa ei suljeta vaan se pienennetään ilmoitusalueelle. Voit sulkea ohjelman ilmoitusalueella olevan kuvakkeen valikon kohdasta Poistu.</translation>
+      <translation>Ohjelmaa ei suljeta vaan se pienennetään ilmoitusalueelle. Voit sulkea ohjelman ilmoitusalueella olevan kuvakkeen valikon kohdasta &lt;b>Poistu&lt;/b>.</translation>
     </message>
     <message>
       <source>Add Directory</source>

@@ -142,7 +142,7 @@ class typotek:public QMainWindow
 
 		Systray *systray;
 
-		static QString fontforgePath;
+		static QString fonteditorPath;
 
 	public:
 		FontItem* getFont ( int i ) ;
@@ -187,6 +187,9 @@ class typotek:public QMainWindow
 		void addNamedSampleFragment(QString name, QString sampleFragment);
 
 		void changeSample(QString name, QString text);
+
+		void setFontEditorPath(const QString &path);
+		QString fontEditorPath() {return fonteditorPath;};
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

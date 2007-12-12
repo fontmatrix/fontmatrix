@@ -14,11 +14,13 @@
 #include <QDebug>
 #include <QToolTip>
 #include <QSettings>
+#include <QFileDialog>
 
 PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
  : QDialog(parent)
 {
 	setupUi(this);
+	fontEditorPath->setText(typotek::getInstance()->fontEditorPath());
 	doConnect();
 	systrayFrame->setCheckable(true);
 	previewWord->setText(typotek::getInstance()->word());
@@ -65,6 +67,8 @@ void PrefsPanelDialog::doConnect()
 	connect(tagsConfirmation, SIGNAL(clicked(bool)), this, SLOT(setSystrayTagsConfirmation(bool)));
 	connect(closeToSystray, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotCloseToSystray(bool)));
 	connect(previewWord, SIGNAL(textChanged ( const QString  ) ), this, SLOT(updateWord(QString)));
+	connect(fontEditorPath, SIGNAL(textChanged(QString)), this, SLOT(setupFontEditor(QString)));
+	connect(fontEditorBrowse, SIGNAL(clicked()), this, SLOT(slotFontEditorBrowse()));
 
 }
 
@@ -129,5 +133,19 @@ void PrefsPanelDialog::updateWord(QString s)
 {
 	typotek::getInstance()->setWord(s, true);
 }
+
+void PrefsPanelDialog::setupFontEditor(QString s)
+{
+	typotek::getInstance()->setFontEditorPath(s);
+}
+
+void PrefsPanelDialog::slotFontEditorBrowse()
+{
+	QString s = QFileDialog::getOpenFileName(this, tr("Select font editor"));
+	if (!s.isEmpty()) {
+		fontEditorPath->setText(s);
+	}
+}
+
 
 

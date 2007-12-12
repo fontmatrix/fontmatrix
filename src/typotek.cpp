@@ -51,7 +51,7 @@
 
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
-QString typotek::fontforgePath = "/usr/bin/fontforge";
+QString typotek::fonteditorPath = "/usr/bin/fontforge";
 extern bool __FM_SHOW_FONTLOADED;
 
 typotek::typotek()
@@ -355,12 +355,12 @@ void typotek::createActions()
 	connect ( deactivCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotDeactivateCurrents() ) );
 	
 	fonteditorAct = new QAction( tr ( "Edit current font" ),this );
-	if (QFile::exists(fontforgePath)) {
-		fonteditorAct->setStatusTip ( tr ( "Try to run Fontforge with the selected font as argument" ) );
-		connect (fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont()) );
+	connect (fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont()) );
+	if (QFile::exists(fonteditorPath)) {
+		fonteditorAct->setStatusTip ( tr ( "Try to run font editor with the selected font as argument" ) );
 	} else {
 		fonteditorAct->setEnabled(false);
-		fonteditorAct->setStatusTip ( tr ( "You don't seem to have Fontforge installed" ) );
+		fonteditorAct->setStatusTip ( tr ( "You don't seem to have font editor installed. Path to font editor can be set in preferences." ) );
 	}
 	
 	prefsAction = new QAction( tr ( "Preferences" ),this );
@@ -411,8 +411,7 @@ void typotek::readSettings()
 	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
 	move ( pos );
-
-
+	fonteditorPath = settings.value("FontEditor", "/usr/bin/fontforge").toString();
 }
 
 void typotek::writeSettings()
@@ -894,7 +893,7 @@ void typotek::slotEditFont()
 	arguments << "-nosplash" << item->path() ;
 
 	QProcess *myProcess = new QProcess(this);
-	myProcess->start(fontforgePath, arguments);
+	myProcess->start(fonteditorPath, arguments);
 }
 
 void typotek::setupDrop()
@@ -1054,6 +1053,20 @@ void typotek::setWord(QString s, bool updateView)
 	m_theWord = s;
 	if (updateView)
 		theMainView->slotView(true);
+}
+
+void typotek::setFontEditorPath(const QString &path)
+{
+	fonteditorPath = path;
+	if (QFile::exists(fonteditorPath)) {
+		fonteditorAct->setEnabled(true);
+		fonteditorAct->setStatusTip ( tr ( "Try to run font editor with the selected font as argument" ) );
+	} else {
+		fonteditorAct->setEnabled(false);
+		fonteditorAct->setStatusTip ( tr ( "You don't seem to have font editor installed. Path to font editor can be set in preferences." ) );
+	}
+	QSettings settings("Undertype", "fontmatrix");
+	settings.setValue("FontEditor", fonteditorPath);
 }
 
 

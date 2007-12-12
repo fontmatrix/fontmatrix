@@ -45,6 +45,8 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void setSystrayTagsConfirmation(bool);
 
 		void updateWord(QString);
+		void setupFontEditor(QString);
+		void slotFontEditorBrowse();
 
 };
 

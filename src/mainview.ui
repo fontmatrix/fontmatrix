@@ -268,13 +268,6 @@ p, li { white-space: pre-wrap; }
                 </property>
                </spacer>
               </item>
-              <item>
-               <widget class="QPushButton" name="OTFeaturesButton" >
-                <property name="text" >
-                 <string>Apply features</string>
-                </property>
-               </widget>
-              </item>
              </layout>
             </item>
            </layout>

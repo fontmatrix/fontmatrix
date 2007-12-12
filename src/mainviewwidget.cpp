@@ -107,7 +107,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect (fitViewCheck,SIGNAL(stateChanged( int )),this,SLOT(slotFitChanged(int)));
 	connect (loremView, SIGNAL(refit()),this,SLOT(slotRefitSample()));
 	connect(abcView,SIGNAL(refit(int)),this,SLOT(slotAdjustGlyphView(int)));
-	connect(OTFeaturesButton, SIGNAL(clicked()), this, SLOT(slotFeatureChanged()));
+	connect(OpenTypeTree, SIGNAL(itemClicked( QTreeWidgetItem*, int )), this, SLOT(slotFeatureChanged()));
 	connect(sampleTextCombo,SIGNAL(activated( int )),this,SLOT(slotSampleChanged()));
 	connect(freetypeButton,SIGNAL(released()),this,SLOT(slotFTRasterChanged()));
 	// END CONNECT

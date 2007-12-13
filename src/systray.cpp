@@ -319,4 +319,36 @@ void Systray::requireTagsConfirmation(bool doRequire)
 	settings->setValue("SystrayTagsConfirmation", doRequire);
 }
 
+void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
+{
+	QStringList tags(tagActions.keys());
+	bool lazy = true;
+	foreach(QString tag, tags)
+	{
+		QList<FontItem*> taggedFonts = ttek->getFonts ( tag , "tag" );
+		foreach(FontItem* fit, taggedFonts)
+		{
+			if(fit->name() == nameOfFontWhichCausedThisUpdate)// we’re concerned
+				lazy = false;
+		}
+	}
+	if(lazy)
+		return;
+	foreach(QString tag, tags)
+	{
+		deleteTag(tag);
+	}
+	
+	if (!ttek)
+		ttek = typotek::getInstance();
+
+	QStringList tmp(ttek->tagsList);
+	tmp.sort();
+	foreach (QString tagName, tmp) {
+		if (tagName != "Activated_On" && tagName != "Activated_Off")
+			newTag(tagName);
+	}
+	
+}
+
 

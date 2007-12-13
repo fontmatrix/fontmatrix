@@ -177,7 +177,8 @@ class typotek:public QMainWindow
 		void presentFontName(QString s){curFontPresentation->setText(s);};
 		
 		void forwardUpdateView();
-
+		
+		Systray *getSystray() const {return systray;}
 		void setSystrayVisible(bool);
 		void showActivateAllSystray(bool);
 		void systrayAllConfirmation(bool);
@@ -194,6 +195,8 @@ class typotek:public QMainWindow
 		QString fontEditorPath() {return fonteditorPath;};
 
 		bool initialTags() { return useInitialTags;};
+		
+		
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

@@ -67,7 +67,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsRectItem *curGlyph;
 		
 		void allActivation(bool act);
-		void activation(FontItem* fit, bool act);
+		void activation(FontItem* fit, bool act, bool updateTree = true);
 		void fillTree();
 		
 		QStringList openKeys;
@@ -129,6 +129,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 	signals:
 		void faceChanged();
 		void newTag(QString);
+		void activationEvent(QString);
 
 	public:
 		QString defaultOrd() {return ord[0];};

@@ -60,6 +60,7 @@ typotek::typotek()
 	instance = this;
 	setWindowTitle ( "Fontmatrix" );
 	setupDrop();
+	
 }
 
 void typotek::initMatrix()
@@ -69,7 +70,11 @@ void typotek::initMatrix()
 	fillTagsList();
 	initDir();
 
-
+	if (QSystemTrayIcon::isSystemTrayAvailable())
+		systray = new Systray();
+	else
+		systray = 0;
+	
 	theMainView = new MainViewWidget ( this );
 	setCentralWidget ( theMainView );
 	
@@ -83,10 +88,7 @@ void typotek::initMatrix()
 	curFontPresentation->setFont(statusFontFont);
 	statusBar()->addPermanentWidget(curFontPresentation);
 
-	if (QSystemTrayIcon::isSystemTrayAvailable())
-		systray = new Systray();
-	else
-		systray = 0;
+	
 
 	createActions();
 	createMenus();

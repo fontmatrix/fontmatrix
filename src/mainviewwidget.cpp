@@ -27,6 +27,7 @@
 #include "listdockwidget.h"
 #include "fmotf.h"
 #include "opentypetags.h"
+#include "systray.h"
 
 
 #include <QString>
@@ -107,6 +108,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( freetypeButton,SIGNAL ( released() ),this,SLOT ( slotFTRasterChanged() ) );
+	
+	connect(this,SIGNAL(activationEvent(QString)),typo->getSystray(),SLOT(updateTagMenu(QString)));
 	// END CONNECT
 
 	currentOrdering = "family" ;
@@ -762,7 +765,7 @@ void MainViewWidget::slotAppendTag ( QString tag )
 	emit newTag ( tag );
 }
 
-void MainViewWidget::activation ( FontItem* fit , bool act )
+void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree)
 {
 // 	qDebug() << "Activation of " << fit->name() << act;
 	if ( act )
@@ -838,7 +841,9 @@ void MainViewWidget::activation ( FontItem* fit , bool act )
 			qDebug() << "\tIs Locked";
 		}
 	}
-	fillTree();
+	if(updateTree)
+		fillTree();
+	emit activationEvent(fit->name());
 // 	typo->save();
 }
 

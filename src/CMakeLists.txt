@@ -21,6 +21,7 @@ typotek.cpp
 fmotf.cpp
 prefspaneldialog.cpp
 fmshaper.cpp
+fontbook.cpp
 )
 
 SET(fontmatrix_MOC_HDRS

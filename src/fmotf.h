@@ -62,14 +62,16 @@ struct RenderedGlyph
 	double yadvance;
 	double xoffset;
 	double yoffset;
+	quint16 prop;
 	QString dump()
 	{
-		return QString ( "Rendered Glyph(%1) : XA=%2 XO=%3 YA=%4 YO=%5" )
+		return QString ( "Rendered Glyph(%1)(%6) : XA=%2 XO=%3 YA=%4 YO=%5" )
 		       .arg ( glyph )
 		       .arg ( xadvance )
 		       .arg ( xoffset )
 		       .arg ( yadvance )
-		       .arg ( yoffset );
+		       .arg ( yoffset )
+		       .arg ( prop );
 	}
 };
 

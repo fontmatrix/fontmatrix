@@ -100,11 +100,16 @@ HB_Bool hb_stringToGlyphs ( HB_Font font, const HB_UChar16 *string, hb_uint32 le
 	return true;
 }
 
-void hb_getAdvances ( HB_Font /*font*/, const HB_Glyph * /*glyphs*/, hb_uint32 numGlyphs, HB_Fixed *advances, int /*flags*/ )
+void hb_getAdvances ( HB_Font font, const HB_Glyph * glyphs, hb_uint32 numGlyphs, HB_Fixed *advances, int flags )
 {
-	qDebug() << "void hb_getAdvances";
+	qDebug() << "void hb_getAdvances with flag(0x"<<QString::number( flags, 16)<<")";
+	FT_Face face = ( FT_Face ) font->userData;
 	for ( hb_uint32 i = 0; i < numGlyphs; ++i )
-		advances[i] = 0; // ### not tested right now
+	{
+		FT_Load_Glyph(face, glyphs[i],FT_LOAD_NO_SCALE);
+		qDebug() << "ADV("<< glyphs[i] <<")("<< face->glyph->metrics.horiAdvance <<")";
+		advances[i] = face->glyph->metrics.horiAdvance;
+	}
 }
 
 HB_Bool hb_canRender ( HB_Font font, const HB_UChar16 *string, hb_uint32 length )
@@ -708,9 +713,14 @@ QList<RenderedGlyph> FmOtf::get_position ( HB_Buffer abuffer )
 		else
 		{
 // 			qDebug() << p->back;
+			double backBonus = 0.0;
+			for(int bb = 0; bb < p->back; ++bb)
+			{
+				backBonus -= renderedString[bIndex - (bb + 1)].xadvance;
+			}
 			if ( p->new_advance )
 			{
-				gl.xadvance = p->x_advance;
+				gl.xadvance = p->x_advance + backBonus;
 				gl.yadvance = p->y_advance;
 				gl.xoffset = p->x_pos;
 				gl.yoffset = p->y_pos;
@@ -720,7 +730,7 @@ QList<RenderedGlyph> FmOtf::get_position ( HB_Buffer abuffer )
 				FT_GlyphSlot slot = _face->glyph;
 				if ( !FT_Load_Glyph ( _face, gl.glyph , FT_LOAD_NO_SCALE ) )
 				{
-					gl.xadvance = ( double ) ( p->x_advance + slot->advance.x );
+					gl.xadvance = ( double ) ( p->x_advance + slot->advance.x ) + backBonus ;
 					gl.yadvance = ( double ) ( p->y_advance + slot->advance.y );
 					gl.xoffset = p->x_pos;
 					gl.yoffset = p->y_pos;

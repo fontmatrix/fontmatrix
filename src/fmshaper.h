@@ -20,6 +20,7 @@
 #include <QString>
 #include <QStringList>
 #include "harfbuzz.h"
+#include "fmotf.h" 
 
 /**
 	@author Pierre Marchand <pierremarc@oep-h.com>
@@ -35,12 +36,13 @@ class FmShaper
 
 		bool setScript ( QString script );
 
-		/* Returns lenght of the glyph string */
-		int doShape ( QString string );
+		
+		QList<RenderedGlyph> doShape(QString string , bool ltr);
 
 		HB_Buffer out_buffer();
 
 	private:
+		FT_Face anchorFace;
 		HB_ShaperItem m;
 
 		bool faceisset;

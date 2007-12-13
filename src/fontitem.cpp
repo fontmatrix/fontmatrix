@@ -533,10 +533,11 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 		releaseFace();
 		return;
 	}
-	shaper->doShape(spec);
+// 	shaper->doShape(spec);
+// 	
+// 	QList<RenderedGlyph> refGlyph = otf->get_position(shaper->out_buffer());
 	
-	QList<RenderedGlyph> refGlyph = otf->get_position(shaper->out_buffer());
-	
+	QList<RenderedGlyph> refGlyph = shaper->doShape(spec, m_RTL);
 	delete shaper;
 	
 	if( refGlyph.count() == 0)
@@ -557,15 +558,15 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 			}
 			if ( record )
 				pixList.append ( glyph );
-			if(m_RTL)
-				pen.rx() -= refGlyph[i].xadvance * scalefactor * 10;
+// 			if(m_RTL)
+				pen.rx() -= refGlyph[i].xadvance * scalefactor ;
 			scene->addItem ( glyph );
 			glyph->setPos ( pen.x() + (refGlyph[i].xoffset  * scalefactor) + glyph->data(1).toInt()  ,
 					pen.y() + (refGlyph[i].yoffset  * scalefactor) - glyph->data(2).toInt());
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
 			
-			if(!m_RTL)
+// 			if(!m_RTL)
 				pen.rx() += refGlyph[i].xadvance * scalefactor;
 		}
 	}
@@ -576,32 +577,32 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 			QGraphicsPathItem *glyph = itemFromGindex( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 			{
-				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+				qDebug() << "Unable to render "<< refGlyph[i].glyph <<" from "<< name() ;
 				continue;
 			}
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
-			
-			if(m_RTL)
-			{
-				pen.rx() -= refGlyph[i].xadvance *  scalefactor;
-				
-				int col = i*255/refGlyph.count();
-				glyph->setBrush(QColor(col,col,col));
-				qDebug()<< refGlyph[i].dump();
-				glyph->setPos ( pen.x() - (refGlyph[i].xoffset * scalefactor),
-					pen.y() + (refGlyph[i].yoffset * scalefactor) );
-			}
-			else
-			{
-				glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor),
-					pen.y() + (refGlyph[i].yoffset * scalefactor) );
-			}
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			if(!m_RTL)
+			//debug
+			glyph->setBrush(QColor((i*255/refGlyph.count()),0,0,255-(i*255/refGlyph.count())));
+			qDebug()<< refGlyph[i].dump();
+			qDebug() << "Scaled advance = " << refGlyph[i].xadvance * scalefactor;
+			qDebug() << pen;
+			//
+			if(m_RTL)
+			{
 				pen.rx() += refGlyph[i].xadvance * scalefactor;
+			}
+			
+			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor),
+					pen.y() + (refGlyph[i].yoffset * scalefactor) );
+			
+			if(!m_RTL)
+			{
+				pen.rx() += refGlyph[i].xadvance * scalefactor;
+			}
 		}
 	}
 	

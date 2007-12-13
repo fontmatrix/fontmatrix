@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/" >
         <file alias="fontmatrix_icon.png">icons/application-fontmatrix_128.png</file>
-
+	<file alias="icon_fake_partiallychecked">icons/icon_warning-32.png</file>
         <file alias="fontmatrix_splash.png">graphic-resources/splashscreen-670x470.png</file>
         <file alias="fontmatrix_about.png">graphic-resources/about-graphic.png</file>
 
@@ -17,6 +17,8 @@
         <file alias="fontmatrix_tagseteditor_icon.png">graphic-resources/fontmatrix-tagseteditor-icon.png</file>
         <file alias="fontmatrix_fontbookexport_icon.png">graphic-resources/fontmatrix-fontbookexport-icon.png</file>
         <file alias="fontmatrix_import_icon.png">graphic-resources/fontmatrix-import-icon.png</file>
+        
+        
     </qresource>
 
 

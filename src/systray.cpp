@@ -21,6 +21,7 @@
 #include "systray.h"
 #include "mainviewwidget.h"
 #include "typotek.h"
+#include "fontitem.h"
 #include <QtGui>
 
 typotek* Systray::ttek = 0;
@@ -148,6 +149,7 @@ void Systray::slotDeactivateAll()
 
 void Systray::slotTagMenuClicked(QAction *action)
 {
+	action->setIcon(QIcon ());
 	QString name = action->text();
 	if (name.isEmpty())
 		return;
@@ -203,6 +205,25 @@ void Systray::newTag(QString name)
 
 	QAction *tmp = tagMenu->addAction(name);
 	tmp->setCheckable(true);
+	if(!ttek)
+		ttek = typotek::getInstance();
+	QList<FontItem*> taggedFonts = ttek->getFonts ( name , "tag" );
+	bool notAtAll = true;
+	bool all = true;
+	for(int i = 0; i < taggedFonts.count() ; ++i)
+	{
+		if(taggedFonts[i]->isActivated())
+			notAtAll = false;
+		else
+			all = false;
+	}
+	if(!all && !notAtAll)
+		tmp->setIcon(QIcon(":/icon_fake_partiallychecked"));// It’s not TriCheckState and we need to inform user
+	else if(all)
+		tmp->setChecked(true);
+	else
+		tmp->setChecked(false);
+	
 	tagActions[name] = tmp;
 }
 

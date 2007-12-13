@@ -142,11 +142,18 @@ void typotek::closeEvent ( QCloseEvent *event )
 
 void typotek::open()
 {
+	static QString dir = QDir::homePath(); // first time use the home path then remember the last used dir
+	QString tmpdir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
+
+	if (tmpdir.isEmpty())
+		return; // user choose to cancel the import process
+
+	dir = tmpdir; // only set dir if importing wasn't cancelled
 
 	QStringList pathList;
 	QStringList nameList;
 	QStringList dirList;
-	QString dir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), QDir::homePath ()  ,  QFileDialog::ShowDirsOnly );
+
 	QDir theDir ( dir );
 	QStringList tmpDirL = theDir.entryList ( QDir::AllDirs );
 	foreach ( QString dirEntry, tmpDirL )

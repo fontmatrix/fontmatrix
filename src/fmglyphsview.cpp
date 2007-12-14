@@ -22,6 +22,7 @@
 FMGlyphsView::FMGlyphsView(QWidget *parent)
  : QGraphicsView(parent)
 {
+	
 }
 
 
@@ -33,5 +34,11 @@ void FMGlyphsView::resizeEvent(QResizeEvent * event)
 {
 	emit refit(width());
 }
+
+void FMGlyphsView::showEvent(QShowEvent * event)
+{
+	emit refit(width());
+}
+
 
 

@@ -543,7 +543,6 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 		return;
 	}
 	QPointF pen ( origine );
-	const double top = pen.y();
 	if(m_rasterFreetype)
 	{
 		for ( int i=0; i < refGlyph.count(); ++i )
@@ -556,15 +555,15 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 			}
 			if ( record )
 				pixList.append ( glyph );
-// 			if(m_RTL)
-				pen.rx() -= refGlyph[i].xadvance * scalefactor ;
+			if(m_RTL)
+				pen.rx() += refGlyph[i].xadvance * scalefactor ;
 			scene->addItem ( glyph );
 			glyph->setPos ( pen.x() + (refGlyph[i].xoffset  * scalefactor) + glyph->data(1).toInt()  ,
 					pen.y() + (refGlyph[i].yoffset  * scalefactor) - glyph->data(2).toInt());
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
 			
-// 			if(!m_RTL)
+			if(!m_RTL)
 				pen.rx() += refGlyph[i].xadvance * scalefactor;
 		}
 	}
@@ -595,7 +594,7 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 			}
 			
 			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor),
-					top + (refGlyph[i].yoffset * scalefactor) );
+					pen.y() + (refGlyph[i].yoffset * scalefactor) );
 			
 			if(!m_RTL)
 			{
@@ -915,23 +914,25 @@ QString FontItem::infoText ( bool fromcache )
 		QString styleLangMatch;
 		for ( QMap<int, QMap<QString, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
 		{
-			if ( langIdMap[ lit.key() ].contains ( sysLang ) )
+			if ( langIdMap[ lit.key() ].contains ( sysLang ) ) // lang match
 			{
-				styleLangMatch = " style=\"background-color:#aae;\" ";
+				styleLangMatch = " style=\"margin-left:16pt;\" ";
 			}
-			else if ( langIdMap[ lit.key() ] == "DEFAULT" )
+			else if ( langIdMap[ lit.key() ] == "DEFAULT" ) // lang does not match but it’s international name
 			{
-				styleLangMatch = "style=\"font-style:normal;\"";
+				styleLangMatch = "style=\"margin-left:16pt;font-style:italic;\"";
 			}
-			else
+			else // lang does not match at all
 			{
-				styleLangMatch = "";
+				styleLangMatch = "style=\"margin-left:16pt;font-style:italic;font-size:7pt\"";
 			}
 			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
 				if ( langIdMap[ lit.key() ].contains ( sysLang ) || langIdMap[ lit.key() ] == "DEFAULT" )
 				{
-					orderedInfo[ mit.key() ] << "<span "+ styleLangMatch +">" + mit.value() +"</span>";
+					QString name_value = mit.value();
+					name_value.replace("\n","<br/>");
+					orderedInfo[ mit.key() ] << "<p "+ styleLangMatch +">" + name_value +"</p>";
 					if ( mit.key() == "Font Subfamily" )
 						m_variant = mit.value();
 				}

@@ -94,6 +94,9 @@ private:
 	/*** hide these systray is not ment to be copied ***/
 	Systray(const Systray&) {};
 	void operator= (const Systray&) {};
+	
+	protected:
+		bool eventFilter ( QObject * watched, QEvent * event ) ;
 };
 
 #endif

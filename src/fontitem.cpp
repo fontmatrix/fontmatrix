@@ -533,11 +533,8 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 		releaseFace();
 		return;
 	}
-// 	shaper->doShape(spec);
-// 	
-// 	QList<RenderedGlyph> refGlyph = otf->get_position(shaper->out_buffer());
 	
-	QList<RenderedGlyph> refGlyph = shaper->doShape(spec, m_RTL);
+	QList<RenderedGlyph> refGlyph = shaper->doShape(spec, !m_RTL);
 	delete shaper;
 	
 	if( refGlyph.count() == 0)
@@ -546,6 +543,7 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 		return;
 	}
 	QPointF pen ( origine );
+	const double top = pen.y();
 	if(m_rasterFreetype)
 	{
 		for ( int i=0; i < refGlyph.count(); ++i )
@@ -597,7 +595,7 @@ void FontItem::renderLine(QString script, QGraphicsScene * scene, QString spec, 
 			}
 			
 			glyph->setPos ( pen.x() + (refGlyph[i].xoffset * scalefactor),
-					pen.y() + (refGlyph[i].yoffset * scalefactor) );
+					top + (refGlyph[i].yoffset * scalefactor) );
 			
 			if(!m_RTL)
 			{

@@ -23,6 +23,7 @@
 #include "typotek.h"
 #include "fontitem.h"
 #include <QtGui>
+#include <QDebug>
 
 typotek* Systray::ttek = 0;
 
@@ -270,6 +271,7 @@ void Systray::createTrayIcon()
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->installEventFilter(this);
 }
 
 void Systray::createTagMenu()
@@ -350,5 +352,17 @@ void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
 	}
 	
 }
+
+bool Systray::eventFilter(QObject * watched, QEvent * event)
+{
+	if (watched == trayIcon) {
+// 		qDebug() << event;
+		}
+	
+	return Systray::eventFilter(watched, event);
+	
+}
+
+
 
 

@@ -26,6 +26,7 @@
 #include <QSizeF>
 #include <QRectF>
 #include <QPrinter>
+#include <QDomDocument>
 
 class QGraphicsScene;
 class FontItem;
@@ -52,6 +53,8 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 		QPrinter::PageSize getPageSizeConstant();
 		double getFontSize(QString s);
 		bool isOk;
+		bool isTemplate(){return m_isTemplate;}
+		QDomDocument getTemplate(){return m_template;}
 		
 	private slots:
 		void slotAccept();
@@ -59,9 +62,12 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 		void slotFileDialog();
 		void slotPageSize(int index);
 		void slotPreview();
+		void slotLoadTemplate();
 	signals:
 		void updateView();
 	private:
+		QDomDocument m_template;
+		bool m_isTemplate;
 		void fillSizeList();
 		void fillFontsList();
 		QSizeF m_pageSize;
@@ -69,6 +75,8 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 		QRectF m_pageRect;
 		QGraphicsScene *preScene;
 		QList<FontItem*> renderedFont;
+		
+		
 };
 
 #endif

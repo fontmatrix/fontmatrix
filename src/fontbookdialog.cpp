@@ -24,13 +24,15 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QGraphicsScene>
-
+#include <QDomNodeList>
+#include <QMessageBox>
 
 FontBookDialog::FontBookDialog ( QWidget *parent )
 		: QDialog ( parent )
 {
 	setupUi ( this );
 	isOk = false;
+	m_isTemplate = false;
 
 	fillSizeList();
 	fillFontsList();
@@ -69,6 +71,8 @@ FontBookDialog::FontBookDialog ( QWidget *parent )
 	}
 	connect (sampleTextEdit,SIGNAL(textChanged()),SIGNAL(updateView()));
 	connect (sampleHeadline,SIGNAL(textChanged( const QString&)),SIGNAL(updateView()));
+	
+	connect(loadTemplateButton,SIGNAL(released()),this,SLOT(slotLoadTemplate()));
 
 }
 
@@ -373,6 +377,79 @@ void FontBookDialog::fillFontsList()
 }
 
 
-
-
-
+/**
+*	1 - browse to select a template file
+*	2 - load as a QDomDocument 
+*	3 - search for "description" and "preview" elements
+*	4 - check validity of the doc (will be hard at the beginning)
+*/
+void FontBookDialog::slotLoadTemplate()
+{
+	QString theTemplate = QFileDialog::getSaveFileName ( this, "Get template", QDir::homePath());
+	
+	if(theTemplate.isEmpty())
+		return;
+	
+	QFile file(theTemplate);
+	QDomDocument doc("template");
+	if ( !file.open ( QFile::ReadOnly ) )
+	{
+		QMessageBox::warning (0, QString ( "Fontmatrix" ),
+				      QString ( "Can’t read %1." ).arg(file.fileName()) );
+		return;
+	}
+	if ( !doc.setContent ( &file ) )
+	{
+		file.close();
+		QMessageBox::warning (0, QString ( "Fontmatrix" ),
+				      QString ( "%1 is an invalid XML tree." ).arg(file.fileName()) );
+		return;
+	}
+	file.close();
+	
+	QString description;
+	QDomNodeList descList = doc.elementsByTagName ( "name" );
+	if ( descList.length()  )
+	{
+			QDomNode node = descList.item ( 0 );
+			description = node.toElement().text();
+	}
+	QString preview;
+	QDomNodeList prevList = doc.elementsByTagName ( "preview" );
+	if ( descList.length()  )
+	{
+		QDomNode node = prevList.item ( 0 );
+		preview = node.toElement().text();
+	}
+	
+	if(description.isEmpty())
+		return;
+	if(preview.isEmpty())
+		return;
+	
+	templateLabel->setText(description);
+	
+	QFileInfo fInfo(file);	
+	QPixmap img(fInfo.absolutePath()+ "/" + preview);
+	if(!img.isNull())
+	{
+		for ( int  n = 0; n < renderedFont.count(); ++n )
+		{
+			renderedFont[n]->deRenderAll();
+				
+		}
+		renderedFont.clear();
+		preScene->removeItem(preScene->createItemGroup(preScene->items()));
+		
+		preScene->addPixmap(img);
+	}
+	else
+	{
+		return;
+	}
+	
+	
+	// TODO Check validity ;-)
+	
+	m_isTemplate = true;
+}

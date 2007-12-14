@@ -12,6 +12,7 @@
 #ifndef FONTBOOK_H
 #define FONTBOOK_H
 
+#include <QDomDocument>
 /**
 	@author Pierre Marchand <pierremarc@oep-h.com>
 
@@ -24,6 +25,8 @@ class FontBook
 
 		~FontBook();
 		void doBook();
+	private:
+		void doBookFromTemplate(QDomDocument aTemplate);
 };
 
 #endif

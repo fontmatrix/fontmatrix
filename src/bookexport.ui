@@ -58,6 +58,16 @@
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="templateLabel" >
+             <property name="text" >
+              <string>Not A Template</string>
+             </property>
+             <property name="alignment" >
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
             <layout class="QHBoxLayout" >
              <item>
               <widget class="QLabel" name="label" >
@@ -426,7 +436,11 @@
       </attribute>
       <layout class="QGridLayout" >
        <item row="0" column="0" >
-        <widget class="QGraphicsView" name="preView" />
+        <widget class="QGraphicsView" name="preView" >
+         <property name="focusPolicy" >
+          <enum>Qt::NoFocus</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

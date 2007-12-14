@@ -36,6 +36,12 @@ void FontBook::doBook()
 
 	if ( !bookOption.isOk )
 		return;
+	
+	if(bookOption.isTemplate())
+	{
+		doBookFromTemplate(bookOption.getTemplate());
+		return;
+	}
 
 	double pageHeight = bookOption.getPageSize().height();
 	double pageWidth = bookOption.getPageSize().width();
@@ -244,5 +250,10 @@ void FontBook::doBook()
 		}
 
 	}
+}
+
+void FontBook::doBookFromTemplate(QDomDocument aTemplate)
+{
+	// TODO
 }
 

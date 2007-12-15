@@ -19,11 +19,16 @@
  ***************************************************************************/
 #include "fmglyphsview.h"
 
+#include <QDebug>
+#include <QMouseEvent>
+
 FMGlyphsView::FMGlyphsView(QWidget *parent)
  : QGraphicsView(parent)
 {
 	// There is just one instance and we want to identify it
 	setObjectName("theglyphsview");
+	
+	setOptimizationFlags ( QGraphicsView::DontClipPainter | QGraphicsView::DontSavePainterState | QGraphicsView::DontAdjustForAntialiasing);
 	
 }
 
@@ -41,6 +46,14 @@ void FMGlyphsView::showEvent(QShowEvent * event)
 {
 	emit refit(width());
 }
+
+void FMGlyphsView::mouseReleaseEvent(QMouseEvent * e)
+{
+// 	qDebug() << "Catch release event";
+	if(e->button() == Qt::LeftButton)
+		QGraphicsView::mouseReleaseEvent(e);
+}
+
 
 
 

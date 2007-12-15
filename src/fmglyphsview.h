@@ -42,6 +42,7 @@ class FMGlyphsView : public QGraphicsView
 
 		void resizeEvent ( QResizeEvent * event );
 		void showEvent ( QShowEvent * event ) ;
+		void mouseReleaseEvent ( QMouseEvent * e );
 };
 
 #endif

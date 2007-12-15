@@ -549,6 +549,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 void MainViewWidget::slotglyphInfo()
 {
+	qDebug() << "SLOTGINFO";
 	if ( abcScene->selectedItems().isEmpty() )
 		return;
 	if ( curGlyph )
@@ -557,12 +558,6 @@ void MainViewWidget::slotglyphInfo()
 	}
 	curGlyph = reinterpret_cast<QGraphicsRectItem*> ( abcScene->selectedItems().first() );
 	curGlyph->setBrush ( QColor ( 0,0,0,60 ) );
-// 	QGraphicsPathItem * gitem = theVeryFont->hasCodepoint(curGlyph->data(3).toInt());
-// 	gitem->setBrush( QColor(200,200,200) );
-
-// 	QTransform transform;
-// 	transform.scale(2.0,2.0);
-// 	abcView->setTransform(transform);
 	if ( abcView->transform().isIdentity() )
 	{
 		abcView->fitInView ( curGlyph->rect().toRect(), Qt::KeepAspectRatio );
@@ -575,6 +570,7 @@ void MainViewWidget::slotglyphInfo()
 		abcView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
 		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
 	}
+	qDebug() << "ENDGINFO";
 }
 
 void MainViewWidget::slotSearch()

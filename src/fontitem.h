@@ -105,6 +105,7 @@ class FontItem : public QObject
 
 
 		bool allIsRendered;
+		bool isDerendered;
 		int m_glyphsPerRow;
 		bool hasUnicode;
 		int currentChar;

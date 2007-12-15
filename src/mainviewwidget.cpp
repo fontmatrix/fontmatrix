@@ -1106,6 +1106,8 @@ void MainViewWidget::fillUniPlanes()
 	uniPlanes["130Supplementary Special-purpose Plane (SSP)"] = qMakePair ( 0xE0000,0xEFFFF ) ;
 	uniPlanes["131Private Use Area 1 (PUA)"] = qMakePair ( 0xF0000,0xFFFFF ) ;
 	uniPlanes["132Private Use Area 2 (PUA)"] = qMakePair ( 0x100000,0x10FFFF ) ;
+	uniPlanes["133Un-Mapped Glyphs"] = qMakePair ( -1,100 ) ;
+	
 }
 
 void MainViewWidget::fillUniPlanesCombo ( FontItem* item )

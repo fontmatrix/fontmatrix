@@ -22,6 +22,8 @@
 FMGlyphsView::FMGlyphsView(QWidget *parent)
  : QGraphicsView(parent)
 {
+	// There is just one instance and we want to identify it
+	setObjectName("theglyphsview");
 	
 }
 

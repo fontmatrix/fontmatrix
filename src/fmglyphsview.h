@@ -27,19 +27,19 @@
 */
 class FMGlyphsView : public QGraphicsView
 {
-Q_OBJECT
-public:
-	FMGlyphsView(QWidget *parent);
+		Q_OBJECT
+	public:
+		FMGlyphsView ( QWidget *parent );
 
-    ~FMGlyphsView();
-    
+		~FMGlyphsView();
+
 	signals:
 		/**
 			forward new width, allowing FontItem::renderAll() to adjust the number of columns
 		*/
-		void refit(int); 
+		void refit ( int );
 	protected:
-		
+
 		void resizeEvent ( QResizeEvent * event );
 		void showEvent ( QShowEvent * event ) ;
 };

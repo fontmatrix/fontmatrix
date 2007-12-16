@@ -731,18 +731,14 @@ int FontItem::countCoverage ( int begin_code, int end_code )
 	else
 	{
 		FT_UInt anIndex = 1;
-		QList<FT_UInt> notCovered;
-		for(int i=1; i  < m_numGlyphs; ++i)
-			notCovered << i;
+		count = m_numGlyphs;
 		FT_UInt anyChar =  FT_Get_First_Char(m_face, &anIndex);
 		while(anIndex)
 		{ 
 			anyChar =  FT_Get_Next_Char(m_face,anyChar,&anIndex);
 			if(anIndex)
-				notCovered.removeAll(anIndex);
+				--count;
 		}	
-		
-		count = notCovered.count() ;
 	}
 	releaseFace();
 	return count - 1;//something weird with freetype which put a valid glyph at the beginning of each lang ??? Or a bug here...
@@ -754,162 +750,157 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	if ( allIsRendered )
 		return;
 	deRenderAll();
-	adjustGlyphsPerRow (scene->views()[0]->width() );
+	adjustGlyphsPerRow ( scene->views() [0]->width() );
 	QPointF pen ( 0,50 );
 	int glyph_count = 0;
 	int nl = 0;
 
-// 	for ( int i=1;i<=m_numGlyphs; ++i )
-// 		m_charLess.append ( i );
-
 	FT_ULong  charcode;
 	FT_UInt   gindex = 1;
 	double sizz = 50;
-
-
-// 	charcode = FT_Get_First_Char ( m_face, &gindex );
 	charcode = begin_code;
-// 	qDebug() << "INTER " << begin_code << end_code;
 	QPen selPen ( Qt::gray );
 	QFont infoFont ( "Helvetica",8 );
 	QBrush selBrush ( QColor ( 255,255,255,0 ) );
-	if(begin_code >= 0)
+	if ( begin_code >= 0 )
 	{
-	if ( hasUnicode )
-	{
-		while ( charcode <= end_code && gindex )
+		if ( hasUnicode )
 		{
-			if ( nl == m_glyphsPerRow )
+			while ( charcode <= end_code && gindex )
 			{
-				nl = 0;
-				pen.rx() = 0;
-				pen.ry() += 100;
+				if ( nl == m_glyphsPerRow )
+				{
+					nl = 0;
+					pen.rx() = 0;
+					pen.ry() += 100;
+				}
+				QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
+				if ( pitem )
+				{
+					pitem->setData ( 1,"glyph" );
+					pitem->setData ( 2,gindex );
+					uint ucharcode = charcode;
+					pitem->setData ( 3,ucharcode );
+					glyphList.append ( pitem );
+// 					pixList.append(pitem);
+					scene->addItem ( pitem );
+					pitem->setPos ( pen );
+					pitem->setZValue ( 10 );
+
+					QGraphicsTextItem *tit= scene->addText ( glyphName ( charcode )  + "\nU+" + QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) )  +" ("+ QString::number ( charcode ) +")"  , infoFont );
+					tit->setPos ( pen.x()-10,pen.y() + 15 );
+					tit->setData ( 1,"label" );
+					tit->setData ( 2,gindex );
+					tit->setData ( 3,ucharcode );
+					labList.append ( tit );
+					tit->setZValue ( 1 );
+
+					QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
+					rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
+					rit->setData ( 1,"select" );
+					rit->setData ( 2,gindex );
+					rit->setData ( 3,ucharcode );
+					rit->setZValue ( 100 );
+					selList.append ( rit );
+
+					pen.rx() += 100;
+					++glyph_count;
+					m_charLess.removeAll ( gindex );
+					++nl;
+				}
+				charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
 			}
-			QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
-			if ( pitem )
-			{
-				pitem->setData ( 1,"glyph" );
-				pitem->setData ( 2,gindex );
-				uint ucharcode = charcode;
-				pitem->setData ( 3,ucharcode );
-				glyphList.append ( pitem );
-				scene->addItem ( pitem );
-				pitem->setPos ( pen );
-				pitem->setZValue ( 10 );
-
-				QGraphicsTextItem *tit= scene->addText ( glyphName ( charcode )  + "\nU+" + QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) )  +" ("+ QString::number ( charcode ) +")"  , infoFont );
-				tit->setPos ( pen.x()-10,pen.y() + 15 );
-				tit->setData ( 1,"label" );
-				tit->setData ( 2,gindex );
-				tit->setData ( 3,ucharcode );
-				labList.append ( tit );
-				tit->setZValue ( 1 );
-
-				QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
-				rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
-				rit->setData ( 1,"select" );
-				rit->setData ( 2,gindex );
-				rit->setData ( 3,ucharcode );
-				rit->setZValue ( 100 );
-				selList.append ( rit );
-
-				pen.rx() += 100;
-				++glyph_count;
-				m_charLess.removeAll ( gindex );
-				++nl;
-			}
-			charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
 		}
-	}
-	else // Has not Unicode
-	{
-		// Here are fake charcodes (glyph index)
-		while ( charcode <= end_code )
+		else // Has not Unicode
 		{
-			if ( nl == m_glyphsPerRow )
+			// Here are fake charcodes (glyph index)
+			while ( charcode <= end_code )
 			{
-				nl = 0;
-				pen.rx() = 0;
-				pen.ry() += 100;
-			}
-			QGraphicsPathItem *pitem = itemFromGindex ( charcode , sizz );
-			if ( pitem )
-			{
-				pitem->setData ( 1,"glyph" );
-				pitem->setData ( 2,gindex );
-				pitem->setData ( 3,0 );
-				glyphList.append ( pitem );
-				scene->addItem ( pitem );
-				pitem->setPos ( pen );
-				pitem->setZValue ( 10 );
+				if ( nl == m_glyphsPerRow )
+				{
+					nl = 0;
+					pen.rx() = 0;
+					pen.ry() += 100;
+				}
+				QGraphicsPathItem *pitem = itemFromGindex ( charcode , sizz );
+				if ( pitem )
+				{
+					pitem->setData ( 1,"glyph" );
+					pitem->setData ( 2,gindex );
+					pitem->setData ( 3,0 );
+					glyphList.append ( pitem );
+					scene->addItem ( pitem );
+					pitem->setPos ( pen );
+					pitem->setZValue ( 10 );
 
-				QGraphicsTextItem *tit= scene->addText ( QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) ) , infoFont);
-				tit->setPos ( pen.x(),pen.y() + 15 );
-				tit->setData ( 1,"label" );
-				tit->setData ( 2,gindex );
-				tit->setData ( 3,0 );
-				labList.append ( tit );
-				tit->setZValue ( 1 );
+					QGraphicsTextItem *tit= scene->addText ( QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) ) , infoFont );
+					tit->setPos ( pen.x(),pen.y() + 15 );
+					tit->setData ( 1,"label" );
+					tit->setData ( 2,gindex );
+					tit->setData ( 3,0 );
+					labList.append ( tit );
+					tit->setZValue ( 1 );
 
-				QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
-				rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
-				rit->setData ( 1,"select" );
-				rit->setData ( 2,gindex );
-				rit->setData ( 3,0 );
-				rit->setZValue ( 100 );
-				selList.append ( rit );
+					QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
+					rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
+					rit->setData ( 1,"select" );
+					rit->setData ( 2,gindex );
+					rit->setData ( 3,0 );
+					rit->setZValue ( 100 );
+					selList.append ( rit );
 
-				pen.rx() += 100;
-				++nl;
+					pen.rx() += 100;
+					++nl;
+				}
+				else
+				{
+					break;
+				}
+				++charcode;
 			}
-			else
-			{
-				break;
-			}
-			++charcode;
 		}
-	}
 	}
 	else // beginCode is negative - it means search for out charmap glyphs
 	{
-		// 1/ where "out charmap" begins?
-// 		int lastCharIndex = 0;
+		// 1/ what is "out charmap"?
 		FT_UInt anIndex = 1;
-		QList<FT_UInt> notCovered;
-		for(int i=1; i  < m_numGlyphs; ++i)
-			notCovered << i;
-		FT_UInt anyChar =  FT_Get_First_Char(m_face, &anIndex);
-		while(anIndex)
-		{ 
-			anyChar =  FT_Get_Next_Char(m_face,anyChar,&anIndex);
-			if(anIndex)
-				notCovered.removeAll(anIndex);
-		}	
-		
-		// 2/ fill with glyphs
-		for(int i = 0; i < notCovered.count(); ++i)
+		QList<bool> notCovered;
+		for ( int i=1; i  < m_numGlyphs +1; ++i )
+			notCovered << true;
+		FT_UInt anyChar =  FT_Get_First_Char ( m_face, &anIndex );
+		while ( anIndex )
 		{
+			anyChar =  FT_Get_Next_Char ( m_face,anyChar,&anIndex );
+			if ( anIndex )
+				notCovered[anIndex] = false;
+		}
+
+		// 2/ fill with glyphs
+		for ( int i = 1; i < notCovered.count(); ++i )
+		{
+			if(!notCovered[i])
+				continue;
 			if ( nl == m_glyphsPerRow )
 			{
 				nl = 0;
 				pen.rx() = 0;
 				pen.ry() += 100;
 			}
-			QGraphicsPathItem *pitem = itemFromGindex ( notCovered[i] , sizz );
+			QGraphicsPathItem *pitem = itemFromGindex ( i , sizz );
 			if ( pitem )
 			{
 				pitem->setData ( 1,"glyph" );
-				pitem->setData ( 2, notCovered[i]);
+				pitem->setData ( 2, i );
 				pitem->setData ( 3,0 );
 				glyphList.append ( pitem );
 				scene->addItem ( pitem );
 				pitem->setPos ( pen );
 				pitem->setZValue ( 10 );
 
-				QGraphicsTextItem *tit= scene->addText ( QString ( "I+%1" ).arg ( notCovered[i] ), infoFont );
+				QGraphicsTextItem *tit= scene->addText ( QString ( "I+%1" ).arg ( i), infoFont );
 				tit->setPos ( pen.x(),pen.y() + 15 );
 				tit->setData ( 1,"label" );
-				tit->setData ( 2,notCovered[i]);
+				tit->setData ( 2,i );
 				tit->setData ( 3,0 );
 				labList.append ( tit );
 				tit->setZValue ( 1 );
@@ -917,7 +908,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
 				rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
 				rit->setData ( 1,"select" );
-				rit->setData ( 2,notCovered[i] );
+				rit->setData ( 2,i );
 				rit->setData ( 3,0 );
 				rit->setZValue ( 100 );
 				selList.append ( rit );
@@ -925,14 +916,14 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				pen.rx() += 100;
 				++nl;
 			}
-			else
-			{
-				break;
-			}
-			++charcode;
+// 			else
+// 			{
+// 				break;
+// 			}
+// 			++charcode;
 		}
 	}
-	
+
 	allIsRendered = true;
 	releaseFace();
 }

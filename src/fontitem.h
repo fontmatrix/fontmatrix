@@ -37,6 +37,7 @@ class QGraphicsScene;
 class QGraphicsRectItem;
 struct OTFSet;
 class FmOtf;
+class QGraphicsView;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -102,6 +103,7 @@ class FontItem : public QObject
 		QList<QGraphicsTextItem*> labList;
 		QList<QGraphicsRectItem*> selList;
 		QList<QGraphicsScene *> sceneList;
+		QList<QGraphicsPixmapItem*> fancyGlyphs;
 
 
 		bool allIsRendered;
@@ -113,7 +115,7 @@ class FontItem : public QObject
 		bool m_RTL;
 
 		bool m_lock;
-// 		QMap<int,QPainterPath> contourCache;
+		
 		QMap<int,double> advanceCache;
 
 		QIcon theOneLinePreviewIcon;
@@ -126,7 +128,6 @@ class FontItem : public QObject
 
 		QMap<int,QMap<QString, QString> > moreInfo;
 		void fillLangIdMap();
-
 
 	public:
 		static FT_Library theLibrary;
@@ -155,7 +156,11 @@ class FontItem : public QObject
 		int countCoverage ( int begin_code, int end_code );
 		void deRender ( QGraphicsScene *scene );
 		void deRenderAll();
-
+		
+		//Return a ref that will be asked for destroy the element. -1 if failed
+		int showFancyGlyph(QGraphicsView *view, int charcode);
+		void hideFancyGlyph(int ref);
+		
 		QString toElement();
 
 		QGraphicsPathItem* hasCodepoint ( int code );

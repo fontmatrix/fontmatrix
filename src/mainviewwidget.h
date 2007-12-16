@@ -84,7 +84,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		OTFSet deFillOTTree();
 		
 		bool renderingLock;
-		
+		int fancyGlyphInUse;
 		
 		
 	public slots:
@@ -93,7 +93,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotFontSelectedByName(QString fname);
 		void slotInfoFont();
 		void slotView(bool needDeRendering = false);
-		void slotglyphInfo();
+		void slotShowOneGlyph();
+		void slotShowAllGlyph();
 		void slotSearch();
 		void slotFontAction(QTreeWidgetItem * item, int column );
 		void slotFontActionByName(QString fname);

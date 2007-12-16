@@ -1665,6 +1665,100 @@ void FontItem::releaseOTFInstance ( FmOtf * rotf )
 	releaseFace();
 }
 
+int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode )
+{
+	ensureFace();
+	
+	QRect allRect ( view->rect() );
+	QRect targetRect ( view->mapToScene ( allRect.topLeft() ).toPoint(),  view->mapToScene ( allRect.topRight() ) .toPoint()) ;
+	qDebug() <<  allRect.topLeft() << view->mapToScene ( allRect.topLeft() );
+	
+	// We’ll try to have a square subRect that fit in view ;-)
+	int squareSideUnit = qMin( allRect.width() ,  allRect.height() ) * 0.1;
+	int squareSide = 8 * squareSideUnit;
+	int squareXOffset = (allRect.width() - squareSide) / 2;
+	int squareYOffset = (allRect.height() - squareSide) / 2;
+	QRect subRect ( QPoint ( squareXOffset , squareYOffset),
+	                QSize ( squareSide, squareSide ) );
+	QPixmap pix ( allRect.width(), allRect.height() );
+	pix.fill ( QColor ( 30,0,0,120 ) );
+	QPainter painter ( &pix );
+	painter.setBrush ( Qt::white );
+	painter.setPen ( QPen ( QColor(0,0,255,120) ) );
+	painter.drawRoundRect ( subRect,5,5 );
+
+	ft_error = FT_Set_Pixel_Sizes (m_face, 0 /*m_face,subRect.width()*/, subRect.height() * 0.8);
+	if ( ft_error )
+	{
+		return -1;
+	}
+	ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_DEFAULT );
+	if ( ft_error )
+	{
+		return -1;
+	}
+	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
+	if ( ft_error )
+	{
+		return -1;
+	}
+
+	QVector<QRgb> palette;
+	for ( int i = 0; i < m_face->glyph->bitmap.num_grays; ++i )
+	{
+		palette << qRgb ( 255 - i,255 - i,255 - i);
+	}
+	QImage img ( m_face->glyph->bitmap.buffer,
+	             m_face->glyph->bitmap.width,
+	             m_face->glyph->bitmap.rows,
+	             m_face->glyph->bitmap.pitch,
+	             QImage::Format_Indexed8 );
+	img.setColorTable ( palette );
+
+	QPoint gPos(subRect.topLeft());
+	gPos.rx() += (subRect.width() - img.width()) / 2;
+	gPos.ry() += (subRect.height() - img.height())/2;
+	painter.drawImage(gPos, img);
+	// Draw metrics
+	QPoint pPos(gPos);
+	pPos.rx() -= m_face->glyph->bitmap_left;
+	pPos.ry() += m_face->glyph->bitmap_top;
+	//left
+	painter.drawLine(pPos.x() , 0,
+			 pPos.x() , allRect.bottom());
+	//right
+	painter.drawLine(pPos.x() + m_face->glyph->metrics.horiAdvance / 64 , 0,
+			 pPos.x() + m_face->glyph->metrics.horiAdvance / 64, allRect.bottom());
+	//baseline
+	painter.drawLine(0, pPos.y() ,
+			 allRect.right(),  pPos.y());
+	
+	painter.end();
+	
+	QGraphicsPixmapItem *fancyGlyph = new  QGraphicsPixmapItem;
+	fancyGlyph->setPixmap(pix);
+	fancyGlyph->setZValue(1000000);
+	fancyGlyph->setPos(targetRect.topLeft());
+	view->scene()->addItem(fancyGlyph);
+	fancyGlyphs.append(fancyGlyph);
+	
+	releaseFace();
+	return fancyGlyphs.count() - 1;
+
+}
+
+void FontItem::hideFancyGlyph(int ref)
+{
+	if(fancyGlyphs.at(ref))
+	{
+		QGraphicsPixmapItem *it = fancyGlyphs.at(ref);
+		it->scene()->removeItem(it);
+		fancyGlyphs.removeAll(it);
+		delete it;
+		
+	}
+}
+
 
 
 

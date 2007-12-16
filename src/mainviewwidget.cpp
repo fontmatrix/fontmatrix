@@ -57,6 +57,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	currentFaction =0;
 	fontsetHasChanged = true;
 	curGlyph = 0;
+	fancyGlyphInUse = -1;
 	fontInfoText->setSource ( QUrl ( "qrc:/texts/welcome" ) );
 	fillUniPlanes();
 	refillSampleList();
@@ -94,7 +95,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 
-	connect ( abcScene,SIGNAL ( selectionChanged() ),this,SLOT ( slotglyphInfo() ) );
+	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
+	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
 	connect ( renderZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
@@ -108,8 +110,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( freetypeButton,SIGNAL ( released() ),this,SLOT ( slotFTRasterChanged() ) );
-	
-	connect(this,SIGNAL(activationEvent(QString)),typo->getSystray(),SLOT(updateTagMenu(QString)));
+
+	connect ( this,SIGNAL ( activationEvent ( QString ) ),typo->getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 	// END CONNECT
 
 	currentOrdering = "family" ;
@@ -344,6 +346,8 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 			if ( faceIndex.count() && faceIndex != lastIndex )
 			{
+				if(abcView->state() == FMGlyphsView::SingleView)
+					slotShowAllGlyph();
 // 				slotFontActionByName( faceIndex );
 				theVeryFont = typo->getFont ( faceIndex );
 				fillOTTree();
@@ -396,6 +400,8 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 		if ( faceIndex.count() && faceIndex != lastIndex )
 		{
+			if(abcView->state() == FMGlyphsView::SingleView)
+				slotShowAllGlyph();
 // 			qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 			slotFontAction ( item,column );
 // 			emit faceChanged();
@@ -434,6 +440,8 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 	if ( faceIndex.count() && faceIndex != lastIndex )
 	{
 // 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
+		if(abcView->state() == FMGlyphsView::SingleView)
+			slotShowAllGlyph();
 		slotFontActionByName ( fname );
 		theVeryFont = typo->getFont ( faceIndex );
 		fillOTTree();
@@ -475,7 +483,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		curGlyph = 0;
 	}
 
-	theVeryFont->setRTL(rtlCheck->isChecked());
+	theVeryFont->setRTL ( rtlCheck->isChecked() );
 	theVeryFont->setFTRaster ( freetypeButton->isChecked() );
 
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
@@ -490,7 +498,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	QApplication::restoreOverrideCursor();
 
 	QStringList stl = typo->namedSample ( sampleTextCombo->currentText() ).split ( '\n' );
-	QPointF pen ((rtlCheck->isChecked()) ? 500 : 100,80 );
+	QPointF pen ( ( rtlCheck->isChecked() ) ? 500 : 100,80 );
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
 	QString script = langCombo->currentText();
@@ -547,31 +555,6 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 }
 
-void MainViewWidget::slotglyphInfo()
-{
-	qDebug() << "SLOTGINFO";
-	if ( abcScene->selectedItems().isEmpty() )
-		return;
-	if ( curGlyph )
-	{
-		curGlyph->setBrush ( QColor ( 255,255,255,0 ) );
-	}
-	curGlyph = reinterpret_cast<QGraphicsRectItem*> ( abcScene->selectedItems().first() );
-	curGlyph->setBrush ( QColor ( 0,0,0,60 ) );
-	if ( abcView->transform().isIdentity() )
-	{
-		abcView->fitInView ( curGlyph->rect().toRect(), Qt::KeepAspectRatio );
-		abcView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-		abcView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	}
-	else
-	{
-		abcView->setTransform ( QTransform() );
-		abcView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-	}
-	qDebug() << "ENDGINFO";
-}
 
 void MainViewWidget::slotSearch()
 {
@@ -761,7 +744,7 @@ void MainViewWidget::slotAppendTag ( QString tag )
 	emit newTag ( tag );
 }
 
-void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree)
+void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
 {
 // 	qDebug() << "Activation of " << fit->name() << act;
 	if ( act )
@@ -837,9 +820,9 @@ void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree)
 			qDebug() << "\tIs Locked";
 		}
 	}
-	if(updateTree)
+	if ( updateTree )
 		fillTree();
-	emit activationEvent(fit->name());
+	emit activationEvent ( fit->name() );
 // 	typo->save();
 }
 
@@ -1103,7 +1086,7 @@ void MainViewWidget::fillUniPlanes()
 	uniPlanes["131Private Use Area 1 (PUA)"] = qMakePair ( 0xF0000,0xFFFFF ) ;
 	uniPlanes["132Private Use Area 2 (PUA)"] = qMakePair ( 0x100000,0x10FFFF ) ;
 	uniPlanes["133Un-Mapped Glyphs"] = qMakePair ( -1,100 ) ;
-	
+
 }
 
 void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
@@ -1297,5 +1280,29 @@ void MainViewWidget::slotChangeScript()
 
 void MainViewWidget::slotSwitchRTL()
 {
-	slotView(true);
+	slotView ( true );
+}
+
+void MainViewWidget::slotShowOneGlyph()
+{
+	if ( abcScene->selectedItems().isEmpty() )
+		return;
+
+	curGlyph = reinterpret_cast<QGraphicsRectItem*> ( abcScene->selectedItems().first() );
+	if ( fancyGlyphInUse < 0 )
+	{
+		fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, curGlyph->data ( 3 ).toInt() );
+		if ( fancyGlyphInUse < 0 )
+			return;
+		abcView->setState(FMGlyphsView::SingleView);
+	}
+
+}
+
+void MainViewWidget::slotShowAllGlyph()
+{
+	theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
+	fancyGlyphInUse = -1;
+	abcView->setState ( FMGlyphsView::AllView );
+
 }

@@ -21,6 +21,7 @@
 
 #include <QDebug>
 #include <QMouseEvent>
+#include <QGraphicsItem>
 
 FMGlyphsView::FMGlyphsView(QWidget *parent)
  : QGraphicsView(parent)
@@ -29,6 +30,8 @@ FMGlyphsView::FMGlyphsView(QWidget *parent)
 	setObjectName("theglyphsview");
 	
 	setOptimizationFlags ( QGraphicsView::DontClipPainter | QGraphicsView::DontSavePainterState | QGraphicsView::DontAdjustForAntialiasing);
+	
+	m_state = AllView;
 	
 }
 
@@ -49,9 +52,58 @@ void FMGlyphsView::showEvent(QShowEvent * event)
 
 void FMGlyphsView::mouseReleaseEvent(QMouseEvent * e)
 {
-// 	qDebug() << "Catch release event";
+// 	Basically, we just do the job, but legacy implementation
+// 	does something I can’t figure out that leads to segfault ??
 	if(e->button() == Qt::LeftButton)
-		QGraphicsView::mouseReleaseEvent(e);
+	{
+		QList<QGraphicsItem*> gg = scene()->items(mapToScene(e->pos()));
+		foreach(QGraphicsItem* ii, gg)
+		{
+			ii->setSelected(true);
+		}
+		
+		if(m_state == AllView)
+			emit pleaseShowSelected();
+		else if( m_state == SingleView)
+			emit pleaseShowAll();
+	}
+}
+
+void FMGlyphsView::mousePressEvent(QMouseEvent * e)
+{
+	// We just catch it to avoid a waeird segfault ... we’ll see later for a plain fix
+// 	if(e->button() == Qt::LeftButton)
+// 		QGraphicsView::mouseReleaseEvent(e);
+}
+
+void FMGlyphsView::setState(ViewState s)
+{
+	if(s == SingleView)
+	{
+		setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+		setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+		
+	}
+	else if(s == AllView)
+	{
+		
+		setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
+		setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
+		
+	}
+	m_state = s;
+}
+
+void FMGlyphsView::hideEvent(QHideEvent * event)
+{
+	if(m_state == SingleView)
+		emit pleaseShowAll();
+}
+
+void FMGlyphsView::wheelEvent(QWheelEvent * e)
+{
+	if(m_state == AllView)
+		QGraphicsView::wheelEvent(e);
 }
 
 

@@ -29,20 +29,34 @@ class FMGlyphsView : public QGraphicsView
 {
 		Q_OBJECT
 	public:
+		
+		enum ViewState{AllView,SingleView};
+		
 		FMGlyphsView ( QWidget *parent );
-
 		~FMGlyphsView();
+		
+		void setState(ViewState s);
+		ViewState state(){return m_state;}
+		
+	private:
+		ViewState m_state;
 
 	signals:
 		/**
 			forward new width, allowing FontItem::renderAll() to adjust the number of columns
 		*/
 		void refit ( int );
+		void pleaseShowSelected();
+		void pleaseShowAll();
+		
 	protected:
 
 		void resizeEvent ( QResizeEvent * event );
 		void showEvent ( QShowEvent * event ) ;
+		void hideEvent ( QHideEvent * event );
 		void mouseReleaseEvent ( QMouseEvent * e );
+		void mousePressEvent ( QMouseEvent * e ) ;
+		void wheelEvent ( QWheelEvent * e );
 };
 
 #endif

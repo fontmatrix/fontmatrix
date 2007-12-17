@@ -158,7 +158,7 @@ class FontItem : public QObject
 		void deRenderAll();
 		
 		//Return a ref that will be asked for destroy the element. -1 if failed
-		int showFancyGlyph(QGraphicsView *view, int charcode);
+		int showFancyGlyph(QGraphicsView *view, int charcode, bool charcodeIsAGlyphIndex = false);
 		void hideFancyGlyph(int ref);
 		
 		QString toElement();

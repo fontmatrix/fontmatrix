@@ -1291,7 +1291,10 @@ void MainViewWidget::slotShowOneGlyph()
 	curGlyph = reinterpret_cast<QGraphicsRectItem*> ( abcScene->selectedItems().first() );
 	if ( fancyGlyphInUse < 0 )
 	{
-		fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, curGlyph->data ( 3 ).toInt() );
+		if(curGlyph->data ( 3 ).toInt() > 0)
+			fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, curGlyph->data ( 3 ).toInt() );
+		else
+			fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, curGlyph->data ( 2 ).toInt() , true);
 		if ( fancyGlyphInUse < 0 )
 			return;
 		abcView->setState(FMGlyphsView::SingleView);

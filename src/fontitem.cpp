@@ -1665,7 +1665,7 @@ void FontItem::releaseOTFInstance ( FmOtf * rotf )
 	releaseFace();
 }
 
-int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode )
+int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcodeIsAGlyphIndex )
 {
 	ensureFace();
 	
@@ -1686,13 +1686,17 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode )
 	painter.setBrush ( Qt::white );
 	painter.setPen ( QPen ( QColor(0,0,255,120) ) );
 	painter.drawRoundRect ( subRect,5,5 );
+	
 
 	ft_error = FT_Set_Pixel_Sizes (m_face, 0 /*m_face,subRect.width()*/, subRect.height() * 0.8);
 	if ( ft_error )
 	{
 		return -1;
 	}
-	ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_DEFAULT );
+	if(!charcodeIsAGlyphIndex)
+		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_DEFAULT );
+	else
+		ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT );
 	if ( ft_error )
 	{
 		return -1;

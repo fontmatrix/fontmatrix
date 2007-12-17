@@ -594,6 +594,7 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 
 void typotek::print()
 {
+	// TODO Provide a decent preview sample, what’s here is just useless.
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog *dialog = new QPrintDialog ( &thePrinter, this );
 	dialog->setWindowTitle ( tr ( "Print specimen" ) );

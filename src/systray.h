@@ -95,8 +95,8 @@ private:
 	Systray(const Systray&) {};
 	void operator= (const Systray&) {};
 	
-	protected:
-		bool eventFilter ( QObject * watched, QEvent * event ) ;
+// 	protected:
+// 		bool eventFilter ( QObject * watched, QEvent * event ) ;
 };
 
 #endif

@@ -353,15 +353,15 @@ void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
 	
 }
 
-bool Systray::eventFilter(QObject * watched, QEvent * event)
-{
-	if (watched == trayIcon) {
-// 		qDebug() << event;
-		}
-	
-	return Systray::eventFilter(watched, event);
-	
-}
+// bool Systray::eventFilter(QObject * watched, QEvent * event)
+// {
+// 	if (watched == trayIcon) {
+// // 		qDebug() << event;
+// 		}
+// 	
+// 	return Systray::eventFilter(watched, event);
+// 	
+// }
 
 
 

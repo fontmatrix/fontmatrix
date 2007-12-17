@@ -49,6 +49,7 @@ FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
 QMap<FT_Encoding, QString> FontItem::charsetMap;
 QMap<int, QString> FontItem::langIdMap;
+/*QMap<QString,QString>*/ QStringList FontItem::name_meaning;
 
 /** functions set for decomposition
  */
@@ -89,7 +90,7 @@ FT_Outline_Funcs outline_funcs=
 /** **************************************************/
 
 
-void fillCharsetMap()
+void FontItem::fillCharsetMap()
 {
 	FontItem::charsetMap[FT_ENCODING_NONE] = "NONE";
 	FontItem::charsetMap[FT_ENCODING_UNICODE] = "UNICODE";
@@ -105,7 +106,7 @@ void fillCharsetMap()
 	FontItem::charsetMap[FT_ENCODING_ADOBE_EXPERT] = "ADOBE_EXPERT ";
 	FontItem::charsetMap[FT_ENCODING_ADOBE_CUSTOM] = "ADOBE_CUSTOM ";
 	FontItem::charsetMap[FT_ENCODING_APPLE_ROMAN] = "APPLE_ROMAN ";
-	FontItem::charsetMap[FT_ENCODING_OLD_LATIN_2] = "This value is deprecated and was never used nor reported by FreeType. Don't use or test for it.";
+	FontItem::charsetMap[FT_ENCODING_OLD_LATIN_2] = tr("This value is deprecated and was never used nor reported by FreeType. Don't use or test for it.");
 	FontItem::charsetMap[FT_ENCODING_MS_SJIS] = "MS_SJIS ";
 	FontItem::charsetMap[FT_ENCODING_MS_GB2312] = "MS_GB2312 ";
 	FontItem::charsetMap[FT_ENCODING_MS_BIG5] = "MS_BIG5 ";
@@ -113,8 +114,7 @@ void fillCharsetMap()
 	FontItem::charsetMap[FT_ENCODING_MS_JOHAB] = "MS_JOHAB ";
 }
 
-// sfnt names
-static QStringList name_meaning;
+
 
 FontItem::FontItem ( QString path )
 {
@@ -805,7 +805,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 
 					pen.rx() += 100;
 					++glyph_count;
-					m_charLess.removeAll ( gindex );
+// 					m_charLess.removeAll ( gindex );
 					++nl;
 				}
 				charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
@@ -1202,27 +1202,7 @@ void FontItem::moreInfo_sfnt()
 
 	if ( name_meaning.isEmpty() )
 	{
-		name_meaning << "Copyright"
-		<< "Font Family"
-		<< "Font Subfamily"
-		<< "Unique font identifier"
-		<< "Full font name"
-		<< "Version string"
-		<< "Postscript name"
-		<< "Trademark"
-		<< "Manufacturer"
-		<< "Designer"
-		<< "Description"
-		<< "URL Vendor"
-		<< "URL Designer"
-		<< "License Description"
-		<< "License Info URL"
-		<< "Reserved"
-		<< "Preferred Family"
-		<< "Preferred Subfamily"
-		<< "Compatible Full (Macintosh only)"
-		<< "Sample text"
-		<< "PostScript CID findfont name";
+		fillNamesMeaning();
 	}
 	int tname_count = FT_Get_Sfnt_Name_Count ( m_face );
 	//TODO check encodings and platforms
@@ -1761,6 +1741,31 @@ void FontItem::hideFancyGlyph(int ref)
 		delete it;
 		
 	}
+}
+
+void FontItem::fillNamesMeaning()
+{
+	name_meaning << tr( "Copyright")
+			<< tr( "Font Family")
+			<< tr( "Font Subfamily")
+			<< tr( "Unique font identifier")
+			<< tr( "Full font name")
+			<< tr( "Version string")
+			<< tr( "Postscript name")
+			<< tr( "Trademark")
+			<< tr( "Manufacturer")
+			<< tr( "Designer")
+			<< tr( "Description")
+			<< tr( "URL Vendor")
+			<< tr( "URL Designer")
+			<< tr( "License Description")
+			<< tr( "License Info URL")
+			<< tr( "Reserved")
+			<< tr( "Preferred Family")
+			<< tr( "Preferred Subfamily")
+			<< tr( "Compatible Full (Macintosh only)")
+			<< tr( "Sample text")
+			<< tr( "PostScript CID findfont name");
 }
 
 

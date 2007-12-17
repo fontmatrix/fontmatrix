@@ -65,8 +65,10 @@ class FontItem : public QObject
 		double m_size;
 		int m_numGlyphs;
 		int m_numFaces;
+		
+		void fillCharsetMap();
 		QStringList m_charsets;
-		QList<int> m_charLess;
+// 		QList<int> m_charLess;
 		
 		bool m_isOpenType;
 		FmOtf *otf;
@@ -191,6 +193,10 @@ class FontItem : public QObject
 		
 		void setRTL(bool rtl){m_RTL=rtl;}
 		bool RTL(){return m_RTL;}
+		
+		// sfnt names
+		void fillNamesMeaning();
+		static /*QMap<QString,QString>*/ QStringList name_meaning;
 
 };
 

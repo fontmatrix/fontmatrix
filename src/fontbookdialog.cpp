@@ -95,7 +95,7 @@ void FontBookDialog::slotCancel()
 
 void FontBookDialog::slotFileDialog()
 {
-	QString theFile = QFileDialog::getSaveFileName ( this, "Save fontBook", QDir::homePath() , "Portable Document Format (*.pdf)" );
+	QString theFile = QFileDialog::getSaveFileName ( this, tr("Save fontBook"), QDir::homePath() , "Portable Document Format (*.pdf)" );
 	fileNameEdit->setText ( theFile );
 }
 
@@ -163,19 +163,19 @@ void FontBookDialog::fillSizeList()
 
 double FontBookDialog::getFontSize ( QString s )
 {
-	if ( s == "family" )
+	if ( s == tr("family") )
 	{
 		return familyFontSizeSpin->value();
 	}
-	if ( s == "style" )
+	if ( s == tr("style") )
 	{
 		return styleFontSizeSpin->value();
 	}
-	if ( s == "headline" )
+	if ( s == tr("headline" ))
 	{
 		return headlineFontSizeSpin->value();
 	}
-	if ( s == "body" )
+	if ( s == tr("body") )
 	{
 		return bodyFontSizeSpin->value();
 	}
@@ -246,10 +246,10 @@ void FontBookDialog::slotPreview()
 	double pageHeight = getPageSize().height();
 	double pageWidth =getPageSize().width();
 	QString theFile = getFileName();
-	double familySize = getFontSize("family");
-	double headSize = getFontSize("headline");
-	double bodySize = getFontSize("body");
-	double styleSize = getFontSize("style");
+	double familySize = getFontSize(tr("family"));
+	double headSize = getFontSize(tr("headline"));
+	double bodySize = getFontSize(tr("body"));
+	double styleSize = getFontSize(tr("style"));
 	double familynameTab = getTabFamily();
 	double variantnameTab = getTabStyle();
 	double sampletextTab = getTabSampleText();

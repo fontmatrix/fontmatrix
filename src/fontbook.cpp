@@ -15,6 +15,7 @@
 #include "fontitem.h"
 
 #include <QDebug>
+#include <QObject>
 #include <QProgressDialog>
 
 FontBook::FontBook()
@@ -46,10 +47,10 @@ void FontBook::doBook()
 	double pageHeight = bookOption.getPageSize().height();
 	double pageWidth = bookOption.getPageSize().width();
 	QString theFile = bookOption.getFileName();
-	double familySize = bookOption.getFontSize ( "family" );
-	double headSize = bookOption.getFontSize ( "headline" );
-	double bodySize = bookOption.getFontSize ( "body" );
-	double styleSize = bookOption.getFontSize ( "style" );
+	double familySize = bookOption.getFontSize ( QObject::tr("family" ));
+	double headSize = bookOption.getFontSize ( QObject::tr("headline" ));
+	double bodySize = bookOption.getFontSize ( QObject::tr("body" ));
+	double styleSize = bookOption.getFontSize (QObject::tr( "style" ));
 	double familynameTab = bookOption.getTabFamily();
 	double variantnameTab = bookOption.getTabStyle();
 	double sampletextTab = bookOption.getTabSampleText();
@@ -97,7 +98,7 @@ void FontBook::doBook()
 	}
 
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
-	QProgressDialog progress ( "Creating font book... ", "cancel", 0, keyList.count(), typotek::getInstance() );
+	QProgressDialog progress ( QObject::tr("Creating font book... "), QObject::tr("cancel"), 0, keyList.count(), typotek::getInstance() );
 	progress.setWindowModality ( Qt::WindowModal );
 	int progressindex=0;
 

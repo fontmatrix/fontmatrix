@@ -751,16 +751,17 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	ensureFace();
 // 	if ( allIsRendered )
 // 		return;
-	
 	FMGlyphsView *allView = reinterpret_cast<FMGlyphsView*>(scene->views()[0]);
+	
+	deRenderAll();
+	if(!allView->isVisible())
+	{
+		releaseFace();
+		return;
+	}
+	
 	adjustGlyphsPerRow ( allView->width() );
 	QRectF exposedRect(allView->visibleSceneRect());
-// 	qDebug() << "--------------------------------------------------------------------------------";
-// 	qDebug() << "BEFOREDERENDER" << exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
-	deRenderAll();
-// 	exposedRect = allView->visibleSceneRect();
-// 	qDebug() << "AFTERDERENDER" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
-	
 	
 	double leftMargin = ((exposedRect.width() - ( 100 * m_glyphsPerRow )) / 2) + 30;
 	double aestheticTopMargin = 12;
@@ -970,8 +971,8 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	allIsRendered = true;
 	releaseFace();
 	
-// 	exposedRect = allView->visibleSceneRect();
-// 	qDebug() << "ENDOFRENDERALL" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
+	exposedRect = allView->visibleSceneRect();
+	qDebug() << "ENDOFRENDERALL" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
 }
 
 QString FontItem::infoText ( bool fromcache )
@@ -1713,8 +1714,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	painter.setPen ( QPen ( QColor(0,0,255,120) ) );
 	painter.drawRoundRect ( subRect,5,5 );
 	
-
-	ft_error = FT_Set_Pixel_Sizes (m_face, 0 /*m_face,subRect.width()*/, subRect.height() * 0.8);
+	ft_error = FT_Set_Pixel_Sizes (m_face, 0, subRect.height() * 0.8);
 	if ( ft_error )
 	{
 		return -1;
@@ -1732,6 +1732,28 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	{
 		return -1;
 	}
+	
+	if(m_face->glyph->bitmap.width > m_face->glyph->bitmap.rows) // Oops, glyph is larger than high! We reload with inverted propotions
+	{
+		ft_error = FT_Set_Pixel_Sizes (m_face,  subRect.height() * 0.8, 0);
+		if ( ft_error )
+		{
+			return -1;
+		}
+		if(!charcodeIsAGlyphIndex)
+			ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_DEFAULT );
+		else
+			ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT );
+		if ( ft_error )
+		{
+			return -1;
+		}
+		ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
+		if ( ft_error )
+		{
+			return -1;
+		}
+	}
 
 	QVector<QRgb> palette;
 	for ( int i = 0; i < m_face->glyph->bitmap.num_grays; ++i )
@@ -1744,6 +1766,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	             m_face->glyph->bitmap.pitch,
 	             QImage::Format_Indexed8 );
 	img.setColorTable ( palette );
+	
 
 	QPoint gPos(subRect.topLeft());
 	gPos.rx() += (subRect.width() - img.width()) / 2;

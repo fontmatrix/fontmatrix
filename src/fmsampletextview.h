@@ -44,10 +44,11 @@ class FMSampleTextView : public QGraphicsView
 		void mouseReleaseEvent ( QMouseEvent * e )  ;
 		void mouseMoveEvent ( QMouseEvent * e ) ;
 		void wheelEvent ( QWheelEvent * e );
-		
+		void showEvent ( QShowEvent * event ) ;
 
 	signals:
 		void refit();
+		void pleaseUpdateMe();
 		
 	private:
 		QPointF mouseStartPoint;

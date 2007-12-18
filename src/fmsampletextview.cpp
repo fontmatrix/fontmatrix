@@ -101,3 +101,8 @@ void FMSampleTextView::wheelEvent(QWheelEvent * e)
 	if(e->orientation() == Qt::Horizontal)
 		horizontalScrollBar()->setValue(horizontalScrollBar()->value() - e->delta());
 }
+
+void FMSampleTextView::showEvent(QShowEvent * event)
+{
+	emit pleaseUpdateMe();
+}

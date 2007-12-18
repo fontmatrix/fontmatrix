@@ -112,6 +112,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( freetypeButton,SIGNAL ( released() ),this,SLOT ( slotFTRasterChanged() ) );
 	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
+	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 
 	connect ( this,SIGNAL ( activationEvent ( QString ) ),typo->getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 	// END CONNECT
@@ -313,7 +314,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 	if ( item->data ( 0,100 ).toString() == "family" )
 	{
-// 		qDebug() << "Item is a family";
+		qDebug() << "Item is a family";
 		bool wantView = true;
 		bool hasChild = false;
 		QStringList names;
@@ -360,7 +361,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 				m_lists->previewList->searchAndSelect ( theVeryFont->name() );
 			}
 		}
-// 		qDebug() << curItemName;
+		qDebug() << curItemName;
 		int oldc = item->data ( 0,200 ).toInt();
 		if ( oldc == item->checkState ( 0 ) )
 		{
@@ -433,15 +434,15 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 void MainViewWidget::slotFontSelectedByName ( QString fname )
 {
 	qDebug() << "MainViewWidget::slotFontSelectedByName("<<fname<<")";
-	if ( fname.isEmpty() )
+	if ( fname.isEmpty() || fname ==  faceIndex )
 		return;
 	lastIndex = faceIndex;
 	faceIndex = fname;
 	curItemName = faceIndex;
-
+	
 	if ( faceIndex.count() && faceIndex != lastIndex )
 	{
-// 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
+		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 		if(abcView->state() == FMGlyphsView::SingleView)
 			slotShowAllGlyph();
 		slotFontActionByName ( fname );
@@ -451,11 +452,11 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		slotView ( true );
 		typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
 		typo->presentFontName ( theVeryFont->fancyName() );
+		fillTree();
+		abcView->verticalScrollBar()->setValue ( 0 );
 	}
-
-	fillTree();
-	abcView->verticalScrollBar()->setValue ( 0 );
-	return;
+	
+	
 }
 
 
@@ -488,71 +489,80 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	theVeryFont->setRTL ( rtlCheck->isChecked() );
 	theVeryFont->setFTRaster ( freetypeButton->isChecked() );
 
-	QApplication::setOverrideCursor ( Qt::WaitCursor );
-
 	QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
 	QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
 	int coverage = theVeryFont->countCoverage ( uniPair.first, uniPair.second );
 	int interval = uniPair.second - uniPair.first;
 	coverage = coverage * 100 / ( interval + 1 );// against /0 exception
 	unicodeCoverageStat->setText ( QString::number ( coverage ) + "\%" );
-	f->renderAll ( abcScene , uniPair.first, uniPair.second );
-	QApplication::restoreOverrideCursor();
 
-	QStringList stl = typo->namedSample ( sampleTextCombo->currentText() ).split ( '\n' );
-	QPointF pen ( ( rtlCheck->isChecked() ) ? 500 : 100,80 );
-	QApplication::setOverrideCursor ( Qt::WaitCursor );
-	bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
-	QString script = langCombo->currentText();
-	bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
-	for ( int i=0; i< stl.count(); ++i )
+	if ( abcView->isVisible() )
 	{
-		pen.ry() = 100 + sampleInterSize * i;
-		if ( processScript )
-		{
-			qDebug() << "render " << stl[i] << " as " << script;
-			f->renderLine ( script ,loremScene,stl[i],pen, sampleFontSize );
-		}
-		else if ( processFeatures )
-		{
-			OTFSet aSet = deFillOTTree();
-			qDebug() << aSet.dump();
-			f->renderLine ( aSet, loremScene,stl[i],pen, sampleFontSize );
-		}
-		else
-		{
-			f->renderLine ( loremScene,stl[i],pen, sampleFontSize );
-		}
+		// Used to be slow,old times
+// 		QApplication::setOverrideCursor ( Qt::WaitCursor );
+		f->renderAll ( abcScene , uniPair.first, uniPair.second );
+// 		QApplication::restoreOverrideCursor();
 	}
-	QApplication::restoreOverrideCursor();
-	slotInfoFont();
-	if ( fitViewCheck->isChecked() )
+
+	if ( loremView->isVisible() )
 	{
-		QRectF allrect, firstrect;
-		bool first = true;
-		QList<QGraphicsItem*> lit = loremScene->items();
-		for ( int i = 0 ; i <lit.count() ; ++i )
+		QStringList stl = typo->namedSample ( sampleTextCombo->currentText() ).split ( '\n' );
+		QPointF pen ( ( rtlCheck->isChecked() ) ? 500 : 100,80 );
+		bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
+		QString script = langCombo->currentText();
+		bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
+
+		QApplication::setOverrideCursor ( Qt::WaitCursor );
+		for ( int i=0; i< stl.count(); ++i )
 		{
-			if ( lit[i]->data ( 1 ).toString() == "glyph" )
+			pen.ry() = 100 + sampleInterSize * i;
+			if ( processScript )
 			{
-				if ( first )
+				qDebug() << "render " << stl[i] << " as " << script;
+				f->renderLine ( script ,loremScene,stl[i],pen, sampleFontSize );
+			}
+			else if ( processFeatures )
+			{
+				OTFSet aSet = deFillOTTree();
+				qDebug() << aSet.dump();
+				f->renderLine ( aSet, loremScene,stl[i],pen, sampleFontSize );
+			}
+			else
+			{
+				f->renderLine ( loremScene,stl[i],pen, sampleFontSize );
+			}
+		}
+		QApplication::restoreOverrideCursor();
+
+		if ( fitViewCheck->isChecked() )
+		{
+			QRectF allrect, firstrect;
+			bool first = true;
+			QList<QGraphicsItem*> lit = loremScene->items();
+			for ( int i = 0 ; i <lit.count() ; ++i )
+			{
+				if ( lit[i]->data ( 1 ).toString() == "glyph" )
 				{
-					firstrect = lit[i]->sceneBoundingRect();
-					first = false;
+					if ( first )
+					{
+						firstrect = lit[i]->sceneBoundingRect();
+						first = false;
+
+					}
+					if ( lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y() )
+						allrect = allrect.united ( lit[i]->sceneBoundingRect() );
+					if ( lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x() )
+						allrect = allrect.united ( lit[i]->sceneBoundingRect() );
 
 				}
-				if ( lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y() )
-					allrect = allrect.united ( lit[i]->sceneBoundingRect() );
-				if ( lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x() )
-					allrect = allrect.united ( lit[i]->sceneBoundingRect() );
+
 
 			}
-
-
+			loremView->fitInView ( allrect, Qt::KeepAspectRatio );
 		}
-		loremView->fitInView ( allrect, Qt::KeepAspectRatio );
 	}
 
+	slotInfoFont();
 // 	renderingLock = false;
 
 }
@@ -1126,14 +1136,14 @@ void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 void MainViewWidget::keyPressEvent ( QKeyEvent * event )
 {
 // 	qDebug() << " MainViewWidget::keyPressEvent(QKeyEvent * "<<event<<")";
-	if ( event->key() == Qt::Key_Space &&  event->modifiers().testFlag ( Qt::ControlModifier ) )
-	{
-		// Switch list view
-		if ( m_lists->fontlistTab->currentIndex() == 0 )
-			m_lists->fontlistTab->setCurrentIndex ( 1 );
-		else
-			m_lists->fontlistTab->setCurrentIndex ( 0 );
-	}
+// 	if ( event->key() == Qt::Key_Space &&  event->modifiers().testFlag ( Qt::ControlModifier ) )
+// 	{
+// 		// Switch list view
+// 		if ( m_lists->fontlistTab->currentIndex() == 0 )
+// 			m_lists->fontlistTab->setCurrentIndex ( 1 );
+// 		else
+// 			m_lists->fontlistTab->setCurrentIndex ( 0 );
+// 	}
 }
 
 void MainViewWidget::slotAdjustGlyphView ( int width )
@@ -1141,7 +1151,7 @@ void MainViewWidget::slotAdjustGlyphView ( int width )
 	if ( !theVeryFont )
 		return;
 
-	theVeryFont->adjustGlyphsPerRow ( width );
+// 	theVeryFont->adjustGlyphsPerRow ( width );
 	slotView ( true );
 }
 
@@ -1318,6 +1328,8 @@ void MainViewWidget::slotShowOneGlyph()
 
 void MainViewWidget::slotShowAllGlyph()
 {
+	if (fancyGlyphInUse < 0)
+		return;
 	theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
 	fancyGlyphInUse = -1;
 	abcView->setState ( FMGlyphsView::AllView );
@@ -1334,4 +1346,10 @@ void MainViewWidget::slotUpdateGView()
 		theVeryFont->renderAll ( abcScene , uniPair.first, uniPair.second );
 		
 	}
+}
+
+void MainViewWidget::slotUpdateSView()
+{
+	if(loremView->isVisible())
+		slotView(true);
 }

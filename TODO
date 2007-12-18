@@ -4,7 +4,7 @@ _PIERRE_
   - performance issues
   - usability issues
   - ugly code
-  - render glyphs with Freetype, Qt doesn’t handle it very well :(
+  - render glyphs with Freetype, Qt doesn’t handle it very well :( DONE
   - split main window into View and Data (or whatever it’s called by actual developers;-)
   - change left pane into a docked widget (DONE 0.3 but I dont like it - Vlada)
    
@@ -46,4 +46,4 @@ _MASA_ (my girlfriend :) )
 _RIKU_
 
 * allow font import with dnd to systray icon
-* synchronize main window and systray activation/deactivation information
+* synchronize main window and systray activation/deactivation information DONE

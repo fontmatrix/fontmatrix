@@ -50,7 +50,8 @@ void FMGlyphsView::resizeEvent(QResizeEvent * event)
 
 void FMGlyphsView::showEvent(QShowEvent * event)
 {
-	emit refit(width());
+// 	emit refit(width());
+	emit pleaseUpdateMe();
 }
 
 void FMGlyphsView::mouseReleaseEvent(QMouseEvent * e)
@@ -62,7 +63,8 @@ void FMGlyphsView::mouseReleaseEvent(QMouseEvent * e)
 		QList<QGraphicsItem*> gg = scene()->items(mapToScene(e->pos()));
 		foreach(QGraphicsItem* ii, gg)
 		{
-			ii->setSelected(true);
+			if(ii->data(1).toString() == "select")
+				ii->setSelected(true);
 		}
 		
 		if(m_state == AllView)
@@ -125,9 +127,12 @@ void FMGlyphsView::slotViewMoved()
 
 void FMGlyphsView::scrollContentsBy(int dx, int dy)
 {
+// 	qDebug() << "FMGlyphsView::scrollContentsBy(int "<<dx<<", int "<<dy<<")";
 	QAbstractScrollArea::scrollContentsBy ( dx,  dy );
-	if(dy != 0 || m_state == AllView)
+	int pos = verticalScrollBar()->value();
+	if(pos != 0 || m_state == AllView)
 		emit pleaseUpdateMe();
+// 	qDebug() << "bang";
 }
 
 void FMGlyphsView::keyPressEvent(QKeyEvent * e)

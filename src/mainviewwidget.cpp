@@ -111,6 +111,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( freetypeButton,SIGNAL ( released() ),this,SLOT ( slotFTRasterChanged() ) );
+	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
 
 	connect ( this,SIGNAL ( activationEvent ( QString ) ),typo->getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 	// END CONNECT
@@ -1096,6 +1097,7 @@ void MainViewWidget::fillUniPlanes()
 	uniPlanes[ tr( "131Private Use Area 1 (PUA)" ) ] = qMakePair ( 0xF0000,0xFFFFF ) ;
 	uniPlanes[ tr( "132Private Use Area 2 (PUA)" ) ] = qMakePair ( 0x100000,0x10FFFF ) ;
 	uniPlanes[ tr( "133Un-Mapped Glyphs" ) ] = qMakePair ( -1,100 ) ;
+	uniPlanes[ tr( "134View all mapped glyphs" ) ] = qMakePair ( 0, 0x10FFFF ) ;
 
 }
 
@@ -1299,16 +1301,18 @@ void MainViewWidget::slotShowOneGlyph()
 		return;
 
 	curGlyph = reinterpret_cast<QGraphicsRectItem*> ( abcScene->selectedItems().first() );
+	curGlyph->setSelected(false);
 	if ( fancyGlyphInUse < 0 )
 	{
-		if(curGlyph->data ( 3 ).toInt() > 0)
+		if(curGlyph->data ( 3 ).toInt() > 0)// Is a codepoint
 			fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, curGlyph->data ( 3 ).toInt() );
-		else
+		else // Is a glyph index
 			fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, curGlyph->data ( 2 ).toInt() , true);
 		if ( fancyGlyphInUse < 0 )
 			return;
 		abcView->setState(FMGlyphsView::SingleView);
 	}
+	
 
 }
 
@@ -1318,4 +1322,16 @@ void MainViewWidget::slotShowAllGlyph()
 	fancyGlyphInUse = -1;
 	abcView->setState ( FMGlyphsView::AllView );
 
+}
+
+void MainViewWidget::slotUpdateGView()
+{
+	// If all is how I think it must be, we don’t need to check anything here :)
+	if(theVeryFont)
+	{
+		QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
+		QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
+		theVeryFont->renderAll ( abcScene , uniPair.first, uniPair.second );
+		
+	}
 }

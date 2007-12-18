@@ -22,16 +22,19 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QGraphicsItem>
+#include <QScrollBar>
 
 FMGlyphsView::FMGlyphsView(QWidget *parent)
  : QGraphicsView(parent)
 {
 	// There is just one instance and we want to identify it
 	setObjectName("theglyphsview");
-	
-	setOptimizationFlags ( QGraphicsView::DontClipPainter | QGraphicsView::DontSavePainterState | QGraphicsView::DontAdjustForAntialiasing);
+	setAlignment (Qt::AlignLeft | Qt::AlignTop);
+// 	setOptimizationFlags ( QGraphicsView::DontClipPainter | QGraphicsView::DontSavePainterState | QGraphicsView::DontAdjustForAntialiasing);
 	
 	m_state = AllView;
+	
+// 	connect(verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotViewMoved()));
 	
 }
 
@@ -82,6 +85,7 @@ void FMGlyphsView::setState(ViewState s)
 	{
 		setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 		setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+		setFocusPolicy(Qt::NoFocus);
 		
 	}
 	else if(s == AllView)
@@ -89,6 +93,7 @@ void FMGlyphsView::setState(ViewState s)
 		
 		setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
 		setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
+		setFocusPolicy(Qt::WheelFocus);
 		
 	}
 	m_state = s;
@@ -104,6 +109,31 @@ void FMGlyphsView::wheelEvent(QWheelEvent * e)
 {
 	if(m_state == AllView)
 		QGraphicsView::wheelEvent(e);
+}
+
+QRectF FMGlyphsView::visibleSceneRect()
+{
+	QRectF rr(mapToScene(0.0, 0.0, width(), height()).boundingRect());
+	return rr;
+}
+
+void FMGlyphsView::slotViewMoved()
+{
+	if(m_state == AllView)
+		emit pleaseUpdateMe();
+}
+
+void FMGlyphsView::scrollContentsBy(int dx, int dy)
+{
+	QAbstractScrollArea::scrollContentsBy ( dx,  dy );
+	if(dy != 0 || m_state == AllView)
+		emit pleaseUpdateMe();
+}
+
+void FMGlyphsView::keyPressEvent(QKeyEvent * e)
+{
+	if(m_state == AllView)
+		QAbstractScrollArea::keyPressEvent(e);
 }
 
 

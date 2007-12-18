@@ -20,6 +20,7 @@
 #include "fontitem.h"
 #include "fmotf.h"
 #include "fmshaper.h"
+#include "fmglyphsview.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -746,15 +747,28 @@ int FontItem::countCoverage ( int begin_code, int end_code )
 
 void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code )
 {
+	
 	ensureFace();
-	if ( allIsRendered )
-		return;
+// 	if ( allIsRendered )
+// 		return;
+	
+	FMGlyphsView *allView = reinterpret_cast<FMGlyphsView*>(scene->views()[0]);
+	adjustGlyphsPerRow ( allView->width() );
+	QRectF exposedRect(allView->visibleSceneRect());
+// 	qDebug() << "--------------------------------------------------------------------------------";
+// 	qDebug() << "BEFOREDERENDER" << exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
 	deRenderAll();
-	adjustGlyphsPerRow ( scene->views() [0]->width() );
-	QPointF pen ( 0,50 );
+// 	exposedRect = allView->visibleSceneRect();
+// 	qDebug() << "AFTERDERENDER" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
+	
+	
+	double leftMargin = ((exposedRect.width() - ( 100 * m_glyphsPerRow )) / 2) + 30;
+	double aestheticTopMargin = 12;
+	QPointF pen ( leftMargin,50  + aestheticTopMargin);
+// 	QPointF last( 0, 0 );
 	int glyph_count = 0;
 	int nl = 0;
-
+	
 	FT_ULong  charcode;
 	FT_UInt   gindex = 1;
 	double sizz = 50;
@@ -771,9 +785,19 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				if ( nl == m_glyphsPerRow )
 				{
 					nl = 0;
-					pen.rx() = 0;
+					pen.rx() = leftMargin;
 					pen.ry() += 100;
 				}
+				if((pen.y() + 100) < exposedRect.y() || pen.y() - 100 > (exposedRect.y() + exposedRect.height() ) )
+				{
+					charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
+// 					qDebug() << "charcode = "<< charcode <<" ; gindex = "<< gindex;
+					pen.rx() += 100;
+					++nl;
+					++glyph_count;
+					continue;
+				}
+				
 				QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
 				if ( pitem )
 				{
@@ -804,6 +828,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					selList.append ( rit );
 
 					pen.rx() += 100;
+// 					last = pen;
 					++glyph_count;
 // 					m_charLess.removeAll ( gindex );
 					++nl;
@@ -819,9 +844,18 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				if ( nl == m_glyphsPerRow )
 				{
 					nl = 0;
-					pen.rx() = 0;
+					pen.rx() = leftMargin;
 					pen.ry() += 100;
 				}
+				
+				if((pen.y() + 100) < exposedRect.y() || pen.y() - 100 > (exposedRect.y() + exposedRect.height() ))
+				{
+					++charcode;
+					++nl;
+					++glyph_count;
+					continue;
+				}
+				
 				QGraphicsPathItem *pitem = itemFromGindex ( charcode , sizz );
 				if ( pitem )
 				{
@@ -883,9 +917,17 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 			if ( nl == m_glyphsPerRow )
 			{
 				nl = 0;
-				pen.rx() = 0;
+				pen.rx() = leftMargin;
 				pen.ry() += 100;
 			}
+			
+			if((pen.y() + 100) < exposedRect.y() || pen.y() - 100 > (exposedRect.y() + exposedRect.height() ))
+			{
+				++nl;
+				++glyph_count;
+				continue;
+			}
+				
 			QGraphicsPathItem *pitem = itemFromGindex ( i , sizz );
 			if ( pitem )
 			{
@@ -924,8 +966,12 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 		}
 	}
 
+	scene->setSceneRect(QRectF(0,0, m_glyphsPerRow * 100 + 30, pen.y() + 100 ));
 	allIsRendered = true;
 	releaseFace();
+	
+// 	exposedRect = allView->visibleSceneRect();
+// 	qDebug() << "ENDOFRENDERALL" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
 }
 
 QString FontItem::infoText ( bool fromcache )

@@ -21,6 +21,7 @@
 #define FMGLYPHSVIEW_H
 
 #include <QGraphicsView>
+#include <QRectF>
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -38,8 +39,13 @@ class FMGlyphsView : public QGraphicsView
 		void setState(ViewState s);
 		ViewState state(){return m_state;}
 		
+		QRectF visibleSceneRect();
+		
 	private:
 		ViewState m_state;
+		
+	private slots:
+		void slotViewMoved();
 
 	signals:
 		/**
@@ -48,6 +54,7 @@ class FMGlyphsView : public QGraphicsView
 		void refit ( int );
 		void pleaseShowSelected();
 		void pleaseShowAll();
+		void pleaseUpdateMe();
 		
 	protected:
 
@@ -57,6 +64,8 @@ class FMGlyphsView : public QGraphicsView
 		void mouseReleaseEvent ( QMouseEvent * e );
 		void mousePressEvent ( QMouseEvent * e ) ;
 		void wheelEvent ( QWheelEvent * e );
+		void scrollContentsBy ( int dx, int dy );
+		void keyPressEvent ( QKeyEvent * e );
 };
 
 #endif

@@ -147,15 +147,19 @@ void MainViewWidget::fillTree()
 
 	m_lists->fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
+	QList<int> initChars;
 	for ( int i=0; i < currentFonts.count();++i )
 	{
 		keyList[currentFonts[i]->value ( currentOrdering ) ].append ( currentFonts[i] );
+		initChars << currentFonts[i]->family()[0].unicode();
 	}
-
+	initChars = initChars.toSet().toList();
+	
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
-	for ( int i = 0x21 /* ! */; i <= 0x7e /* ~ */; ++i )
+	for ( int i = 0 ; i < initChars.count() ; ++i )
 	{
-		QChar firstChar ( i );
+		QChar firstChar ( initChars[i] );
+		qDebug() << "First char is " <<firstChar;
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( m_lists->fontTree );
 		alpha->setText ( 0, firstChar );
 		alpha->setFont ( 0,alphaFont );
@@ -1153,6 +1157,7 @@ void MainViewWidget::slotAdjustGlyphView ( int width )
 void MainViewWidget::fillOTTree()
 {
 	OpenTypeTree->clear();
+	langCombo->clear();
 	langCombo->setEnabled ( false );
 	useShaperCheck->setCheckState ( Qt::Unchecked );
 	useShaperCheck->setEnabled ( false );
@@ -1190,7 +1195,7 @@ void MainViewWidget::fillOTTree()
 		theVeryFont->releaseOTFInstance ( otf );
 	}
 	scripts = scripts.toSet().toList();
-	scripts.removeAll ( "latn" );
+// 	scripts.removeAll ( "latn" );
 	if ( !scripts.isEmpty() )
 	{
 		langCombo->setEnabled ( true );

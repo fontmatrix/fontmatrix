@@ -150,6 +150,7 @@ class FmOtf
 		QList<RenderedGlyph> get_position ( HB_Buffer abuffer = 0 );
 
 		friend class FontItem;
+		friend class FmShaper;
 
 
 

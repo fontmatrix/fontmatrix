@@ -28,11 +28,11 @@
 class FmShaper
 {
 	public:
-		FmShaper();
+		FmShaper(FmOtf *anchor);
 
 		~FmShaper();
 		/* Will return false if there is no GSUB nor GPOS table */
-		bool setFont (FT_Face face, HB_Font font );
+		bool setFont (/*FT_Face face, HB_Font font*/ );
 
 		bool setScript ( QString script );
 
@@ -42,6 +42,7 @@ class FmShaper
 		HB_Buffer out_buffer();
 
 	private:
+		FmOtf *anchorOTF;
 		FT_Face anchorFace;
 		HB_ShaperItem m;
 

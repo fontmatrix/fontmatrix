@@ -14,6 +14,7 @@
 #include <QList>
 #include <QMap>
 #include <QDebug>
+#include <QVarLengthArray>
 
 
 HB_GraphemeClass HB_GetGraphemeClass(HB_UChar32 ch)
@@ -87,35 +88,41 @@ namespace
 
 }
 
-FmShaper::FmShaper()
+FmShaper::FmShaper(FmOtf *anchor)
+	:anchorOTF(anchor)
 {
 	faceisset = langisset = allocated = false;
+	setFont();
+	qDebug() << "FmShaper "<< this <<" created";
 }
 
 FmShaper::~ FmShaper()
 {
+	qDebug() << "FmShaper "<< this <<" destructor";
 	if (faceisset)
 	{
 		delete m.font;
 		HB_FreeFace(m.face);
 	}
+	qDebug() << "FmShaper "<< this <<" destroyed";
 }
 
-bool FmShaper::setFont (FT_Face face, HB_Font font  )
+bool FmShaper::setFont (/*FT_Face face, HB_Font font  */)
 {
-	HB_Face hbFace = HB_NewFace(face, hb_getSFntTable);
+	HB_Face hbFace = HB_NewFace(anchorOTF->_face, hb_getSFntTable);
 	HB_Font hbFont = new HB_FontRec;
 	
-	hbFont->klass = font->klass ;
-	hbFont->userData = font->userData;
-	hbFont->x_ppem  = font->x_ppem;
-	hbFont->y_ppem  = font->y_ppem;
-	hbFont->x_scale = font->x_scale;
-	hbFont->y_scale = font->y_scale;
+	
+	hbFont->klass = anchorOTF->hbFont.klass ;
+	hbFont->userData = anchorOTF->hbFont.userData;
+	hbFont->x_ppem  = anchorOTF->hbFont.x_ppem;
+	hbFont->y_ppem  = anchorOTF->hbFont.y_ppem;
+	hbFont->x_scale = anchorOTF->hbFont.x_scale;
+	hbFont->y_scale = anchorOTF->hbFont.y_scale;
 	m.font = hbFont;
 	m.face = hbFace;
 	
-	anchorFace = face;
+	anchorFace = anchorOTF->_face;
 	faceisset = true;
 	return faceisset;
 }
@@ -134,6 +141,7 @@ bool FmShaper::setScript ( QString script )
 
 QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 {
+	qDebug() << "FmShaper::doShape("<<string<<","<<ltr<<")";
 	m.kerning_applied = false;
 	m.string = reinterpret_cast<const HB_UChar16 *> ( string.constData() );
 	m.stringLength = string.length();
@@ -142,64 +150,92 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 	m.shaperFlags = HB_ShaperFlag_UseDesignMetrics;
 	
 	m.initialGlyphCount = m.num_glyphs = m.item.length = m.stringLength;
-	m.glyphIndicesPresent = true;
+	m.glyphIndicesPresent = false;
 	
 	
-	m.glyphs = new HB_Glyph[ m.num_glyphs ];
-	for(int i = 0; i < m.num_glyphs; ++i)
-	{
-		m.glyphs[i] = FT_Get_Char_Index ( anchorFace , string[i].unicode() );
-		qDebug() << "ADDED "<<string[i]<<" as " << m.glyphs[i];
-	}
-	
-
+// 	m.glyphs = new HB_Glyph[ m.num_glyphs ];
+// 	for(int i = 0; i < m.num_glyphs; ++i)
+// 	{
+// 		m.glyphs[i] = FT_Get_Char_Index ( anchorFace , string[i].unicode() );
+// 		qDebug() << "ADDED "<<string[i]<<" as " << m.glyphs[i];
+// 	}
+// 	
+// 	
+/*
 	if ( allocated )
 	{
-// 		delete  m.glyphs;
+		delete  m.glyphs;
 		delete  m.attributes;
 		delete  m.advances;
 		delete  m.offsets;
 		delete  m.log_clusters;
-	}
+	}*/
 	int neededspace = m.num_glyphs  ;
 
+	QVarLengthArray<HB_Glyph> hb_glyphs(neededspace);
+	QVarLengthArray<HB_GlyphAttributes> hb_attributes(neededspace);
+	QVarLengthArray<HB_Fixed> hb_advances(neededspace);
+	QVarLengthArray<HB_FixedPoint> hb_offsets(neededspace);
+	QVarLengthArray<unsigned short> hb_logClusters(neededspace);
 
+	HB_Bool result = false;
 // 	m.glyphs = new HB_Glyph[neededspace];
 // 	memset ( m.glyphs, 0, neededspace * sizeof ( HB_Glyph ) );
-	m.attributes = new HB_GlyphAttributes[neededspace];
-	memset ( m.attributes, 0, neededspace * sizeof ( HB_GlyphAttributes ) );
-	m.advances = new HB_Fixed[neededspace];
-	memset ( m.advances, 0, neededspace * sizeof ( HB_Fixed ) );
-	m.offsets = new HB_FixedPoint[neededspace];
-	memset ( m.offsets, 0, neededspace * sizeof ( HB_FixedPoint ) );
-	m.log_clusters = new unsigned short[neededspace];
-
-	allocated = true;
-
-	HB_Bool result = HB_ShapeItem ( &m );
-	qDebug() << "ShapeItem run";
+// 	m.attributes = new HB_GlyphAttributes[neededspace];
+// 	memset ( m.attributes, 0, neededspace * sizeof ( HB_GlyphAttributes ) );
+// 	m.advances = new HB_Fixed[neededspace];
+// 	memset ( m.advances, 0, neededspace * sizeof ( HB_Fixed ) );
+// 	m.offsets = new HB_FixedPoint[neededspace];
+// 	memset ( m.offsets, 0, neededspace * sizeof ( HB_FixedPoint ) );
+// 	m.log_clusters = new unsigned short[neededspace];
+// 
+// 	allocated = true;
+// 
+// 	HB_Bool result = HB_ShapeItem ( &m );
+// 	qDebug() << "----------------------------------------------ShapeItem run1-----------";
+	int iter = 0;
 	while ( !result )
 	{
 		neededspace = m.num_glyphs  ;
 
-		delete m.glyphs;
-		delete m.attributes;
-		delete m.advances;
-		delete m.offsets;
-		delete m.log_clusters;
+// 		delete m.glyphs;
+// 		delete m.attributes;
+// 		delete m.advances;
+// 		delete m.offsets;
+// 		delete m.log_clusters;
+// 		
+// 		qDebug() << "----------------------------------------------item cleaned------------";
+// 
+// 		m.glyphs = new HB_Glyph[neededspace];
+// 		memset ( m.glyphs, 0, neededspace * sizeof ( HB_Glyph ) );
+// 		m.attributes = new HB_GlyphAttributes[neededspace];
+// 		memset ( m.attributes, 0, neededspace * sizeof ( HB_GlyphAttributes ) );
+// 		m.advances = new HB_Fixed[neededspace];
+// 		memset ( m.advances, 0, neededspace * sizeof ( HB_Fixed ) );
+// 		m.offsets = new HB_FixedPoint[neededspace];
+// 		memset ( m.offsets, 0, neededspace * sizeof ( HB_FixedPoint ) );
+// 		m.log_clusters = new unsigned short[neededspace];
+		
+		hb_glyphs.resize(neededspace);
+		hb_attributes.resize(neededspace);
+		hb_advances.resize(neededspace);
+		hb_offsets.resize(neededspace);
+		hb_logClusters.resize(neededspace);
 
-		m.glyphs = new HB_Glyph[neededspace];
-		memset ( m.glyphs, 0, neededspace * sizeof ( HB_Glyph ) );
-		m.attributes = new HB_GlyphAttributes[neededspace];
-		memset ( m.attributes, 0, neededspace * sizeof ( HB_GlyphAttributes ) );
-		m.advances = new HB_Fixed[neededspace];
-		memset ( m.advances, 0, neededspace * sizeof ( HB_Fixed ) );
-		m.offsets = new HB_FixedPoint[neededspace];
-		memset ( m.offsets, 0, neededspace * sizeof ( HB_FixedPoint ) );
-		m.log_clusters = new unsigned short[neededspace];
+		memset(hb_glyphs.data(), 0, hb_glyphs.size() * sizeof(HB_Glyph));
+		memset(hb_attributes.data(), 0, hb_attributes.size() * sizeof(HB_GlyphAttributes));
+		memset(hb_advances.data(), 0, hb_advances.size() * sizeof(HB_Fixed));
+		memset(hb_offsets.data(), 0, hb_offsets.size() * sizeof(HB_FixedPoint));
 
+		m.glyphs = hb_glyphs.data();
+		m.attributes = hb_attributes.data();
+		m.advances = hb_advances.data();
+		m.offsets = hb_offsets.data();
+		m.log_clusters = hb_logClusters.data();
+		
+		qDebug() << "----------------------------------------------item allocated------------";
 		result = HB_ShapeItem ( &m );
-		qDebug() << "ShapeItem run2";
+		qDebug() << "----------------------------------------------ShapeItem run"<<++iter<<"-"<< result <<"----------";
 	}
 	
 	
@@ -222,9 +258,9 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 		else
 		{
 			qDebug() << "catch a mark";
-			for(int b=base; b < gIndex; ++b)
+// 			for(int b=base; b < gIndex; ++b)
 			{
-				baseCorrection += renderedString[b].xadvance;
+				baseCorrection = renderedString[base].xadvance;
 			}
 		}
 			RenderedGlyph gl;
@@ -236,6 +272,7 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 				
 			renderedString << gl;
 	}
+	qDebug() << "EndOf FmShaper::doShape("<<string<<","<<ltr<<")";
 	return renderedString;
 }
 

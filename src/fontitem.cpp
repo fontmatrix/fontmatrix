@@ -520,24 +520,27 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 
 	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, 72, 72 );
 
-	FmShaper *shaper = new FmShaper;
-	if ( !shaper )
-	{
-		delete otf;
-		releaseFace();
-		return;
-	}
-	shaper->setFont ( m_face ,&otf->hbFont );
-	if ( !shaper->setScript ( script ) )
+// 	FmShaper *shaper = new FmShaper(otf);
+	FmShaper shaper(otf);
+// 	if ( !shaper )
+// 	{
+// 		delete otf;
+// // 		delete shaper;
+// 		releaseFace();
+// 		return;
+// 	}
+// 	shaper->setFont ( m_face ,&otf->hbFont );
+	if ( !shaper.setScript ( script ) )
 	{
 		qDebug() << "Can not set script "<<script<< " for " << m_name;
 		delete otf;
+// 		delete shaper;
 		releaseFace();
 		return;
 	}
 
-	QList<RenderedGlyph> refGlyph = shaper->doShape ( spec, !m_RTL );
-	delete shaper;
+	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec, !m_RTL );
+// 	delete shaper;
 
 	if ( refGlyph.count() == 0 )
 	{
@@ -586,8 +589,8 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			glyph->setData ( 1,"glyph" );
 			//debug
 			glyph->setBrush ( QColor ( ( i*255/refGlyph.count() ),0,0,255- ( i*255/refGlyph.count() ) ) );
-			qDebug() << refGlyph[i].dump();
-			qDebug() << "Scaled advance = " << refGlyph[i].xadvance * scalefactor;
+// 			qDebug() << refGlyph[i].dump();
+// 			qDebug() << "Scaled advance = " << refGlyph[i].xadvance * scalefactor;
 			qDebug() << pen;
 			//
 			if ( m_RTL )
@@ -606,6 +609,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	}
 
 	delete otf;
+// 	delete shaper;
 	releaseFace();
 }
 
@@ -703,43 +707,43 @@ int FontItem::countCoverage ( int begin_code, int end_code )
 	FT_ULong  charcode = begin_code ;
 	FT_UInt   gindex = 0;
 	int count = 0;
-	if(begin_code >= 0)
+	if ( begin_code >= 0 )
 	{
-	if ( hasUnicode )
-	{
-		while ( charcode <= end_code )
+// 		if ( hasUnicode )
 		{
-			charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
-			if ( !gindex )
-				break;
-			++count;
-		}
-	}
-	else
-	{
-		while ( charcode <= end_code )
-		{
-			if ( charcode < m_numGlyphs )
+			while ( charcode <= end_code )
 			{
-				++charcode;
+				charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
+				if ( !gindex )
+					break;
 				++count;
 			}
-			else
-				break;
 		}
-	}
+// 		else
+// 		{
+// 			while ( charcode <= end_code )
+// 			{
+// 				if ( charcode < m_numGlyphs )
+// 				{
+// 					++charcode;
+// 					++count;
+// 				}
+// 				else
+// 					break;
+// 			}
+// 		}
 	}
 	else
 	{
 		FT_UInt anIndex = 1;
 		count = m_numGlyphs;
-		FT_UInt anyChar =  FT_Get_First_Char(m_face, &anIndex);
-		while(anIndex)
-		{ 
-			anyChar =  FT_Get_Next_Char(m_face,anyChar,&anIndex);
-			if(anIndex)
+		FT_UInt anyChar =  FT_Get_First_Char ( m_face, &anIndex );
+		while ( anIndex )
+		{
+			anyChar =  FT_Get_Next_Char ( m_face,anyChar,&anIndex );
+			if ( anIndex )
 				--count;
-		}	
+		}
 	}
 	releaseFace();
 	return count - 1;//something weird with freetype which put a valid glyph at the beginning of each lang ??? Or a bug here...

@@ -102,10 +102,12 @@ HB_Bool hb_stringToGlyphs ( HB_Font font, const HB_UChar16 *string, hb_uint32 le
 
 void hb_getAdvances ( HB_Font font, const HB_Glyph * glyphs, hb_uint32 numGlyphs, HB_Fixed *advances, int flags )
 {
-	qDebug() << "void hb_getAdvances with flag(0x"<<QString::number( flags, 16)<<")";
+	qDebug() << "void hb_getAdvances with flag("<<QString::number( flags, 16)<<")";
 	FT_Face face = ( FT_Face ) font->userData;
 	for ( hb_uint32 i = 0; i < numGlyphs; ++i )
 	{
+		qDebug() << "\tLoad index "<< i;
+		qDebug() << "\tWhich is glyph "<<glyphs[i];
 		FT_Load_Glyph(face, glyphs[i],FT_LOAD_NO_SCALE);
 		qDebug() << "ADV("<< glyphs[i] <<")("<< face->glyph->metrics.horiAdvance <<")";
 		advances[i] = face->glyph->metrics.horiAdvance;

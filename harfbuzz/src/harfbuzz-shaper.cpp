@@ -1112,8 +1112,13 @@ HB_Bool HB_OpenTypeShape(HB_ShaperItem *item, const hb_uint32 *properties)
 
     hb_buffer_clear(face->buffer);
 
-    face->tmpAttributes = (HB_GlyphAttributes *) realloc(face->tmpAttributes, face->length*sizeof(HB_GlyphAttributes));
-    face->tmpLogClusters = (unsigned int *) realloc(face->tmpLogClusters, face->length*sizeof(unsigned int));
+    if(face->tmpAttributes)
+	 free(face->tmpAttributes);
+    face->tmpAttributes = (HB_GlyphAttributes *) malloc( face->length*sizeof(HB_GlyphAttributes));
+    if(face->tmpLogClusters)
+	    free(face->tmpLogClusters);
+    face->tmpLogClusters = (unsigned int *) malloc( face->length*sizeof(unsigned int));
+    
     for (int i = 0; i < face->length; ++i) {
         hb_buffer_add_glyph(face->buffer, item->glyphs[i], properties ? properties[i] : 0, i);
         face->tmpAttributes[i] = item->attributes[i];

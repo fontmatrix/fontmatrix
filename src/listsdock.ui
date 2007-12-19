@@ -167,7 +167,7 @@
       <property name="sizePolicy" >
        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
         <horstretch>0</horstretch>
-        <verstretch>2</verstretch>
+        <verstretch>3</verstretch>
        </sizepolicy>
       </property>
       <property name="font" >

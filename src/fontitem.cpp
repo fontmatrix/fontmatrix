@@ -766,8 +766,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	double leftMargin = ((exposedRect.width() - ( 100 * m_glyphsPerRow )) / 2) + 30;
 	double aestheticTopMargin = 12;
 	QPointF pen ( leftMargin,50  + aestheticTopMargin);
-// 	QPointF last( 0, 0 );
-	int glyph_count = 0;
+	
 	int nl = 0;
 	
 	FT_ULong  charcode;
@@ -795,30 +794,39 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 // 					qDebug() << "charcode = "<< charcode <<" ; gindex = "<< gindex;
 					pen.rx() += 100;
 					++nl;
-					++glyph_count;
+					
 					continue;
 				}
 				
 				QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
 				if ( pitem )
 				{
-					pitem->setData ( 1,"glyph" );
-					pitem->setData ( 2,gindex );
 					uint ucharcode = charcode;
-					pitem->setData ( 3,ucharcode );
-					glyphList.append ( pitem );
-// 					pixList.append(pitem);
+					
 					scene->addItem ( pitem );
 					pitem->setPos ( pen );
+					pitem->setData ( 1,"glyph" );
+					pitem->setData ( 2,gindex );
+					pitem->setData ( 3,ucharcode );
+					glyphList.append ( pitem );
+					
 					pitem->setZValue ( 10 );
 
-					QGraphicsTextItem *tit= scene->addText ( glyphName ( charcode )  + "\nU+" + QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) )  +" ("+ QString::number ( charcode ) +")"  , infoFont );
+					QGraphicsTextItem *tit= scene->addText ( glyphName ( charcode ), infoFont );
 					tit->setPos ( pen.x()-10,pen.y() + 15 );
 					tit->setData ( 1,"label" );
 					tit->setData ( 2,gindex );
 					tit->setData ( 3,ucharcode );
 					labList.append ( tit );
 					tit->setZValue ( 1 );
+					
+					QGraphicsTextItem *tit2= scene->addText ("U+" + QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) )  +" ("+ QString::number ( charcode ) +")"  , infoFont );
+					tit2->setPos ( pen.x()-10,pen.y() + 28 );
+					tit2->setData ( 1,"label" );
+					tit2->setData ( 2,gindex );
+					tit2->setData ( 3,ucharcode );
+					labList.append ( tit2 );
+					tit2->setZValue ( 1 );
 
 					QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
 					rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
@@ -829,9 +837,6 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					selList.append ( rit );
 
 					pen.rx() += 100;
-// 					last = pen;
-					++glyph_count;
-// 					m_charLess.removeAll ( gindex );
 					++nl;
 				}
 				charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
@@ -853,19 +858,19 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				{
 					++charcode;
 					++nl;
-					++glyph_count;
+					
 					continue;
 				}
 				
 				QGraphicsPathItem *pitem = itemFromGindex ( charcode , sizz );
 				if ( pitem )
 				{
+					scene->addItem ( pitem );
+					pitem->setPos ( pen );
 					pitem->setData ( 1,"glyph" );
 					pitem->setData ( 2,gindex );
 					pitem->setData ( 3,0 );
 					glyphList.append ( pitem );
-					scene->addItem ( pitem );
-					pitem->setPos ( pen );
 					pitem->setZValue ( 10 );
 
 					QGraphicsTextItem *tit= scene->addText ( QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) ) , infoFont );
@@ -925,19 +930,19 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 			if((pen.y() + 100) < exposedRect.y() || pen.y() - 100 > (exposedRect.y() + exposedRect.height() ))
 			{
 				++nl;
-				++glyph_count;
+				
 				continue;
 			}
 				
 			QGraphicsPathItem *pitem = itemFromGindex ( i , sizz );
 			if ( pitem )
 			{
+				scene->addItem ( pitem );
+				pitem->setPos ( pen );
 				pitem->setData ( 1,"glyph" );
 				pitem->setData ( 2, i );
 				pitem->setData ( 3,0 );
 				glyphList.append ( pitem );
-				scene->addItem ( pitem );
-				pitem->setPos ( pen );
 				pitem->setZValue ( 10 );
 
 				QGraphicsTextItem *tit= scene->addText ( QString ( "I+%1" ).arg ( i), infoFont );
@@ -959,11 +964,6 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				pen.rx() += 100;
 				++nl;
 			}
-// 			else
-// 			{
-// 				break;
-// 			}
-// 			++charcode;
 		}
 	}
 
@@ -1720,39 +1720,12 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 		return -1;
 	}
 	if(!charcodeIsAGlyphIndex)
-		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_DEFAULT );
+		ft_error = FT_Load_Char ( m_face, charcode  ,FT_LOAD_RENDER  );
 	else
-		ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT );
+		ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_RENDER  );
 	if ( ft_error )
 	{
 		return -1;
-	}
-	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
-	if ( ft_error )
-	{
-		return -1;
-	}
-	
-	if(m_face->glyph->bitmap.width > m_face->glyph->bitmap.rows) // Oops, glyph is larger than high! We reload with inverted propotions
-	{
-		ft_error = FT_Set_Pixel_Sizes (m_face,  subRect.height() * 0.8, 0);
-		if ( ft_error )
-		{
-			return -1;
-		}
-		if(!charcodeIsAGlyphIndex)
-			ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_DEFAULT );
-		else
-			ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT );
-		if ( ft_error )
-		{
-			return -1;
-		}
-		ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
-		if ( ft_error )
-		{
-			return -1;
-		}
 	}
 
 	QVector<QRgb> palette;
@@ -1767,6 +1740,14 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	             QImage::Format_Indexed8 );
 	img.setColorTable ( palette );
 	
+	double scaledBy = 1.0;
+	if(img.width() > subRect.width())
+	{
+		scaledBy =   (double)subRect.width() / (double)img.width() * 0.8;
+		qDebug()<<"scaledBy = " << scaledBy ;
+		img = img.scaledToWidth(subRect.width() * 0.8,Qt::SmoothTransformation );
+		
+	}
 
 	QPoint gPos(subRect.topLeft());
 	gPos.rx() += (subRect.width() - img.width()) / 2;
@@ -1774,14 +1755,14 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	painter.drawImage(gPos, img);
 	// Draw metrics
 	QPoint pPos(gPos);
-	pPos.rx() -= m_face->glyph->bitmap_left;
-	pPos.ry() += m_face->glyph->bitmap_top;
+	pPos.rx() -= m_face->glyph->bitmap_left * scaledBy;
+	pPos.ry() += m_face->glyph->bitmap_top * scaledBy;
 	//left
 	painter.drawLine(pPos.x() , 0,
 			 pPos.x() , allRect.bottom());
 	//right
-	painter.drawLine(pPos.x() + m_face->glyph->metrics.horiAdvance / 64 , 0,
-			 pPos.x() + m_face->glyph->metrics.horiAdvance / 64, allRect.bottom());
+	painter.drawLine(pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy , 0,
+			 pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy , allRect.bottom());
 	//baseline
 	painter.drawLine(0, pPos.y() ,
 			 allRect.right(),  pPos.y());

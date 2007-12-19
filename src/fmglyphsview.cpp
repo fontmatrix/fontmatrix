@@ -30,11 +30,7 @@ FMGlyphsView::FMGlyphsView(QWidget *parent)
 	// There is just one instance and we want to identify it
 	setObjectName("theglyphsview");
 	setAlignment (Qt::AlignLeft | Qt::AlignTop);
-// 	setOptimizationFlags ( QGraphicsView::DontClipPainter | QGraphicsView::DontSavePainterState | QGraphicsView::DontAdjustForAntialiasing);
-	
 	m_state = AllView;
-	
-// 	connect(verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotViewMoved()));
 	
 }
 
@@ -45,12 +41,11 @@ FMGlyphsView::~FMGlyphsView()
 
 void FMGlyphsView::resizeEvent(QResizeEvent * event)
 {
-	emit refit(width());
+	emit pleaseUpdateMe();
 }
 
 void FMGlyphsView::showEvent(QShowEvent * event)
 {
-// 	emit refit(width());
 	emit pleaseUpdateMe();
 }
 
@@ -63,7 +58,7 @@ void FMGlyphsView::mouseReleaseEvent(QMouseEvent * e)
 		QList<QGraphicsItem*> gg = scene()->items(mapToScene(e->pos()));
 		foreach(QGraphicsItem* ii, gg)
 		{
-			if(ii->data(1).toString() == "select")
+			if(ii->data(1).toString() == "select" && m_state == AllView)
 				ii->setSelected(true);
 		}
 		

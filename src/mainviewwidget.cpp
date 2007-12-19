@@ -962,11 +962,6 @@ void MainViewWidget::slotViewActivated()
 	slotFilterTag ( "Activated_On" );
 }
 
-void MainViewWidget::slotPlaneSelected ( int i )
-{
-	slotView ( true );
-	abcView->verticalScrollBar()->setValue ( 0 );
-}
 
 void MainViewWidget::fillUniPlanes()
 {
@@ -1304,6 +1299,14 @@ void MainViewWidget::slotSwitchRTL()
 {
 	slotView ( true );
 }
+
+void MainViewWidget::slotPlaneSelected ( int i )
+{
+	slotShowAllGlyph();
+	slotView ( true );
+	abcView->verticalScrollBar()->setValue ( 0 );
+}
+
 
 void MainViewWidget::slotShowOneGlyph()
 {

@@ -66,6 +66,9 @@ class FMGlyphsView : public QGraphicsView
 		void wheelEvent ( QWheelEvent * e );
 		void scrollContentsBy ( int dx, int dy );
 		void keyPressEvent ( QKeyEvent * e );
+	private:
+		FMGlyphsView(const FMGlyphsView&) {};
+		void operator= (const FMGlyphsView&) {};
 };
 
 #endif

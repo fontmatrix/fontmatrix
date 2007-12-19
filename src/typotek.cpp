@@ -539,12 +539,14 @@ void typotek::initDir()
 	QChar fl;//A
 	for ( int i = 0 ; i < fontnr ; ++i )
 	{
-
+		if(__FM_SHOW_FONTLOADED)
+			qDebug() << "About to load : " << pathList.at ( i );
 		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
 		fontMap.append ( fi );
 		realFontMap[fi->name() ] = fi;
 		fi->setTags ( tagsMap.value ( fi->name() ) );
-
+		if(__FM_SHOW_FONTLOADED)
+			qDebug() << fi->fancyName() << " loaded.";
 		QChar vl ( fi->family().at ( 0 ).toUpper() );
 		if ( vl != fl )
 		{

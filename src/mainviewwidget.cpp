@@ -159,7 +159,7 @@ void MainViewWidget::fillTree()
 	for ( int i = 0 ; i < initChars.count() ; ++i )
 	{
 		QChar firstChar ( initChars[i] );
-		qDebug() << "First char is " <<firstChar;
+// 		qDebug() << "First char is " <<firstChar;
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( m_lists->fontTree );
 		alpha->setText ( 0, firstChar );
 		alpha->setFont ( 0,alphaFont );

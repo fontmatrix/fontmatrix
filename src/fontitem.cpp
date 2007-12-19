@@ -817,7 +817,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					pitem->setZValue ( 10 );
 
 					QGraphicsTextItem *tit= scene->addText ( glyphName ( charcode ), infoFont );
-					tit->setPos ( pen.x()-10,pen.y() + 15 );
+					tit->setPos ( pen.x()-27,pen.y() + 15 );
 					tit->setData ( 1,"label" );
 					tit->setData ( 2,gindex );
 					tit->setData ( 3,ucharcode );
@@ -825,7 +825,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					tit->setZValue ( 1 );
 					
 					QGraphicsTextItem *tit2= scene->addText ("U+" + QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) )  +" ("+ QString::number ( charcode ) +")"  , infoFont );
-					tit2->setPos ( pen.x()-10,pen.y() + 28 );
+					tit2->setPos ( pen.x()-27,pen.y() + 28 );
 					tit2->setData ( 1,"label" );
 					tit2->setData ( 2,gindex );
 					tit2->setData ( 3,ucharcode );

@@ -53,7 +53,7 @@ int main ( int argc, char *argv[] )
 	}
 
 
-	if ( app.arguments().contains ( "debugfonts" ) )
+	if ( app.arguments().contains ( "listfonts" ) )
 	{
 		__FM_SHOW_FONTLOADED = true;
 	}

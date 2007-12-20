@@ -86,6 +86,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	sampleFontSize = 18;
 	sampleInterSize = 20;
 	m_lists->previewList->setRefWidget ( this );
+	
+	contextMenuReq = false;
+	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	//CONNECT
 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );

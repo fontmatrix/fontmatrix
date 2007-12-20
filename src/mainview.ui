@@ -10,6 +10,9 @@
     <height>622</height>
    </rect>
   </property>
+  <property name="acceptDrops" >
+   <bool>true</bool>
+  </property>
   <property name="windowTitle" >
    <string>main view widget</string>
   </property>
@@ -29,8 +32,11 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="acceptDrops" >
+       <bool>true</bool>
+      </property>
       <property name="statusTip" >
-       <string>Right mouse click on a tag to add it or remove it from TagSet</string>
+       <string/>
       </property>
       <property name="tabPosition" >
        <enum>QTabWidget::North</enum>
@@ -98,7 +104,14 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="1" column="0" >
-             <widget class="QListWidget" name="tagsListWidget" />
+             <widget class="QListWidget" name="tagsListWidget" >
+              <property name="acceptDrops" >
+               <bool>true</bool>
+              </property>
+              <property name="statusTip" >
+               <string>Right mouse click on a tag to add it or remove it from TagSet</string>
+              </property>
+             </widget>
             </item>
             <item row="2" column="0" >
              <layout class="QHBoxLayout" >
@@ -338,10 +351,16 @@ p, li { white-space: pre-wrap; }
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="acceptDrops" >
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item>
              <widget class="QLabel" name="label_2" >
+              <property name="acceptDrops" >
+               <bool>true</bool>
+              </property>
               <property name="text" >
                <string>Coverage of Unicode Interval :</string>
               </property>

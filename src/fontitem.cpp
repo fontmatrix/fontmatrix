@@ -1343,9 +1343,9 @@ void FontItem::moreInfo_type1()
 		return;
 	}
 	// full_name version notice
-	moreInfo[0]["Full font name"] = sinfo.full_name;
-	moreInfo[0]["Version string"] = sinfo.version;
-	moreInfo[0]["Description"] = sinfo.notice;
+	moreInfo[0][tr("Full font name")] = sinfo.full_name;
+	moreInfo[0][tr("Version string")] = sinfo.version;
+	moreInfo[0][tr("Description")] = sinfo.notice;
 }
 
 ///return size of dynamic structuresttnameid.h

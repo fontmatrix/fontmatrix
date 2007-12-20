@@ -60,7 +60,7 @@ typotek::typotek()
 	instance = this;
 	setWindowTitle ( "Fontmatrix" );
 	setupDrop();
-	
+
 }
 
 void typotek::initMatrix()
@@ -70,25 +70,25 @@ void typotek::initMatrix()
 	fillTagsList();
 	initDir();
 
-	if (QSystemTrayIcon::isSystemTrayAvailable())
+	if ( QSystemTrayIcon::isSystemTrayAvailable() )
 		systray = new Systray();
 	else
 		systray = 0;
-	
+
 	theMainView = new MainViewWidget ( this );
 	setCentralWidget ( theMainView );
-	
-	mainDock = new QDockWidget(tr("Lists"));
-	mainDock->setWidget(ListDockWidget::getInstance());
-	addDockWidget(Qt::LeftDockWidgetArea, mainDock);
-	
-	QFont statusFontFont("sans-serif",8,QFont::Bold,false);
-	curFontPresentation = new QLabel(tr("Nothing Selected"));
-	curFontPresentation->setAlignment(Qt::AlignRight);
-	curFontPresentation->setFont(statusFontFont);
-	statusBar()->addPermanentWidget(curFontPresentation);
 
-	
+	mainDock = new QDockWidget ( tr ( "Lists" ) );
+	mainDock->setWidget ( ListDockWidget::getInstance() );
+	addDockWidget ( Qt::LeftDockWidgetArea, mainDock );
+
+	QFont statusFontFont ( "sans-serif",8,QFont::Bold,false );
+	curFontPresentation = new QLabel ( tr ( "Nothing Selected" ) );
+	curFontPresentation->setAlignment ( Qt::AlignRight );
+	curFontPresentation->setFont ( statusFontFont );
+	statusBar()->addPermanentWidget ( curFontPresentation );
+
+
 
 	createActions();
 	createMenus();
@@ -116,14 +116,16 @@ void typotek::doConnect()
 void typotek::closeEvent ( QCloseEvent *event )
 {
 	QSettings settings ( "Undertype", "fontmatrix" );
-	if (systray->isVisible() && settings.value("SystrayCloseToTray", true).toBool()) {
-		if (!settings.value("SystrayCloseNoteShown", false).toBool()) {
-			QMessageBox::information(this, tr("Fontmatrix"),
-				tr("The program will keep running in the "
-					"system tray. To terminate the program, "
-					"choose <b>Exit</b> in the context menu "
-					"of the system tray entry."));
-			settings.setValue("SystrayCloseNoteShown", true);
+	if ( systray->isVisible() && settings.value ( "SystrayCloseToTray", true ).toBool() )
+	{
+		if ( !settings.value ( "SystrayCloseNoteShown", false ).toBool() )
+		{
+			QMessageBox::information ( this, tr ( "Fontmatrix" ),
+			                           tr ( "The program will keep running in the "
+			                                "system tray. To terminate the program, "
+			                                "choose <b>Exit</b> in the context menu "
+			                                "of the system tray entry." ) );
+			settings.setValue ( "SystrayCloseNoteShown", true );
 		}
 		hide();
 		event->ignore();
@@ -148,7 +150,7 @@ void typotek::open()
 	static QString dir = QDir::homePath(); // first time use the home path then remember the last used dir
 	QString tmpdir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
 
-	if (tmpdir.isEmpty())
+	if ( tmpdir.isEmpty() )
 		return; // user choose to cancel the import process
 
 	dir = tmpdir; // only set dir if importing wasn't cancelled
@@ -180,11 +182,12 @@ void typotek::open()
 	QStringList tali;
 	/* Everybody say it’s useless...
 		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
-	if (useInitialTags) {
-		QString inputTags = QInputDialog::getText ( this,"Import tags",tr("Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list.") );
-	
-			if(!inputTags.isEmpty())
-				tali = inputTags.split ( "#" );
+	if ( useInitialTags )
+	{
+		QString inputTags = QInputDialog::getText ( this,"Import tags",tr ( "Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." ) );
+
+		if ( !inputTags.isEmpty() )
+			tali = inputTags.split ( "#" );
 		tali << "Activated_Off" ;
 	}
 
@@ -197,11 +200,11 @@ void typotek::open()
 		}
 	}
 
-	QProgressDialog progress ( tr("Importing font files... "), tr("cancel"), 0, pathList.count(), this );
+	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
-	progress.setAutoReset(false);
+	progress.setAutoReset ( false );
 
-	QString importstring ( tr("Import") +  " %1" );
+	QString importstring ( tr ( "Import" ) +  " %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
 		progress.setLabelText ( importstring.arg ( pathList.at ( i ) ) );
@@ -224,27 +227,35 @@ void typotek::open()
 					fafm.copy ( ownDir.absolutePath() + "/" + iafm.fileName() );
 			}
 			FontItem *fitem = new FontItem ( ownDir.absolutePath() + "/" + fi.fileName() );
-
-			fitem->setTags ( tali );
-			fontMap.append ( fitem );
-			realFontMap[fitem->name() ] = fitem;
-			nameList << fitem->fancyName();
+			if ( fitem->isValid() )
+			{
+				fitem->setTags ( tali );
+				fontMap.append ( fitem );
+				realFontMap[fitem->name() ] = fitem;
+				nameList << fitem->fancyName();
+			}
+			else
+			{
+				QFile::remove ( ownDir.absolutePath() + "/" + fi.fileName() ) ;
+				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
+				statusBar()->showMessage ( errorFont );
+			}
 		}
 	}
-	
+
 	progress.close();
-	
+
 	// The User needs and deserves to know what fonts hve been imported
-	ImportedFontsDialog ifd(nameList);
+	ImportedFontsDialog ifd ( nameList );
 	ifd.exec();
-	
+
 	theMainView->slotReloadFontList();
-	
+
 // 	QMessageBox::information(this,"Fontmatrix info","List of imported fonts :\n" + nameList.join("\n"));
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 }
 
-void typotek::open(QStringList files)
+void typotek::open ( QStringList files )
 {
 	QStringList pathList = files;
 	QStringList nameList;
@@ -260,11 +271,11 @@ void typotek::open(QStringList files)
 		}
 	}
 
-	QProgressDialog progress ( tr("Importing font files... "),tr( "cancel"), 0, pathList.count(), this );
+	QProgressDialog progress ( tr ( "Importing font files... " ),tr ( "cancel" ), 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
-	progress.setAutoReset(false);
+	progress.setAutoReset ( false );
 
-	QString importstring ( tr("Import") +" %1" );
+	QString importstring ( tr ( "Import" ) +" %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
 		progress.setLabelText ( importstring.arg ( pathList.at ( i ) ) );
@@ -287,22 +298,30 @@ void typotek::open(QStringList files)
 					fafm.copy ( ownDir.absolutePath() + "/" + iafm.fileName() );
 			}
 			FontItem *fitem = new FontItem ( ownDir.absolutePath() + "/" + fi.fileName() );
-
-			fitem->setTags ( tali );
-			fontMap.append ( fitem );
-			realFontMap[fitem->name() ] = fitem;
-			nameList << fitem->fancyName();
+			if ( fitem->isValid() )
+			{
+				fitem->setTags ( tali );
+				fontMap.append ( fitem );
+				realFontMap[fitem->name() ] = fitem;
+				nameList << fitem->fancyName();
+			}
+			else
+			{
+				QFile::remove ( ownDir.absolutePath() + "/" + fi.fileName() ) ;
+				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
+				statusBar()->showMessage ( errorFont );
+			}
 		}
 	}
-	
+
 	progress.close();
-	
+
 	// The User needs and deserves to know what fonts hve been imported
-	ImportedFontsDialog ifd(nameList);
+	ImportedFontsDialog ifd ( nameList );
 	ifd.exec();
-	
+
 	theMainView->slotReloadFontList();
-	
+
 }
 
 
@@ -366,21 +385,24 @@ void typotek::createActions()
 
 	deactivCurAct = new QAction ( tr ( "Deactivate all current" ),this );
 	connect ( deactivCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotDeactivateCurrents() ) );
-	
-	fonteditorAct = new QAction( tr ( "Edit current font" ),this );
-	connect (fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont()) );
-	if (QFile::exists(fonteditorPath)) {
+
+	fonteditorAct = new QAction ( tr ( "Edit current font" ),this );
+	connect ( fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont() ) );
+	if ( QFile::exists ( fonteditorPath ) )
+	{
 		fonteditorAct->setStatusTip ( tr ( "Try to run font editor with the selected font as argument" ) );
-	} else {
-		fonteditorAct->setEnabled(false);
+	}
+	else
+	{
+		fonteditorAct->setEnabled ( false );
 		fonteditorAct->setStatusTip ( tr ( "You don't seem to have font editor installed. Path to font editor can be set in preferences." ) );
 	}
-	
-	prefsAction = new QAction( tr ( "Preferences" ),this );
-	connect(prefsAction,SIGNAL(triggered()),this,SLOT(slotPrefsPanel()));
 
-	if (systray)
-		connect(theMainView, SIGNAL(newTag(QString)), systray, SLOT(newTag(QString)));
+	prefsAction = new QAction ( tr ( "Preferences" ),this );
+	connect ( prefsAction,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanel() ) );
+
+	if ( systray )
+		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
 }
 
 void typotek::createMenus()
@@ -403,7 +425,7 @@ void typotek::createMenus()
 	editMenu->addSeparator();
 	editMenu->addAction ( fonteditorAct );
 	editMenu->addSeparator();
-	editMenu->addAction(prefsAction);
+	editMenu->addAction ( prefsAction );
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
@@ -424,8 +446,8 @@ void typotek::readSettings()
 	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
 	move ( pos );
-	fonteditorPath = settings.value("FontEditor", "/usr/bin/fontforge").toString();
-	useInitialTags = settings.value("UseInitialTags", false).toBool();
+	fonteditorPath = settings.value ( "FontEditor", "/usr/bin/fontforge" ).toString();
+	useInitialTags = settings.value ( "UseInitialTags", false ).toBool();
 }
 
 void typotek::writeSettings()
@@ -474,19 +496,19 @@ void typotek::checkOwnDir()
 	else
 	{
 		QDomDocument fc ( "fontconfig" );
-		
+
 		// .fonts.conf is empty, it seems that we just created it.
 		// Wed have to populate it a bit
 		if ( fcfile.size() == 0 )
 		{
-			QString ds( "<?xml version='1.0'?><!DOCTYPE fontconfig SYSTEM 'fonts.dtd'><fontconfig></fontconfig>");
-			fc.setContent(ds);
+			QString ds ( "<?xml version='1.0'?><!DOCTYPE fontconfig SYSTEM 'fonts.dtd'><fontconfig></fontconfig>" );
+			fc.setContent ( ds );
 		}
 		else
 		{
 			fc.setContent ( &fcfile );
 		}
-		
+
 		bool isconfigured = false;
 		QDomNodeList dirlist = fc.elementsByTagName ( "dir" );
 		for ( int i=0;i < dirlist.count();++i )
@@ -503,7 +525,7 @@ void typotek::checkOwnDir()
 			root.appendChild ( direlem );
 
 			fcfile.resize ( 0 );
-			
+
 			QTextStream ts ( &fcfile );
 			fc.save ( ts,4 );
 
@@ -535,27 +557,26 @@ void typotek::initDir()
 	QStringList pathList = ownDir.entryList();
 	if ( __FM_SHOW_FONTLOADED )
 		qDebug() << pathList.join ( "\n" );
+	
 	int fontnr = pathList.count();
-	QChar fl;//A
 	for ( int i = 0 ; i < fontnr ; ++i )
 	{
-		if(__FM_SHOW_FONTLOADED)
+		if ( __FM_SHOW_FONTLOADED )
 			qDebug() << "About to load : " << pathList.at ( i );
 		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
+		if(!fi->isValid())
+		{
+			qDebug() << "ERROR loading : " << pathList.at ( i );
+			continue;
+		}
 		fontMap.append ( fi );
 		realFontMap[fi->name() ] = fi;
 		fi->setTags ( tagsMap.value ( fi->name() ) );
-		if(__FM_SHOW_FONTLOADED)
+		if ( __FM_SHOW_FONTLOADED )
 			qDebug() << fi->fancyName() << " loaded.";
-		QChar vl ( fi->family().at ( 0 ).toUpper() );
-		if ( vl != fl )
-		{
-			fl = vl;
-			QString stars ( fl );
-			emit relayStartingStep ( stars , Qt::AlignCenter, Qt::black );
-		}
 	}
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
+	qDebug() <<  fontMap.count() << " font files loaded.";
 
 
 }
@@ -646,13 +667,13 @@ void typotek::keyPressEvent ( QKeyEvent * event )
 
 void typotek::slotActivateCurrents()
 {
-	if ( QMessageBox::question ( this,tr("Fontmatrix care"),tr("You are about to activate a bunch of fonts,\nit is time to cancel if it was not your intent"), QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel ) == QMessageBox::Ok )
+	if ( QMessageBox::question ( this,tr ( "Fontmatrix care" ),tr ( "You are about to activate a bunch of fonts,\nit is time to cancel if it was not your intent" ), QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel ) == QMessageBox::Ok )
 		theMainView->slotActivateAll();
 }
 
 void typotek::slotDeactivateCurrents()
 {
-	if ( QMessageBox::question ( this,tr("Fontmatrix care"),tr("You are about to deactivate a bunch of fonts,\nit is time to cancel if it was not your intent"),QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel ) == QMessageBox::Ok )
+	if ( QMessageBox::question ( this,tr ( "Fontmatrix care" ),tr ( "You are about to deactivate a bunch of fonts,\nit is time to cancel if it was not your intent" ),QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel ) == QMessageBox::Ok )
 		theMainView->slotDesactivateAll();
 }
 
@@ -673,7 +694,7 @@ FontItem* typotek::getFont ( QString s )
 
 FontItem* typotek::getFont ( int i )
 {
-	if ( i < fontMap.count() && i >= 0)
+	if ( i < fontMap.count() && i >= 0 )
 	{
 		return fontMap.at ( i );
 	}
@@ -686,28 +707,28 @@ FontItem* typotek::getFont ( int i )
 void typotek::slotEditFont()
 {
 	FontItem *item = theMainView->selectedFont();
-	if(!item)
+	if ( !item )
 	{
 		statusBar()->showMessage ( tr ( "There is no font selected" ), 5000 );
 		return;
 	}
-	
+
 	QStringList arguments;
 	arguments << "-nosplash" << item->path() ;
 
-	QProcess *myProcess = new QProcess(this);
-	myProcess->start(fonteditorPath, arguments);
+	QProcess *myProcess = new QProcess ( this );
+	myProcess->start ( fonteditorPath, arguments );
 }
 
 void typotek::setupDrop()
 {
-	setAcceptDrops(true);
+	setAcceptDrops ( true );
 	// was pretty hard!
 }
 
 void typotek::dropEvent ( QDropEvent * event )
 {
-	
+
 	qDebug() << "typotek::dropEvent ("<< event->mimeData()->text() <<")";
 // 	event->acceptProposedAction();
 	QStringList uris = event->mimeData()->text().split ( "\n" );
@@ -715,8 +736,8 @@ void typotek::dropEvent ( QDropEvent * event )
 	for ( int i = 0; i < uris.count() ; ++i )
 	{
 // 		qDebug() << "typotek::dropEvent -> "<< uris[i];
-		QUrl url(uris[i]);
-		if(url.scheme() == "file")
+		QUrl url ( uris[i] );
+		if ( url.scheme() == "file" )
 		{
 			if ( uris[i].endsWith ( "ttf",Qt::CaseInsensitive ) )
 			{
@@ -726,28 +747,28 @@ void typotek::dropEvent ( QDropEvent * event )
 			{
 				ret << url.path();
 			}
-			else if( uris[i].endsWith ( "pfb",Qt::CaseInsensitive ) )
+			else if ( uris[i].endsWith ( "pfb",Qt::CaseInsensitive ) )
 			{
 				ret << url.path();
 			}
 		}
-		else if(url.scheme() == "http")
+		else if ( url.scheme() == "http" )
 		{
 			// TODO Get fonts over http
 			statusBar()->showMessage ( tr ( "Support of DragNDrop over http is sheduled but not yet effective" ), 5000 );
 		}
 	}
-	
+
 // 	qDebug() << ret.join("||");
-	if(ret.count())
-		open(ret);
+	if ( ret.count() )
+		open ( ret );
 
 }
 
-void typotek::dragEnterEvent(QDragEnterEvent * event)
+void typotek::dragEnterEvent ( QDragEnterEvent * event )
 {
-	qDebug() << event->mimeData()->formats().join("|");
-	if (event->mimeData()->hasFormat("text/uri-list"))
+	qDebug() << event->mimeData()->formats().join ( "|" );
+	if ( event->mimeData()->hasFormat ( "text/uri-list" ) )
 	{
 		event->acceptProposedAction();
 		qDebug() << "dragEnterEvent accepted " ;
@@ -762,119 +783,122 @@ void typotek::dragEnterEvent(QDragEnterEvent * event)
 
 void typotek::slotPrefsPanel()
 {
-	PrefsPanelDialog pp(this);
-	pp.initSystrayPrefs(QSystemTrayIcon::isSystemTrayAvailable(),
-                        systray->isVisible(),
-                        systray->hasActivateAll(),
-                        systray->allConfirmation(),
-                        systray->tagsConfirmation());
+	PrefsPanelDialog pp ( this );
+	pp.initSystrayPrefs ( QSystemTrayIcon::isSystemTrayAvailable(),
+	                      systray->isVisible(),
+	                      systray->hasActivateAll(),
+	                      systray->allConfirmation(),
+	                      systray->tagsConfirmation() );
 	pp.initSampleTextPrefs();
 	pp.exec();
 }
 
 void typotek::forwardUpdateView()
 {
-	theMainView->slotView(true);
+	theMainView->slotView ( true );
 }
 
-void typotek::addNamedSample(QString name, QString sample)
+void typotek::addNamedSample ( QString name, QString sample )
 {
-	if(name.isEmpty() || sample.isEmpty())
+	if ( name.isEmpty() || sample.isEmpty() )
 	{
-		statusBar()->showMessage(tr("You provided an empty string, it’s not fair"), 3000);
+		statusBar()->showMessage ( tr ( "You provided an empty string, it’s not fair" ), 3000 );
 		return;
 	}
-	
-	if(name == "default" )
+
+	if ( name == "default" )
 	{
-		statusBar()->showMessage(tr("\"default\" is a reserved keyword"), 3000);
+		statusBar()->showMessage ( tr ( "\"default\" is a reserved keyword" ), 3000 );
 		return;
 	}
 	m_namedSamples[name] = sample;
 	theMainView->refillSampleList();
 }
-void typotek::setSystrayVisible(bool isVisible)
+void typotek::setSystrayVisible ( bool isVisible )
 {
-	systray->slotSetVisible(isVisible);
+	systray->slotSetVisible ( isVisible );
 }
 
-void typotek::showActivateAllSystray(bool isVisible)
+void typotek::showActivateAllSystray ( bool isVisible )
 {
-	systray->slotSetActivateAll(isVisible);
+	systray->slotSetActivateAll ( isVisible );
 }
 
-void typotek::systrayAllConfirmation(bool isEnabled)
+void typotek::systrayAllConfirmation ( bool isEnabled )
 {
-	systray->requireAllConfirmation(isEnabled);
+	systray->requireAllConfirmation ( isEnabled );
 }
 
-void typotek::systrayTagsConfirmation(bool isEnabled)
+void typotek::systrayTagsConfirmation ( bool isEnabled )
 {
-	systray->requireTagsConfirmation(isEnabled);
+	systray->requireTagsConfirmation ( isEnabled );
 }
 
-void typotek::slotCloseToSystray(bool isEnabled)
+void typotek::slotCloseToSystray ( bool isEnabled )
 {
 	QSettings settings ( "Undertype", "fontmatrix" );
-	settings.setValue("SystrayCloseToTray", isEnabled);
-	settings.setValue("SystrayCloseNoteShown", false);
+	settings.setValue ( "SystrayCloseToTray", isEnabled );
+	settings.setValue ( "SystrayCloseNoteShown", false );
 }
 
-void typotek::addNamedSampleFragment(QString name, QString sampleFragment)
+void typotek::addNamedSampleFragment ( QString name, QString sampleFragment )
 {
 	// No need to check, it’s just for the loader
-	QStringList lines = m_namedSamples[name].split("\n");
-	if(lines[0].isEmpty())
-		lines.removeAt(0);
+	QStringList lines = m_namedSamples[name].split ( "\n" );
+	if ( lines[0].isEmpty() )
+		lines.removeAt ( 0 );
 	lines << sampleFragment;
-	m_namedSamples[name] = lines.join("\n");
+	m_namedSamples[name] = lines.join ( "\n" );
 }
 
 
-QString typotek::namedSample(QString name)
+QString typotek::namedSample ( QString name )
 {
-	if(name.isEmpty())
+	if ( name.isEmpty() )
 		return m_namedSamples["default"];
 	return m_namedSamples[name];
 }
 
-void typotek::setSampleText(QString s)
+void typotek::setSampleText ( QString s )
 {
 	m_namedSamples["default"] += s;
 }
 
 
-void typotek::changeSample(QString name, QString text)
+void typotek::changeSample ( QString name, QString text )
 {
-	if(!m_namedSamples.contains(name))
+	if ( !m_namedSamples.contains ( name ) )
 		return;
 	m_namedSamples[name] = text;
 }
 
-void typotek::setWord(QString s, bool updateView)
+void typotek::setWord ( QString s, bool updateView )
 {
 	m_theWord = s;
-	if (updateView)
-		theMainView->slotView(true);
+	if ( updateView )
+		theMainView->slotView ( true );
 }
 
-void typotek::setFontEditorPath(const QString &path)
+void typotek::setFontEditorPath ( const QString &path )
 {
 	fonteditorPath = path;
-	if (QFile::exists(fonteditorPath)) {
-		fonteditorAct->setEnabled(true);
+	if ( QFile::exists ( fonteditorPath ) )
+	{
+		fonteditorAct->setEnabled ( true );
 		fonteditorAct->setStatusTip ( tr ( "Try to run font editor with the selected font as argument" ) );
-	} else {
-		fonteditorAct->setEnabled(false);
+	}
+	else
+	{
+		fonteditorAct->setEnabled ( false );
 		fonteditorAct->setStatusTip ( tr ( "You don't seem to have font editor installed. Path to font editor can be set in preferences." ) );
 	}
-	QSettings settings("Undertype", "fontmatrix");
-	settings.setValue("FontEditor", fonteditorPath);
+	QSettings settings ( "Undertype", "fontmatrix" );
+	settings.setValue ( "FontEditor", fonteditorPath );
 }
 
-void typotek::slotUseInitialTags(bool isEnabled)
+void typotek::slotUseInitialTags ( bool isEnabled )
 {
 	useInitialTags = isEnabled;
-	QSettings settings("Undertype", "fontmatrix");
-	settings.setValue("UseInitialTags", isEnabled);
+	QSettings settings ( "Undertype", "fontmatrix" );
+	settings.setValue ( "UseInitialTags", isEnabled );
 }

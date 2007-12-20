@@ -120,7 +120,7 @@ void FontItem::fillCharsetMap()
 FontItem::FontItem ( QString path )
 {
 // 	qDebug() << path;
-
+	m_valid = false;
 	m_face = 0;
 	facesRef = 0;
 	m_glyphsPerRow = 5;
@@ -145,7 +145,6 @@ FontItem::FontItem ( QString path )
 
 	if ( ! ensureFace() )
 	{
-
 		return;
 	}
 
@@ -186,6 +185,7 @@ FontItem::FontItem ( QString path )
 	//fill cache and avoid a further call to ensureface
 	infoText();
 
+	m_valid = true;
 	releaseFace();
 
 }

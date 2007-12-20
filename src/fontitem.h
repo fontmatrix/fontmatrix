@@ -53,6 +53,7 @@ class FontItem : public QObject
 
 		~FontItem();
 	private:
+		bool m_valid;
 		QString m_path;
 		QString m_afm;
 		QString m_name;
@@ -197,6 +198,8 @@ class FontItem : public QObject
 		// sfnt names
 		void fillNamesMeaning();
 		static /*QMap<QString,QString>*/ QStringList name_meaning;
+		
+		bool isValid(){return m_valid;}
 
 };
 

@@ -6,7 +6,7 @@ dataloader.cpp
 fmglyphsview.cpp
 fmpreviewlist.cpp
 fmsampletextview.cpp
-fontactionwidget.cpp
+# fontactionwidget.cpp
 fontbookdialog.cpp
 fontitem.cpp
 helpwidget.cpp
@@ -29,7 +29,7 @@ aboutwidget.h
 fmglyphsview.h
 fmpreviewlist.h
 fmsampletextview.h
-fontactionwidget.h
+# fontactionwidget.h
 fontbookdialog.h
 fontitem.h
 helpwidget.h
@@ -46,7 +46,7 @@ QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 SET(fontmatrix_UIS
 about.ui
 bookexport.ui
-fontaction.ui
+# fontaction.ui
 help.ui
 importedfonts.ui
 listsdock.ui

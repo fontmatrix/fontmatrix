@@ -30,6 +30,7 @@ FMGlyphsView::FMGlyphsView(QWidget *parent)
 	// There is just one instance and we want to identify it
 	setObjectName("theglyphsview");
 	setAlignment (Qt::AlignLeft | Qt::AlignTop);
+	setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 	m_state = AllView;
 	
 }
@@ -81,7 +82,6 @@ void FMGlyphsView::setState(ViewState s)
 	if(s == SingleView)
 	{
 		setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-		setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 		setFocusPolicy(Qt::NoFocus);
 		
 	}
@@ -89,7 +89,6 @@ void FMGlyphsView::setState(ViewState s)
 	{
 		
 		setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-		setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
 		setFocusPolicy(Qt::WheelFocus);
 		
 	}

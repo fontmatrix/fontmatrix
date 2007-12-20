@@ -20,7 +20,7 @@
 #include "mainviewwidget.h"
 #include "typotek.h"
 #include "fontitem.h"
-#include "fontactionwidget.h"
+// #include "fontactionwidget.h"
 // #include "typotekadaptator.h"
 #include "fmpreviewlist.h"
 #include "fmglyphsview.h"
@@ -42,6 +42,7 @@
 #include <QScrollBar>
 #include <QGraphicsRectItem>
 #include <QProgressDialog>
+#include <QMenu>
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
 
@@ -51,11 +52,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 		: QWidget ( parent )
 {
 	setupUi ( this );
+
 	theVeryFont = 0;
 	typo = typotek::getInstance();
 	m_lists = ListDockWidget::getInstance();
 	currentFonts = typo->getAllFonts();
-	currentFaction =0;
 	fontsetHasChanged = true;
 	curGlyph = 0;
 	fancyGlyphInUse = -1;
@@ -63,7 +64,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	fillUniPlanes();
 	refillSampleList();
 
-	tagLayout = new QGridLayout ( tagPage );
+// 	tagLayout = new QGridLayout ( tagPage );
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
 	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
@@ -113,6 +114,12 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( freetypeButton,SIGNAL ( released() ),this,SLOT ( slotFTRasterChanged() ) );
 	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
+	
+	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
+	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
+	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
+// 	connect ( this ,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
+	connect ( this ,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 
 	connect ( this,SIGNAL ( activationEvent ( QString ) ),typo->getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 	// END CONNECT
@@ -638,22 +645,13 @@ void MainViewWidget::slotFilterTagset ( QString set )
 void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 {
 	if ( column >2 ) return;
-	if ( !currentFaction )
-	{
-		currentFaction = new FontActionWidget ( /* typo->adaptator()*/ );
-		tagLayout->addWidget ( currentFaction );
-		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
-		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
-		currentFaction->show();
-	}
 
 	FontItem * FoIt = typo->getFont ( item->text ( 1 ) );
 	if ( FoIt/* && (!FoIt->isLocked())*/ )
 	{
-// 		currentFaction->slotFinalize();
 		QList<FontItem*> fl;
 		fl.append ( FoIt );
-		currentFaction->prepare ( fl );
+		prepare ( fl );
 
 
 	}
@@ -661,22 +659,12 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 
 void MainViewWidget::slotFontActionByName ( QString fname )
 {
-	if ( !currentFaction )
-	{
-		currentFaction = new FontActionWidget ( /*typo->adaptator()*/ );
-		tagLayout->addWidget ( currentFaction );
-		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
-		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
-		currentFaction->show();
-	}
-
 	FontItem * FoIt = typo->getFont ( fname );
 	if ( FoIt/* && (!FoIt->isLocked())*/ )
 	{
-// 		currentFaction->slotFinalize();
 		QList<FontItem*> fl;
 		fl.append ( FoIt );
-		currentFaction->prepare ( fl );
+		prepare ( fl );
 
 
 	}
@@ -684,56 +672,30 @@ void MainViewWidget::slotFontActionByName ( QString fname )
 
 void MainViewWidget::slotFontActionByNames ( QStringList fnames )
 {
-	if ( !currentFaction )
-	{
-		currentFaction = new FontActionWidget ( /*typo->adaptator()*/ );
-		tagLayout->addWidget ( currentFaction );
-		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
-		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
-		currentFaction->show();
-	}
 
-	QList<FontItem*> FoIt;// = typo->getFont ( fname);
+	QList<FontItem*> FoIt;
 	for ( int i= 0; i < fnames.count() ; ++i )
 	{
 		FoIt.append ( typo->getFont ( fnames[i] ) );
 	}
 	if ( FoIt.count() )
-		currentFaction->prepare ( FoIt );
+		prepare ( FoIt );
 }
 
 
 void MainViewWidget::slotEditAll()
 {
-	if ( !currentFaction )
-	{
-		currentFaction = new FontActionWidget ( /* typo->adaptator()*/ );
-		tagLayout->addWidget ( currentFaction );
-		connect ( currentFaction,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
-		connect ( currentFaction,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
-		currentFaction->show();
-	}
-
-
 	QList<FontItem*> fl;
 	for ( int i =0; i< currentFonts.count(); ++i )
 	{
-// 		if(!currentFonts[i]->isLocked())
-// 		{
 		fl.append ( currentFonts[i] );
-// 		}
 	}
 	if ( fl.isEmpty() )
 		return;
 
-	currentFaction->prepare ( fl );
+	prepare ( fl );
 }
 
-void MainViewWidget::slotCleanFontAction()
-{
-// 	typo->save();
-// 	qDebug() << " FontActionWidget  saved";
-}
 
 void MainViewWidget::slotZoom ( int z )
 {
@@ -1360,4 +1322,154 @@ void MainViewWidget::slotUpdateSView()
 {
 	if(loremView->isVisible())
 		slotView(true);
+}
+
+void MainViewWidget::slotSwitchCheckState(QListWidgetItem * item)
+{
+	if(contextMenuReq)
+	{
+		qDebug() << "\tWant contextual popup menu";
+		typotek *typo = typotek::getInstance();
+		QStringList sets = typo->tagsets();
+		QMenu menu(tagsListWidget);
+		for(int i=0; i< sets.count(); ++i)
+		{
+			
+			if(typo->tagsOfSet(sets[i]).contains(item->text()))
+			{
+				QAction *entry = menu.addAction(QString("Remove from %1").arg(sets[i]));
+				entry->setData(sets[i]);
+			}
+			else
+			{
+				QAction *entry = menu.addAction(QString("Add to %1").arg(sets[i]));
+				entry->setData(sets[i]);
+			}
+		}
+		QAction *sel = menu.exec(contextMenuPos);
+		if(sel /*&& sel != mTitle*/)
+		{
+			if(sel->text().startsWith("Add"))
+			{
+				typo->addTagToSet(sel->data().toString(), item->text());
+			}
+			else
+			{
+				typo->removeTagFromSet(sel->data().toString(), item->text());
+			}
+		}
+		contextMenuReq = false;
+		return;
+	}
+	
+	slotFinalize();
+}
+
+void MainViewWidget::slotNewTag()
+{
+	if ( newTagText->text().isEmpty() )
+		return;
+	if ( typotek::tagsList.contains ( newTagText->text() ) )
+		return;
+
+	typotek::tagsList.append ( newTagText->text() );
+	QListWidgetItem *lit = new QListWidgetItem ( newTagText->text() );
+	lit->setCheckState ( Qt::Checked );
+	tagsListWidget->addItem ( lit );
+	slotFinalize();
+	emit tagAdded(newTagText->text());
+	newTagText->clear();
+
+}
+
+void MainViewWidget::slotContextMenu(QPoint pos)
+{
+	contextMenuReq = true;
+	contextMenuPos = tagsListWidget->mapToGlobal( pos );
+}
+
+void MainViewWidget::slotFinalize()
+{
+	QStringList plusTags;
+	QStringList noTags;
+	for ( int i=0;i< tagsListWidget->count();++i )
+	{
+		if ( tagsListWidget->item ( i )->checkState() == Qt::Checked )
+			plusTags.append ( tagsListWidget->item ( i )->text() );
+		if( tagsListWidget->item ( i )->checkState() == Qt::Unchecked )
+			noTags.append ( tagsListWidget->item ( i )->text() );
+	}
+		
+	QStringList sourceTags;
+	for ( int i=0;i<theTaggedFonts.count();++i )
+	{
+		sourceTags = theTaggedFonts[i]->tags();
+			// sourceTags -= noTags;
+		for(int t = 0; t < noTags.count(); ++t)
+		{
+			sourceTags.removeAll(noTags[t]);
+		}
+		sourceTags += plusTags;
+		sourceTags = sourceTags.toSet().toList();
+		theTaggedFonts[i]->setTags ( sourceTags );
+	}
+
+}
+
+void MainViewWidget::prepare(QList< FontItem * > fonts)
+{
+	slotFinalize();
+	theTaggedFonts.clear();
+	theTaggedFonts = fonts;
+	for ( int i= theTaggedFonts.count() - 1; i >= 0; --i )
+	{
+		if ( theTaggedFonts[i]->isLocked() )
+			theTaggedFonts.removeAt ( i );
+	}
+	tagsListWidget->clear();
+
+	QString tot;
+	for ( int i=0;i<theTaggedFonts.count();++i )
+	{
+		bool last = i == theTaggedFonts.count() - 1;
+		tot.append (  theTaggedFonts[i]->fancyName() + (last ? "" : "\n") );
+	}
+// 	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
+// 	titleLabel->setText ( tit.arg ( theFonts[0]->fancyName() ) + itsagroup );
+	if(theTaggedFonts.count() > 1)
+	{
+		titleLabel->setText ( theTaggedFonts[0]->family() + " (family)");
+	}
+	else
+	{
+		titleLabel->setText ( theTaggedFonts[0]->fancyName() );
+	}
+	titleLabel->setToolTip ( tot );
+
+	for ( int i=0; i < typotek::tagsList.count(); ++i )
+	{
+		QString cur_tag = typotek::tagsList[i];
+
+		if ( cur_tag.isEmpty() || cur_tag.contains ( "Activated_" )  )
+			continue;
+
+		QListWidgetItem *lit;
+		
+		{
+			lit = new QListWidgetItem ( cur_tag );
+			lit->setCheckState ( Qt::Unchecked );
+			int YesState = 0;
+			for ( int i=0;i<theTaggedFonts.count();++i )
+			{
+				if ( theTaggedFonts[i]->tags().contains ( cur_tag ) )
+					++YesState;
+			}
+			if(YesState == theTaggedFonts.count())
+				lit->setCheckState ( Qt::Checked );
+			else if(YesState > 0 && YesState < theTaggedFonts.count())
+				lit->setCheckState ( Qt::PartiallyChecked);
+			
+			tagsListWidget->addItem ( lit );
+		}
+	}
 }

@@ -976,7 +976,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	releaseFace();
 	
 	exposedRect = allView->visibleSceneRect();
-	qDebug() << "ENDOFRENDERALL" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
+// 	qDebug() << "ENDOFRENDERALL" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
 }
 
 QString FontItem::infoText ( bool fromcache )
@@ -987,12 +987,8 @@ QString FontItem::infoText ( bool fromcache )
 	ensureFace();
 
 	QMap<QString, QStringList> orderedInfo;
-	QStringList tagsStr = m_tags;
-	tagsStr.removeAll ( "Activated_On" );
-	tagsStr.removeAll ( "Activated_Off" );
 	QString ret ( "<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n" );
 	ret += "<p>"+ QString::number ( m_numGlyphs ) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " ) +"</p>";
-	ret += "<p style=\"background-color:#aaa;\"><b>Tags  </b>"+ tagsStr.join ( " ; " ) +"</p>";
 
 	if ( moreInfo.isEmpty() )
 	{

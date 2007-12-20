@@ -50,9 +50,7 @@ class FontActionWidget :  public QWidget, private Ui::FontAction
 		bool isOk;
 		QStringList tags;
 	private:
-		QList<FontItem*> theFonts;
-// 		TypotekAdaptator *adaptator;
-		
+		QList<FontItem*> theTaggedFonts;		
 		bool contextMenuReq;
 		QPoint contextMenuPos;
 		
@@ -61,7 +59,6 @@ class FontActionWidget :  public QWidget, private Ui::FontAction
 		void slotCancel();
 		void slotSwitchCheckState( QListWidgetItem * item );
 		void slotNewTag();
-		
 		void slotContextMenu(QPoint  pos);
 		
 	public slots:

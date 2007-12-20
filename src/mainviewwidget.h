@@ -27,7 +27,6 @@
 class QGraphicsScene;
 class typotek;
 class FontItem;
-class FontActionWidget;
 class QTextEdit;
 class QGridLayout;
 class QTreeWidgetItem;
@@ -58,7 +57,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString faceIndex;
 		QString lastIndex;
 		QList<FontItem*> currentFonts;
-		FontActionWidget *currentFaction;
 		QString sampleText;
 		QGridLayout *tagLayout;
 		QString currentOrdering;
@@ -87,6 +85,11 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		int fancyGlyphInUse;
 		
 		
+		void prepare(QList<FontItem*> fonts);
+		QList<FontItem*> theTaggedFonts;		
+		bool contextMenuReq;
+		QPoint contextMenuPos;
+		
 	public slots:
 		void slotOrderingChanged ( QString s );
 		void slotFontSelected ( QTreeWidgetItem * item, int column );
@@ -100,7 +103,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotFontActionByName(QString fname);
 		void slotFontActionByNames(QStringList fnames);
 		void slotEditAll();
-		void slotCleanFontAction();
 		void slotZoom(int z);
 		void slotAppendTag(QString tag);
 		void slotFilterTag(QString tag);
@@ -128,11 +130,17 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotSwitchRTL();
 		void slotUpdateGView();
 		void slotUpdateSView();
+		//tags
+		void slotSwitchCheckState( QListWidgetItem * item );
+		void slotNewTag();
+		void slotContextMenu(QPoint  pos);
+		void slotFinalize();
 		
 	signals:
 		void faceChanged();
 		void newTag(QString);
 		void activationEvent(QString);
+		void tagAdded(QString);
 
 	public:
 		QString defaultOrd() {return ord[0];};

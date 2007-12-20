@@ -119,15 +119,9 @@ void FontActionWidget::prepare ( QList< FontItem * > fonts )
 
 void FontActionWidget::doConnect()
 {
-// 	connect ( buttonBox,SIGNAL ( accepted() ),this,SLOT ( slotOk() ) );
-// 	connect ( buttonBox,SIGNAL ( rejected() ),this,SLOT ( slotCancel() ) );
-
-	connect(tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
-	
+	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
-	
-	
 }
 
 FontActionWidget::~FontActionWidget()

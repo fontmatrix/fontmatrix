@@ -384,6 +384,9 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
+	double scalefactor = sizz / m_face->units_per_EM;
+	double pWidth = m_RTL ?  origine.x() : scene->width() - origine.x() ;
+	const double distance = 20;
 	QPointF pen ( origine );
 	if ( m_rasterFreetype )
 	{
@@ -395,6 +398,25 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
+			if(m_RTL)
+			{
+				pen.rx() -= glyph->data ( 3 ).toInt();
+				pWidth -= glyph->data ( 3 ).toInt();
+				if(pWidth < distance)
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else
+			{
+				pWidth -= glyph->data ( 3 ).toInt();
+				if(pWidth < distance)
+				{
+					delete glyph;
+					break;
+				}
+			}
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
@@ -402,18 +424,40 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			                pen.y() - glyph->data ( 2 ).toInt() );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			pen.rx() += glyph->data ( 3 ).toInt();
+			if ( !m_RTL )
+				pen.rx() += glyph->data ( 3 ).toInt();
 		}
 	}
 	else
 	{
 		for ( int i=0; i < spec.length(); ++i )
 		{
+			if(!scene->sceneRect().contains(pen))
+				break;
 			QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
 			if ( !glyph )
 			{
 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
+			}
+			if(m_RTL)
+			{
+				pen.rx() -= advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+				pWidth -= advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+				if(pWidth < distance)
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else
+			{
+				pWidth -= advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+				if(pWidth < distance)
+				{
+					delete glyph;
+					break;
+				}
 			}
 			if ( record )
 				glyphList.append ( glyph );
@@ -421,11 +465,9 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			glyph->setPos ( pen );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			double scalefactor = sizz / m_face->units_per_EM;
+			
 			if ( !m_RTL )
 				pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
-			else
-				pen.rx() -= advanceCache[spec.at ( i ).unicode() ] * scalefactor;
 		}
 	}
 
@@ -447,6 +489,9 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
+	double scalefactor = sizz / m_face->units_per_EM  ;
+	double pWidth = m_RTL ?  origine.x() : scene->width() - origine.x() ;
+	const double distance = 20;
 	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, 72, 72 );
 	QList<RenderedGlyph> refGlyph = otf->procstring ( spec, set );
 	if ( refGlyph.count() == 0 )
@@ -465,15 +510,34 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
+			if(m_RTL)
+			{
+				pen.rx() -= refGlyph[i].xadvance * scalefactor;
+				pWidth -= refGlyph[i].xadvance * scalefactor;
+				if(pWidth < distance)
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else
+			{
+				pWidth -= refGlyph[i].xadvance * scalefactor;
+				if(pWidth < distance)
+				{
+					delete glyph;
+					break;
+				}
+			}
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
-			double scalefactor = sizz / m_face->units_per_EM  ;
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 1 ).toInt()  ,
 			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 2 ).toInt() );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			pen.rx() += refGlyph[i].xadvance * scalefactor ;//We’ll have some "rounded" related wrong display but...
+			if(!m_RTL)
+				pen.rx() += refGlyph[i].xadvance * scalefactor ;//We’ll have some "rounded" related wrong display but...
 		}
 	}
 	else
@@ -486,15 +550,34 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
+			if(m_RTL)
+			{
+				pen.rx() -= refGlyph[i].xadvance * scalefactor;
+				pWidth -= refGlyph[i].xadvance * scalefactor;
+				if(pWidth < distance)
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else
+			{
+				pWidth -= refGlyph[i].xadvance * scalefactor;
+				if(pWidth < distance)
+				{
+					delete glyph;
+					break;
+				}
+			}
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
-			double scalefactor = sizz / m_face->units_per_EM;
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
 			                pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( 1,"glyph" );
-			pen.rx() += refGlyph[i].xadvance * scalefactor;
+			if(!m_RTL)
+				pen.rx() += refGlyph[i].xadvance * scalefactor;
 		}
 	}
 
@@ -502,7 +585,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 	releaseFace();
 }
 
-/// Shaped line
+/// Shaped line, mostly buggy right now :(
 void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine, double fsize, bool record )
 {
 	if(spec.isEmpty())

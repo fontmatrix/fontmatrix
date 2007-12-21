@@ -230,12 +230,12 @@ FmOtf::FmOtf ( FT_Face f , double scale)
 	hbFont.userData = _face ;
 	hbFont.x_ppem = _face->size->metrics.x_ppem;
 	hbFont.y_ppem = _face->size->metrics.y_ppem;
-	if(scale == 0.0)
-	{
-		hbFont.x_scale = _face->size->metrics.x_scale;
-		hbFont.y_scale = _face->size->metrics.y_scale;
-	}
-	else
+// 	if(scale == 0.0)
+// 	{
+// 		hbFont.x_scale = _face->size->metrics.x_scale;
+// 		hbFont.y_scale = _face->size->metrics.y_scale;
+// 	}
+// 	else
 	{
 		hbFont.x_scale = scale;
 		hbFont.y_scale = scale;

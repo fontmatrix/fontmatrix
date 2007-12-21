@@ -101,8 +101,16 @@ FmShaper::~ FmShaper()
 	qDebug() << "FmShaper "<< this <<" destructor";
 	if (faceisset)
 	{
-		delete m.font;
-		HB_FreeFace(m.face);
+		if(m.font)
+		{
+			qDebug() << "Freeing m.font at "<< m.font;
+			delete m.font;
+		}
+		if(m.face)
+		{
+			qDebug() << "Freeing m.face at "<< m.face;
+			HB_FreeFace(m.face);
+		}
 	}
 	qDebug() << "FmShaper "<< this <<" destroyed";
 }
@@ -142,6 +150,10 @@ bool FmShaper::setScript ( QString script )
 QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 {
 	qDebug() << "FmShaper::doShape("<<string<<","<<ltr<<")";
+	
+	if(!faceisset)
+		setFont();
+	
 	m.kerning_applied = false;
 	m.string = reinterpret_cast<const HB_UChar16 *> ( string.constData() );
 	m.stringLength = string.length();
@@ -151,25 +163,7 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 	
 	m.initialGlyphCount = m.num_glyphs = m.item.length = m.stringLength;
 	m.glyphIndicesPresent = false;
-	
-	
-// 	m.glyphs = new HB_Glyph[ m.num_glyphs ];
-// 	for(int i = 0; i < m.num_glyphs; ++i)
-// 	{
-// 		m.glyphs[i] = FT_Get_Char_Index ( anchorFace , string[i].unicode() );
-// 		qDebug() << "ADDED "<<string[i]<<" as " << m.glyphs[i];
-// 	}
-// 	
-// 	
-/*
-	if ( allocated )
-	{
-		delete  m.glyphs;
-		delete  m.attributes;
-		delete  m.advances;
-		delete  m.offsets;
-		delete  m.log_clusters;
-	}*/
+
 	int neededspace = m.num_glyphs  ;
 
 	QVarLengthArray<HB_Glyph> hb_glyphs(neededspace);
@@ -179,43 +173,11 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 	QVarLengthArray<unsigned short> hb_logClusters(neededspace);
 
 	HB_Bool result = false;
-// 	m.glyphs = new HB_Glyph[neededspace];
-// 	memset ( m.glyphs, 0, neededspace * sizeof ( HB_Glyph ) );
-// 	m.attributes = new HB_GlyphAttributes[neededspace];
-// 	memset ( m.attributes, 0, neededspace * sizeof ( HB_GlyphAttributes ) );
-// 	m.advances = new HB_Fixed[neededspace];
-// 	memset ( m.advances, 0, neededspace * sizeof ( HB_Fixed ) );
-// 	m.offsets = new HB_FixedPoint[neededspace];
-// 	memset ( m.offsets, 0, neededspace * sizeof ( HB_FixedPoint ) );
-// 	m.log_clusters = new unsigned short[neededspace];
-// 
-// 	allocated = true;
-// 
-// 	HB_Bool result = HB_ShapeItem ( &m );
-// 	qDebug() << "----------------------------------------------ShapeItem run1-----------";
 	int iter = 0;
 	while ( !result )
 	{
 		neededspace = m.num_glyphs  ;
 
-// 		delete m.glyphs;
-// 		delete m.attributes;
-// 		delete m.advances;
-// 		delete m.offsets;
-// 		delete m.log_clusters;
-// 		
-// 		qDebug() << "----------------------------------------------item cleaned------------";
-// 
-// 		m.glyphs = new HB_Glyph[neededspace];
-// 		memset ( m.glyphs, 0, neededspace * sizeof ( HB_Glyph ) );
-// 		m.attributes = new HB_GlyphAttributes[neededspace];
-// 		memset ( m.attributes, 0, neededspace * sizeof ( HB_GlyphAttributes ) );
-// 		m.advances = new HB_Fixed[neededspace];
-// 		memset ( m.advances, 0, neededspace * sizeof ( HB_Fixed ) );
-// 		m.offsets = new HB_FixedPoint[neededspace];
-// 		memset ( m.offsets, 0, neededspace * sizeof ( HB_FixedPoint ) );
-// 		m.log_clusters = new unsigned short[neededspace];
-		
 		hb_glyphs.resize(neededspace);
 		hb_attributes.resize(neededspace);
 		hb_advances.resize(neededspace);
@@ -226,6 +188,7 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 		memset(hb_attributes.data(), 0, hb_attributes.size() * sizeof(HB_GlyphAttributes));
 		memset(hb_advances.data(), 0, hb_advances.size() * sizeof(HB_Fixed));
 		memset(hb_offsets.data(), 0, hb_offsets.size() * sizeof(HB_FixedPoint));
+		memset(hb_logClusters.data(), 0, hb_logClusters.size() * sizeof(unsigned short));
 
 		m.glyphs = hb_glyphs.data();
 		m.attributes = hb_attributes.data();
@@ -235,7 +198,7 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 		
 		qDebug() << "----------------------------------------------item allocated------------";
 		result = HB_ShapeItem ( &m );
-		qDebug() << "----------------------------------------------ShapeItem run"<<++iter<<"-"<< result <<"----------";
+		qDebug() << "----------------------------------------------ShapeItem run"<<++iter<<" - "<< (result ? "has " : "wants ") << m.num_glyphs <<" glyphs-";
 	}
 	
 	

@@ -377,6 +377,8 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 /// Nature line
 void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record )
 {
+	if(spec.isEmpty())
+		return;
 	ensureFace();
 	FT_Set_Char_Size ( m_face, fsize  * 64 , 0,72,72 );
 	if ( record )
@@ -433,11 +435,13 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 /// Featured line
 void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QPointF origine, double fsize, bool record )
 {
+	if(spec.isEmpty())
+		return;
 	if ( !m_isOpenType )
 		return;
 	ensureFace();
 
-	otf = new FmOtf ( m_face );
+	otf = new FmOtf ( m_face, 0x10000 );
 	if ( !otf )
 		return;
 	if ( record )
@@ -501,6 +505,8 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 /// Shaped line
 void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine, double fsize, bool record )
 {
+	if(spec.isEmpty())
+		return;
 	if ( !m_isOpenType )
 		return;
 	ensureFace();
@@ -509,7 +515,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	double scalefactor = sizz / m_face->units_per_EM;
 	qDebug() << scalefactor;
 
-	otf = new FmOtf ( m_face );
+	otf = new FmOtf ( m_face , 0x10000);
 	if ( !otf )
 	{
 		releaseFace();
@@ -520,27 +526,16 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 
 	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, 72, 72 );
 
-// 	FmShaper *shaper = new FmShaper(otf);
 	FmShaper shaper(otf);
-// 	if ( !shaper )
-// 	{
-// 		delete otf;
-// // 		delete shaper;
-// 		releaseFace();
-// 		return;
-// 	}
-// 	shaper->setFont ( m_face ,&otf->hbFont );
 	if ( !shaper.setScript ( script ) )
 	{
 		qDebug() << "Can not set script "<<script<< " for " << m_name;
 		delete otf;
-// 		delete shaper;
 		releaseFace();
 		return;
 	}
 
 	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec, !m_RTL );
-// 	delete shaper;
 
 	if ( refGlyph.count() == 0 )
 	{
@@ -609,7 +604,6 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	}
 
 	delete otf;
-// 	delete shaper;
 	releaseFace();
 }
 

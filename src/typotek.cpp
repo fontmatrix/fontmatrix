@@ -116,22 +116,24 @@ void typotek::doConnect()
 void typotek::closeEvent ( QCloseEvent *event )
 {
 	QSettings settings ( "Undertype", "fontmatrix" );
-	if ( systray->isVisible() && settings.value ( "SystrayCloseToTray", true ).toBool() )
+	if ( systray )
 	{
-		if ( !settings.value ( "SystrayCloseNoteShown", false ).toBool() )
+		if ( systray->isVisible() && settings.value ( "SystrayCloseToTray", true ).toBool() )
 		{
-			QMessageBox::information ( this, tr ( "Fontmatrix" ),
-			                           tr ( "The program will keep running in the "
-			                                "system tray. To terminate the program, "
-			                                "choose <b>Exit</b> in the context menu "
-			                                "of the system tray entry." ) );
-			settings.setValue ( "SystrayCloseNoteShown", true );
+			if ( !settings.value ( "SystrayCloseNoteShown", false ).toBool() )
+			{
+				QMessageBox::information ( this, tr ( "Fontmatrix" ),
+				                           tr ( "The program will keep running in the "
+				                                "system tray. To terminate the program, "
+				                                "choose <b>Exit</b> in the context menu "
+				                                "of the system tray entry." ) );
+				settings.setValue ( "SystrayCloseNoteShown", true );
+			}
+			hide();
+			event->ignore();
+			return;
 		}
-		hide();
-		event->ignore();
-		return;
 	}
-
 	if ( maybeSave() )
 	{
 		save();

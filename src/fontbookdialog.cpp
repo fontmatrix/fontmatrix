@@ -33,6 +33,8 @@ FontBookDialog::FontBookDialog ( QWidget *parent )
 	setupUi ( this );
 	isOk = false;
 	m_isTemplate = false;
+	loadTemplateButton->setVisible(false);
+	templateLabel->setVisible(false);
 
 	fillSizeList();
 	fillFontsList();
@@ -163,23 +165,23 @@ void FontBookDialog::fillSizeList()
 
 double FontBookDialog::getFontSize ( QString s )
 {
-	if ( s == tr("family") )
+	if ( s == "family" )
 	{
 		return familyFontSizeSpin->value();
 	}
-	if ( s == tr("style") )
+	if ( s == "style" )
 	{
 		return styleFontSizeSpin->value();
 	}
-	if ( s == tr("headline" ))
+	if ( s == "headline")
 	{
 		return headlineFontSizeSpin->value();
 	}
-	if ( s == tr("body") )
+	if ( s == "body")
 	{
 		return bodyFontSizeSpin->value();
 	}
-	return 0.0;
+	return 12.0;
 }
 
 void FontBookDialog::slotPageSize ( int index )
@@ -363,6 +365,7 @@ void FontBookDialog::slotPreview()
 		}
 	}
 	
+	preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
 	preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
 
 }

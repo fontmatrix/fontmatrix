@@ -47,10 +47,10 @@ void FontBook::doBook()
 	double pageHeight = bookOption.getPageSize().height();
 	double pageWidth = bookOption.getPageSize().width();
 	QString theFile = bookOption.getFileName();
-	double familySize = bookOption.getFontSize ( QObject::tr("family" ));
-	double headSize = bookOption.getFontSize ( QObject::tr("headline" ));
-	double bodySize = bookOption.getFontSize ( QObject::tr("body" ));
-	double styleSize = bookOption.getFontSize (QObject::tr( "style" ));
+	double familySize = bookOption.getFontSize ( "family" );
+	double headSize = bookOption.getFontSize ( "headline" );
+	double bodySize = bookOption.getFontSize ("body" );
+	double styleSize = bookOption.getFontSize ( "style" );
 	double familynameTab = bookOption.getTabFamily();
 	double variantnameTab = bookOption.getTabStyle();
 	double sampletextTab = bookOption.getTabSampleText();
@@ -59,6 +59,7 @@ void FontBook::doBook()
 	QString headline = bookOption.getSampleHeadline();
 	QPrinter::PageSize printedPageSize = bookOption.getPageSizeConstant();
 	double parSize = familySize * 3.0 + styleSize * 1.2 + headSize * 1.2 + static_cast<double> ( loremlist.count() ) * bodySize * 1.2;
+	
 
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	thePrinter.setOutputFormat ( QPrinter::PdfFormat );
@@ -140,7 +141,7 @@ void FontBook::doBook()
 			ABC = theScene.addText ( firstLetter.at ( 0 ).toUpper() ,theFont );
 			ABC->setPos ( pageWidth *0.9,pageHeight * 0.05 );
 // 			ABC->rotate(90);
-			edgeCartouche = theScene.addRect ( pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray );
+			edgeCartouche = theScene.addRect (QRectF(QPointF( pageWidth * 0.85 , 0.0 ),  QSizeF( pageWidth * 0.15, pageHeight)) ,abigwhitepen, Qt::lightGray );
 
 			edgeCartouche->setZValue ( 101.0 );
 
@@ -156,7 +157,9 @@ void FontBook::doBook()
 			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
 			folio->setZValue ( 9999000.0 );
 			folio->setDefaultTextColor ( Qt::black );
+			
 			theScene.render ( &thePainter );
+			
 			thePrinter.newPage();
 			pen.ry() = topMargin;
 			for ( int  n = 0; n < renderedFont.count(); ++n )
@@ -169,8 +172,8 @@ void FontBook::doBook()
 			ABC = theScene.addText ( firstLetter.at ( 0 ).toUpper() ,theFont );
 			ABC->setPos ( pageWidth *0.9,pageHeight * 0.05 );
 // 			ABC->rotate(90);
-			edgeCartouche = theScene.addRect ( pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray );
-
+// 			edgeCartouche = theScene.addRect ( pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray );
+			edgeCartouche = theScene.addRect (QRectF(QPointF( pageWidth * 0.85 , 0.0 ),  QSizeF( pageWidth * 0.15, pageHeight)) ,abigwhitepen, Qt::lightGray );
 			edgeCartouche->setZValue ( 101.0 );
 
 			ABC->setZValue ( 10000.0 );
@@ -198,7 +201,9 @@ void FontBook::doBook()
 				folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
 				folio->setDefaultTextColor ( Qt::black );
 				folio->setZValue ( 1000.0 );
+				
 				theScene.render ( &thePainter );
+				
 				thePrinter.newPage();
 				pen.ry() = topMargin;
 				for ( int  d = 0; d <  renderedFont.count() ; ++d )
@@ -217,7 +222,8 @@ void FontBook::doBook()
 				teteChap->setDefaultTextColor ( Qt::gray );
 
 
-				edgeCartouche = theScene.addRect ( pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray );
+// 				edgeCartouche = theScene.addRect ( pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray );
+				edgeCartouche = theScene.addRect (QRectF(QPointF( pageWidth * 0.85 , 0.0 ),  QSizeF( pageWidth * 0.15, pageHeight)) ,abigwhitepen, Qt::lightGray );
 				edgeCartouche->setZValue ( 101.0 );
 
 				ABC->setZValue ( 10000.0 );
@@ -225,9 +231,13 @@ void FontBook::doBook()
 			}
 			pen.rx() =variantnameTab;
 			FontItem* curfi = kit.value() [n];
-			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
+// 			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
 			renderedFont.append ( curfi );
+			bool oldRast = curfi->rasterFreetype();
+			curfi->setFTRaster(false);
+			curfi->setRTL(false);
 			curfi->renderLine ( &theScene,curfi->variant(), pen ,styleSize );
+			
 			pen.rx() = sampletextTab;
 			pen.ry() +=  2.0 * styleSize;
 			curfi->renderLine ( &theScene, headline,pen, headSize );
@@ -237,6 +247,7 @@ void FontBook::doBook()
 				curfi->renderLine ( &theScene, loremlist[l],pen, bodySize );
 				pen.ry() +=  bodySize * 1.2;
 			}
+			curfi->setFTRaster(oldRast);
 			pen.ry() +=styleSize * 2.0;
 
 		}

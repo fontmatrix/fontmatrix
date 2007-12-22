@@ -784,11 +784,16 @@ void typotek::dragEnterEvent ( QDragEnterEvent * event )
 void typotek::slotPrefsPanel()
 {
 	PrefsPanelDialog pp ( this );
-	pp.initSystrayPrefs ( QSystemTrayIcon::isSystemTrayAvailable(),
-	                      systray->isVisible(),
-	                      systray->hasActivateAll(),
-	                      systray->allConfirmation(),
-	                      systray->tagsConfirmation() );
+
+	// FIXME if Systray is not available, systray->whatever() will segault 
+	if ( QSystemTrayIcon::isSystemTrayAvailable() )
+		pp.initSystrayPrefs ( QSystemTrayIcon::isSystemTrayAvailable(),
+		                      systray->isVisible(),
+		                      systray->hasActivateAll(),
+		                      systray->allConfirmation(),
+		                      systray->tagsConfirmation() );
+	else
+		pp.initSystrayPrefs ( false,false,false,false,false );
 	pp.initSampleTextPrefs();
 	pp.exec();
 }

@@ -124,7 +124,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	connect ( this ,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
 	connect ( this ,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 
-	connect ( this,SIGNAL ( activationEvent ( QString ) ),typo->getSystray(),SLOT ( updateTagMenu ( QString ) ) );
+	if(typo->getSystray())
+		connect ( this,SIGNAL ( activationEvent ( QString ) ),typo->getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 	// END CONNECT
 
 	currentOrdering = "family" ;

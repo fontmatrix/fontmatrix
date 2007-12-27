@@ -24,6 +24,7 @@ ImportedFontsDialog::ImportedFontsDialog(QStringList fontlist)
 {
 	setupUi(this);
 	fontList->addItems(fontlist);
+	label->setText(QString("Number of Imported Fonts ") + QString::number(fontList->count()));
 // 	exec();
 }
 

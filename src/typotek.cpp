@@ -241,7 +241,12 @@ void typotek::open()
 				QFile::remove ( ownDir.absolutePath() + "/" + fi.fileName() ) ;
 				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
 				statusBar()->showMessage ( errorFont );
+				nameList << "__FAILEDTOLOAD__" + fi.fileName();
 			}
+		}
+		else
+		{
+			qDebug()<< "Unable to copy " << fi.fileName() ;
 		}
 	}
 
@@ -312,7 +317,12 @@ void typotek::open ( QStringList files )
 				QFile::remove ( ownDir.absolutePath() + "/" + fi.fileName() ) ;
 				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
 				statusBar()->showMessage ( errorFont );
+				nameList << "__FAILEDTOLOAD__" + fi.fileName();
 			}
+		}
+		else
+		{
+			qDebug()<< "Unable to copy " << fi.fileName() ;
 		}
 	}
 

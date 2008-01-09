@@ -18,13 +18,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "importedfontsdialog.h"
+#include <QListWidgetItem>
 
 ImportedFontsDialog::ImportedFontsDialog(QStringList fontlist)
  : QDialog()
 {
 	setupUi(this);
-	fontList->addItems(fontlist);
-	label->setText(QString("Number of Imported Fonts ") + QString::number(fontList->count()));
+// 	fontList->addItems(fontlist);
+	int buggyFonts = 0;
+	for(int i=0; i < fontlist.count();++i)
+	{
+		QString s(fontlist[i]);
+		bool success = true;
+		if(s.startsWith("__FAILEDTOLOAD__", Qt::CaseSensitive))
+		{
+			success = false;
+			s = s.mid(16) + tr(" (not loaded)");
+			++buggyFonts;
+		}
+		QListWidgetItem *it=new QListWidgetItem(s);
+		it->setTextColor(success ? Qt::black : Qt::red);
+		fontList->addItem(it);
+	}
+	label->setText(QString("Number of Imported Fonts ") + QString::number(fontList->count() - buggyFonts));
 // 	exec();
 }
 

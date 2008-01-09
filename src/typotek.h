@@ -75,6 +75,7 @@ class typotek:public QMainWindow
 		bool save();
 		void slotCloseToSystray(bool isEnabled);
 		void slotUseInitialTags(bool isEnabled);
+		void slotPrefsPanelDefault();
 		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
 		
 	signals:

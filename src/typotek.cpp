@@ -401,7 +401,7 @@ void typotek::createActions()
 	}
 
 	prefsAction = new QAction ( tr ( "Preferences" ),this );
-	connect ( prefsAction,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanel() ) );
+	connect ( prefsAction,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanelDefault() ) );
 
 	if ( systray )
 		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
@@ -801,6 +801,12 @@ void typotek::slotPrefsPanel(PrefsPanelDialog::PAGE page)
 	pp.exec();
 }
 
+void typotek::slotPrefsPanelDefault()
+{
+	slotPrefsPanel(PrefsPanelDialog::PAGE_GENERAL);
+}
+
+
 void typotek::forwardUpdateView()
 {
 	theMainView->slotView ( true );
@@ -910,3 +916,4 @@ void typotek::slotUseInitialTags ( bool isEnabled )
 	QSettings settings ( "Undertype", "fontmatrix" );
 	settings.setValue ( "UseInitialTags", isEnabled );
 }
+

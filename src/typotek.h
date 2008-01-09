@@ -30,6 +30,8 @@
 #include <QStringList>
 #include <QLabel>
 
+#include "prefspaneldialog.h"
+
 class QAction;
 class QMenu;
 class QTextEdit;
@@ -67,12 +69,13 @@ class typotek:public QMainWindow
 		void about();
 		void help();
 // 		void slotWord();
-		void slotPrefsPanel();
+		
 		
 	public slots:
 		bool save();
 		void slotCloseToSystray(bool isEnabled);
 		void slotUseInitialTags(bool isEnabled);
+		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
 		
 	signals:
 		void tagAdded(QString);

@@ -26,9 +26,12 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		PrefsPanelDialog ( QWidget *parent );
 
 		~PrefsPanelDialog();
+		
+		enum PAGE{PAGE_GENERAL,PAGE_SAMPLETEXT};
 
 		void initSystrayPrefs(bool hasSystray, bool isVisible, bool hasActivateAll, bool allConfirmation, bool tagConfirmation);
 		void initSampleTextPrefs();
+		void showPage(PAGE page);
 
 	private:
 		void doConnect();

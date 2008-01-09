@@ -783,7 +783,7 @@ void typotek::dragEnterEvent ( QDragEnterEvent * event )
 }
 
 
-void typotek::slotPrefsPanel()
+void typotek::slotPrefsPanel(PrefsPanelDialog::PAGE page)
 {
 	PrefsPanelDialog pp ( this );
 
@@ -797,6 +797,7 @@ void typotek::slotPrefsPanel()
 	else
 		pp.initSystrayPrefs ( false,false,false,false,false );
 	pp.initSampleTextPrefs();
+	pp.showPage(page);
 	pp.exec();
 }
 

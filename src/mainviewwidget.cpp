@@ -117,6 +117,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( freetypeButton,SIGNAL ( released() ),this,SLOT ( slotFTRasterChanged() ) );
 	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
+	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 	
 	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
@@ -1476,4 +1477,9 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 			tagsListWidget->addItem ( lit );
 		}
 	}
+}
+
+void MainViewWidget::slotEditSampleText()
+{
+	typo->slotPrefsPanel(PrefsPanelDialog::PAGE_SAMPLETEXT);
 }

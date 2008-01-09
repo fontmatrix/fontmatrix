@@ -149,5 +149,13 @@ void PrefsPanelDialog::slotFontEditorBrowse()
 	}
 }
 
+void PrefsPanelDialog::showPage(PAGE page)
+{
+	if(page == PAGE_GENERAL)
+		mainTab->setCurrentIndex ( 0 );
+	else if(page == PAGE_SAMPLETEXT)
+		mainTab->setCurrentIndex ( 1 );
+}
+
 
 

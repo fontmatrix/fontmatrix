@@ -1105,9 +1105,10 @@ QString FontItem::infoText ( bool fromcache )
 				if ( langIdMap[ lit.key() ].contains ( sysLang ) || langIdMap[ lit.key() ] == "DEFAULT" )
 				{
 					QString name_value = mit.value();
+					name_value.replace(QRegExp("(http://.+)\\s*"), "<a href=\"\\1\">\\1</a>");//Make HTTP links
 					name_value.replace ( "\n","<br/>" );
 					orderedInfo[ mit.key() ] << "<p "+ styleLangMatch +">" + name_value +"</p>";
-					if ( mit.key() == "Font Subfamily" )
+					if ( mit.key() == tr( "Font Subfamily") )
 						m_variant = mit.value();
 				}
 			}

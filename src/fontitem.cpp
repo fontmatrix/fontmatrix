@@ -1084,7 +1084,18 @@ QString FontItem::infoText ( bool fromcache )
 		QString sysLang = QLocale::languageToString ( QLocale::system ().language() ).toUpper();
 		QString sysCountry = QLocale::countryToString ( QLocale::system ().country() ).toUpper();
 		QString sysLoc = sysLang + "_"+ sysCountry;
-
+		
+		//We must iter once to find localized strings and ensure default ones are _not_ shown in these cases
+		QStringList localizedKeys;
+		for ( QMap<int, QMap<QString, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
+		{
+			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
+			{
+				if ( langIdMap[ lit.key() ].contains ( sysLang ) )
+					localizedKeys << mit.key();
+			}
+		}
+		
 		QString styleLangMatch;
 		for ( QMap<int, QMap<QString, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
 		{
@@ -1102,7 +1113,7 @@ QString FontItem::infoText ( bool fromcache )
 			}
 			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
-				if ( langIdMap[ lit.key() ].contains ( sysLang ) || langIdMap[ lit.key() ] == "DEFAULT" )
+				if ( langIdMap[ lit.key() ].contains ( sysLang ) )
 				{
 					QString name_value = mit.value();
 					name_value.replace(QRegExp("(http://.+)\\s*"), "<a href=\"\\1\">\\1</a>");//Make HTTP links
@@ -1110,6 +1121,15 @@ QString FontItem::infoText ( bool fromcache )
 					orderedInfo[ mit.key() ] << "<p "+ styleLangMatch +">" + name_value +"</p>";
 					if ( mit.key() == tr( "Font Subfamily") )
 						m_variant = mit.value();
+				}
+				else if( langIdMap[ lit.key() ] == "DEFAULT" && !localizedKeys.contains(mit.key()) )
+				{
+					QString name_value = mit.value();
+					name_value.replace(QRegExp("(http://.+)\\s*"), "<a href=\"\\1\">\\1</a>");//Make HTTP links
+					name_value.replace ( "\n","<br/>" );
+					orderedInfo[ mit.key() ] << "<p "+ styleLangMatch +">" + name_value +"</p>";
+					if ( mit.key() == tr( "Font Subfamily") )
+						m_variant = mit.value();	
 				}
 			}
 		}

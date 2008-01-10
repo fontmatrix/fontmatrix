@@ -14,7 +14,7 @@
     <message>
         <location filename="../bookexport.ui" line="13"/>
         <source>Export Font Book</source>
-        <translation>Output fontbook</translation>
+        <translation>Output fontboek</translation>
     </message>
     <message>
         <location filename="../bookexport.ui" line="23"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../bookexport.ui" line="96"/>
         <source>Paper Size:</source>
-        <translation>Papierformaat:</translation>
+        <translation>Blad maat:</translation>
     </message>
     <message>
         <location filename="../bookexport.ui" line="123"/>
@@ -74,7 +74,7 @@
     <message>
         <location filename="../bookexport.ui" line="238"/>
         <source>Font Size</source>
-        <translation>Fontformaat</translation>
+        <translation>Font maat</translation>
     </message>
     <message>
         <location filename="../bookexport.ui" line="386"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../bookexport.ui" line="435"/>
         <source>Preview</source>
-        <translation>Preview</translation>
+        <translation>Voorzien</translation>
     </message>
 </context>
 <context>
@@ -153,12 +153,12 @@
     <message>
         <location filename="../fontitem.cpp" line="1880"/>
         <source>Full font name</source>
-        <translation>Naam font compleet</translation>
+        <translation>Kompleet font naam</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="1881"/>
         <source>Version string</source>
-        <translation>Vertaalreeks</translation>
+        <translation>Versie naam</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="1886"/>
@@ -218,7 +218,7 @@
     <message>
         <location filename="../fontitem.cpp" line="1889"/>
         <source>License Description</source>
-        <translation>Omschrijving Licentie</translation>
+        <translation>Licentie beschrijving</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="1890"/>
@@ -233,12 +233,12 @@
     <message>
         <location filename="../fontitem.cpp" line="1892"/>
         <source>Preferred Family</source>
-        <translation>Voorkeur voor familie</translation>
+        <translation>Familie Voorkeur</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="1893"/>
         <source>Preferred Subfamily</source>
-        <translation>Voorkeur voor subfamilie</translation>
+        <translation>Subfamilie Voorkeur</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="1894"/>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../fontitem.cpp" line="1895"/>
         <source>PostScript CID findfont name</source>
-        <translation>Identificatie CID</translation>
+        <translation>PostScript Identificatie CID</translation>
     </message>
 </context>
 <context>
@@ -292,17 +292,17 @@
     <message>
         <location filename="../listsdock.ui" line="55"/>
         <source>Search</source>
-        <translation>zoek</translation>
+        <translation>Zoek</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="65"/>
         <source>Respect entered text case when searching</source>
-        <translation>Wanneer je zoekt houdt rekening met bijgeschreven tekstvoorbeeld</translation>
+        <translation>Pas op voor hooge en laage letters om te zoeken</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="68"/>
         <source>Case Sensitive</source>
-        <translation>Gevoelig Voorbeeld</translation>
+        <translation>Kast Gevoelig</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="106"/>
@@ -312,7 +312,7 @@
     <message>
         <location filename="../listsdock.ui" line="122"/>
         <source>Filter view by chosing tag</source>
-        <translation>Filter tijdens functie van het label</translation>
+        <translation>Filter zicht door label keuz</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="145"/>
@@ -337,12 +337,12 @@
     <message>
         <location filename="../listsdock.ui" line="243"/>
         <source>Show complete collection of available fonts</source>
-        <translation>Toon complete collectie beschikbare fonts</translation>
+        <translation>Toon complete collectie van beschikbare fonts</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="246"/>
         <source>View All</source>
-        <translation>Totaalbeeld</translation>
+        <translation>Toon alles</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="253"/>
@@ -352,7 +352,7 @@
     <message>
         <location filename="../listsdock.ui" line="256"/>
         <source>View Activated</source>
-        <translation>Beeld geäctiveerd</translation>
+        <translation>Toon geäctiveerd</translation>
     </message>
 </context>
 <context>
@@ -377,18 +377,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../mainview.ui" line="99"/>
-        <source>Anything selected</source>
-        <translation>Alles geselecteerd</translation>
+        <source>Nothing selected</source>
+        <translation>Niets geselecteerd</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="138"/>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
-        <translation>Klik rechts op een font om het aan de collectie toe te voegen of te verwijderen</translation>
+        <translation>Rechts Kliken op een label om het aan de collectie toe te voegen of te verwijderen</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="150"/>
         <source>Add Tag</source>
-        <translation>Voeg een label toe</translation>
+        <translation>Label Toevoegen</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="164"/>
@@ -398,17 +398,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="194"/>
         <source>Fit to View</source>
-        <translation>Beeldaanpassing</translation>
+        <translation>Zicht aanpassen</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="229"/>
         <source>Zoom is disabled, uncheck fit to view to enable zoom</source>
-        <translation>Hef beeldaanpassing op voor zoom</translation>
+        <translation>Zichtaanpassing moet uitgeschakelt om te zoomen</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="279"/>
         <source>Simulate screen rendering (FreeType inside)</source>
-        <translation>Simuleer schermweergave (Free Type inside)</translation>
+        <translation>Schermweergave simuleeren (FreeType inside)</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="282"/>
@@ -418,7 +418,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="327"/>
         <source>OpenType Features</source>
-        <translation>Open Type functies</translation>
+        <translation>OpenType functies</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="332"/>
@@ -433,7 +433,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="350"/>
         <source>Right to Left</source>
-        <translation>Van links naar rechts</translation>
+        <translation>Van rechts naar links</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="362"/>
@@ -443,12 +443,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="391"/>
         <source>Coverage of Unicode Interval :</source>
-        <translation>Bescherming Unicode Interval :</translation>
+        <translation>Unicode Interval Vulling:</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="423"/>
         <source>Clicking on a glyph will show details about it</source>
-        <translation>voor details klik op een Glyph</translation>
+        <translation>Glyph kliken voor details</translation>
     </message>
 </context>
 <context>
@@ -481,7 +481,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainviewwidget.cpp" line="908"/>
         <source>zoom is disabled, uncheck fit to view to enable zoom</source>
-        <translation>Heft beeldaanpassing op voor zoom</translation>
+        <translation>Zichtaanpassing moet uitgeschakelt om te zoomen</translation>
     </message>
     <message>
         <location filename="../mainviewwidget.cpp" line="939"/>
@@ -666,7 +666,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainviewwidget.cpp" line="975"/>
         <source>036Unified Canadian Aboriginal Syllabics</source>
-        <translation>036Samenvvoeging Autochtoon Canadese syllabi</translation>
+        <translation>036Samenvoeging Autochtoon Canadese syllabi</translation>
     </message>
     <message>
         <location filename="../mainviewwidget.cpp" line="976"/>
@@ -1204,7 +1204,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../prefs_panel.ui" line="89"/>
         <source>Preview Word</source>
-        <translation>Preview Word</translation>
+        <translation>Woord Voorzicht</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="121"/>
@@ -1224,7 +1224,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../prefs_panel.ui" line="163"/>
         <source>Ask for tag names when importing fonts</source>
-        <translation>Vraag naar labelnamen bij het importeren van fonts</translation>
+        <translation>Vraag naar labelnamen bij het fonts importatie</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="184"/>
@@ -1254,7 +1254,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../prefs_panel.ui" line="246"/>
         <source>Font Size:</source>
-        <translation>Fontformaat:</translation>
+        <translation>Font maat:</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="270"/>
@@ -1264,7 +1264,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../prefs_panel.ui" line="263"/>
         <source>Interline:</source>
-        <translation>Invoegen:</translation>
+        <translation>Tussenlijn:</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="313"/>
@@ -1295,7 +1295,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fontbook.cpp" line="102"/>
         <source>Creating font book... </source>
-        <translation>Creëer font book...</translation>
+        <translation>Creëer font boek...</translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="102"/>
@@ -1419,7 +1419,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../typotek.cpp" line="151"/>
         <source>Add Directory</source>
-        <translation>Voeg Adresboek toe</translation>
+        <translation>Voeg Directory toe</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="187"/>
@@ -1446,7 +1446,7 @@ De reeks die je typt zal afsplitsen in &quot;#&quot; om een labellijst te verkri
     <message>
         <location filename="../typotek.cpp" line="311"/>
         <source>Can&#xe2;&#x80;&#x99;t import this font because it&#xe2;&#x80;&#x99;s broken :</source>
-        <translation>Canâ importeer dit font omdat itâ is gebroken :</translation>
+        <translation>Dit font can niet geimporteerd worden wijgens gebroken :</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="348"/>
@@ -1461,7 +1461,7 @@ De reeks die je typt zal afsplitsen in &quot;#&quot; om een labellijst te verkri
     <message>
         <location filename="../typotek.cpp" line="350"/>
         <source>Import a directory</source>
-        <translation>Importeer een adresboek</translation>
+        <translation>Importeer een directory</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="353"/>
@@ -1511,7 +1511,7 @@ De reeks die je typt zal afsplitsen in &quot;#&quot; om een labellijst te verkri
     <message>
         <location filename="../typotek.cpp" line="368"/>
         <source>Exit the application</source>
-        <translation>Stop de toepassing</translation>
+        <translation>Verlaat de programma</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="372"/>
@@ -1556,7 +1556,7 @@ De reeks die je typt zal afsplitsen in &quot;#&quot; om een labellijst te verkri
     <message>
         <location filename="../typotek.cpp" line="893"/>
         <source>You don&apos;t seem to have font editor installed. Path to font editor can be set in preferences.</source>
-        <translation>Je hebt waarschijnlijk font editor niet geïnstalleerd. Mogelijkheid tot font editor is in te stellen in voorkeuren.</translation>
+        <translation>Je hebt waarschijnlijk font editor niet geïnstalleerd. Font editor path moet in Voorkeuren gestelt.</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="401"/>
@@ -1591,41 +1591,41 @@ De reeks die je typt zal afsplitsen in &quot;#&quot; om een labellijst te verkri
     <message>
         <location filename="../typotek.cpp" line="676"/>
         <source>Fontmatrix care</source>
-        <translation>Toezicht Fontmatrix</translation>
+        <translation>Fontmatrix pas voor u op</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="670"/>
         <source>You are about to activate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
-        <translation>Er zijn te veel geactiveerde fonts,
+        <translation>U zal veel fonten activeeren,
 verwijder deze wanneer het niet de bedoeling is</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="676"/>
         <source>You are about to deactivate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
-        <translation>Er zijn teveel gedeactiveerde fonts,
+        <translation>U zal veel fonten deactiveeren,
 verwijder deze wanneer het niet de bedoeling is</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="712"/>
         <source>There is no font selected</source>
-        <translation>Er is geen font geslecteerd</translation>
+        <translation>Er is geen font geselecteerd</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="758"/>
         <source>Support of DragNDrop over http is sheduled but not yet effective</source>
-        <translation>Hulp bij DragNDrop beteffende http is sheduled maar nog niet effectief</translation>
+        <translation>Hulp bij DragNDrop door http is sheduled maar nog niet effectief</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="779"/>
         <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
-        <translation type="unfinished">Je brengt iets over mij I canâ </translation>
+        <translation type="unfinished">Je brengt mij iets dat ik niet kan behandelen</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="805"/>
         <source>You provided an empty string, it&#xe2;&#x80;&#x99;s not fair</source>
-        <translation>Je bepaald een lege reeks, itâ s not fair</translation>
+        <translation>Je bepaald een lege reeks, het is niet fatsoenlijk</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="811"/>

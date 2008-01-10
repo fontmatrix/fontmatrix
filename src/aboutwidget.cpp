@@ -23,8 +23,13 @@ AboutWidget::AboutWidget()
 {
 	setupUi ( this );
 // 	theText->setOpenExternalLinks ( true );
+	QString version_maj(QString::number( FONTMATRIX_VERSION_MAJOR) );
+	QString version_min(QString::number( FONTMATRIX_VERSION_MINOR) );
+	QString version_pat(QString::number( FONTMATRIX_VERSION_PATCH) );
 	theText->setSource(QUrl("qrc:/texts/about"));
 	theText_2->setSource(QUrl("qrc:/texts/about_people"));
+	versionStringLabel->setText(tr("version ") + version_maj + "." + version_min + "." + version_pat);
+	
 			
 }
 

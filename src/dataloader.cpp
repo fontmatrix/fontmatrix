@@ -46,9 +46,10 @@ void DataLoader::load()
 
 	if ( !m_file->open ( QFile::ReadOnly ) )
 	{
-		QMessageBox::warning (0, QString ( "Fontmatrix" ),
-				       QString ( "Seems that is the first time you run Fontmatrix, if not there is a problem loading the data file %1." ).arg(m_file->fileName()) );
-		
+		// As it causes confusion for first users, we just silently consider it’s first time and that’s it
+// 		QMessageBox::warning (0, QString ( "Fontmatrix" ),
+// 				       QString ( "Seems that is the first time you run Fontmatrix, if not there is a problem loading the data file %1." ).arg(m_file->fileName()) );
+// 		
 		// Ensure that there are default samples and preview text
 		m_typo->setSampleText( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.");	
 		m_typo->setWord("hamburgefonstiv", false);

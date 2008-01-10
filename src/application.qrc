@@ -25,6 +25,7 @@
 <!-- DEFAULT -->
     <qresource prefix="/texts" >
         <file alias="about">messages/about.html</file>
+        <file alias="about_people">messages/about_people.html</file>
         <file alias="help">messages/help.html</file>
        <file alias="welcome">messages/welcome.html</file> 
         <file alias="fontmatrix">messages/fontmatrix_en.qm</file>
@@ -33,6 +34,10 @@
 <!-- We’ll try to keep these items alphabetically order by language -->
     <qresource prefix="/texts" lang="da" >
         <file alias="fontmatrix">messages/fontmatrix_da.qm</file>
+    </qresource>
+    
+    <qresource prefix="/texts" lang="de" >
+        <file alias="about">messages/about_de.html</file>
     </qresource>
         
     <qresource prefix="/texts" lang="en" >

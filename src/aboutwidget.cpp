@@ -22,8 +22,9 @@
 AboutWidget::AboutWidget()
 {
 	setupUi ( this );
-	theText->setOpenExternalLinks ( true );
+// 	theText->setOpenExternalLinks ( true );
 	theText->setSource(QUrl("qrc:/texts/about"));
+	theText_2->setSource(QUrl("qrc:/texts/about_people"));
 			
 }
 

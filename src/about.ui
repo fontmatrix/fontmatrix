@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>459</width>
-    <height>149</height>
+    <width>540</width>
+    <height>334</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -21,53 +21,79 @@
   <property name="windowIcon" >
    <iconset resource="application.qrc" >:/fontmatrix_icon.png</iconset>
   </property>
-  <widget class="QLabel" name="label" >
-   <property name="geometry" >
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>131</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="text" >
-    <string/>
-   </property>
-   <property name="pixmap" >
-    <pixmap resource="application.qrc" >:/fontmatrix_about.png</pixmap>
-   </property>
-   <property name="scaledContents" >
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QTextBrowser" name="theText" >
-   <property name="geometry" >
-    <rect>
-     <x>150</x>
-     <y>10</y>
-     <width>301</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="sizePolicy" >
-    <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="focusPolicy" >
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="acceptDrops" >
-    <bool>false</bool>
-   </property>
-   <property name="frameShape" >
-    <enum>QFrame::Panel</enum>
-   </property>
-   <property name="frameShadow" >
-    <enum>QFrame::Plain</enum>
-   </property>
-  </widget>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab" >
+      <attribute name="title" >
+       <string>The Project</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QTextBrowser" name="theText" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="focusPolicy" >
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="acceptDrops" >
+          <bool>false</bool>
+         </property>
+         <property name="frameShape" >
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="openExternalLinks" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>The Peoples</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QTextBrowser" name="theText_2" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="focusPolicy" >
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="acceptDrops" >
+          <bool>false</bool>
+         </property>
+         <property name="frameShape" >
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="openExternalLinks" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources>
   <include location="application.qrc" />

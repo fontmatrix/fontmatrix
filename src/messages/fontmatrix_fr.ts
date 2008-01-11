@@ -6,7 +6,7 @@
     <message>
         <location filename="../about.ui" line="19"/>
         <source>About Fontmatrix</source>
-        <translation type="unfinished">À propos de Fontmatrix</translation>
+        <translation>À propos de Fontmatrix</translation>
     </message>
 </context>
 <context>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../bookexport.ui" line="402"/>
         <source>Sample Text:</source>
-        <translation type="unfinished">Exemple :</translation>
+        <translation>Exemple :</translation>
     </message>
     <message>
         <location filename="../bookexport.ui" line="435"/>
@@ -356,7 +356,7 @@
     <message>
         <location filename="../fontitem.cpp" line="1798"/>
         <source>Sample text</source>
-        <translation type="unfinished">Exemple</translation>
+        <translation>Exemple</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="1798"/>
@@ -395,7 +395,7 @@
     <message>
         <location filename="../listsdock.ui" line="115"/>
         <source>Filter view by chosing tag</source>
-        <translation type="unfinished">Filtre en fonction des étiquettes</translation>
+        <translation>Filtre en fonction des étiquettes</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="13"/>
@@ -548,7 +548,7 @@
     <message>
         <location filename="../mainview.ui" line="278"/>
         <source>Glyphs</source>
-        <translation type="unfinished">Glyphes</translation>
+        <translation>Glyphes</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="308"/>
@@ -602,7 +602,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../mainview.ui" line="80"/>
         <source>Sample Text</source>
-        <translation type="unfinished">Exemple</translation>
+        <translation>Exemple</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="110"/>
@@ -1473,12 +1473,12 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../prefs_panel.ui" line="184"/>
         <source>Sample Text</source>
-        <translation type="unfinished">Exemple</translation>
+        <translation>Exemple</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="193"/>
         <source>Named Sample Texts</source>
-        <translation type="unfinished">Exemples nommés</translation>
+        <translation>Exemples nommés</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="246"/>
@@ -1496,7 +1496,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../prefspaneldialog.cpp" line="39"/>
         <source>Looks like your setup does not have a system tray available.</source>
-        <translation type="unfinished">Il semble que vous ne disposez pas de boîte à miniatures</translation>
+        <translation>Il semble que vous ne disposez pas de boîte à miniatures</translation>
     </message>
     <message>
         <location filename="../prefspaneldialog.cpp" line="90"/>
@@ -1519,32 +1519,32 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../fontbook.cpp" line="50"/>
         <source>family</source>
-        <translation type="unfinished">Famille</translation>
+        <translation>Famille</translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="51"/>
         <source>headline</source>
-        <translation type="unfinished">Première ligne</translation>
+        <translation>Première ligne</translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="52"/>
         <source>body</source>
-        <translation type="unfinished">Corps de texte</translation>
+        <translation>Corps de texte</translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="53"/>
         <source>style</source>
-        <translation type="unfinished">Style</translation>
+        <translation>Style</translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="101"/>
         <source>Creating font book... </source>
-        <translation type="unfinished">Livre de fontes...</translation>
+        <translation>Livre de fontes...</translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="101"/>
         <source>cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -1803,7 +1803,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../typotek.cpp" line="417"/>
         <source>Ready</source>
-        <translation type="unfinished">Prêt</translation>
+        <translation>Prêt</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="600"/>
@@ -1873,7 +1873,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../typotek.cpp" line="86"/>
         <source>Nothing Selected</source>
-        <translation type="unfinished">Aucune sélection</translation>
+        <translation>Aucune sélection</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="184"/>

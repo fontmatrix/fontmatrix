@@ -367,9 +367,10 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	QGraphicsPixmapItem *glyph = new  QGraphicsPixmapItem;
 	glyph->setPixmap ( QPixmap::fromImage ( img ) );
 	// we need to transport more data
-	glyph->setData ( 1,m_face->glyph->bitmap_left );
-	glyph->setData ( 2,m_face->glyph->bitmap_top );
-	glyph->setData ( 3, ( uint ) m_glyph->advance.x >> 6 );
+	glyph->setData ( 1,"glyph" );
+	glyph->setData ( 2, m_face->glyph->bitmap_left );
+	glyph->setData ( 3, m_face->glyph->bitmap_top );
+	glyph->setData ( 4, ( uint ) m_glyph->linearHoriAdvance >> 16 );
 	return glyph;
 }
 
@@ -400,8 +401,8 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			}
 			if(m_RTL)
 			{
-				pen.rx() -= glyph->data ( 3 ).toInt();
-				pWidth -= glyph->data ( 3 ).toInt();
+				pen.rx() -= glyph->data ( 4 ).toInt();
+				pWidth -= glyph->data ( 4 ).toInt();
 				if(pWidth < distance)
 				{
 					delete glyph;
@@ -410,7 +411,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			}
 			else
 			{
-				pWidth -= glyph->data ( 3 ).toInt();
+				pWidth -= glyph->data ( 4 ).toInt();
 				if(pWidth < distance)
 				{
 					delete glyph;
@@ -420,12 +421,13 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
-			glyph->setPos ( pen.x() + glyph->data ( 1 ).toInt(),
-			                pen.y() - glyph->data ( 2 ).toInt() );
-			glyph->setZValue ( 100.0 );
-			glyph->setData ( 1,"glyph" );
+			glyph->setPos ( pen.x() + glyph->data ( 2 ).toInt(),
+			                pen.y() - glyph->data ( 3 ).toInt() );
+		
 			if ( !m_RTL )
-				pen.rx() += glyph->data ( 3 ).toInt();
+				pen.rx() += glyph->data ( 4 ).toInt();
+			
+			glyph->setZValue ( 100.0 );
 		}
 	}
 	else
@@ -532,10 +534,9 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 1 ).toInt()  ,
-			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 2 ).toInt() );
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 2 ).toInt()  ,
+			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 3 ).toInt() );
 			glyph->setZValue ( 100.0 );
-			glyph->setData ( 1,"glyph" );
 			if(!m_RTL)
 				pen.rx() += refGlyph[i].xadvance * scalefactor ;//We’ll have some "rounded" related wrong display but...
 		}
@@ -641,10 +642,9 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			if ( m_RTL )
 				pen.rx() += refGlyph[i].xadvance * scalefactor ;
 			scene->addItem ( glyph );
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 1 ).toInt()  ,
-			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 2 ).toInt() );
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 2 ).toInt()  ,
+			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 3 ).toInt() );
 			glyph->setZValue ( 100.0 );
-			glyph->setData ( 1,"glyph" );
 
 			if ( !m_RTL )
 				pen.rx() += refGlyph[i].xadvance * scalefactor;
@@ -1243,21 +1243,21 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	QRectF savedRect = theOneLineScene->sceneRect();
 	theOneLineScene->setSceneRect ( 0,0,320,32 );
 
-	if ( !m_rasterFreetype )
-	{
-		renderLine ( theOneLineScene,oneline ,QPointF ( 10,24 ),20,false );
-		QPixmap apix ( 320,32 );
-		apix.fill ( Qt::white );
-		QPainter apainter ( &apix );
-		apainter.setRenderHint ( QPainter::Antialiasing,true );
-		theOneLineScene->render ( &apainter );
-		theOneLinePreviewPixmap = apix;
-
-		theOneLineScene->setSceneRect ( savedRect );
-		theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
-
-	}
-	else
+// 	if ( 1 /* !m_rasterFreetype */ )
+// 	{
+// 		renderLine ( theOneLineScene,oneline ,QPointF ( 10,24 ),20,false );
+// 		QPixmap apix ( 320,32 );
+// 		apix.fill ( Qt::white );
+// 		QPainter apainter ( &apix );
+// 		apainter.setRenderHint ( QPainter::Antialiasing,true );
+// 		theOneLineScene->render ( &apainter );
+// 		theOneLinePreviewPixmap = apix;
+// 
+// 		theOneLineScene->setSceneRect ( savedRect );
+// 		theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
+// 
+// 	}
+// 	else
 	{
 // 		qDebug()<< m_name << "renders " << oneline;
 		ensureFace();
@@ -1286,9 +1286,9 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 			}
 
 			palette.clear();
-			for ( int i = 0; i < m_face->glyph->bitmap.num_grays; ++i )
+			for ( int aa = 0; aa < m_face->glyph->bitmap.num_grays; ++aa )
 			{
-				palette << qRgba ( 0,0,0, i );
+				palette << qRgba ( 0,0,0, aa );
 			}
 			QImage img ( m_face->glyph->bitmap.buffer,
 			             m_face->glyph->bitmap.width,
@@ -1297,10 +1297,15 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 			             QImage::Format_Indexed8 );
 			img.setColorTable ( palette );
 // 			apainter.drawImage(pen.x(), pen.y() - m_face->glyph->bitmap_top, img);
-			pen.ry() = 26 - m_face->glyph->bitmap_top;
-			pen.rx() += m_face->glyph->bitmap_left;
+			pen.ry() = 26 - m_glyph->bitmap_top;
+			pen.rx() += m_glyph->bitmap_left;
 			apainter.drawImage ( pen, img );
-			pen.rx() +=  m_glyph->advance.x >> 6 ;
+			pen.rx() +=  m_glyph->linearHoriAdvance >> 16 ;
+// 			if(m_name.contains("woodcut"))
+// 			{
+// 				qDebug()<< m_name << " : "<< oneline[i] << "->xadv = " << (m_glyph->advance.x >> 6) << " ->linearadv = " <<(m_glyph->linearHoriAdvance >> 16) << " ->metricsX = " << (m_glyph->metrics.horiAdvance >> 6);
+// 			}
+			
 		}
 		apainter.end();
 		releaseFace();

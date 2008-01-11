@@ -1251,6 +1251,7 @@ void MainViewWidget::refillSampleList()
 
 void MainViewWidget::slotFTRasterChanged()
 {
+	fitViewCheck->setChecked(false);
 	slotView ( true );
 }
 

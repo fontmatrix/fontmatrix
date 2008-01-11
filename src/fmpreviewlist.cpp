@@ -210,7 +210,10 @@ void FMPreviewList::searchAndSelect(QString fname)
 				FontItem *fit = typotek::getInstance()->getFont(fname);
 				if(fit)
 				{
+					bool oldRaster = fit->rasterFreetype();
+					fit->setFTRaster("true");
 					QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
+					fit->setFTRaster(oldRaster);
 					pit->setPos(m_pixItemList[i].pos);
 					pit->setData(1,fit->name());
 					pit->setData(2,"preview");

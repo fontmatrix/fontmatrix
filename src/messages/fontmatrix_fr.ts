@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="fr">
+<defaultcodec></defaultcodec>
 <context>
     <name>About</name>
     <message>
         <location filename="../about.ui" line="19"/>
         <source>About Fontmatrix</source>
-        <translation>Ã propos de Fontmatrix</translation>
+        <translation type="unfinished">À propos de Fontmatrix</translation>
     </message>
 </context>
 <context>
@@ -158,7 +159,7 @@
     <message>
         <location filename="../bookexport.ui" line="402"/>
         <source>Sample Text:</source>
-        <translation>Texte insensé</translation>
+        <translation type="unfinished">Exemple :</translation>
     </message>
     <message>
         <location filename="../bookexport.ui" line="435"/>
@@ -355,7 +356,7 @@
     <message>
         <location filename="../fontitem.cpp" line="1798"/>
         <source>Sample text</source>
-        <translation>Texte insensé</translation>
+        <translation type="unfinished">Exemple</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="1798"/>
@@ -394,7 +395,7 @@
     <message>
         <location filename="../listsdock.ui" line="115"/>
         <source>Filter view by chosing tag</source>
-        <translation>Filtre en fonction des Ã©tiquettes</translation>
+        <translation type="unfinished">Filtre en fonction des étiquettes</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="13"/>
@@ -547,7 +548,7 @@
     <message>
         <location filename="../mainview.ui" line="278"/>
         <source>Glyphs</source>
-        <translation>Dessins</translation>
+        <translation type="unfinished">Glyphes</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="308"/>
@@ -601,7 +602,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../mainview.ui" line="80"/>
         <source>Sample Text</source>
-        <translation>Texte insensé</translation>
+        <translation type="unfinished">Exemple</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="110"/>
@@ -1472,12 +1473,12 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../prefs_panel.ui" line="184"/>
         <source>Sample Text</source>
-        <translation>Texte insensé</translation>
+        <translation type="unfinished">Exemple</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="193"/>
         <source>Named Sample Texts</source>
-        <translation>Textes insensés nommés</translation>
+        <translation type="unfinished">Exemples nommés</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="246"/>
@@ -1495,7 +1496,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../prefspaneldialog.cpp" line="39"/>
         <source>Looks like your setup does not have a system tray available.</source>
-        <translation>Il semble que vous ne disposez pas de boÃ®te Ã miniatures|</translation>
+        <translation type="unfinished">Il semble que vous ne disposez pas de boîte à miniatures</translation>
     </message>
     <message>
         <location filename="../prefspaneldialog.cpp" line="90"/>
@@ -1802,7 +1803,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../typotek.cpp" line="417"/>
         <source>Ready</source>
-        <translation>PrÃªt</translation>
+        <translation type="unfinished">Prêt</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="600"/>
@@ -1872,7 +1873,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
     <message>
         <location filename="../typotek.cpp" line="86"/>
         <source>Nothing Selected</source>
-        <translation>Aucune séléction</translation>
+        <translation type="unfinished">Aucune sélection</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="184"/>

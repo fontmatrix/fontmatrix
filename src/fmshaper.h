@@ -19,7 +19,6 @@
 
 #include <QString>
 #include <QStringList>
-#include "harfbuzz.h"
 #include "fmotf.h" 
 
 /**
@@ -39,19 +38,19 @@ class FmShaper
 		
 		QList<RenderedGlyph> doShape(QString string , bool ltr);
 
-		HB_Buffer out_buffer();
+		Harfbuzz::HB_Buffer out_buffer();
 
 	private:
 		FmOtf *anchorOTF;
 		FT_Face anchorFace;
-		HB_ShaperItem m;
+		Harfbuzz::HB_ShaperItem m;
 
 		bool faceisset;
 		bool langisset;
 		bool allocated;
 
-		HB_FontRec hbFont;
-		HB_FontClass fontClass;
+		Harfbuzz::HB_FontRec hbFont;
+		Harfbuzz::HB_FontClass fontClass;
 
 };
 

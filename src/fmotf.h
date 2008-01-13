@@ -26,18 +26,21 @@
 #include FT_FREETYPE_H
 #include FT_TRUETYPE_TABLES_H
 
-extern "C"
-{
-#include "harfbuzz.h"
-}
 
 #include <QString>
 #include <QStringList>
 #include <QMap>
 #include <QList>
 
+namespace Harfbuzz
+{
+#include <harfbuzz.h>
+#include <harfbuzz-global.h>
+#include <harfbuzz-gpos.h>
+#include <harfbuzz-shaper.h>
+}
 
-using namespace std;
+// using namespace std;
 
 struct OTFSet
 {
@@ -82,9 +85,9 @@ class FmOtf
 		~FmOtf ();
 
 		enum altPolicy{TAKE_FIRST, ASK_ONCE, ASK_EACH};
-		typedef QMap<HB_UShort,QList<HB_UShort> > altGlyphsMap;
+		typedef QMap<Harfbuzz::HB_UShort,QList<Harfbuzz::HB_UShort> > altGlyphsMap;
 		altGlyphsMap altGlyphs;
-		QMap<HB_UShort, HB_UShort> regAltGlyphs;
+		QMap<Harfbuzz::HB_UShort, Harfbuzz::HB_UShort> regAltGlyphs;
 		altPolicy altGlyphsPolicy;
 		QString curString;
 
@@ -92,17 +95,17 @@ class FmOtf
 		FT_Face _face;
 //   ScShaper * shaper;
 		bool useShaper;
-		HB_FontRec hbFont;
+		Harfbuzz::HB_FontRec hbFont;
 		QByteArray _memgdef,_memgsub,_memgpos;
-		HB_StreamRec* gdefstream;
-		HB_StreamRec* gsubstream;
-		HB_StreamRec* gposstream;
-		HB_GDEF _gdef;
-		HB_GSUB _gsub;
-		HB_GPOS _gpos;
+		Harfbuzz::HB_StreamRec* gdefstream;
+		Harfbuzz::HB_StreamRec* gsubstream;
+		Harfbuzz::HB_StreamRec* gposstream;
+		Harfbuzz::HB_GDEF _gdef;
+		Harfbuzz::HB_GSUB _gsub;
+		Harfbuzz::HB_GPOS _gpos;
 
 		//OTF_GlyphString mys;
-		HB_Buffer _buffer;
+		Harfbuzz::HB_Buffer _buffer;
 
 		bool glyphAlloc;
 
@@ -117,7 +120,7 @@ class FmOtf
 // 	int unicode(int gid){ return OTF_get_unicode(my, gid);}
 		int get_glyph ( int index );//{return _buffer->out_string[index].gindex;}
 		QString curTable;
-		HB_UShort curScript, curLang, curLangReq;
+		Harfbuzz::HB_UShort curScript, curLang, curLangReq;
 		QString curScriptName, curLangName;
 		QStringList curFeatures;
 
@@ -146,8 +149,8 @@ class FmOtf
 
 
 //   uint get_position(int,GlyphLayout *);
-//   uint presentAlternates(HB_UInt, HB_UShort, QList<HB_UShort>);
-		QList<RenderedGlyph> get_position ( HB_Buffer abuffer = 0 );
+//   uint presentAlternates(HB_UInt, Harfbuzz::HB_UShort, QList<Harfbuzz::HB_UShort>);
+		QList<RenderedGlyph> get_position ( Harfbuzz::HB_Buffer abuffer = 0 );
 
 		friend class FontItem;
 		friend class FmShaper;

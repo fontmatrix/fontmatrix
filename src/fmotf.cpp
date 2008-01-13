@@ -285,8 +285,8 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 			gdefstream->pos = 0;
 
 
-			HB_New_GDEF_Table ( &_gdef );
-			if ( !HB_Load_GDEF_Table ( gdefstream, &_gdef ) )
+			Harfbuzz::HB_New_GDEF_Table ( &_gdef );
+			if ( !Harfbuzz::HB_Load_GDEF_Table ( gdefstream, &_gdef ) )
 				GDEF = 1;
 			else
 				GDEF = 0;
@@ -311,8 +311,8 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 			gsubstream->size = _memgsub.size ();
 			gsubstream->pos = 0;
 
-			if ( GDEF ? !HB_Load_GSUB_Table ( gsubstream, &_gsub, _gdef, gdefstream ) :
-			        !HB_Load_GSUB_Table ( gsubstream, &_gsub, NULL, NULL ) )
+			if ( GDEF ? !Harfbuzz::HB_Load_GSUB_Table ( gsubstream, &_gsub, _gdef, gdefstream ) :
+						  !Harfbuzz::HB_Load_GSUB_Table ( gsubstream, &_gsub, NULL, NULL ) )
 			{
 				GSUB = 1;
 				//HB_GSUB_Register_Alternate_Function( _gsub, AltFunc, &altGlyphs);
@@ -340,8 +340,8 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 			gposstream->size = _memgpos.size ();
 			gposstream->pos = 0;
 
-			if ( GDEF ? !HB_Load_GPOS_Table ( gposstream, &_gpos, _gdef, gdefstream ) :
-			        !HB_Load_GPOS_Table ( gposstream, &_gpos, NULL, NULL ) )
+			if ( GDEF ? !Harfbuzz::HB_Load_GPOS_Table ( gposstream, &_gpos, _gdef, gdefstream ) :
+						  !Harfbuzz::HB_Load_GPOS_Table ( gposstream, &_gpos, NULL, NULL ) )
 				GPOS = 1;
 			else
 				GPOS = 0;

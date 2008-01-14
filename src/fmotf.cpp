@@ -351,7 +351,7 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 	}
 	else
 		GPOS = 0;
-	if ( hb_buffer_new ( &_buffer ) )
+	if ( Harfbuzz::hb_buffer_new ( &_buffer ) )
 		qDebug ( "unable to get _buffer" );
 }
 
@@ -360,13 +360,13 @@ FmOtf::~FmOtf ()
 {
 
 	if ( _buffer )
-		hb_buffer_free ( _buffer );
+		Harfbuzz::hb_buffer_free ( _buffer );
 	if ( GDEF )
-		HB_Done_GDEF_Table ( _gdef );
+		Harfbuzz::HB_Done_GDEF_Table ( _gdef );
 	if ( GSUB )
-		HB_Done_GSUB_Table ( _gsub );
+		Harfbuzz::HB_Done_GSUB_Table ( _gsub );
 	if ( GPOS )
-		HB_Done_GPOS_Table ( _gpos );
+		Harfbuzz::HB_Done_GPOS_Table ( _gpos );
 
 }
 
@@ -403,7 +403,7 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 	{
 		prop = 0;
 		prop |= all;
-		error = hb_buffer_add_glyph ( _buffer,
+		error = Harfbuzz::hb_buffer_add_glyph ( _buffer,
 		                              FT_Get_Char_Index ( _face, s[i].unicode() ),
 		                              prop,
 		                              i );

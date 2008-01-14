@@ -1414,6 +1414,12 @@ void FontItem::moreInfo_sfnt()
 			QTextCodec *codec = QTextCodec::codecForName ( "UTF-16" );
 			avalue = codec->toUnicode ( array );
 		}
+		else if ( tname.platform_id == TT_PLATFORM_MACINTOSH   /*&& tname.encoding_id == TT_MAC_ID_TRADITIONAL_CHINESE*/ )
+		{
+			QByteArray array ( ( const char* ) tname.string, tname.string_len );
+			QTextCodec *codec = QTextCodec::codecForName ( "Apple Roman" );
+			avalue = codec->toUnicode ( array );
+		}
 		else
 		{
 			avalue = "Unexpected platform - encoding pair ("

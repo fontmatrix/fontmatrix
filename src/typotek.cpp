@@ -567,8 +567,8 @@ void typotek::initDir()
 	ownDir.setNameFilters ( filters );
 
 	QStringList pathList = ownDir.entryList();
-	if ( __FM_SHOW_FONTLOADED )
-		qDebug() << pathList.join ( "\n" );
+// 	if ( __FM_SHOW_FONTLOADED )
+// 		qDebug() << pathList.join ( "\n" );
 	
 	int fontnr = pathList.count();
 	for ( int i = 0 ; i < fontnr ; ++i )

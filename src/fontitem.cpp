@@ -1407,12 +1407,19 @@ void FontItem::moreInfo_sfnt()
 			QTextCodec *codec = QTextCodec::codecForName ( "ISO 8859-15" ); // ### give better result than UTF ???
 			avalue = codec->toUnicode ( array );
 		}
+		// from  Pajarico, pajarico chez gmail point com
+		else if ( tname.platform_id == TT_PLATFORM_APPLE_UNICODE  && tname.encoding_id == TT_APPLE_ID_UNICODE_2_0 )
+		{
+			QByteArray array ( ( const char* ) tname.string, tname.string_len );
+			QTextCodec *codec = QTextCodec::codecForName ( "UTF-16" );
+			avalue = codec->toUnicode ( array );
+		}
 		else
 		{
 			avalue = "Unexpected platform - encoding pair ("
 			         + QString::number ( tname.platform_id )
 			         + "," + QString::number ( tname.encoding_id )
-			         + ")\nPlease contact Fontmatrix team\nrun Fontmatrix in console to see more info";
+			         + ")\nPlease contact Fontmatrix team.\nRun Fontmatrix in console to see more info.\nPlease, if possible, provide a font file to test.";
 
 			qDebug() << m_name
 			<< "platform_id("

@@ -33,8 +33,8 @@ FontBookDialog::FontBookDialog ( QWidget *parent )
 	setupUi ( this );
 	isOk = false;
 	m_isTemplate = false;
-	loadTemplateButton->setVisible(false);
-	templateLabel->setVisible(false);
+// 	loadTemplateButton->setVisible(false);
+// 	templateLabel->setVisible(false);
 
 	fillSizeList();
 	fillFontsList();
@@ -388,7 +388,7 @@ void FontBookDialog::fillFontsList()
 */
 void FontBookDialog::slotLoadTemplate()
 {
-	QString theTemplate = QFileDialog::getSaveFileName ( this, "Get template", QDir::homePath());
+	QString theTemplate = QFileDialog::getOpenFileName ( this, "Get template", QDir::homePath(), tr("Templates (*.xml)"));
 	
 	if(theTemplate.isEmpty())
 		return;
@@ -427,32 +427,29 @@ void FontBookDialog::slotLoadTemplate()
 	
 	if(description.isEmpty())
 		return;
-	if(preview.isEmpty())
-		return;
+	
+	if(!preview.isEmpty())
+	{
+		QFileInfo fInfo(file);	
+		QPixmap img(fInfo.absolutePath()+ "/" + preview);
+		if(!img.isNull())
+		{
+			for ( int  n = 0; n < renderedFont.count(); ++n )
+			{
+				renderedFont[n]->deRenderAll();
+					
+			}
+			renderedFont.clear();
+			preScene->removeItem(preScene->createItemGroup(preScene->items()));
+			
+			preScene->addPixmap(img);
+		}
+	}
 	
 	templateLabel->setText(description);
 	
-	QFileInfo fInfo(file);	
-	QPixmap img(fInfo.absolutePath()+ "/" + preview);
-	if(!img.isNull())
-	{
-		for ( int  n = 0; n < renderedFont.count(); ++n )
-		{
-			renderedFont[n]->deRenderAll();
-				
-		}
-		renderedFont.clear();
-		preScene->removeItem(preScene->createItemGroup(preScene->items()));
-		
-		preScene->addPixmap(img);
-	}
-	else
-	{
-		return;
-	}
-	
 	
 	// TODO Check validity ;-)
-	
+	m_template = doc;
 	m_isTemplate = true;
 }

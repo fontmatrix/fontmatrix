@@ -80,10 +80,9 @@ ${fontmatrix_RCC_SRCS}
 # MESSAGE(STATUS ${FREETYPE_LIBRARIES})
 # MESSAGE(STATUS ${HARFBUZZ_LIBRARIES})
 
-target_link_libraries(fontmatrix 
+target_link_libraries(fontmatrix harfbuzz
 ${QT_LIBRARIES}
 ${FREETYPE_LIBRARIES}
-harfbuzz
 )
 
 INSTALL(TARGETS fontmatrix

@@ -287,6 +287,8 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 		qDebug() << aTemplate.toString(1);
 		return;
 	}
+	
+	QMap<QString, QFont> qfontCache; // abit of optim.
 	for ( uint i = 0; i < conList.length(); ++i )
 	{
 		FontBookContext fbc;
@@ -301,6 +303,9 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 		fbc.textStyle.name = tStyle.toElement().attributeNode ( "name" ).value();
 		fbc.textStyle.font = tStyle.namedItem ( "font" ).toElement().text();
 		fbc.textStyle.fontsize = QString ( tStyle.namedItem ( "fontsize" ).toElement().text() ).toDouble() ;
+		
+		qfontCache[fbc.textStyle.name] = QFont(fbc.textStyle.font,fbc.textStyle.fontsize );
+		
 		fbc.textStyle.lineheight = QString ( tStyle.namedItem ( "lineheight" ).toElement().text() ).toDouble() ;
 		fbc.textStyle.margin_top = QString ( tStyle.namedItem ( "margintop" ).toElement().text() ).toDouble() ;
 		fbc.textStyle.margin_left = QString ( tStyle.namedItem ( "marginleft" ).toElement().text() ).toDouble() ;
@@ -327,6 +332,8 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 	QPainter thePainter ( &thePrinter );
 	QPointF thePos ( 0,0 );
 	QList<FontItem*> renderedFont;
+	
+	
 
 	QList<FontItem*> localFontMap = typotek::getInstance()->getCurrentFonts();
 	QMap<QString, QList<FontItem*> > keyList;
@@ -344,7 +351,7 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 		QString pageNumStr;
 		int pageNumber = 0;
 		///We begin in a PAGE context
-		qDebug() << "PAGE";
+// 		qDebug() << "PAGE";
 		pageNumStr.setNum ( ++pageNumber );
 		for ( int pIndex = 0; pIndex < conPage.count(); ++pIndex )
 		{
@@ -357,10 +364,10 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 				if ( place == "PageNumber" )
 					plines << pageNumStr;
 			}
-			QFont pFont ( conPage[pIndex].textStyle.font, conPage[pIndex].textStyle.fontsize );
+// 			QFont pFont ( conPage[pIndex].textStyle.font, conPage[pIndex].textStyle.fontsize );
 			for ( int l = 0; l < plines.count(); ++l )
 			{
-				QGraphicsTextItem * ti = theScene.addText ( plines[l], pFont );
+				QGraphicsTextItem * ti = theScene.addText ( plines[l], qfontCache[conPage[pIndex].textStyle.name] );
 				ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( l * conPage[pIndex].textStyle.lineheight ) );
 			}
 		}
@@ -368,7 +375,7 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 		for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 		{
 			/// We are in a FAMILY context
-			qDebug() << "FAMILY";
+// 			qDebug() << "FAMILY";
 			{
 				if ( progress.wasCanceled() )
 					break;
@@ -398,7 +405,7 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 				if ( needed > available )
 				{
 					/// We are in a PAGE context
-					qDebug() << "PAGE";
+// 					qDebug() << "PAGE";
 					// close, clean and create
 					theScene.render ( &thePainter );
 
@@ -423,19 +430,19 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 							if ( place == "PageNumber" )
 								plines << pageNumStr;
 						}
-						QFont pFont ( conPage[pIndex].textStyle.font, conPage[pIndex].textStyle.fontsize );
+// 						QFont pFont ( conPage[pIndex].textStyle.font, conPage[pIndex].textStyle.fontsize );
 						for ( int l = 0; l < plines.count(); ++l )
 						{
-							QGraphicsTextItem * ti = theScene.addText ( plines[l], pFont );
+							QGraphicsTextItem * ti = theScene.addText ( plines[l], qfontCache[conPage[pIndex].textStyle.name] );
 							ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( l * conPage[pIndex].textStyle.lineheight ) );
 						}
 					}
 				}
 
-				QFont aFont ( conFamily[elemIndex].textStyle.font,conFamily[elemIndex].textStyle.fontsize );
+// 				QFont aFont ( conFamily[elemIndex].textStyle.font,conFamily[elemIndex].textStyle.fontsize );
 				for ( int l = 0; l < lines.count(); ++l )
 				{
-					QGraphicsTextItem * ti = theScene.addText ( lines[l], aFont );
+					QGraphicsTextItem * ti = theScene.addText ( lines[l], qfontCache[conFamily[elemIndex].textStyle.name] );
 					ti->setPos ( conFamily[elemIndex].textStyle.margin_left, thePos.y() +
 							( conFamily[elemIndex].textStyle.margin_top + ( l * conFamily[elemIndex].textStyle.lineheight ) ) );
 				}
@@ -451,7 +458,7 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 				theFont->setFTRaster ( false );
 				theFont->setRTL ( false );
 				/// We are in a SUBFAMILY context
-				qDebug() << "SUBFAMILY";
+// 				qDebug() << "SUBFAMILY";
 				for ( int elemIndex = 0; elemIndex < conSubfamily.count() ; ++elemIndex )
 				{
 					// First, is there enough room for this element
@@ -467,6 +474,8 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 							lines << theFont->family();
 						else if ( place == "SubFamily" )
 							lines << theFont->variant();
+						else if( place == "FullName")
+							lines << theFont->fancyName();
 						// more to come
 					}
 					
@@ -477,7 +486,7 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 					if ( needed > available )
 					{
 						/// We are in a PAGE context
-						qDebug() << "PAGE";
+// 						qDebug() << "PAGE";
 						// close, clean and create
 						theScene.render ( &thePainter );
 
@@ -502,10 +511,10 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 								if ( place == "PageNumber" )
 									plines << pageNumStr;
 							}
-							QFont pFont ( conPage[pIndex].textStyle.font, conPage[pIndex].textStyle.fontsize );
+// 							QFont pFont ( conPage[pIndex].textStyle.font, conPage[pIndex].textStyle.fontsize );
 							for ( int l = 0; l < plines.count(); ++l )
 							{
-								QGraphicsTextItem * ti = theScene.addText ( plines[l], pFont );
+								QGraphicsTextItem * ti = theScene.addText ( plines[l], qfontCache[conPage[pIndex].textStyle.name]);
 								ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( l * conPage[pIndex].textStyle.lineheight ) );
 							}
 						}
@@ -526,10 +535,10 @@ void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )
 					}
 					else
 					{
-						QFont aFont ( conSubfamily[elemIndex].textStyle.font,conSubfamily[elemIndex].textStyle.fontsize );
+// 						QFont aFont ( conSubfamily[elemIndex].textStyle.font,conSubfamily[elemIndex].textStyle.fontsize );
 						for ( int l = 0; l < lines.count(); ++l )
 						{
-							QGraphicsTextItem * ti = theScene.addText ( lines[l], aFont );
+							QGraphicsTextItem * ti = theScene.addText ( lines[l], qfontCache[ conSubfamily[elemIndex].textStyle.name] );
 							ti->setPos ( conSubfamily[elemIndex].textStyle.margin_left, thePos.y() + (conSubfamily[elemIndex].textStyle.margin_top + ( l * conSubfamily[elemIndex].textStyle.lineheight )) );
 						}
 					}

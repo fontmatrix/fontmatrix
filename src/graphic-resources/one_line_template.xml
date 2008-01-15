@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+	<name>Oneliner</name>
+	<paperwidth>500</paperwidth>
+	<paperheight>800</paperheight>
+	
+	<context level="page"><!-- page | family | subfamily -->
+		<text internal="true">PageNumber</text>
+		<textstyle name="aname">
+			<font>mono</font><!-- Will be processed through fontconfig which finally will give a font name whatever you write -->
+			<fontsize>13.0</fontsize>
+			<lineheight>15.0</lineheight>
+			<!-- Here think that margins are relative to the whole page -->
+			<margintop>30.0</margintop>
+			<marginleft>450</marginleft>
+		</textstyle>
+	</context>
+	<context level="family">
+		<text internal="false">------------------------------------------------------------------------------</text>
+		<textstyle name="bname">
+			<font>Helvetica</font>
+			<fontsize>8.0</fontsize>
+			<lineheight>2.0</lineheight>
+			<margintop>0.0</margintop>
+			<marginleft>0.0</marginleft>
+			<marginbottom>8.0</marginbottom>
+		</textstyle>
+	</context>
+	<context level="subfamily">
+		<text internal="true">FullName</text>
+		<textstyle name="cname">
+			<font>_FONTMATRIX_</font><!-- here is the trick (just available at subfamily level) -->
+			<fontsize>12.0</fontsize>
+			<lineheight>15.0</lineheight>
+			<margintop>1.0</margintop>
+			<marginleft>40.0</marginleft>
+			<marginbottom>1.0</marginbottom>
+		</textstyle>
+	</context>
+</template>

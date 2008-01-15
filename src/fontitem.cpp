@@ -396,7 +396,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			QGraphicsPixmapItem *glyph = itemFromCharPix ( spec.at ( i ).unicode(), sizz );
 			if ( !glyph )
 			{
-				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+// 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
 			if(m_RTL)
@@ -439,7 +439,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
 			if ( !glyph )
 			{
-				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+// 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
 			if(m_RTL)
@@ -509,7 +509,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 			{
-				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+// 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
 			if(m_RTL)
@@ -548,7 +548,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 			{
-				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+// 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
 			if(m_RTL)
@@ -634,7 +634,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 			{
-				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+// 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
 			if ( record )
@@ -657,7 +657,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 			{
-				qDebug() << "Unable to render "<< refGlyph[i].glyph <<" from "<< name() ;
+// 				qDebug() << "Unable to render "<< refGlyph[i].glyph <<" from "<< name() ;
 				continue;
 			}
 			if ( record )

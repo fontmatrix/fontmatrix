@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
 	<name>Oneliner</name>
+	<preview>oneline_template.png</preview>
 	<paperwidth>500</paperwidth>
 	<paperheight>800</paperheight>
 	

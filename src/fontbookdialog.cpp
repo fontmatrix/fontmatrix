@@ -35,46 +35,55 @@ FontBookDialog::FontBookDialog ( QWidget *parent )
 	m_isTemplate = false;
 // 	loadTemplateButton->setVisible(false);
 // 	templateLabel->setVisible(false);
+	curTemplatePreview = 0;
 
-	fillSizeList();
+// 	fillSizeList();
 	fillFontsList();
-	QString alorem ( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nUt a sapien. Aliquam aliquet purus molestie dolor.\nInteger quis eros ut erat posuere dictum. Curabitur dignissim.\nInteger orci. Fusce vulputate lacus at ipsum. \nQuisque in libero nec mi laoreet volutpat." );
-	QString loremBig ( "LOREM IPSUM DOLOR" );
-	setSampleHeadline ( loremBig );
-	setSampleText ( alorem );
+// 	QString alorem ( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\nUt a sapien. Aliquam aliquet purus molestie dolor.\nInteger quis eros ut erat posuere dictum. Curabitur dignissim.\nInteger orci. Fusce vulputate lacus at ipsum. \nQuisque in libero nec mi laoreet volutpat." );
+// 	QString loremBig ( "LOREM IPSUM DOLOR" );
+// 	setSampleHeadline ( loremBig );
+// 	setSampleText ( alorem );
 	
-	m_pageRect = QRectF(0,0,m_pageSize.width(), m_pageSize.height());
-	preScene = new QGraphicsScene(m_pageRect);
-	preView->setScene(preScene);
-	preView->setRenderHint ( QPainter::Antialiasing, true );
-	preView->setBackgroundBrush(Qt::lightGray);
+// 	m_pageRect = QRectF(0,0,m_pageSize.width(), m_pageSize.height());
+// 	preScene = new QGraphicsScene(m_pageRect);
+// // 	preView->setScene(preScene);
+// 	preView->setRenderHint ( QPainter::Antialiasing, true );
+// 	preView->setBackgroundBrush(Qt::lightGray);
+	
+	templateScene = new QGraphicsScene();
+	templateScene->setBackgroundBrush(Qt::lightGray);
+	templatePreview->setScene(templateScene);
+	
+	fillTemplates();
 	
 // 	slotPreview();
 	
 	connect ( okButton,SIGNAL ( accepted () ),this,SLOT ( slotAccept() ) );
 	connect ( okButton,SIGNAL ( rejected() ),this,SLOT ( slotCancel() ) );
 	connect ( fileNameButton,SIGNAL ( released() ),this,SLOT ( slotFileDialog() ) );
-	connect ( paperSizeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPageSize ( int ) ) );
-	connect(this,SIGNAL(updateView()),this,SLOT(slotPreview()));
+// 	connect ( paperSizeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPageSize ( int ) ) );
+// 	connect(this,SIGNAL(updateView()),this,SLOT(slotPreview()));
 	
 	//all Update
 	connect(fileNameEdit,SIGNAL(textChanged( const QString& )),this,SIGNAL(updateView()));
-	QList<QSpinBox*> spinList;
-	spinList << familySpinBox;
-	spinList << styleSpinBox;
-	spinList << sampleSpinBox;
-	spinList << familyFontSizeSpin;
-	spinList << styleFontSizeSpin;
-	spinList << headlineFontSizeSpin;
-	spinList << bodyFontSizeSpin;
-	foreach(QSpinBox *sp, spinList)
-	{
-		connect(sp,SIGNAL(valueChanged ( int  )),this,SIGNAL(updateView()));
-	}
-	connect (sampleTextEdit,SIGNAL(textChanged()),SIGNAL(updateView()));
-	connect (sampleHeadline,SIGNAL(textChanged( const QString&)),SIGNAL(updateView()));
+// 	QList<QSpinBox*> spinList;
+// 	spinList << familySpinBox;
+// 	spinList << styleSpinBox;
+// 	spinList << sampleSpinBox;
+// 	spinList << familyFontSizeSpin;
+// 	spinList << styleFontSizeSpin;
+// 	spinList << headlineFontSizeSpin;
+// 	spinList << bodyFontSizeSpin;
+// 	foreach(QSpinBox *sp, spinList)
+// 	{
+// 		connect(sp,SIGNAL(valueChanged ( int  )),this,SIGNAL(updateView()));
+// 	}
+// 	connect (sampleTextEdit,SIGNAL(textChanged()),SIGNAL(updateView()));
+// 	connect (sampleHeadline,SIGNAL(textChanged( const QString&)),SIGNAL(updateView()));
 	
-	connect(loadTemplateButton,SIGNAL(released()),this,SLOT(slotLoadTemplate()));
+// 	connect(loadTemplateButton,SIGNAL(released()),this,SLOT(slotLoadTemplate()));
+	
+	connect( templatesList,SIGNAL(currentTextChanged( const QString& )),this,SLOT(slotPreviewTemplate(const QString&)));
 
 }
 
@@ -100,7 +109,7 @@ void FontBookDialog::slotFileDialog()
 	QString theFile = QFileDialog::getSaveFileName ( this, tr("Save fontBook"), QDir::homePath() , "Portable Document Format (*.pdf)" );
 	fileNameEdit->setText ( theFile );
 }
-
+/*
 double FontBookDialog::getTabFamily()
 {
 	return familySpinBox->value();
@@ -232,143 +241,143 @@ QPrinter::PageSize FontBookDialog::getPageSizeConstant()
 
 void FontBookDialog::slotPreview()
 {
-	qDebug() << m_pageRect;
-	preScene->setSceneRect(m_pageRect);
-	for ( int  n = 0; n < renderedFont.count(); ++n )
-	{
-		renderedFont[n]->deRenderAll();
-				
-	}
-	renderedFont.clear();
-	preScene->removeItem(preScene->createItemGroup(preScene->items()));
-	QGraphicsRectItem *backp = preScene->addRect(m_pageRect,QPen(),Qt::white);
-	backp->setEnabled ( false );
-	
-	
-	double pageHeight = getPageSize().height();
-	double pageWidth =getPageSize().width();
-	QString theFile = getFileName();
-	double familySize = getFontSize(tr("family"));
-	double headSize = getFontSize(tr("headline"));
-	double bodySize = getFontSize(tr("body"));
-	double styleSize = getFontSize(tr("style"));
-	double familynameTab = getTabFamily();
-	double variantnameTab = getTabStyle();
-	double sampletextTab = getTabSampleText();
-	double topMargin =  getPageSize().height() / 10.0;
-	QStringList loremlist = getSampleText().split ( '\n' );
-	QString headline = getSampleHeadline();
-	QPrinter::PageSize printedPageSize = getPageSizeConstant();
-	double parSize = familySize * 3.0 + styleSize * 1.2 + headSize * 1.2 + static_cast<double>(loremlist.count()) * bodySize * 1.2;
-	
-	
-	QGraphicsScene *theScene = preScene;	
-	
-	QList<FontItem*> localFontMap = typotek::getInstance()->getCurrentFonts();
-	QMap<QString, QList<FontItem*> > keyList;
-	for ( int i=0; i < localFontMap.count();++i )
-	{
-		keyList[localFontMap[i]->value ( "family" ) ].append ( localFontMap[i] );
-// 		qDebug() << localFontMap[i]->value ( "family" ) ;
-	}
-	
-	QMap<QString, QList<FontItem*> >::const_iterator kit;
-	
-	QFont theFont;// the font for all that is not collected fonts
-	theFont.setPointSize(familySize);
-	theFont.setFamily("Helvetica");
-	theFont.setBold(true);
-	
-	QPen abigwhitepen;
-	abigwhitepen.setWidth(10);
-	abigwhitepen.setColor(Qt::white);
-	
-	QPointF pen(0,0);
-	QGraphicsTextItem *title;
-	QGraphicsTextItem *folio;
-	QGraphicsTextItem *ABC;
-	QGraphicsTextItem *teteChap;
-	QGraphicsRectItem *titleCartouche;
-	QGraphicsRectItem *edgeCartouche;
-	QString firstLetter;
-	QString pageNumStr;
-	
-	int pageNumber = 0;
-	
-	bool firstKey = true;
-	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
-	{
+// 	qDebug() << m_pageRect;
+// 	preScene->setSceneRect(m_pageRect);
+// 	for ( int  n = 0; n < renderedFont.count(); ++n )
+// 	{
+// 		renderedFont[n]->deRenderAll();
+// 				
+// 	}
+// 	renderedFont.clear();
+// 	preScene->removeItem(preScene->createItemGroup(preScene->items()));
+// 	QGraphicsRectItem *backp = preScene->addRect(m_pageRect,QPen(),Qt::white);
+// 	backp->setEnabled ( false );
+// 	
+// 	
+// 	double pageHeight = getPageSize().height();
+// 	double pageWidth =getPageSize().width();
+// 	QString theFile = getFileName();
+// 	double familySize = getFontSize(tr("family"));
+// 	double headSize = getFontSize(tr("headline"));
+// 	double bodySize = getFontSize(tr("body"));
+// 	double styleSize = getFontSize(tr("style"));
+// 	double familynameTab = getTabFamily();
+// 	double variantnameTab = getTabStyle();
+// 	double sampletextTab = getTabSampleText();
+// 	double topMargin =  getPageSize().height() / 10.0;
+// 	QStringList loremlist = getSampleText().split ( '\n' );
+// 	QString headline = getSampleHeadline();
+// 	QPrinter::PageSize printedPageSize = getPageSizeConstant();
+// 	double parSize = familySize * 3.0 + styleSize * 1.2 + headSize * 1.2 + static_cast<double>(loremlist.count()) * bodySize * 1.2;
+// 	
+// 	
+// 	QGraphicsScene *theScene = preScene;	
+// 	
+// 	QList<FontItem*> localFontMap = typotek::getInstance()->getCurrentFonts();
+// 	QMap<QString, QList<FontItem*> > keyList;
+// 	for ( int i=0; i < localFontMap.count();++i )
+// 	{
+// 		keyList[localFontMap[i]->value ( "family" ) ].append ( localFontMap[i] );
+// // 		qDebug() << localFontMap[i]->value ( "family" ) ;
+// 	}
+// 	
+// 	QMap<QString, QList<FontItem*> >::const_iterator kit;
+// 	
+// 	QFont theFont;// the font for all that is not collected fonts
+// 	theFont.setPointSize(familySize);
+// 	theFont.setFamily("Helvetica");
+// 	theFont.setBold(true);
+// 	
+// 	QPen abigwhitepen;
+// 	abigwhitepen.setWidth(10);
+// 	abigwhitepen.setColor(Qt::white);
+// 	
+// 	QPointF pen(0,0);
+// 	QGraphicsTextItem *title;
+// 	QGraphicsTextItem *folio;
+// 	QGraphicsTextItem *ABC;
+// 	QGraphicsTextItem *teteChap;
+// 	QGraphicsRectItem *titleCartouche;
+// 	QGraphicsRectItem *edgeCartouche;
+// 	QString firstLetter;
+// 	QString pageNumStr;
+// 	
+// 	int pageNumber = 0;
+// 	
+// 	bool firstKey = true;
+// 	for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
+// 	{
+// 
+// 		pen.rx() = familynameTab;
+// 		pen.ry() += topMargin;
+// 		firstLetter.clear();
+// // 		firstLetter.append ( kit.key().at ( 0 ).toUpper() );
+// 		firstLetter.append(  kit.key().toLower());
+// 		
+// 		if(firstKey)
+// 		{
+// 			pageNumStr.setNum(1);
+// 			folio = theScene->addText ( pageNumStr,theFont );
+// 			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
+// 			folio->setZValue(9000.0);
+// 			ABC = theScene->addText(firstLetter.at(0).toUpper() ,theFont);
+// 			ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
+// // 			ABC->rotate(90);
+// 			edgeCartouche = theScene->addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
+// 			
+// 			edgeCartouche->setZValue(101.0);
+// 			
+// 			ABC->setZValue(10000.0);
+// 			ABC->setDefaultTextColor(Qt::black);
+// 			firstKey = false;
+// 		}
+// 		if ( ( pen.y() + parSize ) > pageHeight * 0.9 )
+// 		{
+// 			preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
+// 			return;
+// 		}
+// 		
+// 		title = theScene->addText ( QString ("%1" ).arg ( kit.key().toUpper() ), theFont);
+// 		title->setPos ( pen );
+// 		title->setDefaultTextColor(Qt::white);
+// 		title->setZValue ( 100000.0 );
+// 		QRectF cartrect(0,pen.y(),title->sceneBoundingRect().right(), title->sceneBoundingRect().height());
+// 		titleCartouche = theScene->addRect(cartrect,QPen(Qt::transparent) ,Qt::black);
+// 		pen.ry() += 4.0  * familySize;
+// 		
+// 		for ( int  n = 0; n < kit.value().count(); ++n )
+// 		{
+// // 			qDebug() << "\t\t" << kit.value()[n]->variant();
+// 
+// 			if ( ( pen.y() + (parSize - 4.0 * familySize) ) > pageHeight * 0.9 )
+// 			{
+// 				preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
+// 				return;
+// 				
+// 			}
+// 			pen.rx()=variantnameTab;
+// 			FontItem* curfi = kit.value()[n];
+// 			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
+// 			renderedFont.append(curfi);
+// 			curfi->renderLine ( theScene,curfi->variant(), pen ,styleSize );
+// 			pen.rx() = sampletextTab;
+// 			pen.ry() +=  2.0 * styleSize;
+// 			curfi->renderLine ( theScene, headline,pen, headSize );
+// 			pen.ry() +=  headSize * 0.5;
+// 			for ( int l=0; l < loremlist.count(); ++l )
+// 			{
+// 				curfi->renderLine ( theScene, loremlist[l],pen, bodySize );
+// 				pen.ry() +=  bodySize * 1.2;
+// 			}
+// 			pen.ry() +=styleSize * 2.0;
+// 
+// 		}
+// 	}
+// 	
+// 	preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
+// 	preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
 
-		pen.rx() = familynameTab;
-		pen.ry() += topMargin;
-		firstLetter.clear();
-// 		firstLetter.append ( kit.key().at ( 0 ).toUpper() );
-		firstLetter.append(  kit.key().toLower());
-		
-		if(firstKey)
-		{
-			pageNumStr.setNum(1);
-			folio = theScene->addText ( pageNumStr,theFont );
-			folio->setPos ( pageWidth * 0.9, pageHeight * 0.9 );
-			folio->setZValue(9000.0);
-			ABC = theScene->addText(firstLetter.at(0).toUpper() ,theFont);
-			ABC->setPos(pageWidth *0.9,pageHeight * 0.05);
-// 			ABC->rotate(90);
-			edgeCartouche = theScene->addRect(pageWidth * 0.85 + 10.0 , 0.0 - 10.0,  pageWidth * 0.15, pageHeight + 20.0 ,abigwhitepen, Qt::lightGray);
-			
-			edgeCartouche->setZValue(101.0);
-			
-			ABC->setZValue(10000.0);
-			ABC->setDefaultTextColor(Qt::black);
-			firstKey = false;
-		}
-		if ( ( pen.y() + parSize ) > pageHeight * 0.9 )
-		{
-			preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
-			return;
-		}
-		
-		title = theScene->addText ( QString ("%1" ).arg ( kit.key().toUpper() ), theFont);
-		title->setPos ( pen );
-		title->setDefaultTextColor(Qt::white);
-		title->setZValue ( 100000.0 );
-		QRectF cartrect(0,pen.y(),title->sceneBoundingRect().right(), title->sceneBoundingRect().height());
-		titleCartouche = theScene->addRect(cartrect,QPen(Qt::transparent) ,Qt::black);
-		pen.ry() += 4.0  * familySize;
-		
-		for ( int  n = 0; n < kit.value().count(); ++n )
-		{
-// 			qDebug() << "\t\t" << kit.value()[n]->variant();
-
-			if ( ( pen.y() + (parSize - 4.0 * familySize) ) > pageHeight * 0.9 )
-			{
-				preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
-				return;
-				
-			}
-			pen.rx()=variantnameTab;
-			FontItem* curfi = kit.value()[n];
-			qDebug() << "\tRENDER" << kit.key() << curfi->variant();
-			renderedFont.append(curfi);
-			curfi->renderLine ( theScene,curfi->variant(), pen ,styleSize );
-			pen.rx() = sampletextTab;
-			pen.ry() +=  2.0 * styleSize;
-			curfi->renderLine ( theScene, headline,pen, headSize );
-			pen.ry() +=  headSize * 0.5;
-			for ( int l=0; l < loremlist.count(); ++l )
-			{
-				curfi->renderLine ( theScene, loremlist[l],pen, bodySize );
-				pen.ry() +=  bodySize * 1.2;
-			}
-			pen.ry() +=styleSize * 2.0;
-
-		}
-	}
-	
-	preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
-	preView->fitInView(m_pageRect,Qt::KeepAspectRatio);
-
-}
+}*/
 
 void FontBookDialog::fillFontsList()
 {
@@ -379,6 +388,10 @@ void FontBookDialog::fillFontsList()
 	}
 }
 
+QString FontBookDialog::getFileName()
+{
+	return fileNameEdit->text();
+}
 
 /**
 *	1 - browse to select a template file
@@ -386,14 +399,14 @@ void FontBookDialog::fillFontsList()
 *	3 - search for "description" and "preview" elements
 *	4 - check validity of the doc (will be hard at the beginning)
 */
-void FontBookDialog::slotLoadTemplate()
+void FontBookDialog::slotLoadTemplate(const QString &theTemplate)
 {
-	QString theTemplate = QFileDialog::getOpenFileName ( this, "Get template", QDir::homePath(), tr("Templates (*.xml)"));
-	
+// 	QString theTemplate = QFileDialog::getOpenFileName ( this, "Get template", QDir::homePath(), tr("Templates (*.xml)"));
+	qDebug() << "FontBookDialog::slotLoadTemplate("<<theTemplate<<") -> " << templatesMap[theTemplate];
 	if(theTemplate.isEmpty())
 		return;
 	
-	QFile file(theTemplate);
+	QFile file(templatesMap[theTemplate]);
 	QDomDocument doc("template");
 	if ( !file.open ( QFile::ReadOnly ) )
 	{
@@ -410,46 +423,85 @@ void FontBookDialog::slotLoadTemplate()
 	}
 	file.close();
 	
-	QString description;
-	QDomNodeList descList = doc.elementsByTagName ( "name" );
-	if ( descList.length()  )
-	{
-			QDomNode node = descList.item ( 0 );
-			description = node.toElement().text();
-	}
-	QString preview;
-	QDomNodeList prevList = doc.elementsByTagName ( "preview" );
-	if ( descList.length()  )
-	{
-		QDomNode node = prevList.item ( 0 );
-		preview = node.toElement().text();
-	}
-	
-	if(description.isEmpty())
-		return;
-	
-	if(!preview.isEmpty())
-	{
-		QFileInfo fInfo(file);	
-		QPixmap img(fInfo.absolutePath()+ "/" + preview);
-		if(!img.isNull())
-		{
-			for ( int  n = 0; n < renderedFont.count(); ++n )
-			{
-				renderedFont[n]->deRenderAll();
-					
-			}
-			renderedFont.clear();
-			preScene->removeItem(preScene->createItemGroup(preScene->items()));
-			
-			preScene->addPixmap(img);
-		}
-	}
-	
-	templateLabel->setText(description);
-	
-	
-	// TODO Check validity ;-)
 	m_template = doc;
 	m_isTemplate = true;
+}
+
+void FontBookDialog::fillTemplates()
+{
+	//### As a temporary facility, I use an arbitrary folder
+	QDir tDir(typotek::getInstance()->getManagedDir());
+	QStringList filters;
+	filters << "*.xml" ;
+	tDir.setNameFilters ( filters );
+	QStringList pathList = tDir.entryList();
+	for ( int i = 0 ; i < pathList.count() ; ++i )
+	{
+		QFile file(tDir.absoluteFilePath ( pathList.at ( i ) ));
+		QDomDocument doc("template");
+		if ( !file.open ( QFile::ReadOnly ) )
+		{
+			QMessageBox::warning (0, QString ( "Fontmatrix" ),
+					      QString ( "Can’t read %1." ).arg(file.fileName()) );
+			return;
+		}
+		if ( !doc.setContent ( &file ) )
+		{
+			file.close();
+			QMessageBox::warning (0, QString ( "Fontmatrix" ),
+					      QString ( "%1 is an invalid XML tree." ).arg(file.fileName()) );
+			return;
+		}
+		file.close();
+	
+		QString description;
+		QDomNodeList descList = doc.elementsByTagName ( "name" );
+		if ( descList.length()  )
+		{
+			QDomNode node = descList.item ( 0 );
+			description = node.toElement().text();
+		}
+		QString preview;
+		QDomNodeList prevList = doc.elementsByTagName ( "preview" );
+		if ( descList.length()  )
+		{
+			QDomNode node = prevList.item ( 0 );
+			preview = tDir.absoluteFilePath( node.toElement().text() );
+		}
+		
+		if(description.isEmpty())
+			continue;
+		
+		templatesMap[description] = tDir.absoluteFilePath ( pathList.at ( i ) );
+		
+		if(!preview.isEmpty())
+		{
+			templatesPreviewMap[description] = QPixmap(preview);
+		}
+		
+		
+	}
+	
+	templatesList->addItems(templatesMap.keys());	
+}
+
+void FontBookDialog::slotPreviewTemplate(const QString &key)
+{
+	qDebug() << "slotPreviewTemplate("<<key<<") -> "<< templatesMap[key];
+	if(templatesMap.contains(key))
+	{
+		if(!templatesPreviewMap[key].isNull())
+		{
+			if(curTemplatePreview)
+				templateScene->removeItem(curTemplatePreview);
+			delete curTemplatePreview;
+			
+			curTemplatePreview = templateScene->addPixmap( templatesPreviewMap[key] );
+// 			templatePreview->ensureVisible(curTemplatePreview,10,10);
+		}
+		
+		slotLoadTemplate(key);
+		
+	}
+	
 }

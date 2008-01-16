@@ -48,7 +48,7 @@ void FontBook::doBook()
 		doBookFromTemplate ( bookOption.getTemplate() );
 		return;
 	}
-
+/*
 	double pageHeight = bookOption.getPageSize().height();
 	double pageWidth = bookOption.getPageSize().width();
 	QString theFile = bookOption.getFileName();
@@ -266,7 +266,7 @@ void FontBook::doBook()
 
 		}
 
-	}
+	}*/
 }
 
 void FontBook::doBookFromTemplate (const QDomDocument &aTemplate )

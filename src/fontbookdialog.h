@@ -29,6 +29,7 @@
 #include <QDomDocument>
 
 class QGraphicsScene;
+class QGraphicsPixmapItem;
 class FontItem;
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -41,17 +42,17 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 
 		~FontBookDialog();
 
-		void setSampleText ( QString s);
-		void setSampleHeadline(QString s);
-		QString getSampleText();
-		QString getSampleHeadline();
-		double getTabFamily();
-		double getTabStyle();
-		double getTabSampleText();
+// 		void setSampleText ( QString s);
+// 		void setSampleHeadline(QString s);
+// 		QString getSampleText();
+// 		QString getSampleHeadline();
+// 		double getTabFamily();
+// 		double getTabStyle();
+// 		double getTabSampleText();
 		QString getFileName();
-		QSizeF getPageSize();
-		QPrinter::PageSize getPageSizeConstant();
-		double getFontSize(QString s);
+// 		QSizeF getPageSize();
+// 		QPrinter::PageSize getPageSizeConstant();
+// 		double getFontSize(QString s);
 		bool isOk;
 		bool isTemplate(){return m_isTemplate;}
 		QDomDocument getTemplate(){return m_template;}
@@ -60,22 +61,27 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 		void slotAccept();
 		void slotCancel();
 		void slotFileDialog();
-		void slotPageSize(int index);
-		void slotPreview();
-		void slotLoadTemplate();
-	signals:
-		void updateView();
+// 		void slotPageSize(int index);
+// 		void slotPreview();
+		void slotLoadTemplate(const QString &theTemplate);
+		void slotPreviewTemplate(const QString &key);
+// 	signals:
+// 		void updateView();
 	private:
 		QDomDocument m_template;
 		bool m_isTemplate;
-		void fillSizeList();
+// 		void fillSizeList();
 		void fillFontsList();
-		QSizeF m_pageSize;
-		QPrinter::PageSize m_pageSizeConstant;
-		QRectF m_pageRect;
-		QGraphicsScene *preScene;
-		QList<FontItem*> renderedFont;
-		
+		void fillTemplates();
+// 		QSizeF m_pageSize;
+// 		QPrinter::PageSize m_pageSizeConstant;
+// 		QRectF m_pageRect;
+// 		QGraphicsScene *preScene;
+// 		QList<FontItem*> renderedFont;
+		QGraphicsScene *templateScene;
+		QMap<QString,QString> templatesMap;
+		QMap<QString,QPixmap> templatesPreviewMap;
+		QGraphicsPixmapItem *curTemplatePreview;
 		
 };
 

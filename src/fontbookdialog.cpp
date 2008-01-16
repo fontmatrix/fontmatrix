@@ -429,8 +429,8 @@ void FontBookDialog::slotLoadTemplate(const QString &theTemplate)
 
 void FontBookDialog::fillTemplates()
 {
-	//### As a temporary facility, I use an arbitrary folder
-	QDir tDir(typotek::getInstance()->getManagedDir());
+	
+	QDir tDir(typotek::getInstance()->getTemplatesDir());
 	QStringList filters;
 	filters << "*.xml" ;
 	tDir.setNameFilters ( filters );
@@ -481,6 +481,11 @@ void FontBookDialog::fillTemplates()
 		
 		
 	}
+	// Here we insert default templates provided by Fontmatrix
+	templatesMap["Default template"] = ":/template_default";
+	templatesPreviewMap["Default template"] = QPixmap(":/template_default_preview");
+	templatesMap["Default template (oneliner)"] = ":/template_oneline";
+	templatesPreviewMap["Default template (oneliner)"] =  QPixmap(":/template_oneline_preview");
 	
 	templatesList->addItems(templatesMap.keys());	
 }

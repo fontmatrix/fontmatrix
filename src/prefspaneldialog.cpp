@@ -43,7 +43,7 @@ void PrefsPanelDialog::initSystrayPrefs(bool hasSystray, bool isVisible, bool ha
 	activateAllFrame->setChecked(hasActivateAll);
 	activateAllConfirmation->setChecked(allConfirmation);
 	tagsConfirmation->setChecked(tagConfirmation);
-	QSettings settings ( "Undertype", "fontmatrix" );
+	QSettings settings ;
 	closeToSystray->setChecked(settings.value("SystrayCloseToTray", true).toBool());
 }
 
@@ -51,6 +51,12 @@ void PrefsPanelDialog::initSampleTextPrefs()
 {
 	//At least fill the sampletext list :)
 	sampleTextNamesList->addItems(typotek::getInstance()->namedSamplesNames());
+}
+
+void PrefsPanelDialog::initFilesAndFolders()
+{
+	QSettings settings;
+	templatesFolder->setText(typotek::getInstance()->getTemplatesDir());
 }
 
 
@@ -71,6 +77,9 @@ void PrefsPanelDialog::doConnect()
 	connect(fontEditorPath, SIGNAL(textChanged(QString)), this, SLOT(setupFontEditor(QString)));
 	connect(fontEditorBrowse, SIGNAL(clicked()), this, SLOT(slotFontEditorBrowse()));
 	connect(initTagBox, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotUseInitialTags(bool)));
+	
+	connect(templatesDirBrowse,SIGNAL(clicked( )),this, SLOT(slotTemplatesBrowse()));
+	connect(templatesFolder,SIGNAL(textChanged( const QString& )),this,SLOT(setupTemplates(const QString&)));
 
 }
 
@@ -155,6 +164,20 @@ void PrefsPanelDialog::showPage(PAGE page)
 		mainTab->setCurrentIndex ( 0 );
 	else if(page == PAGE_SAMPLETEXT)
 		mainTab->setCurrentIndex ( 1 );
+}
+
+void PrefsPanelDialog::slotTemplatesBrowse()
+{
+	QString s = QFileDialog::getExistingDirectory(this, tr("Select Templates Folder"), QDir::homePath(), QFileDialog::ShowDirsOnly);
+	if (!s.isEmpty()) {
+		templatesFolder->setText(s);
+	}
+}
+
+void PrefsPanelDialog::setupTemplates(const QString &tdir)
+{
+	if(!tdir.isEmpty())
+		typotek::getInstance()->setTemplatesDir(tdir);
 }
 
 

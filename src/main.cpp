@@ -42,6 +42,9 @@ bool __FM_SHOW_FONTLOADED;
  */
 int main ( int argc, char *argv[] )
 {
+	QCoreApplication::setOrganizationName("Undertype");
+	QCoreApplication::setApplicationName("fontmatrix");
+	
 	Q_INIT_RESOURCE ( application );
 	QApplication app ( argc, argv );
 	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );

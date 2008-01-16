@@ -18,7 +18,10 @@
         <file alias="fontmatrix_fontbookexport_icon.png">graphic-resources/fontmatrix-fontbookexport-icon.png</file>
         <file alias="fontmatrix_import_icon.png">graphic-resources/fontmatrix-import-icon.png</file>
         
-        
+	<file alias="template_default">graphic-resources/fontbook_default.xml</file>
+	<file alias="template_default_preview">graphic-resources/default_template.png</file>
+	<file alias="template_oneline">graphic-resources/one_line_template.xml</file>
+	<file alias="template_oneline_preview">graphic-resources/oneline_template.png</file>
     </qresource>
 
 

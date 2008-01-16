@@ -94,14 +94,6 @@ void typotek::initMatrix()
 	createMenus();
 	createStatusBar();
 
-
-// 	{
-// 		actAdaptator = new TypotekAdaptator ( this );
-// 		if ( !QDBusConnection::sessionBus().registerService ( "com.fontmatrix.fonts" ) )
-// 			qDebug() << "unable to register to DBUS";
-// 		if ( !QDBusConnection::sessionBus().registerObject ( "/FontActivation", actAdaptator, QDBusConnection::ExportAllContents ) )
-// 			qDebug() << "unable to register to DBUS";
-// 	}
 }
 
 
@@ -115,7 +107,7 @@ void typotek::doConnect()
 
 void typotek::closeEvent ( QCloseEvent *event )
 {
-	QSettings settings ( "Undertype", "fontmatrix" );
+	QSettings settings ;
 	if ( systray )
 	{
 		if ( systray->isVisible() && settings.value ( "SystrayCloseToTray", true ).toBool() )
@@ -453,18 +445,19 @@ void typotek::createStatusBar()
 
 void typotek::readSettings()
 {
-	QSettings settings ( "Undertype", "fontmatrix" );
+	QSettings settings;
 	QPoint pos = settings.value ( "pos", QPoint ( 200, 200 ) ).toPoint();
 	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
 	move ( pos );
 	fonteditorPath = settings.value ( "FontEditor", "/usr/bin/fontforge" ).toString();
 	useInitialTags = settings.value ( "UseInitialTags", false ).toBool();
+	templatesDir = settings.value ( "TemplatesDir", "./").toString();
 }
 
 void typotek::writeSettings()
 {
-	QSettings settings ( "Undertype", "fontmatrix" );
+	QSettings settings ;
 	settings.setValue ( "pos", pos() );
 	settings.setValue ( "size", size() );
 
@@ -807,6 +800,7 @@ void typotek::slotPrefsPanel(PrefsPanelDialog::PAGE page)
 	else
 		pp.initSystrayPrefs ( false,false,false,false,false );
 	pp.initSampleTextPrefs();
+	pp.initFilesAndFolders();
 	pp.showPage(page);
 	pp.exec();
 }
@@ -860,7 +854,7 @@ void typotek::systrayTagsConfirmation ( bool isEnabled )
 
 void typotek::slotCloseToSystray ( bool isEnabled )
 {
-	QSettings settings ( "Undertype", "fontmatrix" );
+	QSettings settings ;
 	settings.setValue ( "SystrayCloseToTray", isEnabled );
 	settings.setValue ( "SystrayCloseNoteShown", false );
 }
@@ -916,14 +910,22 @@ void typotek::setFontEditorPath ( const QString &path )
 		fonteditorAct->setEnabled ( false );
 		fonteditorAct->setStatusTip ( tr ( "You don't seem to have font editor installed. Path to font editor can be set in preferences." ) );
 	}
-	QSettings settings ( "Undertype", "fontmatrix" );
+	QSettings settings ;
 	settings.setValue ( "FontEditor", fonteditorPath );
 }
 
 void typotek::slotUseInitialTags ( bool isEnabled )
 {
 	useInitialTags = isEnabled;
-	QSettings settings ( "Undertype", "fontmatrix" );
+	QSettings settings ;
 	settings.setValue ( "UseInitialTags", isEnabled );
+}
+
+void typotek::setTemplatesDir(const QString & dir)
+{
+	templatesDir = dir;
+	QSettings settings;
+	settings.setValue("TemplatesDir", templatesDir);
+	
 }
 

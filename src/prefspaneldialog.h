@@ -27,10 +27,11 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 
 		~PrefsPanelDialog();
 		
-		enum PAGE{PAGE_GENERAL,PAGE_SAMPLETEXT};
+		enum PAGE{PAGE_GENERAL,PAGE_SAMPLETEXT,PAGE_FILES};
 
 		void initSystrayPrefs(bool hasSystray, bool isVisible, bool hasActivateAll, bool allConfirmation, bool tagConfirmation);
 		void initSampleTextPrefs();
+		void initFilesAndFolders();
 		void showPage(PAGE page);
 
 	private:
@@ -50,6 +51,9 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void updateWord(QString);
 		void setupFontEditor(QString);
 		void slotFontEditorBrowse();
+		
+		void setupTemplates(const QString&);
+		void slotTemplatesBrowse();
 
 };
 

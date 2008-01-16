@@ -37,7 +37,7 @@ Systray::Systray()
             this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
 	connect(trayIconMenu, SIGNAL(aboutToShow()), this, SLOT(slotPrepareMenu()));
 
-	settings = new QSettings("Undertype", "fontmatrix");
+	settings = new QSettings;
 
 	showAllConfirmation = settings->value("SystrayAllConfirmation", true).toBool();
 	showTagsConfirmation = settings->value("SystrayTagsConfirmation", false).toBool();

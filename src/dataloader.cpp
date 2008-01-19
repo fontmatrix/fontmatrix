@@ -66,6 +66,7 @@ void DataLoader::load()
 	
 	QStringList collectedTags; 
 	
+	
 	//loading fonts
 	QDomNodeList colList = doc.elementsByTagName ( "fontfile" );
 	if ( colList.length() == 0 )
@@ -76,15 +77,22 @@ void DataLoader::load()
 	for ( uint i = 0; i < colList.length(); ++i )
 	{
 		QDomNode col = colList.item ( i );
+#if FONTMATRIX_VERSION_MINOR == 3
+		QString fontName  = col.namedItem ( "file" ).toElement().text();
+		QString fontfile = QDir::home() + "/.fonts-reserved/"+ fontName;
+#else
+		QString fontName = col.toElement().attributeNode("name").value();
 		QString fontfile  = col.namedItem ( "file" ).toElement().text();
+#endif
 		QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
 		QStringList tl;
 		for(int ti = 0; ti < taglist.count(); ++ti)
 		{
 			tl << taglist.at(ti).toElement().text();
 		}
-		m_typo->addTagMapEntry(fontfile,tl);
+		m_typo->addTagMapEntry(fontName,tl);
 		collectedTags << tl;
+		m_fontList << fontfile;
 	}
 	
 	//loading tagsets

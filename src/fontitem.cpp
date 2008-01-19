@@ -370,7 +370,8 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	glyph->setData ( 1,"glyph" );
 	glyph->setData ( 2, m_face->glyph->bitmap_left );
 	glyph->setData ( 3, m_face->glyph->bitmap_top );
-	glyph->setData ( 4, ( uint ) m_glyph->linearHoriAdvance >> 16 );
+// 	glyph->setData ( 4, ( uint ) m_glyph->linearHoriAdvance >> 16 );
+	glyph->setData ( 4, (double) m_glyph->metrics.horiAdvance);
 	return glyph;
 }
 
@@ -401,8 +402,8 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			}
 			if(m_RTL)
 			{
-				pen.rx() -= glyph->data ( 4 ).toInt();
-				pWidth -= glyph->data ( 4 ).toInt();
+				pen.rx() -= glyph->data ( 4 ).toDouble() * scalefactor;
+				pWidth -= glyph->data ( 4 ).toDouble() * scalefactor;
 				if(pWidth < distance)
 				{
 					delete glyph;
@@ -411,7 +412,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			}
 			else
 			{
-				pWidth -= glyph->data ( 4 ).toInt();
+				pWidth -= glyph->data ( 4 ).toDouble() * scalefactor;
 				if(pWidth < distance)
 				{
 					delete glyph;
@@ -425,7 +426,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			                pen.y() - glyph->data ( 3 ).toInt() );
 		
 			if ( !m_RTL )
-				pen.rx() += glyph->data ( 4 ).toInt();
+				pen.rx() += glyph->data ( 4 ).toDouble() * scalefactor;
 			
 			glyph->setZValue ( 100.0 );
 		}

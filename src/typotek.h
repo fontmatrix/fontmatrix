@@ -150,6 +150,8 @@ class typotek:public QMainWindow
 		bool useInitialTags;
 		static QString fonteditorPath;
 		QString templatesDir;
+		
+		void addFcDirItem(const QString &dirPath);
 
 	public:
 		FontItem* getFont ( int i ) ;
@@ -173,6 +175,8 @@ class typotek:public QMainWindow
 		static typotek* getInstance(){return instance;};
 		
 		QString getManagedDir(){return managedDir.absolutePath();};
+		
+		QFile* getFontsData(){ return &fontsdata; }
 		
 		void setSampleText(QString s);
 				

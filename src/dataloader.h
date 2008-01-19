@@ -21,6 +21,7 @@
 #define DATALOADER_H
 
 #include <QFile>
+#include <QStringList>
 
 
 class typotek;
@@ -36,9 +37,11 @@ class DataLoader
 
 		~DataLoader();
 		void load();
+		QStringList fontList() const { return m_fontList; }
 	private :
 		QFile *m_file;
 		typotek *m_typo;
+		QStringList m_fontList;
 
 
 };

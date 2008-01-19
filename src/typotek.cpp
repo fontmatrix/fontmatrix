@@ -138,7 +138,32 @@ void typotek::closeEvent ( QCloseEvent *event )
 	}
 }
 
+namespace fontmatrix
+{
+QStringList exploreDirs(const QDir &dir, int deep)
+{
+	static QStringList retDirList;
+	if(deep > 10)
+		return QStringList();	
+	if(deep == 0)
+		retDirList.clear();
+	qDebug() << dir.absolutePath();
+	
+	retDirList << dir.absolutePath();
+	QStringList localEntries(dir.entryList ( QDir::AllDirs | QDir::NoDotAndDotDot));
+	foreach ( QString dirEntry, localEntries )
+	{
+		qDebug() <<  dir.absolutePath() + "/" + dirEntry;
+		QDir d ( dir.absolutePath() + "/" + dirEntry );
+		exploreDirs(d, true);
+		retDirList << d.absolutePath();
+	}
+	
+	return retDirList;
+} 
+}
 
+/// IMPORT
 void typotek::open()
 {
 	static QString dir = QDir::homePath(); // first time use the home path then remember the last used dir
@@ -148,20 +173,16 @@ void typotek::open()
 		return; // user choose to cancel the import process
 
 	dir = tmpdir; // only set dir if importing wasn't cancelled
+	
+	QDir theDir ( dir );
+// 	addFcDirItem(theDir.absolutePath());
 
 	QStringList pathList;
 	QStringList nameList;
-	QStringList dirList;
-
-	QDir theDir ( dir );
-	QStringList tmpDirL = theDir.entryList ( QDir::AllDirs );
-	foreach ( QString dirEntry, tmpDirL )
-	{
-		QDir d ( theDir.absolutePath() + "/"+dirEntry );
-		dirList << d.absolutePath();
-	}
-	dirList << theDir.absolutePath();
-// 	qDebug() << dirList.join ( "\n" );
+	
+	QStringList dirList( fontmatrix::exploreDirs(dir,0) );
+	qDebug() << dirList.join ( "\n" );
+	
 	QStringList filters;
 	filters << "*.otf" << "*.pfb" << "*.ttf" ;
 	foreach ( QString dr, dirList )
@@ -210,17 +231,17 @@ void typotek::open()
 		QFileInfo fi ( pathList.at ( i ) );
 
 
-		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
+// 		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
 		{
 
-			if ( fi.suffix() == "pfb" )
-			{
-				QFile fafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
-				QFileInfo iafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
-				if ( fafm.exists() )
-					fafm.copy ( ownDir.absolutePath() + "/" + iafm.fileName() );
-			}
-			FontItem *fitem = new FontItem ( ownDir.absolutePath() + "/" + fi.fileName() );
+// 			if ( fi.suffix() == "pfb" )
+// 			{
+// 				QFile fafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
+// 				QFileInfo iafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
+// 				if ( fafm.exists() )
+// 					fafm.copy ( ownDir.absolutePath() + "/" + iafm.fileName() );
+// 			}
+			FontItem *fitem = new FontItem ( fi.absoluteFilePath() /*ownDir.absolutePath() + "/" + fi.fileName()*/ );
 			if ( fitem->isValid() )
 			{
 				fitem->setTags ( tali );
@@ -230,16 +251,16 @@ void typotek::open()
 			}
 			else
 			{
-				QFile::remove ( ownDir.absolutePath() + "/" + fi.fileName() ) ;
+// 				QFile::remove ( ownDir.absolutePath() + "/" + fi.fileName() ) ;
 				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
 				statusBar()->showMessage ( errorFont );
 				nameList << "__FAILEDTOLOAD__" + fi.fileName();
 			}
 		}
-		else
-		{
-			qDebug()<< "Unable to copy " << fi.fileName() ;
-		}
+// 		else
+// 		{
+// 			qDebug()<< "Unable to copy " << fi.fileName() ;
+// 		}
 	}
 
 	progress.close();
@@ -481,22 +502,31 @@ void typotek::fillTagsList()
 
 void typotek::checkOwnDir()
 {
-	//DONE parse ~/.fonts.conf to see if there is the ~/.managed-fonts dir entry
-	// and create it if it does not exist and setup a QDir("~/.managed-fonts") private member
-	QString fontmanaged ( "/.fonts-managed" ); // Where activated fonts are sym-linked
-	QString fontreserved ( "/.fonts-reserved" );// Where aknoweldged fonts are stored.
-
+	QString fontmanaged ( "/.fontmatrix" ); // Where activated fonts are sym-linked
+// 	QString fontreserved ( "/.fonts-reserved" );// Where aknoweldged fonts are stored. - OBSOLETE
+// 
 	managedDir.setPath ( QDir::homePath() + fontmanaged );
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + fontmanaged );
 
+	addFcDirItem( managedDir.absolutePath() );
+
+// 
+// 	ownDir.setPath ( QDir::homePath() +  fontreserved );
+// 	if ( !ownDir.exists() )
+// 		ownDir.mkpath ( QDir::homePath() + fontreserved );
+
+	fontsdata.setFileName ( QDir::homePath() + "/.fontmatrix.data" );
+
+
+}
+
+void typotek::addFcDirItem(const QString & dirPath)
+{
 	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
 	if ( !fcfile.open ( QFile::ReadWrite ) )
 	{
-// 		QMessageBox::warning ( 0, QString ( "fontmatrix" ),
-// 		                       QString ( "Cannot read file %1:\n%2.\nBEFORE ANYTHING, YOU SHOULD CHECK IF FONTCONFIG IS IN USE." )
-// 		                       .arg ( fcfile.fileName() )
-// 		                       .arg ( fcfile.errorString() ) );
+		return;
 	}
 	else
 	{
@@ -518,17 +548,44 @@ void typotek::checkOwnDir()
 		QDomNodeList dirlist = fc.elementsByTagName ( "dir" );
 		for ( int i=0;i < dirlist.count();++i )
 		{
-			if ( dirlist.at ( i ).toElement().text() == managedDir.absolutePath() )
+			if ( dirlist.at ( i ).toElement().text() == dirPath )
 				isconfigured = true;
 		}
 		if ( !isconfigured )
 		{
 			QDomElement root = fc.documentElement();
 			QDomElement direlem = fc.createElement ( "dir" );
-			QDomText textelem = fc.createTextNode ( managedDir.absolutePath() );
+			QDomText textelem = fc.createTextNode ( dirPath );
 			direlem.appendChild ( textelem );
 			root.appendChild ( direlem );
-
+// 			QDomElement selectFont = root.namedItem ( "selectfont" ).toElement();
+// 			if(selectFont.isNull())
+// 			{
+// 				QDomElement e = fc.createElement ( "selectfont" );
+// 				root.appendChild ( e );
+// 				selectFont = root.namedItem ( "selectfont" ).toElement();
+// 			}
+// 			QDomElement rejectFont = selectFont.namedItem("rejectfont").toElement();
+// 			if(rejectFont.isNull())
+// 			{
+// 				QDomElement e = fc.createElement ( "rejectfont" );
+// 				selectFont.appendChild(e);
+// 				rejectFont = selectFont.namedItem("rejectfont").toElement();
+// 			}
+// 			QDomNodeList rejlist = rejectFont.elementsByTagName ( "glob" );
+// 			bool yetRejected = false;
+// 			for ( int i=0;i < rejlist.count();++i )
+// 			{
+// 				if ( rejlist.at ( i ).toElement().text() == dirPath )
+// 					yetRejected = true;
+// 			}
+// 			if(!yetRejected)
+// 			{
+// 				QDomElement e = fc.createElement ( "glob" );
+// 				QDomText t = fc.createTextNode ( dirPath + "*" );
+// 				e.appendChild(t);
+// 				rejectFont.appendChild(e);
+// 			}
 			fcfile.resize ( 0 );
 
 			QTextStream ts ( &fcfile );
@@ -537,15 +594,8 @@ void typotek::checkOwnDir()
 		}
 		fcfile.close();
 	}
-
-	ownDir.setPath ( QDir::homePath() +  fontreserved );
-	if ( !ownDir.exists() )
-		ownDir.mkpath ( QDir::homePath() + fontreserved );
-
-	fontsdata.setFileName ( ownDir.absolutePath() + "/fonts.data" );
-
-
 }
+
 
 void typotek::initDir()
 {
@@ -555,11 +605,11 @@ void typotek::initDir()
 	loader.load();
 
 	// load font files
-	QStringList filters;
-	filters << "*.otf" << "*.pfb"  << "*.ttf" ;
-	ownDir.setNameFilters ( filters );
+// 	QStringList filters;
+// 	filters << "*.otf" << "*.pfb"  << "*.ttf" ;
+// 	ownDir.setNameFilters ( filters );
 
-	QStringList pathList = ownDir.entryList();
+	QStringList pathList = loader.fontList();
 // 	if ( __FM_SHOW_FONTLOADED )
 // 		qDebug() << pathList.join ( "\n" );
 	
@@ -928,4 +978,5 @@ void typotek::setTemplatesDir(const QString & dir)
 	settings.setValue("TemplatesDir", templatesDir);
 	
 }
+
 

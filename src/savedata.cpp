@@ -55,8 +55,9 @@ void SaveData::doSave()
 	foreach ( FontItem* fitem,flist )
 	{
 		writeStartElement("fontfile");
+		writeAttribute("name", fitem->name());
 		writeStartElement("file");
-		writeCharacters(fitem->name());
+		writeCharacters(fitem->path());
 		writeEndElement();
 		QStringList tl = fitem->tags();
 		foreach(QString tag, tl)
@@ -105,7 +106,7 @@ void SaveData::doSave()
 	writeCharacters( m_typo->word() );
 	writeEndElement();
 	
-	
+
 	writeEndElement();//fontmatrix
 	writeEndDocument();
 }

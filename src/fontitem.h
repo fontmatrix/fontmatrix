@@ -28,6 +28,7 @@
 #include <QPainterPath>
 #include <QGraphicsPathItem>
 #include <QIcon>
+#include <QUrl>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -55,6 +56,7 @@ class FontItem : public QObject
 	private:
 		bool m_valid;
 		QString m_path;
+		QUrl m_url;
 		QString m_afm;
 		QString m_name;
 		// Basically, we collect all infos that are in an FT_FaceRec
@@ -173,6 +175,8 @@ class FontItem : public QObject
 
 		bool isActivated();
 		void setActivated ( bool act );
+		
+		bool isLocal();
 
 		// Relative to fontactionwidget
 		void lock() {m_lock=true;};

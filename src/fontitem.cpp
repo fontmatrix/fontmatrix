@@ -1965,3 +1965,11 @@ void FontItem::fillNamesMeaning()
 	<< tr ( "PostScript CID findfont name" );
 }
 
+bool FontItem::isLocal()
+{
+	QString shem = m_url.scheme();
+	if(shem.isEmpty() || shem == "file")
+		return true;
+	return false;
+}
+

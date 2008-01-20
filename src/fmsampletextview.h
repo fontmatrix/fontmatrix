@@ -49,6 +49,7 @@ class FMSampleTextView : public QGraphicsView
 	signals:
 		void refit();
 		void pleaseUpdateMe();
+		void pleaseZoom(int);
 		
 	private:
 		QPointF mouseStartPoint;

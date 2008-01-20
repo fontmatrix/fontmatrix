@@ -50,6 +50,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 	private:
 		QGraphicsScene *abcScene;
 		QGraphicsScene *loremScene;
+		QGraphicsScene *ftScene;
 		QStringList ord;
 		QStringList fields;
 		typotek *typo;
@@ -130,6 +131,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotSwitchRTL();
 		void slotUpdateGView();
 		void slotUpdateSView();
+		void slotUpdateRView();
 		void slotEditSampleText();
 		//tags
 		void slotSwitchCheckState( QListWidgetItem * item );

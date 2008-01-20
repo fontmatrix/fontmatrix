@@ -96,10 +96,20 @@ void FMSampleTextView::wheelEvent(QWheelEvent * e)
 {
 // 	qDebug() << "log wheel event " << e->delta();
 // 	QGraphicsView::wheelEvent(e);
+	if(locker)
+		return;
+	
+	if(e->modifiers().testFlag(Qt::ControlModifier) && e->orientation() == Qt::Vertical  )
+	{
+		emit pleaseZoom(e->delta());
+	}
+	else
+	{
 	if(e->orientation() == Qt::Vertical )
 		verticalScrollBar()->setValue(verticalScrollBar()->value() - e->delta());
 	if(e->orientation() == Qt::Horizontal)
 		horizontalScrollBar()->setValue(horizontalScrollBar()->value() - e->delta());
+	}
 }
 
 void FMSampleTextView::showEvent(QShowEvent * event)

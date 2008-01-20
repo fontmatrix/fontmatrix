@@ -67,10 +67,14 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	tagLayout = new QGridLayout ( tagPage );
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
+	ftScene =  new QGraphicsScene;
 	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
 	loremScene->setSceneRect ( pageRect );
 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
 	backp->setEnabled ( false );
+	ftScene->setSceneRect ( pageRect );
+	QGraphicsRectItem *backpR = ftScene->addRect ( pageRect,QPen(),Qt::white );
+	backpR->setEnabled ( false );
 
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
@@ -81,7 +85,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->locker = true;
 	loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 	loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-
+	
+	loremView_FT->setScene ( ftScene );
+	loremView_FT->setBackgroundBrush ( Qt::lightGray );
+	loremView_FT->locker = false;
+	
 	sampleText= typo->namedSample ( "default" );
 	sampleFontSize = 18;
 	sampleInterSize = 20;
@@ -102,7 +110,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
-	connect ( renderZoom,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotZoom ( int ) ) );
 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
@@ -114,9 +121,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( rtlCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotSwitchRTL() ) );
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
-	connect ( freetypeButton,SIGNAL ( released() ),this,SLOT ( slotFTRasterChanged() ) );
 	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
+	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
+	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 	
 	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
@@ -504,7 +513,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	}
 
 	theVeryFont->setRTL ( rtlCheck->isChecked() );
-	theVeryFont->setFTRaster ( freetypeButton->isChecked() );
+	theVeryFont->setFTRaster ( loremView_FT->isVisible() );
 
 	QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
 	QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
@@ -521,37 +530,42 @@ void MainViewWidget::slotView ( bool needDeRendering )
 // 		QApplication::restoreOverrideCursor();
 	}
 
-	if ( loremView->isVisible() )
+	if ( loremView->isVisible() || loremView_FT->isVisible() )
 	{
+		QGraphicsScene *targetScene;
+		if(loremView->isVisible())
+			targetScene = loremScene;
+		else if(loremView_FT->isVisible())
+			targetScene = ftScene;
 		QStringList stl = typo->namedSample ( sampleTextCombo->currentText() ).split ( '\n' );
 		QPointF pen ( ( rtlCheck->isChecked() ) ? 500 : 100,80 );
 		bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
 		QString script = langCombo->currentText();
 		bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
 
-		QApplication::setOverrideCursor ( Qt::WaitCursor );
+// 		QApplication::setOverrideCursor ( Qt::WaitCursor );
 		for ( int i=0; i< stl.count(); ++i )
 		{
 			pen.ry() = 100 + sampleInterSize * i;
 			if ( processScript )
 			{
 				qDebug() << "render " << stl[i] << " as " << script;
-				f->renderLine ( script ,loremScene,stl[i],pen, sampleFontSize );
+				f->renderLine ( script ,targetScene,stl[i],pen, sampleFontSize );
 			}
 			else if ( processFeatures )
 			{
 				OTFSet aSet = deFillOTTree();
 				qDebug() << aSet.dump();
-				f->renderLine ( aSet, loremScene,stl[i],pen, sampleFontSize );
+				f->renderLine ( aSet, targetScene,stl[i],pen, sampleFontSize );
 			}
 			else
 			{
-				f->renderLine ( loremScene,stl[i],pen, sampleFontSize );
+				f->renderLine ( targetScene,stl[i],pen, sampleFontSize );
 			}
 		}
-		QApplication::restoreOverrideCursor();
+// 		QApplication::restoreOverrideCursor();
 
-		if ( fitViewCheck->isChecked() )
+		if (loremView->isVisible() && fitViewCheck->isChecked() )
 		{
 			QRectF allrect, firstrect;
 			bool first = true;
@@ -707,18 +721,22 @@ void MainViewWidget::slotEditAll()
 void MainViewWidget::slotZoom ( int z )
 {
 	QGraphicsView * concernedView;
-	if ( sender()->objectName().contains ( "render" ) )
-	{
+// 	if ( sender()->objectName().contains ( "render" ) )
+// 	{
+// 		concernedView = loremView;
+// // 		renderZoomLabel->setText(renderZoomString.arg(z));
+// 	}
+// 	else
+// 		concernedView = abcView;
+	if(loremView_FT->isVisible())
+		concernedView = loremView_FT;
+	else if(loremView->isVisible())
 		concernedView = loremView;
-// 		renderZoomLabel->setText(renderZoomString.arg(z));
-	}
-	else
-		concernedView = abcView;
-
+	
+	double delta =  1.0 + (z/1000.0) ;
 	QTransform trans;
-	double delta = ( double ) z / 100.0;
 	trans.scale ( delta,delta );
-	concernedView->setTransform ( trans, false );
+	concernedView->setTransform ( trans, true );
 
 }
 
@@ -899,8 +917,8 @@ void MainViewWidget::slotFitChanged ( int i )
 {
 	if ( i == Qt::Unchecked )
 	{
-		renderZoom->setDisabled ( false );
-		renderZoom->setStatusTip ( tr("zoom is enabled") );
+// 		renderZoom->setDisabled ( false );
+// 		renderZoom->setStatusTip ( tr("zoom is enabled") );
 		loremView->setTransform ( QTransform ( 1,0,0,1,0,0 ),false );
 		loremView->locker = false;
 		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
@@ -908,8 +926,8 @@ void MainViewWidget::slotFitChanged ( int i )
 	}
 	else
 	{
-		renderZoom->setDisabled ( true );
-		renderZoom->setStatusTip ( tr("zoom is disabled, uncheck fit to view to enable zoom") );
+// 		renderZoom->setDisabled ( true );
+// 		renderZoom->setStatusTip ( tr("zoom is disabled, uncheck fit to view to enable zoom") );
 		loremView->locker = true;
 		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
@@ -1332,6 +1350,13 @@ void MainViewWidget::slotUpdateSView()
 		slotView(true);
 }
 
+void MainViewWidget::slotUpdateRView()
+{
+	if(loremView_FT->isVisible())
+		slotView(true);
+}
+
+
 void MainViewWidget::slotSwitchCheckState(QListWidgetItem * item)
 {
 	if(contextMenuReq)
@@ -1486,3 +1511,5 @@ void MainViewWidget::slotEditSampleText()
 {
 	typo->slotPrefsPanel(PrefsPanelDialog::PAGE_SAMPLETEXT);
 }
+
+

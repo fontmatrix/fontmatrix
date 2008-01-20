@@ -784,27 +784,36 @@ void typotek::dropEvent ( QDropEvent * event )
 	QStringList ret;
 	for ( int i = 0; i < uris.count() ; ++i )
 	{
-// 		qDebug() << "typotek::dropEvent -> "<< uris[i];
+		qDebug() << "dropped uri["<< i <<"] -> "<< uris[i];
 		QUrl url ( uris[i] );
 		if ( url.scheme() == "file" )
 		{
 			if ( uris[i].endsWith ( "ttf",Qt::CaseInsensitive ) )
 			{
-				ret << url.path();
+				ret << url.toLocalFile ();
 			}
 			else if ( uris[i].endsWith ( "otf",Qt::CaseInsensitive ) )
 			{
-				ret << url.path();
+				ret << url.toLocalFile ();
 			}
 			else if ( uris[i].endsWith ( "pfb",Qt::CaseInsensitive ) )
 			{
-				ret << url.path();
+				ret << url.toLocalFile ();
+			}
+			else
+			{
+				qDebug() << url.toLocalFile ()  << "is not a supported font file";
 			}
 		}
 		else if ( url.scheme() == "http" )
 		{
 			// TODO Get fonts over http
+			qDebug() << "Support of DragNDrop over http is sheduled";
 			statusBar()->showMessage ( tr ( "Support of DragNDrop over http is sheduled but not yet effective" ), 5000 );
+		}
+		else
+		{
+			qDebug() << "Protocol not supported";
 		}
 	}
 

@@ -153,25 +153,24 @@ void MainViewWidget::fillTree()
 			if ( topit->child ( j )->isExpanded() )
 				openKeys << topit->child ( j )->text ( 0 );
 	}
-// qDebug() << "openjey : " << openKeys.join("/");
 
 	QFont alphaFont ( "helvetica",14,QFont::Bold,false );
 
 	m_lists->fontTree->clear();
 	QMap<QString, QList<FontItem*> > keyList;
-	QList<int> initChars;
+	QMap<int, QChar> initChars;
 	for ( int i=0; i < currentFonts.count();++i )
 	{
 		keyList[currentFonts[i]->value ( currentOrdering ) ].append ( currentFonts[i] );
-		initChars << currentFonts[i]->family()[0].unicode();
+		initChars[currentFonts[i]->family()[0].unicode()] = currentFonts[i]->family()[0] ;
 	}
-	initChars = initChars.toSet().toList();
+// 	initChars = initChars.toSet().toList();
 	
 	QMap<QString, QList<FontItem*> >::const_iterator kit;
-	for ( int i = 0 ; i < initChars.count() ; ++i )
+	QMap<int, QChar>::const_iterator ic = initChars.constBegin();
+	while (  ic != initChars.constEnd() )
 	{
-		QChar firstChar ( initChars[i] );
-// 		qDebug() << "First char is " <<firstChar;
+		QChar firstChar ( ic.value() );
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( m_lists->fontTree );
 		alpha->setText ( 0, firstChar );
 		alpha->setFont ( 0,alphaFont );
@@ -268,6 +267,8 @@ void MainViewWidget::fillTree()
 		{
 			delete alpha;
 		}
+		
+		++ic;
 	}
 
 	m_lists->previewList->slotRefill ( currentFonts, fontsetHasChanged );

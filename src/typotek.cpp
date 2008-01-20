@@ -205,6 +205,8 @@ void typotek::open()
 			tali = inputTags.split ( "#" );
 		tali << "Activated_Off" ;
 	}
+	else
+		tali << "Activated_Off" ;
 
 	foreach ( QString tas, tali )
 	{
@@ -280,7 +282,16 @@ void typotek::open ( QStringList files )
 	QStringList pathList = files;
 	QStringList nameList;
 	QStringList tali;
-	tali << "Activated_Off" ;
+	if ( useInitialTags )
+	{
+		QString inputTags = QInputDialog::getText ( this,"Import tags",tr ( "Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." ) );
+
+		if ( !inputTags.isEmpty() )
+			tali = inputTags.split ( "#" );
+		tali << "Activated_Off" ;
+	}
+	else
+		tali << "Activated_Off" ;
 
 	foreach ( QString tas, tali )
 	{
@@ -306,36 +317,19 @@ void typotek::open ( QStringList files )
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
 
-
-		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
+		FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
+		if ( fitem->isValid() )
 		{
-
-			if ( fi.suffix() == "pfb" )
-			{
-				QFile fafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
-				QFileInfo iafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
-				if ( fafm.exists() )
-					fafm.copy ( ownDir.absolutePath() + "/" + iafm.fileName() );
-			}
-			FontItem *fitem = new FontItem ( ownDir.absolutePath() + "/" + fi.fileName() );
-			if ( fitem->isValid() )
-			{
-				fitem->setTags ( tali );
-				fontMap.append ( fitem );
-				realFontMap[fitem->name() ] = fitem;
-				nameList << fitem->fancyName();
-			}
-			else
-			{
-				QFile::remove ( ownDir.absolutePath() + "/" + fi.fileName() ) ;
-				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
-				statusBar()->showMessage ( errorFont );
-				nameList << "__FAILEDTOLOAD__" + fi.fileName();
-			}
+			fitem->setTags ( tali );
+			fontMap.append ( fitem );
+			realFontMap[fitem->name() ] = fitem;
+			nameList << fitem->fancyName();
 		}
 		else
 		{
-			qDebug()<< "Unable to copy " << fi.fileName() ;
+			QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
+			statusBar()->showMessage ( errorFont );
+			nameList << "__FAILEDTOLOAD__" + fi.fileName();
 		}
 	}
 

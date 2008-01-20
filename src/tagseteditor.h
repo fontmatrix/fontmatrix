@@ -31,7 +31,7 @@ class TagSetEditor :  public QDialog, private Ui::TagSetDialog
 {
 		Q_OBJECT
 	public:
-		TagSetEditor();
+		TagSetEditor(QWidget *parent);
 
 		~TagSetEditor();
 	private:

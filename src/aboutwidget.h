@@ -30,7 +30,7 @@ class AboutWidget : public QDialog, private Ui::About
 {
 		Q_OBJECT
 	public:
-		AboutWidget ( );
+		AboutWidget (QWidget *parent );
 
 		~AboutWidget();
 

@@ -589,6 +589,7 @@ void MainViewWidget::slotSearch()
 	m_lists->fontTree->clear();
 	fontsetHasChanged = true;
 
+	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	QString fs ( m_lists->searchString->text() );
 	QString ff ( "search_%1" );
 	QString sensitivity ( "INSENS" );
@@ -596,7 +597,7 @@ void MainViewWidget::slotSearch()
 	{
 		sensitivity = "SENS";
 	}
-
+	QApplication::restoreOverrideCursor();
 	currentFonts = typo->getFonts ( fs,ff.arg ( sensitivity ) ) ;
 	currentOrdering = "family";
 	fillTree();

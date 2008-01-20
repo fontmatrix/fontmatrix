@@ -22,7 +22,8 @@
 
 #include <QDebug>
 
-TagSetEditor::TagSetEditor()
+TagSetEditor::TagSetEditor(QWidget *parent)
+	:QDialog(parent)
 {
 	setupUi(this);
 	m_typo = typotek::getInstance();

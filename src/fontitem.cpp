@@ -183,7 +183,7 @@ FontItem::FontItem ( QString path )
 	sceneList.clear();
 
 	//fill cache and avoid a further call to ensureface
-	infoText();
+// 	infoText();
 
 	m_valid = true;
 	releaseFace();
@@ -1504,7 +1504,7 @@ void FontItem::setTags ( QStringList l )
 {
 	m_tags = l;
 	// overwrite cached info
-	infoText ( false );
+// 	infoText ( false );
 }
 
 /// When glyphsView is resized we wantto adjust the number of columns

@@ -354,7 +354,7 @@ bool typotek::save()
 
 void typotek::about()
 {
-	AboutWidget aabout;
+	AboutWidget aabout(this);
 	aabout.exec();
 }
 
@@ -702,7 +702,7 @@ QList<FontItem*> typotek::getCurrentFonts()
 
 void typotek::popupTagsetEditor()
 {
-	TagSetEditor ed;
+	TagSetEditor ed(this);
 	connect ( &ed,SIGNAL ( signalNewTagset() ),theMainView,SLOT ( slotReloadTagsetList() ) );
 	ed.exec();
 	disconnect ( &ed,SIGNAL ( signalNewTagset() ),theMainView,SLOT ( slotReloadTagsetList() ) );

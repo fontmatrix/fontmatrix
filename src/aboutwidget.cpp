@@ -19,7 +19,8 @@
  ***************************************************************************/
 #include "aboutwidget.h"
 
-AboutWidget::AboutWidget()
+AboutWidget::AboutWidget(QWidget *parent)
+	:QDialog(parent)
 {
 	setupUi ( this );
 // 	theText->setOpenExternalLinks ( true );

@@ -61,8 +61,8 @@
         <file alias="fontmatrix">messages/fontmatrix_nl.qm</file>
     </qresource>
     
-   <qresource prefix="/texts" lang="no" >
-        <file alias="fontmatrix">messages/fontmatrix_no.qm</file>
+   <qresource prefix="/texts" lang="nb" >
+        <file alias="fontmatrix">messages/fontmatrix_nb.qm</file>
     </qresource>
     
     <qresource prefix="/texts" lang="sr" >

@@ -5,3 +5,4 @@ ls ../*.h > lupdate.files
 ls ../*.cpp >> lupdate.files
 ls ../*.ui >> lupdate.files
 for i in *.ts; do lupdate `cat lupdate.files ` -ts "$i" ; done
+for i in *.ts; do lrelease -nounfinished "$i" -qm `basename $i .ts`.qm ; done

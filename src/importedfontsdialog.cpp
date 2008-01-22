@@ -20,8 +20,8 @@
 #include "importedfontsdialog.h"
 #include <QListWidgetItem>
 
-ImportedFontsDialog::ImportedFontsDialog(QStringList fontlist)
- : QDialog()
+ImportedFontsDialog::ImportedFontsDialog(QWidget * parent, QStringList fontlist)
+ : QDialog(parent)
 {
 	setupUi(this);
 // 	fontList->addItems(fontlist);
@@ -40,13 +40,17 @@ ImportedFontsDialog::ImportedFontsDialog(QStringList fontlist)
 		it->setTextColor(success ? Qt::black : Qt::red);
 		fontList->addItem(it);
 	}
-	label->setText(QString("Number of Imported Fonts ") + QString::number(fontList->count() - buggyFonts));
-// 	exec();
+	label->setText(tr("Number of Imported Fonts ") + QString::number(fontList->count() - buggyFonts));
 }
 
-
-ImportedFontsDialog::~ImportedFontsDialog()
+ImportedFontsDialog::~ ImportedFontsDialog()
 {
+	/* what’s up? */
 }
+
+
+
+
+
 
 

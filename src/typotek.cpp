@@ -268,7 +268,7 @@ void typotek::open()
 	progress.close();
 
 	// The User needs and deserves to know what fonts hve been imported
-	ImportedFontsDialog ifd ( nameList );
+	ImportedFontsDialog ifd ( this, nameList );
 	ifd.exec();
 
 	theMainView->slotReloadFontList();
@@ -336,7 +336,7 @@ void typotek::open ( QStringList files )
 	progress.close();
 
 	// The User needs and deserves to know what fonts hve been imported
-	ImportedFontsDialog ifd ( nameList );
+	ImportedFontsDialog ifd ( this, nameList );
 	ifd.exec();
 
 	theMainView->slotReloadFontList();

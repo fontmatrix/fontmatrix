@@ -51,9 +51,9 @@ struct TextElement
 	- PageNumber
 	- ...
 	*/
-	bool internal;
+// 	bool internal; OBSOLETE - substitution will be regexpizated ##KEYWORD##
 	TextElement(){}
-	TextElement ( QString elem, bool i, bool f ) :e ( elem ), internal ( i ){}
+	TextElement ( QString elem, /*bool i,*/ bool f ) :e ( elem )/*, internal ( i )*/{}
 };
 
 struct FontBookContext

@@ -76,8 +76,8 @@ class FontItem : public QObject
 		bool m_isOpenType;
 		FmOtf *otf;
 
-		QString m_author;
-		QString m_foundry;
+// 		QString m_author;
+// 		QString m_foundry;
 
 		QStringList m_tags;
 		QString m_cacheInfo;
@@ -138,16 +138,19 @@ class FontItem : public QObject
 		static FT_Library theLibrary;
 		static QMap<FT_Encoding, QString> charsetMap;
 
-		QString path() {return m_path;};
-		QString afm() {return m_afm;};
-		void setAfm ( QString apath ) {m_afm = apath;};
-		QString faceFlags() {return m_faceFlags;};
-		QString family() {return m_family;};
-		QString variant() {return m_variant;};
-		QStringList tags() {return m_tags;};
+		QString path() {return m_path;}
+		QString afm() {return m_afm;}
+		void setAfm ( QString apath ) {m_afm = apath;}
+		QString faceFlags() {return m_faceFlags;}
+		QString family() {return m_family;}
+		QString variant() {return m_variant;}
+		QStringList tags() {return m_tags;}
+		int glyphsCount() {return m_numGlyphs;}
+		QString type(){return m_type;}
+		QStringList charmaps(){return m_charsets;}
 		void setTags ( QStringList l );
 		QString name();
-		QString fancyName() {return m_family + " " + m_variant;};
+		QString fancyName() {return m_family + " " + m_variant;}
 		QString infoText ( bool fromcache = true );
 		QString infoGlyph ( int index, int code = 0 );
 		QString glyphName(int codepoint);

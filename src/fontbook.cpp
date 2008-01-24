@@ -17,6 +17,8 @@
 #include <QDebug>
 #include <QObject>
 #include <QProgressDialog>
+#include <QSvgRenderer>
+#include <QGraphicsSvgItem>
 
 FontBook::FontBook()
 {
@@ -288,6 +290,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 		return;
 	}
 
+	QMap<QString, QSvgRenderer*> svgRendered;
 	QMap<QString, QFont> qfontCache; // abit of optim.
 	for ( uint i = 0; i < conList.length(); ++i )
 	{
@@ -296,21 +299,50 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 		QString levelString = context.toElement().attributeNode ( "level" ).value();
 
 		fbc.textElement.e = context.namedItem ( "text" ).toElement().text();
-// 		QString textInternalString = context.namedItem ( "text" ).toElement().attributeNode ( "internal" ).value();
-// 		fbc.textElement.internal = ( textInternalString == "true" ) ? true : false;
-
-		QDomNode tStyle =  context.namedItem ( "textstyle" );
-		fbc.textStyle.name = tStyle.toElement().attributeNode ( "name" ).value();
-		fbc.textStyle.font = tStyle.namedItem ( "font" ).toElement().text();
-		fbc.textStyle.fontsize = QString ( tStyle.namedItem ( "fontsize" ).toElement().text() ).toDouble() ;
-
-		qfontCache[fbc.textStyle.name] = QFont ( fbc.textStyle.font,fbc.textStyle.fontsize );
-
-		fbc.textStyle.lineheight = QString ( tStyle.namedItem ( "lineheight" ).toElement().text() ).toDouble() ;
-		fbc.textStyle.margin_top = QString ( tStyle.namedItem ( "margintop" ).toElement().text() ).toDouble() ;
-		fbc.textStyle.margin_left = QString ( tStyle.namedItem ( "marginleft" ).toElement().text() ).toDouble() ;
-		fbc.textStyle.margin_bottom = QString ( tStyle.namedItem ( "marginbottom" ).toElement().text() ).toDouble() ;
-		fbc.textStyle.margin_right = QString ( tStyle.namedItem ( "marginright" ).toElement().text() ).toDouble() ;
+		if(!fbc.textElement.e.isEmpty())
+		{
+	// 		QString textInternalString = context.namedItem ( "text" ).toElement().attributeNode ( "internal" ).value();
+	// 		fbc.textElement.internal = ( textInternalString == "true" ) ? true : false;
+			fbc.textElement.valid = true;
+					
+			QDomNode tStyle =  context.namedItem ( "textstyle" );
+			fbc.textStyle.name = tStyle.toElement().attributeNode ( "name" ).value();
+			fbc.textStyle.font = tStyle.namedItem ( "font" ).toElement().text();
+			fbc.textStyle.fontsize = QString ( tStyle.namedItem ( "fontsize" ).toElement().text() ).toDouble() ;
+	
+			qfontCache[fbc.textStyle.name] = QFont ( fbc.textStyle.font,fbc.textStyle.fontsize );
+	
+			fbc.textStyle.lineheight = QString ( tStyle.namedItem ( "lineheight" ).toElement().text() ).toDouble() ;
+			fbc.textStyle.margin_top = QString ( tStyle.namedItem ( "margintop" ).toElement().text() ).toDouble() ;
+			fbc.textStyle.margin_left = QString ( tStyle.namedItem ( "marginleft" ).toElement().text() ).toDouble() ;
+			fbc.textStyle.margin_bottom = QString ( tStyle.namedItem ( "marginbottom" ).toElement().text() ).toDouble() ;
+			fbc.textStyle.margin_right = QString ( tStyle.namedItem ( "marginright" ).toElement().text() ).toDouble() ;
+		}
+		
+		QDomNode graphicNode = context.namedItem ( "graphic" );
+		if(graphicNode.isElement())
+		{
+// 			QDomDocumentFragment svgFrag = aTemplate.createDocumentFragment();
+			QDomNode svgNode = graphicNode.toElement().namedItem("svg").cloneNode(true);
+// 			svgFrag.appendChild(svgNode);
+// 			if(svgNode.isElement())
+			{
+				fbc.graphic.name =  graphicNode.toElement().attributeNode("name").value();
+				fbc.graphic.x = QString ( graphicNode.toElement().attributeNode("xpos").value()).toDouble();
+				fbc.graphic.y = QString ( graphicNode.toElement().attributeNode("ypos").value()).toDouble();
+				
+				QDomDocument svgDoc;
+				QDomNode svg = svgDoc.importNode(svgNode,true);
+				svgDoc.appendChild(svg);
+				QString svgString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" + svgDoc.toString(0));
+				QSvgRenderer *doc = new QSvgRenderer( svgString.toUtf8());
+				svgRendered[fbc.graphic.name] = doc;
+				fbc.graphic.valid = true;
+// 				qDebug() << fbc.graphic.svg;
+			}
+			
+		}
+		
 
 		if ( levelString == "page" )
 			conPage << fbc;
@@ -332,6 +364,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 	QPainter thePainter ( &thePrinter );
 	QPointF thePos ( 0,0 );
 	QList<FontItem*> renderedFont;
+	QList<QGraphicsSvgItem*> renderedGraphic;
 
 
 
@@ -356,25 +389,41 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 	QMap<QString,QString> pageReplace;
 	QMap<QString,QString> familyReplace;
 	QMap<QString,QString> subfamilyReplace;
+	
+	QString currentFamily;
+	QString currentSubfamily;
 
 	for ( int pIndex = 0; pIndex < conPage.count(); ++pIndex )
 	{
-		QStringList pagelines ;
-		QStringList tmplines = conPage[pIndex].textElement.e.split ( "\n" );
-		pageReplace["##PAGENUMBER##"] = pageNumStr;
-		for ( int t = 0; t < tmplines.count(); ++t )
+		if(conPage[pIndex].textElement.valid)
 		{
-
-			QString place = tmplines[t];
-			for ( QMap<QString,QString>::const_iterator repIt = pageReplace.begin(); repIt != pageReplace.end();   ++repIt )
-				place.replace ( repIt.key(),repIt.value(),Qt::CaseSensitive );
-			pagelines << place;
+			QStringList pagelines ;
+			QStringList tmplines = conPage[pIndex].textElement.e.split ( "\n" );
+			pageReplace["##PAGENUMBER##"] = pageNumStr;
+			pageReplace["##FAMILY##"] = currentFamily;
+			pageReplace["##SUBFAMILY##"] = currentSubfamily;
+			for ( int t = 0; t < tmplines.count(); ++t )
+			{
+	
+				QString place = tmplines[t];
+				for ( QMap<QString,QString>::const_iterator repIt = pageReplace.begin(); repIt != pageReplace.end();   ++repIt )
+					place.replace ( repIt.key(),repIt.value(),Qt::CaseSensitive );
+				pagelines << place;
+			}
+	// 			QFont pFont ( conPage[pIndex].textStyle.font, conPage[pIndex].textStyle.fontsize );
+			for ( int pl = 0; pl < pagelines.count(); ++pl )
+			{
+				QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
+				ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
+			}
 		}
-// 			QFont pFont ( conPage[pIndex].textStyle.font, conPage[pIndex].textStyle.fontsize );
-		for ( int pl = 0; pl < pagelines.count(); ++pl )
+		if(conPage[pIndex].graphic.valid)
 		{
-			QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
-			ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
+				QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
+				svgIt->setSharedRenderer(svgRendered[conPage[pIndex].graphic.name]);
+				theScene.addItem(svgIt);
+				svgIt->setPos(conPage[pIndex].graphic.x, conPage[pIndex].graphic.y);
+				renderedGraphic << svgIt;
 		}
 	}
 
@@ -389,7 +438,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			progress.setLabelText ( kit.key() );
 			progress.setValue ( ++progressindex );
 		}
-
+		currentFamily = kit.key();
 		for ( int elemIndex = 0; elemIndex < conFamily.count() ; ++elemIndex )
 		{
 			QStringList familylines;
@@ -419,7 +468,10 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				thePos.ry() = 0;
 				for ( int  d = 0; d <  renderedFont.count() ; ++d )
 					renderedFont[d]->deRenderAll();
+				for ( int  d = 0; d < renderedGraphic.count(); ++d)
+					delete renderedGraphic[d];
 				renderedFont.clear();
+				renderedGraphic.clear();
 				theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
 
 				thePrinter.newPage();
@@ -431,6 +483,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					QStringList pagelines ;
 					QStringList tmplines = conPage[pIndex].textElement.e.split ( "\n" );
 					pageReplace["##PAGENUMBER##"] = pageNumStr;
+					pageReplace["##FAMILY##"] = currentFamily;
+					pageReplace["##SUBFAMILY##"] = currentSubfamily;
 					for ( int t = 0; t < tmplines.count(); ++t )
 					{
 
@@ -467,7 +521,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			theFont->setFTRaster ( false );
 			theFont->setRTL ( false );
 			/// We are in a SUBFAMILY context
-			
+			currentSubfamily = theFont->variant();
 			for ( int elemIndex = 0; elemIndex < conSubfamily.count() ; ++elemIndex )
 			{
 				// First, is there enough room for this element
@@ -506,7 +560,10 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					thePos.ry() = 0;
 					for ( int  d = 0; d <  renderedFont.count() ; ++d )
 						renderedFont[d]->deRenderAll();
+					for ( int  d = 0; d < renderedGraphic.count(); ++d)
+						delete renderedGraphic[d];
 					renderedFont.clear();
+					renderedGraphic.clear();
 					theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
 
 					thePrinter.newPage();
@@ -518,6 +575,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						QStringList pagelines ;
 						QStringList tmplines = conPage[pIndex].textElement.e.split ( "\n" );
 						pageReplace["##PAGENUMBER##"] = pageNumStr;
+						pageReplace["##FAMILY##"] = currentFamily;
+						pageReplace["##SUBFAMILY##"] = currentSubfamily;
 						for ( int t = 0; t < tmplines.count(); ++t )
 						{
 
@@ -578,6 +637,10 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			renderedFont[d]->deRenderAll();
 
 		}
+		for ( int  d = 0; d < renderedGraphic.count(); ++d)
+			delete renderedGraphic[d];
+		renderedFont.clear();
+		renderedGraphic.clear();
 
 	}
 }

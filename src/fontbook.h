@@ -42,6 +42,7 @@ struct TextElementStyle
 struct TextElement
 {
 	QString e;
+	bool valid;
 	/**
 	Has to be set if "e" must be substituted with a contextual info
 	available infos depend of level and are :
@@ -50,16 +51,33 @@ struct TextElement
 	- Encoding
 	- PageNumber
 	- ...
+	At some point, I’ll provide a reference.
 	*/
 // 	bool internal; OBSOLETE - substitution will be regexpizated ##KEYWORD##
-	TextElement(){}
-	TextElement ( QString elem, /*bool i,*/ bool f ) :e ( elem )/*, internal ( i )*/{}
+	TextElement():valid(false){}
+	TextElement ( QString elem) :e ( elem ), valid(true){}
+};
+
+/**
+GraphicElement will be made by
+<graphic xpos="0.0" ypos="0.0"><svg></svg></graphic>
+where svg comes from regular svg file.
+*/
+struct GraphicElement
+{
+	QString name;
+	double x,y;
+	QString svg; // OBSOLETE :)
+	bool valid;
+	GraphicElement(QString aName, QString svgstring, double xpos,double ypos):name(aName),svg(svgstring.startsWith("<?xml") ? svgstring : ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" + svgstring)),x(xpos),y(ypos),valid(true){}
+	GraphicElement():name("noname"),svg(""),x(0.0),y(0.0),valid(false){}
 };
 
 struct FontBookContext
 {
 	TextElement textElement;
 	TextElementStyle textStyle;
+	GraphicElement graphic;
 /*	
 	enum FBCLevel{PAGE, FAMILY, SUBFAMILY};
 	

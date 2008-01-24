@@ -499,6 +499,14 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
 						ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
 					}
+					if(conPage[pIndex].graphic.valid)
+					{
+						QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
+						svgIt->setSharedRenderer(svgRendered[conPage[pIndex].graphic.name]);
+						theScene.addItem(svgIt);
+						svgIt->setPos(conPage[pIndex].graphic.x, conPage[pIndex].graphic.y);
+						renderedGraphic << svgIt;
+					}
 				}
 			}
 
@@ -508,6 +516,14 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				QGraphicsTextItem * ti = theScene.addText ( familylines[fl], qfontCache[conFamily[elemIndex].textStyle.name] );
 				ti->setPos ( conFamily[elemIndex].textStyle.margin_left, thePos.y() +
 				             ( conFamily[elemIndex].textStyle.margin_top + ( fl * conFamily[elemIndex].textStyle.lineheight ) ) );
+			}
+			if(conFamily[elemIndex].graphic.valid)
+			{
+				QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
+				svgIt->setSharedRenderer(svgRendered[conFamily[elemIndex].graphic.name]);
+				theScene.addItem(svgIt);
+				svgIt->setPos(conFamily[elemIndex].graphic.x, conFamily[elemIndex].graphic.y + thePos.y());
+				renderedGraphic << svgIt;
 			}
 
 			thePos.ry() += needed;
@@ -591,6 +607,14 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 							QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
 							ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
 						}
+						if(conPage[pIndex].graphic.valid)
+						{
+							QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
+							svgIt->setSharedRenderer(svgRendered[conPage[pIndex].graphic.name]);
+							theScene.addItem(svgIt);
+							svgIt->setPos(conPage[pIndex].graphic.x, conPage[pIndex].graphic.y);
+							renderedGraphic << svgIt;
+						}
 					}
 				}
 // 				else
@@ -620,6 +644,14 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					}
 				}
 
+				if(conSubfamily[elemIndex].graphic.valid)
+				{
+					QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
+					svgIt->setSharedRenderer(svgRendered[conSubfamily[elemIndex].graphic.name]);
+					theScene.addItem(svgIt);
+					svgIt->setPos(conSubfamily[elemIndex].graphic.x, conSubfamily[elemIndex].graphic.y + thePos.y());
+					renderedGraphic << svgIt;
+				}
 				theFont->setFTRaster ( oldRast );
 				thePos.ry() += needed;
 				

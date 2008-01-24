@@ -183,6 +183,10 @@ void typotek::open()
 	QStringList dirList( fontmatrix::exploreDirs(dir,0) );
 	qDebug() << dirList.join ( "\n" );
 	
+	QStringList yetHereFonts;
+	for(int i=0;i < fontMap.count() ; ++i)
+		yetHereFonts << fontMap[i]->path();
+	
 	QStringList filters;
 	filters << "*.otf" << "*.pfb" << "*.ttf" ;
 	foreach ( QString dr, dirList )
@@ -191,7 +195,8 @@ void typotek::open()
 		QFileInfoList fil= d.entryInfoList ( filters );
 		foreach ( QFileInfo fp, fil )
 		{
-			pathList <<  fp.absoluteFilePath();
+			if(!yetHereFonts.contains(fp.absoluteFilePath()))
+				pathList <<  fp.absoluteFilePath();
 		}
 	}
 	QStringList tali;
@@ -302,6 +307,14 @@ void typotek::open ( QStringList files )
 		}
 	}
 
+	
+	for(int i=0;i < fontMap.count() ; ++i)
+	{
+		if(pathList.contains( fontMap[i]->path()))
+			pathList.removeAll(fontMap[i]->path());
+		
+	}
+	
 	QProgressDialog progress ( tr ( "Importing font files... " ),tr ( "cancel" ), 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 	progress.setAutoReset ( false );

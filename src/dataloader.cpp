@@ -90,9 +90,12 @@ void DataLoader::load()
 		{
 			tl << taglist.at(ti).toElement().text();
 		}
-		m_typo->addTagMapEntry(fontName,tl);
-		collectedTags << tl;
-		m_fontList << fontfile;
+		if(!m_fontList.contains(fontfile))
+		{
+			m_typo->addTagMapEntry(fontName,tl);
+			collectedTags << tl;
+			m_fontList << fontfile;
+		}
 	}
 	
 	//loading tagsets

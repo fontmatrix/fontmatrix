@@ -159,6 +159,12 @@ FontItem::FontItem ( QString path )
 				m_afm ="";
 		}
 	}
+	
+	if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
+	{
+		m_isOpenType = true;
+	}
+
 // 	if ( infopath.suffix() == "otf" ||  infopath.suffix() == "OTF")
 // 	{
 // 		m_isOpenType = true; // A bit rough, perhaps!
@@ -1100,9 +1106,9 @@ QString FontItem::infoText ( bool fromcache )
 
 	if ( moreInfo.isEmpty() )
 	{
-		if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
+		if ( m_isOpenType = true /*testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" */)
 		{
-			m_isOpenType = true;
+			
 			moreInfo_sfnt();
 		}
 		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )

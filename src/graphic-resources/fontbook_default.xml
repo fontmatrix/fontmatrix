@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
 	<name>The default Fontmatrix fontbook template</name>
-	<paperwidth>500</paperwidth>
-	<paperheight>800</paperheight>
+	<papersize>A4</papersize>
 	
 	<context level="page"><!-- page | family | subfamily -->
 		<text>##PAGENUMBER##</text>

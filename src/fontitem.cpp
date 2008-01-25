@@ -412,7 +412,7 @@ QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 
 
 /// Nature line
-void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize ,bool record )
+void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double fsize , double zindex ,bool record )
 {
 	if ( spec.isEmpty() )
 		return;
@@ -463,7 +463,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			if ( !m_RTL )
 				pen.rx() += glyph->data ( 4 ).toDouble() * scalefactor;
 
-			glyph->setZValue ( 100.0 );
+			glyph->setZValue ( zindex );
 		}
 	}
 	else
@@ -501,7 +501,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
 			glyph->setPos ( pen );
-			glyph->setZValue ( 100.0 );
+			glyph->setZValue ( zindex );
 			glyph->setData ( 1,"glyph" );
 
 			if ( !m_RTL )

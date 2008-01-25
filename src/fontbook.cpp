@@ -22,6 +22,32 @@
 
 FontBook::FontBook()
 {
+	mapPSize[ "A0" ] = QPrinter::A0 ;
+	mapPSize[ "A1" ] = QPrinter::A1 ;
+	mapPSize[ "A2" ] = QPrinter::A2 ;
+	mapPSize[ "A3" ] = QPrinter::A3 ;
+	mapPSize[ "A4" ] = QPrinter::A4 ;
+	mapPSize[ "A5" ] = QPrinter::A5 ;
+	mapPSize[ "A6" ] = QPrinter::A6 ;
+	mapPSize[ "A7" ] = QPrinter::A7 ;
+	mapPSize[ "A8" ] = QPrinter::A8 ;
+	mapPSize[ "A9" ] = QPrinter::A9 ;
+	mapPSize[ "B0" ] = QPrinter::B0 ;
+	mapPSize[ "B1" ] = QPrinter::B1 ;
+	mapPSize[ "B10" ] = QPrinter::B10 ;
+	mapPSize[ "B2" ] = QPrinter::B2 ;
+	mapPSize[ "B3" ] = QPrinter::B3 ;
+	mapPSize[ "B4" ] = QPrinter::B4 ;
+	mapPSize[ "B5" ] = QPrinter::B5 ;
+	mapPSize[ "B6" ] = QPrinter::B6 ;
+	mapPSize[ "B7" ] = QPrinter::B7 ;
+	mapPSize[ "B8" ] = QPrinter::B8 ;
+	mapPSize[ "B9" ] = QPrinter::B9 ;
+	mapPSize[ "Letter" ] = QPrinter::Letter ;
+	mapPSize[ "Tabloid" ] = QPrinter::Tabloid ;
+	mapPSize[ "Custom" ] = QPrinter::Custom ;
+
+
 }
 
 
@@ -273,7 +299,7 @@ void FontBook::doBook()
 
 void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 {
-	// TODO
+	
 
 	/**
 	We build lists of contexts
@@ -309,7 +335,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			fbc.textStyle.name = tStyle.toElement().attributeNode ( "name" ).value();
 			fbc.textStyle.font = tStyle.namedItem ( "font" ).toElement().text();
 			fbc.textStyle.fontsize = QString ( tStyle.namedItem ( "fontsize" ).toElement().text() ).toDouble() ;
-	
+			fbc.textStyle.color = QColor( tStyle.namedItem ( "color" ).toElement().text() );
 			qfontCache[fbc.textStyle.name] = QFont ( fbc.textStyle.font,fbc.textStyle.fontsize );
 	
 			fbc.textStyle.lineheight = QString ( tStyle.namedItem ( "lineheight" ).toElement().text() ).toDouble() ;
@@ -351,16 +377,21 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 		else if ( levelString == "subfamily" )
 			conSubfamily << fbc;
 	}
-
-	double paperWidth  = QString ( aTemplate.documentElement () .namedItem ( "paperwidth" ).toElement().text() ).toDouble();
-	double paperHeight = QString ( aTemplate.documentElement () .namedItem ( "paperheight" ).toElement().text() ).toDouble();
-
+	
 	QPrinter thePrinter ( QPrinter::HighResolution );
+	QString paperSize = QString (aTemplate.documentElement().namedItem( "papersize" ).toElement().text()).toUpper();
 	thePrinter.setOutputFormat ( QPrinter::PdfFormat );
+	thePrinter.setCreator("Fontmatrix " + QString::number(FONTMATRIX_VERSION_MAJOR) + "." + QString::number(FONTMATRIX_VERSION_MINOR));
+	thePrinter.setDocName("A font book");
 	thePrinter.setOutputFileName ( outputFilePath );
+	thePrinter.setPageSize ( mapPSize[paperSize] );
+	thePrinter.setFullPage ( true );
+	qDebug() << thePrinter.pageSize() << thePrinter.pageRect() << thePrinter.paperRect() << thePrinter.resolution() ;
+	double paperWidth  = thePrinter.pageRect().width() / thePrinter.resolution() * 72;
+	double paperHeight = thePrinter.pageRect().height() / thePrinter.resolution() * 72;
+	qDebug()<< paperSize << paperWidth << paperHeight;
 	QGraphicsScene theScene;
-	QRectF pageRect ( 0,0,paperWidth,  paperHeight );
-	theScene.setSceneRect ( pageRect );
+	theScene.setSceneRect ( 0,0,paperWidth,paperHeight );
 	QPainter thePainter ( &thePrinter );
 	QPointF thePos ( 0,0 );
 	QList<FontItem*> renderedFont;
@@ -392,6 +423,15 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 	
 	QString currentFamily;
 	QString currentSubfamily;
+	
+	/** Z policy is
+		PAGE_SVG 1
+		PAGE_TEXT 10
+		FAMILY_SVG 100
+		FAMILY_TEXT 1000
+		SUBFAMILY_SVG 10000
+		SUBFAMILY_TEXT 100000
+	*/
 
 	for ( int pIndex = 0; pIndex < conPage.count(); ++pIndex )
 	{
@@ -415,6 +455,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			{
 				QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
 				ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
+				ti->setZValue(10);
+				ti->setDefaultTextColor ( conPage[pIndex].textStyle.color );
 			}
 		}
 		if(conPage[pIndex].graphic.valid)
@@ -424,6 +466,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				theScene.addItem(svgIt);
 				svgIt->setPos(conPage[pIndex].graphic.x, conPage[pIndex].graphic.y);
 				renderedGraphic << svgIt;
+				svgIt->setZValue(1);
 		}
 	}
 
@@ -498,6 +541,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					{
 						QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
 						ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
+						ti->setZValue(10);
+						ti->setDefaultTextColor( conPage[pIndex].textStyle.color);
 					}
 					if(conPage[pIndex].graphic.valid)
 					{
@@ -506,6 +551,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						theScene.addItem(svgIt);
 						svgIt->setPos(conPage[pIndex].graphic.x, conPage[pIndex].graphic.y);
 						renderedGraphic << svgIt;
+						svgIt->setZValue(1);
 					}
 				}
 			}
@@ -516,6 +562,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				QGraphicsTextItem * ti = theScene.addText ( familylines[fl], qfontCache[conFamily[elemIndex].textStyle.name] );
 				ti->setPos ( conFamily[elemIndex].textStyle.margin_left, thePos.y() +
 				             ( conFamily[elemIndex].textStyle.margin_top + ( fl * conFamily[elemIndex].textStyle.lineheight ) ) );
+				ti->setZValue(1000);
+				ti->setDefaultTextColor(conFamily[elemIndex].textStyle.color);
 			}
 			if(conFamily[elemIndex].graphic.valid)
 			{
@@ -524,6 +572,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				theScene.addItem(svgIt);
 				svgIt->setPos(conFamily[elemIndex].graphic.x, conFamily[elemIndex].graphic.y + thePos.y());
 				renderedGraphic << svgIt;
+				svgIt->setZValue(100);
 			}
 
 			thePos.ry() += needed;
@@ -561,7 +610,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					sublines << subplace;
 				}
 // 				qDebug() <<"C";
-				double available = paperHeight - thePos.y();
+				double available =  paperHeight - thePos.y();
 				double needed = ( sublines.count() * conSubfamily[elemIndex].textStyle.lineheight )
 				                + conSubfamily[elemIndex].textStyle.margin_top
 				                + conSubfamily[elemIndex].textStyle.margin_bottom;
@@ -606,6 +655,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						{
 							QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
 							ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
+							ti->setZValue(10);
+							ti->setDefaultTextColor(conPage[pIndex].textStyle.color);
 						}
 						if(conPage[pIndex].graphic.valid)
 						{
@@ -614,6 +665,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 							theScene.addItem(svgIt);
 							svgIt->setPos(conPage[pIndex].graphic.x, conPage[pIndex].graphic.y);
 							renderedGraphic << svgIt;
+							svgIt->setZValue(1);
 						}
 					}
 				}
@@ -630,7 +682,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						theFont->renderLine ( &theScene,
 						                      sublines[sl],
 						                      pen ,
-						                      conSubfamily[elemIndex].textStyle.fontsize );
+						                      conSubfamily[elemIndex].textStyle.fontsize, 10000 );
+						//TODO adding color support for text sample
 					}
 					renderedFont.append ( theFont );
 				}
@@ -641,6 +694,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					{
 						QGraphicsTextItem * ti = theScene.addText ( sublines[sl], qfontCache[ conSubfamily[elemIndex].textStyle.name] );
 						ti->setPos ( conSubfamily[elemIndex].textStyle.margin_left, thePos.y() + ( conSubfamily[elemIndex].textStyle.margin_top + ( sl * conSubfamily[elemIndex].textStyle.lineheight ) ) );
+						ti->setZValue(10000);
+						ti->setDefaultTextColor(conSubfamily[elemIndex].textStyle.color);
 					}
 				}
 
@@ -651,6 +706,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					theScene.addItem(svgIt);
 					svgIt->setPos(conSubfamily[elemIndex].graphic.x, conSubfamily[elemIndex].graphic.y + thePos.y());
 					renderedGraphic << svgIt;
+					svgIt->setZValue(100000);
 				}
 				theFont->setFTRaster ( oldRast );
 				thePos.ry() += needed;

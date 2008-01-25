@@ -13,6 +13,9 @@
 #define FONTBOOK_H
 
 #include <QDomDocument>
+#include <QColor>
+#include <QPrinter>
+#include <QMap>
 
 /**
 	@author Pierre Marchand <pierremarc@oep-h.com>
@@ -26,9 +29,10 @@ struct TextElementStyle
 	QString font; // _FONTMATRIX_ is reserved
 	double fontsize;
 	double lineheight;
+	QColor color;
 	double margin_top,margin_left,margin_bottom,margin_right;
 	TextElementStyle () {}
-	TextElementStyle ( QString n, QString f, double fs, double lh, double mt, double ml, double mb, double mr ) :
+	TextElementStyle ( QString n, QString f, double fs, double lh, double mt, double ml, double mb, double mr, QColor co) :
 			name(n),
 			font ( f ),
 			fontsize ( fs ),
@@ -36,7 +40,8 @@ struct TextElementStyle
 			margin_top ( mt ),
 			margin_left ( ml ),
 			margin_bottom ( mb ),
-			margin_right ( mr ) {}
+			margin_right ( mr ),
+			color ( co ) {}
 };
 
 struct TextElement
@@ -95,6 +100,7 @@ class FontBook
 	private:
 		
 		QString outputFilePath;
+		QMap<QString, QPrinter::PageSize > mapPSize;
 		void doBookFromTemplate ( const QDomDocument &aTemplate );
 };
 

@@ -77,10 +77,11 @@ class typotek:public QMainWindow
 		void slotUseInitialTags(bool isEnabled);
 		void slotPrefsPanelDefault();
 		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
+		void relayStartingStepIn(QString, int, QColor);
 		
 	signals:
 		void tagAdded(QString);
-		void relayStartingStep(QString, int, QColor);
+		void relayStartingStepOut(QString, int, QColor);
 // 		void wordHasChanged(QString);
 
 	private:

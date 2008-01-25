@@ -27,6 +27,8 @@
 #include <QStatusBar>
 #include <QDebug>
 
+extern bool __FM_SHOW_FONTLOADED;
+
 DataLoader::DataLoader(QFile *file )
 	: m_file(file)
 {
@@ -46,10 +48,6 @@ void DataLoader::load()
 
 	if ( !m_file->open ( QFile::ReadOnly ) )
 	{
-		// As it causes confusion for first users, we just silently consider it’s first time and that’s it
-// 		QMessageBox::warning (0, QString ( "Fontmatrix" ),
-// 				       QString ( "Seems that is the first time you run Fontmatrix, if not there is a problem loading the data file %1." ).arg(m_file->fileName()) );
-// 		
 		// Ensure that there are default samples and preview text
 		m_typo->setSampleText( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.");	
 		m_typo->setWord("hamburgefonstiv", false);
@@ -74,27 +72,57 @@ void DataLoader::load()
 		m_typo->statusBar()->showMessage ( QString ( "WARNING: no fontfile in %1" ).arg ( m_file->fileName() ),3000 );
 	}
 // 	qDebug() << colList.length();
-	for ( uint i = 0; i < colList.length(); ++i )
+	if(__FM_SHOW_FONTLOADED)
 	{
-		QDomNode col = colList.item ( i );
+		for ( uint i = 0; i < colList.length(); ++i )
+		{
+			QDomNode col = colList.item ( i );
 #if FONTMATRIX_VERSION_MINOR == 3
-		QString fontName  = col.namedItem ( "file" ).toElement().text();
-		QString fontfile = QDir::home() + "/.fonts-reserved/"+ fontName;
+			QString fontName  = col.namedItem ( "file" ).toElement().text();
+			QString fontfile = QDir::home() + "/.fonts-reserved/"+ fontName;
 #else
-		QString fontName = col.toElement().attributeNode("name").value();
-		QString fontfile  = col.namedItem ( "file" ).toElement().text();
+			QString fontName = col.toElement().attributeNode("name").value();
+			QString fontfile  = col.namedItem ( "file" ).toElement().text();
 #endif
-		QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
-		QStringList tl;
-		for(int ti = 0; ti < taglist.count(); ++ti)
-		{
-			tl << taglist.at(ti).toElement().text();
+			QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
+			QStringList tl;
+			for(int ti = 0; ti < taglist.count(); ++ti)
+			{
+				tl << taglist.at(ti).toElement().text();
+			}
+			if(!m_fontList.contains(fontfile))
+			{
+				m_typo->addTagMapEntry(fontName,tl);
+				collectedTags << tl;
+				m_fontList << fontfile;
+				m_typo->relayStartingStepIn(fontName, Qt::AlignCenter , Qt::white );
+			}
 		}
-		if(!m_fontList.contains(fontfile))
+	}
+	else
+	{
+		for ( uint i = 0; i < colList.length(); ++i )
 		{
-			m_typo->addTagMapEntry(fontName,tl);
-			collectedTags << tl;
-			m_fontList << fontfile;
+			QDomNode col = colList.item ( i );
+#if FONTMATRIX_VERSION_MINOR == 3
+			QString fontName  = col.namedItem ( "file" ).toElement().text();
+			QString fontfile = QDir::home() + "/.fonts-reserved/"+ fontName;
+#else
+			QString fontName = col.toElement().attributeNode("name").value();
+			QString fontfile  = col.namedItem ( "file" ).toElement().text();
+#endif
+			QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
+			QStringList tl;
+			for(int ti = 0; ti < taglist.count(); ++ti)
+			{
+				tl << taglist.at(ti).toElement().text();
+			}
+			if(!m_fontList.contains(fontfile))
+			{
+				m_typo->addTagMapEntry(fontName,tl);
+				collectedTags << tl;
+				m_fontList << fontfile;
+			}
 		}
 	}
 	

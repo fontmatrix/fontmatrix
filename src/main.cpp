@@ -80,9 +80,9 @@ int main ( int argc, char *argv[] )
 		splash = true;
 	}
 	
-	if(app.arguments().contains ( "show_loading" ) && splash)
+	if(__FM_SHOW_FONTLOADED  && splash)
 	{
-		QObject::connect ( mw,SIGNAL ( relayStartingStep ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
+		QObject::connect ( mw,SIGNAL ( relayStartingStepOut ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
 	}
 	
 	// Many splash transparency tests

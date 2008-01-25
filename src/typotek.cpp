@@ -995,4 +995,9 @@ void typotek::setTemplatesDir(const QString & dir)
 	
 }
 
+void typotek::relayStartingStepIn(QString s, int i , QColor c )
+{
+	emit relayStartingStepOut( s, i , c );
+}
+
 

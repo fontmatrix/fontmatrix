@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
-	<name>The default Fontmatrix fontbook template</name>
+	<name>test from def</name>
 	<papersize bboxx="0" bboxy="30" bboxw="0" bboxh="760">A4</papersize>
+	<preview>default_template.png</preview>
 	
+	<context level="page">
+		<text>##FAMILY## ##SUBFAMILY##</text>
+		<textstyle name="rappel">
+			<font>helvetica italic</font>
+			<fontsize>9.0</fontsize>
+			<lineheight>9.0</lineheight>
+			<margintop>20.0</margintop>
+			<marginleft>315</marginleft>
+			<color>#aaacac</color>
+		</textstyle>
+	</context>
 	<context level="page"><!-- page | family | subfamily -->
 		<text>##PAGENUMBER##</text>
 		<textstyle name="aname">
@@ -10,44 +22,94 @@
 			<fontsize>13.0</fontsize>
 			<lineheight>15.0</lineheight>
 			<!-- Here think that margins are relative to the whole page -->
-			<margintop>30.0</margintop>
-			<marginleft>450</marginleft>
+			<margintop>20.0</margintop>
+			<marginleft>530</marginleft>
 		</textstyle>
+		<graphic name="svgtest" xpos="500.0" ypos="0.0">
+			<svg
+			    xmlns:svg="http://www.w3.org/2000/svg"
+			    xmlns="http://www.w3.org/2000/svg"
+			    version="1.0"
+			    width="125.10004"
+			    height="1056.3423"
+			    id="svg2">
+				<defs
+				     id="defs4" />
+				<g
+				  transform="translate(-628.01249,-0.4052878)"
+				  id="layer1">
+					<rect
+					     width="124.8096"
+					     height="1056.0519"
+					     x="628.15771"
+					     y="0.5505079"
+					     style="opacity:1;fill:#aaacac;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.29044014;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:0.19774008"
+					     id="rect2160" />
+  </g>
+  </svg>
+		</graphic>
 	</context>
 	<context level="family">
 		<text>##FAMILY##</text>
 		<textstyle name="bname">
 			<font>Helvetica</font>
 			<fontsize>18.0</fontsize>
+			<color>#FFF</color>
 			<lineheight>24.0</lineheight>
-			<margintop>5.0</margintop>
+			<margintop>18.0</margintop>
 			<marginleft>20.0</marginleft>
-			<marginbottom>10.0</marginbottom>
+			<marginbottom>15.0</marginbottom>
 		</textstyle>
+		<graphic xpos="0" ypos="20">
+			<svg
+			    xmlns:svg="http://www.w3.org/2000/svg"
+			    xmlns="http://www.w3.org/2000/svg"
+			    version="1.0"
+			    width="500"
+			    height="30"
+			    id="svg2">
+				<defs
+				     id="defs4" />
+				<g
+				  id="layer1">
+					<rect
+					     width="500"
+					     height="30"
+					     x="0"
+					     y="0"
+					     style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.29044014;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3;stroke-opacity:0.19774008"
+					     id="rect2160" />
+				</g>
+  </svg>
+		</graphic>
 	</context>
+	
 	<context level="subfamily">
 		<text>##SUBFAMILY##</text>
 		<textstyle name="cname">
 			<font>Helvetica</font>
 			<fontsize>12.0</fontsize>
 			<lineheight>24.0</lineheight>
-			<margintop>5.0</margintop>
-			<marginleft>20.0</marginleft>
-			<marginbottom>5.0</marginbottom>
+			<margintop>0.0</margintop>
+			<marginleft>100.0</marginleft>
+			<marginbottom>0.0</marginbottom>
 		</textstyle>
 	</context>
 	<context level="subfamily">
 		<text>
-			A sample text,
-			with a second line!
+			Si Grasset créa le romain calamique,
+			il était réservé à Georges Auriol
+			de nous donner le romain au pinceau,
+			ou très exactement
+			« l’écriture typographiée ».
 		</text>
-		<textstyle name="cname">
+		<textstyle name="samplename">
 			<font>_FONTMATRIX_</font><!-- here is the trick (just available at subfamily level) -->
 			<fontsize>12.0</fontsize>
-			<lineheight>24.0</lineheight>
-			<margintop>5.0</margintop>
-			<marginleft>20.0</marginleft>
-			<marginbottom>5.0</marginbottom>
+			<lineheight>16.0</lineheight>
+			<margintop>0.0</margintop>
+			<marginleft>120.0</marginleft>
+			<marginbottom>0.0</marginbottom>
 		</textstyle>
 	</context>
 </template>

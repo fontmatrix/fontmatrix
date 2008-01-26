@@ -353,7 +353,8 @@ QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 	{
 		return 0;
 	}
-	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance;
+	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance *((double)QApplication::desktop()->physicalDpiX() / 72.0);
+	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ((double)QApplication::desktop()->physicalDpiX() / 72.0);
 	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT /*| FT_LOAD_NO_HINTING*/ );
 	if ( ft_error )
 	{
@@ -404,8 +405,8 @@ QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 	glyph->setPixmap ( QPixmap::fromImage ( img ) );
 	// we need to transport more data
 	glyph->setData ( 1,"glyph" );
-	glyph->setData ( 2, ( double ) m_glyph->metrics.horiBearingX );
-	glyph->setData ( 3, m_face->glyph->bitmap_top );
+	glyph->setData ( 2, takeLeftBeforeRender);
+	glyph->setData ( 3, m_face->glyph->bitmap_top);
 	glyph->setData ( 4, takeAdvanceBeforeRender);
 	return glyph;
 }
@@ -417,7 +418,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 	if ( spec.isEmpty() )
 		return;
 	ensureFace();
-	FT_Set_Char_Size ( m_face, fsize  * 64 , 0,72,72 );
+	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
@@ -531,7 +532,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 	double scalefactor = sizz / m_face->units_per_EM  ;
 	double pWidth = m_RTL ?  origine.x() : scene->width() - origine.x() ;
 	const double distance = 20;
-	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, 72, 72 );
+	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	QList<RenderedGlyph> refGlyph = otf->procstring ( spec, set );
 	if ( refGlyph.count() == 0 )
 	{
@@ -551,8 +552,8 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			}
 			if ( m_RTL )
 			{
-				pen.rx() -= refGlyph[i].xadvance * scalefactor;
-				pWidth -= refGlyph[i].xadvance * scalefactor;
+				pen.rx() -= refGlyph[i].xadvance * scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0);
+				pWidth -= refGlyph[i].xadvance * scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0);
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -561,7 +562,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			}
 			else
 			{
-				pWidth -= refGlyph[i].xadvance * scalefactor;
+				pWidth -= refGlyph[i].xadvance * scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0);
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -571,11 +572,11 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 2 ).toDouble() * scalefactor  ,
-			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 3 ).toInt() );
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0)) + glyph->data ( 2 ).toDouble() * scalefactor  ,
+					pen.y() + ( refGlyph[i].yoffset  * scalefactor * ((double)QApplication::desktop()->physicalDpiY() / 72.0) ) - glyph->data ( 3 ).toInt() );
 			glyph->setZValue ( 100.0 );
 			if ( !m_RTL )
-				pen.rx() += refGlyph[i].xadvance * scalefactor ;//We’ll have some "rounded" related wrong display but...
+				pen.rx() += refGlyph[i].xadvance * scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0);//We’ll have some "rounded" related wrong display but...
 		}
 	}
 	else
@@ -645,7 +646,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	if ( record )
 		sceneList.append ( scene );
 
-	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, 72, 72 );
+	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 
 	FmShaper shaper ( otf );
 	if ( !shaper.setScript ( script ) )
@@ -1279,26 +1280,11 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 		return theOneLinePreviewPixmap;
 	QRectF savedRect = theOneLineScene->sceneRect();
 	theOneLineScene->setSceneRect ( 0,0,320,32 );
-
-// 	if ( 1 /* !m_rasterFreetype */ )
-// 	{
-// 		renderLine ( theOneLineScene,oneline ,QPointF ( 10,24 ),20,false );
-// 		QPixmap apix ( 320,32 );
-// 		apix.fill ( Qt::white );
-// 		QPainter apainter ( &apix );
-// 		apainter.setRenderHint ( QPainter::Antialiasing,true );
-// 		theOneLineScene->render ( &apainter );
-// 		theOneLinePreviewPixmap = apix;
-//
-// 		theOneLineScene->setSceneRect ( savedRect );
-// 		theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
-//
-// 	}
-// 	else
-	{
-// 		qDebug()<< m_name << "renders " << oneline;
+	
 		ensureFace();
-		FT_Set_Char_Size ( m_face, 20  * 64 , 0, 72, 72 );
+		double fsize = 19.0;
+		double scalefactor = fsize / m_face->units_per_EM;
+		FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 		QPointF pen ( 10,0 );
 		QPixmap linePixmap ( 320,32 );
 		linePixmap.fill ( Qt::white );
@@ -1311,6 +1297,18 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 			{
 				continue;
 			}
+			ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_NO_SCALE );
+			if ( ft_error )
+			{
+				continue;
+			}
+			double advance = m_glyph->metrics.horiAdvance 
+						* scalefactor 
+						* ((double)QApplication::desktop()->physicalDpiX() / 72.0);
+			double leftBearing = ( double ) m_glyph->metrics.horiBearingX  
+						* scalefactor
+						* ((double)QApplication::desktop()->physicalDpiX() / 72.0);
+// 			qDebug() << oneline[i] <<  m_glyph->metrics.horiAdvance  << advance ;
 			ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
 			if ( ft_error )
 			{
@@ -1335,9 +1333,8 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 			img.setColorTable ( palette );
 // 			apainter.drawImage(pen.x(), pen.y() - m_face->glyph->bitmap_top, img);
 			pen.ry() = 26 - m_glyph->bitmap_top;
-			pen.rx() += m_glyph->bitmap_left;
-			apainter.drawImage ( pen, img );
-			pen.rx() +=  m_glyph->linearHoriAdvance >> 16 ;
+			apainter.drawImage ( pen.x() + leftBearing, pen.y(), img );
+			pen.rx() +=  advance;
 // 			if(m_name.contains("woodcut"))
 // 			{
 // 				qDebug()<< m_name << " : "<< oneline[i] << "->xadv = " << (m_glyph->advance.x >> 6) << " ->linearadv = " <<(m_glyph->linearHoriAdvance >> 16) << " ->metricsX = " << (m_glyph->metrics.horiAdvance >> 6);
@@ -1348,7 +1345,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 		releaseFace();
 
 		theOneLinePreviewPixmap = linePixmap;
-	}
+	
 
 	if ( !theOneLinePreviewPixmap.isNull() )
 		return theOneLinePreviewPixmap;

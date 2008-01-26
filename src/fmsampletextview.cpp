@@ -61,6 +61,17 @@ void FMSampleTextView::mouseReleaseEvent(QMouseEvent * e)
 {
 	if(!isSelecting)
 		return;
+	qDebug()<<"End mouse is "<< mapToScene( e->pos()).toPoint();
+	if(mouseStartPoint.toPoint() == mapToScene( e->pos()).toPoint())
+	{
+		// scale(1,1)
+		qDebug() << "Re-init transformation";
+		emit pleaseZoom(0);
+		isSelecting = false;
+		theRect->setRect(QRectF());
+		return;
+	}
+
 	QRect zoomRect(mouseStartPoint.toPoint(),mapToScene( e->pos()).toPoint());
 	ensureVisible(zoomRect);
 	isSelecting = false;

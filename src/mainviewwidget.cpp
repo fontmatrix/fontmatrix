@@ -72,9 +72,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremScene->setSceneRect ( pageRect );
 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
 	backp->setEnabled ( false );
-	ftScene->setSceneRect ( pageRect );
-	QGraphicsRectItem *backpR = ftScene->addRect ( pageRect,QPen(),Qt::white );
-	backpR->setEnabled ( false );
+	ftScene->setSceneRect ( 0,0,1000,1000 );
+// 	QGraphicsRectItem *backpR = ftScene->addRect ( pageRect,QPen(),Qt::white );
+// 	backpR->setEnabled ( false );
 
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
@@ -87,7 +87,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 	
 	loremView_FT->setScene ( ftScene );
-	loremView_FT->setBackgroundBrush ( Qt::lightGray );
+// 	loremView_FT->setBackgroundBrush ( Qt::lightGray ); 
 	loremView_FT->locker = false;
 	
 	sampleText= typo->namedSample ( "default" );
@@ -511,9 +511,10 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 		curGlyph = 0;
 	}
+	bool wantDeviceDependant = loremView_FT->isVisible();
 
 	theVeryFont->setRTL ( rtlCheck->isChecked() );
-	theVeryFont->setFTRaster ( loremView_FT->isVisible() );
+	theVeryFont->setFTRaster ( wantDeviceDependant );
 
 	QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
 	QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
@@ -544,9 +545,10 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
 
 // 		QApplication::setOverrideCursor ( Qt::WaitCursor );
+		double adjustedSampleInter = wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize ;
 		for ( int i=0; i< stl.count(); ++i )
 		{
-			pen.ry() = 100 + sampleInterSize * i;
+			pen.ry() = 100 + adjustedSampleInter * i;
 			if ( processScript )
 			{
 				qDebug() << "render " << stl[i] << " as " << script;
@@ -721,22 +723,15 @@ void MainViewWidget::slotEditAll()
 void MainViewWidget::slotZoom ( int z )
 {
 	QGraphicsView * concernedView;
-// 	if ( sender()->objectName().contains ( "render" ) )
-// 	{
-// 		concernedView = loremView;
-// // 		renderZoomLabel->setText(renderZoomString.arg(z));
-// 	}
-// 	else
-// 		concernedView = abcView;
 	if(loremView_FT->isVisible())
 		concernedView = loremView_FT;
 	else if(loremView->isVisible())
 		concernedView = loremView;
-	
+	qDebug()<< "slotZoom (" <<z<<" )";
 	double delta =  1.0 + (z/1000.0) ;
 	QTransform trans;
 	trans.scale ( delta,delta );
-	concernedView->setTransform ( trans, true );
+	concernedView->setTransform ( trans, (z == 0) ? false : true );
 
 }
 

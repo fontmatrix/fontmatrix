@@ -2,7 +2,7 @@
 <template>
 	<name>Oneliner</name>
 	<preview>oneline_template.png</preview>
-	<papersize>A4</papersize>
+	<papersize bboxx="0" bboxy="30" bboxw="0" bboxh="760">A4</papersize>
 	
 	<context level="page"><!-- page | family | subfamily -->
 		<text>##PAGENUMBER##</text>

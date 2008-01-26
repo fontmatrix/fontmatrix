@@ -336,7 +336,14 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			fbc.textStyle.font = tStyle.namedItem ( "font" ).toElement().text();
 			fbc.textStyle.fontsize = QString ( tStyle.namedItem ( "fontsize" ).toElement().text() ).toDouble() ;
 			fbc.textStyle.color = QColor( tStyle.namedItem ( "color" ).toElement().text() );
-			qfontCache[fbc.textStyle.name] = QFont ( fbc.textStyle.font,fbc.textStyle.fontsize );
+			
+			bool ital = false;
+			QFont::Weight bold = QFont::Normal;
+			if(fbc.textStyle.font.contains("italic", Qt::CaseInsensitive))
+				ital = true;
+			if(fbc.textStyle.font.contains("bold", Qt::CaseInsensitive))
+				bold = QFont::Bold;
+			qfontCache[fbc.textStyle.name] = QFont ( fbc.textStyle.font,fbc.textStyle.fontsize, bold, ital );
 	
 			fbc.textStyle.lineheight = QString ( tStyle.namedItem ( "lineheight" ).toElement().text() ).toDouble() ;
 			fbc.textStyle.margin_top = QString ( tStyle.namedItem ( "margintop" ).toElement().text() ).toDouble() ;
@@ -378,22 +385,28 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			conSubfamily << fbc;
 	}
 	
-	QPrinter thePrinter ( QPrinter::HighResolution );
+	
 	QString paperSize = QString (aTemplate.documentElement().namedItem( "papersize" ).toElement().text()).toUpper();
+	double prectx =  QString (aTemplate.documentElement().namedItem( "papersize" ).toElement().attributeNode("bboxx").value()).toDouble();
+	double precty =  QString (aTemplate.documentElement().namedItem( "papersize" ).toElement().attributeNode("bboxy").value()).toDouble();
+	double prectw =  QString (aTemplate.documentElement().namedItem( "papersize" ).toElement().attributeNode("bboxw").value()).toDouble();
+	double precth =  QString (aTemplate.documentElement().namedItem( "papersize" ).toElement().attributeNode("bboxh").value()).toDouble();
+	
+	QPrinter thePrinter ( QPrinter::HighResolution );
 	thePrinter.setOutputFormat ( QPrinter::PdfFormat );
 	thePrinter.setCreator("Fontmatrix " + QString::number(FONTMATRIX_VERSION_MAJOR) + "." + QString::number(FONTMATRIX_VERSION_MINOR));
 	thePrinter.setDocName("A font book");
 	thePrinter.setOutputFileName ( outputFilePath );
 	thePrinter.setPageSize ( mapPSize[paperSize] );
 	thePrinter.setFullPage ( true );
-	qDebug() << thePrinter.pageSize() << thePrinter.pageRect() << thePrinter.paperRect() << thePrinter.resolution() ;
-	double paperWidth  = thePrinter.pageRect().width() / thePrinter.resolution() * 72;
-	double paperHeight = thePrinter.pageRect().height() / thePrinter.resolution() * 72;
-	qDebug()<< paperSize << paperWidth << paperHeight;
+// 	qDebug() << thePrinter.pageSize() << thePrinter.pageRect() << thePrinter.paperRect() << thePrinter.resolution() ;
+	double paperWidth  =  thePrinter.pageRect().width() / thePrinter.resolution() * 72;
+	double paperHeight =  thePrinter.pageRect().height() / thePrinter.resolution() * 72;
+// 	qDebug()<< paperSize << paperWidth << paperHeight;
 	QGraphicsScene theScene;
 	theScene.setSceneRect ( 0,0,paperWidth,paperHeight );
 	QPainter thePainter ( &thePrinter );
-	QPointF thePos ( 0,0 );
+	QPointF thePos ( prectx,precty );
 	QList<FontItem*> renderedFont;
 	QList<QGraphicsSvgItem*> renderedGraphic;
 
@@ -454,7 +467,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			for ( int pl = 0; pl < pagelines.count(); ++pl )
 			{
 				QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
-				ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
+				ti->setPos ( conPage[pIndex].textStyle.margin_left , conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
 				ti->setZValue(10);
 				ti->setDefaultTextColor ( conPage[pIndex].textStyle.color );
 			}
@@ -493,10 +506,11 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				QString place = tmplines[t];
 				for ( QMap<QString,QString>::const_iterator repIt = familyReplace.begin(); repIt != familyReplace.end();   ++repIt )
 					place.replace ( repIt.key(),repIt.value(),Qt::CaseSensitive );
-				familylines << place;
+				if(!place.isEmpty())
+					familylines << place;
 			}
 
-			double available = paperHeight - thePos.y();
+			double available = (precty + precth) - thePos.y();
 			double needed = ( familylines.count() * conFamily[elemIndex].textStyle.lineheight )
 			                + conFamily[elemIndex].textStyle.margin_top
 			                + conFamily[elemIndex].textStyle.margin_bottom;
@@ -508,7 +522,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				// close, clean and create
 				theScene.render ( &thePainter );
 
-				thePos.ry() = 0;
+				thePos.ry() = precty;
 				for ( int  d = 0; d <  renderedFont.count() ; ++d )
 					renderedFont[d]->deRenderAll();
 				for ( int  d = 0; d < renderedGraphic.count(); ++d)
@@ -540,7 +554,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					for ( int pl = 0; pl < pagelines.count(); ++pl )
 					{
 						QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
-						ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
+						ti->setPos ( conPage[pIndex].textStyle.margin_left + prectx, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
 						ti->setZValue(10);
 						ti->setDefaultTextColor( conPage[pIndex].textStyle.color);
 					}
@@ -549,7 +563,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
 						svgIt->setSharedRenderer(svgRendered[conPage[pIndex].graphic.name]);
 						theScene.addItem(svgIt);
-						svgIt->setPos(conPage[pIndex].graphic.x, conPage[pIndex].graphic.y);
+						svgIt->setPos(conPage[pIndex].graphic.x + prectx, conPage[pIndex].graphic.y);
 						renderedGraphic << svgIt;
 						svgIt->setZValue(1);
 					}
@@ -560,8 +574,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			for ( int fl = 0; fl < familylines.count(); ++fl )
 			{
 				QGraphicsTextItem * ti = theScene.addText ( familylines[fl], qfontCache[conFamily[elemIndex].textStyle.name] );
-				ti->setPos ( conFamily[elemIndex].textStyle.margin_left, thePos.y() +
-				             ( conFamily[elemIndex].textStyle.margin_top + ( fl * conFamily[elemIndex].textStyle.lineheight ) ) );
+				ti->setPos ( conFamily[elemIndex].textStyle.margin_left + prectx, thePos.y() +  ( conFamily[elemIndex].textStyle.margin_top + ( fl * conFamily[elemIndex].textStyle.lineheight ) ) );
 				ti->setZValue(1000);
 				ti->setDefaultTextColor(conFamily[elemIndex].textStyle.color);
 			}
@@ -570,7 +583,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
 				svgIt->setSharedRenderer(svgRendered[conFamily[elemIndex].graphic.name]);
 				theScene.addItem(svgIt);
-				svgIt->setPos(conFamily[elemIndex].graphic.x, conFamily[elemIndex].graphic.y + thePos.y());
+				svgIt->setPos(conFamily[elemIndex].graphic.x + prectx, conFamily[elemIndex].graphic.y + thePos.y());
 				renderedGraphic << svgIt;
 				svgIt->setZValue(100);
 			}
@@ -607,10 +620,11 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					QString subplace = tmplines[t];
 					for ( QMap<QString,QString>::const_iterator repIt = subfamilyReplace.begin(); repIt != subfamilyReplace.end();   ++repIt )
 						subplace.replace ( repIt.key(),repIt.value(),Qt::CaseSensitive );
-					sublines << subplace;
+					if(!subplace.isEmpty())
+						sublines << subplace;
 				}
 // 				qDebug() <<"C";
-				double available =  paperHeight - thePos.y();
+				double available =  (precty + precth) - thePos.y();
 				double needed = ( sublines.count() * conSubfamily[elemIndex].textStyle.lineheight )
 				                + conSubfamily[elemIndex].textStyle.margin_top
 				                + conSubfamily[elemIndex].textStyle.margin_bottom;
@@ -622,7 +636,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					// close, clean and create
 					theScene.render ( &thePainter );
 
-					thePos.ry() = 0;
+					thePos.ry() = precty;
 					for ( int  d = 0; d <  renderedFont.count() ; ++d )
 						renderedFont[d]->deRenderAll();
 					for ( int  d = 0; d < renderedGraphic.count(); ++d)
@@ -654,7 +668,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						for ( int pl = 0; pl < pagelines.count(); ++pl )
 						{
 							QGraphicsTextItem * ti = theScene.addText ( pagelines[pl], qfontCache[conPage[pIndex].textStyle.name] );
-							ti->setPos ( conPage[pIndex].textStyle.margin_left, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
+							ti->setPos ( conPage[pIndex].textStyle.margin_left + prectx, conPage[pIndex].textStyle.margin_top + ( pl * conPage[pIndex].textStyle.lineheight ) );
 							ti->setZValue(10);
 							ti->setDefaultTextColor(conPage[pIndex].textStyle.color);
 						}
@@ -663,7 +677,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 							QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
 							svgIt->setSharedRenderer(svgRendered[conPage[pIndex].graphic.name]);
 							theScene.addItem(svgIt);
-							svgIt->setPos(conPage[pIndex].graphic.x, conPage[pIndex].graphic.y);
+							svgIt->setPos(conPage[pIndex].graphic.x + prectx, conPage[pIndex].graphic.y);
 							renderedGraphic << svgIt;
 							svgIt->setZValue(1);
 						}
@@ -676,9 +690,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				{
 					for ( int sl = 0; sl < sublines.count(); ++sl )
 					{
-						QPointF pen ( conSubfamily[elemIndex].textStyle.margin_left,
-						              thePos.y() +
-						              ( conSubfamily[elemIndex].textStyle.margin_top + ( ( sl + 1 ) * conSubfamily[elemIndex].textStyle.lineheight ) ) );
+						QPointF pen ( conSubfamily[elemIndex].textStyle.margin_left + prectx,
+						              thePos.y() + conSubfamily[elemIndex].textStyle.margin_top +  ( (sl + 1) * conSubfamily[elemIndex].textStyle.lineheight )  );
 						theFont->renderLine ( &theScene,
 						                      sublines[sl],
 						                      pen ,
@@ -693,7 +706,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					for ( int sl = 0; sl < sublines.count(); ++sl )
 					{
 						QGraphicsTextItem * ti = theScene.addText ( sublines[sl], qfontCache[ conSubfamily[elemIndex].textStyle.name] );
-						ti->setPos ( conSubfamily[elemIndex].textStyle.margin_left, thePos.y() + ( conSubfamily[elemIndex].textStyle.margin_top + ( sl * conSubfamily[elemIndex].textStyle.lineheight ) ) );
+						ti->setPos ( conSubfamily[elemIndex].textStyle.margin_left + prectx, thePos.y() + ( conSubfamily[elemIndex].textStyle.margin_top + ( sl * conSubfamily[elemIndex].textStyle.lineheight ) ) );
 						ti->setZValue(10000);
 						ti->setDefaultTextColor(conSubfamily[elemIndex].textStyle.color);
 					}
@@ -704,7 +717,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
 					svgIt->setSharedRenderer(svgRendered[conSubfamily[elemIndex].graphic.name]);
 					theScene.addItem(svgIt);
-					svgIt->setPos(conSubfamily[elemIndex].graphic.x, conSubfamily[elemIndex].graphic.y + thePos.y());
+					svgIt->setPos(conSubfamily[elemIndex].graphic.x + prectx, conSubfamily[elemIndex].graphic.y + thePos.y());
 					renderedGraphic << svgIt;
 					svgIt->setZValue(100000);
 				}

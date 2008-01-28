@@ -92,7 +92,7 @@ void DataLoader::load()
 			}
 			if(!m_fontList.contains(fontfile))
 			{
-				m_typo->addTagMapEntry(fontName,tl);
+				m_typo->addTagMapEntry(fontfile,tl);
 				collectedTags << tl;
 				m_fontList << fontfile;
 				m_typo->relayStartingStepIn(fontName, Qt::AlignCenter , Qt::white );
@@ -119,7 +119,7 @@ void DataLoader::load()
 			}
 			if(!m_fontList.contains(fontfile))
 			{
-				m_typo->addTagMapEntry(fontName,tl);
+				m_typo->addTagMapEntry(fontfile,tl);
 				collectedTags << tl;
 				m_fontList << fontfile;
 			}

@@ -1494,14 +1494,6 @@ void FontItem::moreInfo_type1()
 	moreInfo[0][tr ( "Description" ) ] = sinfo.notice;
 }
 
-///return size of dynamic structuresttnameid.h
-// int FontItem::debug_size()
-// {
-// // 	int ret=0;
-// // 	for ( QMap<int,QPainterPath>::const_iterator cit = contourCache.begin(); cit != contourCache.end();++cit )
-// // 		ret+=cit->elementCount();
-//
-// }
 
 void FontItem::setTags ( QStringList l )
 {

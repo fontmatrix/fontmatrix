@@ -212,19 +212,19 @@ void MainViewWidget::fillTree()
 					QString variant = kit.value() [n]->variant();
 // 					variantMap[variant] = n;
 					entry->setText ( 0,  variant );
-					entry->setText ( 1, kit.value() [n]->name() );
+					entry->setText ( 1, kit.value() [n]->path() );
 					entry->setData ( 0, 100, "fontfile" );
 
 
-					if ( isExpanded )
-					{
+// 					if ( isExpanded )
+// 					{
 // 						QFont fakeFont;
 // 						fakeFont.setPointSizeF(100);
 // 						entry->setFont(2, fakeFont);
 // 						entry->setText(2, "A");
 // 						entry->setBackground ( 2,QBrush ( kit.value() [n]->oneLinePreviewPixmap() ) );
 
-					}
+// 					}
 
 
 					bool act = kit.value() [n]->isActivated();
@@ -384,7 +384,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 				slotView ( true );
 				typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
 				typo->presentFontName ( theVeryFont->fancyName() );
-				m_lists->previewList->searchAndSelect ( theVeryFont->name() );
+				m_lists->previewList->searchAndSelect ( theVeryFont->path() );
 			}
 		}
 		qDebug() << curItemName;
@@ -440,7 +440,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			slotView ( true );
 			typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
 			typo->presentFontName ( theVeryFont->fancyName() );
-			m_lists->previewList->searchAndSelect ( theVeryFont->name() );
+			m_lists->previewList->searchAndSelect ( theVeryFont->path() );
 		}
 		if ( item->data ( 0,200 ).toInt() != item->checkState ( 1 ) )
 		{
@@ -820,7 +820,7 @@ void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
 	}
 	if ( updateTree )
 		fillTree();
-	emit activationEvent ( fit->name() );
+	emit activationEvent ( fit->path() );
 // 	typo->save();
 }
 

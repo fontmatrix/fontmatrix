@@ -330,7 +330,7 @@ void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
 		QList<FontItem*> taggedFonts = ttek->getFonts ( tag , "tag" );
 		foreach(FontItem* fit, taggedFonts)
 		{
-			if(fit->name() == nameOfFontWhichCausedThisUpdate)// we’re concerned
+			if(fit->path() == nameOfFontWhichCausedThisUpdate)// we’re concerned
 				lazy = false;
 		}
 	}

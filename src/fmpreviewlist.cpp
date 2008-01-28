@@ -102,20 +102,20 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
 				fit->setFTRaster(oldRaster);
 				pit->setPos(50,32*i);
-				pit->setData(1,fit->name());
+				pit->setData(1,fit->path());
 				pit->setData(2,"preview");
 // 				pit->setZValue(1000);
 				pit->setToolTip(fit->fancyName());
 				pit->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
 	// 			pit->setZValue(10);
-				m_pixItemList.append(FontPreviewItem(fit->name(), pit->pos(), true, pit));
+				m_pixItemList.append(FontPreviewItem(fit->path(), pit->pos(), true, pit));
 				
 			}
 		}
 		else
 		{
 			padPixItem->setPos(10,32*i);
-			m_pixItemList.append(FontPreviewItem(fonts.at(i)->name(),padPixItem->pos(),false,padPixItem));
+			m_pixItemList.append(FontPreviewItem(fonts.at(i)->path(),padPixItem->pos(),false,padPixItem));
 		}
 	}
 	horizontalScrollBar()->setValue(0);
@@ -215,7 +215,7 @@ void FMPreviewList::searchAndSelect(QString fname)
 					QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
 					fit->setFTRaster(oldRaster);
 					pit->setPos(m_pixItemList[i].pos);
-					pit->setData(1,fit->name());
+					pit->setData(1,fit->path());
 					pit->setData(2,"preview");
 					pit->setToolTip(fit->fancyName());
 					pit->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
@@ -242,10 +242,10 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 {
 	QString ref;
 	if( mvw->selectedFont())
-		ref = mvw->selectedFont()->name() ;
+		ref = mvw->selectedFont()->path() ;
 	else
 	{
-		searchAndSelect(trackedFonts[0]->name());
+		searchAndSelect(trackedFonts[0]->path());
 		return;
 	}
 	
@@ -256,9 +256,9 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 		QString target;
 		for(int i = 1; i < trackedFonts.count(); ++i)
 		{
-			if(trackedFonts[i]->name() == ref)
+			if(trackedFonts[i]->path() == ref)
 			{
-				target = trackedFonts[i-1]->name();
+				target = trackedFonts[i-1]->path();
 				break;
 			}
 		}
@@ -272,9 +272,9 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 		QString target;
 		for(int i = 0; i < trackedFonts.count() - 1; ++i)
 		{
-			if(trackedFonts[i]->name() == ref)
+			if(trackedFonts[i]->path() == ref)
 			{
-				target = trackedFonts[i+1]->name();
+				target = trackedFonts[i+1]->path();
 				break;
 			}
 		}

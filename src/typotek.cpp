@@ -253,7 +253,7 @@ void typotek::open()
 			{
 				fitem->setTags ( tali );
 				fontMap.append ( fitem );
-				realFontMap[fitem->name() ] = fitem;
+				realFontMap[fitem->path() ] = fitem;
 				nameList << fitem->fancyName();
 			}
 			else
@@ -335,7 +335,7 @@ void typotek::open ( QStringList files )
 		{
 			fitem->setTags ( tali );
 			fontMap.append ( fitem );
-			realFontMap[fitem->name() ] = fitem;
+			realFontMap[fitem->path() ] = fitem;
 			nameList << fitem->fancyName();
 		}
 		else
@@ -612,32 +612,44 @@ void typotek::initDir()
 	loader.load();
 
 	// load font files
-// 	QStringList filters;
-// 	filters << "*.otf" << "*.pfb"  << "*.ttf" ;
-// 	ownDir.setNameFilters ( filters );
 
 	QStringList pathList = loader.fontList();
-// 	if ( __FM_SHOW_FONTLOADED )
-// 		qDebug() << pathList.join ( "\n" );
 	
 	int fontnr = pathList.count();
-	for ( int i = 0 ; i < fontnr ; ++i )
+	if ( __FM_SHOW_FONTLOADED )
 	{
-		if ( __FM_SHOW_FONTLOADED )
-			qDebug() << "About to load : " << pathList.at ( i );
-		FontItem *fi = new FontItem ( ownDir.absoluteFilePath ( pathList.at ( i ) ) );
-		if(!fi->isValid())
+		for ( int i = 0 ; i < fontnr ; ++i )
 		{
-			qDebug() << "ERROR loading : " << pathList.at ( i );
-			continue;
-		}
-		fontMap.append ( fi );
-		realFontMap[fi->name() ] = fi;
-		fi->setTags ( tagsMap.value ( fi->name() ) );
-		if ( __FM_SHOW_FONTLOADED )
+		
+			qDebug() << "About to load : " << pathList.at ( i );
+			FontItem *fi = new FontItem (  pathList.at ( i )  );
+			if(!fi->isValid())
+			{
+				qDebug() << "ERROR loading : " << pathList.at ( i );
+				continue;
+			}
+			fontMap.append ( fi );
+			realFontMap[fi->path() ] = fi;
+			fi->setTags ( tagsMap.value ( fi->path() ) );
 			qDebug() << fi->fancyName() << " loaded.";
+		}	
 	}
+	else
+	{
+		for ( int i = 0 ; i < fontnr ; ++i )
+		{
+			FontItem *fi = new FontItem ( pathList.at ( i )  );
+			if(!fi->isValid())
+			{
+				qDebug() << "ERROR loading : " << pathList.at ( i );
+				continue;
+			}
+			fontMap.append ( fi );
+			realFontMap[fi->path() ] = fi;
+			fi->setTags ( tagsMap.value ( fi->path() ) );
+		}
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
+	}
 	qDebug() <<  fontMap.count() << " font files loaded.";
 
 

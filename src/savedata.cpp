@@ -55,7 +55,7 @@ void SaveData::doSave()
 	foreach ( FontItem* fitem,flist )
 	{
 		writeStartElement("fontfile");
-		writeAttribute("name", fitem->name());
+		writeAttribute("name", fitem->fancyName());
 		writeStartElement("file");
 		writeCharacters(fitem->path());
 		writeEndElement();

@@ -127,6 +127,7 @@ FontItem::FontItem ( QString path )
 	hasUnicode = false;
 	currentChar = -1;
 	m_isOpenType = false;
+	otf = 0;
 	m_rasterFreetype = false;
 	fillLangIdMap();
 
@@ -199,9 +200,9 @@ FontItem::FontItem ( QString path )
 
 FontItem::~FontItem()
 {
-	if ( m_isOpenType )
+	if ( m_isOpenType && otf)
 	{
-		delete otf;
+// 		delete otf;
 	}
 }
 

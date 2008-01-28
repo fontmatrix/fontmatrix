@@ -133,6 +133,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotUpdateSView();
 		void slotUpdateRView();
 		void slotEditSampleText();
+		void slotRemoveCurrentItem();
 		//tags
 		void slotSwitchCheckState( QListWidgetItem * item );
 		void slotNewTag();

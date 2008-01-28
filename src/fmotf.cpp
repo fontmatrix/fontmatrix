@@ -252,6 +252,7 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 {
 
 	_face = f;
+	_buffer = 0;
 
 	hbFont.klass = &hb_fontClass;
 	hbFont.userData = _face ;
@@ -351,14 +352,16 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 	}
 	else
 		GPOS = 0;
-	if ( Harfbuzz::hb_buffer_new ( &_buffer ) )
-		qDebug ( "unable to get _buffer" );
+// 	if ( Harfbuzz::hb_buffer_new ( &_buffer ) )
+// 		qDebug ( "unable to get _buffer" );
 }
 
 
 FmOtf::~FmOtf ()
 {
 
+	/// All those free lead to segfault in Harfbuzz, we’ll see later,
+	/// now, we really want to be able to remove a font.
 	if ( _buffer )
 		Harfbuzz::hb_buffer_free ( _buffer );
 	if ( GDEF )
@@ -394,6 +397,11 @@ int
 FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
 {
 	qDebug() <<"FmOtf::procstring1 ( "<<s<<","<<script<<", "<<lang<<", "<<gsub.join ( "." ) <<", " <<gpos.join ( "." ) <<" )";
+	if ( Harfbuzz::hb_buffer_new ( &_buffer ) )
+	{
+		qDebug ( "unable to get _buffer" );
+		return 0;
+	}
 	hb_buffer_clear ( _buffer );
 	int n = s.length ();
 	Harfbuzz::HB_Error           error;
@@ -494,7 +502,9 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 	}
 
 //  	qDebug() << "END_PROCSTRING";
-	return _buffer->in_length;
+	int nret = _buffer->in_length;
+	Harfbuzz::hb_buffer_free ( _buffer );
+	return nret;
 }
 
 

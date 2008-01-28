@@ -209,6 +209,9 @@ class typotek:public QMainWindow
 		void setTemplatesDir(const QString &dir);
 		QString getTemplatesDir() {return templatesDir;};
 		
+		void removeFontItem(QString key);
+		void removeFontItem(QStringList keyList);
+		
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

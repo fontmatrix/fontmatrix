@@ -43,6 +43,7 @@
 #include <QGraphicsRectItem>
 #include <QProgressDialog>
 #include <QMenu>
+#include <QMessageBox>
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
 
@@ -107,6 +108,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->viewActivatedButton,SIGNAL ( released() ),this,SLOT ( slotViewActivated() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
+	connect ( m_lists->removeButton, SIGNAL(released()),this,SLOT(slotRemoveCurrentItem()));
 
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
@@ -1505,6 +1507,22 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 void MainViewWidget::slotEditSampleText()
 {
 	typo->slotPrefsPanel(PrefsPanelDialog::PAGE_SAMPLETEXT);
+}
+
+void MainViewWidget::slotRemoveCurrentItem()
+{
+	if(curItemName.isEmpty())
+		return;
+	if( QMessageBox::question ( this, "Fontmatrix safe", tr("You are about to remove a font from Fontmatrix database, do you want to continue?"),QMessageBox::Yes |  QMessageBox::No, QMessageBox::No) == QMessageBox::Yes )
+	{ 
+		theVeryFont->deRenderAll();
+		currentFonts.removeAll(theVeryFont);
+		theTaggedFonts.removeAll(theVeryFont);
+		theVeryFont  = 0 ;
+		typo->removeFontItem(curItemName);
+		
+		fillTree();
+	}
 }
 
 

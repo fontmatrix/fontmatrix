@@ -1012,4 +1012,22 @@ void typotek::relayStartingStepIn(QString s, int i , QColor c )
 	emit relayStartingStepOut( s, i , c );
 }
 
+void typotek::removeFontItem(QString key)
+{
+	FontItem *fit = realFontMap.value(key);
+	if(!fit)
+		return;
+	fontMap.removeAll(fit);
+	delete fit;
+	realFontMap.remove(key);
+}
+
+void typotek::removeFontItem(QStringList keyList)
+{
+	foreach(QString key, keyList)
+	{
+		removeFontItem(key);
+	}
+}
+
 

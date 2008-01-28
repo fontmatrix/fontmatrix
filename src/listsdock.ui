@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>352</width>
+    <width>363</width>
     <height>671</height>
    </rect>
   </property>
@@ -254,6 +254,13 @@
        </property>
        <property name="text" >
         <string>View Activated</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="removeButton" >
+       <property name="text" >
+        <string>Remove</string>
        </property>
       </widget>
      </item>

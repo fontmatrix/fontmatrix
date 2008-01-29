@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>861</width>
-    <height>622</height>
+    <height>696</height>
    </rect>
   </property>
   <property name="acceptDrops" >
@@ -320,12 +320,12 @@ p, li { white-space: pre-wrap; }
             </sizepolicy>
            </property>
            <layout class="QGridLayout" >
-            <item rowspan="3" row="0" column="0" >
+            <item rowspan="4" row="0" column="0" >
              <widget class="QTreeWidget" name="OpenTypeTree" >
               <property name="sizePolicy" >
                <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
                 <horstretch>0</horstretch>
-                <verstretch>1</verstretch>
+                <verstretch>0</verstretch>
                </sizepolicy>
               </property>
               <property name="focusPolicy" >
@@ -350,7 +350,14 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="0" column="1" >
-             <widget class="QComboBox" name="langCombo" />
+             <widget class="QComboBox" name="langCombo" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
             <item row="1" column="1" >
              <widget class="QCheckBox" name="useShaperCheck" >
@@ -361,10 +368,29 @@ p, li { white-space: pre-wrap; }
             </item>
             <item row="2" column="1" >
              <widget class="QCheckBox" name="rtlCheck" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text" >
                <string>Right to Left</string>
               </property>
              </widget>
+            </item>
+            <item row="3" column="1" >
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>

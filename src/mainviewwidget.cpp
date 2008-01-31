@@ -1513,7 +1513,7 @@ void MainViewWidget::slotRemoveCurrentItem()
 {
 	if(curItemName.isEmpty())
 		return;
-	if( QMessageBox::question ( this, "Fontmatrix safe", tr("You are about to remove a font from Fontmatrix database, do you want to continue?"),QMessageBox::Yes |  QMessageBox::No, QMessageBox::No) == QMessageBox::Yes )
+	if( QMessageBox::question ( this, "Fontmatrix safe", tr("You are about to remove a font from Fontmatrix database") +"\n"+curItemName+"\n" + tr("Do you want to continue?"),QMessageBox::Yes |  QMessageBox::No, QMessageBox::No) == QMessageBox::Yes )
 	{ 
 		theVeryFont->deRenderAll();
 		currentFonts.removeAll(theVeryFont);

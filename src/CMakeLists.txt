@@ -22,6 +22,7 @@ fmotf.cpp
 prefspaneldialog.cpp
 fmshaper.cpp
 fontbook.cpp
+importtags.cpp
 )
 
 SET(fontmatrix_MOC_HDRS
@@ -39,6 +40,7 @@ systray.h
 tagseteditor.h
 typotek.h
 prefspaneldialog.h
+importtags.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 
@@ -53,6 +55,7 @@ listsdock.ui
 mainview.ui
 tagset.ui
 prefs_panel.ui
+importtags.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
 

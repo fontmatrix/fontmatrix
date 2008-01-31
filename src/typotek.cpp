@@ -35,6 +35,7 @@
 #include "systray.h"
 #include "prefspaneldialog.h"
 #include "fontbook.h"
+#include "importtags.h"
 
 
 #include <QtGui>
@@ -204,10 +205,10 @@ void typotek::open()
 		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
 	if ( useInitialTags )
 	{
-		QString inputTags = QInputDialog::getText ( this,"Import tags",tr ( "Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." ) );
-
-		if ( !inputTags.isEmpty() )
-			tali = inputTags.split ( "#" );
+// 		QString inputTags = QInputDialog::getText ( this,"Import tags",tr ( "Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." ) );
+		ImportTags imp(this,tagsList);
+		imp.exec();
+		tali = imp.tags();
 		tali << "Activated_Off" ;
 	}
 	else

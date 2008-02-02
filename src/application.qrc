@@ -18,10 +18,7 @@
         <file alias="fontmatrix_fontbookexport_icon.png">graphic-resources/fontmatrix-fontbookexport-icon.png</file>
         <file alias="fontmatrix_import_icon.png">graphic-resources/fontmatrix-import-icon.png</file>
         
-	<file alias="template_default">graphic-resources/fontbook_default.xml</file>
-	<file alias="template_default_preview">graphic-resources/default_template.png</file>
-	<file alias="template_oneline">graphic-resources/one_line_template.xml</file>
-	<file alias="template_oneline_preview">graphic-resources/oneline_template.png</file>
+        
     </qresource>
 
 
@@ -61,8 +58,8 @@
         <file alias="fontmatrix">messages/fontmatrix_nl.qm</file>
     </qresource>
     
-   <qresource prefix="/texts" lang="nb" >
-        <file alias="fontmatrix">messages/fontmatrix_nb.qm</file>
+   <qresource prefix="/texts" lang="no" >
+        <file alias="fontmatrix">messages/fontmatrix_no.qm</file>
     </qresource>
     
     <qresource prefix="/texts" lang="sr" >
@@ -73,4 +70,9 @@
         <file alias="fontmatrix">messages/fontmatrix_sv.qm</file>
     </qresource>
     
+    <qresource prefix="/texts" lang="uk" >
+	<file alias="about">messages/about_uk.html</file>
+	<file alias="help">messages/help_uk.html</file>
+        <file alias="fontmatrix">messages/fontmatrix_uk.qm</file>
+    </qresource>
 </RCC>

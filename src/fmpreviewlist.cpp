@@ -63,7 +63,12 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	if(setChanged)
 	{
 		slotClearSelect();
-		trackedFonts = fonts;
+		trackedFonts.clear();
+		QMap<QString, FontItem*> ordFonts;
+		for(int i=0;i<fonts.count();++i)
+			ordFonts[fonts[i]->fancyName()]=fonts[i];
+		for(QMap<QString, FontItem*>::const_iterator fit = ordFonts.begin() ; fit != ordFonts.end(); ++fit)
+			trackedFonts << fit.value();
 	}
 	
 	for(int i = 0; i < m_pixItemList.count(); ++i)
@@ -90,11 +95,11 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	QPixmap padPix(1,1);
 	QGraphicsPixmapItem *padPixItem = m_scene->addPixmap(padPix);
 // 	m_pixItemList.append(FontPreviewItem("NONE",QPointF(),false,padPixItem));
-	for(int i= 0 ; i < fonts.count() ; ++i)
+	for(int i= 0 ; i < trackedFonts.count() ; ++i)
 	{
 		if((i + 1)*32 >= beginPos && i*32 <= endPos)
 		{ 
-			FontItem *fit = fonts.at(i);
+			FontItem *fit = trackedFonts.at(i);
 			if(fit)
 			{
 				bool oldRaster = fit->rasterFreetype();
@@ -128,8 +133,11 @@ void FMPreviewList::showEvent(QShowEvent * event)
 
 void FMPreviewList::slotChanged( )
 {
+#ifndef HIGH_PERF
+	// It waits you release the slider to draw items
 	if(verticalScrollBar()->isSliderDown())
 		return;
+#endif
 	slotRefill(mvw->curFonts(), false);
 }
 

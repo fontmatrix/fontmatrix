@@ -44,6 +44,7 @@
 #include <QProgressDialog>
 #include <QMenu>
 #include <QMessageBox>
+#include <QSettings>
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
 
@@ -54,6 +55,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 {
 	setupUi ( this );
 
+	QSettings settings;
+	sampleFontSize = settings.value("SampleFonSize",12.0).toDouble();
+	sampleInterSize = settings.value("SampleInterline",16.0).toDouble();
+	
 	theVeryFont = 0;
 	typo = typotek::getInstance();
 	m_lists = ListDockWidget::getInstance();
@@ -64,6 +69,13 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	fontInfoText->setSource ( QUrl ( "qrc:/texts/welcome" ) );
 	fillUniPlanes();
 	refillSampleList();
+	
+	QFile styleInfo(":/info.css");
+	if(styleInfo.open(QIODevice::ReadOnly))
+	{
+		QString infoStyle = styleInfo.readAll();
+		fontInfoText->document()->setDefaultStyleSheet(infoStyle);
+	}
 
 // 	tagLayout = new QGridLayout ( tagPage );
 	abcScene = new QGraphicsScene;

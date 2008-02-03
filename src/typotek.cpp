@@ -75,7 +75,11 @@ void typotek::initMatrix()
 		systray = new Systray();
 	else
 		systray = 0;
-
+	
+	QSettings settings;
+	previewSize = settings.value("PreviewSize", 15.0).toDouble();
+	
+	
 	theMainView = new MainViewWidget ( this );
 	setCentralWidget ( theMainView );
 
@@ -1008,6 +1012,14 @@ void typotek::setTemplatesDir(const QString & dir)
 	
 }
 
+void typotek::changeFontSizeSettings(double fSize, double lSize)
+{
+	QSettings settings;
+	settings.setValue("SampleFontSize", fSize);
+	settings.setValue("SampleInterline", lSize);
+	theMainView->reSize(fSize,lSize);
+}
+
 void typotek::relayStartingStepIn(QString s, int i , QColor c )
 {
 	emit relayStartingStepOut( s, i , c );
@@ -1031,5 +1043,4 @@ void typotek::removeFontItem(QStringList keyList)
 		removeFontItem(key);
 	}
 }
-
 

@@ -21,6 +21,7 @@
 #include "fmotf.h"
 #include "fmshaper.h"
 #include "fmglyphsview.h"
+#include "typotek.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -1101,10 +1102,22 @@ QString FontItem::infoText ( bool fromcache )
 		return m_cacheInfo;
 
 	ensureFace();
+	
+	/**
+	Selectors are :
+	#headline
+	#technote
+	.infoblock
+	.infoname
+	.langmatch
+	.langundefined
+	.langnomatch
+	*/
+	QString ret;
 
 	QMap<QString, QStringList> orderedInfo;
-	QString ret ( "<h2 style=\"color:white;background-color:black;\">" + fancyName() + "</h2>\n" );
-	ret += "<p>"+ QString::number ( m_numGlyphs ) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " ) +"</p>";
+	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
+	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " ) +"</div>";
 
 	if ( moreInfo.isEmpty() )
 	{
@@ -1140,15 +1153,15 @@ QString FontItem::infoText ( bool fromcache )
 		{
 			if ( langIdMap[ lit.key() ].contains ( sysLang ) ) // lang match
 			{
-				styleLangMatch = " style=\"margin-left:16pt;\" ";
+				styleLangMatch = "  \"langmatch\" ";
 			}
 			else if ( langIdMap[ lit.key() ] == "DEFAULT" ) // lang does not match but it’s international name
 			{
-				styleLangMatch = "style=\"margin-left:16pt;font-style:italic;\"";
+				styleLangMatch = " \"langundefined\" ";
 			}
 			else // lang does not match at all
 			{
-				styleLangMatch = "style=\"margin-left:16pt;font-style:italic;font-size:7pt\"";
+				styleLangMatch = " \"langnomatch\" ";
 			}
 			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
@@ -1157,7 +1170,7 @@ QString FontItem::infoText ( bool fromcache )
 					QString name_value = mit.value();
 					name_value.replace ( QRegExp ( "(http://.+)\\s*" ), "<a href=\"\\1\">\\1</a>" );//Make HTTP links
 					name_value.replace ( "\n","<br/>" );
-					orderedInfo[ mit.key() ] << "<p "+ styleLangMatch +">" + name_value +"</p>";
+					orderedInfo[ mit.key() ] << "<div class=\""+ styleLangMatch +"\">" + name_value +"</div>";
 					if ( mit.key() == tr ( "Font Subfamily" ) )
 						m_variant = mit.value();
 				}
@@ -1166,7 +1179,7 @@ QString FontItem::infoText ( bool fromcache )
 					QString name_value = mit.value();
 					name_value.replace ( QRegExp ( "(http://.+)\\s*" ), "<a href=\"\\1\">\\1</a>" );//Make HTTP links
 					name_value.replace ( "\n","<br/>" );
-					orderedInfo[ mit.key() ] << "<p "+ styleLangMatch +">" + name_value +"</p>";
+					orderedInfo[ mit.key() ] << "<div \""+ styleLangMatch +"\">" + name_value +"</div>";
 					if ( mit.key() == tr ( "Font Subfamily" ) )
 						m_variant = mit.value();
 				}
@@ -1181,7 +1194,7 @@ QString FontItem::infoText ( bool fromcache )
 		{
 // 			qDebug() << orderedInfo[name_meaning[i]].join("|");
 			QStringList entries ( orderedInfo[name_meaning[i]].toSet().toList() );
-			ret += "<p>"/*+QString::number(i)+*/"<b>"+name_meaning[i] +"</b> "+entries.join ( " " ) +"</p>";
+			ret += "<div class=\"infoblock\"><div class=\"infoname\">" + name_meaning[i]+ "</div>" + entries.join ( " " ) +"</div>";
 		}
 		if ( i == 7 ) //trademark
 			i = -1;
@@ -1280,14 +1293,17 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	if ( !theOneLinePreviewPixmap.isNull() )
 		return theOneLinePreviewPixmap;
 	QRectF savedRect = theOneLineScene->sceneRect();
-	theOneLineScene->setSceneRect ( 0,0,320,32 );
+	double theSize = typotek::getInstance()->getPreviewSize();
+	double theHeight = theSize * 2.0 ;
+	double theWidth = theHeight * 10.0 ;
+	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
 	
 		ensureFace();
-		double fsize = 19.0;
+		double fsize = theSize ;
 		double scalefactor = fsize / m_face->units_per_EM;
 		FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
-		QPointF pen ( 10,0 );
-		QPixmap linePixmap ( 320,32 );
+		QPointF pen ( 0,0 );
+		QPixmap linePixmap ( theWidth,theHeight );
 		linePixmap.fill ( Qt::white );
 		QPainter apainter ( &linePixmap );
 		QVector<QRgb> palette;
@@ -1351,7 +1367,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	if ( !theOneLinePreviewPixmap.isNull() )
 		return theOneLinePreviewPixmap;
 
-	theOneLinePreviewPixmap = QPixmap ( 320,32 );
+	theOneLinePreviewPixmap = QPixmap ( theWidth,theHeight );
 	theOneLinePreviewPixmap.fill ( Qt::lightGray );
 	return theOneLinePreviewPixmap;
 }

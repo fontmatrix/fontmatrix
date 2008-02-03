@@ -25,11 +25,14 @@
       <attribute name="title" >
        <string>General</string>
       </attribute>
-      <layout class="QVBoxLayout" >
-       <item>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
         <widget class="QGroupBox" name="systrayFrame" >
          <property name="title" >
           <string>Show Fontmatrix in System Tray</string>
+         </property>
+         <property name="flat" >
+          <bool>false</bool>
          </property>
          <property name="checkable" >
           <bool>true</bool>
@@ -51,7 +54,7 @@
           <item>
            <widget class="QGroupBox" name="activateAllFrame" >
             <property name="title" >
-             <string>Show Activate All and Deactivate All in the System Tray menu</string>
+             <string>Show "All" actions</string>
             </property>
             <property name="flat" >
              <bool>true</bool>
@@ -83,7 +86,7 @@
          </layout>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0" >
         <widget class="QGroupBox" name="groupBox" >
          <property name="title" >
           <string>Preview Word</string>
@@ -106,16 +109,45 @@
             </property>
             <property name="sizeHint" >
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>51</width>
+              <height>31</height>
              </size>
             </property>
            </spacer>
           </item>
+          <item row="0" column="2" >
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3" >
+           <widget class="QDoubleSpinBox" name="previewSizeSpin" >
+            <property name="wrapping" >
+             <bool>false</bool>
+            </property>
+            <property name="frame" >
+             <bool>true</bool>
+            </property>
+            <property name="suffix" >
+             <string> pt</string>
+            </property>
+            <property name="decimals" >
+             <number>1</number>
+            </property>
+            <property name="minimum" >
+             <double>1.000000000000000</double>
+            </property>
+            <property name="value" >
+             <double>10.000000000000000</double>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
-       <item>
+       <item row="2" column="0" >
         <widget class="QGroupBox" name="groupBox_4" >
          <property name="title" >
           <string>Font Editor</string>
@@ -157,22 +189,22 @@
          </layout>
         </widget>
        </item>
-       <item>
+       <item row="3" column="0" >
         <widget class="QCheckBox" name="initTagBox" >
          <property name="text" >
           <string>Ask for tag names when importing fonts</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="4" column="0" >
         <spacer>
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" >
           <size>
-           <width>544</width>
-           <height>51</height>
+           <width>629</width>
+           <height>31</height>
           </size>
          </property>
         </spacer>

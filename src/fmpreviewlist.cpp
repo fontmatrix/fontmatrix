@@ -92,12 +92,16 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 		beginPos = 0;
 	}
 	
+	double theSize = typotek::getInstance()->getPreviewSize();
+	double theLine = 2.0 * theSize;
+	double indent = 50.0;
+	
 	QPixmap padPix(1,1);
 	QGraphicsPixmapItem *padPixItem = m_scene->addPixmap(padPix);
 // 	m_pixItemList.append(FontPreviewItem("NONE",QPointF(),false,padPixItem));
 	for(int i= 0 ; i < trackedFonts.count() ; ++i)
 	{
-		if((i + 1)*32 >= beginPos && i*32 <= endPos)
+		if((i + 1)*theLine >= beginPos && i*theLine <= endPos)
 		{ 
 			FontItem *fit = trackedFonts.at(i);
 			if(fit)
@@ -106,7 +110,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 				fit->setFTRaster("true");
 				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
 				fit->setFTRaster(oldRaster);
-				pit->setPos(50,32*i);
+				pit->setPos(indent ,theLine*i);
 				pit->setData(1,fit->path());
 				pit->setData(2,"preview");
 // 				pit->setZValue(1000);
@@ -119,7 +123,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 		}
 		else
 		{
-			padPixItem->setPos(10,32*i);
+			padPixItem->setPos(10,theLine*i);
 			m_pixItemList.append(FontPreviewItem(fonts.at(i)->path(),padPixItem->pos(),false,padPixItem));
 		}
 	}

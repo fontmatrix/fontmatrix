@@ -151,6 +151,7 @@ class typotek:public QMainWindow
 		bool useInitialTags;
 		static QString fonteditorPath;
 		QString templatesDir;
+		double previewSize;
 		
 		void addFcDirItem(const QString &dirPath);
 
@@ -209,8 +210,13 @@ class typotek:public QMainWindow
 		void setTemplatesDir(const QString &dir);
 		QString getTemplatesDir() {return templatesDir;};
 		
+		void setPreviewSize(double d){ previewSize = d; }
+		double getPreviewSize(){ return previewSize; }
+		
 		void removeFontItem(QString key);
 		void removeFontItem(QStringList keyList);
+		
+		void changeFontSizeSettings(double fSize, double lSize);
 		
 
 	protected:

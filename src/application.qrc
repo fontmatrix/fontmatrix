@@ -18,6 +18,7 @@
         <file alias="fontmatrix_fontbookexport_icon.png">graphic-resources/fontmatrix-fontbookexport-icon.png</file>
         <file alias="fontmatrix_import_icon.png">graphic-resources/fontmatrix-import-icon.png</file>
         
+        <file alias="info.css">graphic-resources/info.css</file>
         
     </qresource>
 

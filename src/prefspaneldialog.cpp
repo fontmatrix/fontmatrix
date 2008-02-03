@@ -45,12 +45,17 @@ void PrefsPanelDialog::initSystrayPrefs(bool hasSystray, bool isVisible, bool ha
 	tagsConfirmation->setChecked(tagConfirmation);
 	QSettings settings ;
 	closeToSystray->setChecked(settings.value("SystrayCloseToTray", true).toBool());
+	previewSizeSpin->setValue(typotek::getInstance()->getPreviewSize());
+	
 }
 
 void PrefsPanelDialog::initSampleTextPrefs()
 {
 	//At least fill the sampletext list :)
 	sampleTextNamesList->addItems(typotek::getInstance()->namedSamplesNames());
+	QSettings settings;
+	fontSizeSpin->setValue( settings.value("SampleFontSize",12.0).toDouble() );
+	interLineSpin->setValue( settings.value("SampleInterline",16.0).toDouble() );
 }
 
 void PrefsPanelDialog::initFilesAndFolders()
@@ -74,7 +79,8 @@ void PrefsPanelDialog::doConnect()
 	connect(tagsConfirmation, SIGNAL(clicked(bool)), this, SLOT(setSystrayTagsConfirmation(bool)));
 	connect(closeToSystray, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotCloseToSystray(bool)));
 	connect(previewWord, SIGNAL(textChanged ( const QString  ) ), this, SLOT(updateWord(QString)));
-	connect(fontEditorPath, SIGNAL(textChanged(QString)), this, SLOT(setupFontEditor(QString)));
+	connect(previewSizeSpin, SIGNAL(valueChanged ( double  ) ), this, SLOT(updateWordSize(double)));
+	connect(fontEditorPath, SIGNAL(textChanged ( const QString  ) ), this, SLOT(setupFontEditor(QString)));
 	connect(fontEditorBrowse, SIGNAL(clicked()), this, SLOT(slotFontEditorBrowse()));
 	connect(initTagBox, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotUseInitialTags(bool)));
 	
@@ -85,6 +91,7 @@ void PrefsPanelDialog::doConnect()
 
 void PrefsPanelDialog::applySampleText()
 {
+	typotek::getInstance()->changeFontSizeSettings( fontSizeSpin->value(), interLineSpin->value() );
 	typotek::getInstance()->forwardUpdateView();
 }
 
@@ -142,8 +149,19 @@ void PrefsPanelDialog::setSystrayTagsConfirmation(bool isEnabled)
 
 void PrefsPanelDialog::updateWord(QString s)
 {
+	typotek::getInstance()->setPreviewSize(previewSizeSpin->value());
 	typotek::getInstance()->setWord(s, true);
 }
+
+void PrefsPanelDialog::updateWordSize(double d)
+{
+	
+	QSettings settings;
+	settings.setValue("PreviewSize", d);
+	typotek::getInstance()->setPreviewSize(d);
+	typotek::getInstance()->setWord(previewWord->text(), true);
+}
+
 
 void PrefsPanelDialog::setupFontEditor(QString s)
 {
@@ -164,6 +182,8 @@ void PrefsPanelDialog::showPage(PAGE page)
 		mainTab->setCurrentIndex ( 0 );
 	else if(page == PAGE_SAMPLETEXT)
 		mainTab->setCurrentIndex ( 1 );
+	else if(page == PAGE_FILES)
+		mainTab->setCurrentIndex ( 2 );
 }
 
 void PrefsPanelDialog::slotTemplatesBrowse()
@@ -179,6 +199,7 @@ void PrefsPanelDialog::setupTemplates(const QString &tdir)
 	if(!tdir.isEmpty())
 		typotek::getInstance()->setTemplatesDir(tdir);
 }
+
 
 
 

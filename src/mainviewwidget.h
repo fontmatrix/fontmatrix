@@ -153,6 +153,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QList<FontItem*> curFonts(){return currentFonts;};
 		FontItem* selectedFont(){return theVeryFont;};
 		
+		void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 		void refillSampleList();
 		
 	protected:

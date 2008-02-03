@@ -1021,6 +1021,7 @@ void typotek::removeFontItem(QString key)
 	fontMap.removeAll(fit);
 	delete fit;
 	realFontMap.remove(key);
+	qDebug()<< key << "has been removed";
 }
 
 void typotek::removeFontItem(QStringList keyList)

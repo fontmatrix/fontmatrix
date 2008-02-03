@@ -1513,14 +1513,20 @@ void MainViewWidget::slotRemoveCurrentItem()
 {
 	if(curItemName.isEmpty())
 		return;
-	if( QMessageBox::question ( this, "Fontmatrix safe", tr("You are about to remove a font from Fontmatrix database") +"\n"+curItemName+"\n" + tr("Do you want to continue?"),QMessageBox::Yes |  QMessageBox::No, QMessageBox::No) == QMessageBox::Yes )
+	if(theVeryFont->isActivated())
+	{
+		QMessageBox::information(this, tr("Fontmatrix takes care of you"), curItemName + tr(" is activated.\nIf you want to remove it from Fontmatrix database, please deactivate it first."), QMessageBox::Yes );
+		return;
+	}
+	if( QMessageBox::question ( this, tr("Fontmatrix safe"), tr("You are about to remove a font from Fontmatrix database") +"\n"+curItemName+"\n" + tr("Do you want to continue?"),QMessageBox::Yes |  QMessageBox::No, QMessageBox::No) == QMessageBox::Yes )
 	{ 
 		theVeryFont->deRenderAll();
 		currentFonts.removeAll(theVeryFont);
 		theTaggedFonts.removeAll(theVeryFont);
 		theVeryFont  = 0 ;
 		typo->removeFontItem(curItemName);
-		
+		curItemName = lastIndex = faceIndex = "";
+		fontsetHasChanged = true;
 		fillTree();
 	}
 }

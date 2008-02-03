@@ -1,16 +1,44 @@
+
 /*All are div elements*/
-#headline{
-background-color:red;/*check if css is applied*/
-}
-#technote{
-}
-.infoblock{
-}
-.infoname{
-}
-.langmatch{
-}
-.langundefined{
-}
-.langnomatch{
-}
+
+
+#headline {
+    background-color : black;
+    color : white;
+    font-family : 'sans-serif';
+    font-size : 18px;
+    font-variant : small-caps;
+    font-weight : bold;
+  }
+
+
+#technote {
+  }
+
+
+.infoblock {
+    font-family : 'sans-serif';
+    font-size : 13px;
+    margin-right : 10px;
+  }
+
+
+.infoname {
+    background-color : #fff0dd;
+    font-family : 'sans-serif';
+    font-size : 13px;
+    font-weight : bold;
+  }
+
+
+.langmatch {
+  }
+
+
+.langundefined {
+  }
+
+
+.langnomatch {
+  }
+

@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/" >
         <file alias="fontmatrix_icon.png">icons/application-fontmatrix_128.png</file>
+	<file alias="fontmatrix_systray_icon.png">icons/fontmatrix-systray.png</file>
 	<file alias="icon_fake_partiallychecked">icons/icon_warning-32.png</file>
         <file alias="fontmatrix_splash.png">graphic-resources/splashscreen-670x470.png</file>
         <file alias="fontmatrix_about.png">graphic-resources/about-graphic.png</file>

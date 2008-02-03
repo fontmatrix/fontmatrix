@@ -44,7 +44,7 @@ Systray::Systray()
 
 	slotSetActivateAll(settings->value("SystrayActivateAllVisible", false).toBool());
 
-	trayIcon->setIcon(QIcon(":/fontmatrix_icon.png"));
+	trayIcon->setIcon(QIcon(":/fontmatrix_systray_icon.png"));
 	if (settings->value("SystrayVisible", false).toBool())
 		trayIcon->show();
 	else

@@ -1153,15 +1153,15 @@ QString FontItem::infoText ( bool fromcache )
 		{
 			if ( langIdMap[ lit.key() ].contains ( sysLang ) ) // lang match
 			{
-				styleLangMatch = "  \"langmatch\" ";
+				styleLangMatch = "\"langmatch\"";
 			}
 			else if ( langIdMap[ lit.key() ] == "DEFAULT" ) // lang does not match but it’s international name
 			{
-				styleLangMatch = " \"langundefined\" ";
+				styleLangMatch = "\"langundefined\"";
 			}
 			else // lang does not match at all
 			{
-				styleLangMatch = " \"langnomatch\" ";
+				styleLangMatch = "\"langnomatch\"";
 			}
 			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
@@ -1170,7 +1170,7 @@ QString FontItem::infoText ( bool fromcache )
 					QString name_value = mit.value();
 					name_value.replace ( QRegExp ( "(http://.+)\\s*" ), "<a href=\"\\1\">\\1</a>" );//Make HTTP links
 					name_value.replace ( "\n","<br/>" );
-					orderedInfo[ mit.key() ] << "<div class=\""+ styleLangMatch +"\">" + name_value +"</div>";
+					orderedInfo[ mit.key() ] << "<div class="+ styleLangMatch +">" + name_value +"</div>";
 					if ( mit.key() == tr ( "Font Subfamily" ) )
 						m_variant = mit.value();
 				}
@@ -1179,7 +1179,7 @@ QString FontItem::infoText ( bool fromcache )
 					QString name_value = mit.value();
 					name_value.replace ( QRegExp ( "(http://.+)\\s*" ), "<a href=\"\\1\">\\1</a>" );//Make HTTP links
 					name_value.replace ( "\n","<br/>" );
-					orderedInfo[ mit.key() ] << "<div \""+ styleLangMatch +"\">" + name_value +"</div>";
+					orderedInfo[ mit.key() ] << "<div class="+ styleLangMatch +">" + name_value +"</div>";
 					if ( mit.key() == tr ( "Font Subfamily" ) )
 						m_variant = mit.value();
 				}
@@ -1293,14 +1293,17 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	if ( !theOneLinePreviewPixmap.isNull() )
 		return theOneLinePreviewPixmap;
 	QRectF savedRect = theOneLineScene->sceneRect();
+	
 	double theSize = typotek::getInstance()->getPreviewSize();
-	double theHeight = theSize * 2.0 ;
+	double pt2px = QApplication::desktop()->physicalDpiY() / 72.0;
+	double theHeight = theSize * 1.3 * pt2px;
 	double theWidth = theHeight * 10.0 ;
+	qDebug() << theSize << theHeight << theWidth;
 	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
 	
 		ensureFace();
 		double fsize = theSize ;
-		double scalefactor = fsize / m_face->units_per_EM;
+		double scalefactor = theSize / m_face->units_per_EM;
 		FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 		QPointF pen ( 0,0 );
 		QPixmap linePixmap ( theWidth,theHeight );

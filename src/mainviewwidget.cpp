@@ -506,6 +506,7 @@ void MainViewWidget::slotInfoFont()
 	fontInfoText->clear();
 	//QString t(QString("Family : %1\nStyle : %2\nFlags : \n%3").arg(f->family()).arg(f->variant()).arg(f->faceFlags()));
 	fontInfoText->setHtml ( "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  f->infoText() + "</html>" );
+// 	qDebug() << "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  f->infoText() + "</html>";
 
 }
 

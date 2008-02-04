@@ -1296,9 +1296,9 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	
 	double theSize = typotek::getInstance()->getPreviewSize();
 	double pt2px = QApplication::desktop()->physicalDpiY() / 72.0;
-	double theHeight = theSize * 1.3 * pt2px;
+	double theHeight = theSize * 1.1 * pt2px;
 	double theWidth = theHeight * 10.0 ;
-	qDebug() << theSize << theHeight << theWidth;
+// 	qDebug() << theSize << theHeight << theWidth;
 	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
 	
 		ensureFace();
@@ -1352,7 +1352,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 			             QImage::Format_Indexed8 );
 			img.setColorTable ( palette );
 // 			apainter.drawImage(pen.x(), pen.y() - m_face->glyph->bitmap_top, img);
-			pen.ry() = 26 - m_glyph->bitmap_top;
+			pen.ry() = theSize - m_glyph->bitmap_top;
 			apainter.drawImage ( pen.x() + leftBearing, pen.y(), img );
 			pen.rx() +=  advance;
 // 			if(m_name.contains("woodcut"))

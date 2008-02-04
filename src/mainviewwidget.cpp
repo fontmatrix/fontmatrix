@@ -56,7 +56,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	setupUi ( this );
 
 	QSettings settings;
-	sampleFontSize = settings.value("SampleFonSize",12.0).toDouble();
+	sampleFontSize = settings.value("SampleFontSize",12.0).toDouble();
 	sampleInterSize = settings.value("SampleInterline",16.0).toDouble();
 	
 	theVeryFont = 0;
@@ -104,8 +104,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView_FT->locker = false;
 	
 	sampleText= typo->namedSample ( "default" );
-	sampleFontSize = 18;
-	sampleInterSize = 20;
+// 	sampleFontSize = 18;
+// 	sampleInterSize = 20;
 	m_lists->previewList->setRefWidget ( this );
 	
 	contextMenuReq = false;

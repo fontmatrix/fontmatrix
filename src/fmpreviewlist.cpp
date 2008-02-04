@@ -94,7 +94,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	}
 	
 	double theSize = typotek::getInstance()->getPreviewSize();
-	double theLine = 1.3 * theSize * QApplication::desktop()->physicalDpiY() / 72.0;
+	double theLine = 1.1 * theSize * QApplication::desktop()->physicalDpiY() / 72.0;
 	double indent = 50.0;
 	
 	QPixmap padPix(1,1);

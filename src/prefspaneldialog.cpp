@@ -19,11 +19,14 @@
 PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
  : QDialog(parent)
 {
+	//get this before anything
+	double pSize = typotek::getInstance()->getPreviewSize();
 	setupUi(this);
 	fontEditorPath->setText(typotek::getInstance()->fontEditorPath());
 	doConnect();
 	systrayFrame->setCheckable(true);
 	previewWord->setText(typotek::getInstance()->word());
+	previewSizeSpin->setValue(pSize);
 	initTagBox->setChecked(typotek::getInstance()->initialTags());
 }
 

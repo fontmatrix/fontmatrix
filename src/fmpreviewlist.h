@@ -40,7 +40,7 @@ struct FontPreviewItem
 	FontPreviewItem(QString n, QPointF p, bool v, QGraphicsPixmapItem* i)
 	:name(n), pos(p), visible(v), item(i) {};
 	
-	QString dump(){return QString("::::::::::%1::\n\tpos(%2)\n\tvisible(%3)\n\titem(%4)").arg(name).arg(pos.y()).arg(visible).arg((int)item);}
+// 	QString dump(){return QString("::::::::::%1::\n\tpos(%2)\n\tvisible(%3)\n\titem(%4)").arg(name).arg(pos.y()).arg(visible).arg((int)item);}
 };
 
 /**

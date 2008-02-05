@@ -39,7 +39,7 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 	setScene(m_scene);
 	setAlignment (Qt::AlignLeft | Qt::AlignTop);
 // 	m_scene->setBackgroundBrush(Qt::lightGray);
-	m_select = m_scene->addRect(QRectF(), QPen(Qt::blue ), QColor(0,0,120,60));
+	m_select = m_scene->addRect(QRectF(), QPen(Qt::transparent ), QColor(0,0,255,30));
 	m_select->setZValue(100.0);
 	
 	m_currentItem = 0;
@@ -59,29 +59,50 @@ FMPreviewList::~FMPreviewList()
 
 void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 {
+// 	qDebug()<<"FMPreviewList::slotRefill("<< fonts.count() <<","<< setChanged <<")";
 	theWord = typotek::getInstance()->word();
-// 	qDebug() << "FMPreviewList::slotRefill(QList<FontItem*> "<<&fonts<<", bool "<<setChanged<<")";
+	horizontalScrollBar()->setValue(0);
 	if(setChanged)
 	{
+		QString rescueId = " %1";
+		int rescueInt = 0;
 		slotClearSelect();
 		trackedFonts.clear();
 		QMap<QString, FontItem*> ordFonts;
 		for(int i=0;i<fonts.count();++i)
-			ordFonts[fonts[i]->fancyName()]=fonts[i];
+		{
+			QString fId = fonts[i]->fancyName();
+			if(ordFonts.contains(fId))
+			{
+				fId += rescueId.arg(++rescueInt);
+// 				qDebug()<<"un doublon" << fId;
+			}
+			ordFonts[fId] = fonts[i];
+		}
+// 		qDebug()<< "ordFonts.count()->"<<ordFonts.count();
+		
 		for(QMap<QString, FontItem*>::const_iterator fit = ordFonts.begin() ; fit != ordFonts.end(); ++fit)
+		{
 			trackedFonts << fit.value();
+		}
 	}
 	
-	for(int i = 0; i < m_pixItemList.count(); ++i)
+	for(QMap<QString, FontPreviewItem>::const_iterator pit = m_pixItemList.begin() ; pit!= m_pixItemList.end(); ++pit)
 	{
 		
-		if(m_pixItemList[i].item && m_pixItemList[i].visible)
+		if(pit.value().item && pit.value().visible)
 		{
-			m_scene->removeItem(m_pixItemList[i].item);
-			delete m_pixItemList[i].item;
+			m_scene->removeItem(pit.value().item);
+			delete pit.value().item;
+// 			pit.value().item = 0;
+// 			pit.value().visible = false;
 		}
 	}
 	m_pixItemList.clear();
+	
+	double theSize = typotek::getInstance()->getPreviewSize();
+	double theLine = 1.3 * theSize * QApplication::desktop()->physicalDpiY() / 72.0;
+	double indent = 50.0;
 	
 	QRect vvrect(visibleRegion().boundingRect());
 	QRect vrect = mapToScene( vvrect ).boundingRect().toRect();
@@ -93,16 +114,11 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 		beginPos = 0;
 	}
 	
-	double theSize = typotek::getInstance()->getPreviewSize();
-	double theLine = 1.1 * theSize * QApplication::desktop()->physicalDpiY() / 72.0;
-	double indent = 50.0;
-	
-	QPixmap padPix(1,1);
-	QGraphicsPixmapItem *padPixItem = m_scene->addPixmap(padPix);
-// 	m_pixItemList.append(FontPreviewItem("NONE",QPointF(),false,padPixItem));
-	for(int i= 0 ; i < trackedFonts.count() ; ++i)
+	m_scene->setSceneRect(0,0, width(), trackedFonts.count() * theLine);
+	double visibilityAdjustment = theLine / 2.0;
+	for(int i = 0 ; i < trackedFonts.count() ; ++i)
 	{
-		if((i + 1)*theLine >= beginPos && i*theLine <= endPos)
+		if( ((i + 1)*theLine) > (beginPos + visibilityAdjustment) && (i*theLine)  < (endPos - visibilityAdjustment))
 		{ 
 			FontItem *fit = trackedFonts.at(i);
 			if(fit)
@@ -114,21 +130,23 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 				pit->setPos(indent ,theLine*i);
 				pit->setData(1,fit->path());
 				pit->setData(2,"preview");
-// 				pit->setZValue(1000);
-				pit->setToolTip(fit->fancyName());
+				pit->setToolTip(fit->fancyName()/*+" - "+ QString::number(theLine*i)*/);
 				pit->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-	// 			pit->setZValue(10);
-				m_pixItemList.append(FontPreviewItem(fit->path(), pit->pos(), true, pit));
+				m_pixItemList[fit->path()] = FontPreviewItem(fit->path(), QPointF(indent , theLine*i), true, pit) ;
+// 				if(fit->path() == curFontName)
+// 					qDebug()<< i << m_pixItemList[fit->path()].dump();
 				
 			}
 		}
 		else
 		{
-			padPixItem->setPos(10,theLine*i);
-			m_pixItemList.append(FontPreviewItem(fonts.at(i)->path(),padPixItem->pos(),false,padPixItem));
+			m_pixItemList[trackedFonts.at(i)->path()] = FontPreviewItem(trackedFonts.at(i)->path(),QPointF(0,theLine*i),false,0);
+// 			if( fonts.at(i)->path() == curFontName)
+// 				qDebug()<< i << m_pixItemList[fonts.at(i)->path()].dump();
 		}
 	}
-	horizontalScrollBar()->setValue(0);
+// 	qDebug()<< "END OF reFill()";
+	
 }
 
 void FMPreviewList::showEvent(QShowEvent * event)
@@ -138,17 +156,18 @@ void FMPreviewList::showEvent(QShowEvent * event)
 
 void FMPreviewList::slotChanged( )
 {
+// 	qDebug()<<"FMPreviewList::slotChanged( )";
 #ifndef HIGH_PERF
 	// It waits you release the slider to draw items
 	if(verticalScrollBar()->isSliderDown())
 		return;
 #endif
-	slotRefill(mvw->curFonts(), false);
+	slotRefill(trackedFonts, false);
 }
 
 void FMPreviewList::mousePressEvent(QMouseEvent * e)
 {
-	qDebug() << "FMPreviewList::mousePressEvent(QMouseEvent * "<<e<<")";
+// 	qDebug() << "FMPreviewList::mousePressEvent(QMouseEvent * "<<e<<")";
 	
 	QPointF inListPos = mapToScene( e->pos() );
 	inListPos.rx() = 100;
@@ -173,77 +192,64 @@ void FMPreviewList::mousePressEvent(QMouseEvent * e)
 	
 	if(it == m_currentItem)
 		return;
-
 	
-	
-	
-	slotSelect(it);
+	slotSelect(it->data(1).toString());
 	
 }
 
-void FMPreviewList::slotSelect(QGraphicsItem * it)
+void FMPreviewList::slotSelect(QString fontname)
 {
-	QString fontname = it->data(1).toString();
-	qDebug() << "FMPreviewList::slotSelect(QGraphicsItem * "<<fontname<<")";
-	if(!it)
+// 	qDebug() << "FMPreviewList::slotSelect(QGraphicsItem * "<<fontname<<")";
+	if(fontname.isEmpty())
 		return;
-	it->setSelected(true);
-	m_currentItem = it;
-	m_select->setRect(it->boundingRect());
-	m_select->setPos(it->pos());
-	ensureVisible(it);
+	curFontName = fontname;
+	FontPreviewItem it = m_pixItemList[fontname];
+// 	qDebug() << it.dump();
+	
+	if(!it.visible)
+	{
+		double topShift = 0.0;
+		verticalScrollBar()->setValue(it.pos.y() + topShift);
+	}
+// 	ensureVisible(QRectF(0,it.pos.y(), width(), height()));
+// 	qDebug() << "scroll to " << it.pos.y() << "and it was " <<(it.pos.x() == 0 ? "invisible" : "visible");
+	
+	if(!m_pixItemList.contains(fontname))
+	{
+		qDebug()<< "m_pixItemList does not contain " << fontname;
+		return;
+	}
+	FontPreviewItem nit = m_pixItemList[fontname];
+// 	qDebug()<< nit.dump();
+	if(!nit.item)
+	{
+		qDebug()<<"OOPS, the graphic item has not been properly instanciated "<<nit.item;
+		return;
+	}
+	nit.item->setSelected(true);
+	m_currentItem = nit.item;
+// 	double theSize = typotek::getInstance()->getPreviewSize();
+// 	double theLine = 1.4 * theSize * QApplication::desktop()->physicalDpiY() / 72.0;
+// 	
+	QRectF itRect;
+	QPointF itPos ( nit.pos );
+	itRect.setWidth(width());
+	itRect.setHeight(nit.item->boundingRect().height());
+	itPos.rx() = 0.0;
+	
+	m_select->setRect(itRect);
+	m_select->setPos(itPos);
+	
 	if(isVisible())
 		mvw->slotFontSelectedByName(fontname);
 }
 
 void FMPreviewList::slotClearSelect()
 {
+// 	qDebug()<<" FMPreviewList::slotClearSelect()";
 	m_currentItem = 0;
 	m_select->setRect(QRectF());
 	verticalScrollBar()->setValue(0);
-}
-
-void FMPreviewList::searchAndSelect(QString fname)
-{
-	qDebug() << "FMPreviewList::searchAndSelect(QString "<<fname<<")";
-	theWord = typotek::getInstance()->word();
-	QGraphicsItem *it = 0;
-	for(int i = 0 ; i < m_pixItemList.count() ; ++i)
-	{
-// 		qDebug() << m_pixItemList[i].name;
-		if(m_pixItemList[i].name == fname)
-		{
-			if(m_pixItemList[i].visible)
-			{
-				it = m_pixItemList[i].item;
-				break;
-			}
-			else
-			{
-				FontItem *fit = typotek::getInstance()->getFont(fname);
-				if(fit)
-				{
-					bool oldRaster = fit->rasterFreetype();
-					fit->setFTRaster("true");
-					QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
-					fit->setFTRaster(oldRaster);
-					pit->setPos(m_pixItemList[i].pos);
-					pit->setData(1,fit->path());
-					pit->setData(2,"preview");
-					pit->setToolTip(fit->fancyName());
-					pit->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-					m_pixItemList[i].visible = true;
-					m_pixItemList[i].item = pit;
-				
-				}
-				it = m_pixItemList[i].item;
-				break;
-			}
-		}
-	}
-	if(!it)
-		return;
-	slotSelect(it);
 }
 
 void FMPreviewList::resizeEvent(QResizeEvent * event)
@@ -258,7 +264,7 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 		ref = mvw->selectedFont()->path() ;
 	else
 	{
-		searchAndSelect(trackedFonts[0]->path());
+		slotSelect(trackedFonts[0]->path());
 		return;
 	}
 	
@@ -276,7 +282,7 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 			}
 		}
 		if(!target.isEmpty())
-			searchAndSelect(target);
+			slotSelect(target);
 		
 	}
 	else if(e->key() == Qt::Key_Down)
@@ -292,7 +298,7 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 			}
 		}
 		if(!target.isEmpty())
-			searchAndSelect(target);
+			slotSelect(target);
 	}
 }
 

@@ -21,6 +21,7 @@
 #define FMPREVIEWLIST_H
 
 #include <QGraphicsView>
+#include <QMap>
 
 class QGraphicsPixmapItem;
 class QGraphicsScene;
@@ -35,8 +36,11 @@ struct FontPreviewItem
 	QPointF pos;
 	bool visible;
 	QGraphicsPixmapItem* item;
+	FontPreviewItem(){};
 	FontPreviewItem(QString n, QPointF p, bool v, QGraphicsPixmapItem* i)
 	:name(n), pos(p), visible(v), item(i) {};
+	
+	QString dump(){return QString("::::::::::%1::\n\tpos(%2)\n\tvisible(%3)\n\titem(%4)").arg(name).arg(pos.y()).arg(visible).arg((int)item);}
 };
 
 /**
@@ -51,11 +55,11 @@ class FMPreviewList : public QGraphicsView
 
 		~FMPreviewList();
 		void setRefWidget(MainViewWidget* m){mvw = m;};
-		void searchAndSelect(QString fname);
+// 		void searchAndSelect(QString fname);
 		
 	public slots:
 		void slotRefill ( QList<FontItem*> fonts , bool setChanged );
-		void slotSelect ( QGraphicsItem* it );
+		void slotSelect ( QString fontname );
 		void slotClearSelect();
 	private slots:
 		void slotChanged();
@@ -64,11 +68,12 @@ class FMPreviewList : public QGraphicsView
 		
 		QList<FontItem*> trackedFonts;
 		QGraphicsScene *m_scene;
-		QList<FontPreviewItem> m_pixItemList;
+		QMap<QString, FontPreviewItem> m_pixItemList;
 		QGraphicsRectItem* m_select;
 		MainViewWidget *mvw;
 		QGraphicsItem *m_currentItem;
 		QString theWord;
+		QString curFontName;
 		
 	protected:
 		void showEvent ( QShowEvent * event ) ;

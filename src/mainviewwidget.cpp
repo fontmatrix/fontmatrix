@@ -299,12 +299,16 @@ void MainViewWidget::fillTree()
 	{
 // 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
 		m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
-		QColor scol ( Qt::blue );
-		scol.setAlpha ( 30 );
-		curItem->parent()->setBackgroundColor ( 0,scol );
-		curItem->parent()->setBackgroundColor ( 1,scol );
+		QColor scol (0,0,255,30);
+		QColor pcol (100,100,255,100);
+		QFont selFont;
+		selFont.setBold(true);
+		curItem->parent()->setBackgroundColor ( 0,pcol );
+		curItem->parent()->setBackgroundColor ( 1,pcol );
+		curItem->parent()->setFont(0, selFont);
 		curItem->setBackgroundColor ( 0,scol );
 		curItem->setBackgroundColor ( 1,scol );
+		curItem->setFont(0,selFont);
 
 
 // 		curItem->setSelected ( true );
@@ -398,7 +402,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 				slotView ( true );
 				typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
 				typo->presentFontName ( theVeryFont->fancyName() );
-				m_lists->previewList->searchAndSelect ( theVeryFont->path() );
+				m_lists->previewList->slotSelect ( theVeryFont->path() );
 			}
 		}
 		qDebug() << curItemName;
@@ -454,7 +458,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			slotView ( true );
 			typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
 			typo->presentFontName ( theVeryFont->fancyName() );
-			m_lists->previewList->searchAndSelect ( theVeryFont->path() );
+			m_lists->previewList->slotSelect ( theVeryFont->path() );
 		}
 		if ( item->data ( 0,200 ).toInt() != item->checkState ( 1 ) )
 		{

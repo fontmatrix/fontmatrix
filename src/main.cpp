@@ -132,7 +132,7 @@ int main ( int argc, char *argv[] )
 		theSplash.finish ( mw );
 
 	LazyInit lazyInit;
-	lazyInit.run();
+	lazyInit.start(QThread::LowestPriority);
 	
 	return app.exec();
 }

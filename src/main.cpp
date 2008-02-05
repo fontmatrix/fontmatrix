@@ -131,7 +131,9 @@ int main ( int argc, char *argv[] )
 	if(splash)
 		theSplash.finish ( mw );
 
-
+	LazyInit lazyInit;
+	lazyInit.run();
+	
 	return app.exec();
 }
 

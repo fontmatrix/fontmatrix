@@ -29,6 +29,7 @@
 #include <QDir>
 #include <QStringList>
 #include <QLabel>
+#include <QThread>
 
 #include "prefspaneldialog.h"
 
@@ -226,6 +227,11 @@ class typotek:public QMainWindow
 	friend class Systray; // a bit ugly but i'll need access to privates
 };
 
+class LazyInit : public QThread
+{
+	public:
+		void run();
+};
 
 
 #endif

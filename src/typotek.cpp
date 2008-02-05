@@ -70,6 +70,7 @@ void typotek::initMatrix()
 	readSettings();
 	fillTagsList();
 	initDir();
+	
 
 	if ( QSystemTrayIcon::isSystemTrayAvailable() )
 		systray = new Systray();
@@ -98,7 +99,6 @@ void typotek::initMatrix()
 	createActions();
 	createMenus();
 	createStatusBar();
-
 }
 
 
@@ -294,10 +294,9 @@ void typotek::open ( QStringList files )
 	QStringList tali;
 	if ( useInitialTags )
 	{
-		QString inputTags = QInputDialog::getText ( this,"Import tags",tr ( "Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." ) );
-
-		if ( !inputTags.isEmpty() )
-			tali = inputTags.split ( "#" );
+		ImportTags imp(this,tagsList);
+		imp.exec();
+		tali = imp.tags();
 		tali << "Activated_Off" ;
 	}
 	else
@@ -1042,5 +1041,17 @@ void typotek::removeFontItem(QStringList keyList)
 	{
 		removeFontItem(key);
 	}
+}
+
+void LazyInit::run()
+{
+	qDebug() << "LazyInit::run()";
+	typotek* t = typotek::getInstance();
+	QList<FontItem*> fonts = t->getAllFonts();
+	foreach(FontItem *fit, fonts)
+	{
+		fit->infoText();
+	}
+	qDebug() << "END OF LazyInit";
 }
 

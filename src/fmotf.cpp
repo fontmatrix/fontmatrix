@@ -25,7 +25,7 @@
 
 namespace Harfbuzz
 {
-				 
+
 	HB_LineBreakClass HB_GetLineBreakClass ( HB_UChar32 ch )
 	{
 		return ( HB_LineBreakClass ) 0;
@@ -57,23 +57,23 @@ namespace Harfbuzz
 // {
 // 	return ( Harfbuzz::HB_LineBreakClass ) 0;
 // }
-// 
+//
 // void HB_GetUnicodeCharProperties ( Harfbuzz::HB_UChar32 ch, Harfbuzz::HB_CharCategory *category, int *combiningClass )
 // {
 // 	*category = ( Harfbuzz::HB_CharCategory ) QChar::Category ( ch );
 // 	*combiningClass = QChar::CombiningClass ( ch );
 // }
-// 
+//
 // Harfbuzz::HB_CharCategory HB_GetUnicodeCharCategory ( Harfbuzz::HB_UChar32 ch )
 // {
 // 	return ( Harfbuzz::HB_CharCategory ) QChar::Category ( ch );
 // }
-// 
+//
 // int HB_GetUnicodeCharCombiningClass ( Harfbuzz::HB_UChar32 ch )
 // {
 // 	return QChar::CombiningClass ( ch );
 // }
-// 
+//
 // Harfbuzz::HB_UChar16 HB_GetMirroredChar ( Harfbuzz::HB_UChar16 ch )
 // {
 // 	return QChar ( ch ).mirroredChar().unicode();
@@ -94,11 +94,11 @@ Harfbuzz::HB_UChar32 getChar ( const Harfbuzz::HB_UChar16 *string, Harfbuzz::hb_
 	qDebug() << "HB_UChar32 getChar";
 	Harfbuzz::HB_UChar32 ch;
 // HB_SurrogateToUcs4 expands in HB_UChar32 without prefix, i have to expand manually
-	if ( (( string[i] & 0xfc00) == 0xd800 )//  HB_IsHighSurrogate
+	if ( ( ( string[i] & 0xfc00 ) == 0xd800 ) //  HB_IsHighSurrogate
 	        && i < length - 1
-		       && (( string[i + 1] & 0xfc00) == 0xdc00 ))// HB_IsLowSurrogate
+	        && ( ( string[i + 1] & 0xfc00 ) == 0xdc00 ) ) // HB_IsLowSurrogate
 	{
-		ch = (((Harfbuzz::HB_UChar32) string[i]) <<10) + (string[i + 1] ) - 0x35fdc00;// HB_SurrogateToUcs4
+		ch = ( ( ( Harfbuzz::HB_UChar32 ) string[i] ) <<10 ) + ( string[i + 1] ) - 0x35fdc00;// HB_SurrogateToUcs4
 		++i;
 	}
 	else
@@ -313,7 +313,7 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 			gsubstream->pos = 0;
 
 			if ( GDEF ? !Harfbuzz::HB_Load_GSUB_Table ( gsubstream, &_gsub, _gdef, gdefstream ) :
-						  !Harfbuzz::HB_Load_GSUB_Table ( gsubstream, &_gsub, NULL, NULL ) )
+			        !Harfbuzz::HB_Load_GSUB_Table ( gsubstream, &_gsub, NULL, NULL ) )
 			{
 				GSUB = 1;
 				//HB_GSUB_Register_Alternate_Function( _gsub, AltFunc, &altGlyphs);
@@ -342,7 +342,7 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 			gposstream->pos = 0;
 
 			if ( GDEF ? !Harfbuzz::HB_Load_GPOS_Table ( gposstream, &_gpos, _gdef, gdefstream ) :
-						  !Harfbuzz::HB_Load_GPOS_Table ( gposstream, &_gpos, NULL, NULL ) )
+			        !Harfbuzz::HB_Load_GPOS_Table ( gposstream, &_gpos, NULL, NULL ) )
 				GPOS = 1;
 			else
 				GPOS = 0;
@@ -386,9 +386,19 @@ QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
 // 	qDebug()<<"FmOtf::procstring(QString "<<s<<", OTFSet "<<set.dump()<<")";
 	curString = s;
 	regAltGlyphs.clear();
-	int numR = procstring1 ( s, set.script, set.lang, set.gsub_features, set.gpos_features );
 // 	qDebug() <<"Get a bufferString of "<< numR <<" glyphs";
+	if ( Harfbuzz::hb_buffer_new ( &_buffer ) != Harfbuzz::HB_Err_Ok)
+	{
+		qDebug ( ) << "Unable to get _buffer("<< _buffer <<")";
+		return QList<RenderedGlyph>();
+	}
+	int numR = procstring1 ( s, set.script, set.lang, set.gsub_features, set.gpos_features );
+	
 	QList<RenderedGlyph> ret = get_position();
+	
+	Harfbuzz::hb_buffer_free ( _buffer );
+	_buffer = 0;
+	
 // 	qDebug() <<"Get a renderedString of "<< ret.count() <<" glyphs";
 	return ret;
 }
@@ -396,13 +406,13 @@ QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
 int
 FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
 {
-	qDebug() <<"FmOtf::procstring1 ( "<<s<<","<<script<<", "<<lang<<", "<<gsub.join ( "." ) <<", " <<gpos.join ( "." ) <<" )";
-	if ( Harfbuzz::hb_buffer_new ( &_buffer ) )
-	{
-		qDebug ( "unable to get _buffer" );
-		return 0;
-	}
-	hb_buffer_clear ( _buffer );
+// 	qDebug() <<"FmOtf::procstring1 ( "<<s<<","<<script<<", "<<lang<<", "<<gsub.join ( "." ) <<", " <<gpos.join ( "." ) <<" )";
+// 	if ( Harfbuzz::hb_buffer_new ( &_buffer ) )
+// 	{
+// 		qDebug ( "unable to get _buffer" );
+// 		return 0;
+// 	}
+	Harfbuzz::hb_buffer_clear ( _buffer );
 	int n = s.length ();
 	Harfbuzz::HB_Error           error;
 	uint all = 0x1;
@@ -412,9 +422,9 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 		prop = 0;
 		prop |= all;
 		error = Harfbuzz::hb_buffer_add_glyph ( _buffer,
-		                              FT_Get_Char_Index ( _face, s[i].unicode() ),
-		                              prop,
-		                              i );
+		                                        FT_Get_Char_Index ( _face, s[i].unicode() ),
+		                                        prop,
+		                                        i );
 		if ( error !=  Harfbuzz::HB_Err_Ok )
 			qDebug() << "hb_buffer_add_glyph ("<< s[i] <<") failed";
 // 		else
@@ -448,8 +458,8 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 		{
 			Harfbuzz::HB_UShort fidx;
 			error = Harfbuzz::HB_GSUB_Select_Feature ( _gsub,
-			                                 OTF_name_tag ( *ife ),
-			                                 curScript, curLang, &fidx );
+			        OTF_name_tag ( *ife ),
+			        curScript, curLang, &fidx );
 			if ( !error )
 			{
 				Harfbuzz::HB_GSUB_Add_Feature ( _gsub, fidx, ~all );
@@ -483,8 +493,8 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 // 			fprop |= all | init | fina;
 			Harfbuzz::HB_UShort fidx;
 			error = Harfbuzz::HB_GPOS_Select_Feature ( _gpos,
-			                                 OTF_name_tag ( *ife ),
-			                                 curScript, curLang, &fidx );
+			        OTF_name_tag ( *ife ),
+			        curScript, curLang, &fidx );
 			if ( !error )
 			{
 				Harfbuzz::HB_GPOS_Add_Feature ( _gpos, fidx,fprop );
@@ -494,8 +504,8 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 				qDebug () << QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error ) ;
 		}
 		error = Harfbuzz::HB_GPOS_Apply_String ( &hbFont, _gpos, FT_LOAD_NO_SCALE, _buffer,
-		                               /*while dvi is true font klass is not used */ true,
-		                               /*r2l */ true );
+		        /*while dvi is true font klass is not used */ true,
+		        /*r2l */ true );
 		if ( error && error != Harfbuzz::HB_Err_Not_Covered )
 			qDebug () << QString ( "applying gpos features to string \"%1\" returned %2" ).arg ( s ).arg ( error ) ;
 
@@ -503,7 +513,7 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 
 //  	qDebug() << "END_PROCSTRING";
 	int nret = _buffer->in_length;
-	Harfbuzz::hb_buffer_free ( _buffer );
+// 	Harfbuzz::hb_buffer_free ( _buffer );
 	return nret;
 }
 
@@ -640,10 +650,10 @@ FmOtf::set_lang ( QString s )
 	if ( curTable == "GSUB" && GSUB )
 	{
 		error = Harfbuzz::HB_GSUB_Select_Language ( _gsub,
-		                                  OTF_name_tag ( curLangName ),
-		                                  curScript,
-		                                  &curLang,
-		                                  &curLangReq );
+		        OTF_name_tag ( curLangName ),
+		        curScript,
+		        &curLang,
+		        &curLangReq );
 // 		if ( error )
 // 			qDebug ( QString ( "Unable to set lang index due to error %1" ).arg ( error ) );
 	}
@@ -667,8 +677,8 @@ FmOtf::get_features ( bool required )
 
 		Harfbuzz::HB_UInt *taglist;
 		required ? Harfbuzz::HB_GSUB_Query_Features ( _gsub, curScript, curLangReq,
-		                                    &taglist ) :
-				Harfbuzz::HB_GSUB_Query_Features ( _gsub, curScript, curLang, &taglist );
+		        &taglist ) :
+		Harfbuzz::HB_GSUB_Query_Features ( _gsub, curScript, curLang, &taglist );
 		while ( *taglist )
 		{
 			ret.append ( OTF_tag_name ( *taglist ) );
@@ -682,8 +692,8 @@ FmOtf::get_features ( bool required )
 
 		Harfbuzz::HB_UInt *taglist;
 		required ? Harfbuzz::HB_GPOS_Query_Features ( _gpos, curScript, curLangReq,
-		                                    &taglist ) :
-				Harfbuzz::HB_GPOS_Query_Features ( _gpos, curScript, curLang, &taglist );
+		        &taglist ) :
+		Harfbuzz::HB_GPOS_Query_Features ( _gpos, curScript, curLang, &taglist );
 		while ( *taglist )
 		{
 			ret.append ( OTF_tag_name ( *taglist ) );
@@ -726,7 +736,7 @@ QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 		gl.glyph = _buffer->in_string[bIndex].gindex;
 		if ( gl.glyph == 0 )
 		{
-			qDebug() << "glyph skipped";
+// 			qDebug() << "glyph skipped";
 			continue;
 		}
 
@@ -734,7 +744,7 @@ QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 		if ( wantPos )
 		{
 			p = &_buffer->positions[bIndex] ;
-// 			qDebug() << "p = "<< p;
+			qDebug() << "p = "<< p;
 			if ( !p )
 				wantPos = false;
 		}

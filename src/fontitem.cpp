@@ -536,6 +536,9 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 	const double distance = 20;
 	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	QList<RenderedGlyph> refGlyph = otf->procstring ( spec, set );
+// 	qDebug() << "Get line "<<spec;
+	delete otf;
+// 	qDebug() << "Deleted OTF";
 	if ( refGlyph.count() == 0 )
 	{
 		return;
@@ -622,7 +625,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 		}
 	}
 
-	delete otf;
+	
 	releaseFace();
 }
 

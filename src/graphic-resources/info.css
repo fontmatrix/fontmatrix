@@ -2,51 +2,68 @@
 /*All are div elements*/
 
 
+
+
+
+
+
+
+
 #headline {
     background-color : black;
     color : white;
     font-family : 'sans-serif';
-    font-size : 18px;
+    font-size : 16px;
     font-variant : small-caps;
     font-weight : bold;
+    margin-top : 1px;
   }
 
 
 #technote {
- font-family : 'sans-serif';
-    font-size : 13px;
+    font-family : 'sans-serif';
+    background-color : black;
+    color : #fff0dd;
+    font-size : 12px;
+    margin-bottom : 3px;
   }
 
 
 .infoblock {
     font-family : 'sans-serif';
     font-size : 13px;
-    margin-right : 10px;
+/*    text-indent : 10px;*/
   }
 
 
 .infoname {
     background-color : #fff0dd;
     font-family : 'sans-serif';
-    font-size : 13px;
+    font-size : 12px;
     font-weight : bold;
   }
 
 
 .langmatch {
-font-family : 'sans-serif';
-    font-size : 13px;
+    font-family : 'sans-serif';
+    font-size : 12px;
+    text-indent : 10px;
+    margin-bottom : 5px;
   }
 
 
 .langundefined {
-font-family : 'sans-serif';
-    font-size : 13px;
+    font-family : 'sans-serif';
+    font-size : 12px;
+    text-indent : 10px;
+    margin-bottom : 5px;
   }
 
 
 .langnomatch {
-font-family : 'sans-serif';
-    font-size : 13px;
+    font-family : 'sans-serif';
+    font-size : 12px;
+    text-indent : 10px;
+    margin-bottom : 5px;
   }
 

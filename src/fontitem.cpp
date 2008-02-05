@@ -555,6 +555,8 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 // 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
+		
+			
 			if ( m_RTL )
 			{
 				pen.rx() -= refGlyph[i].xadvance * scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0);
@@ -577,9 +579,10 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
+			glyph->setZValue ( 100.0 );
+			
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0)) + glyph->data ( 2 ).toDouble() * scalefactor  ,
 					pen.y() + ( refGlyph[i].yoffset  * scalefactor * ((double)QApplication::desktop()->physicalDpiY() / 72.0) ) - glyph->data ( 3 ).toInt() );
-			glyph->setZValue ( 100.0 );
 			if ( !m_RTL )
 				pen.rx() += refGlyph[i].xadvance * scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0);//We’ll have some "rounded" related wrong display but...
 		}
@@ -640,7 +643,8 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 
 	double sizz = fsize;
 	double scalefactor = sizz / m_face->units_per_EM;
-	qDebug() << scalefactor;
+	double scalefactorHadj = scalefactor * ((double)QApplication::desktop()->physicalDpiX() / 72.0);
+	double scalefactorVadj = scalefactor * ((double)QApplication::desktop()->physicalDpiY() / 72.0);
 
 	otf = new FmOtf ( m_face , 0x10000 );
 	if ( !otf )
@@ -674,23 +678,48 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	{
 		for ( int i=0; i < refGlyph.count(); ++i )
 		{
+// 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
+// 			if ( !glyph )
+// 			{
+// // 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
+// 				continue;
+// 			}
+// 			if ( record )
+// 				pixList.append ( glyph );
+// 			
+// 			scene->addItem ( glyph );
+// 			glyph->setZValue ( 100.0 );
+// 			
+// 			if ( m_RTL )
+// 				pen.rx() += refGlyph[i].xadvance * scalefactor ;
+// 
+// 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 2 ).toInt()  ,
+// 			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 3 ).toInt() );
+// 
+// 			if ( !m_RTL )
+// 				pen.rx() += refGlyph[i].xadvance * scalefactor;
 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 			{
 // 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
+		
+			
+			if ( m_RTL )
+			{
+				pen.rx() += refGlyph[i].xadvance * scalefactorHadj;
+			}
+		
 			if ( record )
 				pixList.append ( glyph );
-			if ( m_RTL )
-				pen.rx() += refGlyph[i].xadvance * scalefactor ;
 			scene->addItem ( glyph );
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 2 ).toInt()  ,
-			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 3 ).toInt() );
 			glyph->setZValue ( 100.0 );
-
+			
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj) + glyph->data ( 2 ).toDouble() * scalefactor  ,
+					pen.y() + ( refGlyph[i].yoffset  * scalefactorVadj) - glyph->data ( 3 ).toInt() );
 			if ( !m_RTL )
-				pen.rx() += refGlyph[i].xadvance * scalefactor;
+				pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
 		}
 	}
 	else
@@ -710,10 +739,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			glyph->setData ( 1,"glyph" );
 			//debug
 			glyph->setBrush ( QColor ( ( i*255/refGlyph.count() ),0,0,255- ( i*255/refGlyph.count() ) ) );
-// 			qDebug() << refGlyph[i].dump();
-// 			qDebug() << "Scaled advance = " << refGlyph[i].xadvance * scalefactor;
-			qDebug() << pen;
-			//
+			
 			if ( m_RTL )
 			{
 				pen.rx() += refGlyph[i].xadvance * scalefactor;

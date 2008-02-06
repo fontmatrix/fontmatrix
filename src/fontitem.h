@@ -149,6 +149,7 @@ class FontItem : public QObject
 		QString type(){return m_type;}
 		QStringList charmaps(){return m_charsets;}
 		void setTags ( QStringList l );
+		void addTag(const QString &t){if(!m_tags.contains(t) && !t.isEmpty())m_tags.append(t);}
 		QString name();
 		QString fancyName() {return m_family + " " + m_variant;}
 		QString infoText ( bool fromcache = true );

@@ -231,7 +231,7 @@ void MainViewWidget::fillTree()
 					if(kit.value() [n]->isLocked())
 					{
 						entry->setFlags(Qt::ItemIsSelectable);
-						entry->parent()->setFlags(Qt::ItemIsSelectable);
+// 						entry->parent()->setFlags(Qt::ItemIsSelectable);
 					}
 
 // 					if ( isExpanded )

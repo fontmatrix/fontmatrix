@@ -652,6 +652,7 @@ void typotek::initDir()
 
 	/// let’s load system fonts
 	{
+		QString SysColFon = tr("Collected System Font");
 		QTime sysTime;
 		sysTime.start();
 		FcConfig* FcInitLoadConfig();
@@ -699,6 +700,7 @@ void typotek::initDir()
 					{
 						fitem->lock();
 						fitem->setActivated(true);
+						fitem->addTag(SysColFon);
 						fontMap.append ( fitem );
 						realFontMap[fitem->path() ] = fitem;
 					}
@@ -711,6 +713,8 @@ void typotek::initDir()
 			
 			sysDir = (char*)FcStrListNext(sysDirList);
 		}
+		if(!tagsList.contains(SysColFon))
+			tagsList << SysColFon;
 		qDebug()<<"TIME(sysfonts) : "<<sysTime.elapsed();
 	}
 #endif //HAVE_FONTCONFIG

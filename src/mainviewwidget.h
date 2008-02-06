@@ -101,7 +101,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotShowAllGlyph();
 		void slotSearch();
 		void slotFontAction(QTreeWidgetItem * item, int column );
-		void slotFontActionByName(QString fname);
+		void slotFontActionByName(const QString &fname);
 		void slotFontActionByNames(QStringList fnames);
 		void slotEditAll();
 		void slotZoom(int z);

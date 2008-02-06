@@ -15,6 +15,10 @@ IF(HIGH_PERF)
     MESSAGE(STATUS "High performance required :-)")
 ENDIF(HIGH_PERF)
 
+IF(NO_ASSERT)
+	ADD_DEFINITIONS(-DNDEBUG )
+ENDIF(NO_ASSERT)
+
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # A lot from Scribus
 #<< Qt 
@@ -25,7 +29,7 @@ SET (QT_USE_QTSVG TRUE )
 FIND_PACKAGE(Qt4 REQUIRED)
 INCLUDE( ${QT_USE_FILE} )
 IF (QT_FOUND)
-  MESSAGE("Qt4 Found OK")
+  MESSAGE(STATUS "Qt4 Found OK")
 #Add our Qt definitions
 #   ADD_DEFINITIONS(
 #     ${QT_DEFINITIONS}
@@ -43,7 +47,7 @@ ENDIF(QT_FOUND)
 SET(FREETYPE_DIR ${CMAKE_MODULE_PATH})
 FIND_PACKAGE(FREETYPE REQUIRED)
 IF (FREETYPE_FOUND)
-  MESSAGE("FreeType2 Library Found OK")
+  MESSAGE(STATUS "FreeType2 Library Found OK")
   INCLUDE(CheckLibraryExists)
   CHECK_LIBRARY_EXISTS(libfreetype.so FT_Get_First_Char "" HAVE_FREETYPE_FIRST)
   CHECK_LIBRARY_EXISTS(libfreetype.so FT_Get_Next_Char "" HAVE_FREETYPE_NEXT)
@@ -51,6 +55,14 @@ ENDIF(FREETYPE_FOUND)
 #FIXME: if cflags empty add, otherwise replace as now
 SET(CFLAGS "${LIBFREETYPE_CFLAGS}")
 #>> FreeType2
+
+SET(FONTCONFIG_DIR ${CMAKE_MODULE_PATH})
+  FIND_PACKAGE(FONTCONFIG)
+IF(FONTCONFIG_FOUND)
+        MESSAGE(STATUS "FontConfig Found OK")
+        ADD_DEFINITIONS( -DHAVE_FONTCONFIG )
+ENDIF(FONTCONFIG_FOUND)
+
 
 # tell cmake to process CMakeLists.txt in that subdirectory
 

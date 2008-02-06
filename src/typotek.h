@@ -30,6 +30,7 @@
 #include <QStringList>
 #include <QLabel>
 #include <QThread>
+#include <QTime>
 
 #include "prefspaneldialog.h"
 

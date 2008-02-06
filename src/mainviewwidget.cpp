@@ -228,7 +228,11 @@ void MainViewWidget::fillTree()
 					entry->setText ( 0,  variant );
 					entry->setText ( 1, kit.value() [n]->path() );
 					entry->setData ( 0, 100, "fontfile" );
-
+					if(kit.value() [n]->isLocked())
+					{
+						entry->setFlags(Qt::ItemIsSelectable);
+						entry->parent()->setFlags(Qt::ItemIsSelectable);
+					}
 
 // 					if ( isExpanded )
 // 					{
@@ -508,9 +512,7 @@ void MainViewWidget::slotInfoFont()
 {
 	FontItem *f = typo->getFont ( faceIndex );
 	fontInfoText->clear();
-	//QString t(QString("Family : %1\nStyle : %2\nFlags : \n%3").arg(f->family()).arg(f->variant()).arg(f->faceFlags()));
 	fontInfoText->setHtml ( "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  f->infoText() + "</html>" );
-// 	qDebug() << "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  f->infoText() + "</html>";
 
 }
 
@@ -686,6 +688,7 @@ void MainViewWidget::slotFilterTagset ( QString set )
 
 void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 {
+	qDebug()<<"MainViewWidget::slotFontAction";
 	if ( column >2 ) return;
 
 	FontItem * FoIt = typo->getFont ( item->text ( 1 ) );
@@ -699,8 +702,9 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 	}
 }
 
-void MainViewWidget::slotFontActionByName ( QString fname )
+void MainViewWidget::slotFontActionByName (const QString &fname )
 {
+	qDebug()<<"MainViewWidget::slotFontActionByName ("<< fname <<")";
 	FontItem * FoIt = typo->getFont ( fname );
 	if ( FoIt/* && (!FoIt->isLocked())*/ )
 	{
@@ -714,7 +718,7 @@ void MainViewWidget::slotFontActionByName ( QString fname )
 
 void MainViewWidget::slotFontActionByNames ( QStringList fnames )
 {
-
+	qDebug()<<"MainViewWidget::slotFontActionByNames ("<< fnames.join(";") <<")";
 	QList<FontItem*> FoIt;
 	for ( int i= 0; i < fnames.count() ; ++i )
 	{
@@ -894,6 +898,7 @@ void MainViewWidget::slotReloadFontList()
 {
 	currentFonts.clear();
 	currentFonts = typo->getAllFonts();
+	fontsetHasChanged = true;
 	fillTree();
 }
 
@@ -1437,6 +1442,7 @@ void MainViewWidget::slotContextMenu(QPoint pos)
 
 void MainViewWidget::slotFinalize()
 {
+	qDebug()<<"MainViewWidget::slotFinalize()";
 	QStringList plusTags;
 	QStringList noTags;
 	for ( int i=0;i< tagsListWidget->count();++i )
@@ -1460,26 +1466,26 @@ void MainViewWidget::slotFinalize()
 		sourceTags = sourceTags.toSet().toList();
 		theTaggedFonts[i]->setTags ( sourceTags );
 	}
-
+	qDebug()<<"END OF slotFinalize";
 }
 
 void MainViewWidget::prepare(QList< FontItem * > fonts)
 {
+	qDebug()<<"MainViewWidget::prepare("<<fonts.count()<<")";
 	slotFinalize();
 	theTaggedFonts.clear();
 	theTaggedFonts = fonts;
-	for ( int i= theTaggedFonts.count() - 1; i >= 0; --i )
-	{
-		if ( theTaggedFonts[i]->isLocked() )
-			theTaggedFonts.removeAt ( i );
-	}
+// 	for ( int i= theTaggedFonts.count() - 1; i >= 0; --i )
+// 	{
+// 		if ( theTaggedFonts[i]->isLocked() )
+// 			theTaggedFonts.removeAt ( i );
+// 	}
 	tagsListWidget->clear();
-
 	QString tot;
 	for ( int i=0;i<theTaggedFonts.count();++i )
 	{
-		bool last = i == theTaggedFonts.count() - 1;
-		tot.append (  theTaggedFonts[i]->fancyName() + (last ? "" : "\n") );
+// 		bool last = i == theTaggedFonts.count() - 1;
+		tot.append (  theTaggedFonts[i]->fancyName() +  "\n" );
 	}
 // 	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
 // 	titleLabel->setText ( tit.arg ( theFonts[0]->fancyName() ) + itsagroup );
@@ -1492,7 +1498,6 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 		titleLabel->setText ( theTaggedFonts[0]->fancyName() );
 	}
 	titleLabel->setToolTip ( tot );
-
 	for ( int i=0; i < typotek::tagsList.count(); ++i )
 	{
 		QString cur_tag = typotek::tagsList[i];
@@ -1519,6 +1524,7 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 			tagsListWidget->addItem ( lit );
 		}
 	}
+	qDebug()<<"END OF prepare";
 }
 
 void MainViewWidget::slotEditSampleText()

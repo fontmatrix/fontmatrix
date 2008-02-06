@@ -54,19 +54,22 @@ void SaveData::doSave()
 	QList<FontItem*> flist = m_typo->getAllFonts();
 	foreach ( FontItem* fitem,flist )
 	{
-		writeStartElement("fontfile");
-		writeAttribute("name", fitem->fancyName());
-		writeStartElement("file");
-		writeCharacters(fitem->path());
-		writeEndElement();
-		QStringList tl = fitem->tags();
-		foreach(QString tag, tl)
+		if(!fitem->isLocked())
 		{
-			writeStartElement("tag");
-			writeCharacters( tag );
+			writeStartElement("fontfile");
+			writeAttribute("name", fitem->fancyName());
+			writeStartElement("file");
+			writeCharacters(fitem->path());
+			writeEndElement();
+			QStringList tl = fitem->tags();
+			foreach(QString tag, tl)
+			{
+				writeStartElement("tag");
+				writeCharacters( tag );
+				writeEndElement();
+			}
 			writeEndElement();
 		}
-		writeEndElement();
 	}
 
 	

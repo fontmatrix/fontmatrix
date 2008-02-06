@@ -50,6 +50,10 @@
 #include <QProcess>
 #include <QDockWidget>
 
+#ifdef HAVE_FONTCONFIG
+#include <fontconfig/fontconfig.h>
+#endif
+
 
 QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
@@ -66,6 +70,9 @@ typotek::typotek()
 
 void typotek::initMatrix()
 {
+	QTime initTime;
+	initTime.start();
+	
 	checkOwnDir();
 	readSettings();
 	fillTagsList();
@@ -99,6 +106,7 @@ void typotek::initMatrix()
 	createActions();
 	createMenus();
 	createStatusBar();
+	qDebug() << "TIME(initiMatrix) : "<<initTime.elapsed();
 }
 
 
@@ -152,16 +160,17 @@ QStringList exploreDirs(const QDir &dir, int deep)
 		return QStringList();	
 	if(deep == 0)
 		retDirList.clear();
-	qDebug() << dir.absolutePath();
+// 	qDebug() << dir.absolutePath();
 	
 	retDirList << dir.absolutePath();
 	QStringList localEntries(dir.entryList ( QDir::AllDirs | QDir::NoDotAndDotDot));
 	foreach ( QString dirEntry, localEntries )
 	{
-		qDebug() <<  dir.absolutePath() + "/" + dirEntry;
+		qDebug() << "[exploreDirs] - " + dir.absolutePath() + "/" + dirEntry;
 		QDir d ( dir.absolutePath() + "/" + dirEntry );
-		exploreDirs(d, true);
-		retDirList << d.absolutePath();
+		exploreDirs(d, deep + 1);
+		if(!retDirList.contains(d.absolutePath()))
+			retDirList << d.absolutePath();
 	}
 	
 	return retDirList;
@@ -186,7 +195,7 @@ void typotek::open()
 	QStringList nameList;
 	
 	QStringList dirList( fontmatrix::exploreDirs(dir,0) );
-	qDebug() << dirList.join ( "\n" );
+// 	qDebug() << dirList.join ( "\n" );
 	
 	QStringList yetHereFonts;
 	for(int i=0;i < fontMap.count() ; ++i)
@@ -209,28 +218,26 @@ void typotek::open()
 		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
 	if ( useInitialTags )
 	{
-// 		QString inputTags = QInputDialog::getText ( this,"Import tags",tr ( "Initial tags.\nThe string you type will be split by \"#\" to obtain a tags list." ) );
 		ImportTags imp(this,tagsList);
 		imp.exec();
 		tali = imp.tags();
-		tali << "Activated_Off" ;
 	}
-	else
-		tali << "Activated_Off" ;
+	
 
-	foreach ( QString tas, tali )
+	for(int i = 0; i < tali.count();++i )
 	{
-		if ( !tagsList.contains ( tas ) )
+		if ( !tagsList.contains ( tali[i] ) )
 		{
-			tagsList.append ( tas );
-			emit tagAdded ( tas );
+			tagsList.append ( tali[i] );
+			emit tagAdded ( tali[i] );
 		}
 	}
 
 	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 	progress.setAutoReset ( false );
-
+	progress.setValue ( 0 );
+	progress.show();
 	QString importstring ( tr ( "Import" ) +  " %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
@@ -241,38 +248,23 @@ void typotek::open()
 
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
-
-
-// 		if ( ff.copy ( ownDir.absolutePath() + "/" + fi.fileName() ) )
 		{
-
-// 			if ( fi.suffix() == "pfb" )
-// 			{
-// 				QFile fafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
-// 				QFileInfo iafm ( QString ( pathList.at ( i ) ).replace ( ".pfb",".afm" ) );
-// 				if ( fafm.exists() )
-// 					fafm.copy ( ownDir.absolutePath() + "/" + iafm.fileName() );
-// 			}
-			FontItem *fitem = new FontItem ( fi.absoluteFilePath() /*ownDir.absolutePath() + "/" + fi.fileName()*/ );
+			FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
 			if ( fitem->isValid() )
 			{
 				fitem->setTags ( tali );
+				fitem->setActivated(false);
 				fontMap.append ( fitem );
 				realFontMap[fitem->path() ] = fitem;
 				nameList << fitem->fancyName();
 			}
 			else
 			{
-// 				QFile::remove ( ownDir.absolutePath() + "/" + fi.fileName() ) ;
 				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
 				statusBar()->showMessage ( errorFont );
 				nameList << "__FAILEDTOLOAD__" + fi.fileName();
 			}
 		}
-// 		else
-// 		{
-// 			qDebug()<< "Unable to copy " << fi.fileName() ;
-// 		}
 	}
 
 	progress.close();
@@ -280,11 +272,7 @@ void typotek::open()
 	// The User needs and deserves to know what fonts hve been imported
 	ImportedFontsDialog ifd ( this, nameList );
 	ifd.exec();
-
 	theMainView->slotReloadFontList();
-
-// 	QMessageBox::information(this,"Fontmatrix info","List of imported fonts :\n" + nameList.join("\n"));
-// 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 }
 
 void typotek::open ( QStringList files )
@@ -611,14 +599,17 @@ void typotek::addFcDirItem(const QString & dirPath)
 void typotek::initDir()
 {
 
+	QTime loadTime;
+	loadTime.start();
 	//load data file
 	DataLoader loader ( &fontsdata );
 	loader.load();
-
+	qDebug()<<"TIME(loader) : "<<loadTime.elapsed();
 	// load font files
 
 	QStringList pathList = loader.fontList();
-	
+	QTime fontsTime;
+	fontsTime.start();
 	int fontnr = pathList.count();
 	if ( __FM_SHOW_FONTLOADED )
 	{
@@ -655,8 +646,75 @@ void typotek::initDir()
 // 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 	}
 	qDebug() <<  fontMap.count() << " font files loaded.";
+	
+#ifdef HAVE_FONTCONFIG
+#include <fontconfig/fontconfig.h>
 
-
+	/// let’s load system fonts
+	{
+		QTime sysTime;
+		sysTime.start();
+		FcConfig* FcInitLoadConfig();
+		FcStrList *sysDirList = FcConfigGetFontDirs(0);
+		QString sysDir((char*)FcStrListNext(sysDirList));
+		while(!sysDir.isEmpty())
+		{
+			if(sysDir.contains("fontmatrix"))
+			{
+				sysDir = (char*)FcStrListNext(sysDirList);
+				continue;
+			}
+			QDir theDir ( sysDir );
+		
+			QStringList pathList;
+			QStringList nameList;
+			
+			QStringList dirList( fontmatrix::exploreDirs(theDir,0) );
+// 			qDebug() << dirList.join ( "\n" );
+			
+			QStringList yetHereFonts;
+			for(int i=0;i < fontMap.count() ; ++i)
+				yetHereFonts << fontMap[i]->path();
+			
+			QStringList filters;
+			filters << "*.otf" << "*.pfb" << "*.ttf" ;
+			foreach ( QString dr, dirList )
+			{
+				QDir d ( dr );
+				QFileInfoList fil= d.entryInfoList ( filters );
+				foreach ( QFileInfo fp, fil )
+				{
+					if(!yetHereFonts.contains(fp.absoluteFilePath()))
+						pathList <<  fp.absoluteFilePath();
+				}
+			}
+			
+			for ( int i = 0 ; i < pathList.count(); ++i )
+			{
+				QFile ff ( pathList.at ( i ) );
+				QFileInfo fi ( pathList.at ( i ) );
+				{
+					FontItem *fitem = new FontItem ( fi.absoluteFilePath());
+					if ( fitem->isValid() )
+					{
+						fitem->lock();
+						fitem->setActivated(true);
+						fontMap.append ( fitem );
+						realFontMap[fitem->path() ] = fitem;
+					}
+					else
+					{
+						qDebug()<< "Can’t open this font because it’s broken : " << fi.fileName() ;
+					}
+				}
+			}
+			
+			sysDir = (char*)FcStrListNext(sysDirList);
+		}
+		qDebug()<<"TIME(sysfonts) : "<<sysTime.elapsed();
+	}
+#endif //HAVE_FONTCONFIG
+	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 }
 
 QList< FontItem * > typotek::getFonts ( QString pattern, QString field )

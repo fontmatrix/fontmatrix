@@ -70,6 +70,7 @@ ${CMAKE_CURRENT_BINARY_DIR}
 ${QT_INCLUDE_DIR}
 ${FREETYPE_INCLUDE_DIR}
 ${HARFBUZZ_INCLUDE_DIR}
+${FONTCONFIG_INCLUDE_DIR}
 )
 
 add_executable(fontmatrix 
@@ -86,6 +87,7 @@ ${fontmatrix_RCC_SRCS}
 target_link_libraries(fontmatrix harfbuzz
 ${QT_LIBRARIES}
 ${FREETYPE_LIBRARIES}
+${FONTCONFIG_LIBRARIES}
 )
 
 INSTALL(TARGETS fontmatrix

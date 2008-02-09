@@ -39,7 +39,7 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 	setScene(m_scene);
 	setAlignment (Qt::AlignLeft | Qt::AlignTop);
 // 	m_scene->setBackgroundBrush(Qt::lightGray);
-	m_select = m_scene->addRect(QRectF(), QPen(Qt::transparent ), QColor(0,0,255,30));
+	m_select = m_scene->addRect(QRectF(), QPen(Qt::transparent ), QColor(255,216,158,100));
 	m_select->setZValue(100.0);
 	
 	m_currentItem = 0;

@@ -307,8 +307,8 @@ void MainViewWidget::fillTree()
 	{
 // 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
 		m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
-		QColor scol (0,0,255,30);
-		QColor pcol (100,100,255,100);
+		QColor scol (255,240,221,255);
+		QColor pcol (255,211,155,255);
 		QFont selFont;
 		selFont.setBold(true);
 		curItem->parent()->setBackgroundColor ( 0,pcol );

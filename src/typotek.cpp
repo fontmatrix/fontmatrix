@@ -876,20 +876,21 @@ void typotek::dropEvent ( QDropEvent * event )
 	for ( int i = 0; i < uris.count() ; ++i )
 	{
 		qDebug() << "dropped uri["<< i <<"] -> "<< uris[i];
-		QUrl url ( uris[i] );
+		QUrl url ( uris[i].trimmed() );
+		qDebug() << "\tURL -> " << url.toLocalFile();
 		if ( url.scheme() == "file" )
 		{
-			if ( uris[i].endsWith ( "ttf",Qt::CaseInsensitive ) )
+			if ( url.toLocalFile().endsWith ( "ttf",Qt::CaseInsensitive ) )
 			{
-				ret << url.toLocalFile ();
+				ret << url.toLocalFile();
 			}
-			else if ( uris[i].endsWith ( "otf",Qt::CaseInsensitive ) )
+			else if ( url.toLocalFile().endsWith ( "otf",Qt::CaseInsensitive ) )
 			{
-				ret << url.toLocalFile ();
+				ret << url.toLocalFile();
 			}
-			else if ( uris[i].endsWith ( "pfb",Qt::CaseInsensitive ) )
+			else if ( url.toLocalFile().endsWith ( "pfb",Qt::CaseInsensitive ) )
 			{
-				ret << url.toLocalFile ();
+				ret << url.toLocalFile();
 			}
 			else
 			{

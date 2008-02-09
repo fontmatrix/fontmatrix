@@ -225,7 +225,7 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 			qDebug() << "catch a mark";
 // 			for(int b=base; b < gIndex; ++b)
 			{
-				baseCorrection = renderedString[base].xadvance;
+// 				baseCorrection = renderedString[base].xadvance;
 			}
 		}
 			RenderedGlyph gl;

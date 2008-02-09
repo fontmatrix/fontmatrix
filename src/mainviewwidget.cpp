@@ -184,16 +184,29 @@ void MainViewWidget::fillTree()
 	QFont alphaFont ( "helvetica",14,QFont::Bold,false );
 
 	m_lists->fontTree->clear();
-	QMap<QString, QList<FontItem*> > keyList;
+// 	QMap<QString, QList<FontItem*> > keyList;
+	QMap<QString, QMap<QString, FontItem*> > keyList;
 	QMap<int, QChar> initChars;
 	for ( int i=0; i < currentFonts.count();++i )
 	{
-		keyList[currentFonts[i]->value ( currentOrdering ) ].append ( currentFonts[i] );
+		QString family = currentFonts[i]->family();
+		QString variant = currentFonts[i]->variant();
+		if( keyList.contains(family) && keyList[family].contains(variant) )
+		{
+			int unique = 2;
+			QString uniString(variant +" (%1)");
+			while(keyList[family].contains(uniString.arg(unique)))
+			{
+				++unique;
+			}
+			variant = uniString.arg(unique);
+		}
+		keyList[family][variant] = ( currentFonts[i] );
 		initChars[currentFonts[i]->family()[0].unicode()] = currentFonts[i]->family()[0] ;
 	}
-// 	initChars = initChars.toSet().toList();
 	
-	QMap<QString, QList<FontItem*> >::const_iterator kit;
+	QMap<QString, QMap<QString, FontItem*> >::const_iterator kit;
+	QMap<QString, FontItem*>::const_iterator kit_value;
 	QMap<int, QChar>::const_iterator ic = initChars.constBegin();
 	while (  ic != initChars.constEnd() )
 	{
@@ -222,34 +235,28 @@ void MainViewWidget::fillTree()
 					ord->setExpanded ( true );
 					isExpanded = true;
 				}
-
-// 				QMap<QString,int> variantMap;
-				for ( int  n = 0; n < kit.value().count(); ++n )
+				
+// 				for ( int  n = 0; n < kit.value().count(); ++n )
+				for(kit_value = kit.value().begin(); kit_value != kit.value().end(); ++kit_value)
 				{
 					QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
-					QString variant = kit.value() [n]->variant();
+					QString variant = kit_value.key();
 // 					variantMap[variant] = n;
 					entry->setText ( 0,  variant );
-					entry->setText ( 1, kit.value() [n]->path() );
+					entry->setText ( 1, kit_value.value()->path() );
 					entry->setData ( 0, 100, "fontfile" );
-					if(kit.value() [n]->isLocked())
+					if(kit_value.value()->isLocked())
 					{
 						entry->setFlags(Qt::ItemIsSelectable);
 // 						entry->parent()->setFlags(Qt::ItemIsSelectable);
 					}
-
-// 					if ( isExpanded )
-// 					{
-						if(kit.value() [n]->type() == "CFF")
+					if(kit_value.value()->type() == "CFF")
 							entry->setIcon(0, iconOTF );
-						else if(kit.value() [n]->type() == "TrueType")
+					else if(kit_value.value()->type() == "TrueType")
 							entry->setIcon(0, iconTTF);
-						else if(kit.value() [n]->type() == "Type 1")
+					else if(kit_value.value()->type() == "Type 1")
 							entry->setIcon(0, iconPS1);
-// 					}
-
-
-					bool act = kit.value() [n]->isActivated();
+					bool act = kit_value.value()->isActivated();
 					if ( act )
 					{
 						checkyes = true;
@@ -264,19 +271,6 @@ void MainViewWidget::fillTree()
 					if ( entry->text ( 1 ) == curItemName )
 						curItem = entry;
 				}
-
-				// try to give the most sensitive icon
-// 				if ( variantMap.contains ( "Regular" ) )
-// 					ord->setIcon ( 2,kit.value() [ variantMap["Regular"] ]->oneLinePreviewIcon ( "a" ) );
-// 				else if ( variantMap.contains ( "Roman" ) )
-// 					ord->setIcon ( 2,kit.value() [ variantMap["Roman"] ]->oneLinePreviewIcon ( "a" ) );
-// 				else if ( variantMap.contains ( "Medium" ) )
-// 					ord->setIcon ( 2,kit.value() [ variantMap["Medium"] ]->oneLinePreviewIcon ( "a" ) );
-// 				else if ( variantMap.contains ( "Book" ) )
-// 					ord->setIcon ( 2,kit.value() [ variantMap["Book"] ]->oneLinePreviewIcon ( "a" ) );
-// 				else
-// 					ord->setIcon ( 2,kit.value() [0]->oneLinePreviewIcon("a") );
-
 				if ( checkyes && chekno )
 					ord->setCheckState ( 0,Qt::PartiallyChecked );
 				else if ( checkyes )
@@ -284,8 +278,6 @@ void MainViewWidget::fillTree()
 				// track checkState
 				ord->setData ( 0,200,ord->checkState ( 0 ) );
 				ord->setText ( 1,QString::number ( ord->childCount() ) );
-
-
 				alphaIsUsed = true;
 			}
 		}

@@ -59,6 +59,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	sampleFontSize = settings.value("SampleFontSize",12.0).toDouble();
 	sampleInterSize = settings.value("SampleInterline",16.0).toDouble();
 	
+	iconPS1 =  QIcon(":/icon-PS1");
+	iconTTF =  QIcon(":/icon-TTF");
+	iconOTF =  QIcon(":/icon-OTF");
+	
 	theVeryFont = 0;
 	typo = typotek::getInstance();
 	m_lists = ListDockWidget::getInstance();
@@ -236,12 +240,12 @@ void MainViewWidget::fillTree()
 
 // 					if ( isExpanded )
 // 					{
-// 						QFont fakeFont;
-// 						fakeFont.setPointSizeF(100);
-// 						entry->setFont(2, fakeFont);
-// 						entry->setText(2, "A");
-// 						entry->setBackground ( 2,QBrush ( kit.value() [n]->oneLinePreviewPixmap() ) );
-
+						if(kit.value() [n]->type() == "CFF")
+							entry->setIcon(0, iconOTF );
+						else if(kit.value() [n]->type() == "TrueType")
+							entry->setIcon(0, iconTTF);
+						else if(kit.value() [n]->type() == "Type 1")
+							entry->setIcon(0, iconPS1);
 // 					}
 
 

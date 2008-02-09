@@ -23,6 +23,7 @@
 #include <ui_mainview.h>
 
 #include <QStringList>
+#include <QIcon>
 
 class QGraphicsScene;
 class typotek;
@@ -90,6 +91,11 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QList<FontItem*> theTaggedFonts;		
 		bool contextMenuReq;
 		QPoint contextMenuPos;
+		
+		QIcon iconPS1;
+		QIcon iconTTF;
+		QIcon iconOTF;
+		
 		
 	public slots:
 		void slotOrderingChanged ( QString s );

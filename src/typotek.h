@@ -79,7 +79,7 @@ class typotek:public QMainWindow
 		void slotUseInitialTags(bool isEnabled);
 		void slotPrefsPanelDefault();
 		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
-		void relayStartingStepIn(QString, int, QColor);
+		void relayStartingStepIn(QString s);
 		
 	signals:
 		void tagAdded(QString);

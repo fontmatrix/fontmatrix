@@ -95,7 +95,7 @@ void DataLoader::load()
 				m_typo->addTagMapEntry(fontfile,tl);
 				collectedTags << tl;
 				m_fontList << fontfile;
-				m_typo->relayStartingStepIn(fontName, Qt::AlignCenter , Qt::white );
+				m_typo->relayStartingStepIn(fontName);
 			}
 		}
 	}

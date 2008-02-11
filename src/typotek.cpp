@@ -70,12 +70,12 @@ typotek::typotek()
 
 void typotek::initMatrix()
 {
-	QTime initTime;
-	initTime.start();
+// 	QTime initTime;
+// 	initTime.start();
 	
 	checkOwnDir();
 	readSettings();
-	fillTagsList();
+// 	fillTagsList();
 	initDir();
 	
 
@@ -106,7 +106,7 @@ void typotek::initMatrix()
 	createActions();
 	createMenus();
 	createStatusBar();
-	qDebug() << "TIME(initiMatrix) : "<<initTime.elapsed();
+// 	qDebug() << "TIME(initiMatrix) : "<<initTime.elapsed();
 }
 
 
@@ -465,6 +465,7 @@ void typotek::createStatusBar()
 
 void typotek::readSettings()
 {
+	relayStartingStepIn(tr("Load settings"));
 	QSettings settings;
 	QPoint pos = settings.value ( "pos", QPoint ( 200, 200 ) ).toPoint();
 	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
@@ -501,23 +502,14 @@ void typotek::fillTagsList()
 
 void typotek::checkOwnDir()
 {
+	relayStartingStepIn(tr("Check for Fontmatrix own dir"));
 	QString fontmanaged ( "/.fontmatrix" ); // Where activated fonts are sym-linked
-// 	QString fontreserved ( "/.fonts-reserved" );// Where aknoweldged fonts are stored. - OBSOLETE
-// 
 	managedDir.setPath ( QDir::homePath() + fontmanaged );
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + fontmanaged );
 
 	addFcDirItem( managedDir.absolutePath() );
-
-// 
-// 	ownDir.setPath ( QDir::homePath() +  fontreserved );
-// 	if ( !ownDir.exists() )
-// 		ownDir.mkpath ( QDir::homePath() + fontreserved );
-
 	fontsdata.setFileName ( QDir::homePath() + "/.fontmatrix.data" );
-
-
 }
 
 void typotek::addFcDirItem(const QString & dirPath)
@@ -598,18 +590,18 @@ void typotek::addFcDirItem(const QString & dirPath)
 
 void typotek::initDir()
 {
-
-	QTime loadTime;
-	loadTime.start();
+	
+// 	QTime loadTime;
+// 	loadTime.start();
 	//load data file
 	DataLoader loader ( &fontsdata );
 	loader.load();
-	qDebug()<<"TIME(loader) : "<<loadTime.elapsed();
+// 	qDebug()<<"TIME(loader) : "<<loadTime.elapsed();
 	// load font files
 
 	QStringList pathList = loader.fontList();
-	QTime fontsTime;
-	fontsTime.start();
+// 	QTime fontsTime;
+// 	fontsTime.start();
 	int fontnr = pathList.count();
 	if ( __FM_SHOW_FONTLOADED )
 	{
@@ -626,11 +618,12 @@ void typotek::initDir()
 			fontMap.append ( fi );
 			realFontMap[fi->path() ] = fi;
 			fi->setTags ( tagsMap.value ( fi->path() ) );
-			qDebug() << fi->fancyName() << " loaded.";
+// 			qDebug() << fi->fancyName() << " loaded.";
 		}	
 	}
 	else
 	{
+		relayStartingStepIn(tr("Loading")+" "+ QString::number(fontnr) +" "+tr("fonts present in database"));
 		for ( int i = 0 ; i < fontnr ; ++i )
 		{
 			FontItem *fi = new FontItem ( pathList.at ( i )  );
@@ -653,11 +646,12 @@ void typotek::initDir()
 	/// let’s load system fonts
 	{
 		QString SysColFon = tr("Collected System Font");
-		QTime sysTime;
-		sysTime.start();
+// 		QTime sysTime;
+// 		sysTime.start();
 		FcConfig* FcInitLoadConfig();
 		FcStrList *sysDirList = FcConfigGetFontDirs(0);
 		QString sysDir((char*)FcStrListNext(sysDirList));
+		int sysCounter(0);
 		while(!sysDir.isEmpty())
 		{
 			if(sysDir.contains("fontmatrix"))
@@ -690,7 +684,9 @@ void typotek::initDir()
 				}
 			}
 			
-			for ( int i = 0 ; i < pathList.count(); ++i )
+			int sysFontCount(pathList.count());
+			relayStartingStepIn(tr("Adding")+" "+ QString::number(sysFontCount) +" "+tr("fonts from system directories"));
+			for ( int i = 0 ; i < sysFontCount; ++i )
 			{
 				QFile ff ( pathList.at ( i ) );
 				QFileInfo fi ( pathList.at ( i ) );
@@ -703,6 +699,7 @@ void typotek::initDir()
 						fitem->addTag(SysColFon);
 						fontMap.append ( fitem );
 						realFontMap[fitem->path() ] = fitem;
+						++sysCounter;
 					}
 					else
 					{
@@ -713,12 +710,13 @@ void typotek::initDir()
 			
 			sysDir = (char*)FcStrListNext(sysDirList);
 		}
+		relayStartingStepIn(QString::number(sysCounter) + " " + tr("fonts available from system"));
 		if(!tagsList.contains(SysColFon))
 			tagsList << SysColFon;
-		qDebug()<<"TIME(sysfonts) : "<<sysTime.elapsed();
+// 		qDebug()<<"TIME(sysfonts) : "<<sysTime.elapsed();
 	}
 #endif //HAVE_FONTCONFIG
-	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
+// 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 }
 
 QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
@@ -1082,8 +1080,10 @@ void typotek::changeFontSizeSettings(double fSize, double lSize)
 	theMainView->reSize(fSize,lSize);
 }
 
-void typotek::relayStartingStepIn(QString s, int i , QColor c )
+void typotek::relayStartingStepIn(QString s)
 {
+	int i(Qt::AlignCenter);
+	QColor c(Qt::white);
 	emit relayStartingStepOut( s, i , c );
 }
 

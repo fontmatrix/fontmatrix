@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QLocale>
 #include <QTranslator>
+#include <QSettings>
 
 #include "typotek.h"
 
@@ -67,38 +68,19 @@ int main ( int argc, char *argv[] )
 	
 	typotek * mw = new typotek;
 	
+	
+	QSettings settings;
+	
 	QSplashScreen theSplash;
 	QPixmap theSplashPix ( ":/fontmatrix_splash.png" );
-	bool splash = false;
-	if(app.arguments().contains ( "splash" ))
+	bool splash = settings.value("SplashScreen", false).toBool();
+	if( app.arguments().contains ( "splash" ) || splash )
 	{
-		
-		theSplash.setPixmap ( theSplashPix );
-		QFont spFont;
-		spFont.setPointSize(42);
-		theSplash.setFont(spFont);
-		splash = true;
-	}
-	
-	if(__FM_SHOW_FONTLOADED  && splash)
-	{
-		QObject::connect ( mw,SIGNAL ( relayStartingStepOut ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
-	}
-	
-	// Many splash transparency tests
-	if ( app.arguments().contains ( "alpha1_splash" ) && splash)
-	{
-		qDebug() << "alpha1_splash in use";
-		theSplash.setMask ( theSplashPix.mask() );
-	}
-	else if ( app.arguments().contains ( "alpha2_splash" ) && splash)
-	{
-		qDebug() << "alpha2_splash in use";
 		QImage rootW = QPixmap::grabWindow ( QApplication::desktop()->winId(),
-		                                      ( QApplication::desktop()->rect().width()-theSplashPix.rect().width() ) /2,
-		                                      ( QApplication::desktop()->rect().height()-theSplashPix.rect().height() ) /2,
-		                                      theSplashPix.rect().width(),
-		                                      theSplashPix.rect().height() ).toImage();
+				( QApplication::desktop()->rect().width()-theSplashPix.rect().width() ) /2,
+				  ( QApplication::desktop()->rect().height()-theSplashPix.rect().height() ) /2,
+				    theSplashPix.rect().width(),
+						    theSplashPix.rect().height() ).toImage();
 		QImage splashImg = theSplashPix.toImage();
 		
 		for(int posx = 0; posx < rootW.width() ;++posx)
@@ -119,8 +101,15 @@ int main ( int argc, char *argv[] )
 			}
 		}
 		theSplash.setPixmap(QPixmap::fromImage(splashImg));
+		QFont spFont;
+		spFont.setPointSize(14);/*
+		spFont.setBold(true);*/
+		theSplash.setFont(spFont);
+		if(/*__FM_SHOW_FONTLOADED*/ 1)
+		{
+			QObject::connect ( mw,SIGNAL ( relayStartingStepOut ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
+		}
 	}
-	
 	
 	if(splash)
 		theSplash.show();

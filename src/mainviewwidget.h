@@ -75,6 +75,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		double sampleFontSize;
 		double sampleInterSize;
+		double sampleRatio;
 		
 		QMap<QString, QPair<int,int> > uniPlanes;
 		void fillUniPlanes();
@@ -145,6 +146,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotNewTag();
 		void slotContextMenu(QPoint  pos);
 		void slotFinalize();
+		
+	private slots:
+		void slotLiveFontSize(double);
 		
 	signals:
 		void faceChanged();

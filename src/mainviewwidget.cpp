@@ -58,6 +58,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	QSettings settings;
 	sampleFontSize = settings.value("SampleFontSize",12.0).toDouble();
 	sampleInterSize = settings.value("SampleInterline",16.0).toDouble();
+	sampleRatio = sampleFontSize / sampleInterSize;
+	liveFontSizeSpin->setValue(sampleFontSize);
 	
 	iconPS1 =  QIcon(":/icon-PS1");
 	iconTTF =  QIcon(":/icon-TTF");
@@ -145,6 +147,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
+	connect ( liveFontSizeSpin, SIGNAL(valueChanged(double)),this,SLOT(slotLiveFontSize(double)));
 	
 	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
@@ -1548,6 +1551,12 @@ void MainViewWidget::slotRemoveCurrentItem()
 		fontsetHasChanged = true;
 		fillTree();
 	}
+}
+
+void MainViewWidget::slotLiveFontSize(double fs)
+{
+	reSize(fs, fs * sampleRatio);
+	slotView(true);
 }
 
 

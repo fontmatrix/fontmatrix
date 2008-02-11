@@ -36,6 +36,7 @@
 #include "prefspaneldialog.h"
 #include "fontbook.h"
 #include "importtags.h"
+#include "dataexport.h"
 
 
 #include <QtGui>
@@ -348,6 +349,29 @@ void typotek::open ( QStringList files )
 
 }
 
+/// EXPORT
+void typotek::slotExportFontSet()
+{
+	QStringList items ( tagsList );
+	items.removeAll ( "Activated_On" );
+	items.removeAll ( "Activated_Off" );
+	bool ok;
+	QString item = QInputDialog::getItem ( this, "Fontmatrix Tags",
+	                                       tr ( "Choose the tag for filter exported fonts" ), items, 0, false, &ok );
+	if ( ok && !item.isEmpty() )
+	{
+
+
+		QString dir( QDir::homePath() );
+		dir = QFileDialog::getExistingDirectory ( this, tr ( "Choose Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
+		if ( dir.isEmpty() )
+			return; 
+		
+		DataExport dx(dir,item);
+		dx.doExport();
+	}
+
+}
 
 bool typotek::save()
 {
@@ -378,6 +402,10 @@ void typotek::createActions()
 	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
 	saveAct->setStatusTip ( tr ( "Save the document to disk" ) );
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
+	
+	exportFontSetAct = new QAction(tr("Export &Fonts"),this);
+	exportFontSetAct->setStatusTip(tr("Export a fontset"));
+	connect( exportFontSetAct,SIGNAL(triggered( )),this,SLOT(slotExportFontSet()));
 
 	printAct = new QAction ( tr ( "Print..." ),this );
 	printAct->setStatusTip ( tr ( "Print a specimen of the current font" ) );
@@ -422,8 +450,8 @@ void typotek::createActions()
 		fonteditorAct->setStatusTip ( tr ( "You don't seem to have font editor installed. Path to font editor can be set in preferences." ) );
 	}
 
-	prefsAction = new QAction ( tr ( "Preferences" ),this );
-	connect ( prefsAction,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanelDefault() ) );
+	prefsAct = new QAction ( tr ( "Preferences" ),this );
+	connect ( prefsAct,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanelDefault() ) );
 
 	if ( systray )
 		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
@@ -435,6 +463,7 @@ void typotek::createMenus()
 
 	fileMenu->addAction ( openAct );
 	fileMenu->addAction ( saveAct );
+	fileMenu->addAction ( exportFontSetAct );
 	fileMenu->addSeparator();
 	fileMenu->addAction ( printAct );
 	fileMenu->addAction ( fontBookAct );
@@ -449,7 +478,7 @@ void typotek::createMenus()
 	editMenu->addSeparator();
 	editMenu->addAction ( fonteditorAct );
 	editMenu->addSeparator();
-	editMenu->addAction ( prefsAction );
+	editMenu->addAction ( prefsAct );
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( aboutAct );
@@ -1106,6 +1135,13 @@ void typotek::removeFontItem(QStringList keyList)
 	}
 }
 
+void typotek::showStatusMessage(const QString & message)
+{
+	statusBar()->showMessage(message, 2500);
+}
+
+
+/// LazyInit *********************************************
 void LazyInit::run()
 {
 	qDebug() << "LazyInit::run()";
@@ -1117,4 +1153,6 @@ void LazyInit::run()
 	}
 	qDebug() << "END OF LazyInit";
 }
+
+
 

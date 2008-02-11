@@ -71,6 +71,7 @@ class typotek:public QMainWindow
 		void about();
 		void help();
 // 		void slotWord();
+		void slotExportFontSet();
 		
 		
 	public slots:
@@ -127,7 +128,8 @@ class typotek:public QMainWindow
 		QAction *deactivCurAct;
 		QAction *helpAct;
 		QAction *fonteditorAct;
-		QAction *prefsAction;
+		QAction *prefsAct;
+		QAction *exportFontSetAct;
 
 		MainViewWidget *theMainView;
 
@@ -219,6 +221,8 @@ class typotek:public QMainWindow
 		void removeFontItem(QStringList keyList);
 		
 		void changeFontSizeSettings(double fSize, double lSize);
+		
+		void showStatusMessage(const QString &message);
 		
 
 	protected:

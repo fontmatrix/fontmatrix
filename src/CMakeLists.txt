@@ -23,6 +23,7 @@ prefspaneldialog.cpp
 fmshaper.cpp
 fontbook.cpp
 importtags.cpp
+dataexport.cpp
 )
 
 SET(fontmatrix_MOC_HDRS

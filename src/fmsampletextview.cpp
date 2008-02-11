@@ -29,6 +29,7 @@ FMSampleTextView::FMSampleTextView(QWidget* parent)
 	setInteractive(true);
 	theRect = 0;
 	isSelecting = false;
+	isPanning = false;
 }
 
 
@@ -48,24 +49,36 @@ void FMSampleTextView::mousePressEvent(QMouseEvent * e)
 	if(locker)
 		return;
 	
-	ensureTheRect();
-	mouseStartPoint = mapToScene( e->pos() );
-	qDebug() << "start mouse "<< mouseStartPoint;
-	isSelecting = true;
-	QRectF arect(mouseStartPoint, QSizeF());
-	theRect->setRect(arect);
+	if( e->button() == Qt::MidButton )
+	{
+		mouseStartPoint =  e->pos() ;
+		isPanning = true;
+	}
+	else
+	{
+		ensureTheRect();
+		mouseStartPoint = mapToScene( e->pos() );
+		isSelecting = true;
+		QRectF arect(mouseStartPoint, QSizeF());
+		theRect->setRect(arect);
+	}
 	
 }
 
 void FMSampleTextView::mouseReleaseEvent(QMouseEvent * e)
 {
+	if(isPanning)
+	{
+		isPanning = false;
+		return;
+	}
 	if(!isSelecting)
 		return;
-	qDebug()<<"End mouse is "<< mapToScene( e->pos()).toPoint();
+// 	qDebug()<<"End mouse is "<< mapToScene( e->pos()).toPoint();
 	if(mouseStartPoint.toPoint() == mapToScene( e->pos()).toPoint())
 	{
 		// scale(1,1)
-		qDebug() << "Re-init transformation";
+// 		qDebug() << "Re-init transformation";
 		emit pleaseZoom(0);
 		isSelecting = false;
 		theRect->setRect(QRectF());
@@ -85,6 +98,16 @@ void FMSampleTextView::mouseReleaseEvent(QMouseEvent * e)
 
 void FMSampleTextView::mouseMoveEvent(QMouseEvent * e)
 {
+	if(isPanning)
+	{
+		QPointF pos(e->pos());
+		int vDelta( mouseStartPoint.y() - pos.y() );
+		int hDelta( mouseStartPoint.x() - pos.x() );
+		verticalScrollBar()->setValue( verticalScrollBar()->value() + vDelta );
+		horizontalScrollBar()->setValue( horizontalScrollBar()->value() + hDelta);
+		mouseStartPoint = pos;
+		return;
+	}
 	if(!isSelecting)
 		return;
 	

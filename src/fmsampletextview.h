@@ -55,6 +55,7 @@ class FMSampleTextView : public QGraphicsView
 		QPointF mouseStartPoint;
 		QGraphicsRectItem *theRect;
 		bool isSelecting;
+		bool isPanning;
 		
 		void ensureTheRect();
 

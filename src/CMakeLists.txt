@@ -24,6 +24,7 @@ fmshaper.cpp
 fontbook.cpp
 importtags.cpp
 dataexport.cpp
+remotedir.cpp
 )
 
 SET(fontmatrix_MOC_HDRS
@@ -42,6 +43,7 @@ tagseteditor.h
 typotek.h
 prefspaneldialog.h
 importtags.h
+remotedir.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 

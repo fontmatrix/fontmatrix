@@ -118,10 +118,11 @@ void FontItem::fillCharsetMap()
 
 
 
-FontItem::FontItem ( QString path )
+FontItem::FontItem ( QString path , bool remote)
 {
 // 	qDebug() << path;
 	m_valid = false;
+	m_remote = remote;
 	m_face = 0;
 	facesRef = 0;
 	m_glyphsPerRow = 5;
@@ -140,16 +141,25 @@ FontItem::FontItem ( QString path )
 	}
 
 	allIsRendered = false;
-
 	m_path = path;
+	
+	if(m_remote)
+	{
+		m_valid = true;
+		return;
+	}
+	
 	QFileInfo infopath ( m_path );
 	m_name = infopath.fileName();
+	
+	
 
 	if ( ! ensureFace() )
 	{
 		return;
 	}
-
+	
+	
 	if ( infopath.suffix() == "pfb" )
 	{
 		if ( !ft_error )
@@ -1319,6 +1329,8 @@ QIcon  FontItem::oneLinePreviewIcon ( QString oneline )
 
 QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 {
+	if ( m_remote )
+		return fixedPixmap;
 	if ( !theOneLinePreviewPixmap.isNull() )
 		return theOneLinePreviewPixmap;
 	QRectF savedRect = theOneLineScene->sceneRect();
@@ -2071,5 +2083,15 @@ bool FontItem::isLocal()
 	if ( shem.isEmpty() || shem == "file" )
 		return true;
 	return false;
+}
+
+/// We don’t want to download fonts yet. We just want something to fill font tree
+void FontItem::fileRemote(QString f , QString v, QString t, QString i, QPixmap p)
+{
+	m_family = f;
+	m_variant = v;
+	m_type = t;
+	m_cacheInfo = i;
+	fixedPixmap = p;
 }
 

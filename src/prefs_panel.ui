@@ -404,8 +404,12 @@
           <string>Remote directories</string>
          </property>
          <layout class="QGridLayout" >
-          <item rowspan="3" row="0" column="0" >
-           <widget class="QListWidget" name="remoteDirList" />
+          <item row="0" column="0" >
+           <widget class="QLineEdit" name="newUrlText" >
+            <property name="text" >
+             <string>http://</string>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1" >
            <widget class="QPushButton" name="remoteDirAdd" >
@@ -413,6 +417,9 @@
              <string>Add</string>
             </property>
            </widget>
+          </item>
+          <item rowspan="2" row="1" column="0" >
+           <widget class="QListWidget" name="remoteDirList" />
           </item>
           <item row="1" column="1" >
            <widget class="QPushButton" name="remoteDirRemove" >

@@ -28,6 +28,7 @@
 #include <QPainterPath>
 #include <QGraphicsPathItem>
 #include <QIcon>
+#include <QPixmap>
 #include <QUrl>
 
 #include <ft2build.h>
@@ -50,11 +51,12 @@ class FontItem : public QObject
 
 		Q_OBJECT
 	public:
-		FontItem ( QString path );
+		FontItem ( QString path , bool remote = false);
 
 		~FontItem();
 	private:
 		bool m_valid;
+		bool m_remote;
 		QString m_path;
 		QUrl m_url;
 		QString m_afm;
@@ -110,7 +112,8 @@ class FontItem : public QObject
 		QList<QGraphicsScene *> sceneList;
 		QList<QGraphicsPixmapItem*> fancyGlyphs;
 
-
+		QPixmap fixedPixmap;
+		
 		bool allIsRendered;
 		bool isDerendered;
 		int m_glyphsPerRow;
@@ -208,6 +211,9 @@ class FontItem : public QObject
 		static /*QMap<QString,QString>*/ QStringList name_meaning;
 		
 		bool isValid(){return m_valid;}
+		
+		bool isRemote(){return m_remote;}		
+		void  fileRemote(QString family, QString variant, QString type, QString info, QPixmap pixmap);
 
 };
 

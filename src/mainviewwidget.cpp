@@ -173,7 +173,7 @@ MainViewWidget::~MainViewWidget()
 
 void MainViewWidget::fillTree()
 {
-
+	qDebug()<< "MainViewWidget::fillTree()";
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
 	for ( int i=0; i < m_lists->fontTree->topLevelItemCount();++i )
@@ -325,6 +325,7 @@ void MainViewWidget::fillTree()
 // 	m_lists->fontTree->setColumnWidth(0,200);
 
 	fontsetHasChanged = false;
+	qDebug()<<"EOS";
 }
 
 void MainViewWidget::slotItemOpened ( QTreeWidgetItem * item )

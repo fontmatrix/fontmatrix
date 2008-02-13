@@ -37,6 +37,7 @@
 #include "fontbook.h"
 #include "importtags.h"
 #include "dataexport.h"
+#include "remotedir.h"
 
 
 #include <QtGui>
@@ -50,6 +51,8 @@
 #include <QDomDocument>
 #include <QProcess>
 #include <QDockWidget>
+// #include <QMutex>
+// #include <QWaitCondition>
 
 #ifdef HAVE_FONTCONFIG
 #include <fontconfig/fontconfig.h>
@@ -60,6 +63,9 @@ QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
 QString typotek::fonteditorPath = "/usr/bin/fontforge";
 extern bool __FM_SHOW_FONTLOADED;
+
+// QMutex remoteDirsMutex;
+// QWaitCondition remoteDirsCond;
 
 typotek::typotek()
 {
@@ -629,8 +635,7 @@ void typotek::initDir()
 	// load font files
 
 	QStringList pathList = loader.fontList();
-// 	QTime fontsTime;
-// 	fontsTime.start();
+	
 	int fontnr = pathList.count();
 	if ( __FM_SHOW_FONTLOADED )
 	{
@@ -647,7 +652,6 @@ void typotek::initDir()
 			fontMap.append ( fi );
 			realFontMap[fi->path() ] = fi;
 			fi->setTags ( tagsMap.value ( fi->path() ) );
-// 			qDebug() << fi->fancyName() << " loaded.";
 		}	
 	}
 	else
@@ -665,9 +669,25 @@ void typotek::initDir()
 			realFontMap[fi->path() ] = fi;
 			fi->setTags ( tagsMap.value ( fi->path() ) );
 		}
-// 	theMainView->slotOrderingChanged ( theMainView->defaultOrd() );
 	}
 	qDebug() <<  fontMap.count() << " font files loaded.";
+	
+	/// Remote dirs
+	//TODO
+	QSettings settings;
+	QList<QVariant> remoteDirV(settings.value("RemoteDirectories").toList());
+	if(!remoteDirV.isEmpty())
+	{
+		QStringList remoteDirStrings;
+		foreach(QVariant v, remoteDirV)
+		{
+			remoteDirStrings << v.toString();
+		}
+		relayStartingStepIn(tr("Catching")+" "+ QString::number(remoteDirStrings.count()) +" "+tr("font descriptions from network"));
+		remoteDir = new RemoteDir(remoteDirStrings);
+		connect(remoteDir,SIGNAL(listIsReady()),this,SLOT(slotRemoteIsReady()));
+		remoteDir->run();
+	}
 	
 #ifdef HAVE_FONTCONFIG
 #include <fontconfig/fontconfig.h>
@@ -747,6 +767,31 @@ void typotek::initDir()
 #endif //HAVE_FONTCONFIG
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 }
+
+void typotek::slotRemoteIsReady()
+{
+	qDebug()<<"typotek::slotRemoteIsReady()";
+	QList<FontInfo> listInfo(remoteDir->rFonts());
+	qDebug()<< "Have got "<< listInfo.count() <<"remote font descriptions";
+	for(int rf(0) ;rf < listInfo.count(); ++rf)
+	{
+// 		qDebug()<< rf <<" : " <<listInfo[rf].dump();
+		FontItem *fi = new FontItem ( listInfo[rf].file , true );
+		if(!fi->isValid())
+		{
+			qDebug() << "ERROR loading : " << listInfo[rf].file;
+			continue;
+		}
+		fi->fileRemote(listInfo[rf].family,listInfo[rf].variant,listInfo[rf].type, listInfo[rf].info, listInfo[rf].pix);
+		fontMap.append ( fi );
+		realFontMap[fi->path() ] = fi;
+		fi->setTags ( listInfo[rf].tags );
+	}
+	theMainView->slotReloadFontList();
+	qDebug()<<"END OF slotRemoteIsReady()";
+}
+
+
 
 QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 {
@@ -1153,6 +1198,7 @@ void LazyInit::run()
 	}
 	qDebug() << "END OF LazyInit";
 }
+
 
 
 

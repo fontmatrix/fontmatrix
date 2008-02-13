@@ -42,6 +42,7 @@ class FontItem;
 // class TypotekAdaptator;
 class QDockWidget;
 class Systray;
+class RemoteDir;
 
 
 
@@ -72,6 +73,7 @@ class typotek:public QMainWindow
 		void help();
 // 		void slotWord();
 		void slotExportFontSet();
+		void slotRemoteIsReady();
 		
 		
 	public slots:
@@ -158,7 +160,8 @@ class typotek:public QMainWindow
 		double previewSize;
 		
 		void addFcDirItem(const QString &dirPath);
-
+		
+		RemoteDir *remoteDir;
 	public:
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );

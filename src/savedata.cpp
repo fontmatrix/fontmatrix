@@ -54,7 +54,7 @@ void SaveData::doSave()
 	QList<FontItem*> flist = m_typo->getAllFonts();
 	foreach ( FontItem* fitem,flist )
 	{
-		if(!fitem->isLocked())
+		if(!fitem->isLocked() && !fitem->isRemote())
 		{
 			writeStartElement("fontfile");
 			writeAttribute("name", fitem->fancyName());

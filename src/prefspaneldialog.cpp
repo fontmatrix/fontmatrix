@@ -89,6 +89,8 @@ void PrefsPanelDialog::doConnect()
 	
 	connect(templatesDirBrowse,SIGNAL(clicked( )),this, SLOT(slotTemplatesBrowse()));
 	connect(templatesFolder,SIGNAL(textChanged( const QString& )),this,SLOT(setupTemplates(const QString&)));
+	
+	connect(remoteDirAdd,SIGNAL(clicked()),this,SLOT(slotAddRemote()));
 
 }
 
@@ -201,6 +203,22 @@ void PrefsPanelDialog::setupTemplates(const QString &tdir)
 {
 	if(!tdir.isEmpty())
 		typotek::getInstance()->setTemplatesDir(tdir);
+}
+
+void PrefsPanelDialog::slotAddRemote()
+{
+	QString rem(newUrlText->text());
+	remoteDirList->addItem(rem);
+	QStringList remList();
+	QSettings settings;
+	QList<QVariant> tmpL (settings.value("RemoteDirectories").toList());
+	tmpL << rem;
+	settings.setValue("RemoteDirectories",tmpL);
+	newUrlText->clear();
+}
+
+void PrefsPanelDialog::slotRemoveRemote()
+{
 }
 
 

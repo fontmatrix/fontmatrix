@@ -38,6 +38,8 @@ int DataExport::copyFiles()
 	progress.setWindowModality ( Qt::WindowModal );
 	int progressindex(0);
 	
+	QString preview(typotek::getInstance()->word());
+	
 	int copyCounter(0);
 	QList<int> toRemove;
 	for(int fidx( 0 ); fidx < fonts.count() ; ++fidx)
@@ -53,6 +55,9 @@ int DataExport::copyFiles()
 		if(ffile.copy(exDir.absolutePath() + exDir.separator() + ifile.fileName()) )
 		{
 			++copyCounter;
+			QImage itImage(fonts[fidx]->oneLinePreviewPixmap(preview).toImage());
+			if(!itImage.save(exDir.absolutePath() + exDir.separator() + ifile.fileName() + ".png"))
+				qDebug()<<"Unable to save "<< exDir.absolutePath() + exDir.separator() + ifile.fileName() + ".png";
 		}
 		else
 		{
@@ -91,10 +96,16 @@ int DataExport::buildIndex()
 			xmlStream.writeStartElement("fontfile");
 			xmlStream.writeAttribute("family", fitem->family());
 			xmlStream.writeAttribute("variant",fitem->variant());
+			xmlStream.writeAttribute("type",fitem->type());
 			xmlStream.writeStartElement("file");
 			xmlStream.writeCharacters( QFileInfo(fitem->path()).fileName() );
 			xmlStream.writeEndElement();
+			xmlStream.writeStartElement("info");
+			xmlStream.writeCharacters( fitem->infoText() );
+			xmlStream.writeEndElement();
 			QStringList tl = fitem->tags();
+			tl.removeAll("Activated_On");
+			tl.removeAll("Activated_Off");
 			foreach(QString tag, tl)
 			{
 				xmlStream.writeStartElement("tag");

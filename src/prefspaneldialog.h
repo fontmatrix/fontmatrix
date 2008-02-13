@@ -55,6 +55,9 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		
 		void setupTemplates(const QString&);
 		void slotTemplatesBrowse();
+		
+		void slotAddRemote();
+		void slotRemoveRemote();
 
 };
 

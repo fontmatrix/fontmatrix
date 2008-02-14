@@ -928,7 +928,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 // 	if ( allIsRendered )
 // 		return;
 	FMGlyphsView *allView = reinterpret_cast<FMGlyphsView*> ( scene->views() [0] );
-
+	qDebug()<<"renderAll("<< begin_code<<","<<end_code <<")";
 	deRenderAll();
 	if ( !allView->isVisible() )
 	{

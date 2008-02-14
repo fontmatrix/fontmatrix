@@ -376,7 +376,6 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			variantMap[item->child ( i )->text ( 0 ) ] = item->child ( i )->text ( 1 ) ;
 		}
 		slotFontActionByNames ( names );
-
 		if ( wantView && hasChild )
 		{
 			lastIndex = faceIndex;
@@ -397,19 +396,10 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 			if ( faceIndex.count() && faceIndex != lastIndex )
 			{
-				if(abcView->state() == FMGlyphsView::SingleView)
-					slotShowAllGlyph();
-// 				slotFontActionByName( faceIndex );
-				theVeryFont = typo->getFont ( faceIndex );
-				fillOTTree();
-				fillUniPlanesCombo ( theVeryFont );
-				slotView ( true );
-				typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
-				typo->presentFontName ( theVeryFont->fancyName() );
-				m_lists->previewList->slotSelect ( theVeryFont->path() );
+				slotFontSelectedByName(faceIndex);
 			}
 		}
-		qDebug() << curItemName;
+// 		qDebug() << curItemName;
 		int oldc = item->data ( 0,200 ).toInt();
 		if ( oldc == item->checkState ( 0 ) )
 		{
@@ -444,36 +434,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 	if ( item->data ( 0,100 ).toString() == "fontfile" )
 	{
-// 		qDebug() << "Item is a fontfile";
-		lastIndex = faceIndex;
-		faceIndex = item->text ( 1 );
-		curItemName = faceIndex;
-
-		if ( faceIndex.count() && faceIndex != lastIndex )
-		{
-			if(abcView->state() == FMGlyphsView::SingleView)
-				slotShowAllGlyph();
-// 			qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
-			slotFontAction ( item,column );
-// 			emit faceChanged();
-			theVeryFont = typo->getFont ( faceIndex );
-			fillOTTree();
-			fillUniPlanesCombo ( theVeryFont ); // has to be called before view, may I should come back to the faceChanged signal idea
-			slotView ( true );
-			typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
-			typo->presentFontName ( theVeryFont->fancyName() );
-			m_lists->previewList->slotSelect ( theVeryFont->path() );
-		}
-		if ( item->data ( 0,200 ).toInt() != item->checkState ( 1 ) )
-		{
-			if ( item->checkState ( 1 ) == Qt::Checked )
-				slotActivate ( true, item, column );
-			else
-				slotActivate ( false, item, column );
-		}
-		fillTree();
-		abcView->verticalScrollBar()->setValue ( 0 );
-		return;
+		slotFontSelectedByName(item->text ( 1 ));
 	}
 	return;
 
@@ -495,6 +456,21 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 			slotShowAllGlyph();
 		slotFontActionByName ( fname );
 		theVeryFont = typo->getFont ( faceIndex );
+		if(theVeryFont->isRemote())
+		{
+			qDebug() << faceIndex <<" is remote";
+			if(!theVeryFont->isCached())
+			{
+				connect(theVeryFont,SIGNAL(dowloadFinished()), this, SLOT(slotRemoteFinished()));
+				theVeryFont->getFromNetwork();
+				currentDownload = faceIndex ;
+				return;
+			}
+			else
+			{
+				currentDownload = "";
+			}
+		}
 		fillOTTree();
 		fillUniPlanesCombo ( theVeryFont );
 		slotView ( true );
@@ -509,10 +485,12 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 
 
 void MainViewWidget::slotInfoFont()
-{
-	FontItem *f = typo->getFont ( faceIndex );
+{	
+	if(theVeryFont)
+	{
 	fontInfoText->clear();
-	fontInfoText->setHtml ( "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  f->infoText() + "</html>" );
+	fontInfoText->setHtml ( "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  theVeryFont->infoText() + "</html>" );
+	}
 
 }
 
@@ -531,25 +509,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		f->deRenderAll();
 
 		curGlyph = 0;
-	}
-	
-	if(theVeryFont->isRemote())
-	{
-		if(!theVeryFont->isCached())
-		{
-			if(currentDownloads.contains(theVeryFont))
-				return;
-			connect(theVeryFont,SIGNAL(dowloadFinished()), this, SLOT(slotRemoteFinished()));
-			theVeryFont->getFromNetwork();
-			currentDownloads << theVeryFont;
-			return;
-		}
-		else
-		{
-			currentDownloads.removeAll(theVeryFont);
-		}
-	}
-	
+	}	
 
 	bool wantDeviceDependant = loremView_FT->isVisible();
 
@@ -1137,6 +1097,7 @@ void MainViewWidget::fillUniPlanes()
 
 void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 {
+	
 	uniPlaneCombo->clear();
 	QStringList plist= uniPlanes.keys();
 	for ( int i= 0;i<plist.count();++i )
@@ -1375,6 +1336,7 @@ void MainViewWidget::slotUpdateGView()
 	// If all is how I think it must be, we don’t need to check anything here :)
 	if(theVeryFont)
 	{
+		theVeryFont->deRenderAll();
 		QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
 		QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
 		theVeryFont->renderAll ( abcScene , uniPair.first, uniPair.second );
@@ -1581,7 +1543,12 @@ void MainViewWidget::slotLiveFontSize(double fs)
 
 void MainViewWidget::slotRemoteFinished()
 {
-	slotView(true);
+	slotFontSelectedByName(currentDownload);
+	slotInfoFont();
+	slotUpdateGView();
+	slotUpdateRView();
+	slotUpdateSView();
+	
 }
 
 

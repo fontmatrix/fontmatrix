@@ -10,6 +10,7 @@
 //
 //
 #include "remotedir.h"
+#include "typotek.h"
 
 #include <QHttp>
 #include <QByteArray>
@@ -51,7 +52,7 @@ void RemoteDir::run()
 // 		connect(rd,SIGNAL(dataReadProgress( int, int )),this,SLOT(slotProgress(int, int)));
 		
 		int rdId(rd->get(url.path()+"/fontmatrix.data", buffer));
-		
+		typotek::getInstance()->showStatusMessage(tr("Downloading")+" " + url.toString() + "/fontmatrix.data");
 		rDirs[rdId] = argDirs[ridx];
 		httpRequests[rdId] = 1;
 		httpBuffers[rdId] = ba;
@@ -234,7 +235,8 @@ void RemoteDir::getPreviews()
 			connect(reverseHttp[bIt.key()],SIGNAL(requestFinished( int, bool )),this,SLOT(slotEndPreviews(int, bool)));
 			int rdId(reverseHttp[bIt.key()]->get(httpPaths[bIt.key()]+"/"+ p + ".png", buffer));
 			pendingPixmaps[rdId] = 1; 
-			qDebug() << "Started download of " << httpPaths[bIt.key()]+"/"+ p + ".png";
+// 			qDebug() << "Started download of " << httpPaths[bIt.key()]+"/"+ p + ".png";
+			typotek::getInstance()->showStatusMessage(tr("Downloading") +" "+ httpPaths[bIt.key()]+"/"+ p + ".png");
 			
 		}
 	}

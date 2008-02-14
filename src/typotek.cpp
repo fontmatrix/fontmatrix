@@ -677,16 +677,11 @@ void typotek::initDir()
 	/// Remote dirs
 	//TODO
 	QSettings settings;
-	QList<QVariant> remoteDirV(settings.value("RemoteDirectories").toList());
+	QStringList remoteDirV(settings.value("RemoteDirectories").toStringList());
 	if(!remoteDirV.isEmpty())
 	{
-		QStringList remoteDirStrings;
-		foreach(QVariant v, remoteDirV)
-		{
-			remoteDirStrings << v.toString();
-		}
-		relayStartingStepIn(tr("Catching")+" "+ QString::number(remoteDirStrings.count()) +" "+tr("font descriptions from network"));
-		remoteDir = new RemoteDir(remoteDirStrings);
+		relayStartingStepIn(tr("Catching")+" "+ QString::number(remoteDirV.count()) +" "+tr("font descriptions from network"));
+		remoteDir = new RemoteDir(remoteDirV);
 		connect(remoteDir,SIGNAL(listIsReady()),this,SLOT(slotRemoteIsReady()));
 		remoteDir->run();
 	}
@@ -778,9 +773,9 @@ void typotek::slotRemoteIsReady()
 	else
 		return;
 	
-	qDebug()<<"typotek::slotRemoteIsReady()";
+// 	qDebug()<<"typotek::slotRemoteIsReady()";
 	QList<FontInfo> listInfo(remoteDir->rFonts());
-	qDebug()<< "Have got "<< listInfo.count() <<"remote font descriptions";
+// 	qDebug()<< "Have got "<< listInfo.count() <<"remote font descriptions";
 	for(int rf(0) ;rf < listInfo.count(); ++rf)
 	{
 // 		qDebug()<< rf <<" : " <<listInfo[rf].dump();
@@ -796,7 +791,8 @@ void typotek::slotRemoteIsReady()
 		fi->setTags ( listInfo[rf].tags );
 	}
 	theMainView->slotReloadFontList();
-	qDebug()<<"END OF slotRemoteIsReady()";
+	showStatusMessage( QString::number(listInfo.count())+ " " +  tr("font descriptions imported from network"));
+// 	qDebug()<<"END OF slotRemoteIsReady()";
 }
 
 

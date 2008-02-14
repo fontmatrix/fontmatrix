@@ -65,6 +65,9 @@ void PrefsPanelDialog::initFilesAndFolders()
 {
 	QSettings settings;
 	templatesFolder->setText(typotek::getInstance()->getTemplatesDir());
+	QStringList remoteDirV(settings.value("RemoteDirectories").toStringList());
+	remoteDirList->addItems(remoteDirV);
+	
 }
 
 
@@ -91,7 +94,7 @@ void PrefsPanelDialog::doConnect()
 	connect(templatesFolder,SIGNAL(textChanged( const QString& )),this,SLOT(setupTemplates(const QString&)));
 	
 	connect(remoteDirAdd,SIGNAL(clicked()),this,SLOT(slotAddRemote()));
-
+	connect(remoteDirRemove,SIGNAL(clicked()),this,SLOT(slotRemoveRemote()));
 }
 
 void PrefsPanelDialog::applySampleText()
@@ -219,6 +222,29 @@ void PrefsPanelDialog::slotAddRemote()
 
 void PrefsPanelDialog::slotRemoveRemote()
 {
+	if(remoteDirList->currentItem())
+	{
+		QString url(remoteDirList->currentItem()->text());
+		qDebug()<<"about to remove "<< url;
+		for(int i(0);i < remoteDirList->count();++i)
+		{
+			if(remoteDirList->item(i)->text() == url)
+				remoteDirList->takeItem(i);
+		}		
+		QSettings settings;
+		QStringList tmpL (settings.value("RemoteDirectories").toStringList());
+		QStringList remoteDirStrings;
+		foreach(QString s, tmpL)
+		{
+			if(s != url)
+				remoteDirStrings << s;
+			else
+				qDebug() << "Exclude "<<url<< " from remote dirs";
+		}
+		qDebug()<<"RemoteDirectories : "<<remoteDirStrings.join(", ");
+		settings.setValue("RemoteDirectories", remoteDirStrings);
+		
+	}
 }
 
 

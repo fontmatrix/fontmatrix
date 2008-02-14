@@ -97,7 +97,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QIcon iconTTF;
 		QIcon iconOTF;
 		
-		QList<FontItem*> currentDownloads;
+		QString currentDownload;
 		
 		
 	public slots:

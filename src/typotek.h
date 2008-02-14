@@ -162,6 +162,7 @@ class typotek:public QMainWindow
 		void addFcDirItem(const QString &dirPath);
 		
 		RemoteDir *remoteDir;
+		QString m_remoteTmpDir;
 	public:
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );
@@ -227,6 +228,7 @@ class typotek:public QMainWindow
 		
 		void showStatusMessage(const QString &message);
 		
+		QString remoteTmpDir() const {return m_remoteTmpDir;}
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

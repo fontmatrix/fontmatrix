@@ -545,6 +545,8 @@ void typotek::checkOwnDir()
 
 	addFcDirItem( managedDir.absolutePath() );
 	fontsdata.setFileName ( QDir::homePath() + "/.fontmatrix.data" );
+	QSettings settings;
+	m_remoteTmpDir = settings.value("RemoteTmpDir", QDir::tempPath()).toString();
 }
 
 void typotek::addFcDirItem(const QString & dirPath)

@@ -36,7 +36,8 @@
 #include <QLocale>
 #include <QTextCodec>
 
-
+#include <QProgressDialog>
+#include <QHttp>
 
 #include FT_XFREE86_H
 #include FT_GLYPH_H
@@ -46,12 +47,17 @@
 #include FT_TRUETYPE_TABLES_H
 #include FT_TRUETYPE_IDS_H
 
+// #include <QWaitCondition>
+// #include <QMutex>
 
 FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
 QMap<FT_Encoding, QString> FontItem::charsetMap;
 QMap<int, QString> FontItem::langIdMap;
-/*QMap<QString,QString>*/ QStringList FontItem::name_meaning;
+QStringList FontItem::name_meaning;
+
+// QWaitCondition theCondition;
+// QMutex theMutex;
 
 /** functions set for decomposition
  */
@@ -123,6 +129,8 @@ FontItem::FontItem ( QString path , bool remote)
 // 	qDebug() << path;
 	m_valid = false;
 	m_remote = remote;
+	remoteCached = false;
+	stopperDownload = false;
 	m_face = 0;
 	facesRef = 0;
 	m_glyphsPerRow = 5;
@@ -240,10 +248,18 @@ bool FontItem::ensureFace()
 			++facesRef;
 			return true;
 		}
-		ft_error = FT_New_Face ( theLibrary, m_path.toLocal8Bit() , 0, &m_face );
+// 		if(m_remote)
+// 		{
+// 			if(getFromNetwork() == 2)//wait
+// 			{
+// 				
+// 			}
+// 		}
+		QString trueFile( m_remote ? remoteHerePath : m_path );
+		ft_error = FT_New_Face ( theLibrary, trueFile.toLocal8Bit() , 0, &m_face );
 		if ( ft_error )
 		{
-			qDebug() << "Error loading face [" << m_path <<"]";
+			qDebug() << "Error loading face [" << trueFile <<"]";
 			return false;
 		}
 		ft_error = FT_Select_Charmap ( m_face, FT_ENCODING_UNICODE );
@@ -2094,4 +2110,103 @@ void FontItem::fileRemote(QString f , QString v, QString t, QString i, QPixmap p
 	m_cacheInfo = i;
 	fixedPixmap = p;
 }
+
+/// Finally, we have to download the font file
+int FontItem::getFromNetwork()
+{
+	qDebug()<<"FontItem::getFromNetwork()";
+	if(remoteCached)
+		return 1;
+	if(stopperDownload)
+		return 2;
+	else
+		stopperDownload = true;
+	
+	QUrl url(m_path);
+	remoteHerePath = typotek::getInstance()->remoteTmpDir() + QDir::separator() + QFileInfo(url.path()).fileName();
+	
+	rFile = new QFile(remoteHerePath);
+	if(!rFile->open(QIODevice::WriteOnly))
+	{
+		qDebug()<< "Can’t open " << remoteHerePath;
+		delete rFile;
+// 		return false;
+	}
+	
+	rHttp = new QHttp(url.host());
+	qDebug()<< "Init progress Dialog";
+	rProgressDialog = new QProgressDialog(typotek::getInstance());
+	rProgressDialog->setWindowTitle(tr("Fontmatrix - Download"));
+	rProgressDialog->setLabelText(tr("Downloading %1.").arg(m_path));
+	rProgressDialog->show();
+	rProgressDialog->raise();
+	rProgressDialog->activateWindow();
+	qDebug()<<"Progress dialog done";
+	
+	connect(rHttp,SIGNAL(dataReadProgress( int, int )),this,SLOT(slotDowloadProgress(int,int)));
+	connect(rHttp,SIGNAL(requestFinished( int, bool )),this,SLOT(slotDownloadEnd(int, bool)));
+	connect(rHttp,SIGNAL(done( bool )),this,SLOT(slotDownloadDone(bool)));
+	connect(rHttp,SIGNAL(stateChanged( int )),this,SLOT(slotDownloadState(int)));
+	
+	remoteId = rHttp->get( url.path() , rFile );
+	return 2;
+}
+
+void FontItem::slotDownloadStart(int id)
+{
+// 	rProgressDialog->show();
+}
+
+void FontItem::slotDowloadProgress(int done, int total)
+{
+	rProgressDialog->setMaximum(total);
+	rProgressDialog->setValue(done);
+	qDebug()<< " [" <<done << "/"<< total<<"]" ;
+}
+
+void FontItem::slotDownloadEnd(int id, bool error)
+{
+	qDebug() << m_path << "::slotDownloadEnd ["<< id <<"] when remoteCached = "<< remoteCached;
+	if(id != remoteId)
+	{
+		qDebug()<< "WTF this id("<< id <<") comes from nowhere, our is "<< remoteId;
+		return;
+	}
+	if(remoteCached)
+	{
+		qDebug()<< "Youre a bit late dude.";
+		return;
+	}
+	else
+	{
+		remoteCached = true;
+	}
+	rFile->flush();
+	rFile->close();
+	rHttp->close();
+	
+	delete rProgressDialog;
+
+	delete rFile;
+	
+	emit dowloadFinished();
+}
+
+void FontItem::slotDownloadDone(bool error)
+{
+	qDebug()<< "slotDownloadDone(" <<error<<")";
+}
+
+void FontItem::slotDownloadState(int state)
+{
+// 	qDebug() << "slotDownloadState("<<state<<")";
+	if(state == QHttp::Unconnected  && rHttp)
+	{
+		qDebug() << "slotDownloadState( QHttp::Unconnected )";
+		delete rHttp;
+		rHttp = 0;
+	}
+	
+}
+
 

@@ -97,6 +97,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QIcon iconTTF;
 		QIcon iconOTF;
 		
+		QList<FontItem*> currentDownloads;
+		
 		
 	public slots:
 		void slotOrderingChanged ( QString s );
@@ -149,6 +151,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 	private slots:
 		void slotLiveFontSize(double);
+		void slotRemoteFinished();
 		
 	signals:
 		void faceChanged();

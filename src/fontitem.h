@@ -30,6 +30,7 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QUrl>
+// #include <QThread>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -40,6 +41,10 @@ class QGraphicsRectItem;
 struct OTFSet;
 class FmOtf;
 class QGraphicsView;
+
+class QProgressDialog;
+class QHttp;
+class QFile;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -56,7 +61,16 @@ class FontItem : public QObject
 		~FontItem();
 	private:
 		bool m_valid;
+		
 		bool m_remote;
+		bool remoteCached;
+		QString remoteHerePath;
+		bool stopperDownload;
+		QHttp *rHttp;
+		QFile *rFile;
+		int remoteId;
+		QProgressDialog *rProgressDialog;
+		
 		QString m_path;
 		QUrl m_url;
 		QString m_afm;
@@ -136,6 +150,20 @@ class FontItem : public QObject
 
 		QMap<int,QMap<QString, QString> > moreInfo;
 		void fillLangIdMap();
+		
+		
+		
+	private slots:
+		void slotDownloadStart(int id);
+		void slotDowloadProgress(int done, int total );
+		void slotDownloadEnd(int id, bool error );
+		void slotDownloadDone(bool error);
+		
+		void slotDownloadState(int state);
+		
+		
+	signals:
+		void dowloadFinished();
 
 	public:
 		static FT_Library theLibrary;
@@ -212,9 +240,11 @@ class FontItem : public QObject
 		
 		bool isValid(){return m_valid;}
 		
-		bool isRemote(){return m_remote;}		
+		bool isRemote(){return m_remote;}
+		bool isCached(){return remoteCached;}		
 		void  fileRemote(QString family, QString variant, QString type, QString info, QPixmap pixmap);
-
+		// retval : 1 => Ready; 2 => Wait ; ...
+		int getFromNetwork();
 };
 
 #endif

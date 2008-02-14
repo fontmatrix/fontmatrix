@@ -248,7 +248,7 @@ void MainViewWidget::fillTree()
 					entry->setText ( 0,  variant );
 					entry->setText ( 1, kit_value.value()->path() );
 					entry->setData ( 0, 100, "fontfile" );
-					if(kit_value.value()->isLocked())
+					if(kit_value.value()->isLocked() || kit_value.value()->isRemote() )
 					{
 						entry->setFlags(Qt::ItemIsSelectable);
 // 						entry->parent()->setFlags(Qt::ItemIsSelectable);
@@ -532,6 +532,25 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 		curGlyph = 0;
 	}
+	
+	if(theVeryFont->isRemote())
+	{
+		if(!theVeryFont->isCached())
+		{
+			if(currentDownloads.contains(theVeryFont))
+				return;
+			connect(theVeryFont,SIGNAL(dowloadFinished()), this, SLOT(slotRemoteFinished()));
+			theVeryFont->getFromNetwork();
+			currentDownloads << theVeryFont;
+			return;
+		}
+		else
+		{
+			currentDownloads.removeAll(theVeryFont);
+		}
+	}
+	
+
 	bool wantDeviceDependant = loremView_FT->isVisible();
 
 	theVeryFont->setRTL ( rtlCheck->isChecked() );
@@ -1557,6 +1576,11 @@ void MainViewWidget::slotRemoveCurrentItem()
 void MainViewWidget::slotLiveFontSize(double fs)
 {
 	reSize(fs, fs * sampleRatio);
+	slotView(true);
+}
+
+void MainViewWidget::slotRemoteFinished()
+{
 	slotView(true);
 }
 

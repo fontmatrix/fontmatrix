@@ -71,6 +71,10 @@ class RemoteDir : public QObject
 		
 		void getPreviews();
 		void eventEndDownload();
+		
+		bool stopperEndReq;
+		bool stopperEndPreviews;
+		bool stopper;
 	private slots:
 		void slotProgress(int done, int total);
 		void slotEndReq(int id, bool error);

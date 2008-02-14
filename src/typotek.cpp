@@ -768,8 +768,14 @@ void typotek::initDir()
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 }
 
+static bool slotRemoteIsReadyRunOnce = false;
 void typotek::slotRemoteIsReady()
 {
+	if(!slotRemoteIsReadyRunOnce)
+		slotRemoteIsReadyRunOnce = true;
+	else
+		return;
+	
 	qDebug()<<"typotek::slotRemoteIsReady()";
 	QList<FontInfo> listInfo(remoteDir->rFonts());
 	qDebug()<< "Have got "<< listInfo.count() <<"remote font descriptions";

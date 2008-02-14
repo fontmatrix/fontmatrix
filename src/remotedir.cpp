@@ -27,6 +27,8 @@ RemoteDir::RemoteDir(const QStringList &dirs)
 	qDebug()<<"RemoteDir::RemoteDir("<<dirs.join(";")<<")";
 	if (argDirs.isEmpty())
 		m_ready = true;
+	
+	stopper = stopperEndPreviews = stopperEndReq = false;
 }
 
 void RemoteDir::run()
@@ -77,6 +79,8 @@ RemoteDir::~RemoteDir()
 void RemoteDir::slotEndPreviews(int id, bool error)
 {
 // 	qDebug()<<"RemoteDir::slotEndPreviews("<< id<<", "<<error<<")";
+	if(stopperEndPreviews)
+		return;
 	if(error)
 		pendingPixmaps[id] = 0;
 	else
@@ -98,6 +102,7 @@ void RemoteDir::slotEndPreviews(int id, bool error)
 	if(!pendingReqs)
 	{
 		qDebug() <<"Get all previews";
+		stopperEndPreviews = true;
 		eventEndDownload();
 	}
 	
@@ -106,6 +111,8 @@ void RemoteDir::slotEndPreviews(int id, bool error)
 void RemoteDir::slotEndReq(int id, bool error)
 {
 	qDebug()<<"RemoteDir::slotEndReq("<< id<<", "<<error<<")";
+	if(stopperEndReq)
+		return;
 	if(error)
 		httpRequests[id] = 0;
 	else
@@ -142,11 +149,16 @@ void RemoteDir::slotEndReq(int id, bool error)
 	}
 	
 	if(!pendingReqs)
+	{
+		stopperEndReq = true;
 		getPreviews();
+	}
 }
 
 void RemoteDir::eventEndDownload()
 {
+	if(stopper)
+		return;
 	QMap<int, QByteArray*>::const_iterator bIt;
 	for(bIt = httpBuffers.begin(); bIt != httpBuffers.end(); ++bIt)
 	{
@@ -192,6 +204,7 @@ void RemoteDir::eventEndDownload()
 		}
 	}
 	m_ready = true;
+	stopper = true;
 	emit listIsReady();
 }
 

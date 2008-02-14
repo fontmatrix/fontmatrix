@@ -2155,6 +2155,10 @@ int FontItem::getFromNetwork()
 void FontItem::slotDownloadStart(int id)
 {
 // 	rProgressDialog->show();
+	if(id != remoteId)
+	{
+		qDebug()<< "catched a weird request : " << id;
+	}
 }
 
 void FontItem::slotDowloadProgress(int done, int total)
@@ -2186,7 +2190,6 @@ void FontItem::slotDownloadEnd(int id, bool error)
 	rHttp->close();
 	
 	delete rProgressDialog;
-
 	delete rFile;
 	
 	emit dowloadFinished();

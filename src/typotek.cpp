@@ -789,6 +789,14 @@ void typotek::slotRemoteIsReady()
 		fontMap.append ( fi );
 		realFontMap[fi->path() ] = fi;
 		fi->setTags ( listInfo[rf].tags );
+		foreach(QString tag, listInfo[rf].tags)
+		{
+			if(!tag.isEmpty() && !tagsList.contains(tag))
+			{
+				tagsList << tag;
+				theMainView->slotAppendTag(tag);
+			}
+		}
 	}
 	theMainView->slotReloadFontList();
 	showStatusMessage( QString::number(listInfo.count())+ " " +  tr("font descriptions imported from network"));

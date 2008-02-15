@@ -173,7 +173,7 @@ MainViewWidget::~MainViewWidget()
 
 void MainViewWidget::fillTree()
 {
-	qDebug()<< "MainViewWidget::fillTree()";
+	qDebug()<< "MainViewWidget::fillTree("<< curItemName <<")";
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
 	for ( int i=0; i < m_lists->fontTree->topLevelItemCount();++i )
@@ -378,26 +378,21 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 		slotFontActionByNames ( names );
 		if ( wantView && hasChild )
 		{
-			lastIndex = faceIndex;
+			QString select;
 
 			if ( variantMap.contains ( "Regular" ) )
-				faceIndex =  variantMap["Regular"];
+				select =  variantMap["Regular"];
 			else if ( variantMap.contains ( "Roman" ) )
-				faceIndex =  variantMap["Roman"];
+				select =  variantMap["Roman"];
 			else if ( variantMap.contains ( "Medium" ) )
-				faceIndex =  variantMap["Medium"];
+				select =  variantMap["Medium"];
 			else if ( variantMap.contains ( "Book" ) )
-				faceIndex =  variantMap["Book"];
+				select =  variantMap["Book"];
 			else
-				faceIndex =  * ( variantMap.begin() );
+				select =  * ( variantMap.begin() );
 
-// 			faceIndex = item->child(0)->text(1);
-			curItemName = faceIndex;
+			slotFontSelectedByName(select);
 
-			if ( faceIndex.count() && faceIndex != lastIndex )
-			{
-				slotFontSelectedByName(faceIndex);
-			}
 		}
 // 		qDebug() << curItemName;
 		int oldc = item->data ( 0,200 ).toInt();
@@ -464,6 +459,7 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 				connect(theVeryFont,SIGNAL(dowloadFinished()), this, SLOT(slotRemoteFinished()));
 				theVeryFont->getFromNetwork();
 				currentDownload = faceIndex ;
+				faceIndex = lastIndex;
 				return;
 			}
 			else
@@ -1543,6 +1539,7 @@ void MainViewWidget::slotLiveFontSize(double fs)
 
 void MainViewWidget::slotRemoteFinished()
 {
+	qDebug()<<"slotRemoteFinished : "<<currentDownload;
 	slotFontSelectedByName(currentDownload);
 	slotInfoFont();
 	slotUpdateGView();

@@ -64,6 +64,20 @@ typotek* typotek::instance = 0;
 QString typotek::fonteditorPath = "/usr/bin/fontforge";
 extern bool __FM_SHOW_FONTLOADED;
 
+
+/// LazyInit *********************************************
+void LazyInit::run()
+{
+	qDebug() << "LazyInit::run()";
+	typotek* t = typotek::getInstance();
+	QList<FontItem*> fonts = t->getAllFonts();
+	foreach(FontItem *fit, fonts)
+	{
+		fit->infoText();
+	}
+	qDebug() << "END OF LazyInit";
+}
+///******************************************************
 // QMutex remoteDirsMutex;
 // QWaitCondition remoteDirsCond;
 
@@ -1197,18 +1211,15 @@ void typotek::showStatusMessage(const QString & message)
 	statusBar()->showMessage(message, 2500);
 }
 
-
-/// LazyInit *********************************************
-void LazyInit::run()
+void typotek::setRemoteTmpDir(const QString & s)
 {
-	qDebug() << "LazyInit::run()";
-	typotek* t = typotek::getInstance();
-	QList<FontItem*> fonts = t->getAllFonts();
-	foreach(FontItem *fit, fonts)
-	{
-		fit->infoText();
-	}
-	qDebug() << "END OF LazyInit";
+	if(s.isEmpty())
+		m_remoteTmpDir = QDir::temp().path();
+	else
+		m_remoteTmpDir = s;
+	
+	QSettings settings;
+	settings.setValue("RemoteTmpDir", m_remoteTmpDir);
 }
 
 

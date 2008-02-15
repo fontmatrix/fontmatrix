@@ -229,6 +229,7 @@ class typotek:public QMainWindow
 		void showStatusMessage(const QString &message);
 		
 		QString remoteTmpDir() const {return m_remoteTmpDir;}
+		void setRemoteTmpDir(const QString &s);
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

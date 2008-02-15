@@ -405,41 +405,87 @@
          </property>
          <layout class="QGridLayout" >
           <item row="0" column="0" >
-           <widget class="QLineEdit" name="newUrlText" >
-            <property name="text" >
-             <string>http://</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QLineEdit" name="newUrlText" >
+              <property name="text" >
+               <string>http://</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="remoteDirAdd" >
+              <property name="minimumSize" >
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text" >
+               <string>Add</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="0" column="1" >
-           <widget class="QPushButton" name="remoteDirAdd" >
-            <property name="text" >
-             <string>Add</string>
-            </property>
-           </widget>
+          <item row="1" column="0" >
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QListWidget" name="remoteDirList" />
+            </item>
+            <item>
+             <layout class="QVBoxLayout" >
+              <item>
+               <widget class="QPushButton" name="remoteDirRemove" >
+                <property name="text" >
+                 <string>Remove</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>100</width>
+                  <height>41</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </item>
-          <item rowspan="2" row="1" column="0" >
-           <widget class="QListWidget" name="remoteDirList" />
-          </item>
-          <item row="1" column="1" >
-           <widget class="QPushButton" name="remoteDirRemove" >
-            <property name="text" >
-             <string>Remove</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" >
-           <spacer>
+          <item row="2" column="0" >
+           <widget class="Line" name="line" >
             <property name="orientation" >
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" >
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
+          </item>
+          <item row="3" column="0" >
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QLabel" name="label_4" >
+              <property name="text" >
+               <string>Local storage</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="localStorageLine" />
+            </item>
+            <item>
+             <widget class="QPushButton" name="localStorageButton" >
+              <property name="text" >
+               <string>Browse...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -452,7 +498,7 @@
          <property name="sizeHint" >
           <size>
            <width>629</width>
-           <height>51</height>
+           <height>31</height>
           </size>
          </property>
         </spacer>

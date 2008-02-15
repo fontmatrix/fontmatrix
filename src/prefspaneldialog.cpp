@@ -67,6 +67,7 @@ void PrefsPanelDialog::initFilesAndFolders()
 	templatesFolder->setText(typotek::getInstance()->getTemplatesDir());
 	QStringList remoteDirV(settings.value("RemoteDirectories").toStringList());
 	remoteDirList->addItems(remoteDirV);
+	localStorageLine->setText(typotek::getInstance()->remoteTmpDir());
 	
 }
 
@@ -95,6 +96,8 @@ void PrefsPanelDialog::doConnect()
 	
 	connect(remoteDirAdd,SIGNAL(clicked()),this,SLOT(slotAddRemote()));
 	connect(remoteDirRemove,SIGNAL(clicked()),this,SLOT(slotRemoveRemote()));
+	connect(localStorageLine,SIGNAL(textChanged( const QString& )),this,SLOT(slotSetLocalStorage(QString)));
+	connect(localStorageButton,SIGNAL(clicked( )),this,SLOT(slotBrowseLocalStorage()));
 }
 
 void PrefsPanelDialog::applySampleText()
@@ -244,6 +247,19 @@ void PrefsPanelDialog::slotRemoveRemote()
 		qDebug()<<"RemoteDirectories : "<<remoteDirStrings.join(", ");
 		settings.setValue("RemoteDirectories", remoteDirStrings);
 		
+	}
+}
+
+void PrefsPanelDialog::slotSetLocalStorage(QString s)
+{
+	typotek::getInstance()->setRemoteTmpDir(s);
+}
+
+void PrefsPanelDialog::slotBrowseLocalStorage()
+{
+	QString s = QFileDialog::getExistingDirectory(this, tr("Select Where remote font files will be stored"));
+	if (!s.isEmpty()) {
+		localStorageLine->setText(s);
 	}
 }
 

@@ -58,6 +58,9 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		
 		void slotAddRemote();
 		void slotRemoveRemote();
+		
+		void slotSetLocalStorage(QString s);
+		void slotBrowseLocalStorage();
 
 };
 

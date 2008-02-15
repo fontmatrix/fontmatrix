@@ -376,33 +376,13 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			variantMap[item->child ( i )->text ( 0 ) ] = item->child ( i )->text ( 1 ) ;
 		}
 		slotFontActionByNames ( names );
-		if ( wantView && hasChild )
-		{
-			QString select;
-
-			if ( variantMap.contains ( "Regular" ) )
-				select =  variantMap["Regular"];
-			else if ( variantMap.contains ( "Roman" ) )
-				select =  variantMap["Roman"];
-			else if ( variantMap.contains ( "Medium" ) )
-				select =  variantMap["Medium"];
-			else if ( variantMap.contains ( "Book" ) )
-				select =  variantMap["Book"];
-			else
-				select =  * ( variantMap.begin() );
-
-			slotFontSelectedByName(select);
-
-		}
-// 		qDebug() << curItemName;
 		int oldc = item->data ( 0,200 ).toInt();
 		if ( oldc == item->checkState ( 0 ) )
 		{
 			fillTree();
-			return;
 
 		}
-		if ( item->checkState ( 0 ) != Qt::PartiallyChecked )
+		else if ( item->checkState ( 0 ) != Qt::PartiallyChecked )
 		{
 
 			bool cs = item->checkState ( 0 ) == Qt::Checked ? true : false;
@@ -423,7 +403,24 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			qDebug() << "Something wrong, Qt::PartiallyChecked should not be reached" ;
 
 		}
-		fillTree();
+		if ( wantView && hasChild )
+		{
+			QString select;
+
+			if ( variantMap.contains ( "Regular" ) )
+				select =  variantMap["Regular"];
+			else if ( variantMap.contains ( "Roman" ) )
+				select =  variantMap["Roman"];
+			else if ( variantMap.contains ( "Medium" ) )
+				select =  variantMap["Medium"];
+			else if ( variantMap.contains ( "Book" ) )
+				select =  variantMap["Book"];
+			else
+				select =  * ( variantMap.begin() );
+
+			slotFontSelectedByName(select);
+
+		}
 		return;
 	}
 

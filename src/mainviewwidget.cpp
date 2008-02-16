@@ -174,6 +174,7 @@ MainViewWidget::~MainViewWidget()
 void MainViewWidget::fillTree()
 {
 	qDebug()<< "MainViewWidget::fillTree("<< curItemName <<")";
+	m_lists->savePosition();
 	QTreeWidgetItem *curItem = 0;
 	openKeys.clear();
 	for ( int i=0; i < m_lists->fontTree->topLevelItemCount();++i )
@@ -323,9 +324,8 @@ void MainViewWidget::fillTree()
 	m_lists->fontTree->resizeColumnToContents ( 0 )  ;
 // 	m_lists->fontTree->resizeColumnToContents ( 1 ) ;
 // 	m_lists->fontTree->setColumnWidth(0,200);
-
+	m_lists->restorePosition();
 	fontsetHasChanged = false;
-	qDebug()<<"EOS";
 }
 
 void MainViewWidget::slotItemOpened ( QTreeWidgetItem * item )
@@ -357,7 +357,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	{
 // 		qDebug() << "Item is an alpha";
 		return;
-		fillTree();
+// 		fillTree();
 	}
 
 	if ( item->data ( 0,100 ).toString() == "family" )

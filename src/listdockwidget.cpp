@@ -20,6 +20,8 @@
 #include "listdockwidget.h"
 #include "typotek.h"
 
+#include <QScrollBar>
+
 ListDockWidget* ListDockWidget::instance = 0;
 
 ListDockWidget * ListDockWidget::getInstance()
@@ -51,4 +53,13 @@ ListDockWidget::~ListDockWidget()
 {
 }
 
+void ListDockWidget::savePosition()
+{
+	m_position = fontTree->verticalScrollBar()->value();
+}
+
+void ListDockWidget::restorePosition()
+{
+	fontTree->verticalScrollBar()->setValue(m_position);
+}
 

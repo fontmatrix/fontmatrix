@@ -35,6 +35,11 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		static ListDockWidget* getInstance();
 		static ListDockWidget* instance;
 		
+		void savePosition();
+		void restorePosition();
+	private:
+		int m_position;
+		
 
 };
 

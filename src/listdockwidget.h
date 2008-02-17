@@ -23,6 +23,8 @@
 #include <QWidget>
 #include <ui_listsdock.h>
 
+class QListWidgetItem;
+
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
 */
@@ -37,8 +39,11 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		
 		void savePosition();
 		void restorePosition();
+		
+		bool nameItemIsVisible(QTreeWidgetItem *item);
 	private:
 		int m_position;
+		
 		
 
 };

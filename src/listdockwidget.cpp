@@ -63,3 +63,17 @@ void ListDockWidget::restorePosition()
 	fontTree->verticalScrollBar()->setValue(m_position);
 }
 
+bool ListDockWidget::nameItemIsVisible(QTreeWidgetItem * item)
+{
+	int center = fontTree->viewport()->size().width() / 2;
+	int begin = fontTree->verticalScrollBar()->value();
+	int end = begin + fontTree->viewport()->size().height();
+	
+	for(int i(begin); i < end; ++i)
+	{
+		if(fontTree->itemAt(center,i) == item)
+			return true;
+	}
+	return false;
+}
+

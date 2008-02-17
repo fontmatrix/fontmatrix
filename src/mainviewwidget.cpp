@@ -302,7 +302,12 @@ void MainViewWidget::fillTree()
 	if ( curItem )
 	{
 // 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
-		m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
+		m_lists->restorePosition();
+		if( !m_lists->nameItemIsVisible(curItem) )
+		{
+			m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
+		}
+		
 		QColor scol (255,240,221,255);
 		QColor pcol (255,211,155,255);
 		QFont selFont;
@@ -324,7 +329,7 @@ void MainViewWidget::fillTree()
 	m_lists->fontTree->resizeColumnToContents ( 0 )  ;
 // 	m_lists->fontTree->resizeColumnToContents ( 1 ) ;
 // 	m_lists->fontTree->setColumnWidth(0,200);
-	m_lists->restorePosition();
+	
 	fontsetHasChanged = false;
 }
 

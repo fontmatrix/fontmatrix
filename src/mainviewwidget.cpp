@@ -423,6 +423,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			else
 				select =  * ( variantMap.begin() );
 
+			m_lists->previewList->slotSelect(select);
 			slotFontSelectedByName(select);
 
 		}
@@ -431,7 +432,9 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 	if ( item->data ( 0,100 ).toString() == "fontfile" )
 	{
-		slotFontSelectedByName(item->text ( 1 ));
+		QString fontname(item->text ( 1 ));
+		m_lists->previewList->slotSelect(fontname);
+		slotFontSelectedByName(fontname);
 	}
 	return;
 

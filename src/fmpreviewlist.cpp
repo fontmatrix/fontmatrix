@@ -193,13 +193,16 @@ void FMPreviewList::mousePressEvent(QMouseEvent * e)
 	if(it == m_currentItem)
 		return;
 	
-	slotSelect(it->data(1).toString());
+	QString fontname(it->data(1).toString());
+	slotSelect(fontname);
+	if(isVisible())
+		mvw->slotFontSelectedByName(fontname);
 	
 }
 
 void FMPreviewList::slotSelect(QString fontname)
 {
-// 	qDebug() << "FMPreviewList::slotSelect(QGraphicsItem * "<<fontname<<")";
+	qDebug() << "FMPreviewList::slotSelect(QGraphicsItem * "<<fontname<<")";
 	if(fontname.isEmpty())
 		return;
 	curFontName = fontname;
@@ -240,8 +243,6 @@ void FMPreviewList::slotSelect(QString fontname)
 	m_select->setRect(itRect);
 	m_select->setPos(itPos);
 	
-	if(isVisible())
-		mvw->slotFontSelectedByName(fontname);
 }
 
 void FMPreviewList::slotClearSelect()
@@ -282,7 +283,10 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 			}
 		}
 		if(!target.isEmpty())
+		{
 			slotSelect(target);
+			mvw->slotFontSelectedByName(target);
+		}
 		
 	}
 	else if(e->key() == Qt::Key_Down)
@@ -298,7 +302,10 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 			}
 		}
 		if(!target.isEmpty())
+		{
 			slotSelect(target);
+			mvw->slotFontSelectedByName(target);
+		}
 	}
 }
 

@@ -158,6 +158,7 @@ class typotek:public QMainWindow
 		static QString fonteditorPath;
 		QString templatesDir;
 		double previewSize;
+		bool previewRTL;
 		
 		void addFcDirItem(const QString &dirPath);
 		
@@ -189,9 +190,6 @@ class typotek:public QMainWindow
 		QFile* getFontsData(){ return &fontsdata; }
 		
 		void setSampleText(QString s);
-				
-		void setWord(QString s, bool updateView);
-		QString word(){return m_theWord;};
 		
 		void presentFontName(QString s){curFontPresentation->setText(s);};
 		
@@ -218,8 +216,12 @@ class typotek:public QMainWindow
 		void setTemplatesDir(const QString &dir);
 		QString getTemplatesDir() {return templatesDir;};
 		
+		void setWord(QString s, bool updateView);
+		QString word(){return m_theWord;};
 		void setPreviewSize(double d){ previewSize = d; }
 		double getPreviewSize(){ return previewSize; }
+		void setPreviewRTL(bool d){ previewRTL = d; }
+		bool getPreviewRTL(){ return previewRTL; }
 		
 		void removeFontItem(QString key);
 		void removeFontItem(QStringList keyList);

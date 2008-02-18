@@ -205,7 +205,7 @@ class FontItem : public QObject
 
 		QGraphicsPathItem* hasCodepoint ( int code );
 
-		QIcon oneLinePreviewIcon ( QString oneline );
+// 		QIcon oneLinePreviewIcon ( QString oneline );
 		QPixmap oneLinePreviewPixmap ( QString oneline );
 
 		bool isActivated();

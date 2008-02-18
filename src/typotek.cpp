@@ -105,8 +105,6 @@ void typotek::initMatrix()
 	else
 		systray = 0;
 	
-	QSettings settings;
-	previewSize = settings.value("PreviewSize", 15.0).toDouble();
 	
 	
 	theMainView = new MainViewWidget ( this );
@@ -523,6 +521,8 @@ void typotek::readSettings()
 	fonteditorPath = settings.value ( "FontEditor", "/usr/bin/fontforge" ).toString();
 	useInitialTags = settings.value ( "UseInitialTags", false ).toBool();
 	templatesDir = settings.value ( "TemplatesDir", "./").toString();
+	previewSize = settings.value("PreviewSize", 15.0).toDouble();
+	previewRTL = settings.value("PreviewRTL", false).toBool();
 }
 
 void typotek::writeSettings()

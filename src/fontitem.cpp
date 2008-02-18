@@ -1322,26 +1322,26 @@ QGraphicsPathItem * FontItem::hasCodepoint ( int code )
 	return 0;
 }
 
-QIcon  FontItem::oneLinePreviewIcon ( QString oneline )
-{
-	if ( !theOneLinePreviewIcon.isNull() )
-		return theOneLinePreviewIcon;
-	QRectF savedRect = theOneLineScene->sceneRect();
-	theOneLineScene->setSceneRect ( 0,0,64,64 );
-
-	renderLine ( theOneLineScene,oneline,QPointF ( 10,55 ),80,false );
-	QPixmap apix ( 64,64 );
-	apix.fill ( Qt::white );
-	QPainter apainter ( &apix );
-	apainter.setRenderHint ( QPainter::Antialiasing,true );
-	theOneLineScene->render ( &apainter,apix.rect(),apix.rect() );
-// 	theOneLinePreviewIcon.addPixmap(apix);
-	theOneLinePreviewIcon = apix;
-
-	theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
-	theOneLineScene->setSceneRect ( savedRect );
-	return theOneLinePreviewIcon;
-}
+// QIcon  FontItem::oneLinePreviewIcon ( QString oneline )
+// {
+// 	if ( !theOneLinePreviewIcon.isNull() )
+// 		return theOneLinePreviewIcon;
+// 	QRectF savedRect = theOneLineScene->sceneRect();
+// 	theOneLineScene->setSceneRect ( 0,0,64,64 );
+// 
+// 	renderLine ( theOneLineScene,oneline,QPointF ( 10,55 ),80,false );
+// 	QPixmap apix ( 64,64 );
+// 	apix.fill ( Qt::white );
+// 	QPainter apainter ( &apix );
+// 	apainter.setRenderHint ( QPainter::Antialiasing,true );
+// 	theOneLineScene->render ( &apainter,apix.rect(),apix.rect() );
+// // 	theOneLinePreviewIcon.addPixmap(apix);
+// 	theOneLinePreviewIcon = apix;
+// 
+// 	theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
+// 	theOneLineScene->setSceneRect ( savedRect );
+// 	return theOneLinePreviewIcon;
+// }
 
 QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 {
@@ -1357,17 +1357,19 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	double theWidth = theSize * pt2px * oneline.count() ;
 // 	qDebug() << theSize << theHeight << theWidth;
 	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
+	bool pRTL = typotek::getInstance()->getPreviewRTL();
+	QPointF pen ( pRTL ? theWidth : 0 , 0 );
 
 	ensureFace();
 	double fsize = theSize ;
 	double scalefactor = theSize / m_face->units_per_EM;
 	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
-	QPointF pen ( 0,0 );
 	QPixmap linePixmap ( theWidth,theHeight );
 	linePixmap.fill ( Qt::white );
 	QPainter apainter ( &linePixmap );
 	QVector<QRgb> palette;
 	int notRenderedGlyphsCount ( 0 );
+	
 	for ( int i =0;i < oneline.count() ; ++i )
 	{
 		int glyphIndex = FT_Get_Char_Index ( m_face, oneline[i].unicode() );
@@ -1388,6 +1390,11 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 		                     * scalefactor
 		                     * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 // 			qDebug() << oneline[i] <<  m_glyph->metrics.horiAdvance  << advance ;
+		if (pRTL)
+		{
+			advance *= -1.0;
+// 			leftBearing *= -1.0;
+		}
 		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
 		if ( ft_error )
 		{
@@ -1409,19 +1416,19 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 		             m_face->glyph->bitmap.rows,
 		             m_face->glyph->bitmap.pitch,
 		             QImage::Format_Indexed8 );
+		if(pRTL)
+			pen.rx() +=  advance;
 		img.setColorTable ( palette );
 		pen.ry() = ( theSize * pt2px ) - m_glyph->bitmap_top;
 		apainter.drawImage ( pen.x() + leftBearing, pen.y(), img );
-		pen.rx() +=  advance;
-// 			if(m_name.contains("woodcut"))
-// 			{
-// 				qDebug()<< m_name << " : "<< oneline[i] << "->xadv = " << (m_glyph->advance.x >> 6) << " ->linearadv = " <<(m_glyph->linearHoriAdvance >> 16) << " ->metricsX = " << (m_glyph->metrics.horiAdvance >> 6);
-// 			}
-
+		if(!pRTL)
+			pen.rx() +=  advance;
+		
 	}
 	/// Check if we have drawn something
 	if ( notRenderedGlyphsCount == oneline.count() )
 	{
+		pen.rx() = 0; // we don’t bother about RTL here.
 		//If not we draw first available characters.
 		FT_ULong  charCode;
 		FT_UInt   glyphIndex;

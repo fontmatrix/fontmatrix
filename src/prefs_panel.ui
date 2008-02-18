@@ -103,26 +103,33 @@
            </widget>
           </item>
           <item row="0" column="1" >
+           <widget class="QCheckBox" name="previewIsRTL" >
+            <property name="text" >
+             <string>is RTL</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
            <spacer>
             <property name="orientation" >
              <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" >
              <size>
-              <width>51</width>
+              <width>41</width>
               <height>31</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item row="0" column="2" >
+          <item row="0" column="3" >
            <widget class="QLabel" name="label" >
             <property name="text" >
              <string>size</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="3" >
+          <item row="0" column="4" >
            <widget class="QDoubleSpinBox" name="previewSizeSpin" >
             <property name="wrapping" >
              <bool>false</bool>

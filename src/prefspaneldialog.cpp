@@ -27,6 +27,7 @@ PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
 	systrayFrame->setCheckable(true);
 	previewWord->setText(typotek::getInstance()->word());
 	previewSizeSpin->setValue(pSize);
+	previewIsRTL->setChecked(typotek::getInstance()->getPreviewRTL());
 	initTagBox->setChecked(typotek::getInstance()->initialTags());
 }
 
@@ -85,10 +86,14 @@ void PrefsPanelDialog::doConnect()
 	connect(activateAllConfirmation, SIGNAL(clicked(bool)), this, SLOT(setSystrayAllConfirmation(bool)));
 	connect(tagsConfirmation, SIGNAL(clicked(bool)), this, SLOT(setSystrayTagsConfirmation(bool)));
 	connect(closeToSystray, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotCloseToSystray(bool)));
+	
 	connect(previewWord, SIGNAL(textChanged ( const QString  ) ), this, SLOT(updateWord(QString)));
 	connect(previewSizeSpin, SIGNAL(valueChanged ( double  ) ), this, SLOT(updateWordSize(double)));
+	connect(previewIsRTL, SIGNAL(stateChanged( int )), this, SLOT(updateWordRTL(int)));
+	
 	connect(fontEditorPath, SIGNAL(textChanged ( const QString  ) ), this, SLOT(setupFontEditor(QString)));
 	connect(fontEditorBrowse, SIGNAL(clicked()), this, SLOT(slotFontEditorBrowse()));
+	
 	connect(initTagBox, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotUseInitialTags(bool)));
 	
 	connect(templatesDirBrowse,SIGNAL(clicked( )),this, SLOT(slotTemplatesBrowse()));
@@ -173,6 +178,14 @@ void PrefsPanelDialog::updateWordSize(double d)
 	typotek::getInstance()->setWord(previewWord->text(), true);
 }
 
+
+void PrefsPanelDialog::updateWordRTL(int rtl)
+{
+	bool booleanState = (rtl == Qt::Checked) ? true : false;
+	QSettings settings;
+	settings.setValue("PreviewRTL", booleanState);
+	typotek::getInstance()->setPreviewRTL(booleanState);
+}
 
 void PrefsPanelDialog::setupFontEditor(QString s)
 {
@@ -262,7 +275,6 @@ void PrefsPanelDialog::slotBrowseLocalStorage()
 		localStorageLine->setText(s);
 	}
 }
-
 
 
 

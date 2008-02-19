@@ -1352,13 +1352,14 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	QRectF savedRect = theOneLineScene->sceneRect();
 
 	double theSize = typotek::getInstance()->getPreviewSize();
-	double pt2px = QApplication::desktop()->physicalDpiY() / 72.0;
+	double pt2px = QApplication::desktop()->physicalDpiX() / 72.0;
 	double theHeight = theSize * 1.3 * pt2px;
-	double theWidth = theSize * pt2px * oneline.count() ;
+	double temperance = 0.8;
+	double theWidth = theSize * pt2px * oneline.count() * temperance;
 // 	qDebug() << theSize << theHeight << theWidth;
 	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
 	bool pRTL = typotek::getInstance()->getPreviewRTL();
-	QPointF pen ( pRTL ? theWidth : 0 , 0 );
+	QPointF pen ( pRTL ? theWidth - 20 : 20 , theSize *  pt2px );
 
 	ensureFace();
 	double fsize = theSize ;
@@ -1383,13 +1384,10 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 		{
 			continue;
 		}
-		double advance = m_glyph->metrics.horiAdvance
-		                 * scalefactor
-		                 * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-		double leftBearing = ( double ) m_glyph->metrics.horiBearingX
-		                     * scalefactor
-		                     * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-// 			qDebug() << oneline[i] <<  m_glyph->metrics.horiAdvance  << advance ;
+		double advance = m_glyph->metrics.horiAdvance * scalefactor * pt2px;
+		double leftBearing = ( double ) m_glyph->metrics.horiBearingX  * scalefactor * pt2px;
+// 		double topAlign =( theSize * pt2px ) - ( ( double ) m_glyph->metrics.horiBearingY  * scalefactor * pt2px);
+// 		qDebug() << oneline[i] << theSize * pt2px  <<  m_glyph->metrics.horiBearingY << scalefactor << m_glyph->metrics.horiBearingY  * scalefactor * pt2px;
 		if (pRTL)
 		{
 			advance *= -1.0;
@@ -1419,8 +1417,8 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 		if(pRTL)
 			pen.rx() +=  advance;
 		img.setColorTable ( palette );
-		pen.ry() = ( theSize * pt2px ) - m_glyph->bitmap_top;
-		apainter.drawImage ( pen.x() + leftBearing, pen.y(), img );
+// 		pen.ry() = topAlign /*( theSize * pt2px ) - m_glyph->bitmap_top*/;
+		apainter.drawImage ( pen.x() + leftBearing, pen.y() - m_glyph->bitmap_top , img );
 		if(!pRTL)
 			pen.rx() +=  advance;
 		
@@ -1444,12 +1442,8 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 			{
 				continue;
 			}
-			double advance = m_glyph->metrics.horiAdvance
-			                 * scalefactor
-			                 * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-			double leftBearing = ( double ) m_glyph->metrics.horiBearingX
-			                     * scalefactor
-			                     * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+			double advance = m_glyph->metrics.horiAdvance  * scalefactor * pt2px;
+			double leftBearing = ( double ) m_glyph->metrics.horiBearingX * scalefactor * pt2px;
 // 			qDebug() << oneline[i] <<  m_glyph->metrics.horiAdvance  << advance ;
 			ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
 			if ( ft_error )

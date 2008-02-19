@@ -37,7 +37,6 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 {
 	m_scene = new QGraphicsScene;
 	setScene(m_scene);
-	setAlignment (Qt::AlignLeft | Qt::AlignTop);
 // 	m_scene->setBackgroundBrush(Qt::lightGray);
 	m_select = m_scene->addRect(QRectF(), QPen(Qt::transparent ), QColor(255,216,158,100));
 	m_select->setZValue(100.0);
@@ -46,9 +45,12 @@ FMPreviewList::FMPreviewList(QWidget* parent)
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
 	
 	theWord = typotek::getInstance()->word();
+	slotPleaseMakeItGoddLooking();
 	
 	connect( verticalScrollBar(), SIGNAL(valueChanged( int )), this, SLOT(slotChanged()) );
 	connect( verticalScrollBar(), SIGNAL(sliderReleased()),this,SLOT(slotChanged()));
+	
+	connect( typotek::getInstance(),SIGNAL(previewDirectionHasChanged()),this,SLOT(slotPleaseMakeItGoddLooking()));
 	
 }
 
@@ -102,7 +104,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	
 	double theSize = typotek::getInstance()->getPreviewSize();
 	double theLine = 1.3 * theSize * QApplication::desktop()->physicalDpiY() / 72.0;
-	double indent = 50.0;
+	double indent = 0;
 	
 	QRect vvrect(visibleRegion().boundingRect());
 	QRect vrect = mapToScene( vvrect ).boundingRect().toRect();
@@ -147,6 +149,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	}
 // 	qDebug()<< "END OF reFill()";
 	
+	slotPleaseMakeItGoddLooking();
 }
 
 void FMPreviewList::showEvent(QShowEvent * event)
@@ -170,7 +173,7 @@ void FMPreviewList::mousePressEvent(QMouseEvent * e)
 // 	qDebug() << "FMPreviewList::mousePressEvent(QMouseEvent * "<<e<<")";
 	
 	QPointF inListPos = mapToScene( e->pos() );
-	inListPos.rx() = 100;
+	inListPos.rx() = 1;
 	QList<QGraphicsItem*> items = m_scene->items(inListPos);
 	
 	if(items.isEmpty())
@@ -236,7 +239,7 @@ void FMPreviewList::slotSelect(QString fontname)
 // 	
 	QRectF itRect;
 	QPointF itPos ( nit.pos );
-	itRect.setWidth(width());
+	itRect.setWidth(nit.item->boundingRect().width());
 	itRect.setHeight(nit.item->boundingRect().height());
 	itPos.rx() = 0.0;
 	
@@ -307,6 +310,26 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 			mvw->slotFontSelectedByName(target);
 		}
 	}
+}
+
+void FMPreviewList::slotPleaseMakeItGoddLooking()
+{
+	typotek *t = typotek::getInstance();
+	if(t->getPreviewRTL())
+	{
+// 		qDebug()<< "Change alignment of preview list to RIGHT";
+		setSceneRect( 0 ,0 ,t->getPreviewSize() * t->word().count() * QApplication::desktop()->physicalDpiX() / 72.0 * 0.8, m_scene->height() );
+// 		qDebug()<< m_scene->sceneRect();
+		horizontalScrollBar()->setValue(m_scene->width());
+		setAlignment( Qt::AlignRight |  Qt::AlignTop );
+	}
+	else
+	{
+// 		qDebug()<< "Change alignment of preview list to LEFT";
+// 		setSceneRect( 0 ,0 ,t->getPreviewSize() * t->word().count(), m_scene->height() );
+		setAlignment( Qt::AlignLeft |  Qt::AlignTop );
+	}
+	
 }
 
 

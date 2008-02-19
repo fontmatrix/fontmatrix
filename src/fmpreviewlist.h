@@ -57,10 +57,12 @@ class FMPreviewList : public QGraphicsView
 		void setRefWidget(MainViewWidget* m){mvw = m;};
 // 		void searchAndSelect(QString fname);
 		
+		
 	public slots:
 		void slotRefill ( QList<FontItem*> fonts , bool setChanged );
 		void slotSelect ( QString fontname );
 		void slotClearSelect();
+		void slotPleaseMakeItGoddLooking();
 	private slots:
 		void slotChanged();
 		

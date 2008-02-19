@@ -1222,6 +1222,12 @@ void typotek::setRemoteTmpDir(const QString & s)
 	settings.setValue("RemoteTmpDir", m_remoteTmpDir);
 }
 
+void typotek::setPreviewRTL(bool d)
+{
+	previewRTL = d;
+	emit previewDirectionHasChanged();
+}
+
 
 
 

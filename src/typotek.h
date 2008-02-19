@@ -87,6 +87,7 @@ class typotek:public QMainWindow
 	signals:
 		void tagAdded(QString);
 		void relayStartingStepOut(QString, int, QColor);
+		void previewDirectionHasChanged();
 // 		void wordHasChanged(QString);
 
 	private:
@@ -220,7 +221,7 @@ class typotek:public QMainWindow
 		QString word(){return m_theWord;};
 		void setPreviewSize(double d){ previewSize = d; }
 		double getPreviewSize(){ return previewSize; }
-		void setPreviewRTL(bool d){ previewRTL = d; }
+		void setPreviewRTL(bool d);
 		bool getPreviewRTL(){ return previewRTL; }
 		
 		void removeFontItem(QString key);

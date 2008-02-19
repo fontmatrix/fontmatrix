@@ -1489,6 +1489,16 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	return theOneLinePreviewPixmap;
 }
 
+void FontItem::clearPreview()
+{
+	if ( m_remote )
+		return;
+	if ( !theOneLinePreviewPixmap.isNull() )
+		theOneLinePreviewPixmap = QPixmap();
+}
+
+
+
 /** reminder
 FT_SfntName::name_id
 Code  	Meaning

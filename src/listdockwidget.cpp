@@ -77,3 +77,8 @@ bool ListDockWidget::nameItemIsVisible(QTreeWidgetItem * item)
 	return false;
 }
 
+void ListDockWidget::forcePreviewRefill()
+{
+	previewList->slotRefill(QList<FontItem*>(),false);
+}
+

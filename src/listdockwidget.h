@@ -24,6 +24,7 @@
 #include <ui_listsdock.h>
 
 class QListWidgetItem;
+class QFontItem;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -41,6 +42,8 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void restorePosition();
 		
 		bool nameItemIsVisible(QTreeWidgetItem *item);
+		
+		void forcePreviewRefill();
 	private:
 		int m_position;
 		

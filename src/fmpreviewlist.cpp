@@ -64,7 +64,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 // 	qDebug()<<"FMPreviewList::slotRefill("<< fonts.count() <<","<< setChanged <<")";
 	theWord = typotek::getInstance()->word();
 	horizontalScrollBar()->setValue(0);
-	if(setChanged)
+	if(setChanged && !fonts.isEmpty()) 
 	{
 		QString rescueId = " %1";
 		int rescueInt = 0;

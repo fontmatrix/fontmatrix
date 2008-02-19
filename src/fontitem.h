@@ -207,6 +207,7 @@ class FontItem : public QObject
 
 // 		QIcon oneLinePreviewIcon ( QString oneline );
 		QPixmap oneLinePreviewPixmap ( QString oneline );
+		void clearPreview();
 
 		bool isActivated();
 		void setActivated ( bool act );

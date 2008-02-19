@@ -1135,9 +1135,25 @@ void typotek::changeSample ( QString name, QString text )
 
 void typotek::setWord ( QString s, bool updateView )
 {
+	if(s == m_theWord)
+		return;
 	m_theWord = s;
+	for(int i(0); i < fontMap.count(); ++i)
+		fontMap[i]->clearPreview() ;
+	ListDockWidget::getInstance()->forcePreviewRefill();
 	if ( updateView )
 		theMainView->slotView ( true );
+}
+
+void typotek::setPreviewRTL(bool d)
+{
+	if(previewRTL == d)
+		return;
+	previewRTL = d;
+	for(int i(0); i < fontMap.count(); ++i)
+		fontMap[i]->clearPreview() ;
+	emit previewDirectionHasChanged();
+	ListDockWidget::getInstance()->forcePreviewRefill();
 }
 
 void typotek::setFontEditorPath ( const QString &path )
@@ -1220,12 +1236,6 @@ void typotek::setRemoteTmpDir(const QString & s)
 	
 	QSettings settings;
 	settings.setValue("RemoteTmpDir", m_remoteTmpDir);
-}
-
-void typotek::setPreviewRTL(bool d)
-{
-	previewRTL = d;
-	emit previewDirectionHasChanged();
 }
 
 

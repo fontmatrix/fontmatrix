@@ -239,9 +239,9 @@ void FMPreviewList::slotSelect(QString fontname)
 // 	
 	QRectF itRect;
 	QPointF itPos ( nit.pos );
-	itRect.setWidth(nit.item->boundingRect().width());
+	itRect.setWidth(1000);
 	itRect.setHeight(nit.item->boundingRect().height());
-	itPos.rx() = 0.0;
+	itPos.rx() = mapToScene(0.0,0.0).x();
 	
 	m_select->setRect(itRect);
 	m_select->setPos(itPos);

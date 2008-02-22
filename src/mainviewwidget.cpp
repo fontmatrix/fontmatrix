@@ -1098,7 +1098,12 @@ void MainViewWidget::fillUniPlanes()
 
 void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 {
-	
+	QString stickyRange;
+	int stickyIndex(0);
+	if(stickRangeButton->isChecked())
+	{
+		stickyRange = uniPlaneCombo->currentText();
+	}
 	uniPlaneCombo->clear();
 	QStringList plist= uniPlanes.keys();
 	for ( int i= 0;i<plist.count();++i )
@@ -1113,9 +1118,11 @@ void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 		{
 // 			qDebug() << p << codecount;
 			uniPlaneCombo->addItem ( p.mid ( 3 ), p.mid ( 0,3 ) );
+			if(p.mid ( 3 ) == stickyRange)
+				stickyIndex = uniPlaneCombo->count() - 1;
 		}
 	}
-	uniPlaneCombo->setCurrentIndex ( 0 );
+	uniPlaneCombo->setCurrentIndex ( stickyIndex );
 
 }
 

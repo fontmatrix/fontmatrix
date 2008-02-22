@@ -324,35 +324,58 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 	uint glyphIndex = 0;
 	currentChar = charcode;
 	glyphIndex = FT_Get_Char_Index ( m_face, charcode );
-	if ( glyphIndex == 0 )
-	{
-		return 0;
-	}
-	else
-	{
+// 	if ( glyphIndex == 0 )
+// 	{
+// 		return 0;
+// 	}
+// 	else
+// 	{
 		return itemFromGindex ( glyphIndex,size );
-	}
-	return 0;
+// 	}
+// 	return 0;
 }
 
 QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 {
 	int charcode = index ;
+	double scalefactor = size / m_face->units_per_EM;
 	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_NO_SCALE );
 	if ( ft_error )
 	{
-		return 0;
+		QPainterPath glyphPath;
+		glyphPath.addRect(0.0,0.0, size, size);
+		QGraphicsPathItem *glyph = new  QGraphicsPathItem;
+		glyph->setBrush ( QBrush ( Qt::red ) );
+		glyph->setPath ( glyphPath );
+		glyph->setData ( 4, ( double ) size  );
+		return glyph;
 	}
+	
 	FT_Outline *outline = &m_glyph->outline;
 	QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
 	FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
-	advanceCache[currentChar] =  m_glyph->metrics.horiAdvance;
 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
-	glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
-	glyph->setPath ( glyphPath );
-	glyph->setData ( 4, ( double ) m_glyph->metrics.horiAdvance );
-	double scalefactor = size / m_face->units_per_EM;
-	glyph->scale ( scalefactor,-scalefactor );
+	
+	if(glyphPath.elementCount() < 3)
+	{
+		QBrush brush( Qt::SolidPattern );
+		brush.setColor(Qt::red);
+		QPen pen(brush, 0);
+		QPainterPath errPath;
+		errPath.addRect(0.0,-size, size , size );
+// 		qDebug()<<errPath.boundingRect() << errPath.elementCount();
+		glyph->setBrush ( brush );
+		glyph->setPen(pen);
+		glyph->setPath ( errPath );
+		glyph->setData ( 4, ( double ) size  /scalefactor );
+	}
+	else
+	{
+		glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
+		glyph->setPath ( glyphPath );
+		glyph->setData ( 4, ( double ) m_glyph->metrics.horiAdvance );
+		glyph->scale ( scalefactor,-scalefactor );
+	}
 	return glyph;
 }
 
@@ -361,15 +384,15 @@ QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 	uint glyphIndex = 0;
 	currentChar = charcode;
 	glyphIndex = FT_Get_Char_Index ( m_face, charcode );
-	if ( glyphIndex == 0 )
-	{
-		return 0;
-	}
-	else
-	{
+// 	if ( glyphIndex == 0 )
+// 	{
+// 		return 0;
+// 	}
+// 	else
+// 	{
 		return itemFromGindexPix ( glyphIndex,size );
-	}
-	return 0;
+// 	}
+// 	return 0;
 }
 
 
@@ -379,19 +402,40 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_NO_SCALE );
 	if ( ft_error )
 	{
-		return 0;
+		QPixmap square(size , size);
+		square.fill(Qt::red);
+		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
+		glyph->setData( 1,"glyph" );
+		glyph->setData( 2, 0 );
+		glyph->setData( 3,size );
+		glyph->setData( 4,size /( size / m_face->units_per_EM) );
+		return glyph;
 	}
 	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT /*| FT_LOAD_NO_HINTING*/ );
 	if ( ft_error )
 	{
-		return 0;
+		QPixmap square(size , size);
+		square.fill(Qt::red);
+		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
+		glyph->setData( 1,"glyph" );
+		glyph->setData( 2, 0 );
+		glyph->setData( 3,size );
+		glyph->setData( 4,size /( size / m_face->units_per_EM) );
+		return glyph;
 	}
 	ft_error = FT_Render_Glyph ( m_face->glyph, /*FT_RENDER_MODE_LCD*/FT_RENDER_MODE_NORMAL );
 	if ( ft_error )
 	{
-		return 0;
+		QPixmap square(size , size);
+		square.fill(Qt::red);
+		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
+		glyph->setData( 1,"glyph" );
+		glyph->setData( 2, 0 );
+		glyph->setData( 3,size );
+		glyph->setData( 4,size  /( size / m_face->units_per_EM));
+		return glyph;
 	}
 
 	QVector<QRgb> palette;
@@ -428,14 +472,27 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 // 	}
 
 
-	advanceCache[currentChar] =  m_glyph->advance.x >> 6;
 	QGraphicsPixmapItem *glyph = new  QGraphicsPixmapItem;
-	glyph->setPixmap ( QPixmap::fromImage ( img ) );
-	// we need to transport more data
-	glyph->setData ( 1,"glyph" );
-	glyph->setData ( 2, takeLeftBeforeRender );
-	glyph->setData ( 3, m_face->glyph->bitmap_top );
-	glyph->setData ( 4, takeAdvanceBeforeRender );
+	if(img.isNull())
+	{
+		QPixmap square(size , size);
+		square.fill(Qt::red);
+		glyph->setPixmap( square);
+		glyph->setData( 1,"glyph" );
+		glyph->setData( 2, 0 );
+		glyph->setData( 3,size );
+		glyph->setData( 4,size /( size / m_face->units_per_EM) );
+	}
+	else
+	{
+		glyph->setPixmap ( QPixmap::fromImage ( img ) );
+		// we need to transport more data
+		glyph->setData ( 1,"glyph" );
+		glyph->setData ( 2, takeLeftBeforeRender );
+		glyph->setData ( 3, m_face->glyph->bitmap_top );
+		glyph->setData ( 4, takeAdvanceBeforeRender );
+	}
+	
 	return glyph;
 }
 
@@ -461,7 +518,6 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			QGraphicsPixmapItem *glyph = itemFromCharPix ( spec.at ( i ).unicode(), sizz );
 			if ( !glyph )
 			{
-// 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
 			}
 			if ( m_RTL )
@@ -509,8 +565,8 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			}
 			if ( m_RTL )
 			{
-				pen.rx() -= advanceCache[spec.at ( i ).unicode() ] * scalefactor;
-				pWidth -= advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+				pen.rx() -= glyph->data(4).toDouble() * scalefactor;
+				pWidth -= glyph->data(4).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -519,7 +575,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			}
 			else
 			{
-				pWidth -= advanceCache[spec.at ( i ).unicode() ] * scalefactor;
+				pWidth -= glyph->data(4).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -534,7 +590,6 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			glyph->setData ( 1,"glyph" );
 
 			if ( !m_RTL )
-// 				pen.rx() += advanceCache[spec.at ( i ).unicode() ] * scalefactor;
 				pen.rx() += glyph->data ( 4 ).toDouble() * scalefactor;
 		}
 	}
@@ -658,7 +713,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 	releaseFace();
 }
 
-/// Shaped line, mostly buggy right now :(
+/// Shaped line, mostly bug^^non-fully-usable right now :(
 void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine, double fsize, bool record )
 {
 	if ( spec.isEmpty() )
@@ -849,8 +904,6 @@ void FontItem::deRenderAll()
 	}
 	selList.clear();
 	allIsRendered = false;
-// 	contourCache.clear();
-	advanceCache.clear();
 }
 
 QByteArray FontItem::pixarray ( uchar * b, int len )

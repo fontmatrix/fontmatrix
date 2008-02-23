@@ -74,6 +74,7 @@ void LazyInit::run()
 	foreach(FontItem *fit, fonts)
 	{
 		fit->infoText();
+		fit->trimSpacesIndex();
 	}
 	qDebug() << "END OF LazyInit";
 }

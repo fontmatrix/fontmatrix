@@ -86,8 +86,10 @@ class FontItem : public QObject
 		int m_numFaces;
 		
 		void fillCharsetMap();
+		void fillLegitimateSpaces();
+		
 		QStringList m_charsets;
-// 		QList<int> m_charLess;
+		QList<int> spaceIndex;
 		
 		bool m_isOpenType;
 		FmOtf *otf;
@@ -202,8 +204,10 @@ class FontItem : public QObject
 		void hideFancyGlyph(int ref);
 		
 		QString toElement();
-
+		
 		QGraphicsPathItem* hasCodepoint ( int code );
+		
+		void trimSpacesIndex();
 
 // 		QIcon oneLinePreviewIcon ( QString oneline );
 		QPixmap oneLinePreviewPixmap ( QString oneline );

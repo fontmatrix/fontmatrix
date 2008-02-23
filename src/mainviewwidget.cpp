@@ -398,11 +398,15 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			{
 				todo << typo->getFont ( item->child ( i )->text ( 1 ) );
 			}
-			foreach ( FontItem* afont, todo )
+			for (int fIndex(0);fIndex < todo.count(); ++fIndex)
 			{
-				activation ( afont, cs );
+				FontItem* afont = todo[fIndex];
+				if(fIndex == todo.count() - 1)
+					activation ( afont, cs , true);
+				else
+					activation ( afont, cs , false);
 			}
-
+		
 		}
 		else
 		{

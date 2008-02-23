@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "aboutwidget.h"
+#include "typotek.h"
 
 AboutWidget::AboutWidget(QWidget *parent)
 	:QDialog(parent)
@@ -30,6 +31,8 @@ AboutWidget::AboutWidget(QWidget *parent)
 	theText->setSource(QUrl("qrc:/texts/about"));
 	theText_2->setSource(QUrl("qrc:/texts/about_people"));
 	versionStringLabel->setText(tr("version ") + version_maj + "." + version_min + "." + version_pat);
+	
+	fontsCountLabel->setText(QString::number(typotek::getInstance()->getAllFonts().count()) + " " +tr("fonts loaded") );
 	
 			
 }

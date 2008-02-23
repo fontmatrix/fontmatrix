@@ -438,8 +438,26 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	if ( item->data ( 0,100 ).toString() == "fontfile" )
 	{
 		QString fontname(item->text ( 1 ));
+		bool wantActivate = (item->checkState(1) == Qt::Checked) ? true : false;
 		m_lists->previewList->slotSelect(fontname);
 		slotFontSelectedByName(fontname);
+		if ( !theVeryFont->isLocked() )
+		{
+			if(theVeryFont->isActivated())
+			{
+				if(!wantActivate)
+				{
+					activation(theVeryFont,false,true);
+				}
+			}
+			else
+			{
+				if(wantActivate)
+				{
+					activation(theVeryFont,true,true);
+				}
+			}
+		}
 	}
 	return;
 
@@ -783,23 +801,32 @@ void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
 			{
 				fit->setActivated ( true );
 
-				QFileInfo fofi ( fit->path() );
+// 				QFileInfo fofi ( fit->path() );
 
-				if ( !QFile::link ( fit->path() , typo->getManagedDir() + "/" + fofi.fileName() ) )
+				if ( !QFile::link ( fit->path() , typo->getManagedDir() + "/" + fit->activationName() ) )
 				{
-					qDebug() << "unable to link " << fofi.fileName();
+					qDebug() << "unable to link " << fit->path() ;
 				}
 				else
 				{
+					qDebug() << fit->path() << " linked" ;
 					if ( !fit->afm().isEmpty() )
 					{
-						QFileInfo afm ( fit->afm() );
-						if ( !QFile::link ( fit->afm(), typo->getManagedDir() + "/" + afm.fileName() ) )
+						
+// 						QFileInfo afm ( fit->afm() );
+						if ( !QFile::link ( fit->afm(), typo->getManagedDir() + "/" + fit->activationAFMName() ) )
 						{
-							qDebug() << "unable to link " << afm.fileName();
+							qDebug() << "unable to link " << fit->afm();
+						}
+						else
+						{
+							qDebug() << fit->afm() << " linked"; 
 						}
 					}
-// 					typo->adaptator()->private_signal ( 1, fofi.fileName() );
+					else
+					{
+						qDebug()<<"There is no AFL file attached to "<<fit->path();
+					}
 				}
 			}
 			else
@@ -822,19 +849,19 @@ void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
 			if ( fit->isActivated() )
 			{
 				fit->setActivated ( false );
-				QFileInfo fofi ( fit->path() );
-				if ( !QFile::remove ( typo->getManagedDir() + "/" + fofi.fileName() ) )
+// 				QFileInfo fofi ( fit->path() );
+				if ( !QFile::remove ( typo->getManagedDir() + "/" + fit->activationName() ) )
 				{
-					qDebug() << "unable to remove " << fofi.fileName();
+					qDebug() << "unable to unlink " << fit->name() ;
 				}
 				else
 				{
 					if ( !fit->afm().isEmpty() )
 					{
-						QFileInfo afm ( fit->afm() );
-						if ( !QFile::remove ( typo->getManagedDir() + "/" + afm.fileName() ) )
+// 						QFileInfo afm ( fit->afm() );
+						if ( !QFile::remove ( typo->getManagedDir() + "/" + fit->activationAFMName() ) )
 						{
-							qDebug() << "unable to remove " << afm.fileName();
+							qDebug() << "unable to unlink " << fit->afm() ;
 						}
 					}
 // 					typo->adaptator()->private_signal ( 0, fofi.fileName() );

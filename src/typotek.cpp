@@ -38,6 +38,7 @@
 #include "importtags.h"
 #include "dataexport.h"
 #include "remotedir.h"
+#include "fmrepair.h"
 
 
 #include <QtGui>
@@ -471,6 +472,9 @@ void typotek::createActions()
 
 	prefsAct = new QAction ( tr ( "Preferences" ),this );
 	connect ( prefsAct,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanelDefault() ) );
+	
+	repairAct = new QAction ( tr("Check Database"), this);
+	connect( repairAct, SIGNAL ( triggered() ),this,SLOT (slotRepair()));
 
 	if ( systray )
 		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
@@ -496,6 +500,7 @@ void typotek::createMenus()
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( fonteditorAct );
+	editMenu->addAction( repairAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
 
@@ -1237,6 +1242,12 @@ void typotek::setRemoteTmpDir(const QString & s)
 	
 	QSettings settings;
 	settings.setValue("RemoteTmpDir", m_remoteTmpDir);
+}
+
+void typotek::slotRepair()
+{
+	FmRepair repair(this);
+	repair.exec();
 }
 
 

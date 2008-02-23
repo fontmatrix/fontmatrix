@@ -74,6 +74,8 @@ class typotek:public QMainWindow
 // 		void slotWord();
 		void slotExportFontSet();
 		void slotRemoteIsReady();
+		void slotRepair();
+		
 		
 		
 	public slots:
@@ -133,6 +135,7 @@ class typotek:public QMainWindow
 		QAction *fonteditorAct;
 		QAction *prefsAct;
 		QAction *exportFontSetAct;
+		QAction *repairAct;
 
 		MainViewWidget *theMainView;
 

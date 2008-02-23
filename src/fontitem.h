@@ -208,6 +208,9 @@ class FontItem : public QObject
 		QGraphicsPathItem* hasCodepoint ( int code );
 		
 		void trimSpacesIndex();
+		
+		QString activationName();
+		QString activationAFMName();
 
 // 		QIcon oneLinePreviewIcon ( QString oneline );
 		QPixmap oneLinePreviewPixmap ( QString oneline );

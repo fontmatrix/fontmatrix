@@ -480,17 +480,28 @@ FontItem::FontItem ( QString path , bool remote)
 	}
 	
 	
-	if ( infopath.suffix() == "pfb" )
+	if ( infopath.suffix() == "pfb" || infopath.suffix() == "PFB")
 	{
 		if ( !ft_error )
 		{
 			m_afm = m_path;
-			m_afm.replace ( ".pfb",".afm" );
+			if(infopath.suffix() == "pfb")
+				m_afm.replace ( ".pfb",".afm" );
+			if(infopath.suffix() == "PFB")
+				m_afm.replace ( ".PFB",".afm" );
 			ft_error = FT_Attach_File ( m_face, m_afm.toLocal8Bit() );
 			if ( ft_error )
-				m_afm ="";
+			{
+				m_afm.replace ( ".afm",".AFM" );
+				ft_error = FT_Attach_File ( m_face, m_afm.toLocal8Bit() );
+				if ( ft_error )
+				{
+					m_afm = "";
+				}
+			}
 		}
 	}
+	
 
 	if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
 	{
@@ -2315,6 +2326,29 @@ void FontItem::trimSpacesIndex()
 	}
 	
 	releaseFace();
+}
+
+QString FontItem::activationName()
+{	
+	if( m_remote || m_lock )
+		return QString();
+	
+	QFileInfo fi(m_path);
+	QString prefix( "%1-" );
+	return  prefix.arg(fi.size()) + fi.fileName();
+}
+
+QString FontItem::activationAFMName()
+{
+	if( m_remote || m_lock )
+		return QString();
+	if(m_afm.isEmpty())
+		return QString();
+	
+	QFileInfo afi(m_afm);
+	QFileInfo fi(m_path);
+	QString prefix("%1-");
+	return  prefix.arg(fi.size()) + afi.fileName();
 }
 
 

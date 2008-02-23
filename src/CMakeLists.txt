@@ -25,6 +25,7 @@ fontbook.cpp
 importtags.cpp
 dataexport.cpp
 remotedir.cpp
+fmrepair.cpp
 )
 
 SET(fontmatrix_MOC_HDRS
@@ -44,6 +45,7 @@ typotek.h
 prefspaneldialog.h
 importtags.h
 remotedir.h
+fmrepair.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 
@@ -59,6 +61,7 @@ mainview.ui
 tagset.ui
 prefs_panel.ui
 importtags.ui
+repair.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
 

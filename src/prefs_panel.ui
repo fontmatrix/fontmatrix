@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>657</width>
-    <height>471</height>
+    <width>687</width>
+    <height>655</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -16,324 +16,245 @@
    <iconset resource="application.qrc" >:/fontmatrix_icon.png</iconset>
   </property>
   <layout class="QGridLayout" >
-   <item row="0" column="0" >
-    <widget class="QTabWidget" name="mainTab" >
-     <property name="currentIndex" >
-      <number>0</number>
+   <item row="0" column="0" colspan="2" >
+    <widget class="QGroupBox" name="groupBox_7" >
+     <property name="title" >
+      <string>Preferences</string>
      </property>
-     <widget class="QWidget" name="tab" >
-      <attribute name="title" >
-       <string>General</string>
-      </attribute>
-      <layout class="QGridLayout" >
-       <item row="0" column="0" >
-        <widget class="QGroupBox" name="systrayFrame" >
-         <property name="title" >
-          <string>Show Fontmatrix in System Tray</string>
-         </property>
-         <property name="flat" >
-          <bool>false</bool>
-         </property>
-         <property name="checkable" >
-          <bool>true</bool>
-         </property>
-         <property name="checked" >
-          <bool>false</bool>
-         </property>
-         <layout class="QVBoxLayout" >
-          <item>
-           <widget class="QCheckBox" name="closeToSystray" >
-            <property name="text" >
-             <string>Close to System Tray</string>
-            </property>
-            <property name="checked" >
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="activateAllFrame" >
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <widget class="QTabWidget" name="mainTab" >
+        <property name="currentIndex" >
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab" >
+         <attribute name="title" >
+          <string>General</string>
+         </attribute>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QGroupBox" name="systrayFrame" >
             <property name="title" >
-             <string>Show "All" actions</string>
+             <string>Show Fontmatrix in System Tray</string>
             </property>
             <property name="flat" >
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="checkable" >
              <bool>true</bool>
             </property>
+            <property name="checked" >
+             <bool>false</bool>
+            </property>
             <layout class="QVBoxLayout" >
              <item>
-              <widget class="QCheckBox" name="activateAllConfirmation" >
+              <widget class="QCheckBox" name="closeToSystray" >
                <property name="text" >
-                <string>Ask confirmation when activating or deactivating all fonts</string>
+                <string>Close to System Tray</string>
                </property>
                <property name="checked" >
                 <bool>true</bool>
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QGroupBox" name="activateAllFrame" >
+               <property name="title" >
+                <string>Show "All" actions</string>
+               </property>
+               <property name="flat" >
+                <bool>true</bool>
+               </property>
+               <property name="checkable" >
+                <bool>true</bool>
+               </property>
+               <layout class="QVBoxLayout" >
+                <item>
+                 <widget class="QCheckBox" name="activateAllConfirmation" >
+                  <property name="text" >
+                   <string>Ask confirmation when activating or deactivating all fonts</string>
+                  </property>
+                  <property name="checked" >
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="tagsConfirmation" >
+               <property name="text" >
+                <string>Ask confirmation when activating or deactivating fonts by tags</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="tagsConfirmation" >
+          <item row="1" column="0" >
+           <widget class="QGroupBox" name="groupBox" >
+            <property name="title" >
+             <string>Preview Word</string>
+            </property>
+            <layout class="QGridLayout" >
+             <item row="0" column="0" >
+              <widget class="QLineEdit" name="previewWord" >
+               <property name="minimumSize" >
+                <size>
+                 <width>300</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" >
+              <widget class="QCheckBox" name="previewIsRTL" >
+               <property name="text" >
+                <string>is RTL</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2" >
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>41</width>
+                 <height>31</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="3" >
+              <widget class="QLabel" name="label" >
+               <property name="text" >
+                <string>size</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4" >
+              <widget class="QDoubleSpinBox" name="previewSizeSpin" >
+               <property name="wrapping" >
+                <bool>false</bool>
+               </property>
+               <property name="frame" >
+                <bool>true</bool>
+               </property>
+               <property name="suffix" >
+                <string> pt</string>
+               </property>
+               <property name="decimals" >
+                <number>1</number>
+               </property>
+               <property name="minimum" >
+                <double>1.000000000000000</double>
+               </property>
+               <property name="value" >
+                <double>10.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" >
+           <widget class="QGroupBox" name="groupBox_4" >
+            <property name="title" >
+             <string>Font Editor</string>
+            </property>
+            <layout class="QHBoxLayout" >
+             <item>
+              <widget class="QLineEdit" name="fontEditorPath" >
+               <property name="minimumSize" >
+                <size>
+                 <width>300</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text" >
+                <string>/usr/bin/fontforge</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="fontEditorBrowse" >
+               <property name="text" >
+                <string>Browse...</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>151</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0" >
+           <widget class="QCheckBox" name="initTagBox" >
             <property name="text" >
-             <string>Ask confirmation when activating or deactivating fonts by tags</string>
+             <string>Ask for tag names when importing fonts</string>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0" >
-        <widget class="QGroupBox" name="groupBox" >
-         <property name="title" >
-          <string>Preview Word</string>
-         </property>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QLineEdit" name="previewWord" >
-            <property name="minimumSize" >
-             <size>
-              <width>300</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" >
-           <widget class="QCheckBox" name="previewIsRTL" >
-            <property name="text" >
-             <string>is RTL</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2" >
+          <item row="4" column="0" >
            <spacer>
             <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" >
              <size>
-              <width>41</width>
+              <width>629</width>
               <height>31</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item row="0" column="3" >
-           <widget class="QLabel" name="label" >
-            <property name="text" >
-             <string>size</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4" >
-           <widget class="QDoubleSpinBox" name="previewSizeSpin" >
-            <property name="wrapping" >
-             <bool>false</bool>
-            </property>
-            <property name="frame" >
-             <bool>true</bool>
-            </property>
-            <property name="suffix" >
-             <string> pt</string>
-            </property>
-            <property name="decimals" >
-             <number>1</number>
-            </property>
-            <property name="minimum" >
-             <double>1.000000000000000</double>
-            </property>
-            <property name="value" >
-             <double>10.000000000000000</double>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
-       </item>
-       <item row="2" column="0" >
-        <widget class="QGroupBox" name="groupBox_4" >
-         <property name="title" >
-          <string>Font Editor</string>
-         </property>
-         <layout class="QHBoxLayout" >
-          <item>
-           <widget class="QLineEdit" name="fontEditorPath" >
-            <property name="minimumSize" >
-             <size>
-              <width>300</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text" >
-             <string>/usr/bin/fontforge</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="fontEditorBrowse" >
-            <property name="text" >
-             <string>Browse...</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>151</width>
-              <height>22</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0" >
-        <widget class="QCheckBox" name="initTagBox" >
-         <property name="text" >
-          <string>Ask for tag names when importing fonts</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" >
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" >
-          <size>
-           <width>629</width>
-           <height>31</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2" >
-      <attribute name="title" >
-       <string>Sample Text</string>
-      </attribute>
-      <layout class="QGridLayout" >
-       <item row="1" column="0" >
-        <widget class="QGroupBox" name="groupBox_2" >
-         <property name="toolTip" >
-          <string/>
-         </property>
-         <property name="title" >
-          <string>Named Sample Texts</string>
-         </property>
+        <widget class="QWidget" name="tab_2" >
+         <attribute name="title" >
+          <string>Sample Text</string>
+         </attribute>
          <layout class="QGridLayout" >
-          <item row="0" column="0" colspan="2" >
-           <widget class="QListWidget" name="sampleTextNamesList" />
-          </item>
-          <item row="0" column="2" colspan="2" >
-           <widget class="QTextEdit" name="namedSampleTextText" />
-          </item>
           <item row="1" column="0" >
-           <widget class="QLineEdit" name="newSampleTextNameText" />
-          </item>
-          <item row="1" column="1" >
-           <widget class="QPushButton" name="addSampleTextNameButton" >
-            <property name="text" >
-             <string>Add</string>
+           <widget class="QGroupBox" name="groupBox_2" >
+            <property name="toolTip" >
+             <string/>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="2" >
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
+            <property name="title" >
+             <string>Named Sample Texts</string>
             </property>
-            <property name="sizeHint" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="3" >
-           <widget class="QPushButton" name="validateNamedSampleTextButton" >
-            <property name="text" >
-             <string>Validate</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0" >
-        <layout class="QHBoxLayout" >
-         <item>
-          <widget class="QGroupBox" name="groupBox_3" >
-           <property name="title" >
-            <string>Initial Layout</string>
-           </property>
-           <layout class="QGridLayout" >
-            <item row="0" column="0" >
-             <widget class="QLabel" name="label_2" >
-              <property name="text" >
-               <string>Font Size:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1" >
-             <widget class="QDoubleSpinBox" name="fontSizeSpin" >
-              <property name="suffix" >
-               <string> pt</string>
-              </property>
-              <property name="minimum" >
-               <double>1.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" >
-             <widget class="QLabel" name="label_3" >
-              <property name="text" >
-               <string>Interline:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1" >
-             <widget class="QDoubleSpinBox" name="interLineSpin" >
-              <property name="suffix" >
-               <string> pt</string>
-              </property>
-              <property name="minimum" >
-               <double>1.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" >
-           <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" >
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" >
-             <item>
+            <layout class="QGridLayout" >
+             <item row="0" column="0" colspan="2" >
+              <widget class="QListWidget" name="sampleTextNamesList" />
+             </item>
+             <item row="0" column="2" colspan="2" >
+              <widget class="QTextEdit" name="namedSampleTextText" />
+             </item>
+             <item row="1" column="0" >
+              <widget class="QLineEdit" name="newSampleTextNameText" />
+             </item>
+             <item row="1" column="1" >
+              <widget class="QPushButton" name="addSampleTextNameButton" >
+               <property name="text" >
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2" >
               <spacer>
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
@@ -346,109 +267,63 @@
                </property>
               </spacer>
              </item>
-             <item>
-              <widget class="QPushButton" name="applySampleTextButton" >
+             <item row="1" column="3" >
+              <widget class="QPushButton" name="validateNamedSampleTextButton" >
                <property name="text" >
-                <string>Apply</string>
+                <string>Validate</string>
                </property>
               </widget>
              </item>
             </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_3" >
-      <attribute name="title" >
-       <string>Files and Folders</string>
-      </attribute>
-      <layout class="QGridLayout" >
-       <item row="0" column="0" >
-        <widget class="QGroupBox" name="groupBox_5" >
-         <property name="title" >
-          <string>Templates Folder</string>
-         </property>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QLineEdit" name="templatesFolder" >
-            <property name="minimumSize" >
-             <size>
-              <width>300</width>
-              <height>0</height>
-             </size>
-            </property>
            </widget>
           </item>
-          <item row="0" column="1" >
-           <widget class="QPushButton" name="templatesDirBrowse" >
-            <property name="text" >
-             <string>Browse...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2" >
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0" >
-        <widget class="QGroupBox" name="groupBox_6" >
-         <property name="title" >
-          <string>Remote directories</string>
-         </property>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
+          <item row="2" column="0" >
            <layout class="QHBoxLayout" >
             <item>
-             <widget class="QLineEdit" name="newUrlText" >
-              <property name="text" >
-               <string>http://</string>
+             <widget class="QGroupBox" name="groupBox_3" >
+              <property name="title" >
+               <string>Initial Layout</string>
               </property>
+              <layout class="QGridLayout" >
+               <item row="0" column="0" >
+                <widget class="QLabel" name="label_2" >
+                 <property name="text" >
+                  <string>Font Size:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" >
+                <widget class="QDoubleSpinBox" name="fontSizeSpin" >
+                 <property name="suffix" >
+                  <string> pt</string>
+                 </property>
+                 <property name="minimum" >
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" >
+                <widget class="QLabel" name="label_3" >
+                 <property name="text" >
+                  <string>Interline:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" >
+                <widget class="QDoubleSpinBox" name="interLineSpin" >
+                 <property name="suffix" >
+                  <string> pt</string>
+                 </property>
+                 <property name="minimum" >
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="remoteDirAdd" >
-              <property name="minimumSize" >
-               <size>
-                <width>100</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text" >
-               <string>Add</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="0" >
-           <layout class="QHBoxLayout" >
-            <item>
-             <widget class="QListWidget" name="remoteDirList" />
             </item>
             <item>
              <layout class="QVBoxLayout" >
-              <item>
-               <widget class="QPushButton" name="remoteDirRemove" >
-                <property name="text" >
-                 <string>Remove</string>
-                </property>
-               </widget>
-              </item>
               <item>
                <spacer>
                 <property name="orientation" >
@@ -456,62 +331,216 @@
                 </property>
                 <property name="sizeHint" >
                  <size>
-                  <width>100</width>
-                  <height>41</height>
+                  <width>20</width>
+                  <height>40</height>
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" >
+                <item>
+                 <spacer>
+                  <property name="orientation" >
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" >
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="applySampleTextButton" >
+                  <property name="text" >
+                   <string>Apply</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
            </layout>
           </item>
-          <item row="2" column="0" >
-           <widget class="Line" name="line" >
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_3" >
+         <attribute name="title" >
+          <string>Files and Folders</string>
+         </attribute>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QGroupBox" name="groupBox_5" >
+            <property name="title" >
+             <string>Templates Folder</string>
             </property>
+            <layout class="QGridLayout" >
+             <item row="0" column="0" >
+              <widget class="QLineEdit" name="templatesFolder" >
+               <property name="minimumSize" >
+                <size>
+                 <width>300</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" >
+              <widget class="QPushButton" name="templatesDirBrowse" >
+               <property name="text" >
+                <string>Browse...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2" >
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </widget>
           </item>
-          <item row="3" column="0" >
-           <layout class="QHBoxLayout" >
-            <item>
-             <widget class="QLabel" name="label_4" >
-              <property name="text" >
-               <string>Local storage</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="localStorageLine" />
-            </item>
-            <item>
-             <widget class="QPushButton" name="localStorageButton" >
-              <property name="text" >
-               <string>Browse...</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+          <item row="1" column="0" >
+           <widget class="QGroupBox" name="groupBox_6" >
+            <property name="title" >
+             <string>Remote directories</string>
+            </property>
+            <layout class="QGridLayout" >
+             <item row="0" column="0" >
+              <layout class="QHBoxLayout" >
+               <item>
+                <widget class="QLineEdit" name="newUrlText" >
+                 <property name="text" >
+                  <string>http://</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="remoteDirAdd" >
+                 <property name="minimumSize" >
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text" >
+                  <string>Add</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0" >
+              <layout class="QHBoxLayout" >
+               <item>
+                <widget class="QListWidget" name="remoteDirList" />
+               </item>
+               <item>
+                <layout class="QVBoxLayout" >
+                 <item>
+                  <widget class="QPushButton" name="remoteDirRemove" >
+                   <property name="text" >
+                    <string>Remove</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer>
+                   <property name="orientation" >
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" >
+                    <size>
+                     <width>100</width>
+                     <height>41</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0" >
+              <widget class="Line" name="line" >
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0" >
+              <layout class="QHBoxLayout" >
+               <item>
+                <widget class="QLabel" name="label_4" >
+                 <property name="text" >
+                  <string>Local storage</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="localStorageLine" />
+               </item>
+               <item>
+                <widget class="QPushButton" name="localStorageButton" >
+                 <property name="text" >
+                  <string>Browse...</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" >
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>629</width>
+              <height>31</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="2" column="0" >
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" >
-          <size>
-           <width>629</width>
-           <height>31</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QPushButton" name="closeButton" >
+     <property name="text" >
+      <string>Close</string>
+     </property>
     </widget>
    </item>
   </layout>

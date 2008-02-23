@@ -103,6 +103,8 @@ void PrefsPanelDialog::doConnect()
 	connect(remoteDirRemove,SIGNAL(clicked()),this,SLOT(slotRemoveRemote()));
 	connect(localStorageLine,SIGNAL(textChanged( const QString& )),this,SLOT(slotSetLocalStorage(QString)));
 	connect(localStorageButton,SIGNAL(clicked( )),this,SLOT(slotBrowseLocalStorage()));
+	
+	connect(closeButton,SIGNAL(clicked()),this,SLOT(close()));
 }
 
 void PrefsPanelDialog::applySampleText()

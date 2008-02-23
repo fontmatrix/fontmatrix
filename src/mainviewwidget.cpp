@@ -588,11 +588,12 @@ void MainViewWidget::slotView ( bool needDeRendering )
 						first = false;
 
 					}
-					if ( lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y() )
+					if ( lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y()
+						|| lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x()
+						|| lit[i]->sceneBoundingRect().topLeft().y() > allrect.topLeft().y()
+						|| lit[i]->sceneBoundingRect().topRight().y() > allrect.topRight().y() 
+					   )
 						allrect = allrect.united ( lit[i]->sceneBoundingRect() );
-					if ( lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x() )
-						allrect = allrect.united ( lit[i]->sceneBoundingRect() );
-
 				}
 
 

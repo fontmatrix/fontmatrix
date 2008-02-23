@@ -122,6 +122,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+	connect ( m_lists->searchString,SIGNAL ( textEdited ( const QString&)  ),this,SLOT ( slotLiveSearch(const QString&) ) );
 	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
 	connect ( m_lists->viewActivatedButton,SIGNAL ( released() ),this,SLOT ( slotViewActivated() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
@@ -607,7 +608,7 @@ void MainViewWidget::slotSearch()
 	m_lists->fontTree->clear();
 	fontsetHasChanged = true;
 
-	QApplication::setOverrideCursor ( Qt::WaitCursor );
+// 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	QString fs ( m_lists->searchString->text() );
 	QString ff ( "search_%1" );
 	QString sensitivity ( "INSENS" );
@@ -615,12 +616,32 @@ void MainViewWidget::slotSearch()
 	{
 		sensitivity = "SENS";
 	}
-	QApplication::restoreOverrideCursor();
+// 	QApplication::restoreOverrideCursor();
 	currentFonts = typo->getFonts ( fs,ff.arg ( sensitivity ) ) ;
 	currentOrdering = "family";
 	fillTree();
 	m_lists->searchString->clear();
 }
+
+// Basically we do the same as in regular search but not clear input field
+void MainViewWidget::slotLiveSearch(const QString & text)
+{
+	if(!m_lists->liveSearchCheck->isChecked())
+		return;
+	m_lists->fontTree->clear();
+	fontsetHasChanged = true;
+	QString ff ( "search_%1" );
+	QString sensitivity ( "INSENS" );
+	if ( m_lists->sensitivityCheck->isChecked() )
+	{
+		sensitivity = "SENS";
+	}
+
+	currentFonts = typo->getFonts ( text,ff.arg ( sensitivity ) ) ;
+	currentOrdering = "family";
+	fillTree();
+}
+
 
 void MainViewWidget::slotFilterTag ( QString tag )
 {

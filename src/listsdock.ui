@@ -57,15 +57,28 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="sensitivityCheck" >
-       <property name="focusPolicy" >
-        <enum>Qt::NoFocus</enum>
-       </property>
+      <widget class="QToolButton" name="sensitivityCheck" >
        <property name="toolTip" >
-        <string>Respect entered text case when searching</string>
+        <string>Case Sensitive search</string>
        </property>
        <property name="text" >
-        <string>Case Sensitive</string>
+        <string>CS</string>
+       </property>
+       <property name="checkable" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="liveSearchCheck" >
+       <property name="toolTip" >
+        <string>Live search</string>
+       </property>
+       <property name="text" >
+        <string>L</string>
+       </property>
+       <property name="checkable" >
+        <bool>true</bool>
        </property>
       </widget>
      </item>

@@ -57,6 +57,7 @@ void FmRepair::fillLists()
 void FmRepair::fillDeadLink()
 {
 	typotek *t = typotek::getInstance();
+	deadList->clear();
 	QDir md(t->getManagedDir());
 	md.setFilter( QDir::Files );
 	QFileInfoList list = md.entryInfoList();
@@ -79,7 +80,7 @@ void FmRepair::fillDeadLink()
 void FmRepair::fillActNotLinked()
 {
 	typotek *t = typotek::getInstance();
-	
+	actNotLinkList->clear();
 	QList<FontItem*> flist(t->getAllFonts());
 	QStringList activated;
 	for(int i(0); i < flist.count();++i)
@@ -127,7 +128,7 @@ void FmRepair::fillActNotLinked()
 void FmRepair::fillDeactLinked()
 {
 	typotek *t = typotek::getInstance();
-	
+	deactLinkList->clear();
 	QList<FontItem*> flist(t->getAllFonts());
 	QStringList activated;
 	for(int i(0); i < flist.count();++i)
@@ -173,20 +174,15 @@ void FmRepair::slotSelAllDead()
 
 void FmRepair::slotRemoveDead()
 {
-	QList<int> toBeCleared;
 	for(int i(0); i < deadList->count(); ++i)
 	{
 		if(deadList->item(i)->checkState() == Qt::Checked)
 		{
 			QFile f(deadList->item(i)->text());
 			f.remove();
-			toBeCleared << i;
 		}
 	}
-	for(int i( toBeCleared.count() - 1 ); i >= 0 ; --i)
-	{
-		deadList->removeItemWidget(deadList->item(toBeCleared[i]));
-	}
+	fillDeadLink();
 }
 
 void FmRepair::slotSelAllActNotLinked()
@@ -200,37 +196,30 @@ void FmRepair::slotSelAllActNotLinked()
 void FmRepair::slotRelinkActNotLinked()
 {
 	typotek *t = typotek::getInstance();
-	QList<int> toBeCleared;
 	for(int i(0); i < actNotLinkList->count() ; ++i)
 	{
 		if(actNotLinkList->item(i)->checkState() == Qt::Checked)
 		{
-			QFile f(actNotLinkList->item(i)->text());
-			QFileInfo fi(f);
-			f.link( t->getManagedDir() + fi.fileName() );
 			FontItem *font = 0;
 			if(font = t->getFont(actNotLinkList->item(i)->text()))
 			{
-				if(!font->afm().isEmpty())
-				{
-					QFile af(font->afm());
-					QFileInfo afi(af);
-					af.link( t->getManagedDir() + afi.fileName() );
-				}
+				QFile f(font->path());
+				f.link( t->getManagedDir() + QDir::separator() + font->activationName() );
+				
+					if(!font->afm().isEmpty())
+					{
+						QFile af(font->afm());
+						af.link( t->getManagedDir() + QDir::separator() + font->activationAFMName() );
+					}
 			}
-			toBeCleared << i;
 		}
 	}
-	for(int i( toBeCleared.count() - 1 ); i >= 0 ; --i)
-	{
-		actNotLinkList->removeItemWidget(actNotLinkList->item(toBeCleared[i]));
-	}
+	fillActNotLinked();
 }
 
 void FmRepair::slotDeactivateActNotLinked()
 {
 	typotek *t = typotek::getInstance();
-	QList<int> toBeCleared;
 	for(int i(0); i < actNotLinkList->count() ; ++i)
 	{
 		if(actNotLinkList->item(i)->checkState() == Qt::Checked)
@@ -240,13 +229,10 @@ void FmRepair::slotDeactivateActNotLinked()
 			{
 				font->setActivated(false);
 			}
-			toBeCleared << i;
 		}
 	}
-	for(int i( toBeCleared.count() - 1 ); i >= 0 ; --i)
-	{
-		actNotLinkList->removeItemWidget(actNotLinkList->item(toBeCleared[i]));
-	}
+	
+	fillActNotLinked();
 }
 
 void FmRepair::slotSelAllDeactLinked()
@@ -260,26 +246,24 @@ void FmRepair::slotSelAllDeactLinked()
 void FmRepair::slotDelinkDeactLinked()
 {
 	typotek *t = typotek::getInstance();
-	QList<int> toBeCleared;
 	for(int i(0); i < deactLinkList->count(); ++i)
 	{
 		if(deactLinkList->item(i)->checkState() == Qt::Checked)
 		{
-			QFileInfo fi(deactLinkList->item(i)->text());
-			QFile f(t->getManagedDir() + fi.fileName());
-			toBeCleared << i;
+			FontItem *font = 0;
+			if(font = t->getFont(deactLinkList->item(i)->text()))
+			{
+				QFile f(t->getManagedDir() + QDir::separator() + font->activationName());
+				f.remove();
+			}
 		}
 	}
-	for(int i( toBeCleared.count() - 1 ); i >= 0 ; --i)
-	{
-		deactLinkList->removeItemWidget(deactLinkList->item(toBeCleared[i]));
-	}
+	fillDeactLinked();
 }
 
 void FmRepair::slotActivateDeactLinked()
 {
 	typotek *t = typotek::getInstance();
-	QList<int> toBeCleared;
 	
 	for(int i(0); i < deactLinkList->count(); ++i)
 	{
@@ -290,14 +274,9 @@ void FmRepair::slotActivateDeactLinked()
 			{
 				font->setActivated(true);
 			}
-			toBeCleared << i;
 		}
 	}
-	
-	for(int i( toBeCleared.count() - 1 ); i >= 0 ; --i)
-	{
-		deactLinkList->removeItemWidget(deactLinkList->item(toBeCleared[i]));
-	}
+	fillDeactLinked();
 }
 
 

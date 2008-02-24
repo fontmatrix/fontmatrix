@@ -179,7 +179,7 @@ p, li { white-space: pre-wrap; }
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
              <horstretch>0</horstretch>
-             <verstretch>3</verstretch>
+             <verstretch>2</verstretch>
             </sizepolicy>
            </property>
            <layout class="QGridLayout" >
@@ -345,7 +345,50 @@ p, li { white-space: pre-wrap; }
             </sizepolicy>
            </property>
            <layout class="QGridLayout" >
-            <item rowspan="4" row="0" column="0" >
+            <item row="0" column="0" >
+             <widget class="QComboBox" name="langCombo" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" >
+             <widget class="QCheckBox" name="useShaperCheck" >
+              <property name="text" >
+               <string>Use shaper</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2" >
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="3" >
+             <widget class="QCheckBox" name="rtlCheck" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Right to Left</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="4" >
              <widget class="QTreeWidget" name="OpenTypeTree" >
               <property name="sizePolicy" >
                <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -373,49 +416,6 @@ p, li { white-space: pre-wrap; }
                </property>
               </column>
              </widget>
-            </item>
-            <item row="0" column="1" >
-             <widget class="QComboBox" name="langCombo" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1" >
-             <widget class="QCheckBox" name="useShaperCheck" >
-              <property name="text" >
-               <string>Use shaper</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1" >
-             <widget class="QCheckBox" name="rtlCheck" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text" >
-               <string>Right to Left</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1" >
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </widget>

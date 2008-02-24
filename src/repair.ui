@@ -23,7 +23,7 @@
        <string>Dead links</string>
       </attribute>
       <layout class="QGridLayout" >
-       <item row="0" column="0" >
+       <item row="0" column="0" colspan="3" >
         <widget class="QListWidget" name="deadList" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -34,35 +34,31 @@
         </widget>
        </item>
        <item row="1" column="0" >
-        <layout class="QHBoxLayout" >
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>37</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="selectAllDead" >
-           <property name="text" >
-            <string>Select all</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="removeDead" >
-           <property name="text" >
-            <string>Remove</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QPushButton" name="selectAllDead" >
+         <property name="text" >
+          <string>Select all</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>241</width>
+           <height>30</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="2" >
+        <widget class="QPushButton" name="removeDead" >
+         <property name="text" >
+          <string>Remove</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -71,7 +67,7 @@
        <string>Activated Not Linked</string>
       </attribute>
       <layout class="QGridLayout" >
-       <item row="0" column="0" >
+       <item row="0" column="0" colspan="4" >
         <widget class="QListWidget" name="actNotLinkList" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -82,42 +78,38 @@
         </widget>
        </item>
        <item row="1" column="0" >
-        <layout class="QHBoxLayout" >
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="selectAllActNot" >
-           <property name="text" >
-            <string>Select all</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="relinkActNot" >
-           <property name="text" >
-            <string>Re-link</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="deactActNot" >
-           <property name="text" >
-            <string>Deactivate</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QPushButton" name="selectAllActNot" >
+         <property name="text" >
+          <string>Select all</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>161</width>
+           <height>30</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="2" >
+        <widget class="QPushButton" name="relinkActNot" >
+         <property name="text" >
+          <string>Re-link</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3" >
+        <widget class="QPushButton" name="deactActNot" >
+         <property name="text" >
+          <string>Deactivate</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -126,7 +118,7 @@
        <string>Deactivated Linked</string>
       </attribute>
       <layout class="QGridLayout" >
-       <item row="0" column="0" >
+       <item row="0" column="0" colspan="4" >
         <widget class="QListWidget" name="deactLinkList" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -137,42 +129,38 @@
         </widget>
        </item>
        <item row="1" column="0" >
-        <layout class="QHBoxLayout" >
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="selectAllDeactLink" >
-           <property name="text" >
-            <string>Select all</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="delinkDeactLink" >
-           <property name="text" >
-            <string>De-link</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="activateDeactLink" >
-           <property name="text" >
-            <string>Activate</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QPushButton" name="selectAllDeactLink" >
+         <property name="text" >
+          <string>Select all</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>141</width>
+           <height>30</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="2" >
+        <widget class="QPushButton" name="delinkDeactLink" >
+         <property name="text" >
+          <string>De-link</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3" >
+        <widget class="QPushButton" name="activateDeactLink" >
+         <property name="text" >
+          <string>Activate</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

@@ -33,7 +33,18 @@ FmRepair::~ FmRepair()
 
 void FmRepair::doConnect()
 {
-	connect(closeButton,SIGNAL(clicked( )),this,SLOT(close()));
+	connect(closeButton,SIGNAL(clicked()),this,SLOT(close()));
+	
+	connect(selectAllDead,SIGNAL(clicked()),this,SLOT(slotSelAllDead()));
+	connect(removeDead,SIGNAL(clicked()),this,SLOT(slotRemoveDead()));
+	
+	connect(selectAllActNot,SIGNAL(clicked()),this,SLOT(slotSelAllActNotLinked()));
+	connect(relinkActNot,SIGNAL(clicked()),this,SLOT(slotRelinkActNotLinked()));
+	connect(deactActNot,SIGNAL(clicked()),this,SLOT(slotDeactivateActNotLinked()));
+	
+	connect(selectAllDeactLink,SIGNAL(clicked()),this,SLOT(slotSelAllDeactLinked()));
+	connect(delinkDeactLink,SIGNAL(clicked()),this,SLOT(slotDelinkDeactLinked()));
+	connect(activateDeactLink,SIGNAL(clicked()),this,SLOT(slotActivateDeactLinked()));
 }
 
 void FmRepair::fillLists()

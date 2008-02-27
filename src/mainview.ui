@@ -431,22 +431,6 @@ p, li { white-space: pre-wrap; }
         <iconset resource="application.qrc" >:/fontmatrix_glypg.png</iconset>
        </attribute>
        <layout class="QGridLayout" >
-        <item row="0" column="0" >
-         <widget class="QToolButton" name="stickRangeButton" >
-          <property name="toolTip" >
-           <string>Stick do this Unicode range when changing selected font</string>
-          </property>
-          <property name="text" >
-           <string>S</string>
-          </property>
-          <property name="checkable" >
-           <bool>true</bool>
-          </property>
-          <property name="autoRaise" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="1" >
          <widget class="QComboBox" name="uniPlaneCombo" >
           <property name="sizePolicy" >

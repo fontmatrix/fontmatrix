@@ -1153,10 +1153,10 @@ void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 {
 	QString stickyRange;
 	int stickyIndex(0);
-	if(stickRangeButton->isChecked())
-	{
+// 	if(stickRangeButton->isChecked())
+// 	{
 		stickyRange = uniPlaneCombo->currentText();
-	}
+// 	}
 	uniPlaneCombo->clear();
 	QStringList plist= uniPlanes.keys();
 	for ( int i= 0;i<plist.count();++i )

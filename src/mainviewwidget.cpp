@@ -191,23 +191,26 @@ void MainViewWidget::fillTree()
 	m_lists->fontTree->clear();
 // 	QMap<QString, QList<FontItem*> > keyList;
 	QMap<QString, QMap<QString, FontItem*> > keyList;
+	QMap<QString, QString> realFamilyName;
 	QMap<int, QChar> initChars;
 	for ( int i=0; i < currentFonts.count();++i )
 	{
 		QString family = currentFonts[i]->family();
+		QString ordFamily = family.toUpper();
 		QString variant = currentFonts[i]->variant();
 		if( keyList.contains(family) && keyList[family].contains(variant) )
 		{
 			int unique = 2;
 			QString uniString(variant +" (%1)");
-			while(keyList[family].contains(uniString.arg(unique)))
+			while(keyList[family].contains(uniString.arg(unique,2,QChar(32))))
 			{
 				++unique;
 			}
-			variant = uniString.arg(unique);
+			variant = uniString.arg(unique,2,QChar(32));
 		}
-		keyList[family][variant] = ( currentFonts[i] );
-		initChars[currentFonts[i]->family()[0].unicode()] = currentFonts[i]->family()[0] ;
+		keyList[ordFamily][variant] = ( currentFonts[i] );
+		realFamilyName[ordFamily] = family;
+		initChars[ordFamily[0].unicode()] = ordFamily[0] ;
 	}
 	
 	QMap<QString, QMap<QString, FontItem*> >::const_iterator kit;
@@ -227,15 +230,15 @@ void MainViewWidget::fillTree()
 		for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
 		{
 			bool isExpanded = false;
-			if ( kit.key().at ( 0 ).toUpper() == firstChar )
+			if ( kit.key().at ( 0 ) == firstChar )
 			{
 				QTreeWidgetItem *ord = new QTreeWidgetItem ( alpha );
-				ord->setText ( 0, kit.key() );
+				ord->setText ( 0, realFamilyName[kit.key()] );
 				ord->setData ( 0,100,"family" );
 				ord->setCheckState ( 0,Qt::Unchecked );
 				bool chekno = false;
 				bool checkyes = false;
-				if ( openKeys.contains ( kit.key() ) )
+				if ( openKeys.contains ( realFamilyName[kit.key()] ) )
 				{
 					ord->setExpanded ( true );
 					isExpanded = true;

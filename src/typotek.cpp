@@ -478,6 +478,9 @@ void typotek::createActions()
 
 	if ( systray )
 		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
+	
+	tagAll = new QAction(tr("Tag All..."), this);
+	connect(tagAll,SIGNAL(triggered()),this,SLOT(slotTagAll()));
 }
 
 void typotek::createMenus()
@@ -496,6 +499,7 @@ void typotek::createMenus()
 	editMenu = menuBar()->addMenu ( tr ( "Edit" ) );
 	editMenu->addAction ( tagsetAct );
 	editMenu->addSeparator();
+	editMenu->addAction( tagAll );
 	editMenu->addAction ( activCurAct );
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
@@ -1248,6 +1252,29 @@ void typotek::slotRepair()
 {
 	FmRepair repair(this);
 	repair.exec();
+}
+
+void typotek::slotTagAll()
+{
+	ImportTags imp(this,tagsList);
+	imp.exec();
+	QStringList tali = imp.tags();
+	
+	if(tali.isEmpty())
+		return;
+	for(int t(0); t < tali.count(); ++t)
+		emit tagAdded(tali[t]);
+	
+	QList<FontItem*> curfonts = theMainView->curFonts();
+	for(int i(0) ; i < curfonts.count(); ++i)
+	{
+		for(int t(0); t < tali.count(); ++t)
+		{
+			curfonts[i]->addTag(tali[t]);
+		}
+		
+	}
+	 
 }
 
 

@@ -2008,9 +2008,9 @@ void FontItem::moreInfo_type1()
 
 void FontItem::setTags ( QStringList l )
 {
+	bool act = isActivated();
 	m_tags = l;
-	// overwrite cached info
-// 	infoText ( false );
+	setActivated(act);
 }
 
 /// When glyphsView is resized we wantto adjust the number of columns

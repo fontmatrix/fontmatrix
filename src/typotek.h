@@ -75,6 +75,7 @@ class typotek:public QMainWindow
 		void slotExportFontSet();
 		void slotRemoteIsReady();
 		void slotRepair();
+		void slotTagAll();
 		
 		
 		
@@ -136,6 +137,7 @@ class typotek:public QMainWindow
 		QAction *prefsAct;
 		QAction *exportFontSetAct;
 		QAction *repairAct;
+		QAction *tagAll;
 
 		MainViewWidget *theMainView;
 

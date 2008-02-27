@@ -26,6 +26,7 @@ importtags.cpp
 dataexport.cpp
 remotedir.cpp
 fmrepair.cpp
+fmnamelist.cpp
 )
 
 SET(fontmatrix_MOC_HDRS
@@ -46,6 +47,7 @@ prefspaneldialog.h
 importtags.h
 remotedir.h
 fmrepair.h
+fmnamelist.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 

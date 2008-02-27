@@ -179,7 +179,7 @@
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QTreeWidget" name="fontTree" >
+     <widget class="FMNameList" name="fontTree" >
       <property name="sizePolicy" >
        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
         <horstretch>0</horstretch>
@@ -195,7 +195,7 @@
        <cursorShape>ArrowCursor</cursorShape>
       </property>
       <property name="focusPolicy" >
-       <enum>Qt::NoFocus</enum>
+       <enum>Qt::StrongFocus</enum>
       </property>
       <property name="acceptDrops" >
        <bool>true</bool>
@@ -212,8 +212,11 @@
       <property name="lineWidth" >
        <number>1</number>
       </property>
+      <property name="dragDropMode" >
+       <enum>QAbstractItemView::DropOnly</enum>
+      </property>
       <property name="alternatingRowColors" >
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="selectionMode" >
        <enum>QAbstractItemView::NoSelection</enum>
@@ -289,6 +292,11 @@
    <class>FMPreviewList</class>
    <extends>QGraphicsView</extends>
    <header>fmpreviewlist.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FMNameList</class>
+   <extends>QTreeWidget</extends>
+   <header>fmnamelist.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

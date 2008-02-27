@@ -502,6 +502,7 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		fillUniPlanesCombo ( theVeryFont );
 		slotView ( true );
 		typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
+		m_lists->fontTree->headerItem()->setText(0, tr("Names")+" ("+theVeryFont->family()+")");
 		typo->presentFontName ( theVeryFont->fancyName() );
 		fillTree();
 		abcView->verticalScrollBar()->setValue ( 0 );

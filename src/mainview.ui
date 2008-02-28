@@ -461,19 +461,6 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="0" column="5" >
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>161</width>
-            <height>30</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="1" column="0" colspan="6" >
          <widget class="FMGlyphsView" name="abcView" >
           <property name="focusPolicy" >

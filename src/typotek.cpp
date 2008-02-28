@@ -1263,7 +1263,13 @@ void typotek::slotTagAll()
 	if(tali.isEmpty())
 		return;
 	for(int t(0); t < tali.count(); ++t)
-		emit tagAdded(tali[t]);
+	{
+		if(!tagsList.contains(tali[t]))
+		{
+			tagsList.append(tali[t]);
+			emit tagAdded(tali[t]);
+		}
+	}
 	
 	QList<FontItem*> curfonts = theMainView->curFonts();
 	for(int i(0) ; i < curfonts.count(); ++i)
@@ -1274,7 +1280,7 @@ void typotek::slotTagAll()
 		}
 		
 	}
-	 
+	theMainView->slotNewTag();
 }
 
 

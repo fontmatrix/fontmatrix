@@ -477,6 +477,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						theFont->renderLine ( &theScene,
 						                      sublines[sl],
 						                      pen ,
+								      conSubfamily[elemIndex].textStyle.margin_right /*Linewidth*/,
 						                      conSubfamily[elemIndex].textStyle.fontsize, 10000 );
 						//TODO adding color support for text sample
 					}

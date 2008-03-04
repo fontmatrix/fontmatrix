@@ -176,6 +176,8 @@ void MainViewWidget::fillTree()
 	qDebug()<< "MainViewWidget::fillTree("<< curItemName <<")";
 	m_lists->savePosition();
 	QTreeWidgetItem *curItem = 0;
+	
+	// We log expanded families item
 	openKeys.clear();
 	for ( int i=0; i < m_lists->fontTree->topLevelItemCount();++i )
 	{
@@ -184,11 +186,9 @@ void MainViewWidget::fillTree()
 			if ( topit->child ( j )->isExpanded() )
 				openKeys << topit->child ( j )->text ( 0 );
 	}
-
-	QFont alphaFont ( "helvetica",14,QFont::Bold,false );
-
 	m_lists->fontTree->clear();
-// 	QMap<QString, QList<FontItem*> > keyList;
+	
+	// Looking for multiple instance of a same "family-variant" pair
 	QMap<QString, QMap<QString, FontItem*> > keyList;
 	QMap<QString, QString> realFamilyName;
 	QMap<int, QChar> initChars;
@@ -199,10 +199,9 @@ void MainViewWidget::fillTree()
 		QString variant = currentFonts[i]->variant();
 		if( keyList.contains(ordFamily) && keyList[ordFamily].contains(variant) )
 		{
-			qDebug()<<"DOUBLON ["<< family << variant<<"]";
 			int unique = 2;
 			QString uniString(variant +" -%1");
-			while(keyList[family].contains(uniString.arg(unique,2)))
+			while(keyList[ordFamily].contains(uniString.arg(unique,2)))
 			{
 				++unique;
 			}
@@ -213,6 +212,8 @@ void MainViewWidget::fillTree()
 		initChars[ordFamily[0].unicode()] = ordFamily[0] ;
 	}
 	
+	// Rebuild the the tree
+	QFont alphaFont ( "helvetica",14,QFont::Bold,false );
 	QMap<QString, QMap<QString, FontItem*> >::const_iterator kit;
 	QMap<QString, FontItem*>::const_iterator kit_value;
 	QMap<int, QChar>::const_iterator ic = initChars.constBegin();
@@ -221,7 +222,7 @@ void MainViewWidget::fillTree()
 		QChar firstChar ( ic.value() );
 		QTreeWidgetItem *alpha = new QTreeWidgetItem ( m_lists->fontTree );
 		alpha->setText ( 0, firstChar );
-		alpha->setFont ( 0,alphaFont );
+		alpha->setFont ( 0, alphaFont );
 		alpha->setData ( 0,100,"alpha" );
 		alpha->setBackgroundColor ( 0,Qt::lightGray );
 		alpha->setBackgroundColor ( 1,Qt::lightGray );
@@ -244,19 +245,16 @@ void MainViewWidget::fillTree()
 					isExpanded = true;
 				}
 				
-// 				for ( int  n = 0; n < kit.value().count(); ++n )
 				for(kit_value = kit.value().begin(); kit_value != kit.value().end(); ++kit_value)
 				{
 					QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 					QString variant = kit_value.key();
-// 					variantMap[variant] = n;
 					entry->setText ( 0,  variant );
 					entry->setText ( 1, kit_value.value()->path() );
 					entry->setData ( 0, 100, "fontfile" );
 					if(kit_value.value()->isLocked() || kit_value.value()->isRemote() )
 					{
 						entry->setFlags(Qt::ItemIsSelectable);
-// 						entry->parent()->setFlags(Qt::ItemIsSelectable);
 					}
 					if(kit_value.value()->type() == "CFF")
 							entry->setIcon(0, iconOTF );

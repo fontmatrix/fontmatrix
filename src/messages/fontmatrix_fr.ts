@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="fr">
+<defaultcodec></defaultcodec>
 <context>
     <name>About</name>
     <message>
@@ -2312,7 +2313,7 @@ it is time to cancel if it was not your intent</source>
     <message>
         <location filename="../typotek.cpp" line="718"/>
         <source>Collected System Font</source>
-        <translation>Fontes collectées sur le système</translation>
+        <translation type="unfinished">Fontes système</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="758"/>

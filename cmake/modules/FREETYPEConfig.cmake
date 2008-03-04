@@ -4,23 +4,27 @@
   FIND_PATH(FREETYPE_INCLUDE_DIR_FT2BUILD ft2build.h
     /usr/include/
     /usr/local/include/
+    /usr/X11R6/include/
     NO_CMAKE_SYSTEM_PATH
   )
 
   FIND_PATH(FREETYPE_INCLUDE_DIR_FTHEADER freetype/config/ftheader.h
     /usr/include/freetype2
     /usr/local/include/freetype2
+    /usr/X11R6/include/freetype2
     NO_CMAKE_SYSTEM_PATH
   )
 
 SET(FREETYPE_LIBRARY_NAMES  freetype)
 
-SET(FREETYPE_LIB_PATHS /usr/lib /usr/local/lib)
+SET(FREETYPE_LIB_PATHS /usr/lib /usr/local/lib /usr/X11R6/lib)
 
 FIND_LIBRARY(FREETYPE_LIBRARY ${FREETYPE_LIBRARY_NAMES}
   PATHS
   ${FREETYPE_LIB_PATHS}
   NO_CMAKE_SYSTEM_PATH)
+
+GET_FILENAME_COMPONENT(FREETYPE_LIBRARY_DIR ${FREETYPE_LIBRARY} PATH)
 
 SET(FREETYPE_FIND_QUIETLY 1)
 

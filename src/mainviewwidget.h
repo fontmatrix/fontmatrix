@@ -138,7 +138,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotFTRasterChanged();
 		void slotWantShape();
 		void slotChangeScript();
-		void slotSwitchRTL();
+// 		void slotSwitchRTL();
+// 		void slotSwitchVertUD();
+		void slotProgressionChanged();
 		void slotUpdateGView();
 		void slotUpdateSView();
 		void slotUpdateRView();

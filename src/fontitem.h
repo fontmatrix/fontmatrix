@@ -46,6 +46,11 @@ class QProgressDialog;
 class QHttp;
 class QFile;
 
+#define PROGRESSION_LTR 0
+#define PROGRESSION_RTL 2
+#define PROGRESSION_TTB 4
+#define PROGRESSION_BTT 8
+
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
 
@@ -136,8 +141,10 @@ class FontItem : public QObject
 		bool hasUnicode;
 		int currentChar;
 		
-		bool m_RTL;
-
+// 		bool m_RTL;// Right to Left
+// 		bool m_VertUD;// Vertical Up Down
+		int m_progression;
+		
 		bool m_lock;
 		
 		QMap<int,double> advanceCache;
@@ -191,9 +198,9 @@ class FontItem : public QObject
 
 		QString value ( QString k );
 
-		void renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, double zindex = 100.0 ,bool record = true );
-		void renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, bool record = true );
-		void renderLine ( QString script, QGraphicsScene *scene, QString spec,  QPointF origine, double fsize, bool record = true );
+		void renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth, double fsize, double zindex = 100.0 ,bool record = true );
+		void renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
+		void renderLine ( QString script, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
 		void renderAll ( QGraphicsScene *scene, int begin_code, int end_code );
 		int countCoverage ( int begin_code, int end_code );
 		void deRender ( QGraphicsScene *scene );
@@ -239,8 +246,13 @@ class FontItem : public QObject
 		void setFTRaster(bool f){m_rasterFreetype = f;};
 		bool rasterFreetype(){return m_rasterFreetype;};
 		
-		void setRTL(bool rtl){m_RTL=rtl;}
-		bool RTL(){return m_RTL;}
+// 		void setRTL(bool rtl){m_RTL=rtl;}
+// 		bool RTL(){return m_RTL;}
+// 		
+// 		void setVertUD(bool v){m_VertUD=v;}
+// 		bool vertUD(){return m_VertUD;}
+		void setProgression(int p){m_progression = p;}
+		int progression(){return m_progression;}
 		
 		// sfnt names
 		void fillNamesMeaning();

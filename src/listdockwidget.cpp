@@ -20,6 +20,7 @@
 #include "listdockwidget.h"
 #include "typotek.h"
 
+#include <QDebug>
 #include <QScrollBar>
 
 ListDockWidget* ListDockWidget::instance = 0;
@@ -41,7 +42,7 @@ ListDockWidget::ListDockWidget()
 	tagsetCombo->addItems (typotek::getInstance()->tagsets() );
 	
 	QStringList tl_tmp = typotek::tagsList;
-// 	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
+	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
 	tl_tmp.removeAll ( "Activated_On" );
 	tl_tmp.removeAll ( "Activated_Off" );
 

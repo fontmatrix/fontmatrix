@@ -379,7 +379,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 			FontItem * theFont = kit.value() [fontIndex];
 			bool oldRast = theFont->rasterFreetype();
 			theFont->setFTRaster ( false );
-			theFont->setRTL ( false );
+// 			theFont->setRTL ( false );
 			/// We are in a SUBFAMILY context
 			currentSubfamily = theFont->variant();
 			for ( int elemIndex = 0; elemIndex < conSubfamily.count() ; ++elemIndex )

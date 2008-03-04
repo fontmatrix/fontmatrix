@@ -1,0 +1,120 @@
+<ui version="4.0" >
+ <class>TextProgressionWidget</class>
+ <widget class="QWidget" name="TextProgressionWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Inline progression</string>
+     </property>
+     <property name="flat" >
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <widget class="QRadioButton" name="inlineLTR" >
+        <property name="toolTip" >
+         <string>e.g. Latin text</string>
+        </property>
+        <property name="text" >
+         <string>Left to right</string>
+        </property>
+        <property name="checked" >
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QRadioButton" name="inlineRTL" >
+        <property name="toolTip" >
+         <string>e.g. Arabic text</string>
+        </property>
+        <property name="text" >
+         <string>Right to left</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QRadioButton" name="inlineTTB" >
+        <property name="toolTip" >
+         <string>e.g. Traditional Chinese &amp; Japanese text</string>
+        </property>
+        <property name="text" >
+         <string>Top to bottom</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="QRadioButton" name="inlineBTT" >
+        <property name="toolTip" >
+         <string>e.g. Runic text</string>
+        </property>
+        <property name="text" >
+         <string>Bottom to top</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="title" >
+      <string>Block progression</string>
+     </property>
+     <property name="flat" >
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" colspan="2" >
+       <widget class="QRadioButton" name="blockTTB" >
+        <property name="toolTip" >
+         <string>e.g. Latin text</string>
+        </property>
+        <property name="text" >
+         <string>Top to bottom</string>
+        </property>
+        <property name="checked" >
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QRadioButton" name="blockLTR" >
+        <property name="toolTip" >
+         <string>e.g. Traditional Mongolian text</string>
+        </property>
+        <property name="text" >
+         <string>Left to right</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="QRadioButton" name="blockRTL" >
+        <property name="toolTip" >
+         <string>e.g. Tarditionnal Chinese &amp; Japanes text</string>
+        </property>
+        <property name="text" >
+         <string>Right to left</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

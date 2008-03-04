@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="sizePolicy" >
-   <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+   <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -123,7 +123,7 @@
      <item>
       <widget class="QComboBox" name="tagsCombo" >
        <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+        <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -134,6 +134,9 @@
        <property name="toolTip" >
         <string>Filter view by chosing tag</string>
        </property>
+       <property name="sizeAdjustPolicy" >
+        <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+       </property>
       </widget>
      </item>
      <item>
@@ -142,7 +145,7 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeType" >
-        <enum>QSizePolicy::Preferred</enum>
+        <enum>QSizePolicy::Expanding</enum>
        </property>
        <property name="sizeHint" >
         <size>
@@ -162,7 +165,7 @@
      <item>
       <widget class="QComboBox" name="tagsetCombo" >
        <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+        <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -176,6 +179,12 @@
    </item>
    <item row="2" column="0" >
     <widget class="QSplitter" name="splitter" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
      </property>

@@ -83,7 +83,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 		fontInfoText->document()->setDefaultStyleSheet(infoStyle);
 	}
 
-// 	tagLayout = new QGridLayout ( tagPage );
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
 	ftScene =  new QGraphicsScene;
@@ -92,8 +91,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
 	backp->setEnabled ( false );
 	ftScene->setSceneRect ( 0,0,1000,1000 );
-// 	QGraphicsRectItem *backpR = ftScene->addRect ( pageRect,QPen(),Qt::white );
-// 	backpR->setEnabled ( false );
 
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
@@ -139,7 +136,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
 	connect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	connect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-	connect ( rtlCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotSwitchRTL() ) );
+// 	connect ( rtlCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotSwitchRTL() ) );
+// 	connect ( vertUDCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotSwitchVertUD()));
+	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
@@ -198,15 +197,16 @@ void MainViewWidget::fillTree()
 		QString family = currentFonts[i]->family();
 		QString ordFamily = family.toUpper();
 		QString variant = currentFonts[i]->variant();
-		if( keyList.contains(family) && keyList[family].contains(variant) )
+		if( keyList.contains(ordFamily) && keyList[ordFamily].contains(variant) )
 		{
+			qDebug()<<"DOUBLON ["<< family << variant<<"]";
 			int unique = 2;
-			QString uniString(variant +" (%1)");
-			while(keyList[family].contains(uniString.arg(unique,2,QChar(32))))
+			QString uniString(variant +" -%1");
+			while(keyList[family].contains(uniString.arg(unique,2)))
 			{
 				++unique;
 			}
-			variant = uniString.arg(unique,2,QChar(32));
+			variant = uniString.arg(unique,2);
 		}
 		keyList[ordFamily][variant] = ( currentFonts[i] );
 		realFamilyName[ordFamily] = family;
@@ -541,7 +541,15 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 	bool wantDeviceDependant = loremView_FT->isVisible();
 
-	theVeryFont->setRTL ( rtlCheck->isChecked() );
+	if(textProgression->inLine() == TextProgression::INLINE_LTR )
+		theVeryFont->setProgression(PROGRESSION_LTR );
+	else if(textProgression->inLine() == TextProgression::INLINE_RTL )
+		theVeryFont->setProgression(PROGRESSION_RTL);
+	else if(textProgression->inLine() == TextProgression::INLINE_TTB )
+		theVeryFont->setProgression(PROGRESSION_TTB );
+	else if(textProgression->inLine() == TextProgression::INLINE_BTT )
+		theVeryFont->setProgression(PROGRESSION_BTT);
+
 	theVeryFont->setFTRaster ( wantDeviceDependant );
 
 	QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
@@ -567,33 +575,98 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		else if(loremView_FT->isVisible())
 			targetScene = ftScene;
 		QStringList stl = typo->namedSample ( sampleTextCombo->currentText() ).split ( '\n' );
-		QPointF pen ( ( rtlCheck->isChecked() ) ? 500 : 100,80 );
 		bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
 		QString script = langCombo->currentText();
 		bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
-
-// 		QApplication::setOverrideCursor ( Qt::WaitCursor );
 		double adjustedSampleInter = wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize ;
-		for ( int i=0; i< stl.count(); ++i )
+		
+		if( textProgression->inBlock() == TextProgression::BLOCK_TTB )
 		{
-			pen.ry() = 100 + adjustedSampleInter * i;
-			if ( processScript )
+			double marginL = loremScene->sceneRect().width() / 10.0;
+			double marginR = loremScene->sceneRect().width() - marginL;
+			double margin = ( textProgression->inLine() == TextProgression::INLINE_RTL ) ? marginR : marginL ;
+			double lineWidth = loremScene->sceneRect().width() * 0.8;
+			QPointF pen ( margin ,   0 );
+			for ( int i=0; i< stl.count(); ++i )
 			{
-				qDebug() << "render " << stl[i] << " as " << script;
-				f->renderLine ( script ,targetScene,stl[i],pen, sampleFontSize );
-			}
-			else if ( processFeatures )
-			{
-				OTFSet aSet = deFillOTTree();
-				qDebug() << aSet.dump();
-				f->renderLine ( aSet, targetScene,stl[i],pen, sampleFontSize );
-			}
-			else
-			{
-				f->renderLine ( targetScene,stl[i],pen, sampleFontSize );
+				
+				pen.ry() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * i;
+				
+				if ( processScript )
+				{
+					qDebug() << "render " << stl[i] << " as " << script;
+					f->renderLine ( script ,targetScene,stl[i],pen, lineWidth,sampleFontSize );
+				}
+				else if ( processFeatures )
+				{
+					OTFSet aSet = deFillOTTree();
+					qDebug() << aSet.dump();
+					f->renderLine ( aSet, targetScene,stl[i],pen, lineWidth,sampleFontSize );
+				}
+				else
+				{
+					f->renderLine ( targetScene,stl[i],pen,lineWidth, sampleFontSize );
+				}
 			}
 		}
-// 		QApplication::restoreOverrideCursor();
+		else if( textProgression->inBlock() == TextProgression::BLOCK_RTL )
+		{
+			double marginT = loremScene->sceneRect().height() / 10.0;
+			double marginB = loremScene->sceneRect().height() - marginT;
+			double margin = ( textProgression->inLine() == TextProgression::INLINE_TTB ) ? marginT : marginB ;
+			double lineWidth = loremScene->sceneRect().height() * 0.8;
+			QPointF pen ( 0 , margin );
+			for ( int i=0; i< stl.count(); ++i )
+			{
+				
+				pen.rx() = (loremScene->sceneRect().width() * 0.9) - adjustedSampleInter * i;
+				
+				if ( processScript )
+				{
+					qDebug() << "render " << stl[i] << " as " << script;
+					f->renderLine ( script ,targetScene,stl[i],pen,lineWidth, sampleFontSize );
+				}
+				else if ( processFeatures )
+				{
+					OTFSet aSet = deFillOTTree();
+					qDebug() << aSet.dump();
+					f->renderLine ( aSet, targetScene,stl[i],pen,lineWidth, sampleFontSize );
+				}
+				else
+				{
+					f->renderLine ( targetScene,stl[i],pen,lineWidth, sampleFontSize );
+				}
+			}
+		}
+		else if( textProgression->inBlock() == TextProgression::BLOCK_LTR )
+		{
+			double marginT = loremScene->sceneRect().height() / 10.0;
+			double marginB = loremScene->sceneRect().height() - marginT;
+			double margin = ( textProgression->inLine() == TextProgression::INLINE_TTB ) ? marginT : marginB ;
+			double lineWidth = loremScene->sceneRect().height() * 0.8;
+			QPointF pen ( 0 , margin );
+			for ( int i=0; i< stl.count(); ++i )
+			{
+				
+				pen.rx() = (loremScene->sceneRect().width() * 0.1) + adjustedSampleInter * i;
+				
+				if ( processScript )
+				{
+					qDebug() << "render " << stl[i] << " as " << script;
+					f->renderLine ( script ,targetScene,stl[i],pen,lineWidth,sampleFontSize );
+				}
+				else if ( processFeatures )
+				{
+					OTFSet aSet = deFillOTTree();
+					qDebug() << aSet.dump();
+					f->renderLine ( aSet, targetScene,stl[i],pen,lineWidth, sampleFontSize );
+				}
+				else
+				{
+					f->renderLine ( targetScene,stl[i],pen, lineWidth,sampleFontSize );
+				}
+			}
+		}
 
 		if (loremView->isVisible() && fitViewCheck->isChecked() )
 		{
@@ -1352,10 +1425,16 @@ void MainViewWidget::slotChangeScript()
 	}
 }
 
-void MainViewWidget::slotSwitchRTL()
-{
-	slotView ( true );
-}
+// void MainViewWidget::slotSwitchRTL()
+// {
+// 	slotView ( true );
+// }
+// 
+// void MainViewWidget::slotSwitchVertUD()
+// {
+// 	slotView ( true );
+// }
+
 
 void MainViewWidget::slotPlaneSelected ( int i )
 {
@@ -1615,6 +1694,11 @@ void MainViewWidget::slotRemoteFinished()
 	slotUpdateRView();
 	slotUpdateSView();
 	
+}
+
+void MainViewWidget::slotProgressionChanged()
+{
+	slotView(true);
 }
 
 

@@ -27,6 +27,7 @@ dataexport.cpp
 remotedir.cpp
 fmrepair.cpp
 fmnamelist.cpp
+textprogression.cpp
 )
 
 SET(fontmatrix_MOC_HDRS
@@ -48,6 +49,7 @@ importtags.h
 remotedir.h
 fmrepair.h
 fmnamelist.h
+textprogression.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 
@@ -64,6 +66,7 @@ tagset.ui
 prefs_panel.ui
 importtags.ui
 repair.ui
+textprogression.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
 

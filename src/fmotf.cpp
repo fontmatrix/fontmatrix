@@ -753,8 +753,8 @@ QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 			FT_GlyphSlot slot = _face->glyph;
 			if ( !FT_Load_Glyph ( _face, gl.glyph , FT_LOAD_NO_SCALE ) )
 			{
-				gl.xadvance = ( double ) ( slot->advance.x );
-				gl.yadvance = ( double ) ( slot->advance.y );
+				gl.xadvance = ( double ) slot->metrics.horiAdvance/* ( slot->advance.x )*/;
+				gl.yadvance = ( double ) slot->metrics.vertAdvance/* ( slot->advance.y )*/;
 				gl.xoffset = 0;
 				gl.yoffset = 0;
 			}
@@ -779,8 +779,8 @@ QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 				FT_GlyphSlot slot = _face->glyph;
 				if ( !FT_Load_Glyph ( _face, gl.glyph , FT_LOAD_NO_SCALE ) )
 				{
-					gl.xadvance = ( double ) ( p->x_advance + slot->advance.x ) + backBonus ;
-					gl.yadvance = ( double ) ( p->y_advance + slot->advance.y );
+					gl.xadvance = ( double ) slot->metrics.horiAdvance/* ( slot->advance.x )*/ + backBonus ;
+					gl.yadvance = ( double ) slot->metrics.vertAdvance/* ( slot->advance.y )*/;
 					gl.xoffset = p->x_pos;
 					gl.yoffset = p->y_pos;
 				}

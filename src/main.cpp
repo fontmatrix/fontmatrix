@@ -55,6 +55,11 @@ int main ( int argc, char *argv[] )
 	{
 		app.installTranslator(&translator);
 	}
+	else
+	{
+		QFile f(":/texts/fontmatrix");
+		qDebug()<< "Unable to load"<< f.fileName() ;
+	}
 
 
 	if ( app.arguments().contains ( "listfonts" ) )

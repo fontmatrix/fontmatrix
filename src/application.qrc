@@ -86,4 +86,12 @@
 	<file alias="help">messages/help_uk.html</file>
         <file alias="fontmatrix">messages/fontmatrix_uk.qm</file>
     </qresource>
+    
+    <qresource prefix="/texts" lang="zh_CN" >
+	    <file alias="fontmatrix">messages/fontmatrix_zh_CN.qm</file>
+    </qresource>
+    
+    <qresource prefix="/texts" lang="zh_TW" >
+	    <file alias="fontmatrix">messages/fontmatrix_zh_TW.qm</file>
+    </qresource>
 </RCC>

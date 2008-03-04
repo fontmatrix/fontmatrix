@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="sv">
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>About</name>
     <message>
         <location filename="../about.ui" line="19"/>
         <source>About Fontmatrix</source>
-        <translation>Om Fontmatrix</translation>
-    </message>
-    <message>
-        <location filename="../about.ui" line="130"/>
-        <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -20,6 +15,11 @@
     <message>
         <location filename="../about.ui" line="74"/>
         <source>The People</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../about.ui" line="130"/>
+        <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -40,81 +40,6 @@
     <name>BookExportDialog</name>
     <message>
         <location filename="../bookexport.ui" line="13"/>
-        <source>Dialog</source>
-        <translation type="obsolete">Dialog</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="66"/>
-        <source>Font book options </source>
-        <translation type="obsolete">Fontbok-alternativ</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="78"/>
-        <source>File</source>
-        <translation type="obsolete">Arkiv</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="55"/>
-        <source>Browse...</source>
-        <translation>Bl�ddra...</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="99"/>
-        <source>Paper Size</source>
-        <translation type="obsolete">�ndra storlek</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="126"/>
-        <source>X-Pos</source>
-        <translation type="obsolete">Horisontell position</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="136"/>
-        <source>Family </source>
-        <translation type="obsolete">Familj</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="170"/>
-        <source>Style </source>
-        <translation type="obsolete">Stil</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="204"/>
-        <source>Text</source>
-        <translation type="obsolete">Text</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="241"/>
-        <source>Font size</source>
-        <translation type="obsolete">Teckenstorlek</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="251"/>
-        <source>Family</source>
-        <translation type="obsolete">Familj</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="282"/>
-        <source>Style</source>
-        <translation type="obsolete">Stil</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="396"/>
-        <source>Headline</source>
-        <translation type="obsolete">Rubrik</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="344"/>
-        <source>Body</source>
-        <translation type="obsolete">Huvudtext</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="412"/>
-        <source>Sample text</source>
-        <translation type="obsolete">Exempeltext</translation>
-    </message>
-    <message>
-        <location filename="../bookexport.ui" line="13"/>
         <source>Export Font Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -123,27 +48,27 @@
         <source>Output</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../bookexport.ui" line="55"/>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FontAction</name>
     <message>
         <location filename="../fontaction.ui" line="14"/>
         <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../fontaction.ui" line="32"/>
-        <source>action</source>
-        <translation type="obsolete">Handling</translation>
-    </message>
-    <message>
-        <location filename="../fontaction.ui" line="65"/>
-        <source>Add Tag</source>
-        <translation>Tillfoga Tagg</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../fontaction.ui" line="32"/>
         <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontaction.ui" line="65"/>
+        <source>Add Tag</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -163,26 +88,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="1673"/>
-        <source>Font Subfamily</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../fontitem.cpp" line="2071"/>
-        <source>Full font name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../fontitem.cpp" line="2072"/>
-        <source>Version string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../fontitem.cpp" line="2073"/>
-        <source>Description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../fontitem.cpp" line="154"/>
         <source>Copyright</source>
         <translation type="unfinished"></translation>
@@ -193,8 +98,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../fontitem.cpp" line="1673"/>
+        <source>Font Subfamily</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../fontitem.cpp" line="157"/>
         <source>Unique font identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2071"/>
+        <source>Full font name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2072"/>
+        <source>Version string</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -215,6 +135,11 @@
     <message>
         <location filename="../fontitem.cpp" line="163"/>
         <source>Designer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2073"/>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -260,7 +185,7 @@
     <message>
         <location filename="../fontitem.cpp" line="173"/>
         <source>Sample text</source>
-        <translation type="unfinished">Exempeltext</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="173"/>
@@ -283,7 +208,7 @@
     <message>
         <location filename="../help.ui" line="13"/>
         <source>Fontmatrix Help</source>
-        <translation>Fontmatrix Hj�lp</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -291,7 +216,7 @@
     <message>
         <location filename="../importtags.ui" line="13"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importtags.ui" line="25"/>
@@ -309,12 +234,7 @@
     <message>
         <location filename="../importedfonts.ui" line="13"/>
         <source>Dialog</source>
-        <translation>Dialog</translation>
-    </message>
-    <message>
-        <location filename="../importedfonts.ui" line="26"/>
-        <source>Imported fonts</source>
-        <translation type="obsolete">Importerade teckensnitt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importedfonts.ui" line="26"/>
@@ -345,101 +265,16 @@
     <message>
         <location filename="../listsdock.ui" line="22"/>
         <source>Form</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="52"/>
         <source>Search through font informations</source>
-        <translation>S�k i teckensnittsinformationer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="55"/>
         <source>Search</source>
-        <translation>S�k</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="65"/>
-        <source>Respect entered text case when searching</source>
-        <translation type="obsolete">Skilj mellan gemener och versaler vid s�kning</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="61"/>
-        <source>Case sensitive</source>
-        <translation type="obsolete">Skillnad gemener/versaler</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="99"/>
-        <source>Tag</source>
-        <translation type="obsolete">Tagg</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="135"/>
-        <source>Filter view by chosing tag</source>
-        <translation>Visa bara vald Tagg</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="138"/>
-        <source>TagSet</source>
-        <translation type="obsolete">Taggrupp</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="174"/>
-        <source>Show only fonts that belong to chosen tagset</source>
-        <translation>Visa bara teckensnitt som tillh�r den valda Taggrupp</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="244"/>
-        <source>Names</source>
-        <translation>Namn</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="249"/>
-        <source>Files</source>
-        <translation>Filer</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="226"/>
-        <source>Preview</source>
-        <translation type="obsolete">Provsida</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="271"/>
-        <source>Show complete collection of available fonts</source>
-        <translation>Visa alla tillg�ngliga teckensnitt</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="248"/>
-        <source>View all</source>
-        <translation type="obsolete">Visa alla</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="281"/>
-        <source>Show all activated fonts</source>
-        <translation>Visa alla aktiva teckensnitt</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="258"/>
-        <source>View activated</source>
-        <translation type="obsolete">Visa aktiva</translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="119"/>
-        <source>Tag:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="161"/>
-        <source>Tag Set:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="274"/>
-        <source>View All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../listsdock.ui" line="284"/>
-        <source>View Activated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -463,6 +298,56 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../listsdock.ui" line="119"/>
+        <source>Tag:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="135"/>
+        <source>Filter view by chosing tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="161"/>
+        <source>Tag Set:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="174"/>
+        <source>Show only fonts that belong to chosen tagset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="244"/>
+        <source>Names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="249"/>
+        <source>Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="271"/>
+        <source>Show complete collection of available fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="274"/>
+        <source>View All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="281"/>
+        <source>Show all activated fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="284"/>
+        <source>View Activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../listsdock.ui" line="291"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
@@ -473,62 +358,7 @@
     <message>
         <location filename="../mainview.ui" line="17"/>
         <source>main view widget</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="137"/>
-        <source>Right mouse click on a tag to add it or remove it from TagSet</source>
-        <translation>H�gerklicka p� en tagg f�r att l�gga den till eller ta bort den fr�n en Taggrupp</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="37"/>
-        <source>Font Info</source>
-        <translation type="obsolete">Teckensnittsinformation</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="66"/>
-        <source>Sample text</source>
-        <translation type="obsolete">Exempeltext</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="79"/>
-        <source>Customising text used for preview rendering</source>
-        <translation type="obsolete">�ndra provtext f�r exempel</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="82"/>
-        <source>Sample text...</source>
-        <translation type="obsolete">Exempeltext...</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="112"/>
-        <source>Fit to view</source>
-        <translation type="obsolete">Tillpassa till f�nster</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="147"/>
-        <source>Zoom is disabled, uncheck fit to view to enable zoom</source>
-        <translation type="obsolete">Zoom �r deaktiverat, avbocka  Tillpassa till f�nster f�r att aktivera</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="432"/>
-        <source>Glyphs</source>
-        <translation>Tecken</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="271"/>
-        <source>No glyph selected</source>
-        <translation type="obsolete">Inget tecken markerat</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="474"/>
-        <source>Clicking on a glyph will show details about it</source>
-        <translation>Klicka p� ett tecken f�r att visa detaljer</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="299"/>
-        <source>Tags</source>
-        <translation type="obsolete">Taggar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="48"/>
@@ -549,9 +379,14 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainview.ui" line="137"/>
+        <source>Right mouse click on a tag to add it or remove it from TagSet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainview.ui" line="149"/>
         <source>Add Tag</source>
-        <translation type="unfinished">Tillfoga Tagg</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="163"/>
@@ -561,6 +396,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="207"/>
         <source>+-~</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="227"/>
+        <source>Font Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="243"/>
+        <source> pt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -579,6 +424,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainview.ui" line="356"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="372"/>
+        <source>Use shaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainview.ui" line="395"/>
         <source>OpenType Features</source>
         <translation type="unfinished"></translation>
@@ -589,8 +444,13 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="372"/>
-        <source>Use shaper</source>
+        <location filename="../mainview.ui" line="417"/>
+        <source>Text Progression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="432"/>
+        <source>Glyphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -599,28 +459,18 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="227"/>
-        <source>Font Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="243"/>
-        <source> pt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="356"/>
-        <source>Advanced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="417"/>
-        <source>Text Progression</source>
+        <location filename="../mainview.ui" line="474"/>
+        <source>Clicking on a glyph will show details about it</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainViewWidget</name>
+    <message>
+        <location filename="../mainviewwidget.cpp" line="503"/>
+        <source>Names</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../mainviewwidget.cpp" line="962"/>
         <source>Activation event</source>
@@ -1322,11 +1172,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="503"/>
-        <source>Names</source>
-        <translation type="unfinished">Namn</translation>
-    </message>
-    <message>
         <location filename="../mainviewwidget.cpp" line="1664"/>
         <source>Fontmatrix takes care of you</source>
         <translation type="unfinished"></translation>
@@ -1361,6 +1206,11 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../prefs_panel.ui" line="22"/>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../prefs_panel.ui" line="32"/>
         <source>General</source>
         <translation type="unfinished"></translation>
@@ -1373,6 +1223,11 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
         <location filename="../prefs_panel.ui" line="53"/>
         <source>Close to System Tray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../prefs_panel.ui" line="63"/>
+        <source>Show &quot;All&quot; actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1391,8 +1246,28 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../prefs_panel.ui" line="114"/>
+        <source>is RTL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../prefs_panel.ui" line="134"/>
+        <source>size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../prefs_panel.ui" line="318"/>
+        <source> pt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../prefs_panel.ui" line="166"/>
         <source>Font Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../prefs_panel.ui" line="178"/>
+        <source>Add the full path to your preferred font editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1403,7 +1278,7 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
         <location filename="../prefs_panel.ui" line="500"/>
         <source>Browse...</source>
-        <translation type="unfinished">Bl�ddra...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="211"/>
@@ -1431,13 +1306,13 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../prefs_panel.ui" line="294"/>
-        <source>Font Size:</source>
+        <location filename="../prefs_panel.ui" line="288"/>
+        <source>Initial Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../prefs_panel.ui" line="318"/>
-        <source> pt</source>
+        <location filename="../prefs_panel.ui" line="294"/>
+        <source>Font Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1466,38 +1341,13 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../prefs_panel.ui" line="457"/>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../prefs_panel.ui" line="22"/>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../prefs_panel.ui" line="63"/>
-        <source>Show &quot;All&quot; actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../prefs_panel.ui" line="114"/>
-        <source>is RTL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../prefs_panel.ui" line="134"/>
-        <source>size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../prefs_panel.ui" line="288"/>
-        <source>Initial Layout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../prefs_panel.ui" line="428"/>
         <source>http://</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../prefs_panel.ui" line="457"/>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1508,11 +1358,6 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
         <location filename="../prefs_panel.ui" line="545"/>
         <source>Close</source>
-        <translation type="unfinished">St�ng</translation>
-    </message>
-    <message>
-        <location filename="../prefs_panel.ui" line="178"/>
-        <source>Add the full path to your preferred font editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1547,23 +1392,13 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../fontitem.cpp" line="1734"/>
-        <source>codepoint is U+</source>
-        <translation type="unfinished">teckenkod �r U+</translation>
-    </message>
-    <message>
-        <location filename="../fontbook.cpp" line="205"/>
-        <source>Creating font book... </source>
+        <location filename="../dataexport.cpp" line="37"/>
+        <source>Copying files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="205"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dataexport.cpp" line="37"/>
-        <source>Copying files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1587,6 +1422,16 @@ rstuvxyz
     <message>
         <location filename="../dataloader.cpp" line="179"/>
         <source>hamburgefonstiv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontbook.cpp" line="205"/>
+        <source>Creating font book... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="1734"/>
+        <source>codepoint is U+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1623,7 +1468,7 @@ rstuvxyz
     <message>
         <location filename="../systray.cpp" line="254"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Avsluta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../systray.cpp" line="265"/>
@@ -1636,56 +1481,21 @@ rstuvxyz
     <message>
         <location filename="../tagset.ui" line="19"/>
         <source>TagSet editor</source>
-        <translation>Bearbeta Taggrupper</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="64"/>
         <source>Collections of Tags</source>
-        <translation>Taggrupper</translation>
-    </message>
-    <message>
-        <location filename="../tagset.ui" line="80"/>
-        <source>Available tags</source>
-        <translation type="obsolete">Tillg�ngliga taggar</translation>
-    </message>
-    <message>
-        <location filename="../tagset.ui" line="115"/>
-        <source>Add selected tag to current set.</source>
-        <translation type="unfinished">L�gg markerad tagg till vald Taggrupp</translation>
-    </message>
-    <message>
-        <location filename="../tagset.ui" line="118"/>
-        <source>add</source>
-        <translation type="obsolete">L�gg till</translation>
-    </message>
-    <message>
-        <location filename="../tagset.ui" line="138"/>
-        <source>Collections</source>
-        <translation>Taggrupper</translation>
-    </message>
-    <message>
-        <location filename="../tagset.ui" line="153"/>
-        <source>New</source>
-        <translation>Ny</translation>
-    </message>
-    <message>
-        <location filename="../tagset.ui" line="160"/>
-        <source>delete</source>
-        <translation type="unfinished">Sl�tt</translation>
-    </message>
-    <message>
-        <location filename="../tagset.ui" line="187"/>
-        <source>remove</source>
-        <translation type="obsolete">Ta bort</translation>
-    </message>
-    <message>
-        <location filename="../tagset.ui" line="231"/>
-        <source>Close</source>
-        <translation>St�ng</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="80"/>
         <source>Available Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tagset.ui" line="115"/>
+        <source>Add selected tag to current set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1694,8 +1504,28 @@ rstuvxyz
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="138"/>
+        <source>Collections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tagset.ui" line="153"/>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tagset.ui" line="160"/>
+        <source>delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../tagset.ui" line="187"/>
         <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tagset.ui" line="231"/>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1772,7 +1602,7 @@ rstuvxyz
     <message>
         <location filename="../repair.ui" line="13"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../repair.ui" line="23"/>
@@ -1822,161 +1652,11 @@ rstuvxyz
     <message>
         <location filename="../repair.ui" line="187"/>
         <source>Close</source>
-        <translation type="unfinished">St�ng</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>typotek</name>
-    <message>
-        <location filename="../typotek.cpp" line="197"/>
-        <source>Add Directory</source>
-        <translation>L�gg till mapp</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="408"/>
-        <source>&amp;Import...</source>
-        <translation>&amp;Importera...</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="409"/>
-        <source>Ctrl+O</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="410"/>
-        <source>Import a directory</source>
-        <translation>Importera en mapp</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="413"/>
-        <source>&amp;Save</source>
-        <translation>&amp;Spara</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="414"/>
-        <source>Ctrl+S</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="415"/>
-        <source>Save the document to disk</source>
-        <translation>Spara dokumentet till disk</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="422"/>
-        <source>Print...</source>
-        <translation>Skriv ut...</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="423"/>
-        <source>Print a specimen of the current font</source>
-        <translation>Skriv ut ett provark med vald teckensnitt</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="426"/>
-        <source>Export font book...</source>
-        <translation>Exportera fontbok...</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="427"/>
-        <source>Export a pdf that show selected fonts</source>
-        <translation>Exportera en pdf-fil med valda teckensnitt</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="430"/>
-        <source>E&amp;xit</source>
-        <translation>&amp;Avsluta</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="431"/>
-        <source>Ctrl+Q</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="432"/>
-        <source>Exit the application</source>
-        <translation>Avsluta Fontmatrix</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="436"/>
-        <source>&amp;About</source>
-        <translation>&amp;Om</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="437"/>
-        <source>Show the Typotek&apos;s About box</source>
-        <translation>Visa information om Fontmatrix</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="440"/>
-        <source>Help</source>
-        <translation>Hj�lp</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="443"/>
-        <source>&amp;Tag Sets</source>
-        <translation>Tag&amp;grupper</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="327"/>
-        <source>Activate all currents</source>
-        <translation type="obsolete">Aktivera alla valda teckensnitt</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="330"/>
-        <source>Deactivate all currents</source>
-        <translation type="obsolete">Avaktivera alla valda teckensnitt</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="453"/>
-        <source>Edit current font</source>
-        <translation>Redigera markerat teckensnitt</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="334"/>
-        <source>Try to run Fontforge with the selected font as argument</source>
-        <translation type="obsolete">F�rs�k att �ppna markerad teckensnitt i FontForge</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="480"/>
-        <source>&amp;File</source>
-        <translation>&amp;Fil</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="491"/>
-        <source>Edit</source>
-        <translation>Redigera</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="503"/>
-        <source>&amp;Help</source>
-        <translation>&amp;Hj�lp</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="512"/>
-        <source>Ready</source>
-        <translation>Klar</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="856"/>
-        <source>Print specimen</source>
-        <translation>Skriv ut provsida</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="945"/>
-        <source>There is no font selected</source>
-        <translation>Inget teckensnitt markerat</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="997"/>
-        <source>Support of DragNDrop over http is sheduled but not yet effective</source>
-        <translation>Drag-och-sl�pp �ver http �r planerat men �nnu inte i funktion</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="1022"/>
-        <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
-        <translation>Detta objekt kan inte sl�ppas h�r</translation>
-    </message>
     <message>
         <location filename="../typotek.cpp" line="111"/>
         <source>Nothing Selected</source>
@@ -1990,6 +1670,11 @@ rstuvxyz
     <message>
         <location filename="../typotek.cpp" line="147"/>
         <source>The program will keep running in the system tray. To terminate the program, choose &lt;b&gt;Exit&lt;/b&gt; in the context menu of the system tray entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="197"/>
+        <source>Add Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2013,6 +1698,111 @@ rstuvxyz
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../typotek.cpp" line="372"/>
+        <source>Choose the tag for filter exported fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="378"/>
+        <source>Choose Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="408"/>
+        <source>&amp;Import...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="409"/>
+        <source>Ctrl+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="410"/>
+        <source>Import a directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="413"/>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="414"/>
+        <source>Ctrl+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="415"/>
+        <source>Save the document to disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="418"/>
+        <source>Export &amp;Fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="419"/>
+        <source>Export a fontset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="422"/>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="423"/>
+        <source>Print a specimen of the current font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="426"/>
+        <source>Export font book...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="427"/>
+        <source>Export a pdf that show selected fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="430"/>
+        <source>E&amp;xit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="431"/>
+        <source>Ctrl+Q</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="432"/>
+        <source>Exit the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="436"/>
+        <source>&amp;About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="437"/>
+        <source>Show the Typotek&apos;s About box</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="440"/>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="443"/>
+        <source>&amp;Tag Sets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../typotek.cpp" line="447"/>
         <source>Activate all current</source>
         <translation type="unfinished"></translation>
@@ -2020,6 +1810,11 @@ rstuvxyz
     <message>
         <location filename="../typotek.cpp" line="450"/>
         <source>Deactivate all current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="453"/>
+        <source>Edit current font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2038,53 +1833,6 @@ rstuvxyz
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="909"/>
-        <source>Fontmatrix care</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="903"/>
-        <source>You are about to activate a bunch of fonts,
-it is time to cancel if it was not your intent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="909"/>
-        <source>You are about to deactivate a bunch of fonts,
-it is time to cancel if it was not your intent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="1061"/>
-        <source>You provided an empty string, it&#xe2;&#x80;&#x99;s not fair</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="1067"/>
-        <source>&quot;default&quot; is a reserved keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="372"/>
-        <source>Choose the tag for filter exported fonts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="378"/>
-        <source>Choose Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="418"/>
-        <source>Export &amp;Fonts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="419"/>
-        <source>Export a fontset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../typotek.cpp" line="468"/>
         <source>Check Database</source>
         <translation type="unfinished"></translation>
@@ -2092,6 +1840,26 @@ it is time to cancel if it was not your intent</source>
     <message>
         <location filename="../typotek.cpp" line="474"/>
         <source>Tag All...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="480"/>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="491"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="503"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="512"/>
+        <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2115,16 +1883,6 @@ it is time to cancel if it was not your intent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="770"/>
-        <source>Catching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="770"/>
-        <source>font descriptions from network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../typotek.cpp" line="695"/>
         <source>Collected System Font</source>
         <translation type="unfinished"></translation>
@@ -2145,8 +1903,65 @@ it is time to cancel if it was not your intent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../typotek.cpp" line="770"/>
+        <source>Catching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="770"/>
+        <source>font descriptions from network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../typotek.cpp" line="811"/>
         <source>font descriptions imported from network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="856"/>
+        <source>Print specimen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="909"/>
+        <source>Fontmatrix care</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="903"/>
+        <source>You are about to activate a bunch of fonts,
+it is time to cancel if it was not your intent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="909"/>
+        <source>You are about to deactivate a bunch of fonts,
+it is time to cancel if it was not your intent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="945"/>
+        <source>There is no font selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="997"/>
+        <source>Support of DragNDrop over http is sheduled but not yet effective</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1022"/>
+        <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1061"/>
+        <source>You provided an empty string, it&#xe2;&#x80;&#x99;s not fair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1067"/>
+        <source>&quot;default&quot; is a reserved keyword</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -49,8 +49,8 @@ void DataLoader::load()
 	if ( !m_file->open ( QFile::ReadOnly ) )
 	{
 		// Ensure that there are default samples and preview text
-		m_typo->setSampleText( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.");	
-		m_typo->setWord("hamburgefonstiv", false);
+		m_typo->setSampleText( QObject::tr("ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?."));	
+		m_typo->setWord(QObject::tr("hamburgefonstiv"), false);
 		return;
 	}
 	if ( !doc.setContent ( m_file ) )
@@ -156,7 +156,7 @@ void DataLoader::load()
 	if ( sampleList.length() == 0 )
 	{
 		m_typo->statusBar()->showMessage ( QString ( "WARNING: no sample text in %1" ).arg ( m_file->fileName() ),3000 );
-		m_typo->setSampleText("ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.");
+		m_typo->setSampleText(QObject::tr("ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?."));
 	}
 	else
 	{
@@ -176,7 +176,7 @@ void DataLoader::load()
 	if ( previewList.length() == 0 )
 	{
 		m_typo->statusBar()->showMessage ( QString ( "WARNING: no preview word in %1" ).arg ( m_file->fileName() ),3000 );
-		pWord =  "hamburgefonstiv";
+		pWord =  QObject::tr("hamburgefonstiv");
 	}
 	else
 	{

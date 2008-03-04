@@ -22,6 +22,7 @@
 ../savedata.h
 ../systray.h
 ../tagseteditor.h
+../textprogression.h
 ../typotekadaptator.h
 ../typotek.h
 ../aboutwidget.cpp
@@ -48,6 +49,7 @@
 ../savedata.cpp
 ../systray.cpp
 ../tagseteditor.cpp
+../textprogression.cpp
 ../typotekadaptator.cpp
 ../typotek.cpp
 ../about.ui
@@ -61,3 +63,4 @@
 ../prefs_panel.ui
 ../repair.ui
 ../tagset.ui
+../textprogression.ui

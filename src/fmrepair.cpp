@@ -99,7 +99,7 @@ void FmRepair::fillActNotLinked()
 		{
 			if(  QFileInfo(list[i].symLinkTarget()).exists()  )
 			{
-				qDebug()<< "Inserting "<<list[i].symLinkTarget();
+// 				qDebug()<< "ACT NOT LINK "<<list[i].symLinkTarget();
 				linked << list[i].symLinkTarget();
 			}
 			else
@@ -130,13 +130,13 @@ void FmRepair::fillDeactLinked()
 	typotek *t = typotek::getInstance();
 	deactLinkList->clear();
 	QList<FontItem*> flist(t->getAllFonts());
-	QStringList activated;
+	QStringList deactivated;
 	for(int i(0); i < flist.count();++i)
 	{
-		if(!flist[i]->isLocked() && flist[i]->isActivated())
-			activated << flist[i]->path();
+		if(!flist[i]->isLocked() && !flist[i]->isRemote() && !flist[i]->isActivated())
+			deactivated << flist[i]->path();
 	}
-	
+	qDebug() << deactivated.join("\nDEACT : ");
 	QStringList linked;
 	QDir md(t->getManagedDir());
 	md.setFilter( QDir::Files );
@@ -145,7 +145,7 @@ void FmRepair::fillDeactLinked()
 	{
 		if(list[i].isSymLink())
 		{
-			if(  !QFileInfo(list[i].symLinkTarget()).exists()  )
+			if(  QFileInfo(list[i].symLinkTarget()).exists()  )
 			{
 				linked << list[i].symLinkTarget();
 			}
@@ -154,12 +154,17 @@ void FmRepair::fillDeactLinked()
 	
 	for(int i(0); i < linked.count(); ++i)
 	{
-		if(!activated.contains(activated[i]))
+		if(deactivated.contains(linked[i]))
 		{
+			qDebug() << "NO " << linked[i] ;
 			QListWidgetItem *lit = new QListWidgetItem(linked[i]);
 			lit->setCheckState(Qt::Unchecked);
 			lit->setToolTip(linked[i]);
 			deactLinkList->addItem(lit);
+		}
+		else
+		{
+			qDebug() << "OK " << linked[i] ;
 		}
 	}
 }

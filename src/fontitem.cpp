@@ -1129,7 +1129,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 		return;
 	}
 
-	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec, false );
+	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec,(m_progression == PROGRESSION_RTL) ? false : true );
 
 	if ( refGlyph.count() == 0 )
 	{
@@ -1141,38 +1141,15 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	{
 		for ( int i=0; i < refGlyph.count(); ++i )
 		{
-// 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
-// 			if ( !glyph )
-// 			{
-// // 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
-// 				continue;
-// 			}
-// 			if ( record )
-// 				pixList.append ( glyph );
-//
-// 			scene->addItem ( glyph );
-// 			glyph->setZValue ( 100.0 );
-//
-// 			if ( m_RTL )
-// 				pen.rx() += refGlyph[i].xadvance * scalefactor ;
-//
-// 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactor ) + glyph->data ( 2 ).toInt()  ,
-// 			                pen.y() + ( refGlyph[i].yoffset  * scalefactor ) - glyph->data ( 3 ).toInt() );
-//
-// 			if ( !m_RTL )
-// 				pen.rx() += refGlyph[i].xadvance * scalefactor;
 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
-			{
-// 				qDebug() << "Unable to render "<< spec.at ( i ) <<" from "<< name() ;
 				continue;
-			}
 
 
-			if ( m_progression == PROGRESSION_RTL )
-			{
-				pen.rx() += refGlyph[i].xadvance * scalefactorHadj;
-			}
+// 			if ( m_progression == PROGRESSION_RTL )
+// 			{
+// 				pen.rx() += refGlyph[i].xadvance * scalefactorHadj;
+// 			}
 
 			if ( record )
 				pixList.append ( glyph );
@@ -1181,7 +1158,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj ) + glyph->data ( 2 ).toDouble() * scalefactor  ,
 			                pen.y() + ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( 3 ).toInt() );
-			if (  m_progression != PROGRESSION_RTL )
+// 			if (  m_progression != PROGRESSION_RTL )
 				pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
 		}
 	}
@@ -1191,10 +1168,8 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 		{
 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
-			{
-// 				qDebug() << "Unable to render "<< refGlyph[i].glyph <<" from "<< name() ;
 				continue;
-			}
+			
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
@@ -1203,18 +1178,18 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			//debug
 			glyph->setBrush ( QColor ( ( i*255/refGlyph.count() ),0,0,255- ( i*255/refGlyph.count() ) ) );
 
-			if ( m_progression == PROGRESSION_RTL )
-			{
-				pen.rx() += refGlyph[i].xadvance * scalefactor;
-			}
+// 			if ( m_progression == PROGRESSION_RTL )
+// 			{
+// 				pen.rx() += refGlyph[i].xadvance * scalefactor;
+// 			}
 
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
 			                pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
 
-			if (  m_progression != PROGRESSION_RTL )
-			{
+// 			if (  m_progression != PROGRESSION_RTL )
+// 			{
 				pen.rx() += refGlyph[i].xadvance * scalefactor;
-			}
+// 			}
 		}
 	}
 

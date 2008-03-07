@@ -95,8 +95,115 @@ void FMOwnShaper::fillIn(const QString& s)
 void FMOwnShaper::Op()
 {
 	/// Here is the beast :)
+	/*
+	It’s all about processing replacements
+	
+	To make it easy to read, we’ll first put matched chunks into a map
+	then process each chunk in another loop.
+	*/
+	
+	// <index of the match sequence, matched list>
+	QMap<int, QList<Character> > chunks;
+	int idx(0);
+	while( idx < In.count() )
+	{
+		for(int nm(0); nm < Matches.count(); ++nm)
+		{
+			int rc = Compare( idx , nm);
+			if(rc > 0)
+			{
+				QList<Character> cl;
+				for(int nc(0); nc < rc; ++nc)
+					cl << In[idx + nc];
+				chunks[nm] = cl;
+				idx += rc;
+				break;
+			}
+		}
+		
+	}
+	
+	// Now we apply replacements as defined in the rules file
+	QMap<int, QList<Character> >::const_iterator chunkIt = chunks.begin();
+	while(chunkIt != chunks.end())
+	{
+		Replace(chunkIt.key(), chunkIt.value());
+	}
+	
 	
 }
+
+/// Return 0 if not matched and number of consumed positions if it matched 
+int FMOwnShaper::Compare(int inIndex, int matchIndex)
+{
+	int matchLen = Matches.at(matchIndex).Properties.count();
+	if(matchLen > (In.count() - inIndex))
+		return 0;
+	for(int i(0); i < matchLen; ++i)
+	{
+		Character car = In[inIndex + i];
+		Character mat = Matches.at(matchIndex).Properties[i];
+		if(mat.isNull())// We’ll just compare properties
+		{
+			foreach(QString prop, mat.CustomProperties)
+			{
+				if(!car.CustomProperties.contains(prop))
+					return 0;
+			}
+		}
+		else 
+		{
+			if(mat.unicode() != car.unicode())
+				return 0;
+			else
+			{
+				foreach(QString prop, mat.CustomProperties)
+				{
+					if(!car.CustomProperties.contains(prop))
+						return 0;
+				}
+			}
+			
+		}
+	}
+	return matchLen;
+}
+
+/// Apply replacement rule and append the result to Out
+void FMOwnShaper::Replace(int repIndex, QList< Character > chunk)
+{
+	QList<Character> buffer;
+	QMap<int, Character> matchedPos;
+	//load matchedPos first
+	int mIndex(0);
+	foreach(Character car, chunk)
+	{
+		if(car.isNull())// undefined code point
+		{
+			matchedPos[++mIndex] = car;
+		}
+	}
+	// Let replace :)
+	int rIndex(0);
+	foreach(Character rep, Replacements[repIndex].Properties)
+	{
+		if(rep.isNull())
+		{
+			Character tc(matchedPos[rep.GroupIndex].unicode(), rep.CustomProperties.toList());
+			buffer << tc;
+		}
+		else
+		{
+			buffer << rep;
+		}
+	}
+	// Push in Out
+	foreach(Character b, buffer)
+	{
+		Out << b;
+	}
+}
+
 
 
 void FMOwnShaper::DumpOut()
@@ -151,15 +258,12 @@ void MatchSequence::SetMatch(const QByteArray &b)
 {
 	/*
 	 The byte array looks like : 
-		"U1111(prop1, prop2, prop3)U2222.(prop4)[U3333-U4444](prop5)"
+		"U1111(prop1, prop2, prop3)U2222.(prop4)"
 	And it has to be turned into :
 		QList(
 			Character(U+1111).CustomProperties["prop1", "prop2", "prop3"],
 			Character(U+2222),
-			Character(`\0`).CustomProperties["prop4"],
-			Character(U+3333).CustomProperties["prop5"],
-			Character(U+nnnn).CustomProperties["prop5"],
-			Character(U+4444).CustomProperties["prop5"]
+			Character(`\0`).CustomProperties["prop4"]
 		)
 	
 	The null character will match only on properties. So dot its quite the same as in REGEX.
@@ -227,50 +331,6 @@ void MatchSequence::SetMatch(const QByteArray &b)
 				Properties << Character(unicode, pList);
 			}
 		}
-		else if(current == '[') // a code points range 
-		{
-			/*
-			[ U1111 - U2222 ]
-			0  2       8    12
-			*/
-			int beginRange;
-			int endRange;
-			bool ok;
-			beginRange = ref.mid(idx + 2 ,4).toInt(&ok,16) ;
-			if(!ok)
-				qDebug()<<"Oops";
-			endRange = ref.mid(idx + 8 ,4).toInt(&ok,16) ;
-			if(!ok)
-				qDebug()<<"Oops";
-			idx += 13;
-			QStringList pList;
-			if(ref[idx] != '(')
-			{
-				--idx;
-// 				Properties << Character(unicode);
-			}
-			else // property list
-			{
-				QStringList pList;
-				int countChars(0);
-				while(ref[idx + countChars] != ')')
-				{
-					++countChars;
-				}
-				QStringList pl(ref.mid(idx+1, countChars).split(";", QString::SkipEmptyParts));
-				foreach(QString prop, pl)
-				{
-					pList << prop.trimmed();
-				}
-				idx += countChars;
-// 				Properties << Character(unicode, pList);
-			}
-			for(; beginRange <=  endRange ; ++beginRange)
-			{
-				Properties << Character(beginRange, pList);
-			}
-			
-		}
 		else
 		{
 			// Error
@@ -320,72 +380,35 @@ void ReplaceSequence::SetReplace(const QByteArray& b)
 		else if(current == '.') // a null char (can have properties)
 		{
 			int unicode = 0 ;
+			Properties << Character(unicode);
 			++idx;
-			if(ref[idx] != '(')
-			{
-				--idx;
-				Properties << Character(unicode);
-			}
-			else // property list
-			{
-				QStringList pList;
-				int countChars(0);
-				while(ref[idx + countChars] != ')')
-				{
-					++countChars;
-				}
-				QStringList pl(ref.mid(idx+1, countChars).split(";", QString::SkipEmptyParts));
-				foreach(QString prop, pl)
-				{
-					pList << prop.trimmed();
-				}
-				idx += countChars;
-				Properties << Character(unicode, pList);
-			}
-		}
-		else if(current == '[') // a code points range 
-		{
-			/*
-			[ U1111 - U2222 ]
-			0  2       8    12
-			*/
-			int beginRange;
-			int endRange;
-			bool ok;
-			beginRange = ref.mid(idx + 2 ,4).toInt(&ok,16) ;
-			if(!ok)
-				qDebug()<<"Oops";
-			endRange = ref.mid(idx + 8 ,4).toInt(&ok,16) ;
-			if(!ok)
-				qDebug()<<"Oops";
-			idx += 13;
-			QStringList pList;
-			if(ref[idx] != '(')
-			{
-				--idx;
-// 				Properties << Character(unicode);
-			}
-			else // property list
-			{
-				QStringList pList;
-				int countChars(0);
-				while(ref[idx + countChars] != ')')
-				{
-					++countChars;
-				}
-				QStringList pl(ref.mid(idx+1, countChars).split(";", QString::SkipEmptyParts));
-				foreach(QString prop, pl)
-				{
-					pList << prop.trimmed();
-				}
-				idx += countChars;
-// 				Properties << Character(unicode, pList);
-			}
-			for(; beginRange <=  endRange ; ++beginRange)
-			{
-				Properties << Character(beginRange, pList);
-			}
 			
+			bool ok;
+			int group = ref.mid(idx,1).toInt(&ok,10) ;
+			Properties.last().GroupIndex = group;
+			++idx;
+			
+			if(ref[idx] != '(')
+			{
+				--idx;
+				
+			}
+			else // property list
+			{
+				QStringList pList;
+				int countChars(0);
+				while(ref[idx + countChars] != ')')
+				{
+					++countChars;
+				}
+				QStringList pl(ref.mid(idx+1, countChars).split(";", QString::SkipEmptyParts));
+				foreach(QString prop, pl)
+				{
+					pList << prop.trimmed();
+				}
+				idx += countChars;
+				Properties.last().CustomProperties = pList.toSet();
+			}
 		}
 		else
 		{

@@ -34,7 +34,16 @@ class Character : public QChar
 		Character():QChar(){}
 		// it should rather be a QFlag... if only I knew how it works ;-)
 		QSet<QString> CustomProperties;
+		// it will be used for replacement
+		/* I think it needs further explanations:
 		
+		U1111(propA).(propB).(propC)|.2(propC,propD)U2222(propA).1(propE)
+		
+		In this example, we want to reorder a sequence while matching is
+		based on properties only. So we need to map matched positions to
+		replacement positions as in "grep" group mechanism.
+		*/
+		int GroupIndex;
 		QString DumpCustom();
 		
 };
@@ -64,7 +73,6 @@ class FMOwnShaper
 	private:
 		QList<Character> In;
 		QList<Character> Out;
-		QList<Character> Buffer;
 		
 		QMap<int, Character> Dictionnary;
 
@@ -77,6 +85,9 @@ class FMOwnShaper
 		
 		int loadRules(QString lang);
 		void fillIn(const QString& s);
+		
+		int Compare(int inIndex, int matchIndex);
+		void Replace(int repIndex, QList<Character> chunk);
 	public:
 		void Op();
 		void DumpOut();

@@ -94,4 +94,12 @@
     <qresource prefix="/texts" lang="zh_TW" >
 	    <file alias="fontmatrix">messages/fontmatrix_zh_TW.qm</file>
     </qresource>
+    
+    
+    
+    <!-- SHAPERS -->
+    <qresource prefix="/shapers" >
+	    <file alias="test.dict">langs/test.dict</file>
+	    <file alias="test.match">langs/test.match</file>
+    </qresource>
 </RCC>

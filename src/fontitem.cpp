@@ -22,6 +22,7 @@
 #include "fmshaper.h"
 #include "fmglyphsview.h"
 #include "typotek.h"
+#include "fmshaper_own.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -785,6 +786,15 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 {
 	if ( spec.isEmpty() )
 		return;
+	
+	/// TEST(own shaper)
+	
+	FMOwnShaper os(spec, "test");
+	os.Op();
+	os.DumpOut();
+	
+	/// END TEST
+	
 	ensureFace();
 	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	if ( record )

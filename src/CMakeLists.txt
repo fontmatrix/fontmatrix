@@ -28,6 +28,7 @@ remotedir.cpp
 fmrepair.cpp
 fmnamelist.cpp
 textprogression.cpp
+fmshaper_own.cpp
 )
 
 SET(fontmatrix_MOC_HDRS

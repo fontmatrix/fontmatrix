@@ -30,11 +30,15 @@ class Character : public QChar
 	public: 
 		Character(int unicode, QList<QByteArray> tokens);
 		Character(int unicode, QStringList tokens);
-		Character(int unicode):QChar(unicode){}
-		Character():QChar(){}
+		Character(int unicode):QChar(unicode),MatchAll(false){}
+		Character():QChar(),MatchAll(false){}
 		// it should rather be a QFlag... if only I knew how it works ;-)
 		QSet<QString> CustomProperties;
-		// it will be used for replacement
+		
+		// Do we want to match all CustomProperties
+		bool MatchAll;
+		
+		// GroupIndex will be used for replacement
 		/* I think it needs further explanations:
 		
 		U1111(propA).(propB).(propC)|.2(propC,propD)U2222(propA).1(propE)
@@ -43,6 +47,7 @@ class Character : public QChar
 		based on properties only. So we need to map matched positions to
 		replacement positions as in "grep" group mechanism.
 		*/
+		bool isMatchedGroup;
 		int GroupIndex;
 		QString DumpCustom();
 		

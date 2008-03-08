@@ -77,7 +77,7 @@ ENDIF(FONTCONFIG_FOUND)
 
 
 ADD_SUBDIRECTORY(src)
-
+ADD_SUBDIRECTORY(src/langs)
 
 ######## Installation ##################
 

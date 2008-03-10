@@ -32,12 +32,20 @@
 #include <QMap>
 #include <QList>
 
+#ifdef FM_OWNSHAPER
+#include "fmshaper_own.h"
+#endif
+
 namespace Harfbuzz
 {
 #include <harfbuzz.h>
 #include <harfbuzz-global.h>
 #include <harfbuzz-gpos.h>
+			 
+#ifndef FM_OWNSHAPER		 
 #include <harfbuzz-shaper.h>
+#endif
+			 
 }
 
 // using namespace std;
@@ -132,6 +140,9 @@ class FmOtf
 		int procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos );
 	public:
 		QList<RenderedGlyph> procstring ( QString s, OTFSet set );
+#ifdef FM_OWNSHAPER
+		QList<RenderedGlyph> procstring ( QList<Character> shaped );
+#endif
 		/*
 		  * These functions give access to informations contained in the fontfile
 		 */

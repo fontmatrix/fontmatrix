@@ -19,6 +19,7 @@ FMOwnShaper::FMOwnShaper(QString s, QString lang)
 {
 	// We need to load at least a default rule 
 	Character noop;
+	noop.GroupIndex = 1;
 	Matches << MatchSequence();
 	Matches.last().Properties << noop;
 	Replacements << ReplaceSequence();
@@ -529,6 +530,12 @@ void ReplaceSequence::SetReplace(const QByteArray& b)
 			qDebug()<<"ERROR replace: current = "<< current;
 		}
 	}
+}
+
+QList< Character > FMOwnShaper::GetShaped()
+{
+	Op();
+	return Out;
 }
 
 

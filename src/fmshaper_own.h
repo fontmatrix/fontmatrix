@@ -9,8 +9,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#ifndef FMSHAPER_OWN
-#define FMSHAPER_OWN
+#ifndef FMSHAPER_OWN_H
+#define FMSHAPER_OWN_H
 
 #include <QSet>
 #include <QString>
@@ -93,9 +93,12 @@ class FMOwnShaper
 		
 		int Compare(int inIndex, int matchIndex);
 		void Replace(int repIndex, QList<Character> chunk);
-	public:
 		void Op();
+		
+	public:
+		
 		void DumpOut();
+		QList<Character> GetShaped();
 };
 
 #endif

@@ -787,14 +787,6 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 	if ( spec.isEmpty() )
 		return;
 	
-	/// TEST(own shaper)
-	
-	FMOwnShaper os(spec, "test");
-	os.Op();
-	os.DumpOut();
-	
-	/// END TEST
-	
 	ensureFace();
 	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	if ( record )
@@ -1105,9 +1097,184 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 	releaseFace();
 }
 
+#ifdef FM_OWNSHAPER
+void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
+{
+	qDebug()<<"Rendered by Me :)";
+	if ( spec.isEmpty() )
+		return;
+	if ( !m_isOpenType )
+		return;
+	ensureFace();
+
+	/// TEST(own shaper)
+	
+	QString canon_script = (script == "latn") ? "test" : "test"; //It’s really the beginning ;-)
+	FMOwnShaper os(spec, canon_script);
+	QList<Character> shaped( os.GetShaped() );
+	os.DumpOut();
+	
+	/// END TEST
+	otf = new FmOtf ( m_face, 0x10000 );
+	if ( !otf )
+		return;
+	if ( record )
+		sceneList.append ( scene );
+	double sizz = fsize;
+	double scalefactor = sizz / m_face->units_per_EM  ;
+	double pixelAdjustX = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+	double pixelAdjustY = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+	double pWidth = lineWidth ;
+	const double distance = 20;
+	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
+	
+	QList<RenderedGlyph> refGlyph = otf->procstring ( shaped );
+	
+// 	qDebug() << "Get line "<<spec;
+	delete otf;
+// 	qDebug() << "Deleted OTF";
+	if ( refGlyph.count() == 0 )
+	{
+		return;
+	}
+	QPointF pen ( origine );
+
+	if ( m_rasterFreetype )
+	{
+		for ( int i=0; i < refGlyph.count(); ++i )
+		{
+			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
+			if ( !glyph )
+				continue;
+			
+			if (  m_progression == PROGRESSION_RTL)
+			{
+				pen.rx() -= refGlyph[i].xadvance * pixelAdjustX;
+				pWidth -= refGlyph[i].xadvance * pixelAdjustX ;
+				if ( pWidth < distance )
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else if( m_progression == PROGRESSION_BTT)
+			{
+				pen.ry() -= refGlyph[i].yadvance * pixelAdjustY;
+				pWidth -=  refGlyph[i].yadvance * pixelAdjustY;
+				if ( pWidth < distance )
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else if( m_progression == PROGRESSION_LTR)
+			{
+				pWidth -= refGlyph[i].xadvance * pixelAdjustX;
+				if ( pWidth < distance )
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else if( m_progression == PROGRESSION_TTB)
+			{
+				pWidth -=  refGlyph[i].yadvance * pixelAdjustY ;
+				if ( pWidth < distance )
+				{
+					delete glyph;
+					break;
+				}
+			}
+			
+			/*************************************************/
+			if ( record )
+				pixList.append ( glyph );
+			scene->addItem ( glyph );
+			glyph->setZValue ( 100.0 );
+			glyph->setData ( 1,"glyph" );
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( 2 ).toDouble() * scalefactor  ,
+					pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( 3 ).toInt() );
+			/*************************************************/
+			
+			if ( m_progression == PROGRESSION_LTR )
+				pen.rx() += refGlyph[i].xadvance * pixelAdjustX ;
+			else if( m_progression == PROGRESSION_TTB )
+				pen.ry() += refGlyph[i].yadvance * pixelAdjustY ;
+		}
+	}
+	else
+	{
+		for ( int i=0; i < refGlyph.count(); ++i )
+		{
+			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
+			if ( !glyph )
+				continue;
+			
+			if (  m_progression == PROGRESSION_RTL )
+			{
+				pen.rx() -= refGlyph[i].xadvance * scalefactor;
+				pWidth -= refGlyph[i].xadvance * scalefactor;
+				if ( pWidth < distance )
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else if( m_progression == PROGRESSION_BTT)
+			{
+				pen.ry() -= refGlyph[i].yadvance * scalefactor;
+				pWidth -=  refGlyph[i].yadvance * scalefactor;
+				if ( pWidth < distance )
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else if(m_progression == PROGRESSION_LTR)
+			{
+				pWidth -= refGlyph[i].xadvance * scalefactor;
+				if ( pWidth < distance )
+				{
+					delete glyph;
+					break;
+				}
+			}
+			else if( m_progression == PROGRESSION_TTB)
+			{
+				pWidth -=  refGlyph[i].yadvance * scalefactor ;
+				if ( pWidth < distance )
+				{
+					delete glyph;
+					break;
+				}
+			}
+			
+			/**********************************************/
+			if ( record )
+				glyphList.append ( glyph );
+			scene->addItem ( glyph );
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
+					pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
+			glyph->setZValue ( 100.0 );
+			glyph->setData ( 1,"glyph" );
+			/*******************************************/
+			
+			if (  m_progression == PROGRESSION_LTR )
+				pen.rx() += refGlyph[i].xadvance * scalefactor;
+			if (  m_progression == PROGRESSION_TTB)
+				pen.ry() += refGlyph[i].yadvance * scalefactor;
+		}
+	}
+
+
+	releaseFace();
+}
+
+#else
 /// Shaped line, mostly bug^^non-fully-usable right now :(
 void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth,double fsize, bool record )
 {
+	qDebug()<<"Rendered by HB";
 	if ( spec.isEmpty() )
 		return;
 	if ( !m_isOpenType )
@@ -1206,8 +1373,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	delete otf;
 	releaseFace();
 }
-
-
+#endif
 
 //deprecated
 void FontItem::deRender ( QGraphicsScene *scene )

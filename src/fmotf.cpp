@@ -383,10 +383,8 @@ int FmOtf::procstring ( QString s, QString script, QString lang, QStringList gsu
 
 QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
 {
-// 	qDebug()<<"FmOtf::procstring(QString "<<s<<", OTFSet "<<set.dump()<<")";
 	curString = s;
 	regAltGlyphs.clear();
-// 	qDebug() <<"Get a bufferString of "<< numR <<" glyphs";
 	if ( Harfbuzz::hb_buffer_new ( &_buffer ) != Harfbuzz::HB_Err_Ok)
 	{
 		qDebug ( ) << "Unable to get _buffer("<< _buffer <<")";
@@ -399,19 +397,113 @@ QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
 	Harfbuzz::hb_buffer_free ( _buffer );
 	_buffer = 0;
 	
-// 	qDebug() <<"Get a renderedString of "<< ret.count() <<" glyphs";
 	return ret;
 }
+
+#ifdef FM_OWNSHAPER
+QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped  )
+{
+	QString script = "latn";
+	QString lang = "dflt";
+	regAltGlyphs.clear();
+	if ( Harfbuzz::hb_buffer_new ( &_buffer ) != Harfbuzz::HB_Err_Ok)
+	{
+		qDebug ( ) << "Unable to get _buffer("<< _buffer <<")";
+		return QList<RenderedGlyph>();
+	}
+	Harfbuzz::hb_buffer_clear ( _buffer );
+	int n = shaped.count ();
+	Harfbuzz::HB_Error           error;
+	uint all = 0x1;
+	QMap<QString,uint> props;
+	
+	//First we collect properties
+	for( int i = 0; i < n; i++ )
+	{
+		foreach(QString cProp, shaped[i].CustomProperties)
+		{
+			if(!props.contains(cProp))
+				props[cProp] = ++all ;
+		}
+	}
+	for ( int i = 0; i < n; i++ )
+	{
+		uint prop = 0;
+// 		prop |= all;
+		foreach(QString cProp, shaped[i].CustomProperties)
+		{
+			prop |= ~(props[cProp]);
+		}
+		error = Harfbuzz::hb_buffer_add_glyph ( _buffer, FT_Get_Char_Index ( _face, shaped[i].unicode() ), prop, i );
+		if ( error !=  Harfbuzz::HB_Err_Ok )
+			qDebug() << "hb_buffer_add_glyph () failed";
+
+	}
+
+// 	if ( ! gsub.isEmpty() )
+	{
+
+		Harfbuzz::HB_GSUB_Clear_Features ( _gsub );
+
+		set_table ( "GSUB" );
+		set_script ( script );
+		set_lang ( lang );
+
+		for ( QMap<QString,uint>::iterator ife = props.begin (); ife != props.end (); ife++ )
+		{
+			Harfbuzz::HB_UShort fidx;
+			error = Harfbuzz::HB_GSUB_Select_Feature ( _gsub, OTF_name_tag ( ife.key() ), curScript, curLang, &fidx );
+			if ( !error )
+			{
+				Harfbuzz::HB_GSUB_Add_Feature ( _gsub, fidx, ife.value() );
+			}
+			else
+				qDebug() << QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error );
+		}
+
+		error = Harfbuzz::HB_GSUB_Apply_String ( _gsub, _buffer );
+		if ( error && error != Harfbuzz::HB_Err_Not_Covered )
+			qDebug () << QString ( "applying gsub features to string  returned %2" ).arg ( error );
+
+	}
+// 	if ( !gpos.isEmpty() )
+	{
+		Harfbuzz::HB_GPOS_Clear_Features ( _gpos );
+		set_table ( "GPOS" );
+		set_script ( script );
+		set_lang ( lang );
+		for ( QMap<QString,uint>::iterator ife = props.begin (); ife != props.end (); ife++ )
+		{
+			Harfbuzz::HB_UShort fidx;
+			error = Harfbuzz::HB_GPOS_Select_Feature ( _gpos, OTF_name_tag ( ife.key() ), curScript, curLang, &fidx );
+			if ( !error )
+			{
+				Harfbuzz::HB_GPOS_Add_Feature ( _gpos, fidx, ife.value() );
+			}
+			else
+				qDebug() << QString ( "adding gpos feature [%1] failed : %2" ).arg ( *ife ).arg ( error );
+		}
+
+		error = Harfbuzz::HB_GPOS_Apply_String ( &hbFont, _gpos, FT_LOAD_NO_SCALE, _buffer,
+		        /*while dvi is true font klass is not used */ true,
+		        /*r2l */ true );
+		if ( error && error != Harfbuzz::HB_Err_Not_Covered )
+			qDebug () << QString ( "applying gpos features to string returned %2" ).arg ( error ) ;
+
+	}
+	
+	
+	QList<RenderedGlyph> ret = get_position();
+	Harfbuzz::hb_buffer_free ( _buffer );
+	_buffer = 0;
+	return ret;
+	
+}
+#endif
 
 int
 FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
 {
-// 	qDebug() <<"FmOtf::procstring1 ( "<<s<<","<<script<<", "<<lang<<", "<<gsub.join ( "." ) <<", " <<gpos.join ( "." ) <<" )";
-// 	if ( Harfbuzz::hb_buffer_new ( &_buffer ) )
-// 	{
-// 		qDebug ( "unable to get _buffer" );
-// 		return 0;
-// 	}
 	Harfbuzz::hb_buffer_clear ( _buffer );
 	int n = s.length ();
 	Harfbuzz::HB_Error           error;

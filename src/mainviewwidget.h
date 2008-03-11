@@ -87,6 +87,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		bool renderingLock;
 		int fancyGlyphInUse;
 		
+		bool uRangeIsNotEmpty;
+		
 		
 		void prepare(QList<FontItem*> fonts);
 		QList<FontItem*> theTaggedFonts;		

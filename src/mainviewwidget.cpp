@@ -55,6 +55,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 {
 	setupUi ( this );
 
+	uRangeIsNotEmpty = false;
+	
 	QSettings settings;
 	sampleFontSize = settings.value("SampleFontSize",12.0).toDouble();
 	sampleInterSize = settings.value("SampleInterline",16.0).toDouble();
@@ -559,10 +561,12 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 	if ( abcView->isVisible() )
 	{
-		// Used to be slow,old times
-// 		QApplication::setOverrideCursor ( Qt::WaitCursor );
-		f->renderAll ( abcScene , uniPair.first, uniPair.second );
-// 		QApplication::restoreOverrideCursor();
+		if(uRangeIsNotEmpty)
+			f->renderAll ( abcScene , uniPair.first, uniPair.second );
+		else
+		{
+			// TODO something useful, if possible
+		}
 	}
 
 	if ( loremView->isVisible() || loremView_FT->isVisible() )
@@ -1226,12 +1230,9 @@ void MainViewWidget::fillUniPlanes()
 
 void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 {
-	QString stickyRange;
+	QString stickyRange(uniPlaneCombo->currentText());
 	int stickyIndex(0);
-// 	if(stickRangeButton->isChecked())
-// 	{
-		stickyRange = uniPlaneCombo->currentText();
-// 	}
+
 	uniPlaneCombo->clear();
 	QStringList plist= uniPlanes.keys();
 	for ( int i= 0;i<plist.count();++i )
@@ -1247,7 +1248,20 @@ void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 // 			qDebug() << p << codecount;
 			uniPlaneCombo->addItem ( p.mid ( 3 ), p.mid ( 0,3 ) );
 			if(p.mid ( 3 ) == stickyRange)
+			{
 				stickyIndex = uniPlaneCombo->count() - 1;
+				uRangeIsNotEmpty = true;
+			}
+		}
+		else
+		{
+			if(p.mid ( 3 ) == stickyRange)
+			{
+				// Here we are, there is not 
+				uniPlaneCombo->addItem ( p.mid ( 3 ), p.mid ( 0,3 ) );
+				stickyIndex = uniPlaneCombo->count() - 1;
+				uRangeIsNotEmpty = false;
+			}
 		}
 	}
 	uniPlaneCombo->setCurrentIndex ( stickyIndex );

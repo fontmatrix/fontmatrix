@@ -30,8 +30,8 @@ class Character : public QChar
 	public: 
 		Character(int unicode, QList<QByteArray> tokens);
 		Character(int unicode, QStringList tokens);
-		Character(int unicode):QChar(unicode),MatchAll(false){}
-		Character():QChar(),MatchAll(false){}
+		Character(int unicode):QChar(unicode),MatchAll(false),isMatchedGroup(false){}
+		Character():QChar(),MatchAll(false),isMatchedGroup(false){}
 		// it should rather be a QFlag... if only I knew how it works ;-)
 		QSet<QString> CustomProperties;
 		

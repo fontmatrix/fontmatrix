@@ -22,8 +22,10 @@ FMOwnShaper::FMOwnShaper(QString s, QString lang)
 	noop.GroupIndex = 1;
 	Matches << MatchSequence();
 	Matches.last().Properties << noop;
+	Matches.last().Properties.last().isMatchedGroup = true;
 	Replacements << ReplaceSequence();
 	Replacements.last().Properties << noop;
+	Replacements.last().Properties.last().GroupIndex = 1;
 	
 	loadRules(lang);
 	fillIn(s);
@@ -135,6 +137,7 @@ void FMOwnShaper::Op()
 		}
 		if(!matched)
 		{
+			In[idx].isMatchedGroup = true;
 			QList< Character > ul;
 			ul << In[idx];
 			chunks.append( QPair< int, QList< Character > >(0 ,ul ) );
@@ -189,8 +192,6 @@ int FMOwnShaper::Compare(int inIndex, int matchIndex)
 			}
 			else
 			{
-				qDebug()<< "mat("<<  mat.unicode() <<") => "<< mat.DumpCustom();
-				qDebug()<< "car("<<  car.unicode() <<") => "<< car.DumpCustom();
 				foreach(QString prop, mat.CustomProperties)
 				{
 					if(!prop.isEmpty())
@@ -238,6 +239,7 @@ int FMOwnShaper::Compare(int inIndex, int matchIndex)
 	foreach(int idx, matchedGroup)
 	{
 		In[idx].isMatchedGroup = true;
+// 		qDebug()<<"MATCHED" <<In[idx].unicode() << In[idx].DumpCustom();
 	}
 	return matchLen;
 }
@@ -251,9 +253,10 @@ void FMOwnShaper::Replace(int repIndex, QList< Character > chunk)
 	int mIndex(0);
 	foreach(Character car, chunk)
 	{
-		if(car.isMatchedGroup)// undefined code point
+		if(car.isMatchedGroup)
 		{
 			matchedPos[++mIndex] = car;
+			qDebug()<< "Matched "<< car.unicode() << " at pos "<< mIndex ;
 		}
 	}
 	// Let replace :)
@@ -294,7 +297,7 @@ void FMOwnShaper::DumpOut()
 
 /// Character
 Character::Character(int unicode, QList< QByteArray > tokens)
-	:QChar(unicode),MatchAll(false)
+	:QChar(unicode),MatchAll(false),isMatchedGroup(false)
 {
 	for(int i(0); i < tokens.count(); ++i)
 		CustomProperties << QString(tokens[i].trimmed());
@@ -302,7 +305,7 @@ Character::Character(int unicode, QList< QByteArray > tokens)
 
 
 Character::Character(int unicode, QStringList tokens)
-	:QChar(unicode),MatchAll(false)
+	:QChar(unicode),MatchAll(false),isMatchedGroup(false)
 {
 	for(int i(0); i < tokens.count(); ++i)
 		CustomProperties << tokens[i].trimmed();

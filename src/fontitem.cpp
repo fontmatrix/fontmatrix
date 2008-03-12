@@ -1109,7 +1109,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 
 	/// TEST(own shaper)
 	
-	QString canon_script = (script == "latn") ? "test" : "test"; //It’s really the beginning ;-)
+	QString canon_script = script ;
 	FMOwnShaper os(spec, canon_script);
 	QList<Character> shaped( os.GetShaped() );
 	os.DumpOut();

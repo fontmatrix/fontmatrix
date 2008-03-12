@@ -99,7 +99,7 @@
     
     <!-- SHAPERS -->
     <qresource prefix="/shapers" >
-	    <file alias="test.dict">langs/test.dict</file>
-	    <file alias="test.match">langs/test.match</file>
+	    <file alias="latn.dict">langs/latn.dict</file>
+	    <file alias="latn.match">langs/latn.match</file>
     </qresource>
 </RCC>

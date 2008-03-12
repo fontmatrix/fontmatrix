@@ -14,6 +14,8 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QSettings>
+#include <QDir>
 
 FMOwnShaper::FMOwnShaper(QString s, QString lang)
 {
@@ -38,13 +40,24 @@ FMOwnShaper::~ FMOwnShaper()
 
 int FMOwnShaper::loadRules(QString lang)
 {
-	QFile dictFile(":/shapers/"+lang+".dict");
+	QSettings stg;
+	QString actualSDir;
+	QString ShaperDir(stg.value("ShaperDataDir").toString());
+	if(ShaperDir.isEmpty())
+	{
+		actualSDir = ":/shapers/";
+	}
+	else
+	{
+		actualSDir = ShaperDir + QDir::separator() ;
+	}
+	QFile dictFile(actualSDir +lang+ ".dict");
 	if(!dictFile.open(QIODevice::ReadOnly))
 	{
 		qDebug()<<"Failed to open " << dictFile.fileName();
 		return 1;
 	}
-	QFile matchFile(":/shapers/"+lang+".match");
+	QFile matchFile(actualSDir +lang+".match");
 	if(!matchFile.open(QIODevice::ReadOnly))
 	{
 		qDebug()<<"Failed to open " << matchFile.fileName();

@@ -1128,7 +1128,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	const double distance = 20;
 	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	
-	QList<RenderedGlyph> refGlyph = otf->procstring ( shaped );
+	QList<RenderedGlyph> refGlyph = otf->procstring ( shaped, script );
 	
 // 	qDebug() << "Get line "<<spec;
 	delete otf;

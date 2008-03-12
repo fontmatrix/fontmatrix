@@ -401,9 +401,9 @@ QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
 }
 
 #ifdef FM_OWNSHAPER
-QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped  )
+QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString script )
 {
-	QString script = "latn";
+// 	QString script = "latn";
 	QString lang = "dflt";
 	regAltGlyphs.clear();
 	if ( Harfbuzz::hb_buffer_new ( &_buffer ) != Harfbuzz::HB_Err_Ok)

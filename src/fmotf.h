@@ -141,7 +141,7 @@ class FmOtf
 	public:
 		QList<RenderedGlyph> procstring ( QString s, OTFSet set );
 #ifdef FM_OWNSHAPER
-		QList<RenderedGlyph> procstring ( QList<Character> shaped );
+		QList<RenderedGlyph> procstring ( QList<Character> shaped , QString script);
 #endif
 		/*
 		  * These functions give access to informations contained in the fontfile

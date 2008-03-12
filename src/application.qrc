@@ -102,4 +102,8 @@
 	    <file alias="latn.dict">langs/latn.dict</file>
 	    <file alias="latn.match">langs/latn.match</file>
     </qresource>
+     <qresource prefix="/shapers" >
+	    <file alias="deva.dict">langs/deva.dict</file>
+	    <file alias="deva.match">langs/deva.match</file>
+    </qresource>
 </RCC>

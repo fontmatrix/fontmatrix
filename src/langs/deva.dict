@@ -3,239 +3,231 @@
 % Where FFFF is a raw hex value representing a code point in Unicode space
 % and "props" are arbitrary ascii strings.
 % Records begining by "%" are comments.
+% space
+0020|generic
+% ऀ 
+0900|generic|internal
 % ँ 
-0901
+0901|generic|SIGN_C
 % ं 
-0902
+0902|generic|SIGN_C
 % ः 
-0903
+0903|generic|SIGN_V
 % ऄ 
-0904
+0904|generic|LETTER_S
 % अ 
-0905
+0905|generic|LETTER_S
 % आ 
-0906
+0906|generic|LETTER_S
 % इ 
-0907
+0907|generic|LETTER_S
 % ई 
-0908
+0908|generic|LETTER_S
 % उ 
-0909
+0909|generic|LETTER_S
 % ऊ 
-090a
+090a|generic|LETTER_S
 % ऋ 
-090b
+090b|generic|LETTER_S
 % ऌ 
-090c
+090c|generic|LETTER_S
 % ऍ 
-090d
+090d|generic|LETTER_S
 % ऎ 
-090e
+090e|generic|LETTER_S
 % ए 
-090f
+090f|generic|LETTER_S
 % ऐ 
-0910
+0910|generic|LETTER_S
 % ऑ 
-0911
+0911|generic|LETTER_S
 % ऒ 
-0912
+0912|generic|LETTER_S
 % ओ 
-0913
+0913|generic|LETTER_S
 % औ 
-0914
+0914|generic|LETTER_S
 % क 
-0915
+0915|generic|LETTER_K
 % ख 
-0916
+0916|generic|LETTER_K
 % ग 
-0917
+0917|generic|LETTER_K
 % घ 
-0918
+0918|generic|LETTER_K
 % ङ 
-0919
+0919|generic|LETTER_K
 % च 
-091a
+091a|generic|LETTER_K
 % छ 
-091b
+091b|generic|LETTER_K
 % ज 
-091c
+091c|generic|LETTER_K
 % झ 
-091d
+091d|generic|LETTER_K
 % ञ 
-091e
+091e|generic|LETTER_K
 % ट 
-091f
+091f|generic|LETTER_K
 % ठ 
-0920
+0920|generic|LETTER_K
 % ड 
-0921
+0921|generic|LETTER_K
 % ढ 
-0922
+0922|generic|LETTER_K
 % ण 
-0923
+0923|generic|LETTER_K
 % त 
-0924
+0924|generic|LETTER_K
 % थ 
-0925
+0925|generic|LETTER_K
 % द 
-0926
+0926|generic|LETTER_K
 % ध 
-0927
+0927|generic|LETTER_K
 % न 
-0928
+0928|generic|LETTER_K
 % ऩ 
-0929
+0929|generic|LETTER_K
 % प 
-092a
+092a|generic|LETTER_K
 % फ 
-092b
+092b|generic|LETTER_K
 % ब 
-092c
+092c|generic|LETTER_K
 % भ 
-092d
+092d|generic|LETTER_K
 % म 
-092e
+092e|generic|LETTER_K
 % य 
-092f
+092f|generic|LETTER_K
 % र 
-0930
+0930|generic|LETTER_K|LETTER_RA
 % ऱ 
-0931
+0931|generic|LETTER_K
 % ल 
-0932
+0932|generic|LETTER_K
 % ळ 
-0933
+0933|generic|LETTER_K
 % ऴ 
-0934
+0934|generic|LETTER_K
 % व 
-0935
+0935|generic|LETTER_K
 % श 
-0936
+0936|generic|LETTER_K
 % ष 
-0937
+0937|generic|LETTER_K
 % स 
-0938
+0938|generic|LETTER_K
 % ह 
-0939
+0939|generic|LETTER_K
 % ऺ 
-093a
+093a|generic
 % ऻ 
-093b
+093b|generic
 % ़ 
-093c
+093c|generic|SIGN_N
 % ऽ 
-093d
+093d|generic
 % ा 
-093e
+093e|generic|VOWEL_AA
 % ि 
-093f
+093f|generic|VOWEL_I
 % ी 
-0940
+0940|generic|VOWEL_II
 % ु 
-0941
+0941|generic|VOWEL_UU
 % ू 
-0942
+0942|generic|VOWEL_UU
 % ृ 
-0943
+0943|generic|VOWEL_UU
 % ॄ 
-0944
+0944|generic|VOWEL_UU
 % ॅ 
-0945
+0945|generic|VOWEL_C_E
 % ॆ 
-0946
+0946|generic|VOWEL_C_E
 % े 
-0947
+0947|generic|VOWEL_C_E
 % ै 
-0948
+0948|generic|VOWEL_C_E
 % ॉ 
-0949
+0949|generic|VOWEL_C_O_
 % ॊ 
-094a
+094a|generic|VOWEL_C_O_
 % ो 
-094b
+094b|generic|VOWEL_C_O_
 % ौ 
-094c
-% ् 
-094d
+094c|generic|VOWEL_C_O_
+% ्   I removed the generic property in  order to have a low cost negation
+094d|SIGN_VIRAMA
 % ॎ 
-094e
+094e|generic
 % ॏ 
-094f
+094f|generic
 % ॐ 
-0950
+0950|generic
 % ॑ 
-0951
+0951|generic|STRESS_U
 % ॒ 
-0952
+0952|generic|STRESS_A
 % ॓ 
-0953
+0953|generic|ACCENT
 % ॔ 
-0954
+0954|generic|ACCENT
 % ॕ 
-0955
+0955|generic
 % ॖ 
-0956
+0956|generic
 % ॗ 
-0957
+0957|generic
 % क़ 
-0958
+0958|generic|LETTER_Q
 % ख़ 
-0959
+0959|generic|LETTER_Q
 % ग़ 
-095a
+095a|generic|LETTER_Q
 % ज़ 
-095b
+095b|generic|LETTER_Q
 % ड़ 
-095c
+095c|generic|LETTER_Q
 % ढ़ 
-095d
+095d|generic|LETTER_Q
 % फ़ 
-095e
+095e|generic|LETTER_Q
 % य़ 
-095f
+095f|generic|LETTER_Q
 % ॠ 
-0960
+0960|generic|LETTER_V
 % ॡ 
-0961
+0961|generic|LETTER_V
 % ॢ 
-0962
+0962|generic|VOWEL_V
 % ॣ 
-0963
+0963|generic|VOWEL_V
 % । 
-0964
+0964|generic
 % ॥ 
-0965
+0965|generic
 % ० 
-0966
+0966|generic
 % १ 
-0967
+0967|generic
 % २ 
-0968
+0968|generic
 % ३ 
-0969
+0969|generic
 % ४ 
-096a
+096a|generic
 % ५ 
-096b
+096b|generic
 % ६ 
-096c
+096c|generic
 % ७ 
-096d
+096d|generic
 % ८ 
-096e
+096e|generic
 % ९ 
-096f
+096f|generic
 % ॰ 
-0970
-% ॱ 
-0971
-% ॲ 
-0972
-% ॳ 
-0973
-% ॴ 
-0974
-% ॵ 
-0975
-% ॶ 
-0976
+0970|generic

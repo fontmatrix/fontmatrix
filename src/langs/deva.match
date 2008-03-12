@@ -1,0 +1,7 @@
+% deva.match
+% I’ll try here to give one or two rules based on the m17n database
+% in order to help match-writers to figure out how it works.
+% One of the important difference with m17n system is we don’t have many stages
+% here, all have to be done in a run.
+% RA(dead) + KA(live) as described in Unicode 5.0 [fig.9.2(4)]
+.(LETTER_RA).(SIGN_VIRAMA).(LETTER_K).(generic)|.3.1(abvs;abvm)

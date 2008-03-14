@@ -103,6 +103,7 @@ int FMOwnShaper::loadRules(QString lang)
 
 void FMOwnShaper::fillIn(const QString& s)
 {
+	QStringList debug;
 	for(int i(0); i < s.count(); ++i)
 	{
 		if(Dictionnary.contains(s[i].unicode()))
@@ -113,7 +114,10 @@ void FMOwnShaper::fillIn(const QString& s)
 		{
 			In << Character(s[i].unicode());
 		}
+		debug << "["+QString::number(s[i].unicode(),16)+"]";
 	}
+	qDebug()<< debug.join(" ");
+	
 }
 
 void FMOwnShaper::Op()
@@ -269,7 +273,7 @@ void FMOwnShaper::Replace(int repIndex, QList< Character > chunk)
 		if(car.isMatchedGroup)
 		{
 			matchedPos[++mIndex] = car;
-			qDebug()<< "Matched "<< car.unicode() << " at pos "<< mIndex ;
+			qDebug()<< "Matched "<<  QString::number(car.unicode(), 16 ) << " at pos "<< mIndex ;
 		}
 	}
 	// Let replace :)
@@ -300,7 +304,7 @@ void FMOwnShaper::DumpOut()
 	qDebug()<<"FMOwnShaper::DumpOut()";
 	for(int i(0); i < Out.count(); ++i)
 	{
-		qDebug()<<"Unicode("<< Out[i].unicode() <<").["<< Out[i].DumpCustom() <<"]";
+		qDebug()<<"Unicode("<< QString::number(Out[i].unicode(), 16 ) <<").["<< Out[i].DumpCustom() <<"]";
 	}
 }
 

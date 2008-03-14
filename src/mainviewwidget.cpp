@@ -1231,6 +1231,7 @@ void MainViewWidget::fillUniPlanes()
 void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 {
 	QString stickyRange(uniPlaneCombo->currentText());
+	qDebug()<<"STiCKyRaNGe :: "<<stickyRange;
 	int stickyIndex(0);
 
 	uniPlaneCombo->clear();
@@ -1450,8 +1451,14 @@ void MainViewWidget::slotChangeScript()
 
 void MainViewWidget::slotPlaneSelected ( int i )
 {
+	bool stickState = uRangeIsNotEmpty;
+	uRangeIsNotEmpty = true;
 	slotShowAllGlyph();
 	slotView ( true );
+	if( stickState == false && theVeryFont)
+	{
+		fillUniPlanesCombo(theVeryFont);
+	}
 	abcView->verticalScrollBar()->setValue ( 0 );
 }
 

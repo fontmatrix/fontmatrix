@@ -58,14 +58,14 @@ class Character : public QChar
 /// over an whole properties List.
 struct MatchSequence
 {
-	void SetMatch(const QByteArray&);
+	void SetMatch(const QString&);
 	
 	QList<Character> Properties;
 };
 
 struct ReplaceSequence
 {
-	void SetReplace(const QByteArray&);
+	void SetReplace(const QString&);
 	
 	QList<Character> Properties;
 };
@@ -87,7 +87,7 @@ class FMOwnShaper
 		QList<MatchSequence> Matches;
 		QList<ReplaceSequence> Replacements;
 		
-		
+		QString CleanRule(QString rule);
 		int loadRules(QString lang);
 		void fillIn(const QString& s);
 		

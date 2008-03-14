@@ -83,11 +83,12 @@ int FMOwnShaper::loadRules(QString lang)
 		
 	}
 	while (!matchFile.atEnd()) {
-		QByteArray line = matchFile.readLine();
+		QString line ( CleanRule(matchFile.readLine()) );
+		
 		if(line.startsWith('%'))
 			continue;
 		
-		QList<QByteArray> elems = line.split ( '|' );
+		QList<QString> elems = line.split ( '|' );
 		if(elems.count() == 2)
 		{
 			Matches.append(MatchSequence());
@@ -351,7 +352,7 @@ QString Character::DumpCustom()
 
 /// Sequences
 
-void MatchSequence::SetMatch(const QByteArray &b)
+void MatchSequence::SetMatch(const QString &b)
 {
 	/*
 	 The byte array looks like : 
@@ -472,7 +473,7 @@ void MatchSequence::SetMatch(const QByteArray &b)
 	}
 }
 
-void ReplaceSequence::SetReplace(const QByteArray& b) 
+void ReplaceSequence::SetReplace(const QString& b) 
 {
 	QString ref(b);
 // 	qDebug()<<"SetReplace("+ref+")";
@@ -556,6 +557,18 @@ QList< Character > FMOwnShaper::GetShaped()
 {
 	Op();
 	return Out;
+}
+
+QString FMOwnShaper::CleanRule(QString rule)
+{
+	QString ret;
+	int len( rule.count() );
+	for(int i(0); i < len; ++i)
+	{
+		if(!rule[i].isSpace())
+			ret += rule[i];
+	}
+	return ret;
 }
 
 

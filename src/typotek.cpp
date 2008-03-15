@@ -113,7 +113,7 @@ void typotek::initMatrix()
 	curFontPresentation->setFont ( statusFontFont );
 	statusBar()->addPermanentWidget ( curFontPresentation );
 
-	mainDock = new QDockWidget ( /*tr ( "Lists" )*/ );
+	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
 	mainDock->setWidget ( ListDockWidget::getInstance() );
 	addDockWidget ( Qt::LeftDockWidgetArea, mainDock );
 

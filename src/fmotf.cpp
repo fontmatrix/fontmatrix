@@ -423,7 +423,11 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 		foreach(QString cProp, shaped[i].CustomProperties)
 		{
 			if(!props.contains(cProp))
-				props[cProp] = ++all ;
+			{
+				props[cProp] = all;
+				all *= 2;
+				qDebug()<< "Feature " << cProp << " has prop mask"<< QString::number(props[cProp],2);
+			}
 		}
 	}
 	for ( int i = 0; i < n; i++ )
@@ -432,14 +436,14 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 // 		prop |= all;
 		foreach(QString cProp, shaped[i].CustomProperties)
 		{
-			prop |= ~(props[cProp]);
+			prop |= (props[cProp]);
 		}
-		if(!prop)
-		{
-			prop = 0xFFFF;
-		}
-		error = Harfbuzz::hb_buffer_add_glyph ( _buffer, FT_Get_Char_Index ( _face, shaped[i].unicode() ), prop, i );
-		qDebug() << "Adding "<< QString::number(shaped[i].unicode(),16) << "["<<prop<<"]";
+// 		if(!prop)
+// 		{
+// 			prop |= ~0 ;
+// 		}
+		error = Harfbuzz::hb_buffer_add_glyph ( _buffer, FT_Get_Char_Index ( _face, shaped[i].unicode() ), ~prop, i );
+		qDebug() << "Adding "<< QString::number(shaped[i].unicode(),16) << "["<< QString::number( ~prop, 2 )<<"]";
 		if ( error !=  Harfbuzz::HB_Err_Ok )
 			qDebug() << "hb_buffer_add_glyph () failed";
 
@@ -461,9 +465,10 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 			if ( !error )
 			{
 				Harfbuzz::HB_GSUB_Add_Feature ( _gsub, fidx, ife.value() );
+				qDebug() << "GSUB_ADD "<< ife.key() <<" => "<<QString::number( ife.value(), 2 );
 			}
 			else
-				qDebug() << QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error );
+				qDebug() << QString ( "adding gsub feature [%1] failed : %2" ).arg ( ife.key() ).arg ( error );
 		}
 
 		error = Harfbuzz::HB_GSUB_Apply_String ( _gsub, _buffer );

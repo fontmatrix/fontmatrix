@@ -434,7 +434,12 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 		{
 			prop |= ~(props[cProp]);
 		}
+		if(!prop)
+		{
+			prop = 0xFFFF;
+		}
 		error = Harfbuzz::hb_buffer_add_glyph ( _buffer, FT_Get_Char_Index ( _face, shaped[i].unicode() ), prop, i );
+		qDebug() << "Adding "<< QString::number(shaped[i].unicode(),16) << "["<<prop<<"]";
 		if ( error !=  Harfbuzz::HB_Err_Ok )
 			qDebug() << "hb_buffer_add_glyph () failed";
 

@@ -145,9 +145,15 @@ void FMOwnShaper::Op()
 			if(rc > 0)
 			{
 				QList<Character> cl;
+				QString debugString;
 				for(int nc(0); nc < rc; ++nc)
+				{
 					cl << In[idx + nc];
+					debugString += "[" + QString::number( In[idx + nc].unicode() , 16) + "]";
+				}
 				chunks.append( QPair< int, QList< Character > >(nm , cl) );
+				
+				qDebug() << "MATCH : "<< debugString;
 				idx += rc;
 				matched = true;
 				break;
@@ -274,7 +280,7 @@ void FMOwnShaper::Replace(int repIndex, QList< Character > chunk)
 		if(car.isMatchedGroup)
 		{
 			matchedPos[++mIndex] = car;
-			qDebug()<< "Matched "<<  QString::number(car.unicode(), 16 ) << " at pos "<< mIndex ;
+// 			qDebug()<< "Matched "<<  QString::number(car.unicode(), 16 ) << " at pos "<< mIndex ;
 		}
 	}
 	// Let replace :)
@@ -302,7 +308,7 @@ void FMOwnShaper::Replace(int repIndex, QList< Character > chunk)
 
 void FMOwnShaper::DumpOut()
 {
-	qDebug()<<"FMOwnShaper::DumpOut()";
+// 	qDebug()<<"FMOwnShaper::DumpOut()";
 	for(int i(0); i < Out.count(); ++i)
 	{
 		qDebug()<<"Unicode("<< QString::number(Out[i].unicode(), 16 ) <<").["<< Out[i].DumpCustom() <<"]";

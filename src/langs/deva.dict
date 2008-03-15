@@ -3,231 +3,236 @@
 % Where FFFF is a raw hex value representing a code point in Unicode space
 % and "props" are arbitrary ascii strings.
 % Records begining by "%" are comments.
-% space
-0020|generic
+% Space, hey it’s not idiot ;-)
+0020|X 
+% BTW, because they’re "out of range", ZW* were not imported from FLT file
+% ZWNJ
+200C|ZWNJ
+% ZWJ
+200D|ZWJ
 % ऀ 
-0900|generic|internal
+0900|X|Z
 % ँ 
-0901|generic|SIGN_C
+0901|X|A
 % ं 
-0902|generic|SIGN_C
+0902|X|A
 % ः 
-0903|generic|SIGN_V
+0903|X|a
 % ऄ 
-0904|generic|LETTER_S
+0904|X|V
 % अ 
-0905|generic|LETTER_S
+0905|X|V
 % आ 
-0906|generic|LETTER_S
+0906|X|V
 % इ 
-0907|generic|LETTER_S
+0907|X|V
 % ई 
-0908|generic|LETTER_S
+0908|X|V
 % उ 
-0909|generic|LETTER_S
+0909|X|V
 % ऊ 
-090a|generic|LETTER_S
+090a|X|V
 % ऋ 
-090b|generic|LETTER_S
+090b|X|V
 % ऌ 
-090c|generic|LETTER_S
+090c|X|V
 % ऍ 
-090d|generic|LETTER_S
+090d|X|V
 % ऎ 
-090e|generic|LETTER_S
+090e|X|V
 % ए 
-090f|generic|LETTER_S
+090f|X|V
 % ऐ 
-0910|generic|LETTER_S
+0910|X|V
 % ऑ 
-0911|generic|LETTER_S
+0911|X|V
 % ऒ 
-0912|generic|LETTER_S
+0912|X|V
 % ओ 
-0913|generic|LETTER_S
+0913|X|V
 % औ 
-0914|generic|LETTER_S
+0914|X|V
 % क 
-0915|generic|LETTER_K
+0915|X|C
 % ख 
-0916|generic|LETTER_K
+0916|X|C
 % ग 
-0917|generic|LETTER_K
+0917|X|C
 % घ 
-0918|generic|LETTER_K
+0918|X|C
 % ङ 
-0919|generic|LETTER_K
+0919|X|C
 % च 
-091a|generic|LETTER_K
+091a|X|C
 % छ 
-091b|generic|LETTER_K
+091b|X|C
 % ज 
-091c|generic|LETTER_K
+091c|X|C
 % झ 
-091d|generic|LETTER_K
+091d|X|C
 % ञ 
-091e|generic|LETTER_K
+091e|X|C
 % ट 
-091f|generic|LETTER_K
+091f|X|C
 % ठ 
-0920|generic|LETTER_K
+0920|X|C
 % ड 
-0921|generic|LETTER_K
+0921|X|C
 % ढ 
-0922|generic|LETTER_K
+0922|X|C
 % ण 
-0923|generic|LETTER_K
+0923|X|C
 % त 
-0924|generic|LETTER_K
+0924|X|C
 % थ 
-0925|generic|LETTER_K
+0925|X|C
 % द 
-0926|generic|LETTER_K
+0926|X|C
 % ध 
-0927|generic|LETTER_K
+0927|X|C
 % न 
-0928|generic|LETTER_K
+0928|X|C
 % ऩ 
-0929|generic|LETTER_K
+0929|X|C
 % प 
-092a|generic|LETTER_K
+092a|X|C
 % फ 
-092b|generic|LETTER_K
+092b|X|C
 % ब 
-092c|generic|LETTER_K
+092c|X|C
 % भ 
-092d|generic|LETTER_K
+092d|X|C
 % म 
-092e|generic|LETTER_K
+092e|X|C
 % य 
-092f|generic|LETTER_K
+092f|X|C
 % र 
-0930|generic|LETTER_K|LETTER_RA
+0930|X|R
 % ऱ 
-0931|generic|LETTER_K
+0931|X|C
 % ल 
-0932|generic|LETTER_K
+0932|X|C
 % ळ 
-0933|generic|LETTER_K
+0933|X|C
 % ऴ 
-0934|generic|LETTER_K
+0934|X|C
 % व 
-0935|generic|LETTER_K
+0935|X|C
 % श 
-0936|generic|LETTER_K
+0936|X|C
 % ष 
-0937|generic|LETTER_K
+0937|X|C
 % स 
-0938|generic|LETTER_K
+0938|X|C
 % ह 
-0939|generic|LETTER_K
+0939|X|C
 % ऺ 
-093a|generic
+093a|X
 % ऻ 
-093b|generic
+093b|X
 % ़ 
-093c|generic|SIGN_N
+093c|X|Nukta
 % ऽ 
-093d|generic
+093d|X
 % ा 
-093e|generic|VOWEL_AA
+093e|X|p
 % ि 
-093f|generic|VOWEL_I
+093f|X|m
 % ी 
-0940|generic|VOWEL_II
+0940|X|p
 % ु 
-0941|generic|VOWEL_UU
+0941|X|b
 % ू 
-0942|generic|VOWEL_UU
+0942|X|b
 % ृ 
-0943|generic|VOWEL_UU
+0943|X|b
 % ॄ 
-0944|generic|VOWEL_UU
+0944|X|b
 % ॅ 
-0945|generic|VOWEL_C_E
+0945|X|u
 % ॆ 
-0946|generic|VOWEL_C_E
+0946|X|u
 % े 
-0947|generic|VOWEL_C_E
+0947|X|u
 % ै 
-0948|generic|VOWEL_C_E
+0948|X|u
 % ॉ 
-0949|generic|VOWEL_C_O_
+0949|X|p
 % ॊ 
-094a|generic|VOWEL_C_O_
+094a|X|p
 % ो 
-094b|generic|VOWEL_C_O_
+094b|X|p
 % ौ 
-094c|generic|VOWEL_C_O_
-% ्   I removed the generic property in  order to have a low cost negation
-094d|SIGN_VIRAMA
+094c|X|p
+% ् 
+094d|H
 % ॎ 
-094e|generic
+094e|X
 % ॏ 
-094f|generic
+094f|X
 % ॐ 
-0950|generic
+0950|X
 % ॑ 
-0951|generic|STRESS_U
+0951|X|S
 % ॒ 
-0952|generic|STRESS_A
+0952|X|s
 % ॓ 
-0953|generic|ACCENT
+0953|X|S
 % ॔ 
-0954|generic|ACCENT
+0954|X|S
 % ॕ 
-0955|generic
+0955|X
 % ॖ 
-0956|generic
+0956|X
 % ॗ 
-0957|generic
+0957|X
 % क़ 
-0958|generic|LETTER_Q
+0958|X|N
 % ख़ 
-0959|generic|LETTER_Q
+0959|X|N
 % ग़ 
-095a|generic|LETTER_Q
+095a|X|N
 % ज़ 
-095b|generic|LETTER_Q
+095b|X|N
 % ड़ 
-095c|generic|LETTER_Q
+095c|X|N
 % ढ़ 
-095d|generic|LETTER_Q
+095d|X|N
 % फ़ 
-095e|generic|LETTER_Q
+095e|X|N
 % य़ 
-095f|generic|LETTER_Q
+095f|X|N
 % ॠ 
-0960|generic|LETTER_V
+0960|X|V
 % ॡ 
-0961|generic|LETTER_V
+0961|X|V
 % ॢ 
-0962|generic|VOWEL_V
+0962|X|b
 % ॣ 
-0963|generic|VOWEL_V
+0963|X|b
 % । 
-0964|generic
+0964|X
 % ॥ 
-0965|generic
+0965|X
 % ० 
-0966|generic
+0966|X
 % १ 
-0967|generic
+0967|X
 % २ 
-0968|generic
+0968|X
 % ३ 
-0969|generic
+0969|X
 % ४ 
-096a|generic
+096a|X
 % ५ 
-096b|generic
+096b|X
 % ६ 
-096c|generic
+096c|X
 % ७ 
-096d|generic
+096d|X
 % ८ 
-096e|generic
+096e|X
 % ९ 
-096f|generic
+096f|X
 % ॰ 
-0970|generic
+0970|X

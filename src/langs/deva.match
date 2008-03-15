@@ -1,7 +1,110 @@
-% deva.match
-% I’ll try here to give one or two rules based on the m17n database
-% in order to help match-writers to figure out how it works.
-% One of the important difference with m17n system is we don’t have many stages
-% here, all have to be done in a run.
-% RA(dead) + KA(live) as described in Unicode 5.0 [fig.9.2(4)]
-.(LETTER_RA).(SIGN_VIRAMA).(LETTER_K).(generic)|.3.1(abvs;abvm)
+% "Pierre Marchand ne doute de rien :-)"
+% We’ll try to give the relevant syntax for the
+% 16 rules edicted in chapter 9 section 1 of
+% Unicode 5.0 for the rendering of Devanagari.
+%   Note: knowing average nothing in Devanagari,
+% expect that it will be all wrong.
+%   Note2: I try to always use Unicode value when
+% it’s possible to clearly distinguish between
+% fixed and dynamic points. In real world a compact form
+% with only char properties would be appropriate.
+%   Note3: To have it actually working, one wants to
+% reorder so longer patterns come first.
+%   Note4: OTF Features are basically those that give good
+% results with Lohit Hindi font, I tried sometimes to 
+% get the same result with Gargi font by appending other
+% features (e.g. R14 "blws").
+%
+%
+%% - R16 -
+% TAd + [ZWNJ] + RAl + Ivs => TAd + Ivs + RAl
+.(C) U094D U200C U0930 U093F | .1 U094D U093F U0930
+%
+% - R15 -
+% TAd + RAl + Ivs => T.RAn + Ivs => Ivs + T.RAd
+.(C) U094D U0930 U093F | U093F .1(akhn;half) U094D(akhn;half)
+%
+%% - Figure 9-8 -
+% KAn + Ivs => Ivs + KAn
+.(C) U093F | U093F .1
+%
+%% - R14 -
+% RAl + Uvs => RUn
+U0930 .(b) | U0930(psts;blws) .1(psts;blws)
+%
+%% - R13 -
+% KAn + RAsub => K.RAn
+.(C) U0930 .(m) | .2 .1 U0930(blwf)
+.(C) U0930 | .1 U0930(blwf)
+%
+%% - R12 -
+% SAd + TAd + RAn => SAd + T.RAn => S.T.RAn
+.(C) U094D .(C) U094D U0930 | .1(akhn;half) U094D(akhn;half) .2(akhn;half) U094D(akhn;half) U0930
+%
+%% - R11 -
+% JAd + NYAl => J.NYAn
+% We need to match CHCH before CHC.
+.(C) U094D .(C) U094D | .1(akhn) U094D(akhn) .2(akhn) U094D(akhn)
+.(C) U094D .(C) .(m)| .3 .1(half;pres) U094D(half;pres) .2(pres) 
+.(C) U094D .(C) | .1(half;akhn) U094D(half;akhn) .2(akhn)
+%
+%% - R10 -
+% KAn + AAvs + CANDRABINDUn
+% I must be under-equiped with brain, I can’t get it.
+%
+%% - R9 -
+% KAn + NUKTAn + VIRAMAn => QAd 
+.(C) U093C U094D .(m) | .2 .1(nukt) U093C(nukt) U094D
+.(C) U093C U094D | .1(nukt) U093C(nukt) U094D
+%
+%% - R8 -
+% TAd + RAd => TAn + RAsub + VIRAMAn => T.RAd
+.(C) U094D U0930 U094D | .1 U0930(blwf;vatu) U094D
+% T.RAd + YAl => T.R.YAn
+.(C) U094D U0930 U094D .(C) .(m) | .3 .1(half) U0930(blwf;vatu;half) U094D(half) .2
+.(C) U094D U0930 U094D .(C) | .1(half) U0930(blwf;vatu;half) U094D(half) .2
+%
+%% - R7 -
+% "For certain consonants" ? "may"? It’s not how
+% a _rule_ should be written IYWMO. But the most important
+% point is that I don’t know what’s different in pattern
+% from R6. #TODO ask to RahulB
+% PHAd + RAl => PHAn + RAsub
+.(C) U094D U0930 .(m) | .2 .1(blwf;vatu) U0930(blwf;vatu) U094D(blwf;vatu)
+.(C) U094D U0930 | .1(blwf;vatu) U0930(blwf;vatu) U094D(blwf;vatu)
+%
+%% - R6 -
+% TTHAd + RAl => TTHAn + RAsub
+.(C) U094D U0930 .(m) | .2 .1 U0930(blwf) U094D(blwf)
+.(C) U094D U0930 | .1 U0930(blwf) U094D(blwf)
+%
+%% - R5a -
+% RAd + ZWJ => RAhU094D
+U0930 U094D U200D .(m) | .1 U0931(half) U094D(half)
+U0930 U094D U200D | U0931(half) U094D(half)
+%
+%% - R5 -
+% RRAn + VIRAMAn => RRAh
+U0931 U094D .(m) | .1 U0931(half) U094D(half)
+U0931 U094D | U0931(half) U094D(half)
+%
+%% - R4 -
+% RAd + GAd + [ZWJ] + GHAl => GAh + GHAl + RAsup
+U0930 U094D .(C) U094D U200D .(C) .(m) | .3 .1(half) .2 U0930(rphf) U094D
+U0930 U094D .(C) U094D U200D .(C) | .1(half) .2 U0930(rphf) U094D
+%
+%% - R3 -
+% RAd + JAd + NYAl => J.NYAn + RAsup
+U0930 U094D .(C) U094D .(C) .(m) | .3 .1(akhn;half) .2(akhn;half) U0930(rphf) U094D
+U0930 U094D .(C) U094D .(C) | .1(akhn;half) .2(akhn;half) U0930(rphf) U094D
+%
+%% - R2 -
+% RAd + KAl => KAl + RAsup
+%U0930 U094D .(C) U094D U0930 .(m) U0902 | .2 .1(blwf;vatu) U0930(blwf;vatu) U094D(blwf;vatu) U0930(rphf;abvs) U094D(rphf;abvs) U0902(abvs)
+U0930 U094D .(C) .(m) | .2 .1 U0930(rphf) U094D
+U0930 U094D .(C) | .1 U0930(rphf) U094D
+%
+%% - R1 - 
+% If "dead" feature exists, it would give:
+% .(C)U094D|.1(dead) 
+%

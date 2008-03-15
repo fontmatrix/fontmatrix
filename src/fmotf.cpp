@@ -416,6 +416,7 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 	Harfbuzz::HB_Error           error;
 	uint all = 0x1;
 	QMap<QString,uint> props;
+	QStringList orderedFeatures;
 	
 	//First we collect properties
 	for( int i = 0; i < n; i++ )
@@ -424,9 +425,10 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 		{
 			if(!props.contains(cProp))
 			{
+				orderedFeatures << cProp;
 				props[cProp] = all;
 				all *= 2;
-				qDebug()<< "Feature " << cProp << " has prop mask"<< QString::number(props[cProp],2);
+				qDebug()<< "Feature " << cProp << " has prop mask"<<  QString::number(props[cProp],2) ;
 			}
 		}
 	}
@@ -458,17 +460,18 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 		set_script ( script );
 		set_lang ( lang );
 
-		for ( QMap<QString,uint>::iterator ife = props.begin (); ife != props.end (); ife++ )
+		for ( int fCur(0); fCur < orderedFeatures.count() ; ++fCur )
 		{
+			QString feature(orderedFeatures[fCur]);
 			Harfbuzz::HB_UShort fidx;
-			error = Harfbuzz::HB_GSUB_Select_Feature ( _gsub, OTF_name_tag ( ife.key() ), curScript, curLang, &fidx );
+			error = Harfbuzz::HB_GSUB_Select_Feature ( _gsub, OTF_name_tag ( feature ), curScript, curLang, &fidx );
 			if ( !error )
 			{
-				Harfbuzz::HB_GSUB_Add_Feature ( _gsub, fidx, ife.value() );
-				qDebug() << "GSUB_ADD "<< ife.key() <<" => "<<QString::number( ife.value(), 2 );
+				Harfbuzz::HB_GSUB_Add_Feature ( _gsub, fidx, props[feature] );
+				qDebug() << "GSUB_ADD "<< feature <<" => "<<QString::number( props[feature], 2 );
 			}
 			else
-				qDebug() << QString ( "adding gsub feature [%1] failed : %2" ).arg ( ife.key() ).arg ( error );
+				qDebug() << QString ( "adding gsub feature [%1] failed : %2" ).arg ( feature ).arg ( error );
 		}
 
 		error = Harfbuzz::HB_GSUB_Apply_String ( _gsub, _buffer );
@@ -482,16 +485,17 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 		set_table ( "GPOS" );
 		set_script ( script );
 		set_lang ( lang );
-		for ( QMap<QString,uint>::iterator ife = props.begin (); ife != props.end (); ife++ )
+		for ( int fCur(0); fCur < orderedFeatures.count() ; ++fCur )
 		{
+			QString feature(orderedFeatures[fCur]);
 			Harfbuzz::HB_UShort fidx;
-			error = Harfbuzz::HB_GPOS_Select_Feature ( _gpos, OTF_name_tag ( ife.key() ), curScript, curLang, &fidx );
+			error = Harfbuzz::HB_GPOS_Select_Feature ( _gpos, OTF_name_tag ( feature ), curScript, curLang, &fidx );
 			if ( !error )
 			{
-				Harfbuzz::HB_GPOS_Add_Feature ( _gpos, fidx, ife.value() );
+				Harfbuzz::HB_GPOS_Add_Feature ( _gpos, fidx,  props[feature]  );
 			}
 			else
-				qDebug() << QString ( "adding gpos feature [%1] failed : %2" ).arg ( *ife ).arg ( error );
+				qDebug() << QString ( "adding gpos feature [%1] failed : %2" ).arg ( feature ).arg ( error );
 		}
 
 		error = Harfbuzz::HB_GPOS_Apply_String ( &hbFont, _gpos, FT_LOAD_NO_SCALE, _buffer,

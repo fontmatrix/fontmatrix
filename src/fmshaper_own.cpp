@@ -51,6 +51,7 @@ int FMOwnShaper::loadRules(QString lang)
 	{
 		actualSDir = ShaperDir + QDir::separator() ;
 	}
+	qDebug()<<"SHAPER_FILES : "<<actualSDir +lang+ ".dict"<<"; "<<actualSDir +lang+".match";
 	QFile dictFile(actualSDir +lang+ ".dict");
 	if(!dictFile.open(QIODevice::ReadOnly))
 	{
@@ -289,7 +290,7 @@ void FMOwnShaper::Replace(int repIndex, QList< Character > chunk)
 	{
 		if(rep.isNull())
 		{
-			Character tc(matchedPos[rep.GroupIndex].unicode(), rep.CustomProperties.toList());
+			Character tc(matchedPos[rep.GroupIndex].unicode(), rep.CustomProperties);
 			buffer << tc;
 		}
 		else
@@ -324,7 +325,7 @@ Character::Character(int unicode, QList< QByteArray > tokens)
 	:QChar(unicode),MatchAll(false),isMatchedGroup(false)
 {
 	for(int i(0); i < tokens.count(); ++i)
-		CustomProperties << QString(tokens[i].trimmed());
+		AddProperty( QString(tokens[i].trimmed()));
 }
 
 
@@ -332,7 +333,7 @@ Character::Character(int unicode, QStringList tokens)
 	:QChar(unicode),MatchAll(false),isMatchedGroup(false)
 {
 	for(int i(0); i < tokens.count(); ++i)
-		CustomProperties << tokens[i].trimmed();
+		AddProperty( QString(tokens[i].trimmed()));
 }
 
 QString Character::DumpCustom()
@@ -548,7 +549,7 @@ void ReplaceSequence::SetReplace(const QString& b)
 					pList << prop.trimmed();
 				}
 				idx += countChars;
-				Properties.last().CustomProperties = pList.toSet();
+				Properties.last().CustomProperties = pList;
 			}
 		}
 		else
@@ -575,6 +576,14 @@ QString FMOwnShaper::CleanRule(QString rule)
 			ret += rule[i];
 	}
 	return ret;
+}
+
+void Character::AddProperty(const QString & prop)
+{
+	if(!CustomProperties.contains(prop))
+	{
+		CustomProperties << prop;
+	}
 }
 
 

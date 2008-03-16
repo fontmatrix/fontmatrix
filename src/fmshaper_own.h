@@ -33,7 +33,8 @@ class Character : public QChar
 		Character(int unicode):QChar(unicode),MatchAll(false),isMatchedGroup(false){}
 		Character():QChar(),MatchAll(false),isMatchedGroup(false){}
 		// it should rather be a QFlag... if only I knew how it works ;-)
-		QSet<QString> CustomProperties;
+		QList<QString> CustomProperties;
+		void AddProperty(const QString& prop);
 		
 		// Do we want to match all CustomProperties
 		bool MatchAll;

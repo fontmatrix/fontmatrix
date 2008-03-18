@@ -1929,7 +1929,7 @@ QGraphicsPathItem * FontItem::hasCodepoint ( int code )
 // 	return theOneLinePreviewIcon;
 // }
 
-QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
+QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w)
 {
 	if ( m_remote )
 		return fixedPixmap;
@@ -1940,8 +1940,15 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	double theSize = typotek::getInstance()->getPreviewSize();
 	double pt2px = QApplication::desktop()->physicalDpiX() / 72.0;
 	double theHeight = theSize * 1.3 * pt2px;
-	double temperance = 0.8;
-	double theWidth = theSize * pt2px * oneline.count() * temperance;
+	double theWidth;
+	if(size_w == 0)
+	{
+		theWidth = theSize * pt2px * oneline.count() * 1.2;
+	}
+	else
+	{
+		theWidth = size_w;
+	}
 // 	qDebug() << theSize << theHeight << theWidth;
 	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
 	bool pRTL = typotek::getInstance()->getPreviewRTL();
@@ -1952,7 +1959,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline )
 	double scalefactor = theSize / m_face->units_per_EM;
 	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	QPixmap linePixmap ( theWidth,theHeight );
-	linePixmap.fill ( Qt::white );
+	linePixmap.fill ( bg_color );
 	QPainter apainter ( &linePixmap );
 	QVector<QRgb> palette;
 	int notRenderedGlyphsCount ( 0 );

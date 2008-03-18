@@ -220,7 +220,7 @@ class FontItem : public QObject
 		QString activationAFMName();
 
 // 		QIcon oneLinePreviewIcon ( QString oneline );
-		QPixmap oneLinePreviewPixmap ( QString oneline );
+		QPixmap oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w = 0);
 		void clearPreview();
 
 		bool isActivated();

@@ -55,7 +55,7 @@ int DataExport::copyFiles()
 		if(ffile.copy(exDir.absolutePath() + exDir.separator() + ifile.fileName()) )
 		{
 			++copyCounter;
-			QImage itImage(fonts[fidx]->oneLinePreviewPixmap(preview).toImage());
+			QImage itImage(fonts[fidx]->oneLinePreviewPixmap(preview, Qt::white).toImage());
 			if(!itImage.save(exDir.absolutePath() + exDir.separator() + ifile.fileName() + ".png"))
 				qDebug()<<"Unable to save "<< exDir.absolutePath() + exDir.separator() + ifile.fileName() + ".png";
 		}

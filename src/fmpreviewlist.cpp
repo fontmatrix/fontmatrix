@@ -64,6 +64,9 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 // 	qDebug()<<"FMPreviewList::slotRefill("<< fonts.count() <<","<< setChanged <<")";
 	theWord = typotek::getInstance()->word();
 	horizontalScrollBar()->setValue(0);
+	QColor oddC(255,255,255);
+	QColor evenC(242,232,232);
+	bool colState (false);
 	if(setChanged && !fonts.isEmpty()) 
 	{
 		QString rescueId = " %1";
@@ -118,8 +121,14 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	
 	m_scene->setSceneRect(0,0, width(), trackedFonts.count() * theLine);
 	double visibilityAdjustment = theLine / 2.0;
+	QString lastFamily;
 	for(int i = 0 ; i < trackedFonts.count() ; ++i)
 	{
+		if(trackedFonts[i]->family() != lastFamily)
+		{
+			colState = !colState;
+			lastFamily = trackedFonts[i]->family();
+		}
 		if( ((i + 1)*theLine) > (beginPos + visibilityAdjustment) && (i*theLine)  < (endPos - visibilityAdjustment))
 		{ 
 			FontItem *fit = trackedFonts.at(i);
@@ -127,7 +136,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 			{
 				bool oldRaster = fit->rasterFreetype();
 				fit->setFTRaster("true");
-				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord));
+				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord,(colState ? oddC : evenC ), width() ));
 				fit->setFTRaster(oldRaster);
 				pit->setPos(indent ,theLine*i);
 				pit->setData(1,fit->path());

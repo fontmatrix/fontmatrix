@@ -20,7 +20,6 @@ tagseteditor.cpp
 typotek.cpp
 fmotf.cpp
 prefspaneldialog.cpp
-fmshaper.cpp
 fontbook.cpp
 importtags.cpp
 dataexport.cpp
@@ -28,8 +27,17 @@ remotedir.cpp
 fmrepair.cpp
 fmnamelist.cpp
 textprogression.cpp
-fmshaper_own.cpp
 )
+
+IF(OWN_SHAPER)
+	SET(shaper_SRCS
+	fmshaper_own.cpp
+	)
+ELSE(OWN_SHAPER)
+	SET(shaper_SRCS
+	fmshaper.cpp
+	)
+ENDIF(OWN_SHAPER)
 
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
@@ -87,6 +95,7 @@ ${FONTCONFIG_INCLUDE_DIR}
 
 add_executable(fontmatrix 
 ${fontmatrix_SRCS} 
+${shaper_SRCS}
 ${fontmatrix_MOC_SRCS} 
 ${fontmatrix_UIS_H}
 ${fontmatrix_RCC_SRCS}

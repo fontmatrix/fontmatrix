@@ -822,12 +822,8 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 	{
 		if ( field == "tag" )
 		{
-			QStringList tl =  fontMap[i]->tags();
-			for ( int ii=0; ii<tl.count(); ++ii )
-			{
-				if ( tl[ii].contains ( pattern,Qt::CaseInsensitive ) )
-					ret.append ( fontMap[i] );
-			}
+			if(fontMap[i]->tags().contains(pattern))
+				ret.append ( fontMap[i] );
 		}
 		else if ( field == "search_INSENS" )
 		{

@@ -69,26 +69,47 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	bool colState (false);
 	if(setChanged && !fonts.isEmpty()) 
 	{
-		QString rescueId = " %1";
-		int rescueInt = 0;
-		slotClearSelect();
 		trackedFonts.clear();
-		QMap<QString, FontItem*> ordFonts;
-		for(int i=0;i<fonts.count();++i)
-		{
-			QString fId = fonts[i]->fancyName();
-			if(ordFonts.contains(fId))
-			{
-				fId += rescueId.arg(++rescueInt);
-// 				qDebug()<<"un doublon" << fId;
-			}
-			ordFonts[fId] = fonts[i];
-		}
-// 		qDebug()<< "ordFonts.count()->"<<ordFonts.count();
 		
-		for(QMap<QString, FontItem*>::const_iterator fit = ordFonts.begin() ; fit != ordFonts.end(); ++fit)
+		QMap<QString, QMap<QString, FontItem*> > keyList;
+		QMap<QString, QString> realFamilyName;
+		QMap<int, QChar> initChars;
+		for ( int i=0; i < fonts.count();++i )
 		{
-			trackedFonts << fit.value();
+			QString family = fonts[i]->family();
+			QString ordFamily = family.toUpper();
+			QString variant = fonts[i]->variant();
+			if( keyList.contains(ordFamily) && keyList[ordFamily].contains(variant) )
+			{
+				int unique = 2;
+				QString uniString(variant +" -%1");
+				while(keyList[ordFamily].contains(uniString.arg(unique,2)))
+				{
+					++unique;
+				}
+				variant = uniString.arg(unique,2);
+			}
+			keyList[ordFamily][variant] = ( fonts[i] );
+			realFamilyName[ordFamily] = family;
+			initChars[ordFamily[0].unicode()] = ordFamily[0] ;
+		}
+		QMap<QString, QMap<QString, FontItem*> >::const_iterator kit;
+		QMap<QString, FontItem*>::const_iterator kit_value;
+		QMap<int, QChar>::const_iterator ic = initChars.constBegin();
+		while (  ic != initChars.constEnd() )
+		{
+			QChar firstChar ( ic.value() );
+			for ( kit = keyList.begin(); kit != keyList.end(); ++kit )
+			{
+				if ( kit.key().at ( 0 ) == firstChar )
+				{
+					for(kit_value = kit.value().begin(); kit_value != kit.value().end(); ++kit_value)
+					{
+						trackedFonts << kit_value.value();
+					}
+				}
+			}
+			++ic;
 		}
 	}
 	

@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
-    <height>306</height>
+    <width>511</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -35,7 +35,7 @@
    <item rowspan="4" row="0" column="1" >
     <widget class="QTabWidget" name="tabWidget" >
      <property name="currentIndex" >
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab" >
       <attribute name="title" >

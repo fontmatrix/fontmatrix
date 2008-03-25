@@ -663,6 +663,8 @@ void typotek::initDir()
 				qDebug() << "ERROR loading : " << pathList.at ( i );
 				continue;
 			}
+			if(tagsMap.value ( fi->path() ).contains("Activated_On"))
+				fi->setActivated(true);
 			fontMap.append ( fi );
 			realFontMap[fi->path() ] = fi;
 			fi->setTags ( tagsMap.value ( fi->path() ) );
@@ -679,6 +681,8 @@ void typotek::initDir()
 				qDebug() << "ERROR loading : " << pathList.at ( i );
 				continue;
 			}
+			if(tagsMap.value ( fi->path() ).contains("Activated_On"))
+				fi->setActivated(true);
 			fontMap.append ( fi );
 			realFontMap[fi->path() ] = fi;
 			fi->setTags ( tagsMap.value ( fi->path() ) );

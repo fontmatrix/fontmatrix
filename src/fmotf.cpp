@@ -887,7 +887,7 @@ QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 				if ( !FT_Load_Glyph ( _face, gl.glyph , FT_LOAD_NO_SCALE ) )
 				{
 // 					qDebug() << "P_ADV  bb = "<<backBonus<<" ; adv = "<<slot->metrics.horiAdvance<<"; offs = "<< p->x_pos;
-					gl.xadvance = ( double ) slot->metrics.horiAdvance/* ( slot->advance.x )*/  ;
+					gl.xadvance = ( double ) slot->metrics.horiAdvance/* ( slot->advance.x )*/   + p->x_advance ;
 					gl.yadvance = ( double ) slot->metrics.vertAdvance/* ( slot->advance.y )*/;
 					gl.xoffset = p->x_pos + backBonus;
 					gl.yoffset = p->y_pos;

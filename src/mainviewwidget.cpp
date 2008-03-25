@@ -870,7 +870,7 @@ void MainViewWidget::slotAppendTag ( QString tag )
 
 void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
 {
-// 	qDebug() << "Activation of " << fit->name() << act;
+	qDebug() << "Activation of " << fit->path() << act;
 	if ( act )
 	{
 
@@ -904,7 +904,7 @@ void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
 					}
 					else
 					{
-						qDebug()<<"There is no AFL file attached to "<<fit->path();
+						qDebug()<<"There is no AFM file attached to "<<fit->path();
 					}
 				}
 			}

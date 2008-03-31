@@ -2394,7 +2394,74 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	fancyGlyph->setPos ( targetRect.topLeft() );
 	view->scene()->addItem ( fancyGlyph );
 	fancyGlyphs.append ( fancyGlyph );
-
+	
+	
+	QGraphicsTextItem *textIt = new QGraphicsTextItem;
+	textIt->setTextWidth(squareSide);
+	
+	QString itemNameStyle("background-color:#333;color:white;font-weight:bold;font-size:10pt");
+	QString itemValueStyle("background-color:#eee;font-style:italic;font-size:10pt");
+	if(charcodeIsAGlyphIndex)
+	{
+		QString html;
+		
+		html = "<span style=\""+ itemNameStyle +"\"> Index </span>";
+		html += "<span style=\""+ itemValueStyle +"\"> "+ QString::number(charcode) +" </span>";
+		textIt->setHtml(html);
+	}
+	else
+	{
+		QString html;
+		
+		QString catString;
+		int cat(QChar::category(static_cast<uint>(charcode)));
+		if(cat == QChar::Mark_NonSpacing) catString = QObject::tr("Mark, NonSpacing");
+		else if(cat == QChar::Mark_SpacingCombining) catString = QObject::tr("Mark, SpacingCombining");
+		else if(cat == QChar::Mark_Enclosing) catString = QObject::tr("Mark, Enclosing");
+		else if(cat == QChar::Number_DecimalDigit) catString = QObject::tr("Number, DecimalDigit");
+		else if(cat == QChar::Number_Letter) catString = QObject::tr("Number, Letter");
+		else if(cat == QChar::Number_Other) catString = QObject::tr("Number, Other");
+		else if(cat == QChar::Separator_Space) catString = QObject::tr("Separator, Space");
+		else if(cat == QChar::Separator_Line) catString = QObject::tr("Separator, Line");
+		else if(cat == QChar::Separator_Paragraph) catString = QObject::tr("Separator, Paragraph");
+		else if(cat == QChar::Other_Control) catString = QObject::tr("Other, Control");
+		else if(cat == QChar::Other_Format) catString = QObject::tr("Other, Format");
+		else if(cat == QChar::Other_Surrogate) catString = QObject::tr("Other, Surrogate");
+		else if(cat == QChar::Other_PrivateUse) catString = QObject::tr("Other, PrivateUse");
+		else if(cat == QChar::Other_NotAssigned) catString = QObject::tr("Other, NotAssigned");
+		else if(cat == QChar::Letter_Uppercase) catString = QObject::tr("Letter, Uppercase");
+		else if(cat == QChar::Letter_Lowercase) catString = QObject::tr("Letter, Lowercase");
+		else if(cat == QChar::Letter_Titlecase) catString = QObject::tr("Letter, Titlecase");
+		else if(cat == QChar::Letter_Modifier) catString = QObject::tr("Letter, Modifier");
+		else if(cat == QChar::Letter_Other) catString = QObject::tr("Letter, Other");
+		else if(cat == QChar::Punctuation_Connector) catString = QObject::tr("Punctuation, Connector");
+		else if(cat == QChar::Punctuation_Dash) catString = QObject::tr("Punctuation, Dash");
+		else if(cat == QChar::Punctuation_Open) catString = QObject::tr("Punctuation, Open");
+		else if(cat == QChar::Punctuation_Close) catString = QObject::tr("Punctuation, Close");
+		else if(cat == QChar::Punctuation_InitialQuote) catString = QObject::tr("Punctuation, InitialQuote");
+		else if(cat == QChar::Punctuation_FinalQuote) catString = QObject::tr("Punctuation, FinalQuote");
+		else if(cat == QChar::Punctuation_Other) catString = QObject::tr("Punctuation, Other");
+		else if(cat == QChar::Symbol_Math) catString = QObject::tr("Symbol, Math");
+		else if(cat == QChar::Symbol_Currency) catString = QObject::tr("Symbol, Currency");
+		else if(cat == QChar::Symbol_Modifier) catString = QObject::tr("Symbol, Modifier");
+		else if(cat == QChar::Symbol_Other) catString = QObject::tr("Symbol, Other");
+		
+		html = "<span style=\""+ itemNameStyle +"\"> Category </span>";
+		html += "<span style=\""+ itemValueStyle +"\"> "+ catString +" </span>";
+		
+		textIt->setHtml(html);
+	}
+	
+// 	qDebug()<< textIt->toHtml();
+	QPointF tPos(subRect.left() + 20.0 , subRect.bottom());
+	textIt->setPos ( view->mapToScene(tPos.toPoint()) );
+	textIt->setZValue ( 2000000 );
+	textIt->setEnabled(true);
+	textIt->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	textIt->setData(10, "FancyText");
+	view->scene()->addItem ( textIt );
+	fancyTexts.append(textIt);
+	
 	releaseFace();
 	return fancyGlyphs.count() - 1;
 
@@ -2409,6 +2476,13 @@ void FontItem::hideFancyGlyph ( int ref )
 		fancyGlyphs.removeAll ( it );
 		delete it;
 
+	}
+	if( fancyTexts.at( ref ) )
+	{
+		QGraphicsTextItem *it = fancyTexts.at ( ref );
+		it->scene()->removeItem ( it );
+		fancyTexts.removeAll ( it );
+		delete it;
 	}
 }
 

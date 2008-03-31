@@ -38,6 +38,7 @@
 class QGraphicsPixmapItem;
 class QGraphicsScene;
 class QGraphicsRectItem;
+class QGraphicsTextItem;
 struct OTFSet;
 class FmOtf;
 class QGraphicsView;
@@ -132,6 +133,7 @@ class FontItem : public QObject
 		QList<QGraphicsRectItem*> selList;
 		QList<QGraphicsScene *> sceneList;
 		QList<QGraphicsPixmapItem*> fancyGlyphs;
+		QList<QGraphicsTextItem*> fancyTexts;
 
 		QPixmap fixedPixmap;
 		

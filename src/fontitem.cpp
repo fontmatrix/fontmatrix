@@ -1765,7 +1765,7 @@ QString FontItem::infoText ( bool fromcache )
 	QString ret;
 
 	QMap<QString, QStringList> orderedInfo;
-// 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
+	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
 	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " ) +"</div>";
 
 	if ( moreInfo.isEmpty() )

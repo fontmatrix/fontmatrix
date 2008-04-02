@@ -119,7 +119,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	//CONNECT
 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
-	connect ( m_lists->searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
+// 	connect ( m_lists->searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 	connect ( m_lists->searchString,SIGNAL ( textEdited ( const QString&)  ),this,SLOT ( slotLiveSearch(const QString&) ) );
 	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
@@ -714,10 +714,10 @@ void MainViewWidget::slotSearch()
 	QString fs ( m_lists->searchString->text() );
 	QString ff ( "search_%1" );
 	QString sensitivity ( "INSENS" );
-	if ( m_lists->sensitivityCheck->isChecked() )
-	{
-		sensitivity = "SENS";
-	}
+// 	if ( m_lists->sensitivityCheck->isChecked() )
+// 	{
+// 		sensitivity = "SENS";
+// 	}
 // 	QApplication::restoreOverrideCursor();
 	currentFonts = typo->getFonts ( fs,ff.arg ( sensitivity ) ) ;
 	currentOrdering = "family";
@@ -728,16 +728,16 @@ void MainViewWidget::slotSearch()
 // Basically we do the same as in regular search but not clear input field
 void MainViewWidget::slotLiveSearch(const QString & text)
 {
-	if(!m_lists->liveSearchCheck->isChecked())
-		return;
+// 	if(!m_lists->liveSearchCheck->isChecked())
+// 		return;
 	m_lists->fontTree->clear();
 	fontsetHasChanged = true;
 	QString ff ( "search_%1" );
 	QString sensitivity ( "INSENS" );
-	if ( m_lists->sensitivityCheck->isChecked() )
-	{
-		sensitivity = "SENS";
-	}
+// 	if ( m_lists->sensitivityCheck->isChecked() )
+// 	{
+// 		sensitivity = "SENS";
+// 	}
 
 	currentFonts = typo->getFonts ( text,ff.arg ( sensitivity ) ) ;
 	currentOrdering = "family";

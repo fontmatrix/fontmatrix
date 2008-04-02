@@ -603,34 +603,6 @@ void typotek::addFcDirItem(const QString & dirPath)
 			QDomText textelem = fc.createTextNode ( dirPath );
 			direlem.appendChild ( textelem );
 			root.appendChild ( direlem );
-// 			QDomElement selectFont = root.namedItem ( "selectfont" ).toElement();
-// 			if(selectFont.isNull())
-// 			{
-// 				QDomElement e = fc.createElement ( "selectfont" );
-// 				root.appendChild ( e );
-// 				selectFont = root.namedItem ( "selectfont" ).toElement();
-// 			}
-// 			QDomElement rejectFont = selectFont.namedItem("rejectfont").toElement();
-// 			if(rejectFont.isNull())
-// 			{
-// 				QDomElement e = fc.createElement ( "rejectfont" );
-// 				selectFont.appendChild(e);
-// 				rejectFont = selectFont.namedItem("rejectfont").toElement();
-// 			}
-// 			QDomNodeList rejlist = rejectFont.elementsByTagName ( "glob" );
-// 			bool yetRejected = false;
-// 			for ( int i=0;i < rejlist.count();++i )
-// 			{
-// 				if ( rejlist.at ( i ).toElement().text() == dirPath )
-// 					yetRejected = true;
-// 			}
-// 			if(!yetRejected)
-// 			{
-// 				QDomElement e = fc.createElement ( "glob" );
-// 				QDomText t = fc.createTextNode ( dirPath + "*" );
-// 				e.appendChild(t);
-// 				rejectFont.appendChild(e);
-// 			}
 			fcfile.resize ( 0 );
 
 			QTextStream ts ( &fcfile );
@@ -657,6 +629,7 @@ void typotek::initDir()
 		{
 		
 			qDebug() << "About to load : " << pathList.at ( i );
+			
 			FontItem *fi = new FontItem (  pathList.at ( i )  );
 			if(!fi->isValid())
 			{
@@ -671,7 +644,9 @@ void typotek::initDir()
 		}	
 	}
 	else
-	{
+	{		
+// 		QStringList zigouigoui;
+// 		zigouigoui << "|" << "/" << "--" << "\\" << "|"  << "/" << "--" << "\\";
 		relayStartingStepIn(tr("Loading")+" "+ QString::number(fontnr) +" "+tr("fonts present in database"));
 		for ( int i = 0 ; i < fontnr ; ++i )
 		{
@@ -686,6 +661,8 @@ void typotek::initDir()
 			fontMap.append ( fi );
 			realFontMap[fi->path() ] = fi;
 			fi->setTags ( tagsMap.value ( fi->path() ) );
+// 			relayStartingStepIn(zigouigoui.at( i % 8 ) );
+			relayStartingStepIn( QString::number( fontnr - i ) );
 		}
 	}
 // 	qDebug() <<  fontMap.count() << " font files loaded.";

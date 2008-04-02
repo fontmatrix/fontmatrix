@@ -106,6 +106,7 @@ class FontItem : public QObject
 		QStringList m_tags;
 		QString m_cacheInfo;
 
+		static FT_Library theLibrary;
 		FT_Error      ft_error;
 		FT_Face m_face;
 		int facesRef;
@@ -177,8 +178,6 @@ class FontItem : public QObject
 		void dowloadFinished();
 
 	public:
-		static FT_Library theLibrary;
-		static QMap<FT_Encoding, QString> charsetMap;
 
 		QString path() {return m_path;}
 		QString afm() {return m_afm;}
@@ -238,9 +237,6 @@ class FontItem : public QObject
 // 		int debug_size();
 
 		void adjustGlyphsPerRow ( int width );
-
-		static QMap<int, QString> langIdMap;
-		
 		bool isOpenType(){return m_isOpenType;};
 		FmOtf *takeOTFInstance();
 		void releaseOTFInstance(FmOtf * rotf);
@@ -248,17 +244,11 @@ class FontItem : public QObject
 		void setFTRaster(bool f){m_rasterFreetype = f;};
 		bool rasterFreetype(){return m_rasterFreetype;};
 		
-// 		void setRTL(bool rtl){m_RTL=rtl;}
-// 		bool RTL(){return m_RTL;}
-// 		
-// 		void setVertUD(bool v){m_VertUD=v;}
-// 		bool vertUD(){return m_VertUD;}
 		void setProgression(int p){m_progression = p;}
 		int progression(){return m_progression;}
 		
 		// sfnt names
 		void fillNamesMeaning();
-		static /*QMap<QString,QString>*/ QStringList name_meaning;
 		
 		bool isValid(){return m_valid;}
 		

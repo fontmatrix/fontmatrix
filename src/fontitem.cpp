@@ -53,9 +53,10 @@
 
 FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
-QMap<FT_Encoding, QString> FontItem::charsetMap;
-QMap<int, QString> FontItem::langIdMap;
-QStringList FontItem::name_meaning;
+
+QMap<FT_Encoding, QString> charsetMap;
+QMap<int, QString> langIdMap;
+QStringList name_meaning;
 QList<int> legitimateNonPathChars;
 
 // QWaitCondition theCondition;
@@ -102,26 +103,25 @@ FT_Outline_Funcs outline_funcs=
 
 void FontItem::fillCharsetMap()
 {
-	FontItem::charsetMap[FT_ENCODING_NONE] = "NONE";
-	FontItem::charsetMap[FT_ENCODING_UNICODE] = "UNICODE";
-
-	FontItem::charsetMap[FT_ENCODING_MS_SYMBOL] = "MS_SYMBOL";
-	FontItem::charsetMap[FT_ENCODING_SJIS] = "SJIS .";
-	FontItem::charsetMap[FT_ENCODING_GB2312	] = "GB2312 ";
-	FontItem::charsetMap[FT_ENCODING_BIG5] = "BIG5 ";
-	FontItem::charsetMap[FT_ENCODING_WANSUNG] = "WANSUNG ";
-	FontItem::charsetMap[FT_ENCODING_JOHAB] = "JOHAB ";
-	FontItem::charsetMap[FT_ENCODING_ADOBE_LATIN_1] = "ADOBE_LATIN_1 ";
-	FontItem::charsetMap[FT_ENCODING_ADOBE_STANDARD] = "ADOBE_STANDARD ";
-	FontItem::charsetMap[FT_ENCODING_ADOBE_EXPERT] = "ADOBE_EXPERT ";
-	FontItem::charsetMap[FT_ENCODING_ADOBE_CUSTOM] = "ADOBE_CUSTOM ";
-	FontItem::charsetMap[FT_ENCODING_APPLE_ROMAN] = "APPLE_ROMAN ";
-	FontItem::charsetMap[FT_ENCODING_OLD_LATIN_2] = tr ( "This value is deprecated and was never used nor reported by FreeType. Don't use or test for it." );
-	FontItem::charsetMap[FT_ENCODING_MS_SJIS] = "MS_SJIS ";
-	FontItem::charsetMap[FT_ENCODING_MS_GB2312] = "MS_GB2312 ";
-	FontItem::charsetMap[FT_ENCODING_MS_BIG5] = "MS_BIG5 ";
-	FontItem::charsetMap[FT_ENCODING_MS_WANSUNG] = "MS_WANSUNG ";
-	FontItem::charsetMap[FT_ENCODING_MS_JOHAB] = "MS_JOHAB ";
+	charsetMap[FT_ENCODING_NONE] = "NONE";
+	charsetMap[FT_ENCODING_UNICODE] = "UNICODE";
+	charsetMap[FT_ENCODING_MS_SYMBOL] = "MS_SYMBOL";
+	charsetMap[FT_ENCODING_SJIS] = "SJIS .";
+	charsetMap[FT_ENCODING_GB2312	] = "GB2312 ";
+	charsetMap[FT_ENCODING_BIG5] = "BIG5 ";
+	charsetMap[FT_ENCODING_WANSUNG] = "WANSUNG ";
+	charsetMap[FT_ENCODING_JOHAB] = "JOHAB ";
+	charsetMap[FT_ENCODING_ADOBE_LATIN_1] = "ADOBE_LATIN_1 ";
+	charsetMap[FT_ENCODING_ADOBE_STANDARD] = "ADOBE_STANDARD ";
+	charsetMap[FT_ENCODING_ADOBE_EXPERT] = "ADOBE_EXPERT ";
+	charsetMap[FT_ENCODING_ADOBE_CUSTOM] = "ADOBE_CUSTOM ";
+	charsetMap[FT_ENCODING_APPLE_ROMAN] = "APPLE_ROMAN ";
+	charsetMap[FT_ENCODING_OLD_LATIN_2] = tr ( "This value is deprecated and was never used nor reported by FreeType. Don't use or test for it." );
+	charsetMap[FT_ENCODING_MS_SJIS] = "MS_SJIS ";
+	charsetMap[FT_ENCODING_MS_GB2312] = "MS_GB2312 ";
+	charsetMap[FT_ENCODING_MS_BIG5] = "MS_BIG5 ";
+	charsetMap[FT_ENCODING_MS_WANSUNG] = "MS_WANSUNG ";
+	charsetMap[FT_ENCODING_MS_JOHAB] = "MS_JOHAB ";
 }
 
 void FontItem::fillLegitimateSpaces()
@@ -451,8 +451,9 @@ FontItem::FontItem ( QString path , bool remote)
 	otf = 0;
 	m_rasterFreetype = false;
 	m_progression = PROGRESSION_LTR;
-	fillLangIdMap();
-
+	
+	if(langIdMap.isEmpty())
+		fillLangIdMap();
 	if ( charsetMap.isEmpty() )
 		fillCharsetMap();
 	if( legitimateNonPathChars.isEmpty())
@@ -484,19 +485,26 @@ FontItem::FontItem ( QString path , bool remote)
 	
 	if ( infopath.suffix() == "pfb" || infopath.suffix() == "PFB")
 	{
-		if ( !ft_error )
+		m_afm = m_path;
+		if(infopath.suffix() == "pfb")
 		{
-			m_afm = m_path;
-			if(infopath.suffix() == "pfb")
-				m_afm.replace ( ".pfb",".afm" );
-			if(infopath.suffix() == "PFB")
-				m_afm.replace ( ".PFB",".afm" );
-			ft_error = FT_Attach_File ( m_face, m_afm.toLocal8Bit() );
-			if ( ft_error )
+			m_afm.replace ( ".pfb",".afm" );
+			if(!QFile::exists(m_afm))
 			{
-				m_afm.replace ( ".afm",".AFM" );
-				ft_error = FT_Attach_File ( m_face, m_afm.toLocal8Bit() );
-				if ( ft_error )
+				m_afm.replace ( ".afm" ,".AFM");
+				if(!QFile::exists(m_afm))
+				{
+					m_afm = "";
+				}
+			}
+		}
+		else if(infopath.suffix() == "PFB")
+		{
+			m_afm.replace ( ".PFB",".AFM" );
+			if(!QFile::exists(m_afm))
+			{
+				m_afm.replace ( ".AFM" ,".afm");
+				if(!QFile::exists(m_afm))
 				{
 					m_afm = "";
 				}
@@ -521,7 +529,7 @@ FontItem::FontItem ( QString path , bool remote)
 		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
 	}
 
-	m_charsets = m_charsets.toSet().toList();
+// 	m_charsets = m_charsets.toSet().toList();
 
 	m_lock = false;
 	pixList.clear();
@@ -1757,7 +1765,7 @@ QString FontItem::infoText ( bool fromcache )
 	QString ret;
 
 	QMap<QString, QStringList> orderedInfo;
-	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
+// 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
 	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " ) +"</div>";
 
 	if ( moreInfo.isEmpty() )

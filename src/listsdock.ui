@@ -25,94 +25,19 @@
    <item row="0" column="0" >
     <layout class="QHBoxLayout" >
      <item>
+      <widget class="QLabel" name="label" >
+       <property name="text" >
+        <string>Filter:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="searchString" />
-     </item>
-     <item>
-      <widget class="QPushButton" name="searchButton" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize" >
-        <size>
-         <width>40</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="font" >
-        <font>
-         <pointsize>9</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="toolTip" >
-        <string>Search through font informations</string>
-       </property>
-       <property name="text" >
-        <string>Search</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="sensitivityCheck" >
-       <property name="toolTip" >
-        <string>Case Sensitive search</string>
-       </property>
-       <property name="text" >
-        <string>CS</string>
-       </property>
-       <property name="checkable" >
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="liveSearchCheck" >
-       <property name="toolTip" >
-        <string>Live search</string>
-       </property>
-       <property name="text" >
-        <string>L</string>
-       </property>
-       <property name="checkable" >
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>
    <item row="1" column="0" >
     <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QLabel" name="OrderBy" >
-       <property name="font" >
-        <font>
-         <pointsize>9</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="text" >
-        <string/>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QLabel" name="Tags" >
        <property name="text" >

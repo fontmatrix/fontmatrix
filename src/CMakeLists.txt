@@ -27,6 +27,7 @@ remotedir.cpp
 fmrepair.cpp
 fmnamelist.cpp
 textprogression.cpp
+fmplayground.cpp
 )
 
 IF(OWN_SHAPER)

@@ -32,7 +32,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="searchString" />
+      <widget class="QLineEdit" name="searchString" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

@@ -88,6 +88,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
 	ftScene =  new QGraphicsScene;
+	playScene = new QGraphicsScene;
 	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
 	loremScene->setSceneRect ( pageRect );
 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
@@ -108,6 +109,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	loremView_FT->setBackgroundBrush ( Qt::lightGray ); 
 	loremView_FT->locker = false;
 	
+	playScene->setSceneRect ( 0,0,10000,10000 );
+	playView->setScene( playScene );
+	
 	sampleText= typo->namedSample ( "default" );
 // 	sampleFontSize = 18;
 // 	sampleInterSize = 20;
@@ -119,7 +123,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	//CONNECT
 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
-// 	connect ( m_lists->searchButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotSearch() ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 	connect ( m_lists->searchString,SIGNAL ( textEdited ( const QString&)  ),this,SLOT ( slotLiveSearch(const QString&) ) );
 	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
@@ -130,31 +133,34 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
-	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
+	connect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
+	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
 	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
+	
+	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
+	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	connect ( loremView, SIGNAL ( refit() ),this,SLOT ( slotRefitSample() ) );
 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
 	connect ( fitViewCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotFitChanged ( int ) ) );
-	connect ( loremView, SIGNAL ( refit() ),this,SLOT ( slotRefitSample() ) );
-	connect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
-	connect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
-	connect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-// 	connect ( rtlCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotSwitchRTL() ) );
-// 	connect ( vertUDCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotSwitchVertUD()));
-	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
-	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
-	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
-	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
-	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
-	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
-	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
+	
+	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
+	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 	connect ( liveFontSizeSpin, SIGNAL(valueChanged(double)),this,SLOT(slotLiveFontSize(double)));
+	
+	connect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
+	connect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
+	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
+	
+	connect ( playString, SIGNAL(editingFinished()), this, SLOT(slotPushOnPlayground()) );
 	
 	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
-// 	connect ( this ,SIGNAL ( cleanMe() ),this,SLOT ( slotCleanFontAction() ) );
 	connect ( this ,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 
 	if(typo->getSystray())
@@ -1718,6 +1724,29 @@ void MainViewWidget::slotRemoteFinished()
 void MainViewWidget::slotProgressionChanged()
 {
 	slotView(true);
+}
+
+void MainViewWidget::slotPushOnPlayground()
+{
+	QString spec(playString->text());
+	if(spec.isEmpty())
+		return;
+	playString->clear();
+	
+	if(!theVeryFont)
+		return;
+	
+	double fSize(playFontSize->value());
+	
+	playView->ensureVisible(100,100,100,100);
+// 	theVeryFont->setFTRaster ( true );
+	theVeryFont->renderLine(playScene, spec, QPointF(100.0,100.0), spec.count() * fSize * 2.0, fSize, 1 ,false);
+	
+	QList< QGraphicsItem* > itemList(playScene->items());
+	for(int i(0); i < itemList.count(); ++i)
+		itemList[i]->setFlags( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable );
+	
+	
 }
 
 

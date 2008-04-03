@@ -44,6 +44,8 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		bool nameItemIsVisible(QTreeWidgetItem *item);
 		
 		void forcePreviewRefill();
+		
+		void unlockFilter();
 	private:
 		int m_position;
 		

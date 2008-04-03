@@ -83,3 +83,8 @@ void ListDockWidget::forcePreviewRefill()
 	previewList->slotRefill(QList<FontItem*>(),false);
 }
 
+void ListDockWidget::unlockFilter()
+{
+	searchString->setEnabled(true);
+}
+

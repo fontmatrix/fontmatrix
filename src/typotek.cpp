@@ -77,6 +77,7 @@ void LazyInit::run()
 		fit->infoText();
 		fit->trimSpacesIndex();
 	}
+	ListDockWidget::getInstance()->unlockFilter();
 // 	qDebug() << "END OF LazyInit";
 }
 ///******************************************************
@@ -662,7 +663,7 @@ void typotek::initDir()
 			realFontMap[fi->path() ] = fi;
 			fi->setTags ( tagsMap.value ( fi->path() ) );
 // 			relayStartingStepIn(zigouigoui.at( i % 8 ) );
-			relayStartingStepIn( QString::number( fontnr - i ) );
+// 			relayStartingStepIn( QString::number( fontnr - i ) );
 		}
 	}
 // 	qDebug() <<  fontMap.count() << " font files loaded.";

@@ -52,6 +52,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsScene *abcScene;
 		QGraphicsScene *loremScene;
 		QGraphicsScene *ftScene;
+		QGraphicsScene *playScene;
 		QStringList ord;
 		QStringList fields;
 		typotek *typo;
@@ -153,6 +154,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotNewTag();
 		void slotContextMenu(QPoint  pos);
 		void slotFinalize();
+		//playground
+		void slotPushOnPlayground();
 		
 	private slots:
 		void slotLiveFontSize(double);

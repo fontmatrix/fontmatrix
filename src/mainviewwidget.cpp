@@ -60,7 +60,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	QSettings settings;
 	sampleFontSize = settings.value("SampleFontSize",12.0).toDouble();
 	sampleInterSize = settings.value("SampleInterline",16.0).toDouble();
-	sampleRatio = sampleFontSize / sampleInterSize;
+	sampleRatio = sampleInterSize / sampleFontSize  ;
 	liveFontSizeSpin->setValue(sampleFontSize);
 	
 	iconPS1 =  QIcon(":/icon-PS1");

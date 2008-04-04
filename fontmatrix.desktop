@@ -10,6 +10,7 @@ Exec=fontmatrix
 Icon=fontmatrix
 Terminal=false
 GenericName[fr]=Gestion des Polices
+GenericName=Font Manager
 TryExec=fontmatrix
 X-StandardInstall=false
 StartupWMClass=fontmatrix

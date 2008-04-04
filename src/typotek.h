@@ -248,8 +248,11 @@ class typotek:public QMainWindow
 
 class LazyInit : public QThread
 {
+	Q_OBJECT
 	public:
 		void run();
+	signals:
+		void endOfRun();
 };
 
 

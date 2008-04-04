@@ -69,7 +69,6 @@ extern bool __FM_SHOW_FONTLOADED;
 /// LazyInit *********************************************
 void LazyInit::run()
 {
-// 	qDebug() << "LazyInit::run()";
 	typotek* t = typotek::getInstance();
 	QList<FontItem*> fonts = t->getAllFonts();
 	foreach(FontItem *fit, fonts)
@@ -77,8 +76,7 @@ void LazyInit::run()
 		fit->infoText();
 		fit->trimSpacesIndex();
 	}
-	ListDockWidget::getInstance()->unlockFilter();
-// 	qDebug() << "END OF LazyInit";
+	emit endOfRun();
 }
 ///******************************************************
 // QMutex remoteDirsMutex;
@@ -121,6 +119,7 @@ void typotek::initMatrix()
 	createActions();
 	createMenus();
 	createStatusBar();
+	
 }
 
 

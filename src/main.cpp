@@ -32,6 +32,7 @@
 #include <QSettings>
 
 #include "typotek.h"
+#include "listdockwidget.h"
 
 bool __FM_SHOW_FONTLOADED;
 
@@ -126,6 +127,9 @@ int main ( int argc, char *argv[] )
 		theSplash.finish ( mw );
 
 	LazyInit lazyInit;
+	// Now we should have A running ListDockWidget in main thread
+	QObject::connect(&lazyInit, SIGNAL(endOfRun()), ListDockWidget::getInstance(), SLOT(unlockFilter()) );
+	
 	lazyInit.start(QThread::LowestPriority);
 	
 	return app.exec();

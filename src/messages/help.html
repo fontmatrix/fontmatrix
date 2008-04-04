@@ -1,9 +1,8 @@
 <html>
 <body>
-<h1>Fontmatrix Help</h1>
-<h3>
-      Importing Fonts
-    </h3>
+<h2>Fontmatrix Help</h2>
+<h3>Importing Fonts</h3>
+<p><em>Editor's Note: This doc is very much a work in progress as Fontmatrix evolves quickly. Each new release will get better and more complete docs. </em></p>
 <p>The very first thing to do once you have Fontmatrix up and running is to import fonts that you want to manage with Fontmatrix.
 Use <strong>Import...</strong> option from <strong>File</strong> menu. Navigate until you find a directory containing your fonts, it will do a one time recursion through the directories. Once Fontmatrix has scanned the directories, they are imported into the left hand panel, however, the fonts are <strong>not activated</strong> by default. You can also import them via Drag and Drop.</p>
 <p>
@@ -20,9 +19,9 @@ There are additional helpers below: 'View all' and 'View activated' which are pr
 <h3>Displaying Fonts</h3>
 <p>Fontmatrix offers you detailed information about your fonts. There are three types of information this font manager can provide:
 <ul><li><strong>Font Info Tab</strong> - The font info shows the the internal text fields which display copyright information, number of glyphs, character map coverage, the Postscript name, which may be different to the displayed name in some applications and sometimes a version string. On occassion, there will be descriptive text and other information. </li>
-<li><strong>Sample Text Tab</strong> By default this panel shows a sample of text and numbers from basic Latin-1, but you can add your own Unicode text samples in a number of languages and scripts to display the most important glyphs contained in a font. For example you can add a snippet of Arabic for use with fonts containing Arabic glyphs or add other non-Latin text for non-Latin fonts. Even most non-Latin fonts do have a basic range of Latin glyphs, even if the font is not used primarily for Latin texts. <br>When you open an Open Type Font, below there will be an additional panel which displays the advanced Open Type features available within the font.</li>
+<li><strong>Sample Text Tab</strong> By default this panel shows a sample of text and numbers from basic Latin-1, but you can add your own Unicode text samples in a number of languages and scripts to display the most important glyphs contained in a font. For example you can add a snippet of Arabic for use with fonts containing Arabic glyphs or add other non-Latin text for non-Latin fonts. Even most non-Latin fonts do have a basic range of Latin glyphs, even if the font is not used primarily for Latin texts. <br>When you open an Open Type Font, below there will be an additional panel which displays the advanced Open Type features available within the font. With <strong>Absolute Mode</strong> Fontmatrix uses the basic Qt library to display the glyphs. When it renders onto the screen, Qt does not know that’s a glyph and does not optimize the rendering. It’s the reason why its display is not optimal at a small size. Quality and precision increases with larger sizes. With <strong>Freetype View</strong> is the well-known glyph rendering specialist. So we ask Freetype to _rasterize_ a path or otherwise create a bitmap (with antialiasing) and get the result in a simple bitmap display. Thus the display has good quality even at small size (try a 4/5 pt to get the actual idea of the Freetype team's skill! It’s amazing). But as it is a raster, quality will decrease when you zoom in.</li>
 
-<li><strong>Glyph </strong>- unfinished</li>
+<li><strong>Glyph </strong>FIXME</li>
 </ul>
 </p>
 <h2>Managing The Collection</h2>

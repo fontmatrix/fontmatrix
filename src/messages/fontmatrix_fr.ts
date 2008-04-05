@@ -603,7 +603,7 @@
     <message>
         <location filename="../listsdock.ui" line="30"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre :</translation>
     </message>
 </context>
 <context>
@@ -783,17 +783,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="356"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancé</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="417"/>
         <source>Text Progression</source>
-        <translation type="unfinished"></translation>
+        <translation>Directions</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="485"/>
         <source>Playground</source>
-        <translation type="unfinished"></translation>
+        <translation>Aire de jeu</translation>
     </message>
 </context>
 <context>
@@ -1756,7 +1756,7 @@ Avant de la supprimer, vous devez la désactiver.</translation>
     <message>
         <location filename="../prefs_panel.ui" line="178"/>
         <source>Add the full path to your preferred font editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter le chemin vers votre éditeur de fontes</translation>
     </message>
 </context>
 <context>
@@ -1845,807 +1845,812 @@ ijklmnopq
 rstuvxyz
 0123456789
 ,;:!?.</source>
-        <translation type="unfinished"></translation>
+        <translation>ABCDEFGHIJKLM
+NOPQRSTUVXYZ
+abcdefghijkl
+mnopqrstuvxyz
+ÀÉÈÊËÎÔ àéèêëîô
+0123456789 ,;:!?.</translation>
     </message>
     <message>
-        <location filename="../dataloader.cpp" line="179"/>
+        <location filename="../dataloader.cpp" line="180"/>
         <source>hamburgefonstiv</source>
-        <translation type="unfinished"></translation>
+        <translation>hamburgefonstiv</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="32"/>
         <source>Access All Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Toutes les variantes</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="33"/>
         <source>Above-Base Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes supérieures</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="34"/>
         <source>Above-Base Mark Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Positionnement supérieur</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="35"/>
         <source>Above-Base Substitutions</source>
-        <translation type="unfinished"></translation>
+        <translation>Substitutions supérieures</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="36"/>
         <source>Alternative Fractions</source>
-        <translation type="unfinished"></translation>
+        <translation>Fractions alternatives</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="37"/>
         <source>Akhands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligatures (écritures indiennes)</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="38"/>
         <source>Below-Base Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes inférieures</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="39"/>
         <source>Below-Base Mark Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Positionnement inférieur</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="40"/>
         <source>Below-Base Substitutions</source>
-        <translation type="unfinished"></translation>
+        <translation>Substitutions inférieures</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="41"/>
         <source>Petite Capitals From Capitals</source>
-        <translation type="unfinished"></translation>
+        <translation>Capitales en petites capitales</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="42"/>
         <source>Small Capitals From Capitals</source>
-        <translation type="unfinished"></translation>
+        <translation>Capitales en «Small caps»</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="43"/>
         <source>Contextual Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes contextuelles</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="44"/>
         <source>Case-Sensitive Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes dépendantes de la casse</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="45"/>
         <source>Glyph Composition/Decomposition</source>
-        <translation type="unfinished"></translation>
+        <translation>Composition et décomposition des glyphes</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="46"/>
         <source>Contextual Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligatures contextuelles</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="47"/>
         <source>Conjunct Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes jointives</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="48"/>
         <source>Capital Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Espacement pour les capitales</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="49"/>
         <source>Contextual Swash</source>
-        <translation type="unfinished"></translation>
+        <translation>Décoratives contextuelles</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="50"/>
         <source>Cursive Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Positionnement des cursives</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="51"/>
         <source>Default Processing</source>
-        <translation type="unfinished"></translation>
+        <translation>Traitement par défaut</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="52"/>
         <source>Distances</source>
-        <translation type="unfinished"></translation>
+        <translation>Distances</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="53"/>
         <source>Discretionary Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligatures supplémentaires</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="54"/>
         <source>Denominators</source>
-        <translation type="unfinished"></translation>
+        <translation>Dénominateurs</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="55"/>
         <source>Expert Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes expertes (mais en quoi ?)</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="56"/>
         <source>Final glyph Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes de glyphes en fin de mot</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="57"/>
         <source>Terminal Forms #2</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes terminales #2</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="58"/>
         <source>Terminal Forms #3</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes terminales #3</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="59"/>
         <source>Terminal Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes terminales</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="60"/>
         <source>Fractions</source>
-        <translation type="unfinished"></translation>
+        <translation>Fractions</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="61"/>
         <source>Full Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Pleines chasses</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="62"/>
         <source>Half Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Demi formes</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="63"/>
         <source>Halant Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes du halant</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="64"/>
         <source>Alternate Half Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes de demi chasses</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="65"/>
         <source>Historical Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes historiques</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="66"/>
         <source>Horizontal Kana Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes hrizontales de kana</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="67"/>
         <source>Historical Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligatures historiques</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="68"/>
         <source>Hangul</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangul</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="69"/>
         <source>Hojo Kanji Forms (JIS x 212-1990 Kanji Forms)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hojo Kanji Forms (JIS x 212-1990 Kanji Forms)</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="70"/>
         <source>Half Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Demi chasses</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="71"/>
         <source>Initial Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes de début de mot</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="72"/>
         <source>Isolated Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes isolées</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="73"/>
         <source>Italics</source>
-        <translation type="unfinished"></translation>
+        <translation>Italiques</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="74"/>
         <source>Justification Alternatives</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes justifiantes</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="75"/>
         <source>JIS78 Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes JIS78</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="76"/>
         <source>JIS83 Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes JIS83</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="77"/>
         <source>JIS90 Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes JIS90</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="78"/>
         <source>JIS2004 Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes JIS2004</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="79"/>
         <source>Kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>Crénage</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="80"/>
         <source>Left Bounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Limites gauche</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="81"/>
         <source>Standard Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligatures habituelles</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="82"/>
         <source>Leading Jamo Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes de Jamo en chef</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="83"/>
         <source>Lining Figures</source>
-        <translation type="unfinished"></translation>
+        <translation>Figures appuyées</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="84"/>
         <source>Localized Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes localisées</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="85"/>
         <source>Mark Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Positionnelment par repères</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="86"/>
         <source>Medial Forms #2</source>
-        <translation type="unfinished"></translation>
+        <translation>Form de milieu de mot #2</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="87"/>
         <source>Medial Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Form de milieu de mot</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="88"/>
         <source>Mathematical Greek</source>
-        <translation type="unfinished"></translation>
+        <translation>Grec pour les mathématiques</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="89"/>
         <source>Mark to Mark Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Positionnement de repère à repère</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="90"/>
         <source>Mark Positioning via Substitution</source>
-        <translation type="unfinished"></translation>
+        <translation>Positionnement par repère via une substitution (confus?)</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="91"/>
         <source>Alternate Annotation Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes de formes annotativatoires</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="92"/>
         <source>NLC Kanji Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes de kanjis NLC</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="93"/>
         <source>Nukta Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes du Nukta</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="94"/>
         <source>Numerators</source>
-        <translation type="unfinished"></translation>
+        <translation>Numérateurs</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="95"/>
         <source>Old Style Figures</source>
-        <translation type="unfinished"></translation>
+        <translation>Figures à l’anciennes (chiffres elzéviriens)</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="96"/>
         <source>Optical Bounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Limites optiques</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="97"/>
         <source>Ordinals</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordinaux</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="98"/>
         <source>Ornaments</source>
-        <translation type="unfinished"></translation>
+        <translation>Ornements</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="99"/>
         <source>Proportional Alternate Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes à chasse variable</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="100"/>
         <source>Petite Capitals</source>
-        <translation type="unfinished"></translation>
+        <translation>Petites capitales</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="101"/>
         <source>Proportional Figures</source>
-        <translation type="unfinished"></translation>
+        <translation>Figures proportionnelles</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="102"/>
         <source>Pre-base Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes antérieures</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="103"/>
         <source>Pre-base Substitutions</source>
-        <translation type="unfinished"></translation>
+        <translation>Substitutions antérieures</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="104"/>
         <source>Post-base Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes postérieures</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="105"/>
         <source>Post-base Substitutions</source>
-        <translation type="unfinished"></translation>
+        <translation>Substitutions postérieures</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="106"/>
         <source>Proportional Widths</source>
-        <translation type="unfinished"></translation>
+        <translation>Chasses proportionnelles</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="107"/>
         <source>Quarter Widths</source>
-        <translation type="unfinished"></translation>
+        <translation>Quart de chasse</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="108"/>
         <source>Randomize</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasard</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="109"/>
         <source>Rakar Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes du rakar</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="110"/>
         <source>Required Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligatures requises</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="111"/>
         <source>Reph Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes du repha</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="112"/>
         <source>Right Bounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Limites droite</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="113"/>
         <source>Right-To-Left Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes pour disposition de droite à gauche</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="114"/>
         <source>Ruby Notation Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes de noation rubinique</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="115"/>
         <source>Stylistic Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes de style</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="116"/>
         <source>Scientific Inferiors</source>
-        <translation type="unfinished"></translation>
+        <translation>Inférieures scientifiques</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="117"/>
         <source>Optical Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille optique</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="118"/>
         <source>Small Capitals</source>
-        <translation type="unfinished"></translation>
+        <translation>Petites (small) capitales</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="119"/>
         <source>Simplified Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes simplifiées</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="120"/>
         <source>Sylistic Set 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 1</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="121"/>
         <source>Sylistic Set 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 2</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="122"/>
         <source>Sylistic Set 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 3</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="123"/>
         <source>Sylistic Set 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 4</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="124"/>
         <source>Sylistic Set 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 5</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="125"/>
         <source>Sylistic Set 6</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 6</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="126"/>
         <source>Sylistic Set 7</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 7</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="127"/>
         <source>Sylistic Set 8</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 8</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="128"/>
         <source>Sylistic Set 9</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 9</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="129"/>
         <source>Sylistic Set 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 10</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="130"/>
         <source>Sylistic Set 11</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 11</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="131"/>
         <source>Sylistic Set 12</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 12</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="132"/>
         <source>Sylistic Set 13</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 13</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="133"/>
         <source>Sylistic Set 14</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 14</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="134"/>
         <source>Sylistic Set 15</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 15</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="135"/>
         <source>Sylistic Set 16</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 16</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="136"/>
         <source>Sylistic Set 17</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 17</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="137"/>
         <source>Sylistic Set 18</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 18</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="138"/>
         <source>Sylistic Set 19</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 19</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="139"/>
         <source>Sylistic Set 20</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensemble de styles 20</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="140"/>
         <source>Subscript</source>
-        <translation type="unfinished"></translation>
+        <translation>Souscrit</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="141"/>
         <source>Superscript</source>
-        <translation type="unfinished"></translation>
+        <translation>Suscrit</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="142"/>
         <source>Swash</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes «Swash»</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="143"/>
         <source>Titling</source>
-        <translation type="unfinished"></translation>
+        <translation>Titrage</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="144"/>
         <source>Trailing Jamo Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes Jamo en queue</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="145"/>
         <source>Traditional Name Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes de noms traditionnels</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="146"/>
         <source>Tabular Figures</source>
-        <translation type="unfinished"></translation>
+        <translation>Figures pour tableaux</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="147"/>
         <source>Traditional Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes traditionnelles</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="148"/>
         <source>Third Widths</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiers de chasse</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="149"/>
         <source>Unicase</source>
-        <translation type="unfinished"></translation>
+        <translation>Casse unique</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="150"/>
         <source>Alternate Vertical Metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes de métriques verticales</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="151"/>
         <source>Vattu Variants</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes vattu</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="152"/>
         <source>Vertical Writing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecriture verticale</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="153"/>
         <source>Alternate Vertical Half Metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes de demi-mesures verticales</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="154"/>
         <source>Vowel Jamo Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Formes de voyelles Jamo</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="155"/>
         <source>Vertical Kana Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes de kana à la verticale</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="156"/>
         <source>Vertical Kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>Crénage vertical</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="157"/>
         <source>Proportional Alternate Vertical Metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Variantes proportionnelles des métriques verticales</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="158"/>
         <source>Vertical Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation verticale</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="159"/>
         <source>Slashed Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Zéro barré</translation>
     </message>
     <message>
-        <location filename="../dataloader.cpp" line="168"/>
+        <location filename="../dataloader.cpp" line="169"/>
         <source>default</source>
-        <translation type="unfinished">default</translation>
+        <translation>défaut</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2426"/>
         <source>Mark, NonSpacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Repère, sans chasse</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2427"/>
         <source>Mark, SpacingCombining</source>
-        <translation type="unfinished"></translation>
+        <translation>Repère, combinatoire</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2428"/>
         <source>Mark, Enclosing</source>
-        <translation type="unfinished"></translation>
+        <translation>Repère, fermant</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2429"/>
         <source>Number, DecimalDigit</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre, chiffre décimal</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2430"/>
         <source>Number, Letter</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre, lettre</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2431"/>
         <source>Number, Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre, autre</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2432"/>
         <source>Separator, Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Séparateur, espace</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2433"/>
         <source>Separator, Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Séparateur, ligne</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2434"/>
         <source>Separator, Paragraph</source>
-        <translation type="unfinished"></translation>
+        <translation>Séparateur, paragraphe</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2435"/>
         <source>Other, Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Autre, contrôle</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2436"/>
         <source>Other, Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Autre, formatage</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2437"/>
         <source>Other, Surrogate</source>
-        <translation type="unfinished"></translation>
+        <translation>Autre, substitut</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2438"/>
         <source>Other, PrivateUse</source>
-        <translation type="unfinished"></translation>
+        <translation>Autre, usage privé</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2439"/>
         <source>Other, NotAssigned</source>
-        <translation type="unfinished"></translation>
+        <translation>Autre, non assigné</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2440"/>
         <source>Letter, Uppercase</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettre, haut de casse</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2441"/>
         <source>Letter, Lowercase</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettre, bas de casse</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2442"/>
         <source>Letter, Titlecase</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettre, casse de titrage</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2443"/>
         <source>Letter, Modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettre, modificateur</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2444"/>
         <source>Letter, Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettre, autre</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2445"/>
         <source>Punctuation, Connector</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponctuation, connecteur</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2446"/>
         <source>Punctuation, Dash</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponctuation, trait</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2447"/>
         <source>Punctuation, Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponctuation, ouverture</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2448"/>
         <source>Punctuation, Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponctuation, fermeture</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2449"/>
         <source>Punctuation, InitialQuote</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponctutatio, début de citation</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2450"/>
         <source>Punctuation, FinalQuote</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponctutatio, fin de citation</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2451"/>
         <source>Punctuation, Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponctuation, autre</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2452"/>
         <source>Symbol, Math</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbole, mathématiques</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2453"/>
         <source>Symbol, Currency</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbole, monnaie</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2454"/>
         <source>Symbol, Modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbole, mdificateur</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="2455"/>
         <source>Symbol, Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol, autre</translation>
     </message>
 </context>
 <context>
@@ -2767,67 +2772,67 @@ rstuvxyz
     <message>
         <location filename="../textprogression.ui" line="13"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="19"/>
         <source>Inline progression</source>
-        <translation type="unfinished"></translation>
+        <translation>En-ligne</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="83"/>
         <source>e.g. Latin text</source>
-        <translation type="unfinished"></translation>
+        <translation>ex. : texte en français</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="99"/>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>de gauche à droite</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="41"/>
         <source>e.g. Arabic text</source>
-        <translation type="unfinished"></translation>
+        <translation>ex. : texte en arabe</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="109"/>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>de droite à gauche</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="51"/>
         <source>e.g. Traditional Chinese &amp; Japanese text</source>
-        <translation type="unfinished"></translation>
+        <translation>ex. : text traditionnel en chinois</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="86"/>
         <source>Top to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>de haut en bas</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="61"/>
         <source>e.g. Runic text</source>
-        <translation type="unfinished"></translation>
+        <translation>ex. : texte Runique</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="64"/>
         <source>Bottom to top</source>
-        <translation type="unfinished"></translation>
+        <translation>de bas en haut</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="74"/>
         <source>Block progression</source>
-        <translation type="unfinished"></translation>
+        <translation>Morceaux</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="96"/>
         <source>e.g. Traditional Mongolian text</source>
-        <translation type="unfinished"></translation>
+        <translation>ex. : texte en mongol</translation>
     </message>
     <message>
         <location filename="../textprogression.ui" line="106"/>
         <source>e.g. Tarditionnal Chinese &amp; Japanes text</source>
-        <translation type="unfinished"></translation>
+        <translation>ex. : text traditionnel en chinois</translation>
     </message>
 </context>
 <context>
@@ -3218,7 +3223,7 @@ it is time to cancel if it was not your intent</source>
     <message>
         <location filename="../typotek.cpp" line="676"/>
         <source>Collected System Font</source>
-        <translation type="unfinished">Fontes système</translation>
+        <translation>Fontes système</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="716"/>
@@ -3243,17 +3248,17 @@ it is time to cancel if it was not your intent</source>
     <message>
         <location filename="../typotek.cpp" line="115"/>
         <source>Browse Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="1097"/>
         <source>default</source>
-        <translation type="unfinished">default</translation>
+        <translation>défaut</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="1044"/>
         <source>&quot;default&quot; is a reserved</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;défaut&quot; est réservé</translation>
     </message>
 </context>
 </TS>

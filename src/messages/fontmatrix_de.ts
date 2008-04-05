@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
-<defaultcodec></defaultcodec>
 <context>
     <name>About</name>
     <message>
@@ -1608,7 +1607,7 @@ rstuvxyz
 ,;:!?.</translation>
     </message>
     <message>
-        <location filename="../dataloader.cpp" line="179"/>
+        <location filename="../dataloader.cpp" line="180"/>
         <source>hamburgefonstiv</source>
         <translation>hamburgefonstiv</translation>
     </message>
@@ -2403,7 +2402,7 @@ rstuvxyz
         <translation>Symbol, Other</translation>
     </message>
     <message>
-        <location filename="../dataloader.cpp" line="168"/>
+        <location filename="../dataloader.cpp" line="169"/>
         <source>default</source>
         <translation>Grundeinstellung</translation>
     </message>

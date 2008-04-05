@@ -1039,9 +1039,9 @@ void typotek::addNamedSample ( QString name, QString sample )
 		return;
 	}
 
-	if ( name == "default" )
+	if ( name == tr("default") )
 	{
-		statusBar()->showMessage ( tr ( "\"default\" is a reserved keyword" ), 3000 );
+		statusBar()->showMessage ( tr ( "\"default\" is a reserved" ), 3000 );
 		return;
 	}
 	m_namedSamples[name] = sample;
@@ -1088,13 +1088,13 @@ void typotek::addNamedSampleFragment ( QString name, QString sampleFragment )
 QString typotek::namedSample ( QString name )
 {
 	if ( name.isEmpty() )
-		return m_namedSamples["default"];
+		return m_namedSamples[tr("default")];
 	return m_namedSamples[name];
 }
 
 void typotek::setSampleText ( QString s )
 {
-	m_namedSamples["default"] += s;
+	m_namedSamples[tr("default")] += s;
 }
 
 

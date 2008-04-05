@@ -112,7 +112,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	playScene->setSceneRect ( 0,0,10000,10000 );
 	playView->setScene( playScene );
 	
-	sampleText= typo->namedSample ( "default" );
+	sampleText= typo->namedSample ( tr("default") );
 // 	sampleFontSize = 18;
 // 	sampleInterSize = 20;
 	m_lists->previewList->setRefWidget ( this );
@@ -1411,7 +1411,7 @@ void MainViewWidget::refillSampleList()
 	QStringList sl = typo->namedSamplesNames();
 	for ( int i = 0;i < sl.count(); ++i )
 	{
-		if ( sl[i] == "default" )
+		if ( sl[i] == tr("default") )
 		{
 			continue;
 		}

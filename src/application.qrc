@@ -49,6 +49,7 @@
     
     <qresource prefix="/texts" lang="de" >
         <file alias="about">messages/about_de.html</file>
+        <file alias="fontmatrix">messages/fontmatrix_de.qm</file>
     </qresource>
         
     <qresource prefix="/texts" lang="en" >

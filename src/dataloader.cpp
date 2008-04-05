@@ -164,8 +164,9 @@ void DataLoader::load()
 		{
 			QDomNode col = sampleList.item ( i );
 			QString name = col.toElement().attributeNode("name").value();
-			if(name.isEmpty())
-				name = "default";
+			if(name.isEmpty()
+				|| name == "default")// rather to not break previous installation
+				name = QObject::tr("default");
 			m_typo->addNamedSampleFragment(name, col.toElement().text());
 		}
 	}

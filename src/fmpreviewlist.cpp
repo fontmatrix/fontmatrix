@@ -115,17 +115,19 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	
 	for(QMap<QString, FontPreviewItem>::const_iterator pit = m_pixItemList.begin() ; pit!= m_pixItemList.end(); ++pit)
 	{
-		
-		if(pit.value().item && pit.value().visible)
+		if(pit.value().item)
 		{
 			m_scene->removeItem(pit.value().item);
 			delete pit.value().item;
-// 			pit.value().item = 0;
-// 			pit.value().visible = false;
+// 			qDebug()<<"remove from preview : "<< pit.value().name;
 		}
 	}
+	
+// 	qDebug()<<"PreviewScene contains now : "<< m_scene->items().count() << " items";
+	
 	m_pixItemList.clear();
 	
+	double theWidth = width();
 	double theSize = typotek::getInstance()->getPreviewSize();
 	double theLine = 1.3 * theSize * QApplication::desktop()->physicalDpiY() / 72.0;
 	double indent = 0;
@@ -157,28 +159,22 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 			{
 				bool oldRaster = fit->rasterFreetype();
 				fit->setFTRaster("true");
-				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord,(colState ? oddC : evenC ), width() ));
+				QGraphicsPixmapItem *pit = m_scene->addPixmap(fit->oneLinePreviewPixmap(theWord,(colState ? oddC : evenC ), theWidth ));
 				fit->setFTRaster(oldRaster);
 				pit->setPos(indent ,theLine*i);
 				pit->setData(1,fit->path());
 				pit->setData(2,"preview");
-				pit->setToolTip(fit->fancyName()/*+" - "+ QString::number(theLine*i)*/);
+				pit->setToolTip(fit->fancyName());
 				pit->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
 				m_pixItemList[fit->path()] = FontPreviewItem(fit->path(), QPointF(indent , theLine*i), true, pit) ;
-// 				if(fit->path() == curFontName)
-// 					qDebug()<< i << m_pixItemList[fit->path()].dump();
 				
 			}
 		}
 		else
 		{
 			m_pixItemList[trackedFonts.at(i)->path()] = FontPreviewItem(trackedFonts.at(i)->path(),QPointF(0,theLine*i),false,0);
-// 			if( fonts.at(i)->path() == curFontName)
-// 				qDebug()<< i << m_pixItemList[fonts.at(i)->path()].dump();
 		}
 	}
-// 	qDebug()<< "END OF reFill()";
-	
 	slotPleaseMakeItGoddLooking();
 }
 
@@ -344,21 +340,21 @@ void FMPreviewList::keyPressEvent(QKeyEvent * e)
 
 void FMPreviewList::slotPleaseMakeItGoddLooking()
 {
-	typotek *t = typotek::getInstance();
-	if(t->getPreviewRTL())
-	{
-// 		qDebug()<< "Change alignment of preview list to RIGHT";
-		setSceneRect( 0 ,0 ,t->getPreviewSize() * t->word().count() * QApplication::desktop()->physicalDpiX() / 72.0 * 0.8, m_scene->height() );
-// 		qDebug()<< m_scene->sceneRect();
-		horizontalScrollBar()->setValue(m_scene->width());
-		setAlignment( Qt::AlignRight |  Qt::AlignTop );
-	}
-	else
-	{
+// 	typotek *t = typotek::getInstance();
+// 	if(t->getPreviewRTL())
+// 	{
+// // 		qDebug()<< "Change alignment of preview list to RIGHT";
+// 		setSceneRect( 0 ,0 ,t->getPreviewSize() * t->word().count() * QApplication::desktop()->physicalDpiX() / 72.0 * 0.8, m_scene->height() );
+// // 		qDebug()<< m_scene->sceneRect();
+// 		horizontalScrollBar()->setValue(m_scene->width());
+// 		setAlignment( Qt::AlignRight |  Qt::AlignTop );
+// 	}
+// 	else
+// 	{
 // 		qDebug()<< "Change alignment of preview list to LEFT";
 // 		setSceneRect( 0 ,0 ,t->getPreviewSize() * t->word().count(), m_scene->height() );
 		setAlignment( Qt::AlignLeft |  Qt::AlignTop );
-	}
+// 	}
 	
 }
 

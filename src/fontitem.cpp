@@ -1941,8 +1941,11 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 {
 	if ( m_remote )
 		return fixedPixmap;
-	if ( !theOneLinePreviewPixmap.isNull() )
-		return theOneLinePreviewPixmap;
+	if ( !theOneLinePreviewPixmap.isNull())
+	{
+		if(theOneLinePreviewPixmap.width() == size_w)
+			return theOneLinePreviewPixmap;	
+	}
 	QRectF savedRect = theOneLineScene->sceneRect();
 
 	double theSize = typotek::getInstance()->getPreviewSize();
@@ -1987,13 +1990,10 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		}
 		double advance = m_glyph->metrics.horiAdvance * scalefactor * pt2px;
 		double leftBearing = ( double ) m_glyph->metrics.horiBearingX  * scalefactor * pt2px;
-// 		double topAlign =( theSize * pt2px ) - ( ( double ) m_glyph->metrics.horiBearingY  * scalefactor * pt2px);
-// 		qDebug() << oneline[i] << theSize * pt2px  <<  m_glyph->metrics.horiBearingY << scalefactor << m_glyph->metrics.horiBearingY  * scalefactor * pt2px;
-		if (pRTL)
-		{
-			advance *= -1.0;
-// 			leftBearing *= -1.0;
-		}
+// 		if (pRTL)
+// 		{
+// 			advance *= -1.0;
+// 		}
 		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
 		if ( ft_error )
 		{
@@ -2016,10 +2016,11 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		             m_face->glyph->bitmap.pitch,
 		             QImage::Format_Indexed8 );
 		if(pRTL)
-			pen.rx() +=  advance;
+			pen.rx() -=  advance;
+		
 		img.setColorTable ( palette );
-// 		pen.ry() = topAlign /*( theSize * pt2px ) - m_glyph->bitmap_top*/;
 		apainter.drawImage ( pen.x() + leftBearing, pen.y() - m_glyph->bitmap_top , img );
+		
 		if(!pRTL)
 			pen.rx() +=  advance;
 		

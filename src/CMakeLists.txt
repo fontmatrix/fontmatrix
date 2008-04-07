@@ -60,6 +60,7 @@ remotedir.h
 fmrepair.h
 fmnamelist.h
 textprogression.h
+fmplayground.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 

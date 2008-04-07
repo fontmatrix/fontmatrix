@@ -146,6 +146,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
 	
+	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	
 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
@@ -859,7 +861,8 @@ void MainViewWidget::slotZoom ( int z )
 		concernedView = loremView_FT;
 	else if(loremView->isVisible())
 		concernedView = loremView;
-	qDebug()<< "slotZoom (" <<z<<" )";
+	else if(playView->isVisible())
+		concernedView = playView;
 	double delta =  1.0 + (z/1000.0) ;
 	QTransform trans;
 	trans.scale ( delta,delta );

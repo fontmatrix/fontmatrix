@@ -535,6 +535,11 @@ FontItem::FontItem ( QString path , bool remote)
 	pixList.clear();
 	sceneList.clear();
 	
+	if(m_family.isEmpty())
+		return;
+	if(m_variant.isEmpty())
+		return;
+	
 	m_valid = true;
 	releaseFace();
 

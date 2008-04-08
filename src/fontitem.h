@@ -62,7 +62,7 @@ class FontItem : public QObject
 
 		Q_OBJECT
 	public:
-		FontItem ( QString path , bool remote = false);
+		FontItem ( QString path , bool remote = false, bool faststart = false);
 
 		~FontItem();
 	private:
@@ -255,6 +255,7 @@ class FontItem : public QObject
 		bool isRemote(){return m_remote;}
 		bool isCached(){return remoteCached;}		
 		void  fileRemote(QString family, QString variant, QString type, QString info, QPixmap pixmap);
+		void  fileLocal(QString family, QString variant, QString type, QString info);
 		// retval : 1 => Ready; 2 => Wait ; ...
 		int getFromNetwork();
 };

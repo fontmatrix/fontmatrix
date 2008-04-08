@@ -20,6 +20,7 @@
 #include "dataloader.h"
 #include "typotek.h"
 
+
 #include <QDomDocument>
 #include <QDomNodeList>
 #include <QMessageBox>
@@ -67,64 +68,35 @@ void DataLoader::load()
 	
 	//loading fonts
 	QDomNodeList colList = doc.elementsByTagName ( "fontfile" );
+	qDebug()<< "colList contains "<< colList.count() << "fontfile elements";
 	if ( colList.length() == 0 )
 	{
 		m_typo->statusBar()->showMessage ( QString ( "WARNING: no fontfile in %1" ).arg ( m_file->fileName() ),3000 );
 	}
-// 	qDebug() << colList.length();
-	if(__FM_SHOW_FONTLOADED)
+
+	for ( uint i = 0; i < colList.length(); ++i )
 	{
-		for ( uint i = 0; i < colList.length(); ++i )
+		QDomNode col = colList.item ( i );
+		FontInfo fi;
+// 			QString fontName = col.toElement().attributeNode("name").value();
+			fi.file  = col.namedItem ( "file" ).toElement().text();
+			fi.family = col.toElement().attributeNode("family").value();
+			fi.variant = col.toElement().attributeNode("variant").value();
+			fi.type = col.toElement().attributeNode("type").value();
+			fi.info = col.namedItem ( "info" ).toElement().text();
+		QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
+		QStringList tl;
+		for(int ti = 0; ti < taglist.count(); ++ti)
 		{
-			QDomNode col = colList.item ( i );
-#if FONTMATRIX_VERSION_MINOR == 3
-			QString fontName  = col.namedItem ( "file" ).toElement().text();
-			QString fontfile = QDir::home() + "/.fonts-reserved/"+ fontName;
-#else
-			QString fontName = col.toElement().attributeNode("name").value();
-			QString fontfile  = col.namedItem ( "file" ).toElement().text();
-#endif
-			QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
-			QStringList tl;
-			for(int ti = 0; ti < taglist.count(); ++ti)
-			{
-				tl << taglist.at(ti).toElement().text();
-			}
-			if(!m_fontList.contains(fontfile))
-			{
-				m_typo->addTagMapEntry(fontfile,tl);
-				collectedTags << tl;
-				m_fontList << fontfile;
-				m_typo->relayStartingStepIn(fontName);
-			}
+			fi.tags << taglist.at(ti).toElement().text();
 		}
+		m_typo->addTagMapEntry(fi.file,fi.tags);
+		collectedTags << fi.tags;
+		m_fastList[fi.file] = fi;
+// 		qDebug() << fi.file << fi.family << fi.variant;
+
 	}
-	else
-	{
-		for ( uint i = 0; i < colList.length(); ++i )
-		{
-			QDomNode col = colList.item ( i );
-#if FONTMATRIX_VERSION_MINOR == 3
-			QString fontName  = col.namedItem ( "file" ).toElement().text();
-			QString fontfile = QDir::home() + "/.fonts-reserved/"+ fontName;
-#else
-			QString fontName = col.toElement().attributeNode("name").value();
-			QString fontfile  = col.namedItem ( "file" ).toElement().text();
-#endif
-			QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
-			QStringList tl;
-			for(int ti = 0; ti < taglist.count(); ++ti)
-			{
-				tl << taglist.at(ti).toElement().text();
-			}
-			if(!m_fontList.contains(fontfile))
-			{
-				m_typo->addTagMapEntry(fontfile,tl);
-				collectedTags << tl;
-				m_fontList << fontfile;
-			}
-		}
-	}
+	
 	
 	//loading tagsets
 	QDomNodeList setList = doc.elementsByTagName ( "tagset" );

@@ -435,7 +435,7 @@ void FontItem::fillLangIdMap()
 
 }
 
-FontItem::FontItem ( QString path , bool remote)
+FontItem::FontItem ( QString path , bool remote, bool faststart)
 {
 // 	qDebug() << path;
 	m_valid = false;
@@ -466,7 +466,7 @@ FontItem::FontItem ( QString path , bool remote)
 	allIsRendered = false;
 	m_path = path;
 	
-	if(m_remote)
+	if(m_remote || faststart)
 	{
 		m_valid = true;
 		return;
@@ -2519,6 +2519,15 @@ void FontItem::fileRemote(QString f , QString v, QString t, QString i, QPixmap p
 	fixedPixmap = p;
 }
 
+/// the same, but just for speedup startup with a lot of font files
+void FontItem::fileLocal(QString f, QString v, QString t, QString i)
+{
+	m_family = f;
+	m_variant = v;
+	m_type = t;
+	m_cacheInfo = i;
+}
+
 /// Finally, we have to download the font file
 int FontItem::getFromNetwork()
 {
@@ -2664,6 +2673,7 @@ QString FontItem::activationAFMName()
 	QString prefix("%1-");
 	return  prefix.arg(fi.size()) + afi.fileName();
 }
+
 
 
 

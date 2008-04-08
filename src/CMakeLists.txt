@@ -2,32 +2,32 @@
 
 set(fontmatrix_SRCS
 aboutwidget.cpp
+dataexport.cpp
 dataloader.cpp
 fmglyphsview.cpp
+fmnamelist.cpp
+fmotf.cpp
+fmplayground.cpp
 fmpreviewlist.cpp
+fmprintdialog.cpp
+fmrepair.cpp
 fmsampletextview.cpp
-# fontactionwidget.cpp
+fontbook.cpp
 fontbookdialog.cpp
 fontitem.cpp
 helpwidget.cpp
 importedfontsdialog.cpp
+importtags.cpp
 listdockwidget.cpp
 main.cpp
 mainviewwidget.cpp
+prefspaneldialog.cpp
+remotedir.cpp
 savedata.cpp
 systray.cpp
 tagseteditor.cpp
-typotek.cpp
-fmotf.cpp
-prefspaneldialog.cpp
-fontbook.cpp
-importtags.cpp
-dataexport.cpp
-remotedir.cpp
-fmrepair.cpp
-fmnamelist.cpp
 textprogression.cpp
-fmplayground.cpp
+typotek.cpp
 )
 
 IF(OWN_SHAPER)
@@ -43,24 +43,24 @@ ENDIF(OWN_SHAPER)
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
 fmglyphsview.h
+fmnamelist.h
+fmplayground.h
 fmpreviewlist.h
+fmprintdialog.h
+fmrepair.h
 fmsampletextview.h
-# fontactionwidget.h
 fontbookdialog.h
 fontitem.h
 helpwidget.h
+importtags.h
 listdockwidget.h
 mainviewwidget.h
+prefspaneldialog.h
+remotedir.h
 systray.h
 tagseteditor.h
-typotek.h
-prefspaneldialog.h
-importtags.h
-remotedir.h
-fmrepair.h
-fmnamelist.h
 textprogression.h
-fmplayground.h
+typotek.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 
@@ -68,15 +68,15 @@ QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 SET(fontmatrix_UIS
 about.ui
 bookexport.ui
-# fontaction.ui
-help.ui
 importedfonts.ui
+importtags.ui
+help.ui
 listsdock.ui
 mainview.ui
-tagset.ui
+multiprintdialog.ui
 prefs_panel.ui
-importtags.ui
 repair.ui
+tagset.ui
 textprogression.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})

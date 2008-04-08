@@ -57,9 +57,15 @@ void SaveData::doSave()
 		if(!fitem->isLocked() && !fitem->isRemote())
 		{
 			writeStartElement("fontfile");
+			writeAttribute("family", fitem->family());
+			writeAttribute("variant",fitem->variant());
+			writeAttribute("type",fitem->type());
 			writeAttribute("name", fitem->fancyName());
 			writeStartElement("file");
 			writeCharacters(fitem->path());
+			writeEndElement();
+			writeStartElement("info");
+			writeCharacters( fitem->infoText() );
 			writeEndElement();
 			QStringList tl = fitem->tags();
 			foreach(QString tag, tl)

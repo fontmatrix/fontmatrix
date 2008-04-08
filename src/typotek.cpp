@@ -39,6 +39,7 @@
 #include "dataexport.h"
 #include "remotedir.h"
 #include "fmrepair.h"
+#include "fmprintdialog.h"
 
 
 #include <QtGui>
@@ -69,13 +70,13 @@ extern bool __FM_SHOW_FONTLOADED;
 /// LazyInit *********************************************
 void LazyInit::run()
 {
-	typotek* t = typotek::getInstance();
-	QList<FontItem*> fonts = t->getAllFonts();
-	foreach(FontItem *fit, fonts)
-	{
-		fit->infoText();
-		fit->trimSpacesIndex();
-	}
+// 	typotek* t = typotek::getInstance();
+// 	QList<FontItem*> fonts = t->getAllFonts();
+// 	foreach(FontItem *fit, fonts)
+// 	{
+// 		fit->infoText(true);
+// 		fit->trimSpacesIndex();
+// 	}
 	emit endOfRun();
 }
 ///******************************************************
@@ -621,9 +622,10 @@ void typotek::initDir()
 	loader.load();
 	/// load font files
 	qDebug()<<"load font files";
-	QStringList pathList = loader.fontList();
+// 	QStringList pathList = loader.fontList();
+	QMap<QString,FontInfo> pathList = loader.fastList();
 	int fontnr = pathList.count();
-	if ( __FM_SHOW_FONTLOADED )
+/*	if ( __FM_SHOW_FONTLOADED )
 	{
 		for ( int i = 0 ; i < fontnr ; ++i )
 		{
@@ -644,18 +646,21 @@ void typotek::initDir()
 		}	
 	}
 	else
-	{		
+	{*/		
 // 		QStringList zigouigoui;
 // 		zigouigoui << "|" << "/" << "--" << "\\" << "|"  << "/" << "--" << "\\";
 		relayStartingStepIn(tr("Loading")+" "+ QString::number(fontnr) +" "+tr("fonts present in database"));
-		for ( int i = 0 ; i < fontnr ; ++i )
+		QMap<QString,FontInfo>::const_iterator pit;
+		for (pit = pathList.begin(); pit != pathList.end(); ++ pit )
 		{
-			FontItem *fi = new FontItem ( pathList.at ( i )  );
+			FontItem *fi = new FontItem ( pit.value().file, false, true  );
 			if(!fi->isValid())
 			{
-				qDebug() << "ERROR loading : " << pathList.at ( i );
+				qDebug() << "ERROR loading : " << pit.value().file ;
 				continue;
 			}
+			fi->fileLocal( pit.value().family, pit.value().variant, pit.value().type, pit.value().info);
+			fi->unLock();
 			if(tagsMap.value ( fi->path() ).contains("Activated_On"))
 				fi->setActivated(true);
 			fontMap.append ( fi );
@@ -664,7 +669,7 @@ void typotek::initDir()
 // 			relayStartingStepIn(zigouigoui.at( i % 8 ) );
 // 			relayStartingStepIn( QString::number( fontnr - i ) );
 		}
-	}
+// 	}
 // 	qDebug() <<  fontMap.count() << " font files loaded.";
 	
 
@@ -716,10 +721,10 @@ void typotek::initDir()
 		relayStartingStepIn(tr("Adding")+" "+ QString::number(sysFontCount) +" "+tr("fonts from system directories"));
 		for ( int i = 0 ; i < sysFontCount; ++i )
 		{
-			QFile ff ( pathList.at ( i ) );
+			QFile ff ( pathList.at ( i ));
 			QFileInfo fi ( pathList.at ( i ) );
 			{
-				FontItem *fitem = new FontItem ( fi.absoluteFilePath());
+				FontItem *fitem = new FontItem ( fi.absoluteFilePath(), false, false );
 				if ( fitem->isValid() )
 				{
 					fitem->lock();
@@ -829,14 +834,14 @@ void typotek::print()
 {
 	// TODO Provide a decent preview sample, what’s here is just useless.
 	QPrinter thePrinter ( QPrinter::HighResolution );
-	QPrintDialog *dialog = new QPrintDialog ( &thePrinter, this );
-	dialog->setWindowTitle ( tr ( "Print specimen" ) );
+	FMPrintDialog *dialog = new FMPrintDialog ( &thePrinter, this );
+	dialog->setWindowTitle ( tr ( "Fontmatrix - Print" ) );
 
 	if ( dialog->exec() != QDialog::Accepted )
 		return;
-	thePrinter.setFullPage ( true );
-	QPainter aPainter ( &thePrinter );
-	theMainView->textScene()->render ( &aPainter );
+// 	thePrinter.setFullPage ( true );
+// 	QPainter aPainter ( &thePrinter );
+// 	theMainView->textScene()->render ( &aPainter );
 // 	int maxPages = theMainView->glyphsScene()->sceneRect().height() / 600;
 // 	QRectF prect = aPainter.viewport();
 // 	for(int i = 0; i < maxPages ; i++)
@@ -848,6 +853,7 @@ void typotek::print()
 //
 // 	}
 //
+	delete dialog;
 }
 
 void typotek::fontBook()

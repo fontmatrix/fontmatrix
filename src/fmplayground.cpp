@@ -81,3 +81,4 @@ void FMPlayGround::wheelEvent(QWheelEvent * e)
 			horizontalScrollBar()->setValue(horizontalScrollBar()->value() - e->delta());
 	}
 }
+

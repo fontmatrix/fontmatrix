@@ -40,6 +40,7 @@
 #include "remotedir.h"
 #include "fmrepair.h"
 #include "fmprintdialog.h"
+#include "fmactivate.h"
 
 
 #include <QtGui>
@@ -77,6 +78,7 @@ void LazyInit::run()
 // 		fit->infoText(true);
 // 		fit->trimSpacesIndex();
 // 	}
+	/// We keep this for further needs
 	emit endOfRun();
 }
 ///******************************************************
@@ -120,6 +122,7 @@ void typotek::initMatrix()
 	createActions();
 	createMenus();
 	createStatusBar();
+	doConnect();
 	
 }
 
@@ -129,6 +132,9 @@ void typotek::initMatrix()
 void typotek::doConnect()
 {
 	// later ?
+	
+	if(getSystray())
+		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( QString ) ), getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 }
 
 

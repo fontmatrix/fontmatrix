@@ -4,6 +4,7 @@ set(fontmatrix_SRCS
 aboutwidget.cpp
 dataexport.cpp
 dataloader.cpp
+fmactivate.cpp
 fmglyphsview.cpp
 fmnamelist.cpp
 fmotf.cpp
@@ -42,6 +43,7 @@ ENDIF(OWN_SHAPER)
 
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
+fmactivate.h
 fmglyphsview.h
 fmnamelist.h
 fmplayground.h

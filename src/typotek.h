@@ -170,6 +170,8 @@ class typotek:public QMainWindow
 		
 		RemoteDir *remoteDir;
 		QString m_remoteTmpDir;
+		
+		QString m_defaultSampleName;
 	public:
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );
@@ -239,9 +241,13 @@ class typotek:public QMainWindow
 		QString remoteTmpDir() const {return m_remoteTmpDir;}
 		void setRemoteTmpDir(const QString &s);
 
+		QString defaultSampleName(){return m_defaultSampleName;}
+		
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dropEvent ( QDropEvent * event );
+		
+		
 
 	friend class Systray; // a bit ugly but i'll need access to privates
 };

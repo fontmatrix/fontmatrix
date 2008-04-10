@@ -96,6 +96,7 @@ typotek::typotek()
 void typotek::initMatrix()
 {
 	qDebug()<<"initMatrix()";
+	m_defaultSampleName = tr("default") ;
 	checkOwnDir();
 	initDir();
 	readSettings();
@@ -1051,7 +1052,7 @@ void typotek::addNamedSample ( QString name, QString sample )
 		return;
 	}
 
-	if ( name == tr("default") )
+	if ( name == defaultSampleName() )
 	{
 		statusBar()->showMessage ( tr ( "\"default\" is a reserved" ), 3000 );
 		return;
@@ -1100,13 +1101,13 @@ void typotek::addNamedSampleFragment ( QString name, QString sampleFragment )
 QString typotek::namedSample ( QString name )
 {
 	if ( name.isEmpty() )
-		return m_namedSamples[tr("default")];
+		return m_namedSamples[defaultSampleName()];
 	return m_namedSamples[name];
 }
 
 void typotek::setSampleText ( QString s )
 {
-	m_namedSamples[tr("default")] += s;
+	m_namedSamples[defaultSampleName()] += s;
 }
 
 

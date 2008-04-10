@@ -50,7 +50,11 @@ void DataLoader::load()
 	if ( !m_file->open ( QFile::ReadOnly ) )
 	{
 		// Ensure that there are default samples and preview text
-		m_typo->setSampleText( QObject::tr("ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?."));	
+		QStringList fallbackSample(QObject::tr("ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.").split("\n"));
+		for ( uint i = 0; i < fallbackSample.count(); ++i )
+		{
+			m_typo->addNamedSampleFragment(m_typo->defaultSampleName() , fallbackSample[i]);
+		}	
 		m_typo->setWord(QObject::tr("hamburgefonstiv"), false);
 		return;
 	}
@@ -128,7 +132,11 @@ void DataLoader::load()
 	if ( sampleList.length() == 0 )
 	{
 		m_typo->statusBar()->showMessage ( QString ( "WARNING: no sample text in %1" ).arg ( m_file->fileName() ),3000 );
-		m_typo->setSampleText(QObject::tr("ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?."));
+		QStringList fallbackSample(QObject::tr("ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?.").split("\n"));
+		for ( uint i = 0; i < fallbackSample.count(); ++i )
+		{
+			m_typo->addNamedSampleFragment(m_typo->defaultSampleName(), fallbackSample[i]);
+		}
 	}
 	else
 	{
@@ -138,7 +146,7 @@ void DataLoader::load()
 			QString name = col.toElement().attributeNode("name").value();
 			if(name.isEmpty()
 				|| name == "default")// rather to not break previous installation
-				name = QObject::tr("default");
+				name = m_typo->defaultSampleName();
 			m_typo->addNamedSampleFragment(name, col.toElement().text());
 		}
 	}

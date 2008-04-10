@@ -70,6 +70,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void allActivation(bool act);
 		void activation(FontItem* fit, bool act, bool updateTree = true);
 		void fillTree();
+		void updateTree();
 		
 		QStringList openKeys;
 		QString curItemName;

@@ -458,6 +458,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart)
 		fillCharsetMap();
 	if( legitimateNonPathChars.isEmpty())
 		fillLegitimateSpaces();
+	
 	if ( !theOneLineScene )
 	{
 		theOneLineScene = new QGraphicsScene;
@@ -599,6 +600,18 @@ bool FontItem::ensureFace()
 		else
 		{
 			hasUnicode = true;
+		}
+		if(spaceIndex.isEmpty())
+		{	
+			int gIndex(0);
+			for(int i(0); i < legitimateNonPathChars.count(); ++i)
+			{
+				gIndex =   FT_Get_Char_Index( m_face , legitimateNonPathChars[i] );
+				if(gIndex)
+				{
+					spaceIndex << gIndex;
+				}
+			}
 		}
 		m_glyph = m_face->glyph;
 		++facesRef;

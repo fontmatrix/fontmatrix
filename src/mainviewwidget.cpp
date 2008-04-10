@@ -370,7 +370,7 @@ void MainViewWidget::fillTree()
 void MainViewWidget::updateTree()
 {
 	QTreeWidgetItem *curItem = 0;
-	
+	QFont deselect;
 	int topCount (m_lists->fontTree->topLevelItemCount());
 	for (int topIdx(0) ; topIdx < topCount; ++topIdx)
 	{
@@ -383,8 +383,19 @@ void MainViewWidget::updateTree()
 			for (int varIdx(0); varIdx < varCount; ++ varIdx)
 			{
 				QTreeWidgetItem *varItem( famItem->child(varIdx) );
-				if(varItem->text ( 1 ) == curItemName)
+				if( varItem->text ( 1 ) == lastIndex )
+				{
+					varItem->setFont(0, deselect);
+					varItem->setBackgroundColor(0, Qt::transparent);
+					varItem->setBackgroundColor(1, Qt::transparent);
+					varItem->parent()->setFont(0, deselect);
+					varItem->parent()->setBackgroundColor(0, Qt::transparent);
+					varItem->parent()->setBackgroundColor(1, Qt::transparent);
+				}	
+				else if(varItem->text ( 1 ) == curItemName)
+				{
 					curItem = varItem;
+				}
 				
 			}
 		} 
@@ -411,6 +422,10 @@ void MainViewWidget::updateTree()
 	else
 	{
 		qDebug() << "NO CURITEM";
+	}
+	if( !m_lists->nameItemIsVisible(curItem) )
+	{
+		m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 	}
 	fontsetHasChanged = false;
 }

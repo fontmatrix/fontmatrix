@@ -177,6 +177,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 		void refillSampleList();
 		
+		QString sampleName();
+		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;
 

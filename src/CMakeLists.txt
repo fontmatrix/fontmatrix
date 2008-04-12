@@ -10,7 +10,7 @@ fmnamelist.cpp
 fmotf.cpp
 fmplayground.cpp
 fmpreviewlist.cpp
-fmprintdialog.cpp
+# fmprintdialog.cpp
 fmrepair.cpp
 fmsampletextview.cpp
 fontbook.cpp
@@ -48,7 +48,7 @@ fmglyphsview.h
 fmnamelist.h
 fmplayground.h
 fmpreviewlist.h
-fmprintdialog.h
+# fmprintdialog.h
 fmrepair.h
 fmsampletextview.h
 fontbookdialog.h
@@ -75,7 +75,7 @@ importtags.ui
 help.ui
 listsdock.ui
 mainview.ui
-multiprintdialog.ui
+# multiprintdialog.ui
 prefs_panel.ui
 repair.ui
 tagset.ui

@@ -1761,5 +1761,13 @@ void MainViewWidget::slotPushOnPlayground()
 	
 }
 
+QString MainViewWidget::sampleName()
+{
+	QString ret( sampleTextCombo->currentText() );
+	if (ret.isEmpty())
+		ret = typo->defaultSampleName();
+	return ret;
+}
+
 
 

@@ -808,10 +808,11 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 
 
 /// Nature line
-void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth, double fsize , double zindex ,bool record )
+double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth, double fsize , double zindex ,bool record )
 {
+	double retValue(0.0);
 	if ( spec.isEmpty() )
-		return;
+		return retValue;
 	
 	ensureFace();
 	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
@@ -869,11 +870,13 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 					break;
 				}
 			}
+			retValue += glyph->data ( 4 ).toDouble() * scalefactor;
 			
 			/************************************/
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
+			retValue += glyph->data ( 4 ).toDouble() * scalefactor;
 			glyph->setPos ( pen.x() + glyph->data ( 2 ).toDouble() * scalefactor, pen.y() - glyph->data ( 3 ).toInt() );
 			glyph->setZValue ( zindex );
 			glyph->setData ( 1,"glyph" );
@@ -942,6 +945,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
+			retValue += glyph->data ( 4 ).toDouble() * scalefactor;
 			glyph->setPos ( pen );
 			glyph->setZValue ( zindex );
 			glyph->setData ( 1,"glyph" );
@@ -959,6 +963,7 @@ void FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origin
 	}
 
 	releaseFace();
+	return retValue;
 }
 
 /// Featured line

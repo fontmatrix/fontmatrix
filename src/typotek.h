@@ -63,7 +63,13 @@ class typotek:public QMainWindow
 		
 		void open();
 		void open(QStringList files);
-		void print();
+		
+		void printInfo();
+		void printSample();
+		void printChart();
+		void printPlayground();
+		void printFamily();
+		
 		void fontBook();
 		void popupTagsetEditor();
 		void slotActivateCurrents();
@@ -127,7 +133,6 @@ class typotek:public QMainWindow
 		QAction *pasteAct;
 		QAction *aboutAct;
 		QAction *aboutQtAct;
-		QAction *printAct;
 		QAction *fontBookAct;
 		QAction *tagsetAct;
 		QAction *activCurAct;
@@ -138,6 +143,13 @@ class typotek:public QMainWindow
 		QAction *exportFontSetAct;
 		QAction *repairAct;
 		QAction *tagAll;
+		
+		QMenu *printMenu;
+		QAction *printInfoAct;
+		QAction *printSampleAct;
+		QAction *printChartAct;
+		QAction *printPlaygroundAct;
+		QAction *printFamilyAct;
 
 		MainViewWidget *theMainView;
 

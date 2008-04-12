@@ -20,10 +20,10 @@ FMPrintDialog::FMPrintDialog(QPrinter * printer, QWidget * parent)
 	: QDialog(parent)
 {
 	setupUi(this);
-	QPrintDialog  printDialog(printer);
+	QPrintDialog  printDialog(printer, printPlaceHolder);
 	printDialog.setModal(false);
-	printDialog.setParent(printPlaceHolder);
-	printDialog.exec();
+	printDialog.show();
+// 	printDialog.exec();
 }
 
 FMPrintDialog::~ FMPrintDialog()

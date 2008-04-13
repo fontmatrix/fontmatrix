@@ -1317,6 +1317,8 @@ void typotek::printFamily()
 	qDebug()<<thePrinter.paperRect();
 	
 	QMap<int , double> logWidth;
+	QMap<int , double> logAscend;
+	QMap<int , double> logDescend;
 	
 	QStringList stl(namedSample ( theMainView->sampleName() ).split ( '\n' ));
 	QList<FontItem*> familyFonts( getFonts(theMainView->selectedFont()->family(), "family"));
@@ -1330,27 +1332,65 @@ void typotek::printFamily()
 		}
 	}
 	
-	// first we’ll get widths for font size 100
+	// first we’ll get widths for font size 1000
 	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
 	{
-		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, stl[fidx], QPointF() , 99999999.0, 100.0, 1, false) ;
+		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, stl[fidx], QPointF(0.0, 1000.0) , 999999.0, 1000.0, 1, false) ;
+		logAscend[fidx] = 1000.0 - tmpScene.itemsBoundingRect().top();
+		logDescend[fidx] = tmpScene.itemsBoundingRect().bottom() - 1000.0;
+		qDebug()<< logWidth[fidx] << logAscend[fidx]  << logDescend[fidx];
+		QList<QGraphicsItem*> lgit(tmpScene.items());
+		foreach(QGraphicsItem* git, lgit)
+		{
+			tmpScene.removeItem(git);
+			delete git;
+		}
 	}
 	double defWidth(0.8 * pScene.width() );
+	double defHeight(0.9 * pScene.height() );
 	double xOff( 0.1 * pScene.width() );
 	double yPos(0.1 * pScene.height() );
 	
+	QFont nameFont;
+	nameFont.setPointSizeF(100.0);
+	nameFont.setItalic(true);
+	
 	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
 	{
-		double fSize( defWidth * 100.0 / logWidth[fidx]  );
-		qDebug()<< defWidth << logWidth[fidx] << fSize;
-		yPos += fSize;
-		QPointF origine(xOff,  yPos);
+		qDebug()<< "Y = "<< yPos;
+		double scaleFactor(1000.0 / logWidth[fidx] ); 
+		double fSize( defWidth *  scaleFactor );
+		double fAscend(logAscend[fidx] * fSize / 1000.0);
+		double fDescend(logDescend[fidx] * fSize  / 1000.0 );
+		if( yPos + fAscend + fDescend > defHeight)
+		{
+			pScene.render(&aPainter);
+			thePrinter.newPage();
+			QList<QGraphicsItem*> lgit(pScene.items());
+			foreach(QGraphicsItem* git, lgit)
+			{
+				pScene.removeItem(git);
+				delete git;
+			}
+			yPos = 0.1 * pScene.height();
+			
+		}
+		
+		yPos +=  fAscend;
+		QPointF origine(xOff,  yPos );
+		
 		bool rasterState(familyFonts[fidx]->rasterFreetype());
 		familyFonts[fidx]->setFTRaster(false);
-		double checkW = familyFonts[fidx]->renderLine(&pScene, stl[fidx], origine, pScene.width(), fSize, 100, false);
+		familyFonts[fidx]->renderLine(&pScene, stl[fidx], origine, pScene.width(), fSize, 100, false);
+		pScene.addLine(QLineF(origine, QPointF(xOff + defWidth, yPos)));
 		familyFonts[fidx]->setFTRaster(rasterState);
-		qDebug()<< "Printed "<< stl[fidx]<< " ; size "<< fSize<< pScene.width() << checkW;
 		
+		yPos +=  fDescend ;
+		
+		QGraphicsSimpleTextItem * nameText = pScene.addSimpleText( familyFonts[fidx]->fancyName(), nameFont) ;
+		nameText->setPos(xOff, yPos);
+// 		nameText->setBrush(Qt::gray);
+		yPos += nameText->boundingRect().height();
 	}
 	
 	pScene.render(&aPainter);

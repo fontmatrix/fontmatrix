@@ -1319,26 +1319,32 @@ void typotek::printFamily()
 	QMap<int , double> logWidth;
 	QMap<int , double> logAscend;
 	QMap<int , double> logDescend;
+	QMap<int , QString> sampleString;
+	QMap<int , FontItem*> sampleFont;
 	
 	QStringList stl(namedSample ( theMainView->sampleName() ).split ( '\n' ));
 	QList<FontItem*> familyFonts( getFonts(theMainView->selectedFont()->family(), "family"));
 	
-	if(familyFonts.count() > stl.count())
+// 	if(familyFonts.count() > stl.count())
 	{
-		int diff (familyFonts.count() - stl.count());
+		int diff ( familyFonts.count()  );
 		for (int i(0); i < diff; ++i)
 		{
-			stl << stl[ i % stl.count() ];
+			sampleString[i] = stl[ i % stl.count() ];
 		}
 	}
 	
 	// first we’ll get widths for font size 1000
 	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
 	{
-		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, stl[fidx], QPointF(0.0, 1000.0) , 999999.0, 1000.0, 1, false) ;
+		sampleFont[fidx] = familyFonts[fidx];
+		bool rasterState(sampleFont[fidx]->rasterFreetype());
+		sampleFont[fidx]->setFTRaster(false);
+		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, sampleString[fidx], QPointF(0.0, 1000.0) , 999999.0, 1000.0, 1, false) ;
+		sampleFont[fidx]->setFTRaster(rasterState);
 		logAscend[fidx] = 1000.0 - tmpScene.itemsBoundingRect().top();
 		logDescend[fidx] = tmpScene.itemsBoundingRect().bottom() - 1000.0;
-		qDebug()<< logWidth[fidx] << logAscend[fidx]  << logDescend[fidx];
+		qDebug()<< sampleString[fidx] << logWidth[fidx];
 		QList<QGraphicsItem*> lgit(tmpScene.items());
 		foreach(QGraphicsItem* git, lgit)
 		{
@@ -1357,7 +1363,6 @@ void typotek::printFamily()
 	
 	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
 	{
-		qDebug()<< "Y = "<< yPos;
 		double scaleFactor(1000.0 / logWidth[fidx] ); 
 		double fSize( defWidth *  scaleFactor );
 		double fAscend(logAscend[fidx] * fSize / 1000.0);
@@ -1379,11 +1384,13 @@ void typotek::printFamily()
 		yPos +=  fAscend;
 		QPointF origine(xOff,  yPos );
 		
-		bool rasterState(familyFonts[fidx]->rasterFreetype());
-		familyFonts[fidx]->setFTRaster(false);
-		familyFonts[fidx]->renderLine(&pScene, stl[fidx], origine, pScene.width(), fSize, 100, false);
+		qDebug()<< sampleString[fidx] << fSize;
+		
+		bool rasterState(sampleFont[fidx]->rasterFreetype());
+		sampleFont[fidx]->setFTRaster(false);
+		sampleFont[fidx]->renderLine(&pScene, sampleString[fidx], origine, pScene.width(), fSize, 100, false);
 		pScene.addLine(QLineF(origine, QPointF(xOff + defWidth, yPos)));
-		familyFonts[fidx]->setFTRaster(rasterState);
+		sampleFont[fidx]->setFTRaster(rasterState);
 		
 		yPos +=  fDescend ;
 		

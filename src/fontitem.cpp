@@ -811,6 +811,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth, double fsize , double zindex ,bool record )
 {
 	double retValue(0.0);
+	QString debugRet("");
 	if ( spec.isEmpty() )
 		return retValue;
 	
@@ -894,7 +895,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 	{
 		for ( int i=0; i < spec.length(); ++i )
 		{
-			if ( !scene->sceneRect().contains ( pen ) )
+			if ( !scene->sceneRect().contains ( pen ) && record )
 				break;
 			QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
 			if ( !glyph )
@@ -946,6 +947,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
 			retValue += glyph->data ( 4 ).toDouble() * scalefactor;
+			debugRet += "("+ QString(spec[i]) +"[" + QString::number(glyph->data ( 4 ).toDouble() * scalefactor) +"]";
 			glyph->setPos ( pen );
 			glyph->setZValue ( zindex );
 			glyph->setData ( 1,"glyph" );
@@ -963,6 +965,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 	}
 
 	releaseFace();
+	qDebug()<< debugRet << "=>"<< retValue;
 	return retValue;
 }
 

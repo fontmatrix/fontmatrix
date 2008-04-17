@@ -74,7 +74,13 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	fontsetHasChanged = true;
 	curGlyph = 0;
 	fancyGlyphInUse = -1;
-	fontInfoText->setSource ( QUrl ( "qrc:/texts/welcome" ) );
+	
+	QFile wFile(":/texts/welcome");
+	wFile.open(QIODevice::ReadOnly);
+	QString wString(wFile.readAll());
+	wString.replace("##WELCOME_PNG##", QDir::tempPath() + QDir::separator() + "FontmatrixWelcome.png" );
+	wString.replace("##WELCOME_FONT##",typo->welcomeFontName);
+	fontInfoText->setHtml(wString);
 	fillUniPlanes();
 	refillSampleList();
 	

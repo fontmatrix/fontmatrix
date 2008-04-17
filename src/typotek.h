@@ -255,6 +255,8 @@ class typotek:public QMainWindow
 
 		QString defaultSampleName(){return m_defaultSampleName;}
 		
+		QString welcomeFontName;
+		
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dropEvent ( QDropEvent * event );

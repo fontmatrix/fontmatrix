@@ -1290,6 +1290,19 @@ void typotek::slotTagAll()
 
 void typotek::printInfo()
 {
+	FontItem * font(theMainView->selectedFont());
+	QString fontname(tr("Welcome maessage"));
+	if(font)
+		fontname =font->fancyName();
+	
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	QPrintDialog dialog(&thePrinter, this);
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Infos") +" - " + fontname );
+	
+	if ( dialog.exec() != QDialog::Accepted )
+		return;
+	thePrinter.setFullPage ( true );
+	theMainView->infoDocument()->print(&thePrinter);
 }
 
 void typotek::printSample()
@@ -1306,9 +1319,12 @@ void typotek::printPlayground()
 
 void typotek::printFamily()
 {
+	FontItem * font(theMainView->selectedFont());
+	if(!font)
+		return;
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Family") +" - " + theMainView->selectedFont()->family());
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Family") +" - " + font->family());
 	
 	if ( dialog.exec() != QDialog::Accepted )
 		return;

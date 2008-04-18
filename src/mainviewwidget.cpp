@@ -1804,5 +1804,10 @@ void MainViewWidget::displayWelcomeMessage()
 	fontInfoText->setHtml(wString);
 }
 
+QTextDocument * MainViewWidget::infoDocument()
+{
+	return fontInfoText->document();
+}
+
 
 

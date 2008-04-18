@@ -180,6 +180,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString sampleName();
 		void displayWelcomeMessage();
 		
+		QTextDocument *infoDocument();
+		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;
 

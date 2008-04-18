@@ -178,6 +178,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void refillSampleList();
 		
 		QString sampleName();
+		void displayWelcomeMessage();
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

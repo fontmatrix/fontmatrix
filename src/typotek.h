@@ -185,12 +185,13 @@ class typotek:public QMainWindow
 		
 		QString m_defaultSampleName;
 	public:
+		int getFontCount(){return fontMap.count(); }
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );
 		QList<FontItem*> getAllFonts() {return fontMap;};
 		QList<FontItem*> getFonts ( QString pattern, QString field );
 		QList<FontItem*> getCurrentFonts();
-		
+				
 		void addTagMapEntry(QString key, QStringList value){tagsMap[key] = value;};
 		void addTagSetMapEntry(QString key, QStringList value){tagSetMap[key] = value;};
 		void removeTagFromSet(QString set, QString tag){tagSetMap[set].removeAll(tag);};
@@ -254,12 +255,11 @@ class typotek:public QMainWindow
 		void setRemoteTmpDir(const QString &s);
 
 		QString defaultSampleName(){return m_defaultSampleName;}
-		
-		QString welcomeFontName;
-		
+				
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dropEvent ( QDropEvent * event );
+		void showEvent ( QShowEvent * event );
 		
 		
 

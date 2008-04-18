@@ -101,22 +101,6 @@ void typotek::initMatrix()
 	initDir();
 	readSettings();
 	
-	QFile wFile( QDir::tempPath() + QDir::separator() + "FontmatrixWelcome.png" );
-	if(!wFile.open(QIODevice::WriteOnly))
-		qDebug()<<"Unable to write in "<< wFile.fileName();
-	else
-	{
-		// We’ll trick the fontitem a bit to have large text
-		double bkPr(previewSize);
-		previewSize = 30.0;
-		FontItem *fitem(fontMap.at( QTime::currentTime().msec() % fontMap.count()));
-		welcomeFontName = fitem->fancyName();
-		QPixmap welcomePix(fitem->oneLinePreviewPixmap ( tr("Welcome to Fontmatrix") , QColor(220,0,0)) );
-		welcomePix.save(&wFile);
-		previewSize = bkPr;
-	}
-	
-	
 	if ( QSystemTrayIcon::isSystemTrayAvailable() )
 		systray = new Systray();
 	else
@@ -140,6 +124,7 @@ void typotek::initMatrix()
 	createStatusBar();
 	doConnect();
 	
+	
 }
 
 
@@ -151,6 +136,7 @@ void typotek::doConnect()
 	
 	if(getSystray())
 		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( QString ) ), getSystray(),SLOT ( updateTagMenu ( QString ) ) );
+	
 }
 
 
@@ -1416,6 +1402,12 @@ void typotek::printFamily()
 	}
 	
 	pScene.render(&aPainter);
+}
+
+void typotek::showEvent(QShowEvent * event)
+{
+	QMainWindow::showEvent(event);
+	theMainView->displayWelcomeMessage();
 }
 
 

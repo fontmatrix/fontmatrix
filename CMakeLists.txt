@@ -21,17 +21,11 @@ SET(HARFBUZZ_DIR harfbuzz/src)
 ADD_SUBDIRECTORY(${HARFBUZZ_DIR})
 SET(HARFBUZZ_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/harfbuzz/src)
 
+# I can’t remember what it does :|
+ADD_DEFINITIONS( -DHIGH_PERF )
 
-#>> IF(HIGH_PERF)
-    ADD_DEFINITIONS( -DHIGH_PERF )
-    MESSAGE(STATUS "High performance required :-)")
-#<< ENDIF(HIGH_PERF)
-
-
-
-IF(NO_ASSERT)
-	ADD_DEFINITIONS(-DNDEBUG )
-ENDIF(NO_ASSERT)
+# Dear packagers, your invited to uncomment this line :)
+# ADD_DEFINITIONS(-DQT_NO_DEBUG_OUTPUT )
 
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # A lot from Scribus

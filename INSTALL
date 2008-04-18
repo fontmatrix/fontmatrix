@@ -10,7 +10,7 @@ Requirements :
 Build instructions are:
  $ mkdir build
  $ cd build
- $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug] [-DCMAKE_INSTALL_PREFIX:PATH=/install/prefix] [-DOWN_SHAPER=1]
+ $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug] [-DCMAKE_INSTALL_PREFIX:PATH=/install/prefix] 
  $ make
  
 At this point, the fontmatrix binary is in build/src/
@@ -23,3 +23,7 @@ suggestions, please take time to suscribe to the undertype-users
 mailing list ( https://mail.gna.org/listinfo/undertype-users ).
 If you want to reach us quickly, come to #fontmatrix at Freenode.
 
+
+NOTE: If you maintain a package or something similar, please
+consider to uncomment "ADD_DEFINITIONS(-DQT_NO_DEBUG_OUTPUT )"
+statement in the top level CMakeLists.txt file.

@@ -40,6 +40,8 @@
 #include <QProgressDialog>
 #include <QHttp>
 
+#include "QDebug"
+
 #include FT_XFREE86_H
 #include FT_GLYPH_H
 #include FT_OUTLINE_H
@@ -437,7 +439,6 @@ void FontItem::fillLangIdMap()
 
 FontItem::FontItem ( QString path , bool remote, bool faststart)
 {
-// 	qDebug() << path;
 	m_valid = false;
 	m_remote = remote;
 	remoteCached = false;

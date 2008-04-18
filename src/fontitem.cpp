@@ -546,6 +546,69 @@ FontItem::FontItem ( QString path , bool remote, bool faststart)
 
 }
 
+void FontItem::updateItem()
+{
+	QFileInfo infopath ( m_path );
+	m_name = infopath.fileName();
+	
+	
+
+	if ( ! ensureFace() )
+	{
+		return;
+	}
+	
+	
+	if ( infopath.suffix() == "pfb" || infopath.suffix() == "PFB")
+	{
+		m_afm = m_path;
+		if(infopath.suffix() == "pfb")
+		{
+			m_afm.replace ( ".pfb",".afm" );
+			if(!QFile::exists(m_afm))
+			{
+				m_afm.replace ( ".afm" ,".AFM");
+				if(!QFile::exists(m_afm))
+				{
+					m_afm = "";
+				}
+			}
+		}
+		else if(infopath.suffix() == "PFB")
+		{
+			m_afm.replace ( ".PFB",".AFM" );
+			if(!QFile::exists(m_afm))
+			{
+				m_afm.replace ( ".AFM" ,".afm");
+				if(!QFile::exists(m_afm))
+				{
+					m_afm = "";
+				}
+			}
+		}
+	}
+	
+
+	if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
+	{
+		m_isOpenType = true;
+	}
+	
+	m_type = FT_Get_X11_Font_Format ( m_face );
+	m_family = m_face->family_name;
+	m_variant = m_face->style_name;
+	m_numGlyphs = m_face->num_glyphs;
+	m_numFaces = m_face->num_faces;
+
+	for ( int i = 0 ;i < m_face->num_charmaps; ++i )
+	{
+		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
+	}
+
+	m_charsets = m_charsets.toSet().toList();
+
+	releaseFace();
+}
 
 FontItem::~FontItem()
 {
@@ -1792,13 +1855,12 @@ QString FontItem::infoText ( bool fromcache )
 
 	QMap<QString, QStringList> orderedInfo;
 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
-	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs || Type : "+ m_type +" || Charmaps : " + m_charsets.join ( ", " ) +"</div>";
+	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type : "+ m_type +" | Charmaps : " + m_charsets.join ( ", " ) +"</div>";
 
-	if ( moreInfo.isEmpty() )
+	if ( moreInfo.isEmpty() || !fromcache )
 	{
 		if ( m_isOpenType = true /*testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" */ )
 		{
-
 			moreInfo_sfnt();
 		}
 		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )
@@ -1819,7 +1881,9 @@ QString FontItem::infoText ( bool fromcache )
 			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
 				if ( langIdMap[ lit.key() ].contains ( sysLang ) )
+				{
 					localizedKeys << mit.key();
+				}
 			}
 		}
 
@@ -2694,6 +2758,7 @@ QString FontItem::activationAFMName()
 	QString prefix("%1-");
 	return  prefix.arg(fi.size()) + afi.fileName();
 }
+
 
 
 

@@ -63,6 +63,8 @@ class FontItem : public QObject
 		Q_OBJECT
 	public:
 		FontItem ( QString path , bool remote = false, bool faststart = false);
+		/** Needed when the item has been instantiate with "faststart=true" */
+		void updateItem();
 
 		~FontItem();
 	private:

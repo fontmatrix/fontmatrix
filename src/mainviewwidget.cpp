@@ -574,10 +574,12 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 	if ( faceIndex.count() && faceIndex != lastIndex )
 	{
 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
+
+		theVeryFont = typo->getFont ( faceIndex );
+		theVeryFont->updateItem();
 		if(abcView->state() == FMGlyphsView::SingleView)
 			slotShowAllGlyph();
 		slotFontActionByName ( fname );
-		theVeryFont = typo->getFont ( faceIndex );
 		if(theVeryFont->isRemote())
 		{
 			qDebug() << faceIndex <<" is remote";
@@ -614,7 +616,7 @@ void MainViewWidget::slotInfoFont()
 	if(theVeryFont)
 	{
 	fontInfoText->clear();
-	fontInfoText->setHtml ( "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  theVeryFont->infoText() + "</html>" );
+	fontInfoText->setHtml ( "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  theVeryFont->infoText(false) + "</html>" );
 	}
 
 }

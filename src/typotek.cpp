@@ -461,6 +461,9 @@ void typotek::createActions()
 	aboutAct = new QAction ( tr ( "&About" ), this );
 	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
+	
+	aboutQtAct = new QAction ( tr ( "About &Qt" ), this );
+	connect (aboutQtAct,SIGNAL(triggered()), QApplication::instance(),SLOT(aboutQt()));
 
 	helpAct = new QAction ( tr ( "Help" ), this );
 	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( help() ) );
@@ -533,8 +536,9 @@ void typotek::createMenus()
 	editMenu->addAction ( prefsAct );
 
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
-	helpMenu->addAction ( aboutAct );
 	helpMenu->addAction ( helpAct );
+	helpMenu->addAction ( aboutAct );
+	helpMenu->addAction ( aboutQtAct );
 
 }
 

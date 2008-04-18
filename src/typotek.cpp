@@ -111,7 +111,7 @@ void typotek::initMatrix()
 		previewSize = 30.0;
 		FontItem *fitem(fontMap.at( QTime::currentTime().msec() % fontMap.count()));
 		welcomeFontName = fitem->fancyName();
-		QPixmap welcomePix(fitem->oneLinePreviewPixmap ( "Welcome to Fontmatrix" , QColor(220,0,0)) );
+		QPixmap welcomePix(fitem->oneLinePreviewPixmap ( tr("Welcome to Fontmatrix") , QColor(220,0,0)) );
 		welcomePix.save(&wFile);
 		previewSize = bkPr;
 	}

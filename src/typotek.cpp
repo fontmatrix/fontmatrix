@@ -1307,6 +1307,21 @@ void typotek::printInfo()
 
 void typotek::printSample()
 {
+	FontItem * font(theMainView->selectedFont());
+	if(!font)
+		return;
+	
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	QPrintDialog dialog(&thePrinter, this);
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Infos") +" - " + font->fancyName() );
+	
+	if ( dialog.exec() != QDialog::Accepted )
+		return;
+	thePrinter.setFullPage ( true );
+	QPainter aPainter ( &thePrinter );
+	
+	theMainView->currentSampleScene()->render(&aPainter);
+	
 }
 
 void typotek::printChart()

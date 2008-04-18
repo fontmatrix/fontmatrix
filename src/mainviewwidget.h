@@ -181,6 +181,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void displayWelcomeMessage();
 		
 		QTextDocument *infoDocument();
+		QGraphicsScene *currentSampleScene();
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

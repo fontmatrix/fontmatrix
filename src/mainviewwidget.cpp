@@ -1756,7 +1756,10 @@ void MainViewWidget::slotPushOnPlayground()
 	
 	playView->ensureVisible(100,100,100,100);
 // 	theVeryFont->setFTRaster ( true );
+	bool backedR(theVeryFont->rasterFreetype());
+	theVeryFont->setFTRaster(false);
 	theVeryFont->renderLine(playScene, spec, QPointF(100.0,100.0), spec.count() * fSize * 2.0, fSize, 1 ,false);
+	theVeryFont->setFTRaster(backedR);
 	
 	QList< QGraphicsItem* > itemList(playScene->items());
 	for(int i(0); i < itemList.count(); ++i)
@@ -1807,6 +1810,17 @@ void MainViewWidget::displayWelcomeMessage()
 QTextDocument * MainViewWidget::infoDocument()
 {
 	return fontInfoText->document();
+}
+
+QGraphicsScene * MainViewWidget::currentSampleScene()
+{
+	if(!loremView->isVisible())
+	{
+		tabView->setCurrentIndex(1);
+		tabSamples->setCurrentIndex(0);
+		slotView(true);
+	}
+	return loremScene;
 }
 
 

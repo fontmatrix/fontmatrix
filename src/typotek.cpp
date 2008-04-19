@@ -1371,7 +1371,8 @@ void typotek::printChart()
 		int controlN(maxCharcode - beginCharcode);
 		int remainC( font->renderChart(&pScene, beginCharcode, maxCharcode, sourceR.width(),sourceR.height() ) );
 		qDebug()<< "Control"<<beginCharcode<<maxCharcode<<controlN<<remainC;
-		if(remainC == 0 )
+		
+		if(remainC == 0 && !first)
 			break;
 		
 		beginCharcode += remainC;

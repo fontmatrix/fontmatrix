@@ -1627,7 +1627,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 
 	double leftMargin = ( ( exposedRect.width() - ( 100 * m_glyphsPerRow ) ) / 2 ) + 30;
 	double aestheticTopMargin = 12;
-	QPointF pen ( leftMargin,50  + aestheticTopMargin );
+	QPointF pen ( leftMargin, 50  + aestheticTopMargin );
 
 	int nl = 0;
 
@@ -1835,6 +1835,89 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 
 	exposedRect = allView->visibleSceneRect();
 // 	qDebug() << "ENDOFRENDERALL" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
+}
+
+int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code ,double pwidth, double pheight )
+{
+	qDebug()<<"FontItem::renderChart ("<< begin_code<<end_code <<")";
+	
+	ensureFace();
+	int nl = 0;
+
+	FT_ULong  charcode;
+	FT_UInt   gindex = 1;
+	double sizz = 50;
+	charcode = begin_code;
+	adjustGlyphsPerRow ( pwidth );
+
+	double leftMargin = 30 + ((pwidth - (m_glyphsPerRow * 100)) / 2 );
+	double aestheticTopMargin = 0;
+	QPointF pen ( leftMargin, sizz + aestheticTopMargin );
+
+	
+	QPen selPen ( Qt::gray );
+	QFont infoFont ( "Helvetica",8 );
+	QBrush selBrush ( QColor ( 255,255,255,0 ) );
+
+	while ( charcode <= end_code && gindex )
+	{
+		if ( nl == m_glyphsPerRow )
+		{
+			nl = 0;
+			pen.rx() = leftMargin;
+			pen.ry() += 100;
+		}
+		if(pen.y() > pheight)
+		{
+			releaseFace();
+			return  charcode;
+		}
+		
+
+		QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
+		if ( pitem )
+		{
+			uint ucharcode = charcode;
+
+			scene->addItem ( pitem );
+			pitem->setPos ( pen );
+			pitem->setData ( 1,"glyph" );
+			pitem->setData ( 2,gindex );
+			pitem->setData ( 3,ucharcode );
+// 			glyphList.append ( pitem );
+
+			pitem->setZValue ( 10 );
+
+			QGraphicsTextItem *tit= scene->addText ( glyphName ( charcode ), infoFont );
+			tit->setPos ( pen.x()-27,pen.y() + 15 );
+			tit->setData ( 1,"label" );
+			tit->setData ( 2,gindex );
+			tit->setData ( 3,ucharcode );
+// 			labList.append ( tit );
+			tit->setZValue ( 1 );
+
+			QGraphicsTextItem *tit2= scene->addText ( "U+" + QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) )  +" ("+ QString::number ( charcode ) +")"  , infoFont );
+			tit2->setPos ( pen.x()-27,pen.y() + 28 );
+			tit2->setData ( 1,"label" );
+			tit2->setData ( 2,gindex );
+			tit2->setData ( 3,ucharcode );
+// 			labList.append ( tit2 );
+			tit2->setZValue ( 1 );
+			
+			QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
+			rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
+			rit->setData ( 1,"select" );
+			rit->setData ( 2,gindex );
+			rit->setData ( 3,ucharcode );
+			rit->setZValue ( 100 );
+
+			pen.rx() += 100;
+			++nl;
+		}
+		charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
+	}
+	releaseFace();
+	return 0;
 }
 
 QString FontItem::infoText ( bool fromcache )
@@ -2761,6 +2844,7 @@ QString FontItem::activationAFMName()
 	QString prefix("%1-");
 	return  prefix.arg(fi.size()) + afi.fileName();
 }
+
 
 
 

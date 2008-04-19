@@ -1326,6 +1326,71 @@ void typotek::printSample()
 
 void typotek::printChart()
 {
+	FontItem * font(theMainView->selectedFont());
+	if(!font)
+		return;
+	
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	QPrintDialog dialog(&thePrinter, this);
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Chart") +" - " + font->fancyName() );
+	
+	if ( dialog.exec() != QDialog::Accepted )
+		return;
+	thePrinter.setFullPage ( true );
+	QPainter aPainter ( &thePrinter );
+	
+	
+	double pWidth(thePrinter.paperRect().width());
+	double pHeight(thePrinter.paperRect().height());
+	double pFactor( thePrinter.resolution() );
+	
+	qDebug()<<"Paper :"<<pWidth<<pHeight;
+	qDebug()<<"Resolution :"<<pFactor;
+	qDebug()<<"P/R*72:"<<pWidth / pFactor * 72<< pHeight / pFactor * 72;
+	
+	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
+	
+
+	QRectF sourceR( 0, 0, pWidth / pFactor * 72, pHeight / pFactor * 72);
+	QGraphicsScene pScene(sourceR);
+	
+	int maxCharcode(0x10FFFF);
+	int beginCharcode(0);
+	int numP(0);
+	bool first(true);
+	while(beginCharcode < maxCharcode)
+	{
+		qDebug() << "Chart("<< ++numP <<") ->"<<beginCharcode<<maxCharcode;
+		QList<QGraphicsItem*> lgit(pScene.items());
+		foreach(QGraphicsItem* git, lgit)
+		{
+			pScene.removeItem(git);
+			delete git;
+		}
+		
+		int controlN(maxCharcode - beginCharcode);
+		int remainC( font->renderChart(&pScene, beginCharcode, maxCharcode, sourceR.width(),sourceR.height() ) );
+		qDebug()<< "Control"<<beginCharcode<<maxCharcode<<controlN<<remainC;
+		if(remainC == 0 )
+			break;
+		
+		beginCharcode += remainC;
+		
+		if(first)
+		{
+			first = false;
+		}
+		else
+		{
+			thePrinter.newPage();
+		}
+		aPainter.drawText(targetR.topLeft(), font->fancyName()+"[U"+QString::number(beginCharcode - remainC ,16).toUpper()+", U"+QString::number(beginCharcode -1,16).toUpper()+"]");
+		pScene.render(&aPainter,targetR, sourceR, Qt::KeepAspectRatio);
+		
+		
+	}
+	
+	
 }
 
 void typotek::printPlayground()

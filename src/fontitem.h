@@ -212,6 +212,8 @@ class FontItem : public QObject
 		void renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
 		void renderLine ( QString script, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
 		void renderAll ( QGraphicsScene *scene, int begin_code, int end_code );
+		//return count codes that remain
+		int renderChart(QGraphicsScene *scene, int begin_code, int end_code ,double pwidth, double pheight);
 		int countCoverage ( int begin_code, int end_code );
 		void deRender ( QGraphicsScene *scene );
 		void deRenderAll();

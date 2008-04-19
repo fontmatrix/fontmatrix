@@ -1867,7 +1867,7 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 			pen.rx() = leftMargin;
 			pen.ry() += 100;
 		}
-		if(pen.y() > pheight)
+		if(pen.y() > pheight - 30)
 		{
 			releaseFace();
 			return  charcode;

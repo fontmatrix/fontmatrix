@@ -52,6 +52,13 @@ class QFile;
 #define PROGRESSION_TTB 4
 #define PROGRESSION_BTT 8
 
+#define GLYPH_DATA_GLYPH 1
+#define GLYPH_DATA_BITMAPLEFT 2
+#define GLYPH_DATA_BITMAPTOP 3
+#define GLYPH_DATA_HADVANCE 4
+#define GLYPH_DATA_VADVANCE 5
+#define GLYPH_DATA_FONTNAME 100
+
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
 

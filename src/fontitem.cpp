@@ -747,7 +747,7 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 		glyph->setBrush ( QBrush ( Qt::red ) );
 		glyph->setPath ( glyphPath );
-		glyph->setData ( 4, ( double ) size  );
+		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size  );
 		return glyph;
 	}
 	
@@ -766,13 +766,13 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		glyph->setBrush ( brush );
 		glyph->setPen(pen);
 		glyph->setPath ( errPath );
-		glyph->setData ( 4, ( double ) size  /scalefactor );
+		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size  /scalefactor );
 	}
 	else
 	{
 		glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
 		glyph->setPath ( glyphPath );
-		glyph->setData ( 4, ( double ) m_glyph->metrics.horiAdvance );
+		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) m_glyph->metrics.horiAdvance );
 		glyph->setData ( 5, ( double ) m_glyph->metrics.vertAdvance );
 		glyph->scale ( scalefactor,-scalefactor );
 	}
@@ -799,10 +799,10 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		QPixmap square(size , size);
 		square.fill(Qt::red);
 		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
-		glyph->setData( 1,"glyph" );
-		glyph->setData( 2, 0 );
-		glyph->setData( 3,size );
-		glyph->setData( 4,size /( size / m_face->units_per_EM) );
+		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
+		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
+		glyph->setData ( GLYPH_DATA_HADVANCE ,size /( size / m_face->units_per_EM) );
 		return glyph;
 	}
 	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
@@ -814,10 +814,10 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		QPixmap square(size , size);
 		square.fill(Qt::red);
 		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
-		glyph->setData( 1,"glyph" );
-		glyph->setData( 2, 0 );
-		glyph->setData( 3,size );
-		glyph->setData( 4,size /( size / m_face->units_per_EM) );
+		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
+		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
+		glyph->setData ( GLYPH_DATA_HADVANCE ,size /( size / m_face->units_per_EM) );
 		return glyph;
 	}
 	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
@@ -826,10 +826,10 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		QPixmap square(size , size);
 		square.fill(Qt::red);
 		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
-		glyph->setData( 1,"glyph" );
-		glyph->setData( 2, 0 );
-		glyph->setData( 3,size );
-		glyph->setData( 4,size  /( size / m_face->units_per_EM));
+		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
+		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
+		glyph->setData ( GLYPH_DATA_HADVANCE ,size  /( size / m_face->units_per_EM));
 		return glyph;
 	}
 
@@ -851,20 +851,20 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		QPixmap square(size , size);
 		square.fill(Qt::red);
 		glyph->setPixmap( square);
-		glyph->setData( 1,"glyph" );
-		glyph->setData( 2, 0 );
-		glyph->setData( 3,size );
-		glyph->setData( 4,size /( size / m_face->units_per_EM) );
+		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
+		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
+		glyph->setData ( GLYPH_DATA_HADVANCE ,size /( size / m_face->units_per_EM) );
 	}
 	else
 	{
 		glyph->setPixmap ( QPixmap::fromImage ( img ) );
 		// we need to transport more data
-		glyph->setData ( 1,"glyph" );
-		glyph->setData ( 2, takeLeftBeforeRender );
-		glyph->setData ( 3, m_face->glyph->bitmap_top );
-		glyph->setData ( 4, takeAdvanceBeforeRender );
-		glyph->setData ( 5, takeVertAdvanceBeforeRender);
+		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_BITMAPLEFT , takeLeftBeforeRender );
+		glyph->setData ( GLYPH_DATA_BITMAPTOP , m_face->glyph->bitmap_top );
+		glyph->setData ( GLYPH_DATA_HADVANCE , takeAdvanceBeforeRender );
+		glyph->setData ( GLYPH_DATA_VADVANCE , takeVertAdvanceBeforeRender);
 	}
 	
 	return glyph;
@@ -875,7 +875,6 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth, double fsize , double zindex ,bool record )
 {
 	double retValue(0.0);
-	QString debugRet("");
 	if ( spec.isEmpty() )
 		return retValue;
 	
@@ -899,8 +898,8 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			}
 			if ( m_progression == PROGRESSION_RTL)
 			{
-				pen.rx() -= ( glyph->data ( 4 ).toDouble() + glyph->data ( 2 ).toDouble() ) * scalefactor;
-				pWidth -= glyph->data ( 4 ).toDouble() * scalefactor;
+				pen.rx() -= ( glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() ) * scalefactor;
+				pWidth -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -909,8 +908,8 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			}
 			else if( m_progression == PROGRESSION_BTT)
 			{
-				pen.ry() -=  glyph->data ( 5 ).toDouble() * scalefactor;
-				pWidth -=  glyph->data ( 5 ).toDouble() * scalefactor;
+				pen.ry() -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
+				pWidth -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -919,7 +918,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			}
 			else if( m_progression == PROGRESSION_LTR)
 			{
-				pWidth -= glyph->data ( 4 ).toDouble() * scalefactor;
+				pWidth -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -928,30 +927,31 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			}
 			else if( m_progression == PROGRESSION_TTB)
 			{
-				pWidth -=  glyph->data ( 5 ).toDouble() * scalefactor;
+				pWidth -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
 					break;
 				}
 			}
-			retValue += glyph->data ( 4 ).toDouble() * scalefactor;
+			retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			
 			/************************************/
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
-			retValue += glyph->data ( 4 ).toDouble() * scalefactor;
-			glyph->setPos ( pen.x() + glyph->data ( 2 ).toDouble() * scalefactor, pen.y() - glyph->data ( 3 ).toInt() );
+			retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			glyph->setPos ( pen.x() + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor, pen.y() - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 			glyph->setZValue ( zindex );
-			glyph->setData ( 1,"glyph" );
+			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			/************************************/
 			
 			if (  m_progression == PROGRESSION_LTR )
-				pen.rx() += glyph->data ( 4 ).toDouble() * scalefactor;
+				pen.rx() += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			else if( m_progression == PROGRESSION_TTB)
 			{
-				pen.ry() +=  glyph->data ( 5 ).toDouble() * scalefactor;
+				pen.ry() +=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 			}
 		}
 	}
@@ -968,9 +968,9 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			
 			if (  m_progression == PROGRESSION_RTL )
 			{
-				pen.rx() -= glyph->data(4).toDouble() * scalefactor;
+				pen.rx() -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 				
-				pWidth -= glyph->data(4).toDouble() * scalefactor;
+				pWidth -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -979,8 +979,8 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			}
 			else if( m_progression == PROGRESSION_BTT)
 			{
-				pen.ry() -=  glyph->data ( 5 ).toDouble() * scalefactor;
-				pWidth -=  glyph->data ( 5 ).toDouble() * scalefactor;
+				pen.ry() -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
+				pWidth -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -989,7 +989,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			}
 			else if( m_progression == PROGRESSION_LTR )
 			{
-				pWidth -= glyph->data(4).toDouble() * scalefactor;
+				pWidth -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -998,7 +998,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			}
 			else if( m_progression == PROGRESSION_TTB)
 			{
-				pWidth -=  glyph->data ( 5 ).toDouble() * scalefactor;
+				pWidth -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
 					delete glyph;
@@ -1010,26 +1010,25 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
-			retValue += glyph->data ( 4 ).toDouble() * scalefactor;
-			debugRet += "("+ QString(spec[i]) +"[" + QString::number(glyph->data ( 4 ).toDouble() * scalefactor) +"]";
+			retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			glyph->setPos ( pen );
 			glyph->setZValue ( zindex );
-			glyph->setData ( 1,"glyph" );
+			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			/*********************************/
 
 			if (  m_progression == PROGRESSION_LTR )
 			{
-				pen.rx() += glyph->data ( 4 ).toDouble() * scalefactor;
+				pen.rx() += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			}
 			else if( m_progression == PROGRESSION_TTB)
 			{
-				pen.ry() +=  glyph->data ( 5 ).toDouble() * scalefactor;
+				pen.ry() +=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 			}
 		}
 	}
 
 	releaseFace();
-	qDebug()<< debugRet << "=>"<< retValue;
 	return retValue;
 }
 
@@ -1042,7 +1041,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 		return;
 	ensureFace();
 
-	otf = new FmOtf ( m_face, 0x10000 );
+	otf = new FmOtf ( m_face, 0x10000 );// You think "What’s this 0x10000?", so am I! Just accept Harfbuzz black magic :)
 	if ( !otf )
 		return;
 	if ( record )
@@ -1116,9 +1115,10 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
 			glyph->setZValue ( 100.0 );
-			glyph->setData ( 1,"glyph" );
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( 2 ).toDouble() * scalefactor  ,
-					pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( 3 ).toInt() );
+			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
+					pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 			/*************************************************/
 			
 			if ( m_progression == PROGRESSION_LTR )
@@ -1181,7 +1181,8 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
 			                pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
 			glyph->setZValue ( 100.0 );
-			glyph->setData ( 1,"glyph" );
+			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			/*******************************************/
 			
 			if (  m_progression == PROGRESSION_LTR )
@@ -1289,9 +1290,10 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
 			glyph->setZValue ( 100.0 );
-			glyph->setData ( 1,"glyph" );
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( 2 ).toDouble() * scalefactor  ,
-					pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( 3 ).toInt() );
+			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
+					pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 			/*************************************************/
 			
 			if ( m_progression == PROGRESSION_LTR )
@@ -1354,7 +1356,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
 					pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
 			glyph->setZValue ( 100.0 );
-			glyph->setData ( 1,"glyph" );
+			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			/*******************************************/
 			
 			if (  m_progression == PROGRESSION_LTR )
@@ -1431,8 +1433,8 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			scene->addItem ( glyph );
 			glyph->setZValue ( 100.0 );
 
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj ) + glyph->data ( 2 ).toDouble() * scalefactor  ,
-			                pen.y() + ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( 3 ).toInt() );
+			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
+			                pen.y() + ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 // 			if (  m_progression != PROGRESSION_RTL )
 				pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
 		}
@@ -1449,7 +1451,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
 			glyph->setZValue ( 100.0 );
-			glyph->setData ( 1,"glyph" );
+			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			//debug
 			glyph->setBrush ( QColor ( ( i*255/refGlyph.count() ),0,0,255- ( i*255/refGlyph.count() ) ) );
 

@@ -16,20 +16,30 @@
 #include <QGraphicsView>
 #include <QPointF>
 
+class FontItem;
+
 class FMPlayGround : public QGraphicsView
 {
 	Q_OBJECT
 	public:
 		FMPlayGround(QWidget *parent);
 		~FMPlayGround();
+		
+		void displayGlyphs(const QString& spec, FontItem* fontI, double fontS);
+		QStringList fontnameList();
+		QList< QGraphicsItemGroup* > getLines();
+		QRectF getMaxRect();
+		
 	protected:
 		void mousePressEvent ( QMouseEvent * e ) ;
 		void mouseReleaseEvent ( QMouseEvent * e )  ;
 		void mouseMoveEvent ( QMouseEvent * e ) ;
 		void wheelEvent ( QWheelEvent * e );
+		
 	private:
 		QPointF mouseStartPoint;
 		bool isPanning;
+		QList<QGraphicsItemGroup*> glyphLines;
 		
 	signals:
 		void pleaseZoom(int);

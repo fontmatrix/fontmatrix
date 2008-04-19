@@ -1330,6 +1330,23 @@ void typotek::printChart()
 
 void typotek::printPlayground()
 {
+	FontItem * font(theMainView->selectedFont());
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	QPrintDialog dialog(&thePrinter, this);
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Playground")  );
+	
+	if ( dialog.exec() != QDialog::Accepted )
+		return;
+	thePrinter.setFullPage ( true );
+	QPainter aPainter ( &thePrinter );	
+	
+	double pWidth(thePrinter.paperRect().width());
+	double pHeight(thePrinter.paperRect().height());
+	
+	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
+	QRectF sourceR( theMainView->getPlayground()->getMaxRect() );
+	
+	theMainView->getPlayground()->scene()->render(&aPainter, targetR ,sourceR, Qt::KeepAspectRatio );
 }
 
 void typotek::printFamily()

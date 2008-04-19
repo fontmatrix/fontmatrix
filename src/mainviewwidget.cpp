@@ -616,7 +616,13 @@ void MainViewWidget::slotInfoFont()
 	if(theVeryFont)
 	{
 	fontInfoText->clear();
-	fontInfoText->setHtml ( "<html>	<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>" +  theVeryFont->infoText(false) + "</html>" );
+	fontInfoText->setHtml ( 
+			       "<html>\
+			<head>\
+			<title>" + theVeryFont->fancyName() + "</title>\
+			<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\
+			</head>" +  theVeryFont->infoText(false) + "</html>" 
+			      );
 	}
 
 }
@@ -1754,18 +1760,8 @@ void MainViewWidget::slotPushOnPlayground()
 	
 	double fSize(playFontSize->value());
 	
-	playView->ensureVisible(100,100,100,100);
-// 	theVeryFont->setFTRaster ( true );
-	bool backedR(theVeryFont->rasterFreetype());
-	theVeryFont->setFTRaster(false);
-	theVeryFont->renderLine(playScene, spec, QPointF(100.0,100.0), spec.count() * fSize * 2.0, fSize, 1 ,false);
-	theVeryFont->setFTRaster(backedR);
-	
-	QList< QGraphicsItem* > itemList(playScene->items());
-	for(int i(0); i < itemList.count(); ++i)
-		itemList[i]->setFlags( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable );
-	
-	
+	playView->displayGlyphs(spec, theVeryFont, fSize);
+		
 }
 
 QString MainViewWidget::sampleName()
@@ -1821,6 +1817,11 @@ QGraphicsScene * MainViewWidget::currentSampleScene()
 		slotView(true);
 	}
 	return loremScene;
+}
+
+FMPlayGround * MainViewWidget::getPlayground()
+{
+	return playView;
 }
 
 

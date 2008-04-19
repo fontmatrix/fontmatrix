@@ -182,6 +182,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		QTextDocument *infoDocument();
 		QGraphicsScene *currentSampleScene();
+		FMPlayGround *getPlayground();
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

@@ -1776,25 +1776,27 @@ void MainViewWidget::displayWelcomeMessage()
 {
 	QString welcomeFontName;
 	QString wpng(QDir::tempPath() + QDir::separator() + "FontmatrixWelcome.png");
-	QFile wpngFile( wpng );
-	int pngWidth(fontInfoText->width() * 0.98);
-	qDebug()<<"PNGW = "<< fontInfoText->width();
-	
-	if(!wpngFile.open(QIODevice::WriteOnly))
-		qDebug()<<"Unable to write in "<< wpngFile.fileName();
-	else
+	if(typo->getFontCount() > 0)
 	{
-		// We’ll trick the fontitem a bit to have large text
-		double bkPr(typo->getPreviewSize());
-		typo->setPreviewSize(30.0);
-		int rIdx(QTime::currentTime().msec() % typo->getFontCount());
-		FontItem *fitem( typo->getFont( rIdx ));
-		welcomeFontName = fitem->fancyName();
-		QPixmap welcomePix(fitem->oneLinePreviewPixmap ( tr("Welcome to Fontmatrix") , QColor(220,0,0), pngWidth) );
-		welcomePix.save(&wpngFile);
-		typo->setPreviewSize( bkPr );
+		QFile wpngFile( wpng );
+		int pngWidth(fontInfoText->width() * 0.98);
+		qDebug()<<"PNGW = "<< fontInfoText->width();
+		
+		if(!wpngFile.open(QIODevice::WriteOnly))
+			qDebug()<<"Unable to write in "<< wpngFile.fileName();
+		else
+		{
+			// We’ll trick the fontitem a bit to have large text
+			double bkPr(typo->getPreviewSize());
+			typo->setPreviewSize(30.0);
+			int rIdx(QTime::currentTime().msec() % typo->getFontCount());
+			FontItem *fitem( typo->getFont( rIdx ));
+			welcomeFontName = fitem->fancyName();
+			QPixmap welcomePix(fitem->oneLinePreviewPixmap ( tr("Welcome to Fontmatrix") , QColor(220,0,0), pngWidth) );
+			welcomePix.save(&wpngFile);
+			typo->setPreviewSize( bkPr );
+		}
 	}
-	
 	QFile wFile(":/texts/welcome");
 	wFile.open(QIODevice::ReadOnly);
 	QString wString(wFile.readAll());

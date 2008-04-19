@@ -42,6 +42,8 @@
 // #include "fmprintdialog.h"
 #include "fmactivate.h"
 
+#include "winutils.h"
+
 
 #include <QtGui>
 #include <QTextEdit>
@@ -729,7 +731,10 @@ void typotek::initDir()
 			continue;
 		}
 		QDir theDir ( sysDir );
-	
+#endif //HAVE_FONTCONFIG
+#ifdef _WIN32
+		QDir theDir ( getWin32SystemFontDir() );
+#endif // _WIN32
 		QStringList pathList;
 		QStringList nameList;
 		
@@ -775,12 +780,12 @@ void typotek::initDir()
 				}
 			}
 		}
-		
+#ifdef HAVE_FONTCONFIG	
 		sysDir = (char*)FcStrListNext(sysDirList);
 	}
 	relayStartingStepIn(QString::number(sysCounter) + " " + tr("fonts available from system"));
-	
-#endif //HAVE_FONTCONFIG
+#endif // _WIN32
+
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 		/// Remote dirs
 	//TODO

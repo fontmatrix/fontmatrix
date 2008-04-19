@@ -1293,7 +1293,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
-					pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
+					pen.y() - ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 			/*************************************************/
 			
 			if ( m_progression == PROGRESSION_LTR )
@@ -1354,7 +1354,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
-					pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
+					pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			/*******************************************/
@@ -1434,7 +1434,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			glyph->setZValue ( 100.0 );
 
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
-			                pen.y() + ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
+			                pen.y() - ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 // 			if (  m_progression != PROGRESSION_RTL )
 				pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
 		}
@@ -1461,7 +1461,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 // 			}
 
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
-			                pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
+			                pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
 
 // 			if (  m_progression != PROGRESSION_RTL )
 // 			{

@@ -651,6 +651,28 @@ void typotek::addFcDirItem(const QString & dirPath)
 	}
 }
 
+QStringList typotek::getSystemFontDirs()
+{
+	QStringList retList;
+#ifdef HAVE_FONTCONFIG // For Unices (OSX included)
+	FcConfig* FcInitLoadConfig();
+	FcStrList *sysDirList = FcConfigGetFontDirs(0);
+	QString sysDir( (char*)FcStrListNext(sysDirList) );
+	while(!sysDir.isEmpty())
+	{
+		if(!sysDir.contains("fontmatrix"))
+		{
+			qDebug()<< "SYSDIR"<<sysDir;
+			retList << sysDir;
+		}
+		sysDir = ( (char*)FcStrListNext(sysDirList) );
+	}
+#endif //HAVE_FONTCONFIG
+#if _WIN32
+	retList << getWin32SystemFontDir();
+#endif // _WIN32
+	return retList;
+}
 
 void typotek::initDir()
 {
@@ -662,28 +684,7 @@ void typotek::initDir()
 // 	QStringList pathList = loader.fontList();
 	QMap<QString,FontInfo> pathList = loader.fastList();
 	int fontnr = pathList.count();
-/*	if ( __FM_SHOW_FONTLOADED )
-	{
-		for ( int i = 0 ; i < fontnr ; ++i )
-		{
-		
-			qDebug() << "About to load : " << pathList.at ( i );
-			
-			FontItem *fi = new FontItem (  pathList.at ( i )  );
-			if(!fi->isValid())
-			{
-				qDebug() << "ERROR loading : " << pathList.at ( i );
-				continue;
-			}
-			if(tagsMap.value ( fi->path() ).contains("Activated_On"))
-				fi->setActivated(true);
-			fontMap.append ( fi );
-			realFontMap[fi->path() ] = fi;
-			fi->setTags ( tagsMap.value ( fi->path() ) );
-		}	
-	}
-	else
-	{*/		
+	
 // 		QStringList zigouigoui;
 // 		zigouigoui << "|" << "/" << "--" << "\\" << "|"  << "/" << "--" << "\\";
 		relayStartingStepIn(tr("Loading")+" "+ QString::number(fontnr) +" "+tr("fonts present in database"));
@@ -710,32 +711,19 @@ void typotek::initDir()
 // 	qDebug() <<  fontMap.count() << " font files loaded.";
 	
 
-	
-#ifdef HAVE_FONTCONFIG
-
 	/// let’s load system fonts
-	qDebug()<<"load system fonts";
-	QString SysColFon = tr("Collected System Font");
 	
+	QString SysColFon = tr("Collected System Font");
 	if(!tagsList.contains(SysColFon))
 		tagsList << SysColFon;
-	FcConfig* FcInitLoadConfig();
-	FcStrList *sysDirList = FcConfigGetFontDirs(0);
-	QString sysDir((char*)FcStrListNext(sysDirList));
+	
 	int sysCounter(0);
-	while(!sysDir.isEmpty())
+
+	QStringList sysDir(getSystemFontDirs());
+	for(int sIdx(0); sIdx < sysDir.count(); ++sIdx)
 	{
-		if(sysDir.contains("fontmatrix"))
-		{
-			sysDir = (char*)FcStrListNext(sysDirList);
-			continue;
-		}
-		QDir theDir ( sysDir );
-#endif //HAVE_FONTCONFIG
-#ifdef _WIN32
-		QDir theDir ( getWin32SystemFontDir() );
-#endif // _WIN32
-		QStringList pathList;
+		QDir theDir ( sysDir[sIdx] );
+		QStringList syspathList;
 		QStringList nameList;
 		
 		QStringList dirList( fontmatrix::exploreDirs(theDir,0) );
@@ -753,16 +741,16 @@ void typotek::initDir()
 			foreach ( QFileInfo fp, fil )
 			{
 				if(!yetHereFonts.contains(fp.absoluteFilePath()))
-					pathList <<  fp.absoluteFilePath();
+					syspathList <<  fp.absoluteFilePath();
 			}
 		}
 		
-		int sysFontCount(pathList.count());
+		int sysFontCount(syspathList.count());
 		relayStartingStepIn(tr("Adding")+" "+ QString::number(sysFontCount) +" "+tr("fonts from system directories"));
 		for ( int i = 0 ; i < sysFontCount; ++i )
 		{
-			QFile ff ( pathList.at ( i ));
-			QFileInfo fi ( pathList.at ( i ) );
+			QFile ff ( syspathList.at ( i ));
+			QFileInfo fi ( syspathList.at ( i ) );
 			{
 				FontItem *fitem = new FontItem ( fi.absoluteFilePath(), false, false );
 				if ( fitem->isValid() )
@@ -780,11 +768,9 @@ void typotek::initDir()
 				}
 			}
 		}
-#ifdef HAVE_FONTCONFIG	
-		sysDir = (char*)FcStrListNext(sysDirList);
 	}
 	relayStartingStepIn(QString::number(sysCounter) + " " + tr("fonts available from system"));
-#endif // _WIN32
+
 
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 		/// Remote dirs
@@ -1532,6 +1518,7 @@ void typotek::showEvent(QShowEvent * event)
 	QMainWindow::showEvent(event);
 	theMainView->displayWelcomeMessage();
 }
+
 
 
 

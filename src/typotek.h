@@ -179,6 +179,7 @@ class typotek:public QMainWindow
 		bool previewRTL;
 		
 		void addFcDirItem(const QString &dirPath);
+		QStringList getSystemFontDirs();
 		
 		RemoteDir *remoteDir;
 		QString m_remoteTmpDir;

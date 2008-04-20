@@ -1360,13 +1360,11 @@ void typotek::printChart()
 		}
 		
 		int controlN(maxCharcode - beginCharcode);
-		int remainC( font->renderChart(&pScene, beginCharcode, maxCharcode, sourceR.width(),sourceR.height() ) );
-		qDebug()<< "Control"<<beginCharcode<<maxCharcode<<controlN<<remainC;
+		int stopAtCode( font->renderChart(&pScene, beginCharcode, maxCharcode, sourceR.width(),sourceR.height() ) );
+		qDebug()<< "Control"<<beginCharcode<<stopAtCode;
 		
-		if(remainC == 0 && !first)
+		if(stopAtCode == beginCharcode)
 			break;
-		
-		beginCharcode += remainC;
 		
 		if(first)
 		{
@@ -1376,10 +1374,10 @@ void typotek::printChart()
 		{
 			thePrinter.newPage();
 		}
-		aPainter.drawText(targetR.topLeft(), font->fancyName()+"[U"+QString::number(beginCharcode - remainC ,16).toUpper()+", U"+QString::number(beginCharcode -1,16).toUpper()+"]");
+		aPainter.drawText(targetR.bottomLeft(), font->fancyName()+"[U"+QString::number(beginCharcode  ,16).toUpper()+", U"+QString::number(stopAtCode ,16).toUpper()+"]");
 		pScene.render(&aPainter,targetR, sourceR, Qt::KeepAspectRatio);
 		
-		
+		beginCharcode = stopAtCode;
 	}
 	
 	

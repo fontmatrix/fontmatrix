@@ -1842,7 +1842,8 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 	qDebug()<<"FontItem::renderChart ("<< begin_code<<end_code <<")";
 	
 	ensureFace();
-	int nl = 0;
+	int nl(0);
+	int retValue(0);
 
 	FT_ULong  charcode;
 	FT_UInt   gindex = 1;
@@ -1870,7 +1871,7 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 		if(pen.y() > pheight - 30)
 		{
 			releaseFace();
-			return  charcode;
+			return  retValue  ;
 		}
 		
 
@@ -1913,11 +1914,14 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 
 			pen.rx() += 100;
 			++nl;
+			++retValue;
 		}
+		retValue = charcode;
 		charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
 	}
 	releaseFace();
-	return 0;
+	
+	return retValue ;
 }
 
 QString FontItem::infoText ( bool fromcache )

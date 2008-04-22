@@ -154,26 +154,26 @@ void FontItem::fillLegitimateSpaces()
 void FontItem::fillNamesMeaning()
 {
 	name_meaning << tr ( "Copyright" )
-			<< tr ( "Font Family" )
-			<< tr ( "Font Subfamily" )
-			<< tr ( "Unique font identifier" )
-			<< tr ( "Full font name" )
-			<< tr ( "Version string" )
-			<< tr ( "Postscript name" )
-			<< tr ( "Trademark" )
-			<< tr ( "Manufacturer" )
-			<< tr ( "Designer" )
-			<< tr ( "Description" )
-			<< tr ( "URL Vendor" )
-			<< tr ( "URL Designer" )
-			<< tr ( "License Description" )
-			<< tr ( "License Info URL" )
-			<< tr ( "Reserved" )
-			<< tr ( "Preferred Family" )
-			<< tr ( "Preferred Subfamily" )
-			<< tr ( "Compatible Full (Macintosh only)" )
-			<< tr ( "Sample text" )
-			<< tr ( "PostScript CID findfont name" );
+	<< tr ( "Font Family" )
+	<< tr ( "Font Subfamily" )
+	<< tr ( "Unique font identifier" )
+	<< tr ( "Full font name" )
+	<< tr ( "Version string" )
+	<< tr ( "Postscript name" )
+	<< tr ( "Trademark" )
+	<< tr ( "Manufacturer" )
+	<< tr ( "Designer" )
+	<< tr ( "Description" )
+	<< tr ( "URL Vendor" )
+	<< tr ( "URL Designer" )
+	<< tr ( "License Description" )
+	<< tr ( "License Info URL" )
+	<< tr ( "Reserved" )
+	<< tr ( "Preferred Family" )
+	<< tr ( "Preferred Subfamily" )
+	<< tr ( "Compatible Full (Macintosh only)" )
+	<< tr ( "Sample text" )
+	<< tr ( "PostScript CID findfont name" );
 }
 
 void FontItem::fillLangIdMap()
@@ -437,7 +437,7 @@ void FontItem::fillLangIdMap()
 
 }
 
-FontItem::FontItem ( QString path , bool remote, bool faststart)
+FontItem::FontItem ( QString path , bool remote, bool faststart )
 {
 	m_valid = false;
 	m_remote = remote;
@@ -452,14 +452,14 @@ FontItem::FontItem ( QString path , bool remote, bool faststart)
 	otf = 0;
 	m_rasterFreetype = false;
 	m_progression = PROGRESSION_LTR;
-	
-	if(langIdMap.isEmpty())
+
+	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
 	if ( charsetMap.isEmpty() )
 		fillCharsetMap();
-	if( legitimateNonPathChars.isEmpty())
+	if ( legitimateNonPathChars.isEmpty() )
 		fillLegitimateSpaces();
-	
+
 	if ( !theOneLineScene )
 	{
 		theOneLineScene = new QGraphicsScene;
@@ -467,59 +467,59 @@ FontItem::FontItem ( QString path , bool remote, bool faststart)
 
 	allIsRendered = false;
 	m_path = path;
-	
-	if(m_remote || faststart)
+
+	if ( m_remote || faststart )
 	{
 		m_valid = true;
 		return;
 	}
-	
+
 	QFileInfo infopath ( m_path );
 	m_name = infopath.fileName();
-	
-	
+
+
 
 	if ( ! ensureFace() )
 	{
 		return;
 	}
-	
-	
-	if ( infopath.suffix() == "pfb" || infopath.suffix() == "PFB")
+
+
+	if ( infopath.suffix() == "pfb" || infopath.suffix() == "PFB" )
 	{
 		m_afm = m_path;
-		if(infopath.suffix() == "pfb")
+		if ( infopath.suffix() == "pfb" )
 		{
 			m_afm.replace ( ".pfb",".afm" );
-			if(!QFile::exists(m_afm))
+			if ( !QFile::exists ( m_afm ) )
 			{
-				m_afm.replace ( ".afm" ,".AFM");
-				if(!QFile::exists(m_afm))
+				m_afm.replace ( ".afm" ,".AFM" );
+				if ( !QFile::exists ( m_afm ) )
 				{
 					m_afm = "";
 				}
 			}
 		}
-		else if(infopath.suffix() == "PFB")
+		else if ( infopath.suffix() == "PFB" )
 		{
 			m_afm.replace ( ".PFB",".AFM" );
-			if(!QFile::exists(m_afm))
+			if ( !QFile::exists ( m_afm ) )
 			{
-				m_afm.replace ( ".AFM" ,".afm");
-				if(!QFile::exists(m_afm))
+				m_afm.replace ( ".AFM" ,".afm" );
+				if ( !QFile::exists ( m_afm ) )
 				{
 					m_afm = "";
 				}
 			}
 		}
 	}
-	
+
 
 	if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
 	{
 		m_isOpenType = true;
 	}
-	
+
 	m_type = FT_Get_X11_Font_Format ( m_face );
 	m_family = m_face->family_name;
 	m_variant = m_face->style_name;
@@ -536,12 +536,12 @@ FontItem::FontItem ( QString path , bool remote, bool faststart)
 	m_lock = false;
 	pixList.clear();
 	sceneList.clear();
-	
-	if(m_family.isEmpty())
+
+	if ( m_family.isEmpty() )
 		return;
-	if(m_variant.isEmpty())
+	if ( m_variant.isEmpty() )
 		return;
-	
+
 	m_valid = true;
 	releaseFace();
 
@@ -551,50 +551,50 @@ void FontItem::updateItem()
 {
 	QFileInfo infopath ( m_path );
 	m_name = infopath.fileName();
-	
-	
+
+
 
 	if ( ! ensureFace() )
 	{
 		return;
 	}
-	
-	
-	if ( infopath.suffix() == "pfb" || infopath.suffix() == "PFB")
+
+
+	if ( infopath.suffix() == "pfb" || infopath.suffix() == "PFB" )
 	{
 		m_afm = m_path;
-		if(infopath.suffix() == "pfb")
+		if ( infopath.suffix() == "pfb" )
 		{
 			m_afm.replace ( ".pfb",".afm" );
-			if(!QFile::exists(m_afm))
+			if ( !QFile::exists ( m_afm ) )
 			{
-				m_afm.replace ( ".afm" ,".AFM");
-				if(!QFile::exists(m_afm))
+				m_afm.replace ( ".afm" ,".AFM" );
+				if ( !QFile::exists ( m_afm ) )
 				{
 					m_afm = "";
 				}
 			}
 		}
-		else if(infopath.suffix() == "PFB")
+		else if ( infopath.suffix() == "PFB" )
 		{
 			m_afm.replace ( ".PFB",".AFM" );
-			if(!QFile::exists(m_afm))
+			if ( !QFile::exists ( m_afm ) )
 			{
-				m_afm.replace ( ".AFM" ,".afm");
-				if(!QFile::exists(m_afm))
+				m_afm.replace ( ".AFM" ,".afm" );
+				if ( !QFile::exists ( m_afm ) )
 				{
 					m_afm = "";
 				}
 			}
 		}
 	}
-	
+
 
 	if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
 	{
 		m_isOpenType = true;
 	}
-	
+
 	m_type = FT_Get_X11_Font_Format ( m_face );
 	m_family = m_face->family_name;
 	m_variant = m_face->style_name;
@@ -646,10 +646,10 @@ bool FontItem::ensureFace()
 // 		{
 // 			if(getFromNetwork() == 2)//wait
 // 			{
-// 				
+//
 // 			}
 // 		}
-		QString trueFile( m_remote ? remoteHerePath : m_path );
+		QString trueFile ( m_remote ? remoteHerePath : m_path );
 		ft_error = FT_New_Face ( theLibrary, trueFile.toLocal8Bit() , 0, &m_face );
 		if ( ft_error )
 		{
@@ -665,13 +665,13 @@ bool FontItem::ensureFace()
 		{
 			hasUnicode = true;
 		}
-		if(spaceIndex.isEmpty())
-		{	
-			int gIndex(0);
-			for(int i(0); i < legitimateNonPathChars.count(); ++i)
+		if ( spaceIndex.isEmpty() )
+		{
+			int gIndex ( 0 );
+			for ( int i ( 0 ); i < legitimateNonPathChars.count(); ++i )
 			{
-				gIndex =   FT_Get_Char_Index( m_face , legitimateNonPathChars[i] );
-				if(gIndex)
+				gIndex =   FT_Get_Char_Index ( m_face , legitimateNonPathChars[i] );
+				if ( gIndex )
 				{
 					spaceIndex << gIndex;
 				}
@@ -743,28 +743,28 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 	if ( ft_error )
 	{
 		QPainterPath glyphPath;
-		glyphPath.addRect(0.0,0.0, size, size);
+		glyphPath.addRect ( 0.0,0.0, size, size );
 		QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 		glyph->setBrush ( QBrush ( Qt::red ) );
 		glyph->setPath ( glyphPath );
-		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size  );
+		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size );
 		return glyph;
 	}
-	
+
 	FT_Outline *outline = &m_glyph->outline;
 	QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
 	FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
-	
-	if(glyphPath.elementCount() < 3 && !spaceIndex.contains(index))
+
+	if ( glyphPath.elementCount() < 3 && !spaceIndex.contains ( index ) )
 	{
-		QBrush brush( Qt::SolidPattern );
-		brush.setColor(Qt::red);
-		QPen pen(brush, 0);
+		QBrush brush ( Qt::SolidPattern );
+		brush.setColor ( Qt::red );
+		QPen pen ( brush, 0 );
 		QPainterPath errPath;
-		errPath.addRect(0.0,-size, size , size );
+		errPath.addRect ( 0.0,-size, size , size );
 		glyph->setBrush ( brush );
-		glyph->setPen(pen);
+		glyph->setPen ( pen );
 		glyph->setPath ( errPath );
 		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size  /scalefactor );
 	}
@@ -796,13 +796,13 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_NO_SCALE );
 	if ( ft_error )
 	{
-		QPixmap square(size , size);
-		square.fill(Qt::red);
-		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
+		QPixmap square ( size , size );
+		square.fill ( Qt::red );
+		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
 		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
-		glyph->setData ( GLYPH_DATA_HADVANCE ,size /( size / m_face->units_per_EM) );
+		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
 		return glyph;
 	}
 	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
@@ -811,25 +811,25 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT /*| FT_LOAD_NO_HINTING*/ );
 	if ( ft_error )
 	{
-		QPixmap square(size , size);
-		square.fill(Qt::red);
-		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
+		QPixmap square ( size , size );
+		square.fill ( Qt::red );
+		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
 		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
-		glyph->setData ( GLYPH_DATA_HADVANCE ,size /( size / m_face->units_per_EM) );
+		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
 		return glyph;
 	}
 	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
 	if ( ft_error )
 	{
-		QPixmap square(size , size);
-		square.fill(Qt::red);
-		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem( square);
+		QPixmap square ( size , size );
+		square.fill ( Qt::red );
+		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
 		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
-		glyph->setData ( GLYPH_DATA_HADVANCE ,size  /( size / m_face->units_per_EM));
+		glyph->setData ( GLYPH_DATA_HADVANCE ,size  / ( size / m_face->units_per_EM ) );
 		return glyph;
 	}
 
@@ -844,17 +844,17 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	             m_face->glyph->bitmap.pitch,
 	             QImage::Format_Indexed8 );
 	img.setColorTable ( palette );
-	
+
 	QGraphicsPixmapItem *glyph = new  QGraphicsPixmapItem;
-	if(img.isNull() && !spaceIndex.contains(index))
+	if ( img.isNull() && !spaceIndex.contains ( index ) )
 	{
-		QPixmap square(size , size);
-		square.fill(Qt::red);
-		glyph->setPixmap( square);
+		QPixmap square ( size , size );
+		square.fill ( Qt::red );
+		glyph->setPixmap ( square );
 		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
-		glyph->setData ( GLYPH_DATA_HADVANCE ,size /( size / m_face->units_per_EM) );
+		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
 	}
 	else
 	{
@@ -864,20 +864,27 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , takeLeftBeforeRender );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP , m_face->glyph->bitmap_top );
 		glyph->setData ( GLYPH_DATA_HADVANCE , takeAdvanceBeforeRender );
-		glyph->setData ( GLYPH_DATA_VADVANCE , takeVertAdvanceBeforeRender);
+		glyph->setData ( GLYPH_DATA_VADVANCE , takeVertAdvanceBeforeRender );
 	}
-	
+
 	return glyph;
 }
 
 
 /// Nature line
-double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth, double fsize , double zindex ,bool record )
+double FontItem::renderLine ( QGraphicsScene * scene,
+                              QString spec,
+                              QPointF origine,
+                              double lineWidth,
+                              double fsize ,
+                              double zindex ,
+                              bool record )
 {
-	double retValue(0.0);
+	qDebug()<<fancyName()<<"::"<<"renderLine("<<scene<<spec<<lineWidth<<fsize<<zindex<<record<<")";
+	double retValue ( 0.0 );
 	if ( spec.isEmpty() )
 		return retValue;
-	
+
 	ensureFace();
 	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	if ( record )
@@ -896,7 +903,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			{
 				continue;
 			}
-			if ( m_progression == PROGRESSION_RTL)
+			if ( m_progression == PROGRESSION_RTL )
 			{
 				pen.rx() -= ( glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() ) * scalefactor;
 				pWidth -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
@@ -906,7 +913,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_BTT)
+			else if ( m_progression == PROGRESSION_BTT )
 			{
 				pen.ry() -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 				pWidth -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
@@ -916,7 +923,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_LTR)
+			else if ( m_progression == PROGRESSION_LTR )
 			{
 				pWidth -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
@@ -925,7 +932,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_TTB)
+			else if ( m_progression == PROGRESSION_TTB )
 			{
 				pWidth -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
@@ -935,7 +942,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 				}
 			}
 			retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
-			
+
 			/************************************/
 			if ( record )
 				pixList.append ( glyph );
@@ -946,10 +953,10 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			/************************************/
-			
-			if (  m_progression == PROGRESSION_LTR )
+
+			if ( m_progression == PROGRESSION_LTR )
 				pen.rx() += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
-			else if( m_progression == PROGRESSION_TTB)
+			else if ( m_progression == PROGRESSION_TTB )
 			{
 				pen.ry() +=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 			}
@@ -964,12 +971,12 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
 			if ( !glyph )
 				continue;
-			
-			
-			if (  m_progression == PROGRESSION_RTL )
+
+
+			if ( m_progression == PROGRESSION_RTL )
 			{
 				pen.rx() -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
-				
+
 				pWidth -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
 				{
@@ -977,7 +984,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_BTT)
+			else if ( m_progression == PROGRESSION_BTT )
 			{
 				pen.ry() -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 				pWidth -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
@@ -987,7 +994,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_LTR )
+			else if ( m_progression == PROGRESSION_LTR )
 			{
 				pWidth -= glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
@@ -996,7 +1003,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_TTB)
+			else if ( m_progression == PROGRESSION_TTB )
 			{
 				pWidth -=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 				if ( pWidth < distance )
@@ -1005,7 +1012,7 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 					break;
 				}
 			}
-			
+
 			/*********************************/
 			if ( record )
 				glyphList.append ( glyph );
@@ -1017,11 +1024,11 @@ double FontItem::renderLine ( QGraphicsScene * scene, QString spec, QPointF orig
 			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			/*********************************/
 
-			if (  m_progression == PROGRESSION_LTR )
+			if ( m_progression == PROGRESSION_LTR )
 			{
 				pen.rx() += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			}
-			else if( m_progression == PROGRESSION_TTB)
+			else if ( m_progression == PROGRESSION_TTB )
 			{
 				pen.ry() +=  glyph->data ( GLYPH_DATA_VADVANCE ).toDouble() * scalefactor;
 			}
@@ -1070,8 +1077,8 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 				continue;
-			
-			if (  m_progression == PROGRESSION_RTL)
+
+			if ( m_progression == PROGRESSION_RTL )
 			{
 				pen.rx() -= refGlyph[i].xadvance * pixelAdjustX;
 				pWidth -= refGlyph[i].xadvance * pixelAdjustX ;
@@ -1081,7 +1088,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_BTT)
+			else if ( m_progression == PROGRESSION_BTT )
 			{
 				pen.ry() -= refGlyph[i].yadvance * pixelAdjustY;
 				pWidth -=  refGlyph[i].yadvance * pixelAdjustY;
@@ -1091,7 +1098,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_LTR)
+			else if ( m_progression == PROGRESSION_LTR )
 			{
 				pWidth -= refGlyph[i].xadvance * pixelAdjustX;
 				if ( pWidth < distance )
@@ -1100,7 +1107,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_TTB)
+			else if ( m_progression == PROGRESSION_TTB )
 			{
 				pWidth -=  refGlyph[i].yadvance * pixelAdjustY ;
 				if ( pWidth < distance )
@@ -1109,7 +1116,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 					break;
 				}
 			}
-			
+
 			/*************************************************/
 			if ( record )
 				pixList.append ( glyph );
@@ -1118,12 +1125,12 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
-					pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
+			                pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 			/*************************************************/
-			
+
 			if ( m_progression == PROGRESSION_LTR )
 				pen.rx() += refGlyph[i].xadvance * pixelAdjustX ;
-			else if( m_progression == PROGRESSION_TTB )
+			else if ( m_progression == PROGRESSION_TTB )
 				pen.ry() += refGlyph[i].yadvance * pixelAdjustY ;
 		}
 	}
@@ -1134,8 +1141,8 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 				continue;
-			
-			if (  m_progression == PROGRESSION_RTL )
+
+			if ( m_progression == PROGRESSION_RTL )
 			{
 				pen.rx() -= refGlyph[i].xadvance * scalefactor;
 				pWidth -= refGlyph[i].xadvance * scalefactor;
@@ -1145,7 +1152,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_BTT)
+			else if ( m_progression == PROGRESSION_BTT )
 			{
 				pen.ry() -= refGlyph[i].yadvance * scalefactor;
 				pWidth -=  refGlyph[i].yadvance * scalefactor;
@@ -1155,7 +1162,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 					break;
 				}
 			}
-			else if(m_progression == PROGRESSION_LTR)
+			else if ( m_progression == PROGRESSION_LTR )
 			{
 				pWidth -= refGlyph[i].xadvance * scalefactor;
 				if ( pWidth < distance )
@@ -1164,7 +1171,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_TTB)
+			else if ( m_progression == PROGRESSION_TTB )
 			{
 				pWidth -=  refGlyph[i].yadvance * scalefactor ;
 				if ( pWidth < distance )
@@ -1173,7 +1180,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 					break;
 				}
 			}
-			
+
 			/**********************************************/
 			if ( record )
 				glyphList.append ( glyph );
@@ -1184,10 +1191,10 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			/*******************************************/
-			
-			if (  m_progression == PROGRESSION_LTR )
+
+			if ( m_progression == PROGRESSION_LTR )
 				pen.rx() += refGlyph[i].xadvance * scalefactor;
-			if (  m_progression == PROGRESSION_TTB)
+			if ( m_progression == PROGRESSION_TTB )
 				pen.ry() += refGlyph[i].yadvance * scalefactor;
 		}
 	}
@@ -1199,7 +1206,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 #ifdef FM_OWNSHAPER
 void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
 {
-	qDebug()<<"Rendered by Me :)";
+	qDebug() <<"Rendered by Me :)";
 	if ( spec.isEmpty() )
 		return;
 	if ( !m_isOpenType )
@@ -1207,12 +1214,12 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	ensureFace();
 
 	/// TEST(own shaper)
-	
+
 	QString canon_script = script ;
-	FMOwnShaper os(spec, canon_script);
-	QList<Character> shaped( os.GetShaped() );
+	FMOwnShaper os ( spec, canon_script );
+	QList<Character> shaped ( os.GetShaped() );
 	os.DumpOut();
-	
+
 	/// END TEST
 	otf = new FmOtf ( m_face, 0x10000 );
 	if ( !otf )
@@ -1226,9 +1233,9 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	double pWidth = lineWidth ;
 	const double distance = 20;
 	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
-	
+
 	QList<RenderedGlyph> refGlyph = otf->procstring ( shaped, script );
-	
+
 // 	qDebug() << "Get line "<<spec;
 	delete otf;
 // 	qDebug() << "Deleted OTF";
@@ -1245,8 +1252,8 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 				continue;
-			
-			if (  m_progression == PROGRESSION_RTL)
+
+			if ( m_progression == PROGRESSION_RTL )
 			{
 				pen.rx() -= refGlyph[i].xadvance * pixelAdjustX;
 				pWidth -= refGlyph[i].xadvance * pixelAdjustX ;
@@ -1256,7 +1263,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_BTT)
+			else if ( m_progression == PROGRESSION_BTT )
 			{
 				pen.ry() -= refGlyph[i].yadvance * pixelAdjustY;
 				pWidth -=  refGlyph[i].yadvance * pixelAdjustY;
@@ -1266,7 +1273,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_LTR)
+			else if ( m_progression == PROGRESSION_LTR )
 			{
 				pWidth -= refGlyph[i].xadvance * pixelAdjustX;
 				if ( pWidth < distance )
@@ -1275,7 +1282,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_TTB)
+			else if ( m_progression == PROGRESSION_TTB )
 			{
 				pWidth -=  refGlyph[i].yadvance * pixelAdjustY ;
 				if ( pWidth < distance )
@@ -1284,7 +1291,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 					break;
 				}
 			}
-			
+
 			/*************************************************/
 			if ( record )
 				pixList.append ( glyph );
@@ -1293,12 +1300,12 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			glyph->setData ( GLYPH_DATA_FONTNAME , fancyName() );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
-					pen.y() - ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
+			                pen.y() - ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 			/*************************************************/
-			
+
 			if ( m_progression == PROGRESSION_LTR )
 				pen.rx() += refGlyph[i].xadvance * pixelAdjustX ;
-			else if( m_progression == PROGRESSION_TTB )
+			else if ( m_progression == PROGRESSION_TTB )
 				pen.ry() += refGlyph[i].yadvance * pixelAdjustY ;
 		}
 	}
@@ -1309,8 +1316,8 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 				continue;
-			
-			if (  m_progression == PROGRESSION_RTL )
+
+			if ( m_progression == PROGRESSION_RTL )
 			{
 				pen.rx() -= refGlyph[i].xadvance * scalefactor;
 				pWidth -= refGlyph[i].xadvance * scalefactor;
@@ -1320,7 +1327,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_BTT)
+			else if ( m_progression == PROGRESSION_BTT )
 			{
 				pen.ry() -= refGlyph[i].yadvance * scalefactor;
 				pWidth -=  refGlyph[i].yadvance * scalefactor;
@@ -1330,7 +1337,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 					break;
 				}
 			}
-			else if(m_progression == PROGRESSION_LTR)
+			else if ( m_progression == PROGRESSION_LTR )
 			{
 				pWidth -= refGlyph[i].xadvance * scalefactor;
 				if ( pWidth < distance )
@@ -1339,7 +1346,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 					break;
 				}
 			}
-			else if( m_progression == PROGRESSION_TTB)
+			else if ( m_progression == PROGRESSION_TTB )
 			{
 				pWidth -=  refGlyph[i].yadvance * scalefactor ;
 				if ( pWidth < distance )
@@ -1348,20 +1355,20 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 					break;
 				}
 			}
-			
+
 			/**********************************************/
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
-					pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
+			                pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 			/*******************************************/
-			
-			if (  m_progression == PROGRESSION_LTR )
+
+			if ( m_progression == PROGRESSION_LTR )
 				pen.rx() += refGlyph[i].xadvance * scalefactor;
-			if (  m_progression == PROGRESSION_TTB)
+			if ( m_progression == PROGRESSION_TTB )
 				pen.ry() += refGlyph[i].yadvance * scalefactor;
 		}
 	}
@@ -1374,7 +1381,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 /// Shaped line, mostly bug^^non-fully-usable right now :(
 void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth,double fsize, bool record )
 {
-	qDebug()<<"Rendered by HB";
+	qDebug() <<"Rendered by HB";
 	if ( spec.isEmpty() )
 		return;
 	if ( !m_isOpenType )
@@ -1406,7 +1413,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 		return;
 	}
 
-	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec,(m_progression == PROGRESSION_RTL) ? false : true );
+	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec, ( m_progression == PROGRESSION_RTL ) ? false : true );
 
 	if ( refGlyph.count() == 0 )
 	{
@@ -1436,7 +1443,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
 			                pen.y() - ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 // 			if (  m_progression != PROGRESSION_RTL )
-				pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
+			pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
 		}
 	}
 	else
@@ -1446,7 +1453,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 				continue;
-			
+
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
@@ -1465,7 +1472,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 
 // 			if (  m_progression != PROGRESSION_RTL )
 // 			{
-				pen.rx() += refGlyph[i].xadvance * scalefactor;
+			pen.rx() += refGlyph[i].xadvance * scalefactor;
 // 			}
 		}
 	}
@@ -1614,7 +1621,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 // 	if ( allIsRendered )
 // 		return;
 	FMGlyphsView *allView = reinterpret_cast<FMGlyphsView*> ( scene->views() [0] );
-	qDebug()<<"renderAll("<< begin_code<<","<<end_code <<")";
+	qDebug() <<"renderAll("<< begin_code<<","<<end_code <<")";
 	deRenderAll();
 	if ( !allView->isVisible() )
 	{
@@ -1839,11 +1846,11 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 
 int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code ,double pwidth, double pheight )
 {
-	qDebug()<<"FontItem::renderChart ("<< begin_code<<end_code <<")";
-	
+	qDebug() <<"FontItem::renderChart ("<< begin_code<<end_code <<")";
+
 	ensureFace();
-	int nl(0);
-	int retValue(0);
+	int nl ( 0 );
+	int retValue ( 0 );
 
 	FT_ULong  charcode;
 	FT_UInt   gindex = 1;
@@ -1851,11 +1858,11 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 	charcode = begin_code;
 	adjustGlyphsPerRow ( pwidth );
 
-	double leftMargin = 30 + ((pwidth - (m_glyphsPerRow * 100)) / 2 );
+	double leftMargin = 30 + ( ( pwidth - ( m_glyphsPerRow * 100 ) ) / 2 );
 	double aestheticTopMargin = 0;
 	QPointF pen ( leftMargin, sizz + aestheticTopMargin );
 
-	
+
 	QPen selPen ( Qt::gray );
 	QFont infoFont ( "Helvetica",8 );
 	QBrush selBrush ( QColor ( 255,255,255,0 ) );
@@ -1868,12 +1875,12 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 			pen.rx() = leftMargin;
 			pen.ry() += 100;
 		}
-		if(pen.y() > pheight - 30)
+		if ( pen.y() > pheight - 30 )
 		{
 			releaseFace();
 			return  retValue  ;
 		}
-		
+
 
 		QGraphicsPathItem *pitem = itemFromChar ( charcode , sizz );
 		if ( pitem )
@@ -1904,7 +1911,7 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 			tit2->setData ( 3,ucharcode );
 // 			labList.append ( tit2 );
 			tit2->setZValue ( 1 );
-			
+
 			QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
 			rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
 			rit->setData ( 1,"select" );
@@ -1920,7 +1927,7 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 		charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
 	}
 	releaseFace();
-	
+
 	return retValue ;
 }
 
@@ -2102,7 +2109,7 @@ QGraphicsPathItem * FontItem::hasCodepoint ( int code )
 // 		return theOneLinePreviewIcon;
 // 	QRectF savedRect = theOneLineScene->sceneRect();
 // 	theOneLineScene->setSceneRect ( 0,0,64,64 );
-// 
+//
 // 	renderLine ( theOneLineScene,oneline,QPointF ( 10,55 ),80,false );
 // 	QPixmap apix ( 64,64 );
 // 	apix.fill ( Qt::white );
@@ -2111,20 +2118,20 @@ QGraphicsPathItem * FontItem::hasCodepoint ( int code )
 // 	theOneLineScene->render ( &apainter,apix.rect(),apix.rect() );
 // // 	theOneLinePreviewIcon.addPixmap(apix);
 // 	theOneLinePreviewIcon = apix;
-// 
+//
 // 	theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
 // 	theOneLineScene->setSceneRect ( savedRect );
 // 	return theOneLinePreviewIcon;
 // }
 
-QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w)
+QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w )
 {
 	if ( m_remote )
 		return fixedPixmap;
-	if ( !theOneLinePreviewPixmap.isNull())
+	if ( !theOneLinePreviewPixmap.isNull() )
 	{
-		if(theOneLinePreviewPixmap.width() == size_w)
-			return theOneLinePreviewPixmap;	
+		if ( theOneLinePreviewPixmap.width() == size_w )
+			return theOneLinePreviewPixmap;
 	}
 	QRectF savedRect = theOneLineScene->sceneRect();
 
@@ -2132,7 +2139,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 	double pt2px = QApplication::desktop()->physicalDpiX() / 72.0;
 	double theHeight = theSize * 1.3 * pt2px;
 	double theWidth;
-	if(size_w == 0)
+	if ( size_w == 0 )
 	{
 		theWidth = theSize * pt2px * oneline.count() * 1.2;
 	}
@@ -2154,7 +2161,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 	QPainter apainter ( &linePixmap );
 	QVector<QRgb> palette;
 	int notRenderedGlyphsCount ( 0 );
-	
+
 	for ( int i =0;i < oneline.count() ; ++i )
 	{
 		int glyphIndex = FT_Get_Char_Index ( m_face, oneline[i].unicode() );
@@ -2195,15 +2202,15 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		             m_face->glyph->bitmap.rows,
 		             m_face->glyph->bitmap.pitch,
 		             QImage::Format_Indexed8 );
-		if(pRTL)
+		if ( pRTL )
 			pen.rx() -=  advance;
-		
+
 		img.setColorTable ( palette );
 		apainter.drawImage ( pen.x() + leftBearing, pen.y() - m_glyph->bitmap_top , img );
-		
-		if(!pRTL)
+
+		if ( !pRTL )
 			pen.rx() +=  advance;
-		
+
 	}
 	/// Check if we have drawn something
 	if ( notRenderedGlyphsCount == oneline.count() )
@@ -2212,8 +2219,8 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		//If not we draw first available characters.
 		FT_ULong  charCode;
 		FT_UInt   glyphIndex;
-		charCode = FT_Get_First_Char( m_face, &glyphIndex ); 
-		for ( int i =0;i < oneline.count() ; ++i )// get same number of glyphs than normal preview word
+		charCode = FT_Get_First_Char ( m_face, &glyphIndex );
+		for ( int i =0;i < oneline.count() ; ++i ) // get same number of glyphs than normal preview word
 		{
 			if ( glyphIndex == 0 )
 			{
@@ -2252,8 +2259,8 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 			pen.ry() = ( theSize * pt2px ) - m_glyph->bitmap_top;
 			apainter.drawImage ( pen.x() + leftBearing, pen.y(), img );
 			pen.rx() +=  advance;
-			
-			charCode = FT_Get_Next_Char( m_face, charCode, &glyphIndex );
+
+			charCode = FT_Get_Next_Char ( m_face, charCode, &glyphIndex );
 
 		}
 	}
@@ -2425,7 +2432,7 @@ void FontItem::setTags ( QStringList l )
 {
 	bool act = isActivated();
 	m_tags = l;
-	setActivated(act);
+	setActivated ( act );
 }
 
 /// When glyphsView is resized we wantto adjust the number of columns
@@ -2583,74 +2590,74 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	fancyGlyph->setPos ( targetRect.topLeft() );
 	view->scene()->addItem ( fancyGlyph );
 	fancyGlyphs.append ( fancyGlyph );
-	
-	
+
+
 	QGraphicsTextItem *textIt = new QGraphicsTextItem;
-	textIt->setTextWidth(squareSide);
-	
-	QString itemNameStyle("background-color:#333;color:white;font-weight:bold;font-size:10pt");
-	QString itemValueStyle("background-color:#eee;font-style:italic;font-size:10pt");
-	if(charcodeIsAGlyphIndex)
+	textIt->setTextWidth ( squareSide );
+
+	QString itemNameStyle ( "background-color:#333;color:white;font-weight:bold;font-size:10pt" );
+	QString itemValueStyle ( "background-color:#eee;font-style:italic;font-size:10pt" );
+	if ( charcodeIsAGlyphIndex )
 	{
 		QString html;
-		
+
 		html = "<span style=\""+ itemNameStyle +"\"> Index </span>";
-		html += "<span style=\""+ itemValueStyle +"\"> "+ QString::number(charcode) +" </span>";
-		textIt->setHtml(html);
+		html += "<span style=\""+ itemValueStyle +"\"> "+ QString::number ( charcode ) +" </span>";
+		textIt->setHtml ( html );
 	}
 	else
 	{
 		QString html;
-		
+
 		QString catString;
-		int cat(QChar::category(static_cast<uint>(charcode)));
-		if(cat == QChar::Mark_NonSpacing) catString = QObject::tr("Mark, NonSpacing");
-		else if(cat == QChar::Mark_SpacingCombining) catString = QObject::tr("Mark, SpacingCombining");
-		else if(cat == QChar::Mark_Enclosing) catString = QObject::tr("Mark, Enclosing");
-		else if(cat == QChar::Number_DecimalDigit) catString = QObject::tr("Number, DecimalDigit");
-		else if(cat == QChar::Number_Letter) catString = QObject::tr("Number, Letter");
-		else if(cat == QChar::Number_Other) catString = QObject::tr("Number, Other");
-		else if(cat == QChar::Separator_Space) catString = QObject::tr("Separator, Space");
-		else if(cat == QChar::Separator_Line) catString = QObject::tr("Separator, Line");
-		else if(cat == QChar::Separator_Paragraph) catString = QObject::tr("Separator, Paragraph");
-		else if(cat == QChar::Other_Control) catString = QObject::tr("Other, Control");
-		else if(cat == QChar::Other_Format) catString = QObject::tr("Other, Format");
-		else if(cat == QChar::Other_Surrogate) catString = QObject::tr("Other, Surrogate");
-		else if(cat == QChar::Other_PrivateUse) catString = QObject::tr("Other, PrivateUse");
-		else if(cat == QChar::Other_NotAssigned) catString = QObject::tr("Other, NotAssigned");
-		else if(cat == QChar::Letter_Uppercase) catString = QObject::tr("Letter, Uppercase");
-		else if(cat == QChar::Letter_Lowercase) catString = QObject::tr("Letter, Lowercase");
-		else if(cat == QChar::Letter_Titlecase) catString = QObject::tr("Letter, Titlecase");
-		else if(cat == QChar::Letter_Modifier) catString = QObject::tr("Letter, Modifier");
-		else if(cat == QChar::Letter_Other) catString = QObject::tr("Letter, Other");
-		else if(cat == QChar::Punctuation_Connector) catString = QObject::tr("Punctuation, Connector");
-		else if(cat == QChar::Punctuation_Dash) catString = QObject::tr("Punctuation, Dash");
-		else if(cat == QChar::Punctuation_Open) catString = QObject::tr("Punctuation, Open");
-		else if(cat == QChar::Punctuation_Close) catString = QObject::tr("Punctuation, Close");
-		else if(cat == QChar::Punctuation_InitialQuote) catString = QObject::tr("Punctuation, InitialQuote");
-		else if(cat == QChar::Punctuation_FinalQuote) catString = QObject::tr("Punctuation, FinalQuote");
-		else if(cat == QChar::Punctuation_Other) catString = QObject::tr("Punctuation, Other");
-		else if(cat == QChar::Symbol_Math) catString = QObject::tr("Symbol, Math");
-		else if(cat == QChar::Symbol_Currency) catString = QObject::tr("Symbol, Currency");
-		else if(cat == QChar::Symbol_Modifier) catString = QObject::tr("Symbol, Modifier");
-		else if(cat == QChar::Symbol_Other) catString = QObject::tr("Symbol, Other");
-		
+		int cat ( QChar::category ( static_cast<uint> ( charcode ) ) );
+		if ( cat == QChar::Mark_NonSpacing ) catString = QObject::tr ( "Mark, NonSpacing" );
+		else if ( cat == QChar::Mark_SpacingCombining ) catString = QObject::tr ( "Mark, SpacingCombining" );
+		else if ( cat == QChar::Mark_Enclosing ) catString = QObject::tr ( "Mark, Enclosing" );
+		else if ( cat == QChar::Number_DecimalDigit ) catString = QObject::tr ( "Number, DecimalDigit" );
+		else if ( cat == QChar::Number_Letter ) catString = QObject::tr ( "Number, Letter" );
+		else if ( cat == QChar::Number_Other ) catString = QObject::tr ( "Number, Other" );
+		else if ( cat == QChar::Separator_Space ) catString = QObject::tr ( "Separator, Space" );
+		else if ( cat == QChar::Separator_Line ) catString = QObject::tr ( "Separator, Line" );
+		else if ( cat == QChar::Separator_Paragraph ) catString = QObject::tr ( "Separator, Paragraph" );
+		else if ( cat == QChar::Other_Control ) catString = QObject::tr ( "Other, Control" );
+		else if ( cat == QChar::Other_Format ) catString = QObject::tr ( "Other, Format" );
+		else if ( cat == QChar::Other_Surrogate ) catString = QObject::tr ( "Other, Surrogate" );
+		else if ( cat == QChar::Other_PrivateUse ) catString = QObject::tr ( "Other, PrivateUse" );
+		else if ( cat == QChar::Other_NotAssigned ) catString = QObject::tr ( "Other, NotAssigned" );
+		else if ( cat == QChar::Letter_Uppercase ) catString = QObject::tr ( "Letter, Uppercase" );
+		else if ( cat == QChar::Letter_Lowercase ) catString = QObject::tr ( "Letter, Lowercase" );
+		else if ( cat == QChar::Letter_Titlecase ) catString = QObject::tr ( "Letter, Titlecase" );
+		else if ( cat == QChar::Letter_Modifier ) catString = QObject::tr ( "Letter, Modifier" );
+		else if ( cat == QChar::Letter_Other ) catString = QObject::tr ( "Letter, Other" );
+		else if ( cat == QChar::Punctuation_Connector ) catString = QObject::tr ( "Punctuation, Connector" );
+		else if ( cat == QChar::Punctuation_Dash ) catString = QObject::tr ( "Punctuation, Dash" );
+		else if ( cat == QChar::Punctuation_Open ) catString = QObject::tr ( "Punctuation, Open" );
+		else if ( cat == QChar::Punctuation_Close ) catString = QObject::tr ( "Punctuation, Close" );
+		else if ( cat == QChar::Punctuation_InitialQuote ) catString = QObject::tr ( "Punctuation, InitialQuote" );
+		else if ( cat == QChar::Punctuation_FinalQuote ) catString = QObject::tr ( "Punctuation, FinalQuote" );
+		else if ( cat == QChar::Punctuation_Other ) catString = QObject::tr ( "Punctuation, Other" );
+		else if ( cat == QChar::Symbol_Math ) catString = QObject::tr ( "Symbol, Math" );
+		else if ( cat == QChar::Symbol_Currency ) catString = QObject::tr ( "Symbol, Currency" );
+		else if ( cat == QChar::Symbol_Modifier ) catString = QObject::tr ( "Symbol, Modifier" );
+		else if ( cat == QChar::Symbol_Other ) catString = QObject::tr ( "Symbol, Other" );
+
 		html = "<span style=\""+ itemNameStyle +"\"> Category </span>";
 		html += "<span style=\""+ itemValueStyle +"\"> "+ catString +" </span>";
-		
-		textIt->setHtml(html);
+
+		textIt->setHtml ( html );
 	}
-	
+
 // 	qDebug()<< textIt->toHtml();
-	QPointF tPos(subRect.left() + 20.0 , subRect.bottom());
-	textIt->setPos ( view->mapToScene(tPos.toPoint()) );
+	QPointF tPos ( subRect.left() + 20.0 , subRect.bottom() );
+	textIt->setPos ( view->mapToScene ( tPos.toPoint() ) );
 	textIt->setZValue ( 2000000 );
-	textIt->setEnabled(true);
-	textIt->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-	textIt->setData(10, "FancyText");
+	textIt->setEnabled ( true );
+	textIt->setFlags ( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable );
+	textIt->setData ( 10, "FancyText" );
 	view->scene()->addItem ( textIt );
-	fancyTexts.append(textIt);
-	
+	fancyTexts.append ( textIt );
+
 	releaseFace();
 	return fancyGlyphs.count() - 1;
 
@@ -2666,7 +2673,7 @@ void FontItem::hideFancyGlyph ( int ref )
 		delete it;
 
 	}
-	if( fancyTexts.at( ref ) )
+	if ( fancyTexts.at ( ref ) )
 	{
 		QGraphicsTextItem *it = fancyTexts.at ( ref );
 		it->scene()->removeItem ( it );
@@ -2685,7 +2692,7 @@ bool FontItem::isLocal()
 }
 
 /// We don’t want to download fonts yet. We just want something to fill font tree
-void FontItem::fileRemote(QString f , QString v, QString t, QString i, QPixmap p)
+void FontItem::fileRemote ( QString f , QString v, QString t, QString i, QPixmap p )
 {
 	m_family = f;
 	m_variant = v;
@@ -2695,7 +2702,7 @@ void FontItem::fileRemote(QString f , QString v, QString t, QString i, QPixmap p
 }
 
 /// the same, but just for speedup startup with a lot of font files
-void FontItem::fileLocal(QString f, QString v, QString t, QString i)
+void FontItem::fileLocal ( QString f, QString v, QString t, QString i )
 {
 	m_family = f;
 	m_variant = v;
@@ -2706,71 +2713,71 @@ void FontItem::fileLocal(QString f, QString v, QString t, QString i)
 /// Finally, we have to download the font file
 int FontItem::getFromNetwork()
 {
-	qDebug()<<"FontItem::getFromNetwork()";
-	if(remoteCached)
+	qDebug() <<"FontItem::getFromNetwork()";
+	if ( remoteCached )
 		return 1;
-	if(stopperDownload)
+	if ( stopperDownload )
 		return 2;
 	else
 		stopperDownload = true;
-	
-	QUrl url(m_path);
-	remoteHerePath = typotek::getInstance()->remoteTmpDir() + QDir::separator() + QFileInfo(url.path()).fileName();
-	
-	rFile = new QFile(remoteHerePath);
-	if(!rFile->open(QIODevice::WriteOnly))
+
+	QUrl url ( m_path );
+	remoteHerePath = typotek::getInstance()->remoteTmpDir() + QDir::separator() + QFileInfo ( url.path() ).fileName();
+
+	rFile = new QFile ( remoteHerePath );
+	if ( !rFile->open ( QIODevice::WriteOnly ) )
 	{
-		qDebug()<< "Can’t open " << remoteHerePath;
+		qDebug() << "Can’t open " << remoteHerePath;
 		delete rFile;
 // 		return false;
 	}
-	
-	rHttp = new QHttp(url.host());
-	qDebug()<< "Init progress Dialog";
-	rProgressDialog = new QProgressDialog(typotek::getInstance());
-	rProgressDialog->setWindowTitle(tr("Fontmatrix - Download"));
-	rProgressDialog->setLabelText(tr("Downloading %1.").arg(m_path));
+
+	rHttp = new QHttp ( url.host() );
+	qDebug() << "Init progress Dialog";
+	rProgressDialog = new QProgressDialog ( typotek::getInstance() );
+	rProgressDialog->setWindowTitle ( tr ( "Fontmatrix - Download" ) );
+	rProgressDialog->setLabelText ( tr ( "Downloading %1." ).arg ( m_path ) );
 	rProgressDialog->show();
 	rProgressDialog->raise();
 	rProgressDialog->activateWindow();
-	qDebug()<<"Progress dialog done";
-	
-	connect(rHttp,SIGNAL(dataReadProgress( int, int )),this,SLOT(slotDowloadProgress(int,int)));
-	connect(rHttp,SIGNAL(requestFinished( int, bool )),this,SLOT(slotDownloadEnd(int, bool)));
-	connect(rHttp,SIGNAL(done( bool )),this,SLOT(slotDownloadDone(bool)));
-	connect(rHttp,SIGNAL(stateChanged( int )),this,SLOT(slotDownloadState(int)));
-	
-	remoteId = rHttp->get( url.path() , rFile );
+	qDebug() <<"Progress dialog done";
+
+	connect ( rHttp,SIGNAL ( dataReadProgress ( int, int ) ),this,SLOT ( slotDowloadProgress ( int,int ) ) );
+	connect ( rHttp,SIGNAL ( requestFinished ( int, bool ) ),this,SLOT ( slotDownloadEnd ( int, bool ) ) );
+	connect ( rHttp,SIGNAL ( done ( bool ) ),this,SLOT ( slotDownloadDone ( bool ) ) );
+	connect ( rHttp,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotDownloadState ( int ) ) );
+
+	remoteId = rHttp->get ( url.path() , rFile );
 	return 2;
 }
 
-void FontItem::slotDownloadStart(int id)
+void FontItem::slotDownloadStart ( int id )
 {
 // 	rProgressDialog->show();
-	if(id != remoteId)
+	if ( id != remoteId )
 	{
-		qDebug()<< "catched a weird request : " << id;
+		qDebug() << "catched a weird request : " << id;
 	}
 }
 
-void FontItem::slotDowloadProgress(int done, int total)
+void FontItem::slotDowloadProgress ( int done, int total )
 {
-	rProgressDialog->setMaximum(total);
-	rProgressDialog->setValue(done);
-	qDebug()<< " [" <<done << "/"<< total<<"]" ;
+	rProgressDialog->setMaximum ( total );
+	rProgressDialog->setValue ( done );
+	qDebug() << " [" <<done << "/"<< total<<"]" ;
 }
 
-void FontItem::slotDownloadEnd(int id, bool error)
+void FontItem::slotDownloadEnd ( int id, bool error )
 {
 	qDebug() << m_path << "::slotDownloadEnd ["<< id <<"] when remoteCached = "<< remoteCached;
-	if(id != remoteId)
+	if ( id != remoteId )
 	{
-		qDebug()<< "WTF this id("<< id <<") comes from nowhere, our is "<< remoteId;
+		qDebug() << "WTF this id("<< id <<") comes from nowhere, our is "<< remoteId;
 		return;
 	}
-	if(remoteCached)
+	if ( remoteCached )
 	{
-		qDebug()<< "Youre a bit late dude.";
+		qDebug() << "Youre a bit late dude.";
 		return;
 	}
 	else
@@ -2780,73 +2787,73 @@ void FontItem::slotDownloadEnd(int id, bool error)
 	rFile->flush();
 	rFile->close();
 	rHttp->close();
-	
+
 	delete rProgressDialog;
 	delete rFile;
-	
+
 	emit dowloadFinished();
 }
 
-void FontItem::slotDownloadDone(bool error)
+void FontItem::slotDownloadDone ( bool error )
 {
-	qDebug()<< "slotDownloadDone(" <<error<<")";
+	qDebug() << "slotDownloadDone(" <<error<<")";
 }
 
-void FontItem::slotDownloadState(int state)
+void FontItem::slotDownloadState ( int state )
 {
 // 	qDebug() << "slotDownloadState("<<state<<")";
-	if(state == QHttp::Unconnected  && rHttp)
+	if ( state == QHttp::Unconnected  && rHttp )
 	{
 		qDebug() << "slotDownloadState( QHttp::Unconnected )";
 		delete rHttp;
 		rHttp = 0;
 	}
-	
+
 }
 
 
 void FontItem::trimSpacesIndex()
 {
-	if(!spaceIndex.isEmpty())
+	if ( !spaceIndex.isEmpty() )
 		return;
-	if(!ensureFace())
+	if ( !ensureFace() )
 		return;
-	
-	int gIndex(0);
-	for(int i(0); i < legitimateNonPathChars.count(); ++i)
+
+	int gIndex ( 0 );
+	for ( int i ( 0 ); i < legitimateNonPathChars.count(); ++i )
 	{
-		gIndex =   FT_Get_Char_Index( m_face , legitimateNonPathChars[i] );
-		if(gIndex)
+		gIndex =   FT_Get_Char_Index ( m_face , legitimateNonPathChars[i] );
+		if ( gIndex )
 		{
 // 			qDebug()<<"Space : " << legitimateNonPathChars[i] << " is : "<<gIndex;
 			spaceIndex << gIndex;
 		}
 	}
-	
+
 	releaseFace();
 }
 
 QString FontItem::activationName()
-{	
-	if( m_remote || m_lock )
+{
+	if ( m_remote || m_lock )
 		return QString();
-	
-	QFileInfo fi(m_path);
-	QString prefix( "%1-" );
-	return  prefix.arg(fi.size()) + fi.fileName();
+
+	QFileInfo fi ( m_path );
+	QString prefix ( "%1-" );
+	return  prefix.arg ( fi.size() ) + fi.fileName();
 }
 
 QString FontItem::activationAFMName()
 {
-	if( m_remote || m_lock )
+	if ( m_remote || m_lock )
 		return QString();
-	if(m_afm.isEmpty())
+	if ( m_afm.isEmpty() )
 		return QString();
-	
-	QFileInfo afi(m_afm);
-	QFileInfo fi(m_path);
-	QString prefix("%1-");
-	return  prefix.arg(fi.size()) + afi.fileName();
+
+	QFileInfo afi ( m_afm );
+	QFileInfo fi ( m_path );
+	QString prefix ( "%1-" );
+	return  prefix.arg ( fi.size() ) + afi.fileName();
 }
 
 

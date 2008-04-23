@@ -2601,7 +2601,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	gPos.ry() += ( subRect.height() - img.height() ) /2;
 	painter.drawImage ( gPos, img );
 
-	
+
 	// Draw metrics
 	QPoint pPos ( gPos );
 	pPos.rx() -= m_face->glyph->bitmap_left * scaledBy;
@@ -2692,45 +2692,46 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	view->scene()->addItem ( textIt );
 	fancyTexts.append ( textIt );
 
-		
+
 	// Alternates
-	if(!charcodeIsAGlyphIndex)
+	if ( !charcodeIsAGlyphIndex )
 	{
-		int ref(fancyGlyphs.count() - 1);
-		
-		QList<int> alts( getAlternates(charcode) );
-		qDebug()<< "PALTS"<<alts;
-		double altSize( squareSide / 6 );
-		double altXOffset( subRect.top() + 5 );
-		for(int a(0); a < alts.count() ; ++a)
+		int ref ( fancyGlyphs.count() - 1 );
+
+		QList<int> alts ( getAlternates ( charcode ) );
+		qDebug() << "PALTS"<<alts;
+		double altSize ( squareSide / 6 );
+		double altXOffset ( subRect.top() + 10 );
+		for ( int a ( 0 ); a < alts.count() ; ++a )
 		{
-			QGraphicsPixmapItem *gpi(itemFromGindexPix( alts.at(a), altSize ) );
+			QGraphicsPixmapItem *gpi ( itemFromGindexPix ( alts.at ( a ), altSize ) );
 			fancyAlternates[ref] << gpi;
-			
-			QImage altI( gpi->pixmap().toImage().alphaChannel() );
-// 			altI.setColorTable(invertedGray256Palette);
-// 			int aw(altI.width());
-// 			int ah(altI.height());
-// 			for(int rw(0); rw < aw; ++rw)
-// 			{
-// 				for(int rh(0); rh < ah; ++rh)
-// 				{
-// 					QRgb col(altI.pixel(rw,rh) );
-// // 					qDebug()<< col;
-// 					altI.setPixel(rw, rh,  ~col);
-// 				}
-// 			}
-			gpi->setPixmap(QPixmap::fromImage(altI));
-			
-			
-			view->scene()->addItem(gpi);
-			gpi->setPos(view->mapToScene( subRect.right() ,altXOffset+( altSize * a )));
-			gpi->setZValue(9999999);
-			qDebug()<<gpi->pos()<<gpi->scenePos();
+
+			QImage altI ( gpi->pixmap().toImage().alphaChannel() );
+			QPixmap altP ( altI.width() * 2, altI.height() * 2 );
+			altP.fill ( Qt::transparent );
+			QPainter altPainter ( &altP );
+			altPainter.setRenderHint(QPainter::Antialiasing,true);
+			altPainter.setBrush ( Qt::black );
+			altPainter.drawRoundRect (  5,
+			                            5,
+			                           altP.width() - 10,
+			                           altP.height()  - 10,
+			                           20,20 );
+			altPainter.drawImage (  altI.width() / 2.0, altI.height() / 2.0 , altI );
+
+			gpi->setPixmap ( altP );
+
+
+			view->scene()->addItem ( gpi );
+			gpi->setPos ( view->mapToScene ( subRect.right()  ,altXOffset ) );
+			altXOffset += altP.height();
+			gpi->setZValue ( 9999999 );
+			qDebug() <<gpi->pos() <<gpi->scenePos();
 		}
-		
+
 	}
-	
+
 	releaseFace();
 	return fancyGlyphs.count() - 1;
 

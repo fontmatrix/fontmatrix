@@ -23,6 +23,8 @@
 
 #include <QDebug>
 
+QList<int> FmOtf::altGlyphs;
+
 namespace Harfbuzz
 {
 
@@ -79,15 +81,15 @@ namespace Harfbuzz
 // 	return QChar ( ch ).mirroredChar().unicode();
 // }
 
-Harfbuzz::HB_UShort  AltFunc ( Harfbuzz::HB_UInt    pos,
-                               Harfbuzz::HB_UShort   glyphID,
-                               Harfbuzz::HB_UShort   num_alternates,
-                               Harfbuzz::HB_UShort*  alternates,
-                               void*       data )
-{
-
-	return ( Harfbuzz::HB_UShort ) 0;
-}
+// // // Harfbuzz::HB_UShort  AltFunc ( Harfbuzz::HB_UInt    pos,
+// // //                                Harfbuzz::HB_UShort   glyphID,
+// // //                                Harfbuzz::HB_UShort   num_alternates,
+// // //                                Harfbuzz::HB_UShort*  alternates,
+// // //                                )
+// // // {
+// // // 
+// // // 	return ( Harfbuzz::HB_UShort ) 0;
+// // // }
 
 Harfbuzz::HB_UChar32 getChar ( const Harfbuzz::HB_UChar16 *string, Harfbuzz::hb_uint32 length, Harfbuzz::hb_uint32 &i )
 {
@@ -316,7 +318,7 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 			        !Harfbuzz::HB_Load_GSUB_Table ( gsubstream, &_gsub, NULL, NULL ) )
 			{
 				GSUB = 1;
-				//HB_GSUB_Register_Alternate_Function( _gsub, AltFunc, &altGlyphs);
+				Harfbuzz::HB_GSUB_Register_Alternate_Function( _gsub, manageAlternates ,0);
 			}
 			else
 				GSUB = 0;
@@ -376,7 +378,7 @@ FmOtf::~FmOtf ()
 int FmOtf::procstring ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
 {
 	curString = s;
-	regAltGlyphs.clear();
+// 	regAltGlyphs.clear();
 	return procstring1 ( s,script,lang,gsub,gpos );
 
 }
@@ -384,7 +386,7 @@ int FmOtf::procstring ( QString s, QString script, QString lang, QStringList gsu
 QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
 {
 	curString = s;
-	regAltGlyphs.clear();
+	altGlyphs.clear();
 	if ( Harfbuzz::hb_buffer_new ( &_buffer ) != Harfbuzz::HB_Err_Ok)
 	{
 		qDebug ( ) << "Unable to get _buffer("<< _buffer <<")";
@@ -405,7 +407,7 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 {
 // 	QString script = "latn";
 	QString lang = "dflt";
-	regAltGlyphs.clear();
+// 	regAltGlyphs.clear();
 	if ( Harfbuzz::hb_buffer_new ( &_buffer ) != Harfbuzz::HB_Err_Ok)
 	{
 		qDebug ( ) << "Unable to get _buffer("<< _buffer <<")";
@@ -902,6 +904,17 @@ QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 
 	_buffer = bak_buf;
 	return renderedString;
+}
+
+Harfbuzz::HB_UShort FmOtf::manageAlternates(Harfbuzz::HB_UInt pos, Harfbuzz::HB_UShort glyphID, Harfbuzz::HB_UShort num_alternates, Harfbuzz::HB_UShort * alternates, void * data)
+{
+	qDebug()<<"manageAlternates("<<  glyphID <<")";
+	altGlyphs.clear();
+	for(int i(0); i < num_alternates; ++i)
+	{
+		altGlyphs << alternates[i];
+		qDebug() << "\t"<<alternates[i];
+	}
 }
 
 

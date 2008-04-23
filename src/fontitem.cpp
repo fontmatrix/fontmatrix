@@ -61,6 +61,9 @@ QMap<int, QString> langIdMap;
 QStringList name_meaning;
 QList<int> legitimateNonPathChars;
 
+QVector<QRgb> gray256Palette;
+QVector<QRgb> invertedGray256Palette;
+
 // QWaitCondition theCondition;
 // QMutex theMutex;
 
@@ -437,6 +440,24 @@ void FontItem::fillLangIdMap()
 
 }
 
+void FontItem::fill256Palette()
+{
+	for ( int i = 0; i < 256 ; ++i )
+	{
+		gray256Palette << qRgba ( 0,0,0, i );
+	}
+}
+
+void FontItem::fillInvertedPalette()
+{
+	for (int i = 0; i < 256 ; ++i)
+	{
+		invertedGray256Palette << qRgb( i , i,  i);
+	}
+}
+
+
+
 FontItem::FontItem ( QString path , bool remote, bool faststart )
 {
 	m_valid = false;
@@ -459,6 +480,10 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 		fillCharsetMap();
 	if ( legitimateNonPathChars.isEmpty() )
 		fillLegitimateSpaces();
+	if ( gray256Palette.isEmpty() )
+		fill256Palette();
+	if( invertedGray256Palette.isEmpty() )
+		fillInvertedPalette();
 
 	if ( !theOneLineScene )
 	{
@@ -793,6 +818,8 @@ QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 {
 	int charcode = index ;
+	FT_Set_Char_Size ( m_face, size  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
+	
 	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_NO_SCALE );
 	if ( ft_error )
 	{
@@ -833,17 +860,26 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		return glyph;
 	}
 
-	QVector<QRgb> palette;
-	for ( int i = 0; i < m_face->glyph->bitmap.num_grays; ++i )
-	{
-		palette << qRgba ( 0,0,0, i );
-	}
+	
 	QImage img ( m_face->glyph->bitmap.buffer,
 	             m_face->glyph->bitmap.width,
 	             m_face->glyph->bitmap.rows,
 	             m_face->glyph->bitmap.pitch,
 	             QImage::Format_Indexed8 );
-	img.setColorTable ( palette );
+	if(m_face->glyph->bitmap.num_grays != 256)
+	{
+		qDebug()<<"SLOW PALETTE";
+		QVector<QRgb> palette;
+		for ( int i = 0; i < m_face->glyph->bitmap.num_grays; ++i )
+		{
+			palette << qRgba ( 0,0,0, i );
+		}
+		img.setColorTable ( palette );
+	}
+	else 
+	{
+		img.setColorTable( gray256Palette );
+	}
 
 	QGraphicsPixmapItem *glyph = new  QGraphicsPixmapItem;
 	if ( img.isNull() && !spaceIndex.contains ( index ) )
@@ -893,7 +929,7 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 		return retValue;
 
 	ensureFace();
-	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
+	
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
@@ -1066,10 +1102,10 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 	double pixelAdjustY = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	double pWidth = lineWidth ;
 	const double distance = 20;
-	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 	QList<RenderedGlyph> refGlyph = otf->procstring ( spec, set );
 // 	qDebug() << "Get line "<<spec;
 	delete otf;
+	otf = 0;
 // 	qDebug() << "Deleted OTF";
 	if ( refGlyph.count() == 0 )
 	{
@@ -1239,12 +1275,12 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	double pixelAdjustY = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	double pWidth = lineWidth ;
 	const double distance = 20;
-	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 
 	QList<RenderedGlyph> refGlyph = otf->procstring ( shaped, script );
 
 // 	qDebug() << "Get line "<<spec;
 	delete otf;
+	otf = 0;
 // 	qDebug() << "Deleted OTF";
 	if ( refGlyph.count() == 0 )
 	{
@@ -1409,13 +1445,13 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	if ( record )
 		sceneList.append ( scene );
 
-	FT_Set_Char_Size ( m_face, sizz  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
 
 	FmShaper shaper ( otf );
 	if ( !shaper.setScript ( script ) )
 	{
 		qDebug() << "Can not set script "<<script<< " for " << m_name;
 		delete otf;
+		otf = 0;
 		releaseFace();
 		return;
 	}
@@ -1485,6 +1521,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	}
 
 	delete otf;
+	otf = 0;
 	releaseFace();
 }
 #endif
@@ -1635,6 +1672,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 		releaseFace();
 		return;
 	}
+
 
 	adjustGlyphsPerRow ( allView->width() );
 	QRectF exposedRect ( allView->visibleSceneRect() );
@@ -2174,12 +2212,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		{
 			continue;
 		}
-
-		palette.clear();
-		for ( int aa = 0; aa < m_face->glyph->bitmap.num_grays; ++aa )
-		{
-			palette << qRgba ( 0,0,0, aa );
-		}
+		
 		QImage img ( m_face->glyph->bitmap.buffer,
 		             m_face->glyph->bitmap.width,
 		             m_face->glyph->bitmap.rows,
@@ -2187,8 +2220,21 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		             QImage::Format_Indexed8 );
 		if ( pRTL )
 			pen.rx() -=  advance;
-
-		img.setColorTable ( palette );
+		
+		if(m_face->glyph->bitmap.num_grays != 256)
+		{
+			palette.clear();
+			for ( int aa = 0; aa < m_face->glyph->bitmap.num_grays; ++aa )
+			{
+				palette << qRgba ( 0,0,0, aa );
+			}
+			img.setColorTable ( palette );
+		}
+		else 
+		{
+			img.setColorTable( gray256Palette );
+		}
+		
 		apainter.drawImage ( pen.x() + leftBearing, pen.y() - m_glyph->bitmap_top , img );
 
 		if ( !pRTL )
@@ -2486,7 +2532,10 @@ FmOtf * FontItem::takeOTFInstance()
 void FontItem::releaseOTFInstance ( FmOtf * rotf )
 {
 	if ( rotf == otf )
+	{
 		delete otf;
+		otf = 0;
+	}
 	releaseFace();
 }
 
@@ -2518,7 +2567,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 		return -1;
 	}
 	if ( !charcodeIsAGlyphIndex )
-		ft_error = FT_Load_Char ( m_face, charcode  ,FT_LOAD_RENDER );
+		ft_error = FT_Load_Char ( m_face, charcode  , FT_LOAD_RENDER );
 	else
 		ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_RENDER );
 	if ( ft_error )
@@ -2551,6 +2600,8 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	gPos.rx() += ( subRect.width() - img.width() ) / 2;
 	gPos.ry() += ( subRect.height() - img.height() ) /2;
 	painter.drawImage ( gPos, img );
+
+	
 	// Draw metrics
 	QPoint pPos ( gPos );
 	pPos.rx() -= m_face->glyph->bitmap_left * scaledBy;
@@ -2569,7 +2620,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 
 	QGraphicsPixmapItem *fancyGlyph = new  QGraphicsPixmapItem;
 	fancyGlyph->setPixmap ( pix );
-	fancyGlyph->setZValue ( 1000000 );
+	fancyGlyph->setZValue ( 10000 );
 	fancyGlyph->setPos ( targetRect.topLeft() );
 	view->scene()->addItem ( fancyGlyph );
 	fancyGlyphs.append ( fancyGlyph );
@@ -2641,6 +2692,45 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	view->scene()->addItem ( textIt );
 	fancyTexts.append ( textIt );
 
+		
+	// Alternates
+	if(!charcodeIsAGlyphIndex)
+	{
+		int ref(fancyGlyphs.count() - 1);
+		
+		QList<int> alts( getAlternates(charcode) );
+		qDebug()<< "PALTS"<<alts;
+		double altSize( squareSide / 6 );
+		double altXOffset( subRect.top() + 5 );
+		for(int a(0); a < alts.count() ; ++a)
+		{
+			QGraphicsPixmapItem *gpi(itemFromGindexPix( alts.at(a), altSize ) );
+			fancyAlternates[ref] << gpi;
+			
+			QImage altI( gpi->pixmap().toImage().alphaChannel() );
+// 			altI.setColorTable(invertedGray256Palette);
+// 			int aw(altI.width());
+// 			int ah(altI.height());
+// 			for(int rw(0); rw < aw; ++rw)
+// 			{
+// 				for(int rh(0); rh < ah; ++rh)
+// 				{
+// 					QRgb col(altI.pixel(rw,rh) );
+// // 					qDebug()<< col;
+// 					altI.setPixel(rw, rh,  ~col);
+// 				}
+// 			}
+			gpi->setPixmap(QPixmap::fromImage(altI));
+			
+			
+			view->scene()->addItem(gpi);
+			gpi->setPos(view->mapToScene( subRect.right() ,altXOffset+( altSize * a )));
+			gpi->setZValue(9999999);
+			qDebug()<<gpi->pos()<<gpi->scenePos();
+		}
+		
+	}
+	
 	releaseFace();
 	return fancyGlyphs.count() - 1;
 
@@ -2662,6 +2752,17 @@ void FontItem::hideFancyGlyph ( int ref )
 		it->scene()->removeItem ( it );
 		fancyTexts.removeAll ( it );
 		delete it;
+	}
+	if (fancyAlternates.value(ref).count())
+	{
+		QList<QGraphicsPixmapItem*> pil(fancyAlternates.value(ref));
+		for(int pidx(0); pidx < pil.count(); ++pidx)
+		{
+			QGraphicsPixmapItem *it = pil.at(pidx) ;
+			it->scene()->removeItem ( it );
+			delete it;
+		}
+		fancyAlternates.remove( ref );
 	}
 }
 
@@ -2838,6 +2939,67 @@ QString FontItem::activationAFMName()
 	QString prefix ( "%1-" );
 	return  prefix.arg ( fi.size() ) + afi.fileName();
 }
+
+QList< int > FontItem::getAlternates(int ccode)
+{
+	QList<int> ret;
+	if(!ensureFace())
+		return ret;
+	if ( !otf && m_isOpenType )
+	{
+		otf = new FmOtf ( m_face );
+		if(!otf)
+			return ret;
+	}
+	
+	QList<OTFSet> setList;
+	setList.clear();
+	
+	otf->set_table ( "GSUB" );
+	foreach ( QString script, otf->get_scripts() )
+	{
+		otf->set_script ( script );
+		foreach ( QString lang, otf->get_langs() )
+		{
+			otf->set_lang ( lang );
+			QStringList fl( otf->get_features() );
+			if(fl.contains("aalt"))
+			{
+				OTFSet set;
+				set.script = script;
+				set.lang = lang;
+				set.gpos_features.clear();
+				set.gsub_features = QStringList("aalt");
+				setList << set;
+				qDebug()<< "AALT"<<script<< lang;
+			} 
+		}
+	}
+	
+	QString spec;
+	spec = QChar(ccode);
+	
+	foreach(OTFSet set, setList)
+	{
+		otf->procstring(spec, set);
+		if(!otf->altGlyphs.isEmpty())
+		{
+			QList<int> l(otf->altGlyphs);
+			foreach(int g, l)
+			{
+				if(!ret.contains(g))
+					ret << g;
+			}
+		}
+	}
+	
+	delete otf;
+	otf = 0;
+	
+	releaseFace();
+	return ret;
+}
+
 
 
 

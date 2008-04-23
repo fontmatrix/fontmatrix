@@ -102,6 +102,9 @@ class FontItem : public QObject
 		
 		void fillCharsetMap();
 		void fillLegitimateSpaces();
+		void fillLangIdMap();
+		void fill256Palette();
+		void fillInvertedPalette();
 		
 		QStringList m_charsets;
 		QList<int> spaceIndex;
@@ -132,6 +135,8 @@ class FontItem : public QObject
 		bool ensureLibrary();
 		bool ensureFace();
 		void releaseFace();
+		
+		QList<int> getAlternates(int ccode);
 
 		QString testFlag ( long flag , long against, QString yes, QString no );
 		QByteArray pixarray ( uchar *b, int len );
@@ -144,6 +149,7 @@ class FontItem : public QObject
 		QList<QGraphicsScene *> sceneList;
 		QList<QGraphicsPixmapItem*> fancyGlyphs;
 		QList<QGraphicsTextItem*> fancyTexts;
+		QMap<int, QList<QGraphicsPixmapItem*> > fancyAlternates;
 
 		QPixmap fixedPixmap;
 		
@@ -170,7 +176,6 @@ class FontItem : public QObject
 		void moreInfo_type1();
 
 		QMap<int,QMap<QString, QString> > moreInfo;
-		void fillLangIdMap();
 		
 		
 		

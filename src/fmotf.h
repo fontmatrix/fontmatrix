@@ -41,11 +41,11 @@ namespace Harfbuzz
 #include <harfbuzz.h>
 #include <harfbuzz-global.h>
 #include <harfbuzz-gpos.h>
-			 
-#ifndef FM_OWNSHAPER		 
+
+#ifndef FM_OWNSHAPER
 #include <harfbuzz-shaper.h>
 #endif
-			 
+
 }
 
 // using namespace std;
@@ -92,11 +92,6 @@ class FmOtf
 		FmOtf ( FT_Face, double scale = 0.0 );
 		~FmOtf ();
 
-		enum altPolicy{TAKE_FIRST, ASK_ONCE, ASK_EACH};
-		typedef QMap<Harfbuzz::HB_UShort,QList<Harfbuzz::HB_UShort> > altGlyphsMap;
-		altGlyphsMap altGlyphs;
-		QMap<Harfbuzz::HB_UShort, Harfbuzz::HB_UShort> regAltGlyphs;
-		altPolicy altGlyphsPolicy;
 		QString curString;
 
 	private:
@@ -132,6 +127,8 @@ class FmOtf
 		QString curScriptName, curLangName;
 		QStringList curFeatures;
 
+		static Harfbuzz::HB_UShort manageAlternates ( Harfbuzz::HB_UInt    pos,Harfbuzz::HB_UShort   glyphID,Harfbuzz::HB_UShort   num_alternates,Harfbuzz::HB_UShort*  alternates, void*       data );
+		static QList<int> altGlyphs;
 		/*
 		 * These members functions apply features currently set
 		 */
@@ -141,7 +138,7 @@ class FmOtf
 	public:
 		QList<RenderedGlyph> procstring ( QString s, OTFSet set );
 #ifdef FM_OWNSHAPER
-		QList<RenderedGlyph> procstring ( QList<Character> shaped , QString script);
+		QList<RenderedGlyph> procstring ( QList<Character> shaped , QString script );
 #endif
 		/*
 		  * These functions give access to informations contained in the fontfile

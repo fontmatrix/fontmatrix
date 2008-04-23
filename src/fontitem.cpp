@@ -858,7 +858,14 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	}
 	else
 	{
+#ifndef PLATFORM_APPLE
 		glyph->setPixmap ( QPixmap::fromImage ( img ) );
+#else
+		QPixmap aPix(img.width(), img.height());
+		QPainter aPainter(&aPix);
+		aPainter.drawImage(0,0, img);
+		glyph->setPixmap (aPix);
+#endif
 		// we need to transport more data
 		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , takeLeftBeforeRender );
@@ -2103,26 +2110,6 @@ QGraphicsPathItem * FontItem::hasCodepoint ( int code )
 	return 0;
 }
 
-// QIcon  FontItem::oneLinePreviewIcon ( QString oneline )
-// {
-// 	if ( !theOneLinePreviewIcon.isNull() )
-// 		return theOneLinePreviewIcon;
-// 	QRectF savedRect = theOneLineScene->sceneRect();
-// 	theOneLineScene->setSceneRect ( 0,0,64,64 );
-//
-// 	renderLine ( theOneLineScene,oneline,QPointF ( 10,55 ),80,false );
-// 	QPixmap apix ( 64,64 );
-// 	apix.fill ( Qt::white );
-// 	QPainter apainter ( &apix );
-// 	apainter.setRenderHint ( QPainter::Antialiasing,true );
-// 	theOneLineScene->render ( &apainter,apix.rect(),apix.rect() );
-// // 	theOneLinePreviewIcon.addPixmap(apix);
-// 	theOneLinePreviewIcon = apix;
-//
-// 	theOneLineScene->removeItem ( theOneLineScene->createItemGroup ( theOneLineScene->items() ) );
-// 	theOneLineScene->setSceneRect ( savedRect );
-// 	return theOneLinePreviewIcon;
-// }
 
 QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w )
 {
@@ -2177,10 +2164,6 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		}
 		double advance = m_glyph->metrics.horiAdvance * scalefactor * pt2px;
 		double leftBearing = ( double ) m_glyph->metrics.horiBearingX  * scalefactor * pt2px;
-// 		if (pRTL)
-// 		{
-// 			advance *= -1.0;
-// 		}
 		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
 		if ( ft_error )
 		{

@@ -17,6 +17,11 @@ IF(OWN_SHAPER)
     MESSAGE(STATUS "Use own shaper rather than HB")
 ENDIF(OWN_SHAPER)
 
+# Very generic definition, mainly to sort out bugs reported by mrdocs
+IF(APPLE)
+	ADD_DEFINITIONS( -DPLATFORM_APPLE )
+ENDIF(APPLE)
+
 SET(HARFBUZZ_DIR harfbuzz/src)
 ADD_SUBDIRECTORY(${HARFBUZZ_DIR})
 SET(HARFBUZZ_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/harfbuzz/src)

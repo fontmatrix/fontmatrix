@@ -38,7 +38,7 @@
       <bool>true</bool>
      </property>
      <property name="toolTip" >
-      <string>Vlada, please give us an icon for the PUSH ON CANVA button:)</string>
+      <string/>
      </property>
      <property name="statusTip" >
       <string/>
@@ -393,7 +393,7 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>782</width>
+             <width>215</width>
              <height>142</height>
             </rect>
            </property>
@@ -454,8 +454,8 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>100</width>
-             <height>30</height>
+             <width>96</width>
+             <height>28</height>
             </rect>
            </property>
            <attribute name="label" >

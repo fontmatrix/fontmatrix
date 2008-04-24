@@ -76,6 +76,10 @@
    <qresource prefix="/texts" lang="no" >
         <file alias="fontmatrix">messages/fontmatrix_no.qm</file>
     </qresource>
+
+    <qresource prefix="/texts" lang="ru" >
+        <file alias="fontmatrix">messages/fontmatrix_ru.qm</file>
+    </qresource>
     
     <qresource prefix="/texts" lang="sr" >
         <file alias="fontmatrix">messages/fontmatrix_sr.qm</file>

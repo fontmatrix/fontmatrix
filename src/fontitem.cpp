@@ -2953,6 +2953,7 @@ QList< int > FontItem::getAlternates(int ccode)
 			return ret;
 	}
 	
+	int glyphIndex( FT_Get_Char_Index(m_face, ccode) );
 	QList<OTFSet> setList;
 	setList.clear();
 	
@@ -2982,7 +2983,12 @@ QList< int > FontItem::getAlternates(int ccode)
 	
 	foreach(OTFSet set, setList)
 	{
-		otf->procstring(spec, set);
+		QList<RenderedGlyph> rendered( otf->procstring(spec, set) );
+		if(rendered.at(0).glyph != glyphIndex )
+		{
+			if(!ret.contains( rendered.at(0).glyph ))
+				ret << rendered.at(0).glyph;
+		}
 		if(!otf->altGlyphs.isEmpty())
 		{
 			QList<int> l(otf->altGlyphs);

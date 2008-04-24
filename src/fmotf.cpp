@@ -711,7 +711,7 @@ FmOtf::get_langs ()
 {
 	QStringList ret;
 
-	ret << "default";
+	ret << "dflt";
 	if ( curTable == "GSUB" && GSUB )
 	{
 
@@ -915,6 +915,8 @@ Harfbuzz::HB_UShort FmOtf::manageAlternates(Harfbuzz::HB_UInt pos, Harfbuzz::HB_
 		altGlyphs << alternates[i];
 		qDebug() << "\t"<<alternates[i];
 	}
+	
+	return (Harfbuzz::HB_UShort) 0;
 }
 
 

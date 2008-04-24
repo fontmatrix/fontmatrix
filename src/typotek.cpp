@@ -525,7 +525,7 @@ void typotek::createMenus()
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
 
-	editMenu = menuBar()->addMenu ( tr ( "Edit" ) );
+	editMenu = menuBar()->addMenu ( tr ( "&Edit" ) );
 	editMenu->addAction ( tagsetAct );
 	editMenu->addSeparator();
 	editMenu->addAction( tagAll );

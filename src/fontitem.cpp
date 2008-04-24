@@ -2994,7 +2994,7 @@ QList< int > FontItem::getAlternates(int ccode)
 			QList<int> l(otf->altGlyphs);
 			foreach(int g, l)
 			{
-				if(!ret.contains(g))
+				if(!ret.contains(g) && g != glyphIndex )
 					ret << g;
 			}
 		}

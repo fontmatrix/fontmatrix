@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>784</width>
-    <height>462</height>
+    <width>838</width>
+    <height>471</height>
    </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="acceptDrops" >
    <bool>true</bool>
@@ -23,13 +29,16 @@
       <bool>true</bool>
      </property>
      <property name="sizePolicy" >
-      <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="acceptDrops" >
       <bool>true</bool>
+     </property>
+     <property name="toolTip" >
+      <string>Vlada, please give us an icon for the PUSH ON CANVA button:)</string>
      </property>
      <property name="statusTip" >
       <string/>
@@ -44,11 +53,20 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="tab" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>816</width>
+        <height>417</height>
+       </rect>
+      </property>
       <attribute name="title" >
        <string>Font Information</string>
       </attribute>
       <attribute name="icon" >
-       <iconset resource="application.qrc" >:/fontmatrix_info.png</iconset>
+       <iconset resource="application.qrc" >
+        <normaloff>:/fontmatrix_info.png</normaloff>:/fontmatrix_info.png</iconset>
       </attribute>
       <layout class="QGridLayout" >
        <item row="0" column="0" >
@@ -67,7 +85,8 @@
            <enum>Qt::NoFocus</enum>
           </property>
           <property name="html" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+           <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;/p>&lt;/body>&lt;/html></string>
@@ -120,7 +139,7 @@ p, li { white-space: pre-wrap; }
              <property name="orientation" >
               <enum>Qt::Horizontal</enum>
              </property>
-             <property name="sizeHint" >
+             <property name="sizeHint" stdset="0" >
               <size>
                <width>611</width>
                <height>22</height>
@@ -159,11 +178,20 @@ p, li { white-space: pre-wrap; }
       </layout>
      </widget>
      <widget class="QWidget" name="tab_4" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>816</width>
+        <height>417</height>
+       </rect>
+      </property>
       <attribute name="title" >
        <string>Sample Text</string>
       </attribute>
       <attribute name="icon" >
-       <iconset resource="application.qrc" >:/fontmatrix_sampletext.png</iconset>
+       <iconset resource="application.qrc" >
+        <normaloff>:/fontmatrix_sampletext.png</normaloff>:/fontmatrix_sampletext.png</iconset>
       </attribute>
       <layout class="QGridLayout" >
        <item row="0" column="0" >
@@ -213,7 +241,7 @@ p, li { white-space: pre-wrap; }
              <property name="orientation" >
               <enum>Qt::Horizontal</enum>
              </property>
-             <property name="sizeHint" >
+             <property name="sizeHint" stdset="0" >
               <size>
                <width>181</width>
                <height>30</height>
@@ -256,6 +284,14 @@ p, li { white-space: pre-wrap; }
               <number>1</number>
              </property>
              <widget class="QWidget" name="tabSampleVector" >
+              <property name="geometry" >
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>720</width>
+                <height>360</height>
+               </rect>
+              </property>
               <attribute name="title" >
                <string>Absolute view</string>
               </attribute>
@@ -267,7 +303,7 @@ p, li { white-space: pre-wrap; }
                    <property name="orientation" >
                     <enum>Qt::Horizontal</enum>
                    </property>
-                   <property name="sizeHint" >
+                   <property name="sizeHint" stdset="0" >
                     <size>
                      <width>40</width>
                      <height>20</height>
@@ -294,7 +330,8 @@ p, li { white-space: pre-wrap; }
                     <string/>
                    </property>
                    <property name="icon" >
-                    <iconset resource="application.qrc" >:/fontmatrix_antialias.png</iconset>
+                    <iconset resource="application.qrc" >
+                     <normaloff>:/fontmatrix_antialias.png</normaloff>:/fontmatrix_antialias.png</iconset>
                    </property>
                    <property name="checkable" >
                     <bool>true</bool>
@@ -316,6 +353,14 @@ p, li { white-space: pre-wrap; }
               </layout>
              </widget>
              <widget class="QWidget" name="tabSampleFT" >
+              <property name="geometry" >
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>776</width>
+                <height>149</height>
+               </rect>
+              </property>
               <attribute name="title" >
                <string>FreeType view</string>
               </attribute>
@@ -348,8 +393,8 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>210</width>
-             <height>102</height>
+             <width>782</width>
+             <height>142</height>
             </rect>
            </property>
            <attribute name="label" >
@@ -409,8 +454,8 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>94</width>
-             <height>24</height>
+             <width>100</width>
+             <height>30</height>
             </rect>
            </property>
            <attribute name="label" >
@@ -428,11 +473,20 @@ p, li { white-space: pre-wrap; }
       </layout>
      </widget>
      <widget class="QWidget" name="Glyphs" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>816</width>
+        <height>417</height>
+       </rect>
+      </property>
       <attribute name="title" >
        <string>Glyphs</string>
       </attribute>
       <attribute name="icon" >
-       <iconset resource="application.qrc" >:/fontmatrix_glypg.png</iconset>
+       <iconset resource="application.qrc" >
+        <normaloff>:/fontmatrix_glypg.png</normaloff>:/fontmatrix_glypg.png</iconset>
       </attribute>
       <layout class="QGridLayout" >
        <item row="0" column="1" >
@@ -481,30 +535,69 @@ p, li { white-space: pre-wrap; }
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>816</width>
+        <height>417</height>
+       </rect>
+      </property>
       <attribute name="title" >
        <string>Playground</string>
       </attribute>
-      <layout class="QGridLayout" >
+      <layout class="QGridLayout" name="gridLayout" >
        <item row="0" column="0" >
-        <widget class="QLineEdit" name="playString" />
+        <layout class="QHBoxLayout" name="horizontalLayout_2" >
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout" >
+           <item>
+            <widget class="QDoubleSpinBox" name="playFontSize" >
+             <property name="suffix" >
+              <string> pt</string>
+             </property>
+             <property name="minimum" >
+              <double>1.000000000000000</double>
+             </property>
+             <property name="maximum" >
+              <double>999.990000000000009</double>
+             </property>
+             <property name="value" >
+              <double>24.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="playString" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <horstretch>10</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="editable" >
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushToPlayButton" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>push</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1" >
-        <widget class="QDoubleSpinBox" name="playFontSize" >
-         <property name="suffix" >
-          <string> pt</string>
-         </property>
-         <property name="minimum" >
-          <double>1.000000000000000</double>
-         </property>
-         <property name="maximum" >
-          <double>999.990000000000009</double>
-         </property>
-         <property name="value" >
-          <double>24.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2" >
+       <item row="1" column="0" >
         <widget class="FMPlayGround" name="playView" />
        </item>
       </layout>

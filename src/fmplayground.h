@@ -41,6 +41,8 @@ class FMPlayGround : public QGraphicsView
 		bool isPanning;
 		QList<QGraphicsItemGroup*> glyphLines;
 		
+		QPointF CursorPos;
+		
 	signals:
 		void pleaseZoom(int);
 };

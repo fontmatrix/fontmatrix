@@ -26,6 +26,8 @@ FMPlayGround::FMPlayGround ( QWidget *parent )
 	setRenderHint ( QPainter::Antialiasing );
 
 	isPanning = false;
+	CursorPos.rx() = 100;
+	CursorPos.ry() = 100;
 }
 
 FMPlayGround::~ FMPlayGround()
@@ -89,11 +91,11 @@ void FMPlayGround::wheelEvent ( QWheelEvent * e )
 void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, double fontS )
 {
 
-	ensureVisible ( 100,100,100,100 );
+	ensureVisible ( CursorPos.x(), CursorPos.y(), spec.count(), fontS * 1.5 );
 
 	bool backedR ( fontI->rasterFreetype() );
 	fontI->setFTRaster ( false );
-	fontI->renderLine ( scene() , spec, QPointF ( 100.0,100.0 ), spec.count() * fontS * 2.0, fontS, 1 ,false );
+	fontI->renderLine ( scene() , spec, CursorPos, spec.count() * fontS * 2.0, fontS, 1 ,false );
 	fontI->setFTRaster ( backedR );
 
 	QList< QGraphicsItem* > itemList ( scene()->items() );
@@ -119,6 +121,8 @@ void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, doubl
 	git->setFlags ( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable );
 	git->setCursor(QCursor(	Qt::OpenHandCursor ) );
 	glyphLines << git;
+	
+	CursorPos.ry() += fontS * 1.5;
 
 }
 

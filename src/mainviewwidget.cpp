@@ -160,7 +160,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	
-	connect ( playString, SIGNAL(editingFinished()), this, SLOT(slotPushOnPlayground()) );
+	connect ( pushToPlayButton, SIGNAL(clicked ( bool ) ), this, SLOT(slotPushOnPlayground()) );
 	
 	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
@@ -1429,6 +1429,10 @@ void MainViewWidget::slotSampleChanged()
 void MainViewWidget::refillSampleList()
 {
 	sampleTextCombo->clear();
+	playString->clear();
+	
+	playString->addItems( typo->namedSample(typo->defaultSampleName()).split("\n") );
+	
 	QStringList sl = typo->namedSamplesNames();
 	for ( int i = 0;i < sl.count(); ++i )
 	{
@@ -1439,11 +1443,13 @@ void MainViewWidget::refillSampleList()
 		else
 		{
 			sampleTextCombo->addItem ( sl[i] );
+			QStringList nl(typo->namedSample(sl[i]).split("\n")) ;
+			playString->addItems(nl);
+			
 		}
 	}
 	sampleTextCombo-> insertItem ( 0,typo->defaultSampleName() );
 	sampleTextCombo->setCurrentIndex ( 0 );
-
 }
 
 void MainViewWidget::slotFTRasterChanged()
@@ -1749,10 +1755,9 @@ void MainViewWidget::slotProgressionChanged()
 
 void MainViewWidget::slotPushOnPlayground()
 {
-	QString spec(playString->text());
+	QString spec(playString->currentText());
 	if(spec.isEmpty())
 		return;
-	playString->clear();
 	
 	if(!theVeryFont)
 		return;
@@ -1760,6 +1765,7 @@ void MainViewWidget::slotPushOnPlayground()
 	double fSize(playFontSize->value());
 	
 	playView->displayGlyphs(spec, theVeryFont, fSize);
+// 	playString->clearEditText();
 		
 }
 

@@ -88,6 +88,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		bool renderingLock;
 		int fancyGlyphInUse;
+		int fancyGlyphData;
 		
 		bool uRangeIsNotEmpty;
 		
@@ -146,6 +147,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 // 		void slotSwitchVertUD();
 		void slotProgressionChanged();
 		void slotUpdateGView();
+		void slotUpdateGViewSingle();
 		void slotUpdateSView();
 		void slotUpdateRView();
 		void slotEditSampleText();

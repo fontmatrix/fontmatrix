@@ -32,6 +32,7 @@ FMGlyphsView::FMGlyphsView(QWidget *parent)
 	setAlignment (Qt::AlignLeft | Qt::AlignTop);
 	setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 	m_state = AllView;
+	m_lock = false;
 	
 }
 
@@ -42,7 +43,11 @@ FMGlyphsView::~FMGlyphsView()
 
 void FMGlyphsView::resizeEvent(QResizeEvent * event)
 {
+	if(m_state == SingleView)
+		emit pleaseUpdateSingle();
+
 	emit pleaseUpdateMe();
+
 }
 
 void FMGlyphsView::showEvent(QShowEvent * event)
@@ -133,6 +138,19 @@ void FMGlyphsView::keyPressEvent(QKeyEvent * e)
 {
 	if(m_state == AllView)
 		QAbstractScrollArea::keyPressEvent(e);
+}
+
+bool FMGlyphsView::lock()
+{
+	if(m_lock)
+		return false;
+	m_lock = true;
+	return true;
+}
+
+void FMGlyphsView::unlock()
+{
+	m_lock = false;
 }
 
 

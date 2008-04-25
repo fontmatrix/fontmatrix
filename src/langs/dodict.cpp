@@ -117,7 +117,7 @@ int main(int argc, char *argv[] )
 				end = earg.toInt();
 			}
 		}
-		if( args.at(i) == "-l" || args.at(i) == "--lang")
+		if( args.at(i) == "-s" || args.at(i) == "--script")
 		{
 			if(args.count() > i + 1)
 			{
@@ -142,7 +142,7 @@ int main(int argc, char *argv[] )
 	{
 		QString msgD("Begining of range is :\t" + QString::number(begin));
 		QString msgE("End of range is :\t" + QString::number(end));
-		QString msgL("Lang is :\t" + lang);
+		QString msgL("Script is :\t" + lang);
 		QString msgC("Category file is :\t" + catfile);
 		std::cout << msgD.toStdString() << "\n" << msgE.toStdString() << "\n"<< msgL.toStdString() << "\n"<< msgC.toStdString() << "\n";
 	}

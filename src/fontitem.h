@@ -147,8 +147,8 @@ class FontItem : public QObject
 		QList<QGraphicsTextItem*> labList;
 		QList<QGraphicsRectItem*> selList;
 		QList<QGraphicsScene *> sceneList;
-		QList<QGraphicsPixmapItem*> fancyGlyphs;
-		QList<QGraphicsTextItem*> fancyTexts;
+		QMap<int, QGraphicsPixmapItem*> fancyGlyphs;
+		QMap<int, QGraphicsTextItem*> fancyTexts;
 		QMap<int, QList<QGraphicsPixmapItem*> > fancyAlternates;
 
 		QPixmap fixedPixmap;

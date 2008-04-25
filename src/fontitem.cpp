@@ -2543,6 +2543,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 {
 	ensureFace();
 
+	int ref( fancyGlyphs.count() );
 	QRect allRect ( view->rect() );
 	QRect targetRect ( view->mapToScene ( allRect.topLeft() ).toPoint(),  view->mapToScene ( allRect.topRight() ) .toPoint() ) ;
 	qDebug() <<  allRect.topLeft() << view->mapToScene ( allRect.topLeft() );
@@ -2623,7 +2624,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	fancyGlyph->setZValue ( 10000 );
 	fancyGlyph->setPos ( targetRect.topLeft() );
 	view->scene()->addItem ( fancyGlyph );
-	fancyGlyphs.append ( fancyGlyph );
+	fancyGlyphs[ref] =  fancyGlyph ;
 
 
 	QGraphicsTextItem *textIt = new QGraphicsTextItem;
@@ -2690,14 +2691,12 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	textIt->setFlags ( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable );
 	textIt->setData ( 10, "FancyText" );
 	view->scene()->addItem ( textIt );
-	fancyTexts.append ( textIt );
+	fancyTexts[ref] = textIt ;
 
 
 	// Alternates
 	if ( !charcodeIsAGlyphIndex )
 	{
-		int ref ( fancyGlyphs.count() - 1 );
-
 		QList<int> alts ( getAlternates ( charcode ) );
 		qDebug() << "PALTS"<<alts;
 		double altSize ( squareSide / 6 );
@@ -2733,25 +2732,25 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	}
 
 	releaseFace();
-	return fancyGlyphs.count() - 1;
+	return ref;
 
 }
 
 void FontItem::hideFancyGlyph ( int ref )
 {
-	if ( fancyGlyphs.at ( ref ) )
+	if ( fancyGlyphs.contains(ref) )
 	{
-		QGraphicsPixmapItem *it = fancyGlyphs.at ( ref );
+		QGraphicsPixmapItem *it = fancyGlyphs.value ( ref );
 		it->scene()->removeItem ( it );
-		fancyGlyphs.removeAll ( it );
+		fancyGlyphs.remove(ref);
 		delete it;
 
 	}
-	if ( fancyTexts.at ( ref ) )
+	if ( fancyTexts.contains(ref) )
 	{
-		QGraphicsTextItem *it = fancyTexts.at ( ref );
+		QGraphicsTextItem *it = fancyTexts.value ( ref );
 		it->scene()->removeItem ( it );
-		fancyTexts.removeAll ( it );
+		fancyTexts.remove(ref);
 		delete it;
 	}
 	if (fancyAlternates.value(ref).count())

@@ -137,6 +137,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
 	connect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
 	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
+	connect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
 	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
 	
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
@@ -1498,47 +1499,90 @@ void MainViewWidget::slotPlaneSelected ( int i )
 
 void MainViewWidget::slotShowOneGlyph()
 {
+	qDebug() <<"slotShowOneGlyph()";
 	if ( abcScene->selectedItems().isEmpty() )
 		return;
-
-	curGlyph = reinterpret_cast<QGraphicsRectItem*> ( abcScene->selectedItems().first() );
-	curGlyph->setSelected(false);
-	if ( fancyGlyphInUse < 0 )
+	if ( abcView->lock() )
 	{
-		if(curGlyph->data ( 3 ).toInt() > 0)// Is a codepoint
-			fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, curGlyph->data ( 3 ).toInt() );
-		else // Is a glyph index
-			fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, curGlyph->data ( 2 ).toInt() , true);
+		curGlyph = reinterpret_cast<QGraphicsRectItem*> ( abcScene->selectedItems().first() );
+		curGlyph->setSelected ( false );
 		if ( fancyGlyphInUse < 0 )
-			return;
-		abcView->setState(FMGlyphsView::SingleView);
+		{
+			if ( curGlyph->data ( 3 ).toInt() > 0 ) // Is a codepoint
+			{
+				fancyGlyphData = curGlyph->data ( 3 ).toInt();
+				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData );
+			}
+			else // Is a glyph index
+			{
+				fancyGlyphData = curGlyph->data ( 2 ).toInt();
+				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData , true );
+			}
+			if ( fancyGlyphInUse < 0 )
+				return;
+			abcView->setState ( FMGlyphsView::SingleView );
+		}
+		abcView->unlock();
 	}
-	
 
 }
 
 void MainViewWidget::slotShowAllGlyph()
 {
-	if (fancyGlyphInUse < 0)
+	qDebug() <<"slotShowAllGlyph()";
+	if ( fancyGlyphInUse < 0 )
 		return;
-	theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
-	fancyGlyphInUse = -1;
-	abcView->setState ( FMGlyphsView::AllView );
+	if ( abcView->lock() )
+	{
+		qDebug()<<"View Locked";
+		theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
+		fancyGlyphInUse = -1;
+		abcView->setState ( FMGlyphsView::AllView );
 
+		abcView->unlock();
+	}
+	qDebug() <<"ENDOF slotShowAllGlyph()";
 }
 
 void MainViewWidget::slotUpdateGView()
 {
+	qDebug()<<"slotUpdateGView()";
 	// If all is how I think it must be, we don’t need to check anything here :)
-	if(theVeryFont)
+	if(theVeryFont && abcView->lock())
 	{
 		theVeryFont->deRenderAll();
 		QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
 		QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
 		theVeryFont->renderAll ( abcScene , uniPair.first, uniPair.second );
-		
+		abcView->unlock();
 	}
 }
+
+
+void MainViewWidget::slotUpdateGViewSingle()
+{
+	qDebug()<<"slotUpdateGViewSingle";
+	if ( theVeryFont && abcView->lock())
+	{
+			qDebug() <<"1.FGI"<<fancyGlyphInUse;
+			theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
+			if ( fancyGlyphData > 0 ) // Is a codepoint
+			{
+				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData );
+				qDebug() <<"2.FGI"<<fancyGlyphInUse;
+			}
+			else // Is a glyph index
+			{
+				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData , true );
+				qDebug() <<"3.FGI"<<fancyGlyphInUse;
+			}
+			abcView->unlock();
+	
+	}
+
+}
+
+
 
 void MainViewWidget::slotUpdateSView()
 {
@@ -1830,6 +1874,5 @@ FMPlayGround * MainViewWidget::getPlayground()
 {
 	return playView;
 }
-
 
 

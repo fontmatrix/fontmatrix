@@ -40,9 +40,12 @@ class FMGlyphsView : public QGraphicsView
 		ViewState state(){return m_state;}
 		
 		QRectF visibleSceneRect();
+		bool lock();
+		void unlock();
 		
 	private:
 		ViewState m_state;
+		bool m_lock;
 		
 	private slots:
 		void slotViewMoved();
@@ -55,6 +58,7 @@ class FMGlyphsView : public QGraphicsView
 		void pleaseShowSelected();
 		void pleaseShowAll();
 		void pleaseUpdateMe();
+		void pleaseUpdateSingle();
 		
 	protected:
 

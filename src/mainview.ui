@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>838</width>
+    <width>377</width>
     <height>471</height>
    </rect>
   </property>
@@ -57,7 +57,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>816</width>
+        <width>355</width>
         <height>417</height>
        </rect>
       </property>
@@ -78,7 +78,7 @@
           <property name="sizePolicy" >
            <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
             <horstretch>0</horstretch>
-            <verstretch>3</verstretch>
+            <verstretch>2</verstretch>
            </sizepolicy>
           </property>
           <property name="focusPolicy" >
@@ -96,6 +96,12 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
          <widget class="QFrame" name="frame" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
+          </property>
           <property name="frameShape" >
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -141,7 +147,7 @@ p, li { white-space: pre-wrap; }
              </property>
              <property name="sizeHint" stdset="0" >
               <size>
-               <width>611</width>
+               <width>50</width>
                <height>22</height>
               </size>
              </property>
@@ -182,7 +188,7 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>816</width>
+        <width>355</width>
         <height>417</height>
        </rect>
       </property>
@@ -243,7 +249,7 @@ p, li { white-space: pre-wrap; }
              </property>
              <property name="sizeHint" stdset="0" >
               <size>
-               <width>181</width>
+               <width>10</width>
                <height>30</height>
               </size>
              </property>
@@ -357,7 +363,7 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>776</width>
+                <width>315</width>
                 <height>149</height>
                </rect>
               </property>
@@ -380,7 +386,7 @@ p, li { white-space: pre-wrap; }
          </widget>
          <widget class="QToolBox" name="toolBox" >
           <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
             <horstretch>0</horstretch>
             <verstretch>1</verstretch>
            </sizepolicy>
@@ -393,7 +399,7 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>215</width>
+             <width>321</width>
              <height>142</height>
             </rect>
            </property>
@@ -477,7 +483,7 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>816</width>
+        <width>355</width>
         <height>417</height>
        </rect>
       </property>
@@ -504,6 +510,12 @@ p, li { white-space: pre-wrap; }
        </item>
        <item row="0" column="2" >
         <widget class="QLabel" name="label_2" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="acceptDrops" >
           <bool>true</bool>
          </property>
@@ -514,6 +526,12 @@ p, li { white-space: pre-wrap; }
        </item>
        <item row="0" column="3" >
         <widget class="QLabel" name="unicodeCoverageStat" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string/>
          </property>
@@ -539,65 +557,57 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>816</width>
+        <width>355</width>
         <height>417</height>
        </rect>
       </property>
       <attribute name="title" >
        <string>Playground</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_99" >
+      <layout class="QGridLayout" name="gridLayout" >
        <item row="0" column="0" >
-        <layout class="QHBoxLayout" name="horizontalLayout_2" >
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout" >
-           <item>
-            <widget class="QDoubleSpinBox" name="playFontSize" >
-             <property name="suffix" >
-              <string> pt</string>
-             </property>
-             <property name="minimum" >
-              <double>1.000000000000000</double>
-             </property>
-             <property name="maximum" >
-              <double>999.990000000000009</double>
-             </property>
-             <property name="value" >
-              <double>24.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="playString" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-               <horstretch>10</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="editable" >
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushToPlayButton" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text" >
-            <string>push</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QDoubleSpinBox" name="playFontSize" >
+         <property name="suffix" >
+          <string> pt</string>
+         </property>
+         <property name="minimum" >
+          <double>1.000000000000000</double>
+         </property>
+         <property name="maximum" >
+          <double>999.990000000000009</double>
+         </property>
+         <property name="value" >
+          <double>24.000000000000000</double>
+         </property>
+        </widget>
        </item>
-       <item row="1" column="0" >
+       <item row="0" column="1" >
+        <widget class="QComboBox" name="playString" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+           <horstretch>1</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="editable" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" >
+        <widget class="QPushButton" name="pushToPlayButton" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text" >
+          <string>push</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3" >
         <widget class="FMPlayGround" name="playView" />
        </item>
       </layout>

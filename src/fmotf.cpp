@@ -453,7 +453,7 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 
 	}
 
-// 	if ( ! gsub.isEmpty() )
+	if ( GSUB )
 	{
 
 		Harfbuzz::HB_GSUB_Clear_Features ( _gsub );
@@ -481,7 +481,7 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 			qDebug () << QString ( "applying gsub features to string  returned %2" ).arg ( error );
 
 	}
-// 	if ( !gpos.isEmpty() )
+	if ( GPOS )
 	{
 		Harfbuzz::HB_GPOS_Clear_Features ( _gpos );
 		set_table ( "GPOS" );
@@ -849,13 +849,14 @@ QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 		}
 
 		Harfbuzz::HB_Position p = 0;
-		if ( wantPos )
+		if ( wantPos && GPOS )
 		{
 			p = &_buffer->positions[bIndex] ;
 			qDebug() << "p = "<< p;
 			if ( !p )
 				wantPos = false;
 		}
+		
 		if ( !p ) // applyGPOS has not been called?
 		{
 			FT_GlyphSlot slot = _face->glyph;

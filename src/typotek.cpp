@@ -92,6 +92,7 @@ typotek::typotek()
 	instance = this;
 	setWindowTitle ( "Fontmatrix" );
 	setupDrop();
+	qDebug()<<"Policy"<<sizePolicy().horizontalPolicy();
 
 }
 
@@ -1514,7 +1515,9 @@ void typotek::printFamily()
 void typotek::showEvent(QShowEvent * event)
 {
 	QMainWindow::showEvent(event);
-	theMainView->displayWelcomeMessage();
+	
+	if(!theMainView->selectedFont())
+		theMainView->displayWelcomeMessage();
 }
 
 

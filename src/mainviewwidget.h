@@ -186,6 +186,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsScene *currentSampleScene();
 		FMPlayGround *getPlayground();
 		
+		void addFilterToCrumb(QString filter);
+		void resetCrumb();
+		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;
 

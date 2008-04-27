@@ -126,7 +126,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
-	connect ( m_lists->searchString,SIGNAL ( textEdited ( const QString&)  ),this,SLOT ( slotLiveSearch(const QString&) ) );
+// 	connect ( m_lists->searchString,SIGNAL ( textEdited ( const QString&)  ),this,SLOT ( slotLiveSearch(const QString&) ) );
 	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
 	connect ( m_lists->viewActivatedButton,SIGNAL ( released() ),this,SLOT ( slotViewActivated() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
@@ -817,6 +817,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 void MainViewWidget::slotSearch()
 {
+	qDebug()<<"slotSearch";
 	m_lists->fontTree->clear();
 	fontsetHasChanged = true;
 
@@ -829,7 +830,20 @@ void MainViewWidget::slotSearch()
 // 		sensitivity = "SENS";
 // 	}
 // 	QApplication::restoreOverrideCursor();
-	currentFonts = typo->getFonts ( fs,ff.arg ( sensitivity ) ) ;
+	
+	QList<FontItem*> tmpList;
+	tmpList.clear();
+	tmpList = typo->getFonts ( fs,ff.arg ( sensitivity ) );
+	currentFonts.clear();
+	currentFonts = tmpList ;
+// 	for(int i(0);i < tmpList.count();++i)
+// 	{
+// 		qDebug()<< "CHECK T"<<tmpList[i]->family();
+// 	}
+// 	for(int i(0);i < currentFonts.count();++i)
+// 	{
+// 		qDebug()<< "CHECK C"<<currentFonts[i]->family();
+// 	}
 	currentOrdering = "family";
 	fillTree();
 	m_lists->searchString->clear();
@@ -838,6 +852,7 @@ void MainViewWidget::slotSearch()
 // Basically we do the same as in regular search but not clear input field
 void MainViewWidget::slotLiveSearch(const QString & text)
 {
+	qDebug()<<"slotLiveSearch";
 // 	if(!m_lists->liveSearchCheck->isChecked())
 // 		return;
 	m_lists->fontTree->clear();
@@ -847,9 +862,14 @@ void MainViewWidget::slotLiveSearch(const QString & text)
 // 	if ( m_lists->sensitivityCheck->isChecked() )
 // 	{
 // 		sensitivity = "SENS";
-// 	}
-
-	currentFonts = typo->getFonts ( text,ff.arg ( sensitivity ) ) ;
+// 	}	
+	
+	QList<FontItem*> tmpList;
+	tmpList.clear();
+	tmpList = typo->getFonts ( text ,ff.arg ( sensitivity ) );
+	currentFonts.clear();
+	currentFonts = tmpList ;
+	
 	currentOrdering = "family";
 	fillTree();
 }
@@ -1105,6 +1125,7 @@ void MainViewWidget::slotViewAll()
 	fontsetHasChanged = true;
 	currentFonts = typo->getAllFonts();
 	fillTree();
+	resetCrumb();
 }
 
 void MainViewWidget::slotViewActivated()
@@ -1873,6 +1894,18 @@ QGraphicsScene * MainViewWidget::currentSampleScene()
 FMPlayGround * MainViewWidget::getPlayground()
 {
 	return playView;
+}
+
+void MainViewWidget::addFilterToCrumb(QString filter)
+{
+	QString t(m_lists->filtersCrumb->text());
+	t += "[" + filter.trimmed() + "]";
+	m_lists->filtersCrumb->setText(t);
+}
+
+void MainViewWidget::resetCrumb()
+{
+	m_lists->filtersCrumb->clear();
 }
 
 

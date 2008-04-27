@@ -67,7 +67,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	QColor oddC(255,255,255);
 	QColor evenC(242,232,232);
 	bool colState (false);
-	if(setChanged && !fonts.isEmpty()) 
+	if(setChanged/* && !fonts.isEmpty()*/) 
 	{
 		trackedFonts.clear();
 		

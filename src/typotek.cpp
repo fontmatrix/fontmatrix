@@ -104,13 +104,14 @@ void typotek::initMatrix()
 	initDir();
 	readSettings();
 	
+	theMainView = new MainViewWidget ( this );
+	setCentralWidget ( theMainView );
+	
 	if ( QSystemTrayIcon::isSystemTrayAvailable() )
 		systray = new Systray();
 	else
 		systray = 0;
 	
-	theMainView = new MainViewWidget ( this );
-	setCentralWidget ( theMainView );
 	
 	QFont statusFontFont ( "sans-serif",8,QFont::Bold,false );
 	curFontPresentation = new QLabel ( tr ( "Nothing Selected" ) );
@@ -127,6 +128,7 @@ void typotek::initMatrix()
 	createStatusBar();
 	doConnect();
 	
+	theMainView->resetCrumb();
 	
 }
 
@@ -829,31 +831,72 @@ void typotek::slotRemoteIsReady()
 
 QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 {
-	QList< FontItem * > ret;
-
-	for ( int i =0; i < fontMap.count(); ++i )
+	
+	if(pattern.isEmpty())
 	{
-		if ( field == "tag" )
+		theMainView->resetCrumb();
+		return fontMap;
+	}
+	
+	theMainView->addFilterToCrumb(pattern);
+	
+	QList< FontItem * > ret;
+	ret.clear();
+	QList< FontItem * > superSet ( theMainView->curFonts() ) ;
+	
+	if(superSet.isEmpty())
+		superSet = fontMap;
+	
+	int superSetCount ( superSet.count() );
+
+	qDebug()<<"PATERN ="<< pattern<<": FIELD ="<< field<<":"<< superSetCount;
+	
+	if ( field == "tag" )
+	{
+		for ( int i =0; i < superSetCount; ++i )
 		{
-			if(fontMap[i]->tags().contains(pattern))
-				ret.append ( fontMap[i] );
-		}
-		else if ( field == "search_INSENS" )
-		{
-			if ( fontMap[i]->infoText().contains ( pattern,Qt::CaseInsensitive ) )
-				ret.append ( fontMap[i] );
-		}
-		else if ( field == "search_SENS" )
-		{
-			if ( fontMap[i]->infoText().contains ( pattern,Qt::CaseSensitive ) )
-				ret.append ( fontMap[i] );
-		}
-		else
-		{
-			if ( fontMap[i]->value ( field ).contains ( pattern , Qt::CaseInsensitive ) )
-				ret.append ( fontMap[i] );
+			if ( superSet[i]->tags().contains ( pattern ) )
+			{
+// 				qDebug()<< "TAG MATCH"<<superSet[i]->family();
+				ret.append ( superSet[i] );
+			}
 		}
 	}
+	else if ( field == "search_INSENS" )
+	{
+		for ( int i =0; i < superSetCount; ++i )
+		{
+			if ( superSet[i]->infoText().contains ( pattern,Qt::CaseInsensitive ) )
+			{
+// 				qDebug()<< "search_I MATCH"<<superSet[i]->family();
+				ret.append ( superSet[i] );
+			}
+		}
+	}
+	else if ( field == "search_SENS" )
+	{
+		for ( int i =0; i < superSetCount; ++i )
+		{
+			if ( superSet[i]->infoText().contains ( pattern,Qt::CaseSensitive ) )
+			{
+// 				qDebug()<< "search_S MATCH"<<superSet[i]->family();
+				ret.append ( superSet[i] );
+			}
+		}
+	}
+	else
+	{
+		for ( int i =0; i < superSetCount; ++i )
+		{
+			if ( superSet[i]->value ( field ).contains ( pattern , Qt::CaseInsensitive ) )
+			{
+// 				qDebug()<< "ELSE MATCH"<<superSet[i]->family();
+				ret.append ( superSet[i] );
+			}
+		}
+	}
+
+	qDebug()<<"RET"<< ret.count();
 	return ret;
 }
 

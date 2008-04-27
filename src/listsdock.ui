@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
+    <width>367</width>
     <height>671</height>
    </rect>
   </property>
@@ -21,35 +21,31 @@
   <property name="windowTitle" >
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" >
-    <layout class="QHBoxLayout" >
-     <item>
+  <layout class="QGridLayout" name="gridLayout_2" >
+   <item rowspan="3" row="0" column="0" >
+    <layout class="QGridLayout" name="gridLayout" >
+     <item row="0" column="0" >
       <widget class="QLabel" name="label" >
        <property name="text" >
         <string>Filter:</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item row="0" column="1" colspan="2" >
       <widget class="QLineEdit" name="searchString" >
        <property name="enabled" >
         <bool>false</bool>
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item row="1" column="0" >
-    <layout class="QHBoxLayout" >
-     <item>
+     <item row="1" column="0" >
       <widget class="QLabel" name="Tags" >
        <property name="text" >
         <string>Tag:</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item row="1" column="1" colspan="2" >
       <widget class="QComboBox" name="tagsCombo" >
        <property name="sizePolicy" >
         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
@@ -68,30 +64,14 @@
        </property>
       </widget>
      </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
+     <item row="2" column="0" >
       <widget class="QLabel" name="setlabel" >
        <property name="text" >
         <string>Tag Set:</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item row="2" column="1" colspan="2" >
       <widget class="QComboBox" name="tagsetCombo" >
        <property name="sizePolicy" >
         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
@@ -106,7 +86,34 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0" >
+   <item row="0" column="1" >
+    <widget class="QPushButton" name="viewAllButton" >
+     <property name="statusTip" >
+      <string>Show complete collection of available fonts</string>
+     </property>
+     <property name="text" >
+      <string>View All</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QPushButton" name="viewActivatedButton" >
+     <property name="statusTip" >
+      <string>Show all activated fonts</string>
+     </property>
+     <property name="text" >
+      <string>View Activated</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="QPushButton" name="removeButton" >
+     <property name="text" >
+      <string>Remove</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2" >
     <widget class="QSplitter" name="splitter" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -192,36 +199,18 @@
      </widget>
     </widget>
    </item>
-   <item row="3" column="0" >
-    <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QPushButton" name="viewAllButton" >
-       <property name="statusTip" >
-        <string>Show complete collection of available fonts</string>
-       </property>
-       <property name="text" >
-        <string>View All</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="viewActivatedButton" >
-       <property name="statusTip" >
-        <string>Show all activated fonts</string>
-       </property>
-       <property name="text" >
-        <string>View Activated</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="removeButton" >
-       <property name="text" >
-        <string>Remove</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item row="4" column="0" colspan="2" >
+    <widget class="QLabel" name="filtersCrumb" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text" >
+      <string>TextLabel</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

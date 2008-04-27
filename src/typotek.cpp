@@ -838,15 +838,18 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 		return fontMap;
 	}
 	
-	theMainView->addFilterToCrumb(pattern);
 	
 	QList< FontItem * > ret;
 	ret.clear();
 	QList< FontItem * > superSet ( theMainView->curFonts() ) ;
 	
 	if(superSet.isEmpty())
+	{
+		theMainView->resetCrumb();
 		superSet = fontMap;
+	}
 	
+	theMainView->addFilterToCrumb(pattern);
 	int superSetCount ( superSet.count() );
 
 	qDebug()<<"PATERN ="<< pattern<<": FIELD ="<< field<<":"<< superSetCount;

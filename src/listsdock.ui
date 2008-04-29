@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>367</width>
-    <height>671</height>
+    <width>311</width>
+    <height>677</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -21,99 +21,159 @@
   <property name="windowTitle" >
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2" >
-   <item rowspan="3" row="0" column="0" >
-    <layout class="QGridLayout" name="gridLayout" >
-     <item row="0" column="0" >
-      <widget class="QLabel" name="label" >
-       <property name="text" >
-        <string>Filter:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1" colspan="2" >
-      <widget class="QLineEdit" name="searchString" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" >
-      <widget class="QLabel" name="Tags" >
-       <property name="text" >
-        <string>Tag:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" colspan="2" >
-      <widget class="QComboBox" name="tagsCombo" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="contextMenuPolicy" >
-        <enum>Qt::DefaultContextMenu</enum>
-       </property>
-       <property name="toolTip" >
-        <string>Filter view by chosing tag</string>
-       </property>
-       <property name="sizeAdjustPolicy" >
-        <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0" >
-      <widget class="QLabel" name="setlabel" >
-       <property name="text" >
-        <string>Tag Set:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1" colspan="2" >
-      <widget class="QComboBox" name="tagsetCombo" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip" >
-        <string>Show only fonts that belong to chosen tagset</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="0" >
+    <widget class="QLineEdit" name="searchString" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="0" column="1" >
-    <widget class="QPushButton" name="viewAllButton" >
-     <property name="statusTip" >
-      <string>Show complete collection of available fonts</string>
-     </property>
+    <widget class="QLabel" name="Tags" >
      <property name="text" >
-      <string>View All</string>
+      <string>Tag:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1" >
-    <widget class="QPushButton" name="viewActivatedButton" >
-     <property name="statusTip" >
-      <string>Show all activated fonts</string>
+   <item row="0" column="2" colspan="2" >
+    <widget class="QComboBox" name="tagsCombo" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="text" >
-      <string>View Activated</string>
+     <property name="contextMenuPolicy" >
+      <enum>Qt::DefaultContextMenu</enum>
+     </property>
+     <property name="toolTip" >
+      <string>Filter view by chosing tag</string>
+     </property>
+     <property name="sizeAdjustPolicy" >
+      <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
      </property>
     </widget>
    </item>
-   <item row="2" column="1" >
-    <widget class="QPushButton" name="removeButton" >
+   <item row="1" column="0" >
+    <widget class="QWidget" native="1" name="widgetTools" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>0</width>
+       <height>33</height>
+      </size>
+     </property>
+     <widget class="QPushButton" name="removeButton" >
+      <property name="geometry" >
+       <rect>
+        <x>80</x>
+        <y>0</y>
+        <width>30</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text" >
+       <string>R</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="viewAllButton" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>32</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="statusTip" >
+       <string>Show complete collection of available fonts</string>
+      </property>
+      <property name="text" >
+       <string>All</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="viewActivatedButton" >
+      <property name="geometry" >
+       <rect>
+        <x>40</x>
+        <y>0</y>
+        <width>32</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="statusTip" >
+       <string>Show all activated fonts</string>
+      </property>
+      <property name="text" >
+       <string>Act</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="2" >
+    <widget class="QLabel" name="setlabel" >
      <property name="text" >
-      <string>Remove</string>
+      <string>Tag Set:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2" >
+   <item row="1" column="3" >
+    <widget class="QComboBox" name="tagsetCombo" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip" >
+      <string>Show only fonts that belong to chosen tagset</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4" >
+    <widget class="QLabel" name="filtersCrumb" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="text" >
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="4" >
     <widget class="QSplitter" name="splitter" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -197,19 +257,6 @@
        <bool>true</bool>
       </property>
      </widget>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2" >
-    <widget class="QLabel" name="filtersCrumb" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text" >
-      <string>TextLabel</string>
-     </property>
     </widget>
    </item>
   </layout>

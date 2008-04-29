@@ -130,6 +130,8 @@ class FontItem : public QObject
 		QGraphicsPixmapItem* itemFromCharPix ( int charcode, double size );
 		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
 		
+		QImage glyphImage();
+		
 		bool m_rasterFreetype;
 		
 		bool ensureLibrary();

@@ -818,9 +818,11 @@ QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 {
 	int charcode = index ;
-	FT_Set_Char_Size ( m_face, size  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
-	
-	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_NO_SCALE );
+
+	// Grab metrics in FONT UNIT
+	ft_error = FT_Load_Glyph ( m_face,
+	                           charcode  ,
+	                           FT_LOAD_NO_SCALE );
 	if ( ft_error )
 	{
 		QPixmap square ( size , size );
@@ -835,7 +837,18 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT /*| FT_LOAD_NO_HINTING*/ );
+
+	// Set size
+	FT_Set_Char_Size ( m_face,
+			    size  * 64 ,
+	                   0,
+	                   QApplication::desktop()->physicalDpiX(),
+	                   QApplication::desktop()->physicalDpiY() );
+
+	// Reload the glyph in device dependant way
+	ft_error = FT_Load_Glyph ( m_face, 
+				   charcode  ,
+       				FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING);
 	if ( ft_error )
 	{
 		QPixmap square ( size , size );
@@ -847,7 +860,10 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
 		return glyph;
 	}
-	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
+
+	// Render the glyph into a grayscale bitmap
+	ft_error = FT_Render_Glyph ( m_face->glyph,
+	                             FT_RENDER_MODE_NORMAL );
 	if ( ft_error )
 	{
 		QPixmap square ( size , size );
@@ -860,28 +876,10 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		return glyph;
 	}
 
-	
-	QImage img ( m_face->glyph->bitmap.buffer,
-	             m_face->glyph->bitmap.width,
-	             m_face->glyph->bitmap.rows,
-	             m_face->glyph->bitmap.pitch,
-	             QImage::Format_Indexed8 );
-	if(m_face->glyph->bitmap.num_grays != 256)
-	{
-		qDebug()<<"SLOW PALETTE";
-		QVector<QRgb> palette;
-		for ( int i = 0; i < m_face->glyph->bitmap.num_grays; ++i )
-		{
-			palette << qRgba ( 0,0,0, i );
-		}
-		img.setColorTable ( palette );
-	}
-	else 
-	{
-		img.setColorTable( gray256Palette );
-	}
 
+	QImage img ( glyphImage() );
 	QGraphicsPixmapItem *glyph = new  QGraphicsPixmapItem;
+
 	if ( img.isNull() && !spaceIndex.contains ( index ) )
 	{
 		QPixmap square ( size , size );
@@ -897,10 +895,10 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 #ifndef PLATFORM_APPLE
 		glyph->setPixmap ( QPixmap::fromImage ( img ) );
 #else
-		QPixmap aPix(img.width(), img.height());
-		QPainter aPainter(&aPix);
-		aPainter.drawImage(0,0, img);
-		glyph->setPixmap (aPix);
+		QPixmap aPix ( img.width(), img.height() );
+		QPainter aPainter ( &aPix );
+		aPainter.drawImage ( 0,0, img );
+		glyph->setPixmap ( aPix );
 #endif
 		// we need to transport more data
 		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
@@ -2175,12 +2173,12 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 // 	qDebug() << theSize << theHeight << theWidth;
 	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
 	bool pRTL = typotek::getInstance()->getPreviewRTL();
-	QPointF pen ( pRTL ? theWidth - 20 : 20 , theSize *  pt2px );
+	QPoint pen ( pRTL ? theWidth - 20 : 20 , theSize *  pt2px );
 
 	ensureFace();
 	double fsize = theSize ;
 	double scalefactor = theSize / m_face->units_per_EM;
-	FT_Set_Char_Size ( m_face, fsize  * 64 , 0, QApplication::desktop()->physicalDpiX(), QApplication::desktop()->physicalDpiY() );
+
 	QPixmap linePixmap ( theWidth,theHeight );
 	linePixmap.fill ( bg_color );
 	QPainter apainter ( &linePixmap );
@@ -2195,50 +2193,39 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 			++notRenderedGlyphsCount;
 			continue;
 		}
-		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_NO_SCALE );
+
+// 		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_NO_SCALE );
+// 		if ( ft_error )
+// 		{
+// 			continue;
+// 		}
+// 		int  advance = qRound( m_glyph->metrics.horiAdvance * scalefactor * pt2px );
+// 		int leftBearing = qRound( ( double ) m_glyph->metrics.horiBearingX  * scalefactor * pt2px);
+		FT_Set_Char_Size ( m_face,
+		                   fsize  * 64 ,
+		                   0,
+		                   QApplication::desktop()->physicalDpiX(),
+		                   QApplication::desktop()->physicalDpiY() );
+		
+		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING);
 		if ( ft_error )
 		{
 			continue;
 		}
-		double advance = m_glyph->metrics.horiAdvance * scalefactor * pt2px;
-		double leftBearing = ( double ) m_glyph->metrics.horiBearingX  * scalefactor * pt2px;
-		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
-		if ( ft_error )
-		{
-			continue;
-		}
+		
 		ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
 		if ( ft_error )
 		{
 			continue;
 		}
-		
-		QImage img ( m_face->glyph->bitmap.buffer,
-		             m_face->glyph->bitmap.width,
-		             m_face->glyph->bitmap.rows,
-		             m_face->glyph->bitmap.pitch,
-		             QImage::Format_Indexed8 );
+
 		if ( pRTL )
-			pen.rx() -=  advance;
-		
-		if(m_face->glyph->bitmap.num_grays != 256)
-		{
-			palette.clear();
-			for ( int aa = 0; aa < m_face->glyph->bitmap.num_grays; ++aa )
-			{
-				palette << qRgba ( 0,0,0, aa );
-			}
-			img.setColorTable ( palette );
-		}
-		else 
-		{
-			img.setColorTable( gray256Palette );
-		}
-		
-		apainter.drawImage ( pen.x() + leftBearing, pen.y() - m_glyph->bitmap_top , img );
+			pen.rx() -= qRound( m_glyph->linearHoriAdvance / 65536 );
+
+		apainter.drawImage ( pen.x() +  m_glyph->bitmap_left , pen.y() - m_glyph->bitmap_top , glyphImage() );
 
 		if ( !pRTL )
-			pen.rx() +=  advance;
+			pen.rx() += qRound( m_glyph->linearHoriAdvance / 65536 );
 
 	}
 	/// Check if we have drawn something
@@ -2263,6 +2250,11 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 			double advance = m_glyph->metrics.horiAdvance  * scalefactor * pt2px;
 			double leftBearing = ( double ) m_glyph->metrics.horiBearingX * scalefactor * pt2px;
 // 			qDebug() << oneline[i] <<  m_glyph->metrics.horiAdvance  << advance ;
+			FT_Set_Char_Size ( m_face,
+			                   fsize  * 64 ,
+			                   0,
+			                   QApplication::desktop()->physicalDpiX(),
+			                   QApplication::desktop()->physicalDpiY() );
 			ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
 			if ( ft_error )
 			{
@@ -2274,19 +2266,10 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 				continue;
 			}
 
-			palette.clear();
-			for ( int aa = 0; aa < m_face->glyph->bitmap.num_grays; ++aa )
-			{
-				palette << qRgba ( 0,0,0, aa );
-			}
-			QImage img ( m_face->glyph->bitmap.buffer,
-			             m_face->glyph->bitmap.width,
-			             m_face->glyph->bitmap.rows,
-			             m_face->glyph->bitmap.pitch,
-			             QImage::Format_Indexed8 );
-			img.setColorTable ( palette );
 			pen.ry() = ( theSize * pt2px ) - m_glyph->bitmap_top;
-			apainter.drawImage ( pen.x() + leftBearing, pen.y(), img );
+
+			apainter.drawImage ( pen.x() + leftBearing, pen.y(), glyphImage() );
+
 			pen.rx() +=  advance;
 
 			charCode = FT_Get_Next_Char ( m_face, charCode, &glyphIndex );
@@ -3004,6 +2987,32 @@ QList< int > FontItem::getAlternates(int ccode)
 	
 	releaseFace();
 	return ret;
+}
+
+QImage FontItem::glyphImage()
+{
+	QImage img ( m_face->glyph->bitmap.buffer,
+	             m_face->glyph->bitmap.width,
+	             m_face->glyph->bitmap.rows,
+	             m_face->glyph->bitmap.pitch,
+	             QImage::Format_Indexed8 );
+
+	if ( m_face->glyph->bitmap.num_grays != 256 )
+	{
+		QVector<QRgb> palette;
+		palette.clear();
+		for ( int aa = 0; aa < m_face->glyph->bitmap.num_grays; ++aa )
+		{
+			palette << qRgba ( 0,0,0, aa );
+		}
+		img.setColorTable ( palette );
+	}
+	else
+	{
+		img.setColorTable ( gray256Palette );
+	}
+	
+	return img;
 }
 
 

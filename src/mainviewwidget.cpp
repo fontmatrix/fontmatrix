@@ -280,6 +280,7 @@ void MainViewWidget::fillTree()
 				QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 				entry->setText ( 0,  var );
 				entry->setText ( 1, fPointer->path() );
+				entry->setToolTip( 1, fPointer->path() );
 				entry->setData ( 0, 100, "fontfile" );
 				if(fPointer->isLocked() || fPointer->isRemote() )
 				{

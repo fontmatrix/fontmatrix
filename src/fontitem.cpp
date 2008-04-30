@@ -442,10 +442,17 @@ void FontItem::fillLangIdMap()
 
 void FontItem::fill256Palette()
 {
+#ifdef   PLATFORM_APPLE
+	for ( int i = 0; i < 256 ; ++i )
+	{
+		gray256Palette << qRgb (255-i, 255-i,255- i );
+	}
+#else
 	for ( int i = 0; i < 256 ; ++i )
 	{
 		gray256Palette << qRgba ( 0,0,0, i );
 	}
+#endif
 }
 
 void FontItem::fillInvertedPalette()
@@ -2194,14 +2201,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 			++notRenderedGlyphsCount;
 			continue;
 		}
-
-// 		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_NO_SCALE );
-// 		if ( ft_error )
-// 		{
-// 			continue;
-// 		}
-// 		int  advance = qRound( m_glyph->metrics.horiAdvance * scalefactor * pt2px );
-// 		int leftBearing = qRound( ( double ) m_glyph->metrics.horiBearingX  * scalefactor * pt2px);
+		
 		FT_Set_Char_Size ( m_face,
 		                   fsize  * 64 ,
 		                   0,

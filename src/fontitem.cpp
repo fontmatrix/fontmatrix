@@ -442,17 +442,17 @@ void FontItem::fillLangIdMap()
 
 void FontItem::fill256Palette()
 {
-#ifdef   PLATFORM_APPLE
-	for ( int i = 0; i < 256 ; ++i )
-	{
-		gray256Palette << qRgb (255-i, 255-i,255- i );
-	}
-#else
+// #ifdef   PLATFORM_APPLE
+// 	for ( int i = 0; i < 256 ; ++i )
+// 	{
+// 		gray256Palette << qRgb (255-i, 255-i,255- i );
+// 	}
+// #else
 	for ( int i = 0; i < 256 ; ++i )
 	{
 		gray256Palette << qRgba ( 0,0,0, i );
 	}
-#endif
+// #endif
 }
 
 void FontItem::fillInvertedPalette()
@@ -904,6 +904,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		glyph->setPixmap ( QPixmap::fromImage ( img ) );
 #else
 		QPixmap aPix ( img.width(), img.height() );
+		aPix.fill(QColor(255,0,0,255)); // yes, plain red so we can trace it easily
 		QPainter aPainter ( &aPix );
 		aPainter.drawImage ( 0,0, img );
 		glyph->setPixmap ( aPix );

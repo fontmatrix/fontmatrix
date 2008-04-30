@@ -39,6 +39,7 @@ class DataExport
 		//methods
 		int copyFiles();
 		int buildIndex();
+		int buildHtml();
 
 };
 

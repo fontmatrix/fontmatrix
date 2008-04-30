@@ -2164,6 +2164,8 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		if ( theOneLinePreviewPixmap.width() == size_w )
 			return theOneLinePreviewPixmap;
 	}
+	if(!ensureFace())
+		return QPixmap();
 	QRectF savedRect = theOneLineScene->sceneRect();
 
 	double theSize = typotek::getInstance()->getPreviewSize();
@@ -2183,7 +2185,6 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 	bool pRTL = typotek::getInstance()->getPreviewRTL();
 	QPoint pen ( pRTL ? theWidth - 20 : 20 , theSize *  pt2px );
 
-	ensureFace();
 	double fsize = theSize ;
 	double scalefactor = theSize / m_face->units_per_EM;
 

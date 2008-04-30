@@ -904,7 +904,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		glyph->setPixmap ( QPixmap::fromImage ( img ) );
 #else
 		QPixmap aPix ( img.width(), img.height() );
-		aPix.fill(QColor(255,0,0,255)); // yes, plain red so we can trace it easily
+		aPix.fill(QColor(0,0,0,0));
 		QPainter aPainter ( &aPix );
 		aPainter.drawImage ( 0,0, img );
 		glyph->setPixmap ( aPix );

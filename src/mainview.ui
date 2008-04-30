@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>377</width>
-    <height>471</height>
+    <width>1003</width>
+    <height>820</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -22,7 +22,7 @@
   <property name="windowTitle" >
    <string>main view widget</string>
   </property>
-  <layout class="QGridLayout" >
+  <layout class="QGridLayout" name="gridLayout_7" >
    <item row="0" column="0" >
     <widget class="QTabWidget" name="tabView" >
      <property name="enabled" >
@@ -57,8 +57,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>355</width>
-        <height>417</height>
+        <width>981</width>
+        <height>766</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -188,8 +188,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>355</width>
-        <height>417</height>
+        <width>981</width>
+        <height>766</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -199,20 +199,22 @@ p, li { white-space: pre-wrap; }
        <iconset resource="application.qrc" >
         <normaloff>:/fontmatrix_sampletext.png</normaloff>:/fontmatrix_sampletext.png</iconset>
       </attribute>
-      <layout class="QGridLayout" >
+      <layout class="QGridLayout" name="gridLayout_6" >
        <item row="0" column="0" >
-        <widget class="QSplitter" name="splitter" >
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
+        <widget class="QStackedWidget" name="stackedSample" >
+         <property name="currentIndex" >
+          <number>0</number>
          </property>
-         <widget class="QWidget" native="1" name="widget_2" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-            <horstretch>0</horstretch>
-            <verstretch>2</verstretch>
-           </sizepolicy>
+         <widget class="QWidget" name="page_basic" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>963</width>
+            <height>748</height>
+           </rect>
           </property>
-          <layout class="QGridLayout" >
+          <layout class="QGridLayout" name="gridLayout_5" >
            <item row="0" column="0" >
             <widget class="QComboBox" name="sampleTextCombo" >
              <property name="sizePolicy" >
@@ -243,14 +245,14 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item row="0" column="2" >
-            <spacer>
+            <spacer name="horizontalSpacer_3" >
              <property name="orientation" >
               <enum>Qt::Horizontal</enum>
              </property>
              <property name="sizeHint" stdset="0" >
               <size>
-               <width>10</width>
-               <height>30</height>
+               <width>363</width>
+               <height>20</height>
               </size>
              </property>
             </spacer>
@@ -262,7 +264,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="0" column="4" >
+           <item row="0" column="4" colspan="2" >
             <widget class="QDoubleSpinBox" name="liveFontSizeSpin" >
              <property name="wrapping" >
               <bool>false</bool>
@@ -284,7 +286,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="5" >
+           <item row="1" column="0" colspan="6" >
             <widget class="QTabWidget" name="tabSamples" >
              <property name="currentIndex" >
               <number>1</number>
@@ -294,8 +296,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>720</width>
-                <height>360</height>
+                <width>288</width>
+                <height>245</height>
                </rect>
               </property>
               <attribute name="title" >
@@ -363,14 +365,14 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>315</width>
-                <height>149</height>
+                <width>941</width>
+                <height>621</height>
                </rect>
               </property>
               <attribute name="title" >
                <string>FreeType view</string>
               </attribute>
-              <layout class="QGridLayout" >
+              <layout class="QGridLayout" name="gridLayout_3" >
                <item row="0" column="0" >
                 <widget class="FMSampleTextView" name="loremView_FT" >
                  <property name="focusPolicy" >
@@ -382,97 +384,151 @@ p, li { white-space: pre-wrap; }
              </widget>
             </widget>
            </item>
+           <item row="2" column="3" colspan="2" >
+            <spacer name="horizontalSpacer_2" >
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>68</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="2" column="5" >
+            <widget class="QPushButton" name="advanceButton" >
+             <property name="text" >
+              <string>Advanced</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
-         <widget class="QToolBox" name="toolBox" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
-            <horstretch>0</horstretch>
-            <verstretch>1</verstretch>
-           </sizepolicy>
+         <widget class="QWidget" name="page_advanced" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>963</width>
+            <height>748</height>
+           </rect>
           </property>
-          <property name="currentIndex" >
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="page" >
-           <property name="geometry" >
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>321</width>
-             <height>142</height>
-            </rect>
-           </property>
-           <attribute name="label" >
-            <string>Advanced</string>
-           </attribute>
-           <layout class="QGridLayout" >
-            <item row="0" column="0" >
-             <widget class="QComboBox" name="langCombo" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+          <layout class="QGridLayout" name="gridLayout_2" >
+           <item row="0" column="0" colspan="2" >
+            <widget class="QToolBox" name="toolBox" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+               <horstretch>0</horstretch>
+               <verstretch>1</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="currentIndex" >
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="page" >
+              <property name="geometry" >
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>945</width>
+                <height>626</height>
+               </rect>
               </property>
+              <attribute name="label" >
+               <string>Advanced</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_4" >
+               <item row="0" column="0" >
+                <widget class="QComboBox" name="langCombo" >
+                 <property name="sizePolicy" >
+                  <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" >
+                <widget class="QCheckBox" name="useShaperCheck" >
+                 <property name="text" >
+                  <string>Use shaper</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="2" >
+                <widget class="QTreeWidget" name="OpenTypeTree" >
+                 <property name="sizePolicy" >
+                  <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="focusPolicy" >
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="alternatingRowColors" >
+                  <bool>true</bool>
+                 </property>
+                 <property name="columnCount" >
+                  <number>2</number>
+                 </property>
+                 <column>
+                  <property name="text" >
+                   <string>OpenType Features</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text" >
+                   <string>Friendly Name</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
              </widget>
-            </item>
-            <item row="0" column="1" >
-             <widget class="QCheckBox" name="useShaperCheck" >
-              <property name="text" >
-               <string>Use shaper</string>
+             <widget class="QWidget" name="page_2" >
+              <property name="geometry" >
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>945</width>
+                <height>626</height>
+               </rect>
               </property>
+              <attribute name="label" >
+               <string>Text Progression</string>
+              </attribute>
+              <layout class="QGridLayout" >
+               <item row="0" column="0" >
+                <widget class="TextProgression" native="1" name="textProgression" />
+               </item>
+              </layout>
              </widget>
-            </item>
-            <item row="1" column="0" colspan="2" >
-             <widget class="QTreeWidget" name="OpenTypeTree" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="focusPolicy" >
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="alternatingRowColors" >
-               <bool>true</bool>
-              </property>
-              <property name="columnCount" >
-               <number>2</number>
-              </property>
-              <column>
-               <property name="text" >
-                <string>OpenType Features</string>
-               </property>
-              </column>
-              <column>
-               <property name="text" >
-                <string>Friendly Name</string>
-               </property>
-              </column>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="page_2" >
-           <property name="geometry" >
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>96</width>
-             <height>28</height>
-            </rect>
-           </property>
-           <attribute name="label" >
-            <string>Text Progression</string>
-           </attribute>
-           <layout class="QGridLayout" >
-            <item row="0" column="0" >
-             <widget class="TextProgression" native="1" name="textProgression" />
-            </item>
-           </layout>
-          </widget>
+            </widget>
+           </item>
+           <item row="1" column="0" >
+            <spacer name="horizontalSpacer" >
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>857</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="1" >
+            <widget class="QPushButton" name="basicButton" >
+             <property name="text" >
+              <string>Basic</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -483,8 +539,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>355</width>
-        <height>417</height>
+        <width>981</width>
+        <height>766</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -557,8 +613,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>355</width>
-        <height>417</height>
+        <width>981</width>
+        <height>766</height>
        </rect>
       </property>
       <attribute name="title" >

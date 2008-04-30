@@ -145,6 +145,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( loremView, SIGNAL ( refit() ),this,SLOT ( slotRefitSample() ) );
 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
 	connect ( fitViewCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotFitChanged ( int ) ) );
+	connect (advanceButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchAdvanced()));
+	connect (basicButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchBasic()));
 	
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
@@ -1907,6 +1909,18 @@ void MainViewWidget::addFilterToCrumb(QString filter)
 void MainViewWidget::resetCrumb()
 {
 	m_lists->filtersCrumb->clear();
+}
+
+void MainViewWidget::slotSwitchBasic()
+{
+	qDebug()<<"slotSwitchBasic";
+	stackedSample->setCurrentIndex(0);
+}
+
+void MainViewWidget::slotSwitchAdvanced()
+{
+	qDebug()<<"slotSwitchAdvanced";
+	stackedSample->setCurrentIndex(1);
 }
 
 

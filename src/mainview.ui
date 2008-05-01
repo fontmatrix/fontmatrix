@@ -133,7 +133,7 @@ p, li { white-space: pre-wrap; }
               <enum>QFrame::StyledPanel</enum>
              </property>
              <property name="text" >
-              <string>Anything selected</string>
+              <string>Nothing selected</string>
              </property>
              <property name="alignment" >
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

@@ -73,19 +73,48 @@ extern bool __FM_SHOW_FONTLOADED;
 /// LazyInit *********************************************
 void LazyInit::run()
 {
-// 	typotek* t = typotek::getInstance();
-// 	QList<FontItem*> fonts = t->getAllFonts();
-// 	foreach(FontItem *fit, fonts)
-// 	{
-// 		fit->infoText(true);
-// 		fit->trimSpacesIndex();
-// 	}
 	/// We keep this for further needs
 	emit endOfRun();
 }
 ///******************************************************
-// QMutex remoteDirsMutex;
-// QWaitCondition remoteDirsCond;
+
+/// a bit of globalness *******************************************
+namespace fontmatrix
+{
+	QStringList exploreDirs ( const QDir &dir, int deep )
+	{
+		static QStringList retDirList;
+		if ( deep > 10 )
+			return QStringList();
+		if ( deep == 0 )
+			retDirList.clear();
+		retDirList << dir.absolutePath();
+		QStringList localEntries ( dir.entryList ( QDir::AllDirs | QDir::NoDotAndDotDot ) );
+		foreach ( QString dirEntry, localEntries )
+		{
+			qDebug() << "[exploreDirs] - " + dir.absolutePath() + "/" + dirEntry;
+			QDir d ( dir.absolutePath() + "/" + dirEntry );
+			exploreDirs ( d, deep + 1 );
+			if ( !retDirList.contains ( d.absolutePath() ) )
+				retDirList << d.absolutePath();
+		}
+
+		return retDirList;
+	}
+
+
+	QMap<QString , Qt::DockWidgetArea> DockPosition;
+
+	void fillDockPos()
+	{
+		DockPosition["Left"] = Qt::LeftDockWidgetArea;
+		DockPosition["Right"]= Qt::RightDockWidgetArea;
+		DockPosition["Top"]= Qt::TopDockWidgetArea;
+		DockPosition["Bottom"]= Qt::BottomDockWidgetArea;
+	}
+}
+
+/// *****************************************************
 
 typotek::typotek()
 {
@@ -100,6 +129,8 @@ void typotek::initMatrix()
 {
 	qDebug()<<"initMatrix()";
 	m_defaultSampleName = tr("default") ;
+	fontmatrix::fillDockPos();
+	
 	checkOwnDir();
 	initDir();
 	readSettings();
@@ -121,7 +152,8 @@ void typotek::initMatrix()
 
 	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
 	mainDock->setWidget ( ListDockWidget::getInstance() );
-	addDockWidget ( Qt::LeftDockWidgetArea, mainDock );
+	addDockWidget ( fontmatrix::DockPosition[mainDockArea], mainDock );
+	
 
 	createActions();
 	createMenus();
@@ -141,6 +173,8 @@ void typotek::doConnect()
 	
 	if(getSystray())
 		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( QString ) ), getSystray(),SLOT ( updateTagMenu ( QString ) ) );
+	
+	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
 	
 }
 
@@ -178,31 +212,6 @@ void typotek::closeEvent ( QCloseEvent *event )
 	}
 }
 
-namespace fontmatrix
-{
-QStringList exploreDirs(const QDir &dir, int deep)
-{
-	static QStringList retDirList;
-	if(deep > 10)
-		return QStringList();	
-	if(deep == 0)
-		retDirList.clear();
-// 	qDebug() << dir.absolutePath();
-	
-	retDirList << dir.absolutePath();
-	QStringList localEntries(dir.entryList ( QDir::AllDirs | QDir::NoDotAndDotDot));
-	foreach ( QString dirEntry, localEntries )
-	{
-		qDebug() << "[exploreDirs] - " + dir.absolutePath() + "/" + dirEntry;
-		QDir d ( dir.absolutePath() + "/" + dirEntry );
-		exploreDirs(d, deep + 1);
-		if(!retDirList.contains(d.absolutePath()))
-			retDirList << d.absolutePath();
-	}
-	
-	return retDirList;
-} 
-}
 
 /// IMPORT
 void typotek::open()
@@ -598,6 +607,8 @@ void typotek::readSettings()
 	templatesDir = settings.value ( "TemplatesDir", "./").toString();
 	previewSize = settings.value("PreviewSize", 15.0).toDouble();
 	previewRTL = settings.value("PreviewRTL", false).toBool();
+	
+	mainDockArea = settings.value("ToolPos", "Left").toString();
 }
 
 void typotek::writeSettings()
@@ -605,6 +616,7 @@ void typotek::writeSettings()
 	QSettings settings ;
 	settings.setValue ( "pos", pos() );
 	settings.setValue ( "size", size() );
+	settings.setValue( "ToolPos", mainDock->isFloating() ? "Float" : mainDockArea );
 
 }
 
@@ -1596,6 +1608,18 @@ void typotek::showEvent(QShowEvent * event)
 	
 	if(!theMainView->selectedFont())
 		theMainView->displayWelcomeMessage();
+}
+
+void typotek::slotMainDockAreaChanged(Qt::DockWidgetArea area)
+{
+	if(area == Qt::LeftDockWidgetArea)
+		mainDockArea = "Left";
+	else if(area ==Qt::RightDockWidgetArea)
+		mainDockArea ="Right";
+	else if(area == Qt::TopDockWidgetArea)
+		mainDockArea ="Top";
+	else if(area == Qt::BottomDockWidgetArea)
+		mainDockArea = "Bottom";
 }
 
 

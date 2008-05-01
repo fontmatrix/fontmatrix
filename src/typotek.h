@@ -82,6 +82,7 @@ class typotek:public QMainWindow
 		void slotRemoteIsReady();
 		void slotRepair();
 		void slotTagAll();
+		void slotMainDockAreaChanged(Qt::DockWidgetArea area);
 		
 		
 		
@@ -185,6 +186,8 @@ class typotek:public QMainWindow
 		QString m_remoteTmpDir;
 		
 		QString m_defaultSampleName;
+		
+		QString mainDockArea;
 	public:
 		int getFontCount(){return fontMap.count(); }
 		FontItem* getFont ( int i ) ;

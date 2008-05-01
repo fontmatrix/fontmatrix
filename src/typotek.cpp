@@ -623,7 +623,7 @@ void typotek::writeSettings()
 	QSettings settings ;
 	settings.setValue ( "pos", pos() );
 	settings.setValue ( "size", size() );
-	settings.setValue( "ToolPos", mainDock->isFloating() ? "Float" : mainDockArea );
+	settings.setValue( "ToolPos", mainDockArea );
 
 }
 

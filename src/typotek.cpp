@@ -389,7 +389,7 @@ bool typotek::insertTemporaryFont(const QString & path)
 	for(int i=0;i < fontMap.count() ; ++i)
 	{
 		if(fontMap[i]->path() == absPath)
-			return false;
+			return true;
 	}
 	
 	// Build an item

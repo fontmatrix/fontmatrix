@@ -1721,11 +1721,16 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 	slotFinalize();
 	theTaggedFonts.clear();
 	theTaggedFonts = fonts;
-// 	for ( int i= theTaggedFonts.count() - 1; i >= 0; --i )
-// 	{
-// 		if ( theTaggedFonts[i]->isLocked() )
-// 			theTaggedFonts.removeAt ( i );
-// 	}
+	
+	bool readOnly(false);
+	for ( int i(0); i < theTaggedFonts.count() ; ++i )
+	{
+		if ( theTaggedFonts[i]->isLocked() )
+		{
+			readOnly = true;
+			break;
+		}
+	}
 	tagsListWidget->clear();
 	QString tot;
 	for ( int i=0;i<theTaggedFonts.count();++i )
@@ -1768,6 +1773,8 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 				lit->setCheckState ( Qt::PartiallyChecked);
 			
 			tagsListWidget->addItem ( lit );
+			if(readOnly)
+				lit->setFlags(Qt::NoItemFlags);
 		}
 	}
 	qDebug()<<"END OF prepare";

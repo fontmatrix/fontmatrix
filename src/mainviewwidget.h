@@ -160,6 +160,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		//playground
 		void slotPushOnPlayground();
 		
+		//lists
+		void slotSelectFromFolders(const QString&);
+		
 	private slots:
 		void slotLiveFontSize(double);
 		void slotRemoteFinished();

@@ -375,6 +375,38 @@ void typotek::open ( QStringList files )
 
 }
 
+/// Neede at least for the "Browse Font Dirs" feature
+// It will be a regular import, as for system fonts the item will be locked.
+bool typotek::insertTemporaryFont(const QString & path)
+{
+	// basic check
+	if(path.isEmpty())
+		return false;
+	
+	QFileInfo fi ( path );
+	QString absPath ( fi.absoluteFilePath() ); 
+	// check if we have it yet
+	for(int i=0;i < fontMap.count() ; ++i)
+	{
+		if(fontMap[i]->path() == absPath)
+			return false;
+	}
+	
+	// Build an item
+	FontItem *item(new FontItem(absPath));
+	if(!item->isValid())
+	{
+		delete item;
+		return false;
+	}
+	fontMap.append ( item );
+	realFontMap[ item->path() ] = item;
+	item->lock();
+	
+	return true;
+}
+
+
 /// EXPORT
 void typotek::slotExportFontSet()
 {
@@ -1565,6 +1597,7 @@ void typotek::showEvent(QShowEvent * event)
 	if(!theMainView->selectedFont())
 		theMainView->displayWelcomeMessage();
 }
+
 
 
 

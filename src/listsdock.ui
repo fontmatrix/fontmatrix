@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>311</width>
-    <height>677</height>
+    <width>415</width>
+    <height>610</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -21,7 +21,7 @@
   <property name="windowTitle" >
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" >
+  <layout class="QGridLayout" name="gridLayout_3" >
    <item row="0" column="0" >
     <widget class="QLineEdit" name="searchString" >
      <property name="enabled" >
@@ -174,88 +174,126 @@
     </widget>
    </item>
    <item row="3" column="0" colspan="4" >
-    <widget class="QSplitter" name="splitter" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
      </property>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <widget class="FMNameList" name="fontTree" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-        <horstretch>0</horstretch>
-        <verstretch>3</verstretch>
-       </sizepolicy>
+     <widget class="QWidget" name="tab" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>393</width>
+        <height>457</height>
+       </rect>
       </property>
-      <property name="font" >
-       <font>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="cursor" stdset="0" >
-       <cursorShape>ArrowCursor</cursorShape>
-      </property>
-      <property name="focusPolicy" >
-       <enum>Qt::StrongFocus</enum>
-      </property>
-      <property name="acceptDrops" >
-       <bool>true</bool>
-      </property>
-      <property name="autoFillBackground" >
-       <bool>false</bool>
-      </property>
-      <property name="frameShape" >
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow" >
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <property name="lineWidth" >
-       <number>1</number>
-      </property>
-      <property name="dragDropMode" >
-       <enum>QAbstractItemView::DropOnly</enum>
-      </property>
-      <property name="alternatingRowColors" >
-       <bool>true</bool>
-      </property>
-      <property name="selectionMode" >
-       <enum>QAbstractItemView::NoSelection</enum>
-      </property>
-      <property name="textElideMode" >
-       <enum>Qt::ElideRight</enum>
-      </property>
-      <property name="autoExpandDelay" >
-       <number>1</number>
-      </property>
-      <property name="columnCount" >
-       <number>2</number>
-      </property>
-      <column>
-       <property name="text" >
-        <string>Names</string>
-       </property>
-      </column>
-      <column>
-       <property name="text" >
-        <string>Files</string>
-       </property>
-      </column>
+      <attribute name="title" >
+       <string>Names</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout" >
+       <item row="0" column="0" >
+        <widget class="FMNameList" name="fontTree" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>3</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font" >
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="cursor" stdset="0" >
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="focusPolicy" >
+          <enum>Qt::StrongFocus</enum>
+         </property>
+         <property name="acceptDrops" >
+          <bool>true</bool>
+         </property>
+         <property name="autoFillBackground" >
+          <bool>false</bool>
+         </property>
+         <property name="frameShape" >
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <property name="lineWidth" >
+          <number>1</number>
+         </property>
+         <property name="dragDropMode" >
+          <enum>QAbstractItemView::DropOnly</enum>
+         </property>
+         <property name="alternatingRowColors" >
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode" >
+          <enum>QAbstractItemView::NoSelection</enum>
+         </property>
+         <property name="textElideMode" >
+          <enum>Qt::ElideRight</enum>
+         </property>
+         <property name="autoExpandDelay" >
+          <number>1</number>
+         </property>
+         <property name="columnCount" >
+          <number>2</number>
+         </property>
+         <column>
+          <property name="text" >
+           <string>Names</string>
+          </property>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Files</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="FMPreviewList" name="previewList" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-        <horstretch>0</horstretch>
-        <verstretch>1</verstretch>
-       </sizepolicy>
+     <widget class="QWidget" name="tab_2" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>393</width>
+        <height>457</height>
+       </rect>
       </property>
-      <property name="acceptDrops" >
-       <bool>true</bool>
-      </property>
+      <attribute name="title" >
+       <string>Previews</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2" >
+       <item row="0" column="0" >
+        <widget class="FMPreviewList" name="previewList" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>1</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="acceptDrops" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3" >
+      <attribute name="title" >
+       <string>Folders</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4" >
+       <item row="0" column="0" >
+        <widget class="QTreeView" name="folderView" />
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>

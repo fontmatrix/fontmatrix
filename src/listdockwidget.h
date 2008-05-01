@@ -25,6 +25,7 @@
 
 class QListWidgetItem;
 class QFontItem;
+class QDirModel;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -44,12 +45,18 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		bool nameItemIsVisible(QTreeWidgetItem *item);
 		
 		void forcePreviewRefill();
-	public slots:
-		void unlockFilter();
 	private:
 		int m_position;
+		QDirModel *theDirModel;
 		
+	public slots:
+		void unlockFilter();
 		
+	private slots:
+		void slotFolderItemclicked(QModelIndex mIdx);
+		
+	signals:
+		void folderSelectFont(const QString&);
 
 };
 

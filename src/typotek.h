@@ -256,6 +256,8 @@ class typotek:public QMainWindow
 		void setRemoteTmpDir(const QString &s);
 
 		QString defaultSampleName(){return m_defaultSampleName;}
+		
+		bool insertTemporaryFont(const QString& path);
 				
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

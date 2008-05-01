@@ -22,6 +22,7 @@
 
 #include <QDebug>
 #include <QScrollBar>
+#include <QDirModel>
 
 ListDockWidget* ListDockWidget::instance = 0;
 
@@ -47,6 +48,16 @@ ListDockWidget::ListDockWidget()
 	tl_tmp.removeAll ( "Activated_Off" );
 
 	tagsCombo->addItems ( tl_tmp );
+	
+	// Folders tree
+	QStringList ffilter;
+	ffilter << "*.otf" << "*.ttf" << "*.pfb";
+	theDirModel = new QDirModel(ffilter, QDir::AllDirs | QDir::Files | QDir::Drives | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
+	folderView->setModel(theDirModel);
+// 	folderView->setRootIndex(theDirModel->index(QDir::currentPath()));
+// 	folderView->setExpanded(0, 0);
+	
+	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 }
 
 
@@ -86,5 +97,15 @@ void ListDockWidget::forcePreviewRefill()
 void ListDockWidget::unlockFilter()
 {
 	searchString->setEnabled(true);
+}
+
+void ListDockWidget::slotFolderItemclicked(QModelIndex mIdx)
+{
+	QString path(theDirModel->data(mIdx,QDirModel::FilePathRole).toString());
+	if(typotek::getInstance()->insertTemporaryFont(path))
+	{
+		QFileInfo pf(path);
+		emit folderSelectFont(pf.absoluteFilePath());
+	}
 }
 

@@ -132,6 +132,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists->removeButton, SIGNAL(released()),this,SLOT(slotRemoveCurrentItem()));
+	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
@@ -1921,6 +1922,13 @@ void MainViewWidget::slotSwitchAdvanced()
 {
 	qDebug()<<"slotSwitchAdvanced";
 	stackedSample->setCurrentIndex(1);
+}
+
+// Don’t know if it’s really useful
+// It will be used for track down problems at least
+void MainViewWidget::slotSelectFromFolders(const QString &f)
+{
+	slotFontSelectedByName(f);
 }
 
 

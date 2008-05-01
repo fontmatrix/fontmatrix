@@ -50,14 +50,19 @@ ListDockWidget::ListDockWidget()
 	tagsCombo->addItems ( tl_tmp );
 	
 	// Folders tree
-	QStringList ffilter;
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
 	theDirModel = new QDirModel(ffilter, QDir::AllDirs | QDir::Files | QDir::Drives | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
 	folderView->setModel(theDirModel);
-// 	folderView->setRootIndex(theDirModel->index(QDir::currentPath()));
-// 	folderView->setExpanded(0, 0);
+	folderView->hideColumn(1);
+	folderView->hideColumn(2);
+	folderView->hideColumn(3);
+	
+	
+	folderView->setDragDropMode(QAbstractItemView::DragDrop);
 	
 	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
+// 	connect(folderView,SIGNAL(doubleClicked( const QModelIndex& )),this,SLOT(slotFolderItemDoubleclicked(QModelIndex)));
+	connect(folderView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
 }
 
 
@@ -108,4 +113,35 @@ void ListDockWidget::slotFolderItemclicked(QModelIndex mIdx)
 		emit folderSelectFont(pf.absoluteFilePath());
 	}
 }
+/*
+void ListDockWidget::slotFolderItemDoubleclicked(QModelIndex mIdx)
+{
+	qDebug()<<"DOUBLE_ClIC"<<theDirModel->data(mIdx,QDirModel::FilePathRole).toString();
+	// Want to import?
+	if(theDirModel->isDir(mIdx) && theDirModel->hasChildren(mIdx))
+	{
+		QDir dir(theDirModel->data(mIdx,QDirModel::FilePathRole).toString());
+		QStringList tmplist(dir.entryList(ffilter));
+		QStringList flist;
+		for(int i(0); i < tmplist.count();++i)
+			flist << dir.absoluteFilePath( tmplist[i] );
+		
+		qDebug()<<"WANT"<<flist.join("::");
+		if(!flist.isEmpty())
+			typotek::getInstance()->open(flist);
+	}
+	else
+	{
+		QStringList flist(theDirModel->data(mIdx,QDirModel::FilePathRole).toString());
+		qDebug()<<"WANT"<<flist.join("::");
+		if(!flist.isEmpty())
+			typotek::getInstance()->open(flist);
+	}
+	
+}
+*/
 
+void ListDockWidget::slotFolderPressed(QModelIndex mIdx)
+{
+	currentFIndex = mIdx;
+}

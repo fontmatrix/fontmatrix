@@ -60,10 +60,6 @@ class typotek:public QMainWindow
 		void keyPressEvent ( QKeyEvent * event ) ;
 
 	private slots:
-		
-		void open();
-		void open(QStringList files);
-		
 		void printInfo();
 		void printSample();
 		void printChart();
@@ -83,10 +79,10 @@ class typotek:public QMainWindow
 		void slotRepair();
 		void slotTagAll();
 		void slotMainDockAreaChanged(Qt::DockWidgetArea area);
-		
-		
-		
+	
 	public slots:
+		void open( QString path = QString() );
+		void open(QStringList files);
 		bool save();
 		void slotCloseToSystray(bool isEnabled);
 		void slotUseInitialTags(bool isEnabled);
@@ -188,6 +184,8 @@ class typotek:public QMainWindow
 		QString m_defaultSampleName;
 		
 		QString mainDockArea;
+		
+		QMap<QString, FontItem*> temporaryFonts;
 	public:
 		int getFontCount(){return fontMap.count(); }
 		FontItem* getFont ( int i ) ;

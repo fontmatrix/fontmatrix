@@ -214,10 +214,16 @@ void typotek::closeEvent ( QCloseEvent *event )
 
 
 /// IMPORT
-void typotek::open()
+void typotek::open(QString path)
 {
+	
 	static QString dir = QDir::homePath(); // first time use the home path then remember the last used dir
-	QString tmpdir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
+	QString tmpdir;
+	
+	if(!path.isEmpty())
+		tmpdir = path;
+	else
+		tmpdir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
 
 	if ( tmpdir.isEmpty() )
 		return; // user choose to cancel the import process
@@ -410,6 +416,7 @@ bool typotek::insertTemporaryFont(const QString & path)
 	}
 	fontMap.append ( item );
 	realFontMap[ item->path() ] = item;
+	temporaryFonts[ item->path() ] = item;
 	item->lock();
 	
 	return true;
@@ -1062,9 +1069,71 @@ void typotek::dropEvent ( QDropEvent * event )
 {
 
 	qDebug() << "typotek::dropEvent ("<< event->mimeData()->text() <<")";
+// 	qDebug()<<"F: "<<event->mimeData()->formats().join(";");
+
 // 	event->acceptProposedAction();
 	QStringList uris = event->mimeData()->text().split ( "\n" );
-	QStringList ret;
+	QStringList ret;	
+	
+	// Internal drag & drop
+	if(event->source() && event->source()->objectName() == "folderView" )
+	{
+		QString fP(ListDockWidget::getInstance()->getFolderCurrentIndex().data(QDirModel::FilePathRole).toString());
+		
+		if(QFileInfo(fP).isDir())
+		{
+			// We remove all temporary fonts
+			// a bit rough, but it should work well
+			QMap<QString,FontItem*>::const_iterator fIt;
+			for(fIt = temporaryFonts.constBegin(); fIt != temporaryFonts.constEnd() ; ++fIt)
+			{
+				realFontMap.remove(fIt.key());
+				fontMap.removeAll(fIt.value());
+				delete fIt.value();
+			}
+			temporaryFonts.clear();
+			open(fP);
+			return;
+		}
+		else
+		{
+			if(temporaryFonts.contains(fP))
+			{
+				QStringList tali;
+				if ( useInitialTags )
+				{
+					ImportTags imp(this,tagsList);
+					imp.exec();
+					tali = imp.tags();
+					tali << "Activated_Off" ;
+				}
+				else
+					tali << "Activated_Off" ;
+
+				foreach ( QString tas, tali )
+				{
+					if ( !tagsList.contains ( tas ) )
+					{
+						tagsList.append ( tas );
+						emit tagAdded ( tas );
+					}
+				}
+				
+				FontItem *fitem(temporaryFonts.value(fP));
+				fitem->unLock();
+				fitem->setTags(tali);
+				temporaryFonts.remove(fP);
+				theMainView->slotReloadFontList();
+				return;
+			}
+			else
+			{
+				uris << "file://" + fP;
+			}
+		}
+		
+	}
+	
 	for ( int i = 0; i < uris.count() ; ++i )
 	{
 		qDebug() << "dropped uri["<< i <<"] -> "<< uris[i];

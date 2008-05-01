@@ -45,15 +45,22 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		bool nameItemIsVisible(QTreeWidgetItem *item);
 		
 		void forcePreviewRefill();
+		
+		QModelIndex getFolderCurrentIndex(){return currentFIndex;}
+		
 	private:
 		int m_position;
 		QDirModel *theDirModel;
+		QStringList ffilter;
+		QModelIndex currentFIndex;
 		
 	public slots:
 		void unlockFilter();
 		
 	private slots:
 		void slotFolderItemclicked(QModelIndex mIdx);
+// 		void slotFolderItemDoubleclicked(QModelIndex mIdx);
+		void slotFolderPressed(QModelIndex mIdx);
 		
 	signals:
 		void folderSelectFont(const QString&);

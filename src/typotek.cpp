@@ -283,13 +283,24 @@ void typotek::open(QString path)
 	QString importstring ( tr ( "Import" ) +  " %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
-		progress.setLabelText ( importstring.arg ( pathList.at ( i ) ) );
+		QString pathCur(pathList.at ( i ));
+		progress.setLabelText ( importstring.arg ( pathCur ) );
 		progress.setValue ( i );
 		if ( progress.wasCanceled() )
 			break;
 
-		QFile ff ( pathList.at ( i ) );
-		QFileInfo fi ( pathList.at ( i ) );
+		if(temporaryFonts.contains(pathCur))
+		{
+			FontItem *fitem(temporaryFonts.value(pathCur));
+			fitem->unLock();
+			fitem->setTags(tali);
+			temporaryFonts.remove(pathCur);
+			nameList << fitem->fancyName();
+			continue;
+		}
+		
+		QFile ff ( pathCur);
+		QFileInfo fi ( pathCur );
 		{
 			FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
 			if ( fitem->isValid() )
@@ -1082,16 +1093,16 @@ void typotek::dropEvent ( QDropEvent * event )
 		
 		if(QFileInfo(fP).isDir())
 		{
-			// We remove all temporary fonts
-			// a bit rough, but it should work well
-			QMap<QString,FontItem*>::const_iterator fIt;
-			for(fIt = temporaryFonts.constBegin(); fIt != temporaryFonts.constEnd() ; ++fIt)
-			{
-				realFontMap.remove(fIt.key());
-				fontMap.removeAll(fIt.value());
-				delete fIt.value();
-			}
-			temporaryFonts.clear();
+// 			// We remove all temporary fonts
+// 			// a bit rough, but it should work well
+// 			QMap<QString,FontItem*>::const_iterator fIt;
+// 			for(fIt = temporaryFonts.constBegin(); fIt != temporaryFonts.constEnd() ; ++fIt)
+// 			{
+// 				realFontMap.remove(fIt.key());
+// 				fontMap.removeAll(fIt.value());
+// 				delete fIt.value();
+// 			}
+// 			temporaryFonts.clear();
 			open(fP);
 			return;
 		}

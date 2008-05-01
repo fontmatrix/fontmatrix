@@ -64,6 +64,17 @@ class QFile;
 
 	(reminder) glyph data -> 1 = index, 2 = charcode
 */
+struct FontLocalInfo
+{
+	QString file;
+	QString family;
+	QString variant;
+	QString type;
+	QMap<int,QMap<QString, QString> > info;
+	QStringList tags;
+	QPixmap pix;
+};
+
 class FontItem : public QObject
 {
 
@@ -117,7 +128,6 @@ class FontItem : public QObject
 
 		QStringList m_tags;
 		QString m_cacheInfo;
-
 		static FT_Library theLibrary;
 		FT_Error      ft_error;
 		FT_Face m_face;
@@ -212,6 +222,7 @@ class FontItem : public QObject
 		QString infoText ( bool fromcache = true );
 		QString infoGlyph ( int index, int code = 0 );
 		QString glyphName(int codepoint);
+		QMap<int,QMap<QString, QString> >& rawInfo();
 
 		QString value ( QString k );
 
@@ -273,7 +284,7 @@ class FontItem : public QObject
 		bool isRemote(){return m_remote;}
 		bool isCached(){return remoteCached;}		
 		void  fileRemote(QString family, QString variant, QString type, QString info, QPixmap pixmap);
-		void  fileLocal(QString family, QString variant, QString type, QString info);
+		void  fileLocal(QString family, QString variant, QString type, QMap<int, QMap< QString, QString > > info);
 		// retval : 1 => Ready; 2 => Wait ; ...
 		int getFromNetwork();
 };

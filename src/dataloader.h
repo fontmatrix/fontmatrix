@@ -23,7 +23,7 @@
 #include <QFile>
 #include <QStringList>
 
-#include "remotedir.h"
+#include "fontitem.h"
 
 class typotek;
 
@@ -39,12 +39,12 @@ class DataLoader
 		~DataLoader();
 		void load();
 		QStringList fontList() const { return m_fontList; }
-		QMap<  QString,FontInfo > fastList() const { return m_fastList; }
+		QMap<  QString,FontLocalInfo > fastList() const { return m_fastList; }
 	private :
 		QFile *m_file;
 		typotek *m_typo;
 		QStringList m_fontList;
-		QMap<  QString,FontInfo > m_fastList;
+		QMap<  QString,FontLocalInfo > m_fastList;
 
 
 };

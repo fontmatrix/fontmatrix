@@ -64,9 +64,36 @@ void SaveData::doSave()
 			writeStartElement("file");
 			writeCharacters(fitem->path());
 			writeEndElement();
+			
 			writeStartElement("info");
-			writeCharacters( fitem->infoText() );
-			writeEndElement();
+			
+			QMap<int, QMap<QString,QString> > Info(fitem->rawInfo());
+			QMap<int, QMap<QString,QString> >::const_iterator infoMap = Info.begin();
+			QMap<int, QMap<QString,QString> >::const_iterator endMap = Info.end();
+			
+// 			qDebug() << "INFO" << Info.count() << infoMap.key()  ;
+			
+			while( infoMap != endMap )
+			{
+// 				qDebug() << "LANG" << infoMap.key() ;
+				writeStartElement("lang");
+				writeAttribute("code", QString::number( infoMap.key() ) );
+				QMap<QString,QString>::const_iterator langMap = infoMap.value().begin();
+				QMap<QString,QString>::const_iterator endLang = infoMap.value().end();
+				
+				for(;langMap != endLang; ++langMap)
+				{
+					writeStartElement("name");
+					writeAttribute( "name" ,langMap.key()); // ;-)
+					writeCharacters(langMap.value());
+					writeEndElement(); // key
+				}
+				writeEndElement();//lang
+				
+				++infoMap;
+			}
+			
+			writeEndElement();//info
 			QStringList tl = fitem->tags();
 			foreach(QString tag, tl)
 			{

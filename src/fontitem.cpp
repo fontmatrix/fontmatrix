@@ -2330,6 +2330,9 @@ Code  	Meaning
 */
 void FontItem::moreInfo_sfnt()
 {
+	if(!ensureFace())
+		return;
+	
 	FT_SfntName tname;
 
 	if ( name_meaning.isEmpty() )
@@ -2425,10 +2428,15 @@ void FontItem::moreInfo_sfnt()
 			moreInfo[tname.language_id][akey] = avalue;
 		}
 	}
+	
+	releaseFace();
 }
 
 void FontItem::moreInfo_type1()
 {
+	if(!ensureFace())
+		return;
+	
 	PS_FontInfoRec sinfo ;
 	int err = FT_Get_PS_Font_Info ( m_face,&sinfo );
 	if ( err )
@@ -2440,6 +2448,8 @@ void FontItem::moreInfo_type1()
 	moreInfo[0][tr ( "Full font name" ) ] = sinfo.full_name;
 	moreInfo[0][tr ( "Version string" ) ] = sinfo.version;
 	moreInfo[0][tr ( "Description" ) ] = sinfo.notice;
+	
+	releaseFace();
 }
 
 
@@ -2772,12 +2782,13 @@ void FontItem::fileRemote ( QString f , QString v, QString t, QString i, QPixmap
 }
 
 /// the same, but just for speedup startup with a lot of font files
-void FontItem::fileLocal ( QString f, QString v, QString t, QString i )
+void FontItem::fileLocal ( QString f, QString v, QString t, QMap<int, QMap< QString, QString > > i )
 {
 	m_family = f;
 	m_variant = v;
 	m_type = t;
-	m_cacheInfo = i;
+	
+	moreInfo = i;
 }
 
 /// Finally, we have to download the font file
@@ -3019,8 +3030,21 @@ QImage FontItem::glyphImage()
 }
 
 
-
-
-
+QMap< int, QMap < QString , QString > > & FontItem::rawInfo()
+{
+	if(moreInfo.isEmpty())
+	{
+// 		qDebug()<< m_name <<"WARNING MoreInfo is empty"; 
+		if ( m_isOpenType = true /*testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" */ )
+		{
+			moreInfo_sfnt();
+		}
+		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )
+		{
+			moreInfo_type1();
+		}	
+	}
+	 return moreInfo;
+}
 
 

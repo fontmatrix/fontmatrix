@@ -65,7 +65,7 @@ void FMPreviewList::slotRefill(QList<FontItem*> fonts, bool setChanged)
 	theWord = typotek::getInstance()->word();
 	horizontalScrollBar()->setValue(0);
 	QColor oddC(255,255,255);
-	QColor evenC(242,232,232);
+	QColor evenC(242,242,242);
 	bool colState (false);
 	if(setChanged/* && !fonts.isEmpty()*/) 
 	{

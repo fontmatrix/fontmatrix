@@ -723,62 +723,61 @@ QStringList typotek::getSystemFontDirs()
 
 void typotek::initDir()
 {
-	qDebug()<<"initDir()";
+	qDebug() <<"initDir()";
 	DataLoader loader ( &fontsdata );
 	loader.load();
 	/// load font files
-	qDebug()<<"load font files";
+	qDebug() <<"load font files";
 // 	QStringList pathList = loader.fontList();
-	QMap<QString,FontInfo> pathList = loader.fastList();
+	QMap<QString,FontLocalInfo> pathList = loader.fastList();
 	int fontnr = pathList.count();
+
+	relayStartingStepIn ( tr ( "Loading" ) +" "+ QString::number ( fontnr ) +" "+tr ( "fonts present in database" ) );
 	
-// 		QStringList zigouigoui;
-// 		zigouigoui << "|" << "/" << "--" << "\\" << "|"  << "/" << "--" << "\\";
-		relayStartingStepIn(tr("Loading")+" "+ QString::number(fontnr) +" "+tr("fonts present in database"));
-		QMap<QString,FontInfo>::const_iterator pit;
-		for (pit = pathList.begin(); pit != pathList.end(); ++ pit )
+	QMap<QString,FontLocalInfo>::const_iterator pit;
+	for ( pit = pathList.begin(); pit != pathList.end(); ++ pit )
+	{
+		FontItem *fi = new FontItem ( pit.value().file, false, true );
+		if ( !fi->isValid() )
 		{
-			FontItem *fi = new FontItem ( pit.value().file, false, true  );
-			if(!fi->isValid())
-			{
-				qDebug() << "ERROR loading : " << pit.value().file ;
-				continue;
-			}
-			fi->fileLocal( pit.value().family, pit.value().variant, pit.value().type, pit.value().info);
-			fi->unLock();
-			if(tagsMap.value ( fi->path() ).contains("Activated_On"))
-				fi->setActivated(true);
-			fontMap.append ( fi );
-			realFontMap[fi->path() ] = fi;
-			fi->setTags ( tagsMap.value ( fi->path() ) );
+			qDebug() << "ERROR loading : " << pit.value().file ;
+			continue;
+		}
+		fi->fileLocal ( pit.value().family, pit.value().variant, pit.value().type, pit.value().info );
+		fi->unLock();
+		if ( tagsMap.value ( fi->path() ).contains ( "Activated_On" ) )
+			fi->setActivated ( true );
+		fontMap.append ( fi );
+		realFontMap[fi->path() ] = fi;
+		fi->setTags ( tagsMap.value ( fi->path() ) );
 // 			relayStartingStepIn(zigouigoui.at( i % 8 ) );
 // 			relayStartingStepIn( QString::number( fontnr - i ) );
-		}
+	}
 // 	}
 // 	qDebug() <<  fontMap.count() << " font files loaded.";
-	
+
 
 	/// let’s load system fonts
-	
-	QString SysColFon = tr("Collected System Font");
-	if(!tagsList.contains(SysColFon))
-		tagsList << SysColFon;
-	
-	int sysCounter(0);
 
-	QStringList sysDir(getSystemFontDirs());
-	for(int sIdx(0); sIdx < sysDir.count(); ++sIdx)
+	QString SysColFon = tr ( "Collected System Font" );
+	if ( !tagsList.contains ( SysColFon ) )
+		tagsList << SysColFon;
+
+	int sysCounter ( 0 );
+
+	QStringList sysDir ( getSystemFontDirs() );
+	for ( int sIdx ( 0 ); sIdx < sysDir.count(); ++sIdx )
 	{
 		QDir theDir ( sysDir[sIdx] );
 		QStringList syspathList;
 		QStringList nameList;
-		
-		QStringList dirList( fontmatrix::exploreDirs(theDir,0) );
-		
+
+		QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );
+
 		QStringList yetHereFonts;
-		for(int i=0;i < fontMap.count() ; ++i)
+		for ( int i=0;i < fontMap.count() ; ++i )
 			yetHereFonts << fontMap[i]->path();
-		
+
 		QStringList filters;
 		filters << "*.otf" << "*.pfb" << "*.ttf" ;
 		foreach ( QString dr, dirList )
@@ -787,48 +786,48 @@ void typotek::initDir()
 			QFileInfoList fil= d.entryInfoList ( filters );
 			foreach ( QFileInfo fp, fil )
 			{
-				if(!yetHereFonts.contains(fp.absoluteFilePath()))
+				if ( !yetHereFonts.contains ( fp.absoluteFilePath() ) )
 					syspathList <<  fp.absoluteFilePath();
 			}
 		}
-		
-		int sysFontCount(syspathList.count());
-		relayStartingStepIn(tr("Adding")+" "+ QString::number(sysFontCount) +" "+tr("fonts from system directories"));
+
+		int sysFontCount ( syspathList.count() );
+		relayStartingStepIn ( tr ( "Adding" ) +" "+ QString::number ( sysFontCount ) +" "+tr ( "fonts from system directories" ) );
 		for ( int i = 0 ; i < sysFontCount; ++i )
 		{
-			QFile ff ( syspathList.at ( i ));
+			QFile ff ( syspathList.at ( i ) );
 			QFileInfo fi ( syspathList.at ( i ) );
 			{
 				FontItem *fitem = new FontItem ( fi.absoluteFilePath(), false, false );
 				if ( fitem->isValid() )
 				{
 					fitem->lock();
-					fitem->setActivated(true);
-					fitem->addTag(SysColFon);
+					fitem->setActivated ( true );
+					fitem->addTag ( SysColFon );
 					fontMap.append ( fitem );
 					realFontMap[fitem->path() ] = fitem;
 					++sysCounter;
 				}
 				else
 				{
-					qDebug()<< "Can’t open this font because it’s broken : " << fi.fileName() ;
+					qDebug() << "Can’t open this font because it’s broken : " << fi.fileName() ;
 				}
 			}
 		}
 	}
-	relayStartingStepIn(QString::number(sysCounter) + " " + tr("fonts available from system"));
+	relayStartingStepIn ( QString::number ( sysCounter ) + " " + tr ( "fonts available from system" ) );
 
 
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
-		/// Remote dirs
+	/// Remote dirs
 	//TODO
 	QSettings settings;
-	QStringList remoteDirV(settings.value("RemoteDirectories").toStringList());
-	if(!remoteDirV.isEmpty())
+	QStringList remoteDirV ( settings.value ( "RemoteDirectories" ).toStringList() );
+	if ( !remoteDirV.isEmpty() )
 	{
-		relayStartingStepIn(tr("Catching")+" "+ QString::number(remoteDirV.count()) +" "+tr("font descriptions from network"));
-		remoteDir = new RemoteDir(remoteDirV);
-		connect(remoteDir,SIGNAL(listIsReady()),this,SLOT(slotRemoteIsReady()));
+		relayStartingStepIn ( tr ( "Catching" ) +" "+ QString::number ( remoteDirV.count() ) +" "+tr ( "font descriptions from network" ) );
+		remoteDir = new RemoteDir ( remoteDirV );
+		connect ( remoteDir,SIGNAL ( listIsReady() ),this,SLOT ( slotRemoteIsReady() ) );
 		remoteDir->run();
 	}
 }

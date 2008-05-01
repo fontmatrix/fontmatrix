@@ -1774,7 +1774,7 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 			
 			tagsListWidget->addItem ( lit );
 			if(readOnly)
-				lit->setFlags(Qt::NoItemFlags);
+				lit->setFlags(0);// No NoItemFlags in Qt < 4.4
 		}
 	}
 	qDebug()<<"END OF prepare";

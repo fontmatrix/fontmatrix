@@ -27,6 +27,8 @@
         <file alias="icon-PS1">icons/font_type116.png</file>
         <file alias="icon-OTF">icons/font_otf16.png</file>
         
+        <file alias="icon_empty.png">icons/action-empty-128.png</file>
+        
         <file alias="template_default">graphic-resources/fontbook_default.xml</file>
 	<file alias="template_default_preview">graphic-resources/default_template.png</file>
 	<file alias="template_oneline">graphic-resources/one_line_template.xml</file>

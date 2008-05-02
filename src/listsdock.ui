@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>415</width>
-    <height>610</height>
+    <height>723</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -23,24 +23,23 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_3" >
    <item row="0" column="0" >
-    <widget class="QLineEdit" name="searchString" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" >
     <widget class="QLabel" name="Tags" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text" >
       <string>Tag:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="2" colspan="2" >
+   <item row="0" column="1" >
     <widget class="QComboBox" name="tagsCombo" >
      <property name="sizePolicy" >
-      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-       <horstretch>0</horstretch>
+      <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+       <horstretch>1</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
@@ -55,106 +54,20 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" >
-    <widget class="QWidget" native="1" name="widgetTools" >
+   <item row="0" column="2" colspan="2" >
+    <widget class="QLineEdit" name="searchString" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize" >
-      <size>
-       <width>0</width>
-       <height>33</height>
-      </size>
-     </property>
-     <widget class="QPushButton" name="removeButton" >
-      <property name="geometry" >
-       <rect>
-        <x>80</x>
-        <y>0</y>
-        <width>30</width>
-        <height>29</height>
-       </rect>
-      </property>
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text" >
-       <string>R</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="viewAllButton" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>32</width>
-        <height>29</height>
-       </rect>
-      </property>
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="statusTip" >
-       <string>Show complete collection of available fonts</string>
-      </property>
-      <property name="text" >
-       <string>All</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="viewActivatedButton" >
-      <property name="geometry" >
-       <rect>
-        <x>40</x>
-        <y>0</y>
-        <width>32</width>
-        <height>29</height>
-       </rect>
-      </property>
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="statusTip" >
-       <string>Show all activated fonts</string>
-      </property>
-      <property name="text" >
-       <string>Act</string>
-      </property>
-     </widget>
     </widget>
    </item>
-   <item row="1" column="1" colspan="2" >
-    <widget class="QLabel" name="setlabel" >
-     <property name="text" >
-      <string>Tag Set:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3" >
-    <widget class="QComboBox" name="tagsetCombo" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-       <horstretch>1</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="toolTip" >
-      <string>Show only fonts that belong to chosen tagset</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="4" >
+   <item row="1" column="0" colspan="3" >
     <widget class="QLabel" name="filtersCrumb" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
@@ -173,7 +86,33 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="4" >
+   <item row="1" column="3" >
+    <widget class="QPushButton" name="viewAllButton" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="statusTip" >
+      <string>Show complete collection of available fonts</string>
+     </property>
+     <property name="text" >
+      <string/>
+     </property>
+     <property name="icon" >
+      <iconset resource="application.qrc" >
+       <normaloff>:/icon_empty.png</normaloff>:/icon_empty.png</iconset>
+     </property>
+     <property name="iconSize" >
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4" >
     <widget class="QTabWidget" name="tabWidget" >
      <property name="currentIndex" >
       <number>0</number>
@@ -184,7 +123,7 @@
         <x>0</x>
         <y>0</y>
         <width>393</width>
-        <height>457</height>
+        <height>607</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -263,7 +202,7 @@
         <x>0</x>
         <y>0</y>
         <width>393</width>
-        <height>457</height>
+        <height>607</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -286,6 +225,14 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tab_3" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>393</width>
+        <height>607</height>
+       </rect>
+      </property>
       <attribute name="title" >
        <string>Folders</string>
       </attribute>
@@ -298,6 +245,15 @@
     </widget>
    </item>
   </layout>
+  <zorder>searchString</zorder>
+  <zorder>Tags</zorder>
+  <zorder>tagsCombo</zorder>
+  <zorder>widgetTools</zorder>
+  <zorder>setlabel</zorder>
+  <zorder>tagsetCombo</zorder>
+  <zorder>filtersCrumb</zorder>
+  <zorder>viewAllButton</zorder>
+  <zorder>tabWidget</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -311,6 +267,8 @@
    <header>fmnamelist.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="application.qrc" />
+ </resources>
  <connections/>
 </ui>

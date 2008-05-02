@@ -123,15 +123,15 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	//CONNECT
-	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
+// 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 // 	connect ( m_lists->searchString,SIGNAL ( textEdited ( const QString&)  ),this,SLOT ( slotLiveSearch(const QString&) ) );
 	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
-	connect ( m_lists->viewActivatedButton,SIGNAL ( released() ),this,SLOT ( slotViewActivated() ) );
+// 	connect ( m_lists->viewActivatedButton,SIGNAL ( released() ),this,SLOT ( slotViewActivated() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
-	connect ( m_lists->removeButton, SIGNAL(released()),this,SLOT(slotRemoveCurrentItem()));
+// 	connect ( m_lists->removeButton, SIGNAL(released()),this,SLOT(slotRemoveCurrentItem()));
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
@@ -1068,8 +1068,8 @@ void MainViewWidget::slotReloadFontList()
 
 void MainViewWidget::slotReloadTagsetList()
 {
-	m_lists->tagsetCombo->clear();
-	m_lists->tagsetCombo->addItems ( typo->tagsets() );
+// 	m_lists->tagsetCombo->clear();
+	m_lists->tagsCombo->addItems ( typo->tagsets() );
 }
 
 // void MainViewWidget::slotShowCodePoint()

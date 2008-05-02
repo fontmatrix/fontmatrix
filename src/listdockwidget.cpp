@@ -40,7 +40,7 @@ ListDockWidget::ListDockWidget()
 {
 	setupUi(this);
 	fontTree->setIconSize(QSize(32,32));
-	tagsetCombo->addItems (typotek::getInstance()->tagsets() );
+// 	tagsetCombo->addItems (typotek::getInstance()->tagsets() );
 	
 	QStringList tl_tmp = typotek::tagsList;
 	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
@@ -48,6 +48,7 @@ ListDockWidget::ListDockWidget()
 	tl_tmp.removeAll ( "Activated_Off" );
 
 	tagsCombo->addItems ( tl_tmp );
+	tagsCombo->addItems ( typotek::getInstance()->tagsets() );
 	
 	// Folders tree
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";

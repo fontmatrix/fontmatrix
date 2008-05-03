@@ -21,6 +21,7 @@
 #define LISTDOCKWIDGET_H
 
 #include <QWidget>
+#include <QMap>
 #include <ui_listsdock.h>
 
 class QListWidgetItem;
@@ -29,6 +30,8 @@ class QDirModel;
 class QMenu;
 class QAction;
 class QActionGroup;
+class QCompleter;
+
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -65,6 +68,8 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		QActionGroup *filterActGroup;
 		QString currentField;
 		
+		QMap<QString, QCompleter*> completers;
+		
 	public slots:
 		void unlockFilter();
 		
@@ -73,6 +78,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 // 		void slotFolderItemDoubleclicked(QModelIndex mIdx);
 		void slotFolderPressed(QModelIndex mIdx);
 		void slotFieldChanged(QAction * action);
+		void slotFeedTheCompleter(const QString& w);
 		
 	signals:
 		void folderSelectFont(const QString&);

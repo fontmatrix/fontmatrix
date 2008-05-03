@@ -25,6 +25,8 @@
 #include <QScrollBar>
 #include <QDirModel>
 #include <QMenu>
+#include <QStringListModel>
+#include <QCompleter>
 
 extern QStringList name_meaning;
 
@@ -74,21 +76,30 @@ ListDockWidget::ListDockWidget()
 	actn->setChecked(true);
 	theFilterMenu->addAction(actn);
 	
+	QStringListModel *lModel = new QStringListModel;
+	completers[currentField] = new QCompleter(this);
+	completers[currentField]->setModel(lModel);
+	
 	for(int gIdx(0); gIdx < name_meaning.count() ; ++gIdx)
 	{
 		qDebug()<<"ADD Name action"<< name_meaning[gIdx];
 		actn = new QAction(name_meaning[gIdx], filterActGroup);
 		actn->setCheckable(true);
 		theFilterMenu->addAction(actn);
+		lModel = new QStringListModel;
+		completers[name_meaning[gIdx]] = new QCompleter(this);
+		completers[name_meaning[gIdx]]->setModel(lModel);
 	}
 	
 	fieldButton->setMenu(theFilterMenu);
 	fieldButton->setToolTip(currentField);
 	
+	searchString->setCompleter(completers.value(currentField));
 	
 	folderView->setDragDropMode(QAbstractItemView::DragDrop);
 	
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
+	connect( searchString,SIGNAL(textEdited( const QString& )),this,SLOT(slotFeedTheCompleter(const QString&)));
 	
 	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(folderView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
@@ -179,4 +190,17 @@ void ListDockWidget::slotFieldChanged(QAction * action)
 {
 	currentField = action->text();
 	fieldButton->setToolTip(currentField);
+	searchString->setCompleter(completers.value(currentField));
+}
+
+
+void ListDockWidget::slotFeedTheCompleter(const QString & w)
+{
+	QStringListModel *m = reinterpret_cast<QStringListModel*>( completers.value(currentField)->model() );
+	QStringList l(m->stringList ());
+	if(!l.contains(w))
+	{
+		l << w;
+		m->setStringList(l);
+	}
 }

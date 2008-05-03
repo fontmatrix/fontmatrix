@@ -2673,7 +2673,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 		else if ( cat == QChar::Symbol_Modifier ) catString = QObject::tr ( "Symbol, Modifier" );
 		else if ( cat == QChar::Symbol_Other ) catString = QObject::tr ( "Symbol, Other" );
 
-		html = "<span style=\""+ itemNameStyle +"\"> Category </span>";
+		html = "<span style=\""+ itemNameStyle +"\"> "+ tr("Category") + " </span>";
 		html += "<span style=\""+ itemValueStyle +"\"> "+ catString +" </span>";
 
 		textIt->setHtml ( html );

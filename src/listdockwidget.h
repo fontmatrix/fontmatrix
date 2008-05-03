@@ -22,6 +22,8 @@
 
 #include <QWidget>
 #include <QMap>
+#include <QMenu>
+#include <QFileInfo>
 #include <ui_listsdock.h>
 
 class QListWidgetItem;
@@ -31,7 +33,8 @@ class QMenu;
 class QAction;
 class QActionGroup;
 class QCompleter;
-
+class QPoint;
+class FolderViewMenu;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -44,21 +47,21 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		~ListDockWidget();
 		static ListDockWidget* getInstance();
 		static ListDockWidget* instance;
-		
+
 		void savePosition();
 		void restorePosition();
-		
+
 		bool nameItemIsVisible(QTreeWidgetItem *item);
-		
+
 		void forcePreviewRefill();
-		
+
 		QModelIndex getFolderCurrentIndex(){return currentFIndex;}
-		
+
 		QString getCurrentField() const
 		{
 			return currentField;
 		}
-		
+
 	private:
 		int m_position;
 		QDirModel *theDirModel;
@@ -67,22 +70,47 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		QMenu *theFilterMenu;
 		QActionGroup *filterActGroup;
 		QString currentField;
-		
+
 		QMap<QString, QCompleter*> completers;
-		
+
+		FolderViewMenu *folderViewContextMenu;
+
 	public slots:
 		void unlockFilter();
-		
+
 	private slots:
 		void slotFolderItemclicked(QModelIndex mIdx);
 // 		void slotFolderItemDoubleclicked(QModelIndex mIdx);
 		void slotFolderPressed(QModelIndex mIdx);
 		void slotFieldChanged(QAction * action);
 		void slotFeedTheCompleter(const QString& w);
-		
+		void slotFolderViewContextMenu(const QPoint&);
+
 	signals:
 		void folderSelectFont(const QString&);
 
+};
+
+class FolderViewMenu : public QMenu
+{
+	Q_OBJECT
+public:
+	FolderViewMenu();
+	~FolderViewMenu();
+
+	void exec(const QFileInfo &fi, const QPoint &p);
+
+private:
+	QAction *dirAction;
+	QAction *dirRecursiveAction;
+	QAction *fileAction;
+
+	QFileInfo selectedFileOrDir;
+
+private slots:
+	void slotImportDir();
+	void slotImportDirRecursively();
+	void slotImportFile();
 };
 
 #endif

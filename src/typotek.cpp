@@ -131,20 +131,20 @@ void typotek::initMatrix()
 	qDebug()<<"initMatrix()";
 	m_defaultSampleName = tr("default") ;
 	fontmatrix::fillDockPos();
-	
+
 	checkOwnDir();
 	initDir();
 	readSettings();
-	
+
 	theMainView = new MainViewWidget ( this );
 	setCentralWidget ( theMainView );
-	
+
 	if ( QSystemTrayIcon::isSystemTrayAvailable() )
 		systray = new Systray();
 	else
 		systray = 0;
-	
-	
+
+
 	QFont statusFontFont ( "sans-serif",8,QFont::Bold,false );
 	curFontPresentation = new QLabel ( tr ( "Nothing Selected" ) );
 	curFontPresentation->setAlignment ( Qt::AlignRight );
@@ -154,15 +154,15 @@ void typotek::initMatrix()
 	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
 	mainDock->setWidget ( ListDockWidget::getInstance() );
 	addDockWidget ( fontmatrix::DockPosition[mainDockArea], mainDock );
-	
+
 
 	createActions();
 	createMenus();
 	createStatusBar();
 	doConnect();
-	
+
 	theMainView->resetCrumb();
-	
+
 }
 
 
@@ -171,12 +171,12 @@ void typotek::initMatrix()
 void typotek::doConnect()
 {
 	// later ?
-	
+
 	if(getSystray())
 		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( QString ) ), getSystray(),SLOT ( updateTagMenu ( QString ) ) );
-	
+
 	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
-	
+
 }
 
 
@@ -217,116 +217,146 @@ void typotek::closeEvent ( QCloseEvent *event )
 /// IMPORT
 void typotek::open(QString path)
 {
-	
-	static QString dir = QDir::homePath(); // first time use the home path then remember the last used dir
-	QString tmpdir;
-	
-	if(!path.isEmpty())
-		tmpdir = path;
-	else
-		tmpdir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
+	QFileInfo finfo(path);
+	if (finfo.isDir()) {
+		static QString dir = QDir::homePath(); // first time use the home path then remember the last used dir
+		QString tmpdir;
 
-	if ( tmpdir.isEmpty() )
-		return; // user choose to cancel the import process
+		if(!path.isEmpty())
+			tmpdir = path;
+		else
+			tmpdir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
 
-	dir = tmpdir; // only set dir if importing wasn't cancelled
-	
-	QDir theDir ( dir );
-// 	addFcDirItem(theDir.absolutePath());
+		if ( tmpdir.isEmpty() )
+			return; // user choose to cancel the import process
 
-	QStringList pathList;
-	QStringList nameList;
-	
-	QStringList dirList( fontmatrix::exploreDirs(dir,0) );
-// 	qDebug() << dirList.join ( "\n" );
-	
-	QStringList yetHereFonts;
-	for(int i=0;i < fontMap.count() ; ++i)
-		yetHereFonts << fontMap[i]->path();
-	
-	QStringList filters;
-	filters << "*.otf" << "*.pfb" << "*.ttf" ;
-	foreach ( QString dr, dirList )
-	{
-		QDir d ( dr );
-		QFileInfoList fil= d.entryInfoList ( filters );
-		foreach ( QFileInfo fp, fil )
+		dir = tmpdir; // only set dir if importing wasn't cancelled
+
+		QDir theDir ( dir );
+	// 	addFcDirItem(theDir.absolutePath());
+
+		QStringList pathList;
+		QStringList nameList;
+
+		QStringList dirList( fontmatrix::exploreDirs(dir,0) );
+	// 	qDebug() << dirList.join ( "\n" );
+
+		QStringList yetHereFonts;
+		for(int i=0;i < fontMap.count() ; ++i)
+			yetHereFonts << fontMap[i]->path();
+
+		QStringList filters;
+		filters << "*.otf" << "*.pfb" << "*.ttf" ;
+		foreach ( QString dr, dirList )
 		{
-			if(!yetHereFonts.contains(fp.absoluteFilePath()))
-				pathList <<  fp.absoluteFilePath();
-		}
-	}
-	QStringList tali;
-	/* Everybody say it’s useless...
-		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
-	if ( useInitialTags )
-	{
-		ImportTags imp(this,tagsList);
-		imp.exec();
-		tali = imp.tags();
-	}
-	
-
-	for(int i = 0; i < tali.count();++i )
-	{
-		if ( !tagsList.contains ( tali[i] ) )
-		{
-			tagsList.append ( tali[i] );
-			emit tagAdded ( tali[i] );
-		}
-	}
-
-	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
-	progress.setWindowModality ( Qt::WindowModal );
-	progress.setAutoReset ( false );
-	progress.setValue ( 0 );
-	progress.show();
-	QString importstring ( tr ( "Import" ) +  " %1" );
-	for ( int i = 0 ; i < pathList.count(); ++i )
-	{
-		QString pathCur(pathList.at ( i ));
-		progress.setLabelText ( importstring.arg ( pathCur ) );
-		progress.setValue ( i );
-		if ( progress.wasCanceled() )
-			break;
-
-		if(temporaryFonts.contains(pathCur))
-		{
-			FontItem *fitem(temporaryFonts.value(pathCur));
-			fitem->unLock();
-			fitem->setTags(tali);
-			temporaryFonts.remove(pathCur);
-			nameList << fitem->fancyName();
-			continue;
-		}
-		
-		QFile ff ( pathCur);
-		QFileInfo fi ( pathCur );
-		{
-			FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
-			if ( fitem->isValid() )
+			QDir d ( dr );
+			QFileInfoList fil= d.entryInfoList ( filters );
+			foreach ( QFileInfo fp, fil )
 			{
-				fitem->setTags ( tali );
-				fitem->setActivated(false);
-				fontMap.append ( fitem );
-				realFontMap[fitem->path() ] = fitem;
+				if(!yetHereFonts.contains(fp.absoluteFilePath()))
+					pathList <<  fp.absoluteFilePath();
+			}
+		}
+		QStringList tali;
+		/* Everybody say it’s useless...
+			NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
+		if ( useInitialTags )
+		{
+			ImportTags imp(this,tagsList);
+			imp.exec();
+			tali = imp.tags();
+		}
+
+
+		for(int i = 0; i < tali.count();++i )
+		{
+			if ( !tagsList.contains ( tali[i] ) )
+			{
+				tagsList.append ( tali[i] );
+				emit tagAdded ( tali[i] );
+			}
+		}
+
+		QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
+		progress.setWindowModality ( Qt::WindowModal );
+		progress.setAutoReset ( false );
+		progress.setValue ( 0 );
+		progress.show();
+		QString importstring ( tr ( "Import" ) +  " %1" );
+		for ( int i = 0 ; i < pathList.count(); ++i )
+		{
+			QString pathCur(pathList.at ( i ));
+			progress.setLabelText ( importstring.arg ( pathCur ) );
+			progress.setValue ( i );
+			if ( progress.wasCanceled() )
+				break;
+
+			if(temporaryFonts.contains(pathCur))
+			{
+				FontItem *fitem(temporaryFonts.value(pathCur));
+				fitem->unLock();
+				fitem->setTags(tali);
+				temporaryFonts.remove(pathCur);
 				nameList << fitem->fancyName();
+				continue;
 			}
-			else
+
+			QFile ff ( pathCur);
+			QFileInfo fi ( pathCur );
 			{
-				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
-				statusBar()->showMessage ( errorFont );
-				nameList << "__FAILEDTOLOAD__" + fi.fileName();
+				FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
+				if ( fitem->isValid() )
+				{
+					fitem->setTags ( tali );
+					fitem->setActivated(false);
+					fontMap.append ( fitem );
+					realFontMap[fitem->path() ] = fitem;
+					nameList << fitem->fancyName();
+				}
+				else
+				{
+					QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
+					statusBar()->showMessage ( errorFont );
+					nameList << "__FAILEDTOLOAD__" + fi.fileName();
+				}
 			}
 		}
+
+		progress.close();
+
+		// The User needs and deserves to know what fonts hve been imported
+		ImportedFontsDialog ifd ( this, nameList );
+		ifd.exec();
+		theMainView->slotReloadFontList();
+
+
+	} else if (finfo.isFile()) {
+		QStringList tali;
+		if ( useInitialTags )
+		{
+			ImportTags imp(this,tagsList);
+			imp.exec();
+			tali = imp.tags();
+			tali << "Activated_Off" ;
+		}
+		else
+			tali << "Activated_Off" ;
+
+		foreach ( QString tas, tali )
+		{
+			if ( !tagsList.contains ( tas ) )
+			{
+				tagsList.append ( tas );
+				emit tagAdded ( tas );
+			}
+		}
+
+		FontItem *fitem(temporaryFonts.value(path));
+		fitem->unLock();
+		fitem->setTags(tali);
+		temporaryFonts.remove(path);
+		theMainView->slotReloadFontList();
 	}
-
-	progress.close();
-
-	// The User needs and deserves to know what fonts hve been imported
-	ImportedFontsDialog ifd ( this, nameList );
-	ifd.exec();
-	theMainView->slotReloadFontList();
 }
 
 void typotek::open ( QStringList files )
@@ -353,14 +383,14 @@ void typotek::open ( QStringList files )
 		}
 	}
 
-	
+
 	for(int i=0;i < fontMap.count() ; ++i)
 	{
 		if(pathList.contains( fontMap[i]->path()))
 			pathList.removeAll(fontMap[i]->path());
-		
+
 	}
-	
+
 	QProgressDialog progress ( tr ( "Importing font files... " ),tr ( "cancel" ), 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 	progress.setAutoReset ( false );
@@ -409,16 +439,16 @@ bool typotek::insertTemporaryFont(const QString & path)
 	// basic check
 	if(path.isEmpty())
 		return false;
-	
+
 	QFileInfo fi ( path );
-	QString absPath ( fi.absoluteFilePath() ); 
+	QString absPath ( fi.absoluteFilePath() );
 	// check if we have it yet
 	for(int i=0;i < fontMap.count() ; ++i)
 	{
 		if(fontMap[i]->path() == absPath)
 			return true;
 	}
-	
+
 	// Build an item
 	FontItem *item(new FontItem(absPath));
 	if(!item->isValid())
@@ -430,7 +460,7 @@ bool typotek::insertTemporaryFont(const QString & path)
 	realFontMap[ item->path() ] = item;
 	temporaryFonts[ item->path() ] = item;
 	item->lock();
-	
+
 	return true;
 }
 
@@ -451,8 +481,8 @@ void typotek::slotExportFontSet()
 		QString dir( QDir::homePath() );
 		dir = QFileDialog::getExistingDirectory ( this, tr ( "Choose Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
 		if ( dir.isEmpty() )
-			return; 
-		
+			return;
+
 		DataExport dx(dir,item);
 		dx.doExport();
 	}
@@ -488,7 +518,7 @@ void typotek::createActions()
 	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
 	saveAct->setStatusTip ( tr ( "Save the document to disk" ) );
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
-	
+
 	exportFontSetAct = new QAction(tr("Export &Fonts"),this);
 	exportFontSetAct->setStatusTip(tr("Export a fontset"));
 	connect( exportFontSetAct,SIGNAL(triggered( )),this,SLOT(slotExportFontSet()));
@@ -496,7 +526,7 @@ void typotek::createActions()
 	printInfoAct = new QAction ( tr ( "Print Info..." ),this );
 	printInfoAct->setStatusTip ( tr ( "Print informations about the current font" ) );
 	connect ( printInfoAct, SIGNAL ( triggered() ), this, SLOT ( printInfo() ) );
-	
+
 	printSampleAct = new QAction ( tr ( "Print Sample..." ),this );
 	printSampleAct->setStatusTip( tr("Print the sample as a specimen"));
 	connect (printSampleAct,SIGNAL( triggered() ), this, SLOT ( printSample()) );
@@ -504,15 +534,15 @@ void typotek::createActions()
 	printChartAct = new QAction ( tr ( "Print Chart..." ),this );
 	printChartAct->setStatusTip( tr("Print a chart of the current font"));
 	connect (printChartAct,SIGNAL( triggered() ), this, SLOT ( printChart()) );
-	
+
 	printPlaygroundAct = new QAction ( tr ( "Print Playground..." ),this );
 	printPlaygroundAct->setStatusTip( tr("Print the playground"));
 	connect (printPlaygroundAct,SIGNAL( triggered() ), this, SLOT ( printPlayground()) );
-	
+
 	printFamilyAct = new QAction ( tr ( "Print Family..." ),this );
 	printFamilyAct->setStatusTip( tr("Print a specimen of the whole family the current face belongs to"));
 	connect (printFamilyAct,SIGNAL( triggered() ), this, SLOT ( printFamily()) );
-	
+
 	fontBookAct = new QAction ( QIcon ( ":/fontmatrix_fontbookexport_icon.png" ), tr ( "Export font book..." ),this );
 	fontBookAct->setStatusTip ( tr ( "Export a pdf that show selected fonts" ) );
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
@@ -526,7 +556,7 @@ void typotek::createActions()
 	aboutAct = new QAction ( tr ( "&About" ), this );
 	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
-	
+
 	aboutQtAct = new QAction ( tr ( "About &Qt" ), this );
 	connect (aboutQtAct,SIGNAL(triggered()), QApplication::instance(),SLOT(aboutQt()));
 
@@ -557,13 +587,13 @@ void typotek::createActions()
 
 	prefsAct = new QAction ( tr ( "Preferences" ),this );
 	connect ( prefsAct,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanelDefault() ) );
-	
+
 	repairAct = new QAction ( tr("Check Database"), this);
 	connect( repairAct, SIGNAL ( triggered() ),this,SLOT (slotRepair()));
 
 	if ( systray )
 		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
-	
+
 	tagAll = new QAction(tr("Tag All..."), this);
 	connect(tagAll,SIGNAL(triggered()),this,SLOT(slotTagAll()));
 }
@@ -576,14 +606,14 @@ void typotek::createMenus()
 	fileMenu->addAction ( saveAct );
 	fileMenu->addAction ( exportFontSetAct );
 	fileMenu->addSeparator();
-	
+
 	printMenu = fileMenu->addMenu(tr("Print"));
 	printMenu->addAction(printInfoAct);
 	printMenu->addAction(printSampleAct);
 	printMenu->addAction(printChartAct);
 	printMenu->addAction(printPlaygroundAct);
 	printMenu->addAction(printFamilyAct);
-	
+
 	fileMenu->addAction ( fontBookAct );
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
@@ -626,7 +656,7 @@ void typotek::readSettings()
 	templatesDir = settings.value ( "TemplatesDir", "./").toString();
 	previewSize = settings.value("PreviewSize", 15.0).toDouble();
 	previewRTL = settings.value("PreviewRTL", false).toBool();
-	
+
 	mainDockArea = settings.value("ToolPos", "Left").toString();
 }
 
@@ -752,7 +782,7 @@ void typotek::initDir()
 	int fontnr = pathList.count();
 
 	relayStartingStepIn ( tr ( "Loading" ) +" "+ QString::number ( fontnr ) +" "+tr ( "fonts present in database" ) );
-	
+
 	QMap<QString,FontLocalInfo>::const_iterator pit;
 	for ( pit = pathList.begin(); pit != pathList.end(); ++ pit )
 	{
@@ -858,7 +888,7 @@ void typotek::slotRemoteIsReady()
 		slotRemoteIsReadyRunOnce = true;
 	else
 		return;
-	
+
 // 	qDebug()<<"typotek::slotRemoteIsReady()";
 	QList<FontInfo> listInfo(remoteDir->rFonts());
 // 	qDebug()<< "Have got "<< listInfo.count() <<"remote font descriptions";
@@ -893,29 +923,29 @@ void typotek::slotRemoteIsReady()
 
 QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 {
-	
+
 	if(pattern.isEmpty())
 	{
 		theMainView->resetCrumb();
 		return fontMap;
 	}
-	
-	
+
+
 	QList< FontItem * > ret;
 	ret.clear();
 	QList< FontItem * > superSet ( theMainView->curFonts() ) ;
-	
+
 	if(superSet.isEmpty())
 	{
 		theMainView->resetCrumb();
 		superSet = fontMap;
 	}
-	
+
 	theMainView->addFilterToCrumb(pattern);
 	int superSetCount ( superSet.count() );
 
 	qDebug()<<"PATERN ="<< pattern<<": FIELD ="<< field<<":"<< superSetCount;
-	
+
 	if ( field == "tag" )
 	{
 		for ( int i =0; i < superSetCount; ++i )
@@ -958,7 +988,7 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 // 	QPrinter thePrinter ( QPrinter::HighResolution );
 // // 	FMPrintDialog *dialog = new FMPrintDialog ( &thePrinter, this );
 // 	dialog->setWindowTitle ( tr ( "Fontmatrix - Print" ) );
-// 
+//
 // 	if ( dialog->exec() != QDialog::Accepted )
 // 		return;
 // // 	thePrinter.setFullPage ( true );
@@ -1074,13 +1104,13 @@ void typotek::dropEvent ( QDropEvent * event )
 
 // 	event->acceptProposedAction();
 	QStringList uris = event->mimeData()->text().split ( "\n" );
-	QStringList ret;	
-	
+	QStringList ret;
+
 	// Internal drag & drop
 	if(event->source() && event->source()->objectName() == "folderView" )
 	{
 		QString fP(ListDockWidget::getInstance()->getFolderCurrentIndex().data(QDirModel::FilePathRole).toString());
-		
+
 		if(QFileInfo(fP).isDir())
 		{
 // 			// We remove all temporary fonts
@@ -1100,41 +1130,16 @@ void typotek::dropEvent ( QDropEvent * event )
 		{
 			if(temporaryFonts.contains(fP))
 			{
-				QStringList tali;
-				if ( useInitialTags )
-				{
-					ImportTags imp(this,tagsList);
-					imp.exec();
-					tali = imp.tags();
-					tali << "Activated_Off" ;
-				}
-				else
-					tali << "Activated_Off" ;
-
-				foreach ( QString tas, tali )
-				{
-					if ( !tagsList.contains ( tas ) )
-					{
-						tagsList.append ( tas );
-						emit tagAdded ( tas );
-					}
-				}
-				
-				FontItem *fitem(temporaryFonts.value(fP));
-				fitem->unLock();
-				fitem->setTags(tali);
-				temporaryFonts.remove(fP);
-				theMainView->slotReloadFontList();
-				return;
+				open(fP);
 			}
 			else
 			{
 				uris << "file://" + fP;
 			}
 		}
-		
+
 	}
-	
+
 	for ( int i = 0; i < uris.count() ; ++i )
 	{
 		qDebug() << "dropped uri["<< i <<"] -> "<< uris[i];
@@ -1197,7 +1202,7 @@ void typotek::slotPrefsPanel(PrefsPanelDialog::PAGE page)
 {
 	PrefsPanelDialog pp ( this );
 
-	// FIXME if Systray is not available, systray->whatever() will segault 
+	// FIXME if Systray is not available, systray->whatever() will segault
 	if ( QSystemTrayIcon::isSystemTrayAvailable() )
 		pp.initSystrayPrefs ( QSystemTrayIcon::isSystemTrayAvailable(),
 		                      systray->isVisible(),
@@ -1351,7 +1356,7 @@ void typotek::setTemplatesDir(const QString & dir)
 	templatesDir = dir;
 	QSettings settings;
 	settings.setValue("TemplatesDir", templatesDir);
-	
+
 }
 
 void typotek::changeFontSizeSettings(double fSize, double lSize)
@@ -1399,7 +1404,7 @@ void typotek::setRemoteTmpDir(const QString & s)
 		m_remoteTmpDir = QDir::temp().path();
 	else
 		m_remoteTmpDir = s;
-	
+
 	QSettings settings;
 	settings.setValue("RemoteTmpDir", m_remoteTmpDir);
 }
@@ -1415,7 +1420,7 @@ void typotek::slotTagAll()
 	ImportTags imp(this,tagsList);
 	imp.exec();
 	QStringList tali = imp.tags();
-	
+
 	if(tali.isEmpty())
 		return;
 	for(int t(0); t < tali.count(); ++t)
@@ -1426,7 +1431,7 @@ void typotek::slotTagAll()
 			emit tagAdded(tali[t]);
 		}
 	}
-	
+
 	QList<FontItem*> curfonts = theMainView->curFonts();
 	for(int i(0) ; i < curfonts.count(); ++i)
 	{
@@ -1434,7 +1439,7 @@ void typotek::slotTagAll()
 		{
 			curfonts[i]->addTag(tali[t]);
 		}
-		
+
 	}
 	theMainView->slotNewTag();
 }
@@ -1445,11 +1450,11 @@ void typotek::printInfo()
 	QString fontname(tr("Welcome maessage"));
 	if(font)
 		fontname =font->fancyName();
-	
+
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);
 	dialog.setWindowTitle("Fontmatrix - " + tr("Print Infos") +" - " + fontname );
-	
+
 	if ( dialog.exec() != QDialog::Accepted )
 		return;
 	thePrinter.setFullPage ( true );
@@ -1461,18 +1466,18 @@ void typotek::printSample()
 	FontItem * font(theMainView->selectedFont());
 	if(!font)
 		return;
-	
+
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);
 	dialog.setWindowTitle("Fontmatrix - " + tr("Print Infos") +" - " + font->fancyName() );
-	
+
 	if ( dialog.exec() != QDialog::Accepted )
 		return;
 	thePrinter.setFullPage ( true );
 	QPainter aPainter ( &thePrinter );
-	
+
 	theMainView->currentSampleScene()->render(&aPainter);
-	
+
 }
 
 void typotek::printChart()
@@ -1480,31 +1485,31 @@ void typotek::printChart()
 	FontItem * font(theMainView->selectedFont());
 	if(!font)
 		return;
-	
+
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);
 	dialog.setWindowTitle("Fontmatrix - " + tr("Print Chart") +" - " + font->fancyName() );
-	
+
 	if ( dialog.exec() != QDialog::Accepted )
 		return;
 	thePrinter.setFullPage ( true );
 	QPainter aPainter ( &thePrinter );
-	
-	
+
+
 	double pWidth(thePrinter.paperRect().width());
 	double pHeight(thePrinter.paperRect().height());
 	double pFactor( thePrinter.resolution() );
-	
+
 	qDebug()<<"Paper :"<<pWidth<<pHeight;
 	qDebug()<<"Resolution :"<<pFactor;
 	qDebug()<<"P/R*72:"<<pWidth / pFactor * 72<< pHeight / pFactor * 72;
-	
+
 	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
-	
+
 
 	QRectF sourceR( 0, 0, pWidth / pFactor * 72, pHeight / pFactor * 72);
 	QGraphicsScene pScene(sourceR);
-	
+
 	int maxCharcode(0x10FFFF);
 	int beginCharcode(0);
 	int numP(0);
@@ -1518,14 +1523,14 @@ void typotek::printChart()
 			pScene.removeItem(git);
 			delete git;
 		}
-		
+
 		int controlN(maxCharcode - beginCharcode);
 		int stopAtCode( font->renderChart(&pScene, beginCharcode, maxCharcode, sourceR.width(),sourceR.height() ) );
 		qDebug()<< "Control"<<beginCharcode<<stopAtCode;
-		
+
 		if(stopAtCode == beginCharcode)
 			break;
-		
+
 		if(first)
 		{
 			first = false;
@@ -1536,11 +1541,11 @@ void typotek::printChart()
 		}
 		aPainter.drawText(targetR.bottomLeft(), font->fancyName()+"[U"+QString::number(beginCharcode  ,16).toUpper()+", U"+QString::number(stopAtCode ,16).toUpper()+"]");
 		pScene.render(&aPainter,targetR, sourceR, Qt::KeepAspectRatio);
-		
+
 		beginCharcode = stopAtCode;
 	}
-	
-	
+
+
 }
 
 void typotek::printPlayground()
@@ -1549,18 +1554,18 @@ void typotek::printPlayground()
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);
 	dialog.setWindowTitle("Fontmatrix - " + tr("Print Playground")  );
-	
+
 	if ( dialog.exec() != QDialog::Accepted )
 		return;
 	thePrinter.setFullPage ( true );
-	QPainter aPainter ( &thePrinter );	
-	
+	QPainter aPainter ( &thePrinter );
+
 	double pWidth(thePrinter.paperRect().width());
 	double pHeight(thePrinter.paperRect().height());
-	
+
 	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
 	QRectF sourceR( theMainView->getPlayground()->getMaxRect() );
-	
+
 	theMainView->getPlayground()->scene()->render(&aPainter, targetR ,sourceR, Qt::KeepAspectRatio );
 }
 
@@ -1572,27 +1577,27 @@ void typotek::printFamily()
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);
 	dialog.setWindowTitle("Fontmatrix - " + tr("Print Family") +" - " + font->family());
-	
+
 	if ( dialog.exec() != QDialog::Accepted )
 		return;
-	
+
 	thePrinter.setFullPage ( true );
 	QPainter aPainter ( &thePrinter );
-	
+
 	QGraphicsScene tmpScene(thePrinter.paperRect());
 	QGraphicsScene pScene(thePrinter.paperRect());
-	
+
 	qDebug()<<thePrinter.paperRect();
-	
+
 	QMap<int , double> logWidth;
 	QMap<int , double> logAscend;
 	QMap<int , double> logDescend;
 	QMap<int , QString> sampleString;
 	QMap<int , FontItem*> sampleFont;
-	
+
 	QStringList stl(namedSample ( theMainView->sampleName() ).split ( '\n' ));
 	QList<FontItem*> familyFonts( getFonts(theMainView->selectedFont()->family(), "family"));
-	
+
 // 	if(familyFonts.count() > stl.count())
 	{
 		int diff ( familyFonts.count()  );
@@ -1601,7 +1606,7 @@ void typotek::printFamily()
 			sampleString[i] = stl[ i % stl.count() ];
 		}
 	}
-	
+
 	// first we’ll get widths for font size 1000
 	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
 	{
@@ -1624,14 +1629,14 @@ void typotek::printFamily()
 	double defHeight(0.9 * pScene.height() );
 	double xOff( 0.1 * pScene.width() );
 	double yPos(0.1 * pScene.height() );
-	
+
 	QFont nameFont;
 	nameFont.setPointSizeF(100.0);
 	nameFont.setItalic(true);
-	
+
 	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
 	{
-		double scaleFactor(1000.0 / logWidth[fidx] ); 
+		double scaleFactor(1000.0 / logWidth[fidx] );
 		double fSize( defWidth *  scaleFactor );
 		double fAscend(logAscend[fidx] * fSize / 1000.0);
 		double fDescend(logDescend[fidx] * fSize  / 1000.0 );
@@ -1646,35 +1651,35 @@ void typotek::printFamily()
 				delete git;
 			}
 			yPos = 0.1 * pScene.height();
-			
+
 		}
-		
+
 		yPos +=  fAscend;
 		QPointF origine(xOff,  yPos );
-		
+
 		qDebug()<< sampleString[fidx] << fSize;
-		
+
 		bool rasterState(sampleFont[fidx]->rasterFreetype());
 		sampleFont[fidx]->setFTRaster(false);
 		sampleFont[fidx]->renderLine(&pScene, sampleString[fidx], origine, pScene.width(), fSize, 100, false);
 		pScene.addLine(QLineF(origine, QPointF(xOff + defWidth, yPos)));
 		sampleFont[fidx]->setFTRaster(rasterState);
-		
+
 		yPos +=  fDescend ;
-		
+
 		QGraphicsSimpleTextItem * nameText = pScene.addSimpleText( familyFonts[fidx]->fancyName(), nameFont) ;
 		nameText->setPos(xOff, yPos);
 // 		nameText->setBrush(Qt::gray);
 		yPos += nameText->boundingRect().height();
 	}
-	
+
 	pScene.render(&aPainter);
 }
 
 void typotek::showEvent(QShowEvent * event)
 {
 	QMainWindow::showEvent(event);
-	
+
 	if(!theMainView->selectedFont())
 		theMainView->displayWelcomeMessage();
 }

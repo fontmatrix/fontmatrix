@@ -24,9 +24,9 @@
 #include <QDebug>
 #include <QScrollBar>
 #include <QDirModel>
-#include <QMenu>
 #include <QStringListModel>
 #include <QCompleter>
+#include <QStatusBar>
 
 extern QStringList name_meaning;
 
@@ -47,7 +47,7 @@ ListDockWidget::ListDockWidget()
 	setupUi(this);
 	fontTree->setIconSize(QSize(32,32));
 // 	tagsetCombo->addItems (typotek::getInstance()->tagsets() );
-	
+
 	QStringList tl_tmp = typotek::tagsList;
 	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
 	tl_tmp.removeAll ( "Activated_On" );
@@ -55,7 +55,7 @@ ListDockWidget::ListDockWidget()
 
 	tagsCombo->addItems ( tl_tmp );
 	tagsCombo->addItems ( typotek::getInstance()->tagsets() );
-	
+
 	// Folders tree
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
 	theDirModel = new QDirModel(ffilter, QDir::AllDirs | QDir::Files | QDir::Drives | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
@@ -63,23 +63,25 @@ ListDockWidget::ListDockWidget()
 	folderView->hideColumn(1);
 	folderView->hideColumn(2);
 	folderView->hideColumn(3);
-	
+	folderView->setContextMenuPolicy(Qt::CustomContextMenu);
+	folderViewContextMenu = 0;
+
 	theFilterMenu = new QMenu;
 	filterActGroup = new QActionGroup(theFilterMenu);
-	
+
 	if(name_meaning.isEmpty())
 		FontItem::fillNamesMeaning();
-	
+
 	currentField = tr("All fields");
 	QAction *actn = new QAction(currentField, filterActGroup);
 	actn->setCheckable(true);
 	actn->setChecked(true);
 	theFilterMenu->addAction(actn);
-	
+
 	QStringListModel *lModel = new QStringListModel;
 	completers[currentField] = new QCompleter(this);
 	completers[currentField]->setModel(lModel);
-	
+
 	for(int gIdx(0); gIdx < name_meaning.count() ; ++gIdx)
 	{
 		qDebug()<<"ADD Name action"<< name_meaning[gIdx];
@@ -90,19 +92,20 @@ ListDockWidget::ListDockWidget()
 		completers[name_meaning[gIdx]] = new QCompleter(this);
 		completers[name_meaning[gIdx]]->setModel(lModel);
 	}
-	
+
 	fieldButton->setMenu(theFilterMenu);
 	fieldButton->setToolTip(currentField);
-	
+
 	searchString->setCompleter(completers.value(currentField));
-	
+
 	folderView->setDragDropMode(QAbstractItemView::DragDrop);
-	
+
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
 	connect( searchString,SIGNAL(textEdited( const QString& )),this,SLOT(slotFeedTheCompleter(const QString&)));
-	
+
 	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(folderView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
+	connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(slotFolderViewContextMenu(const QPoint &)));
 }
 
 
@@ -125,7 +128,7 @@ bool ListDockWidget::nameItemIsVisible(QTreeWidgetItem * item)
 	int center = fontTree->viewport()->size().width() / 2;
 	int begin = fontTree->verticalScrollBar()->value();
 	int end = begin + fontTree->viewport()->size().height();
-	
+
 	for(int i(begin); i < end; ++i)
 	{
 		if(fontTree->itemAt(center,i) == item)
@@ -165,7 +168,7 @@ void ListDockWidget::slotFolderItemDoubleclicked(QModelIndex mIdx)
 		QStringList flist;
 		for(int i(0); i < tmplist.count();++i)
 			flist << dir.absoluteFilePath( tmplist[i] );
-		
+
 		qDebug()<<"WANT"<<flist.join("::");
 		if(!flist.isEmpty())
 			typotek::getInstance()->open(flist);
@@ -177,7 +180,7 @@ void ListDockWidget::slotFolderItemDoubleclicked(QModelIndex mIdx)
 		if(!flist.isEmpty())
 			typotek::getInstance()->open(flist);
 	}
-	
+
 }
 */
 
@@ -204,3 +207,79 @@ void ListDockWidget::slotFeedTheCompleter(const QString & w)
 		m->setStringList(l);
 	}
 }
+
+void ListDockWidget::slotFolderViewContextMenu(const QPoint& p)
+{
+	QDirModel *dm = static_cast<QDirModel*>(folderView->model());
+	if (!dm)
+		return;
+
+	QModelIndex mi = folderView->currentIndex();
+	if (!mi.isValid())
+		return;
+
+	if (!folderViewContextMenu)
+		folderViewContextMenu = new FolderViewMenu();
+
+	folderViewContextMenu->exec(dm->fileInfo(mi), tabWidget->pos() + mapToGlobal(p));
+}
+
+
+FolderViewMenu::FolderViewMenu() : QMenu()
+{
+	dirAction = new QAction(tr("Import"), 0);
+	dirRecursiveAction = new QAction(tr("Import recursively"), 0);
+	fileAction = new QAction("Import", 0);
+
+	addAction(dirAction);
+	addAction(dirRecursiveAction);
+	addAction(fileAction);
+
+	connect(dirAction, SIGNAL(triggered()), this, SLOT(slotImportDir()));
+	connect(dirRecursiveAction, SIGNAL(triggered()), this, SLOT(slotImportDirRecursively()));
+	connect(fileAction, SIGNAL(triggered()), this, SLOT(slotImportFile()));
+}
+
+void FolderViewMenu::exec(const QFileInfo &fi, const QPoint &p)
+{
+	if (fi.isDir()) {
+		dirAction->setVisible(true);
+		dirRecursiveAction->setVisible(true);
+		fileAction->setVisible(false);
+	} else if (fi.isFile()) {
+		dirAction->setVisible(false);
+		dirRecursiveAction->setVisible(false);
+		fileAction->setVisible(true);
+	} else
+		return; // not a file or a directory
+	selectedFileOrDir = fi;
+	QMenu::exec(p);
+}
+
+void FolderViewMenu::slotImportDir()
+{
+	QDir dir(selectedFileOrDir.absoluteFilePath());
+	QStringList ffilter;
+	ffilter << "*.otf" << "*.ttf" << "*.pfb";
+	QStringList fontList = dir.entryList(ffilter);
+	QString tmpFontPath;
+	foreach(tmpFontPath, fontList) {
+		typotek::getInstance()->open(tmpFontPath);
+	}
+}
+
+void FolderViewMenu::slotImportDirRecursively()
+{
+	typotek::getInstance()->open(selectedFileOrDir.absoluteFilePath());
+}
+
+void FolderViewMenu::slotImportFile()
+{
+	typotek::getInstance()->open(selectedFileOrDir.absoluteFilePath());
+}
+
+FolderViewMenu::~FolderViewMenu()
+{
+
+}
+

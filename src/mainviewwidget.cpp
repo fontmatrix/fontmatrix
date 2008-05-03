@@ -49,7 +49,6 @@
 // #include <QGraphicsItemAnimation>
 
 
-
 MainViewWidget::MainViewWidget ( QWidget *parent )
 		: QWidget ( parent )
 {
@@ -823,31 +822,18 @@ void MainViewWidget::slotSearch()
 {
 	qDebug()<<"slotSearch";
 	m_lists->fontTree->clear();
+	m_lists->previewList->slotRefill(QList<FontItem*>(), true);
 	fontsetHasChanged = true;
 
 // 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	QString fs ( m_lists->searchString->text() );
-	QString ff ( "search_%1" );
-	QString sensitivity ( "INSENS" );
-// 	if ( m_lists->sensitivityCheck->isChecked() )
-// 	{
-// 		sensitivity = "SENS";
-// 	}
-// 	QApplication::restoreOverrideCursor();
 	
 	QList<FontItem*> tmpList;
 	tmpList.clear();
-	tmpList = typo->getFonts ( fs,ff.arg ( sensitivity ) );
+	tmpList = typo->getFonts ( fs, m_lists->getCurrentField() );
 	currentFonts.clear();
 	currentFonts = tmpList ;
-// 	for(int i(0);i < tmpList.count();++i)
-// 	{
-// 		qDebug()<< "CHECK T"<<tmpList[i]->family();
-// 	}
-// 	for(int i(0);i < currentFonts.count();++i)
-// 	{
-// 		qDebug()<< "CHECK C"<<currentFonts[i]->family();
-// 	}
+	
 	currentOrdering = "family";
 	fillTree();
 	m_lists->searchString->clear();

@@ -53,6 +53,8 @@
 // #include <QWaitCondition>
 // #include <QMutex>
 
+int fm_num_face_opened = 0;
+
 FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
 
@@ -674,13 +676,6 @@ bool FontItem::ensureFace()
 			++facesRef;
 			return true;
 		}
-// 		if(m_remote)
-// 		{
-// 			if(getFromNetwork() == 2)//wait
-// 			{
-//
-// 			}
-// 		}
 		QString trueFile ( m_remote ? remoteHerePath : m_path );
 		ft_error = FT_New_Face ( theLibrary, trueFile.toLocal8Bit() , 0, &m_face );
 		if ( ft_error )
@@ -711,6 +706,7 @@ bool FontItem::ensureFace()
 		}
 		m_glyph = m_face->glyph;
 		++facesRef;
+		++fm_num_face_opened;
 		return true;
 	}
 	return false;
@@ -718,7 +714,6 @@ bool FontItem::ensureFace()
 
 void FontItem::releaseFace()
 {
-// 	qDebug("\t\tRELEASEFACE") ;
 	if ( m_face )
 	{
 		--facesRef;
@@ -726,6 +721,7 @@ void FontItem::releaseFace()
 		{
 			FT_Done_Face ( m_face );
 			m_face = 0;
+			--fm_num_face_opened;
 		}
 	}
 }
@@ -741,14 +737,16 @@ QString FontItem::testFlag ( long flag, long against, QString yes, QString no )
 
 QString FontItem::value ( QString k )
 {
+	// I don’t know if something relies o it so I keep it, for the moment.
 	if ( k == "family" )
 		return m_family;
-	if ( k == "variant" )
+	else if ( k == "variant" )
 		return m_variant;
-
-	//default
-	return QString();
-
+	
+	// 0 is default language
+	// TODO inspect all available languages
+	QMap<QString, QString> namap( moreInfo.value(0) ); 
+	return namap.value(k);
 }
 
 QString FontItem::name()
@@ -1988,7 +1986,20 @@ QString FontItem::infoText ( bool fromcache )
 	if ( !m_cacheInfo.isEmpty() && fromcache )
 		return m_cacheInfo;
 
-	ensureFace();
+	bool rFace(false);
+	if ( moreInfo.isEmpty() || !fromcache )
+	{
+		ensureFace();
+		rFace = true;
+		if ( m_isOpenType = true /*testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" */ )
+		{
+			moreInfo_sfnt();
+		}
+		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )
+		{
+			moreInfo_type1();
+		}
+	}
 
 	/**
 	Selectors are :
@@ -2006,17 +2017,7 @@ QString FontItem::infoText ( bool fromcache )
 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
 	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type : "+ m_type +" | Charmaps : " + m_charsets.join ( ", " ) +"</div>";
 
-	if ( moreInfo.isEmpty() || !fromcache )
-	{
-		if ( m_isOpenType = true /*testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" */ )
-		{
-			moreInfo_sfnt();
-		}
-		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )
-		{
-			moreInfo_type1();
-		}
-	}
+	
 // 	if ( !moreInfo.isEmpty() ) // moreInfo.isNotEmpty
 	{
 		QString sysLang = QLocale::languageToString ( QLocale::system ().language() ).toUpper();
@@ -2090,9 +2091,11 @@ QString FontItem::infoText ( bool fromcache )
 			i = 7;
 	}
 
-	m_cacheInfo = ret;
-
-	releaseFace();
+// 	m_cacheInfo = ret;
+	
+	if(rFace)
+		releaseFace();
+	
 	return ret;
 }
 

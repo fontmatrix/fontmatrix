@@ -19,10 +19,14 @@
  ***************************************************************************/
 #include "listdockwidget.h"
 #include "typotek.h"
+#include "fontitem.h"
 
 #include <QDebug>
 #include <QScrollBar>
 #include <QDirModel>
+#include <QMenu>
+
+extern QStringList name_meaning;
 
 ListDockWidget* ListDockWidget::instance = 0;
 
@@ -58,11 +62,35 @@ ListDockWidget::ListDockWidget()
 	folderView->hideColumn(2);
 	folderView->hideColumn(3);
 	
+	theFilterMenu = new QMenu;
+	filterActGroup = new QActionGroup(theFilterMenu);
+	
+	if(name_meaning.isEmpty())
+		FontItem::fillNamesMeaning();
+	
+	currentField = tr("All fields");
+	QAction *actn = new QAction(currentField, filterActGroup);
+	actn->setCheckable(true);
+	actn->setChecked(true);
+	theFilterMenu->addAction(actn);
+	
+	for(int gIdx(0); gIdx < name_meaning.count() ; ++gIdx)
+	{
+		qDebug()<<"ADD Name action"<< name_meaning[gIdx];
+		actn = new QAction(name_meaning[gIdx], filterActGroup);
+		actn->setCheckable(true);
+		theFilterMenu->addAction(actn);
+	}
+	
+	fieldButton->setMenu(theFilterMenu);
+	fieldButton->setToolTip(currentField);
+	
 	
 	folderView->setDragDropMode(QAbstractItemView::DragDrop);
 	
+	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
+	
 	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
-// 	connect(folderView,SIGNAL(doubleClicked( const QModelIndex& )),this,SLOT(slotFolderItemDoubleclicked(QModelIndex)));
 	connect(folderView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
 }
 
@@ -145,4 +173,10 @@ void ListDockWidget::slotFolderItemDoubleclicked(QModelIndex mIdx)
 void ListDockWidget::slotFolderPressed(QModelIndex mIdx)
 {
 	currentFIndex = mIdx;
+}
+
+void ListDockWidget::slotFieldChanged(QAction * action)
+{
+	currentField = action->text();
+	fieldButton->setToolTip(currentField);
 }

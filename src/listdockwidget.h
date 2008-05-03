@@ -26,6 +26,9 @@
 class QListWidgetItem;
 class QFontItem;
 class QDirModel;
+class QMenu;
+class QAction;
+class QActionGroup;
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
@@ -48,11 +51,19 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		
 		QModelIndex getFolderCurrentIndex(){return currentFIndex;}
 		
+		QString getCurrentField() const
+		{
+			return currentField;
+		}
+		
 	private:
 		int m_position;
 		QDirModel *theDirModel;
 		QStringList ffilter;
 		QModelIndex currentFIndex;
+		QMenu *theFilterMenu;
+		QActionGroup *filterActGroup;
+		QString currentField;
 		
 	public slots:
 		void unlockFilter();
@@ -61,6 +72,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void slotFolderItemclicked(QModelIndex mIdx);
 // 		void slotFolderItemDoubleclicked(QModelIndex mIdx);
 		void slotFolderPressed(QModelIndex mIdx);
+		void slotFieldChanged(QAction * action);
 		
 	signals:
 		void folderSelectFont(const QString&);

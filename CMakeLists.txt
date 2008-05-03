@@ -29,8 +29,12 @@ SET(HARFBUZZ_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/harfbuzz/src)
 # I can’t remember what it does :|
 ADD_DEFINITIONS( -DHIGH_PERF )
 
-# Dear packagers, your invited to uncomment this line :)
-# ADD_DEFINITIONS(-DQT_NO_DEBUG_OUTPUT )
+
+IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
+	MESSAGE(STATUS "Debug build")
+ELSE(CMAKE_BUILD_TYPE STREQUAL "Debug")
+	ADD_DEFINITIONS(-DQT_NO_DEBUG_OUTPUT )
+ENDIF(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # A lot from Scribus

@@ -68,6 +68,7 @@ QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
 QString typotek::fonteditorPath = "/usr/bin/fontforge";
 extern bool __FM_SHOW_FONTLOADED;
+extern int fm_num_face_opened;
 
 
 /// LazyInit *********************************************
@@ -926,24 +927,12 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 			}
 		}
 	}
-	else if ( field == "search_INSENS" )
+	else if ( field == tr("All fields"))
 	{
 		for ( int i =0; i < superSetCount; ++i )
 		{
 			if ( superSet[i]->infoText().contains ( pattern,Qt::CaseInsensitive ) )
 			{
-// 				qDebug()<< "search_I MATCH"<<superSet[i]->family();
-				ret.append ( superSet[i] );
-			}
-		}
-	}
-	else if ( field == "search_SENS" )
-	{
-		for ( int i =0; i < superSetCount; ++i )
-		{
-			if ( superSet[i]->infoText().contains ( pattern,Qt::CaseSensitive ) )
-			{
-// 				qDebug()<< "search_S MATCH"<<superSet[i]->family();
 				ret.append ( superSet[i] );
 			}
 		}
@@ -954,7 +943,6 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 		{
 			if ( superSet[i]->value ( field ).contains ( pattern , Qt::CaseInsensitive ) )
 			{
-// 				qDebug()<< "ELSE MATCH"<<superSet[i]->family();
 				ret.append ( superSet[i] );
 			}
 		}
@@ -1013,6 +1001,8 @@ void typotek::popupTagsetEditor()
 void typotek::keyPressEvent ( QKeyEvent * event )
 {
 	qDebug() << "typotek::keyPressEvent(QKeyEvent * "<<event<<")";
+	if(/*event->modifiers().testFlag(Qt::ControlModifier) &&*/ event->key() == Qt::Key_J)
+		qDebug()<<"NUM FACES OPENED:"<<fm_num_face_opened;
 }
 
 void typotek::slotActivateCurrents()

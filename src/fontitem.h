@@ -277,7 +277,7 @@ class FontItem : public QObject
 		int progression(){return m_progression;}
 		
 		// sfnt names
-		void fillNamesMeaning();
+		static void fillNamesMeaning();
 		
 		bool isValid(){return m_valid;}
 		

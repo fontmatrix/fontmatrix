@@ -86,6 +86,8 @@ class typotek:public QMainWindow
 		bool save();
 		void slotCloseToSystray(bool isEnabled);
 		void slotUseInitialTags(bool isEnabled);
+		void showImportedFonts(int show);
+		bool showImportedFonts();
 		void slotPrefsPanelDefault();
 		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
 		void relayStartingStepIn(QString s);
@@ -170,6 +172,7 @@ class typotek:public QMainWindow
 		Systray *systray;
 
 		bool useInitialTags;
+		bool showFontListDialog;
 		static QString fonteditorPath;
 		QString templatesDir;
 		double previewSize;

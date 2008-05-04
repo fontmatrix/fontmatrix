@@ -6,14 +6,15 @@
     <x>0</x>
     <y>0</y>
     <width>691</width>
-    <height>511</height>
+    <height>529</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Preferences Panel</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="application.qrc" >:/fontmatrix_icon.png</iconset>
+   <iconset resource="application.qrc" >
+    <normaloff>:/fontmatrix_icon.png</normaloff>:/fontmatrix_icon.png</iconset>
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" colspan="2" >
@@ -28,11 +29,19 @@
          <number>0</number>
         </property>
         <widget class="QWidget" name="tab" >
+         <property name="geometry" >
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>647</width>
+           <height>404</height>
+          </rect>
+         </property>
          <attribute name="title" >
           <string>General</string>
          </attribute>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
+         <layout class="QVBoxLayout" name="verticalLayout" >
+          <item>
            <widget class="QGroupBox" name="systrayFrame" >
             <property name="title" >
              <string>Show Fontmatrix in System Tray</string>
@@ -92,7 +101,7 @@
             </layout>
            </widget>
           </item>
-          <item row="1" column="0" >
+          <item>
            <widget class="QGroupBox" name="groupBox" >
             <property name="title" >
              <string>Preview Word</string>
@@ -120,7 +129,7 @@
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeHint" >
+               <property name="sizeHint" stdset="0" >
                 <size>
                  <width>41</width>
                  <height>31</height>
@@ -160,7 +169,7 @@
             </layout>
            </widget>
           </item>
-          <item row="2" column="0" >
+          <item>
            <widget class="QGroupBox" name="groupBox_4" >
             <property name="title" >
              <string>Font Editor</string>
@@ -194,7 +203,7 @@
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeHint" >
+               <property name="sizeHint" stdset="0" >
                 <size>
                  <width>151</width>
                  <height>22</height>
@@ -205,19 +214,26 @@
             </layout>
            </widget>
           </item>
-          <item row="3" column="0" >
+          <item>
            <widget class="QCheckBox" name="initTagBox" >
             <property name="text" >
              <string>Ask for tag names when importing fonts</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0" >
+          <item>
+           <widget class="QCheckBox" name="showNamesBox" >
+            <property name="text" >
+             <string>Show names of imported fonts after import process</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer>
             <property name="orientation" >
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0" >
              <size>
               <width>629</width>
               <height>31</height>
@@ -226,8 +242,22 @@
            </spacer>
           </item>
          </layout>
+         <zorder>systrayFrame</zorder>
+         <zorder>groupBox</zorder>
+         <zorder>groupBox_4</zorder>
+         <zorder>initTagBox</zorder>
+         <zorder>showNamesBox</zorder>
+         <zorder>fontEditorBrowse</zorder>
         </widget>
         <widget class="QWidget" name="tab_2" >
+         <property name="geometry" >
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>647</width>
+           <height>386</height>
+          </rect>
+         </property>
          <attribute name="title" >
           <string>Sample Text</string>
          </attribute>
@@ -262,7 +292,7 @@
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeHint" >
+               <property name="sizeHint" stdset="0" >
                 <size>
                  <width>40</width>
                  <height>20</height>
@@ -332,7 +362,7 @@
                 <property name="orientation" >
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>20</width>
                   <height>40</height>
@@ -347,7 +377,7 @@
                   <property name="orientation" >
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" >
+                  <property name="sizeHint" stdset="0" >
                    <size>
                     <width>40</width>
                     <height>20</height>
@@ -371,6 +401,14 @@
          </layout>
         </widget>
         <widget class="QWidget" name="tab_3" >
+         <property name="geometry" >
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>647</width>
+           <height>386</height>
+          </rect>
+         </property>
          <attribute name="title" >
           <string>Files and Folders</string>
          </attribute>
@@ -403,7 +441,7 @@
                <property name="orientation" >
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeHint" >
+               <property name="sizeHint" stdset="0" >
                 <size>
                  <width>40</width>
                  <height>20</height>
@@ -463,7 +501,7 @@
                    <property name="orientation" >
                     <enum>Qt::Vertical</enum>
                    </property>
-                   <property name="sizeHint" >
+                   <property name="sizeHint" stdset="0" >
                     <size>
                      <width>100</width>
                      <height>41</height>
@@ -511,7 +549,7 @@
             <property name="orientation" >
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0" >
              <size>
               <width>629</width>
               <height>31</height>
@@ -531,7 +569,7 @@
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0" >
       <size>
        <width>40</width>
        <height>20</height>

@@ -267,6 +267,8 @@ void FolderViewMenu::slotImportDir()
 	QStringList ffilter;
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
 	QStringList fontList = dir.entryList(ffilter);
+	if (fontList.count() < 1)
+		return;
 	QString lastItem = fontList.at(fontList.count() - 1);
 	fontList.removeAt(fontList.count() - 1);
 	foreach(QString tmpFontPath, fontList) {

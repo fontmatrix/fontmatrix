@@ -336,9 +336,13 @@ void typotek::open(QString path, bool announce, bool collect)
 	progress.close();
 
 	if (announce) {
-		// The User needs and deserves to know what fonts hve been imported
-		ImportedFontsDialog ifd ( this, nameList );
-		ifd.exec();
+		if (showFontListDialog) {
+			// The User needs and deserves to know what fonts hve been imported
+			ImportedFontsDialog ifd ( this, nameList );
+			ifd.exec();
+		} else { // show info in the statusbar
+			statusBar()->showMessage(tr("Fonts imported: %1").arg(nameList.count()), 3000);
+		}
 		nameList.clear();
 		tali.clear();
 		shouldAskTali = true;
@@ -412,11 +416,15 @@ void typotek::open ( QStringList files )
 	progress.close();
 
 	// The User needs and deserves to know what fonts hve been imported
-	ImportedFontsDialog ifd ( this, nameList );
-	ifd.exec();
+	if (showFontListDialog) {
+		// The User needs and deserves to know what fonts hve been imported
+		ImportedFontsDialog ifd ( this, nameList );
+		ifd.exec();
+	} else { // show info in the statusbar
+		statusBar()->showMessage(tr("Fonts imported: %1").arg(nameList.count()), 3000);
+	}
 
 	theMainView->slotReloadFontList();
-
 }
 
 /// Neede at least for the "Browse Font Dirs" feature
@@ -640,6 +648,7 @@ void typotek::readSettings()
 	move ( pos );
 	fonteditorPath = settings.value ( "FontEditor", "/usr/bin/fontforge" ).toString();
 	useInitialTags = settings.value ( "UseInitialTags", false ).toBool();
+	showFontListDialog = settings.value("ShowImportedFonts", true).toBool();
 	templatesDir = settings.value ( "TemplatesDir", "./").toString();
 	previewSize = settings.value("PreviewSize", 15.0).toDouble();
 	previewRTL = settings.value("PreviewRTL", false).toBool();
@@ -1337,6 +1346,21 @@ void typotek::slotUseInitialTags ( bool isEnabled )
 	useInitialTags = isEnabled;
 	QSettings settings ;
 	settings.setValue ( "UseInitialTags", isEnabled );
+}
+
+void typotek::showImportedFonts(int show) // 0 == show dialog, 2 == do not show
+{
+	bool doShow = true;
+	if (show == Qt::Checked)
+		doShow = false;
+	showFontListDialog = doShow;
+	QSettings settings;
+	settings.setValue("ShowImportedFonts", doShow);
+}
+
+bool typotek::showImportedFonts()
+{
+	return showFontListDialog;
 }
 
 void typotek::setTemplatesDir(const QString & dir)

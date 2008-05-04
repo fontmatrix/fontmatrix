@@ -26,7 +26,7 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		PrefsPanelDialog ( QWidget *parent );
 
 		~PrefsPanelDialog();
-		
+
 		enum PAGE{PAGE_GENERAL,PAGE_SAMPLETEXT,PAGE_FILES};
 
 		void initSystrayPrefs(bool hasSystray, bool isVisible, bool hasActivateAll, bool allConfirmation, bool tagConfirmation);
@@ -53,15 +53,17 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void updateWordRTL(int);
 		void setupFontEditor(QString);
 		void slotFontEditorBrowse();
-		
+
 		void setupTemplates(const QString&);
 		void slotTemplatesBrowse();
-		
+
 		void slotAddRemote();
 		void slotRemoveRemote();
-		
+
 		void slotSetLocalStorage(QString s);
 		void slotBrowseLocalStorage();
+
+		void slotShowImportedFonts(int i);
 
 };
 

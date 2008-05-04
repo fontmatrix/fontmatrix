@@ -29,7 +29,7 @@
 	@author Pierre Marchand <pierre@oep-h.com>
 */
 class ImportedFontsDialog : public QDialog, private Ui::ImportedFonts
-{			
+{
 public:
     ImportedFontsDialog(QWidget *parent, QStringList fontlist );
 

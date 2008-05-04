@@ -1,7 +1,7 @@
 //
 // C++ Implementation: prefspaneldialog
 //
-// Description: 
+// Description:
 //
 //
 // Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2007
@@ -29,6 +29,7 @@ PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
 	previewSizeSpin->setValue(pSize);
 	previewIsRTL->setChecked(typotek::getInstance()->getPreviewRTL());
 	initTagBox->setChecked(typotek::getInstance()->initialTags());
+	showNamesBox->setChecked(typotek::getInstance()->showImportedFonts());
 }
 
 
@@ -50,7 +51,7 @@ void PrefsPanelDialog::initSystrayPrefs(bool hasSystray, bool isVisible, bool ha
 	QSettings settings ;
 	closeToSystray->setChecked(settings.value("SystrayCloseToTray", true).toBool());
 	previewSizeSpin->setValue(typotek::getInstance()->getPreviewSize());
-	
+
 }
 
 void PrefsPanelDialog::initSampleTextPrefs()
@@ -69,7 +70,7 @@ void PrefsPanelDialog::initFilesAndFolders()
 	QStringList remoteDirV(settings.value("RemoteDirectories").toStringList());
 	remoteDirList->addItems(remoteDirV);
 	localStorageLine->setText(typotek::getInstance()->remoteTmpDir());
-	
+
 }
 
 
@@ -86,24 +87,26 @@ void PrefsPanelDialog::doConnect()
 	connect(activateAllConfirmation, SIGNAL(clicked(bool)), this, SLOT(setSystrayAllConfirmation(bool)));
 	connect(tagsConfirmation, SIGNAL(clicked(bool)), this, SLOT(setSystrayTagsConfirmation(bool)));
 	connect(closeToSystray, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotCloseToSystray(bool)));
-	
+
 	connect(previewWord, SIGNAL(textChanged ( const QString  ) ), this, SLOT(updateWord(QString)));
 	connect(previewSizeSpin, SIGNAL(valueChanged ( double  ) ), this, SLOT(updateWordSize(double)));
 	connect(previewIsRTL, SIGNAL(stateChanged( int )), this, SLOT(updateWordRTL(int)));
-	
+
 	connect(fontEditorPath, SIGNAL(textChanged ( const QString  ) ), this, SLOT(setupFontEditor(QString)));
 	connect(fontEditorBrowse, SIGNAL(clicked()), this, SLOT(slotFontEditorBrowse()));
-	
+
 	connect(initTagBox, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotUseInitialTags(bool)));
-	
+
 	connect(templatesDirBrowse,SIGNAL(clicked( )),this, SLOT(slotTemplatesBrowse()));
 	connect(templatesFolder,SIGNAL(textChanged( const QString& )),this,SLOT(setupTemplates(const QString&)));
-	
+
 	connect(remoteDirAdd,SIGNAL(clicked()),this,SLOT(slotAddRemote()));
 	connect(remoteDirRemove,SIGNAL(clicked()),this,SLOT(slotRemoveRemote()));
 	connect(localStorageLine,SIGNAL(textChanged( const QString& )),this,SLOT(slotSetLocalStorage(QString)));
 	connect(localStorageButton,SIGNAL(clicked( )),this,SLOT(slotBrowseLocalStorage()));
-	
+
+	connect(showNamesBox, SIGNAL(stateChanged(int)), this, SLOT(slotShowImportedFonts(int)));
+
 	connect(closeButton,SIGNAL(clicked()),this,SLOT(close()));
 }
 
@@ -120,12 +123,12 @@ void PrefsPanelDialog::addSampleName()
 		return;
 	if(typotek::getInstance()->namedSamplesNames().contains(n))
 		return;
-	
+
 	typotek::getInstance()->addNamedSample(n, tr("A text"));
 	sampleTextNamesList->addItem(n);
 	newSampleTextNameText->clear();
 // 	displayNamedText();
-	
+
 }
 
 
@@ -173,7 +176,7 @@ void PrefsPanelDialog::updateWord(QString s)
 
 void PrefsPanelDialog::updateWordSize(double d)
 {
-	
+
 	QSettings settings;
 	settings.setValue("PreviewSize", d);
 	typotek::getInstance()->setPreviewSize(d);
@@ -248,7 +251,7 @@ void PrefsPanelDialog::slotRemoveRemote()
 		{
 			if(remoteDirList->item(i)->text() == url)
 				remoteDirList->takeItem(i);
-		}		
+		}
 		QSettings settings;
 		QStringList tmpL (settings.value("RemoteDirectories").toStringList());
 		QStringList remoteDirStrings;
@@ -261,7 +264,7 @@ void PrefsPanelDialog::slotRemoveRemote()
 		}
 		qDebug()<<"RemoteDirectories : "<<remoteDirStrings.join(", ");
 		settings.setValue("RemoteDirectories", remoteDirStrings);
-		
+
 	}
 }
 
@@ -278,5 +281,11 @@ void PrefsPanelDialog::slotBrowseLocalStorage()
 	}
 }
 
-
+void PrefsPanelDialog::slotShowImportedFonts(int show)
+{
+	int opposite = Qt::Unchecked;
+	if (show == Qt::Unchecked)
+		opposite = Qt::Checked;
+	typotek::getInstance()->showImportedFonts(opposite);
+}
 

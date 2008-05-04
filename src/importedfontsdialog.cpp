@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "importedfontsdialog.h"
 #include <QListWidgetItem>
+#include "typotek.h"
 
 ImportedFontsDialog::ImportedFontsDialog(QWidget * parent, QStringList fontlist)
  : QDialog(parent)
@@ -41,12 +42,17 @@ ImportedFontsDialog::ImportedFontsDialog(QWidget * parent, QStringList fontlist)
 		fontList->addItem(it);
 	}
 	label->setText(tr("Number of Imported Fonts ") + QString::number(fontList->count() - buggyFonts));
+	dontShowBox->setChecked(false);
+
+	connect(dontShowBox, SIGNAL(stateChanged(int)),typotek::getInstance(), SLOT(showImportedFonts(int)));
 }
 
-ImportedFontsDialog::~ ImportedFontsDialog()
+ImportedFontsDialog::~ImportedFontsDialog()
 {
-	/* what’s up? */
+	disconnect(dontShowBox, SIGNAL(stateChanged(int)),typotek::getInstance(), SLOT(showImportedFonts(int)));
 }
+
+
 
 
 

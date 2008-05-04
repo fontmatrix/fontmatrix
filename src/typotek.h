@@ -65,7 +65,7 @@ class typotek:public QMainWindow
 		void printChart();
 		void printPlayground();
 		void printFamily();
-		
+
 		void fontBook();
 		void popupTagsetEditor();
 		void slotActivateCurrents();
@@ -79,9 +79,9 @@ class typotek:public QMainWindow
 		void slotRepair();
 		void slotTagAll();
 		void slotMainDockAreaChanged(Qt::DockWidgetArea area);
-	
+
 	public slots:
-		void open( QString path = QString() );
+		void open( QString path = QString(), bool announce = true, bool collect = false );
 		void open(QStringList files);
 		bool save();
 		void slotCloseToSystray(bool isEnabled);
@@ -89,7 +89,7 @@ class typotek:public QMainWindow
 		void slotPrefsPanelDefault();
 		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
 		void relayStartingStepIn(QString s);
-		
+
 	signals:
 		void tagAdded(QString);
 		void relayStartingStepOut(QString, int, QColor);
@@ -113,7 +113,7 @@ class typotek:public QMainWindow
 
 		QTextEdit *textEdit;
 		QString curFile;
-		
+
 		QDockWidget *mainDock;
 		QMenu *fileMenu;
 		QMenu *editMenu;
@@ -140,7 +140,7 @@ class typotek:public QMainWindow
 		QAction *exportFontSetAct;
 		QAction *repairAct;
 		QAction *tagAll;
-		
+
 		QMenu *printMenu;
 		QAction *printInfoAct;
 		QAction *printSampleAct;
@@ -156,15 +156,15 @@ class typotek:public QMainWindow
 
 		QMap<QString, QStringList> tagsMap;
 		QMap<QString, QStringList> tagSetMap;
-		
+
 		QList<FontItem*> fontMap;
 		QMap<QString, FontItem*> realFontMap;
-		
+
 // 		TypotekAdaptator *actAdaptator;
-		
+
 		QMap<QString,QString> m_namedSamples;
 		QString m_theWord;
-		
+
 		QLabel *curFontPresentation;
 
 		Systray *systray;
@@ -174,17 +174,17 @@ class typotek:public QMainWindow
 		QString templatesDir;
 		double previewSize;
 		bool previewRTL;
-		
+
 		void addFcDirItem(const QString &dirPath);
 		QStringList getSystemFontDirs();
-		
+
 		RemoteDir *remoteDir;
 		QString m_remoteTmpDir;
-		
+
 		QString m_defaultSampleName;
-		
+
 		QString mainDockArea;
-		
+
 		QMap<QString, FontItem*> temporaryFonts;
 	public:
 		int getFontCount(){return fontMap.count(); }
@@ -193,7 +193,7 @@ class typotek:public QMainWindow
 		QList<FontItem*> getAllFonts() {return fontMap;};
 		QList<FontItem*> getFonts ( QString pattern, QString field );
 		QList<FontItem*> getCurrentFonts();
-				
+
 		void addTagMapEntry(QString key, QStringList value){tagsMap[key] = value;};
 		void addTagSetMapEntry(QString key, QStringList value){tagSetMap[key] = value;};
 		void removeTagFromSet(QString set, QString tag){tagSetMap[set].removeAll(tag);};
@@ -201,23 +201,23 @@ class typotek:public QMainWindow
 		void removeTagset(QString key){tagSetMap.remove(key);};
 		QStringList tagsets(){return tagSetMap.keys();};
 		QStringList tagsOfSet(QString set){return tagSetMap[set];};
-		
+
 		static QStringList tagsList;
 // 		TypotekAdaptator *adaptator(){return actAdaptator;};
-		
+
 		static typotek* instance;
 		static typotek* getInstance(){return instance;};
-		
+
 		QString getManagedDir(){return managedDir.absolutePath();};
-		
+
 		QFile* getFontsData(){ return &fontsdata; }
-		
+
 		void setSampleText(QString s);
-		
+
 		void presentFontName(QString s){curFontPresentation->setText(s);};
-		
+
 		void forwardUpdateView();
-		
+
 		Systray *getSystray() const {return systray;}
 		void setSystrayVisible(bool);
 		void showActivateAllSystray(bool);
@@ -235,37 +235,37 @@ class typotek:public QMainWindow
 		QString fontEditorPath() {return fonteditorPath;};
 
 		bool initialTags() { return useInitialTags;};
-		
+
 		void setTemplatesDir(const QString &dir);
 		QString getTemplatesDir() {return templatesDir;};
-		
+
 		void setWord(QString s, bool updateView);
 		QString word(){return m_theWord;};
 		void setPreviewSize(double d){ previewSize = d; }
 		double getPreviewSize(){ return previewSize; }
 		void setPreviewRTL(bool d);
 		bool getPreviewRTL(){ return previewRTL; }
-		
+
 		void removeFontItem(QString key);
 		void removeFontItem(QStringList keyList);
-		
+
 		void changeFontSizeSettings(double fSize, double lSize);
-		
+
 		void showStatusMessage(const QString &message);
-		
+
 		QString remoteTmpDir() const {return m_remoteTmpDir;}
 		void setRemoteTmpDir(const QString &s);
 
 		QString defaultSampleName(){return m_defaultSampleName;}
-		
+
 		bool insertTemporaryFont(const QString& path);
-				
+
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dropEvent ( QDropEvent * event );
 		void showEvent ( QShowEvent * event );
-		
-		
+
+
 
 	friend class Systray; // a bit ugly but i'll need access to privates
 };

@@ -215,10 +215,18 @@ void typotek::closeEvent ( QCloseEvent *event )
 
 
 /// IMPORT
-void typotek::open(QString path)
+// if announce == true user will be shown a dialog of imported fonts
+// if announce == false and collect == true all fonts imported will be
+// collected and announced next time announce == true
+void typotek::open(QString path, bool announce, bool collect)
 {
+	static QStringList nameList;
+	static QStringList tali; // tali gets reseted when announce = true then the shouldAskTali is also set to true
+	static bool shouldAskTali = true; // initial tags is only asked once if collect == true
+	QStringList pathList;
+
 	QFileInfo finfo(path);
-	if (finfo.isDir()) {
+	if (finfo.isDir()) { // importing a directory
 		static QString dir = QDir::homePath(); // first time use the home path then remember the last used dir
 		QString tmpdir;
 
@@ -234,9 +242,6 @@ void typotek::open(QString path)
 
 		QDir theDir ( dir );
 	// 	addFcDirItem(theDir.absolutePath());
-
-		QStringList pathList;
-		QStringList nameList;
 
 		QStringList dirList( fontmatrix::exploreDirs(dir,0) );
 	// 	qDebug() << dirList.join ( "\n" );
@@ -257,106 +262,88 @@ void typotek::open(QString path)
 					pathList <<  fp.absoluteFilePath();
 			}
 		}
-		QStringList tali;
-		/* Everybody say it’s useless...
-			NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
-		if ( useInitialTags )
+	} else if (finfo.isFile())
+		pathList <<  finfo.absoluteFilePath();
+
+	/* Everybody say it’s useless...
+		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
+	if ( useInitialTags && shouldAskTali )
+	{
+		ImportTags imp(this,tagsList);
+		imp.exec();
+		tali = imp.tags();
+		shouldAskTali = false;
+	}
+
+
+	for(int i = 0; i < tali.count();++i )
+	{
+		if ( !tagsList.contains ( tali[i] ) )
 		{
-			ImportTags imp(this,tagsList);
-			imp.exec();
-			tali = imp.tags();
+			tagsList.append ( tali[i] );
+			emit tagAdded ( tali[i] );
 		}
+	}
 
+	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
+	progress.setWindowModality ( Qt::WindowModal );
+	progress.setAutoReset ( false );
+	progress.setValue ( 0 );
+	progress.show();
+	QString importstring ( tr ( "Import" ) +  " %1" );
+	for ( int i = 0 ; i < pathList.count(); ++i )
+	{
+		QString pathCur(pathList.at ( i ));
+		progress.setLabelText ( importstring.arg ( pathCur ) );
+		progress.setValue ( i );
+		if ( progress.wasCanceled() )
+			break;
 
-		for(int i = 0; i < tali.count();++i )
+		if(temporaryFonts.contains(pathCur))
 		{
-			if ( !tagsList.contains ( tali[i] ) )
-			{
-				tagsList.append ( tali[i] );
-				emit tagAdded ( tali[i] );
-			}
-		}
-
-		QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
-		progress.setWindowModality ( Qt::WindowModal );
-		progress.setAutoReset ( false );
-		progress.setValue ( 0 );
-		progress.show();
-		QString importstring ( tr ( "Import" ) +  " %1" );
-		for ( int i = 0 ; i < pathList.count(); ++i )
-		{
-			QString pathCur(pathList.at ( i ));
-			progress.setLabelText ( importstring.arg ( pathCur ) );
-			progress.setValue ( i );
-			if ( progress.wasCanceled() )
-				break;
-
-			if(temporaryFonts.contains(pathCur))
-			{
-				FontItem *fitem(temporaryFonts.value(pathCur));
-				fitem->unLock();
-				fitem->setTags(tali);
-				temporaryFonts.remove(pathCur);
+			FontItem *fitem(temporaryFonts.value(pathCur));
+			fitem->unLock();
+			fitem->setTags(tali);
+			temporaryFonts.remove(pathCur);
+			if (announce || collect)
 				nameList << fitem->fancyName();
-				continue;
-			}
-
-			QFile ff ( pathCur);
-			QFileInfo fi ( pathCur );
-			{
-				FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
-				if ( fitem->isValid() )
-				{
-					fitem->setTags ( tali );
-					fitem->setActivated(false);
-					fontMap.append ( fitem );
-					realFontMap[fitem->path() ] = fitem;
-					nameList << fitem->fancyName();
-				}
-				else
-				{
-					QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
-					statusBar()->showMessage ( errorFont );
-					nameList << "__FAILEDTOLOAD__" + fi.fileName();
-				}
-			}
+			continue;
 		}
 
-		progress.close();
+		QFile ff ( pathCur);
+		QFileInfo fi ( pathCur );
+		{
+			FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
+			if ( fitem->isValid() )
+			{
+				fitem->setTags ( tali );
+				fitem->setActivated(false);
+				fontMap.append ( fitem );
+				realFontMap[fitem->path() ] = fitem;
+				if (announce || collect)
+					nameList << fitem->fancyName();
+			}
+			else
+			{
+				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
+				statusBar()->showMessage ( errorFont );
+				if (announce || collect)
+					nameList << "__FAILEDTOLOAD__" + fi.fileName();
+			}
+		}
+	}
 
+	progress.close();
+
+	if (announce) {
 		// The User needs and deserves to know what fonts hve been imported
 		ImportedFontsDialog ifd ( this, nameList );
 		ifd.exec();
-		theMainView->slotReloadFontList();
-
-
-	} else if (finfo.isFile()) {
-		QStringList tali;
-		if ( useInitialTags )
-		{
-			ImportTags imp(this,tagsList);
-			imp.exec();
-			tali = imp.tags();
-			tali << "Activated_Off" ;
-		}
-		else
-			tali << "Activated_Off" ;
-
-		foreach ( QString tas, tali )
-		{
-			if ( !tagsList.contains ( tas ) )
-			{
-				tagsList.append ( tas );
-				emit tagAdded ( tas );
-			}
-		}
-
-		FontItem *fitem(temporaryFonts.value(path));
-		fitem->unLock();
-		fitem->setTags(tali);
-		temporaryFonts.remove(path);
-		theMainView->slotReloadFontList();
+		nameList.clear();
+		tali.clear();
+		shouldAskTali = true;
 	}
+	theMainView->slotReloadFontList();
 }
 
 void typotek::open ( QStringList files )
@@ -1131,6 +1118,7 @@ void typotek::dropEvent ( QDropEvent * event )
 			if(temporaryFonts.contains(fP))
 			{
 				open(fP);
+				temporaryFonts.remove(fP);
 			}
 			else
 			{

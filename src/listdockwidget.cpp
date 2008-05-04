@@ -267,10 +267,13 @@ void FolderViewMenu::slotImportDir()
 	QStringList ffilter;
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
 	QStringList fontList = dir.entryList(ffilter);
-	QString tmpFontPath;
-	foreach(tmpFontPath, fontList) {
-		typotek::getInstance()->open(tmpFontPath);
+	QString lastItem = fontList.at(fontList.count() - 1);
+	fontList.removeAt(fontList.count() - 1);
+	foreach(QString tmpFontPath, fontList) {
+		QString absPath = dir.absolutePath() + "/" + tmpFontPath;
+		typotek::getInstance()->open(absPath, false, true);
 	}
+	typotek::getInstance()->open(dir.absolutePath() + "/" + lastItem, true); // import the last font with the announce flag set to true
 }
 
 void FolderViewMenu::slotImportDirRecursively()

@@ -218,6 +218,9 @@ void ListDockWidget::slotFolderViewContextMenu(const QPoint& p)
 	if (!mi.isValid())
 		return;
 
+	slotFolderItemclicked(mi); // make sure the font in question is loaded
+	                           // with a direct right click it would crash without this
+
 	if (!folderViewContextMenu)
 		folderViewContextMenu = new FolderViewMenu();
 
@@ -252,7 +255,9 @@ void FolderViewMenu::exec(const QFileInfo &fi, const QPoint &p)
 		fileAction->setVisible(true);
 	} else
 		return; // not a file or a directory
+
 	selectedFileOrDir = fi;
+
 	QMenu::exec(p);
 }
 

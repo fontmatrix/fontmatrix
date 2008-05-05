@@ -920,44 +920,53 @@ void typotek::slotRemoteIsReady()
 QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 {
 
-	if(pattern.isEmpty())
+	if ( pattern.isEmpty() )
 	{
 		theMainView->resetCrumb();
 		return fontMap;
 	}
 
+	bool negate ( false );
+	QString rPattern ( pattern );
+	if ( pattern.startsWith ( "!" ) )
+	{
+		negate = true;
+		rPattern = pattern.mid ( 1 );
+	}
 
 	QList< FontItem * > ret;
 	ret.clear();
 	QList< FontItem * > superSet ( theMainView->curFonts() ) ;
 
-	if(superSet.isEmpty())
+	if ( superSet.isEmpty() )
 	{
 		theMainView->resetCrumb();
 		superSet = fontMap;
 	}
 
-	theMainView->addFilterToCrumb(pattern);
+	theMainView->addFilterToCrumb ( pattern );
 	int superSetCount ( superSet.count() );
 
-	qDebug()<<"PATERN ="<< pattern<<": FIELD ="<< field<<":"<< superSetCount;
+	qDebug() <<"PATERN ="<< rPattern<<": FIELD ="<< field<<":"<< superSetCount;
 
 	if ( field == "tag" )
 	{
 		for ( int i =0; i < superSetCount; ++i )
 		{
-			if ( superSet[i]->tags().contains ( pattern ) )
+			if ( superSet[i]->tags().contains ( rPattern ) )
 			{
 // 				qDebug()<< "TAG MATCH"<<superSet[i]->family();
 				ret.append ( superSet[i] );
 			}
 		}
 	}
-	else if ( field == tr("All fields"))
+	else if ( field == tr ( "All fields" ) )
 	{
 		for ( int i =0; i < superSetCount; ++i )
 		{
-			if ( superSet[i]->infoText().contains ( pattern,Qt::CaseInsensitive ) )
+			if ( negate ?
+			        ( !superSet[i]->infoText().contains ( rPattern,Qt::CaseInsensitive ) ) :
+						  ( superSet[i]->infoText().contains (rPattern,Qt::CaseInsensitive ) ) )
 			{
 				ret.append ( superSet[i] );
 			}
@@ -967,14 +976,16 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 	{
 		for ( int i =0; i < superSetCount; ++i )
 		{
-			if ( superSet[i]->value ( field ).contains ( pattern , Qt::CaseInsensitive ) )
+			if ( negate ?
+			        ( !superSet[i]->value ( field ).contains ( rPattern , Qt::CaseInsensitive ) ) :
+						  ( superSet[i]->value ( field ).contains ( rPattern , Qt::CaseInsensitive ) ) )
 			{
 				ret.append ( superSet[i] );
 			}
 		}
 	}
 
-	qDebug()<<"RET"<< ret.count();
+	qDebug() <<"RET"<< ret.count();
 	return ret;
 }
 

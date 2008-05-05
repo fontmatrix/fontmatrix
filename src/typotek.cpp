@@ -286,18 +286,23 @@ void typotek::open(QString path, bool announce, bool collect)
 	}
 
 	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
-	progress.setWindowModality ( Qt::WindowModal );
-	progress.setAutoReset ( false );
-	progress.setValue ( 0 );
-	progress.show();
+	bool showProgress = pathList.count() > 1;
+	if (showProgress) { // show progress bar only if there's more than one font
+		progress.setWindowModality ( Qt::WindowModal );
+		progress.setAutoReset ( false );
+		progress.setValue ( 0 );
+		progress.show();
+	}
 	QString importstring ( tr ( "Import" ) +  " %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
 		QString pathCur(pathList.at ( i ));
-		progress.setLabelText ( importstring.arg ( pathCur ) );
-		progress.setValue ( i );
-		if ( progress.wasCanceled() )
-			break;
+		if (showProgress) {
+			progress.setLabelText ( importstring.arg ( pathCur ) );
+			progress.setValue ( i );
+			if ( progress.wasCanceled() )
+				break;
+		}
 
 		if(temporaryFonts.contains(pathCur))
 		{

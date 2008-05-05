@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/" >
-    
+
     	<file alias="Welcome.png">graphic-resources/welcome.png</file>
-    
+
         <file alias="fontmatrix_icon.png">icons/application-fontmatrix_128.png</file>
 	<file alias="fontmatrix_systray_icon.png">icons/fontmatrix-systray.png</file>
 	<file alias="icon_fake_partiallychecked">icons/icon_warning-32.png</file>
@@ -22,20 +22,20 @@
         <file alias="fontmatrix_tagseteditor_icon.png">graphic-resources/fontmatrix-tagseteditor-icon.png</file>
         <file alias="fontmatrix_fontbookexport_icon.png">graphic-resources/fontmatrix-fontbookexport-icon.png</file>
         <file alias="fontmatrix_import_icon.png">graphic-resources/fontmatrix-import-icon.png</file>
-        
+
         <file alias="icon-TTF">icons/font_truetype16.png</file>
         <file alias="icon-PS1">icons/font_type116.png</file>
         <file alias="icon-OTF">icons/font_otf16.png</file>
-        
+
         <file alias="icon_empty.png">icons/action-empty-128.png</file>
-        
+
         <file alias="template_default">graphic-resources/fontbook_default.xml</file>
 	<file alias="template_default_preview">graphic-resources/default_template.png</file>
 	<file alias="template_oneline">graphic-resources/one_line_template.xml</file>
 	<file alias="template_oneline_preview">graphic-resources/oneline_template.png</file>
-        
+
         <file alias="info.css">graphic-resources/info.css</file>
-        
+
     </qresource>
 
 
@@ -44,7 +44,7 @@
         <file alias="about">messages/about.html</file>
         <file alias="about_people">messages/about_people.html</file>
         <file alias="help">messages/help.html</file>
-       <file alias="welcome">messages/welcome.html</file> 
+       <file alias="welcome">messages/welcome.html</file>
         <file alias="fontmatrix">messages/fontmatrix_en.qm</file>
     </qresource>
 
@@ -52,30 +52,32 @@
     <qresource prefix="/texts" lang="da" >
         <file alias="fontmatrix">messages/fontmatrix_da.qm</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="de" >
         <file alias="about">messages/about_de.html</file>
         <file alias="fontmatrix">messages/fontmatrix_de.qm</file>
     </qresource>
-        
+
     <qresource prefix="/texts" lang="en" >
 	    <file alias="fontmatrix">messages/fontmatrix_en.qm</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="fi" >
 	    <file alias="fontmatrix">messages/fontmatrix_fi.qm</file>
+	    <file alias="help">messages/help_fi.html</file>
+	    <file alias="welcome">messages/welcome_fi.html</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="fr" >
         <file alias="about">messages/about_fr.html</file>
         <file alias="help">messages/help_fr.html</file>
         <file alias="fontmatrix">messages/fontmatrix_fr.qm</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="nl" >
         <file alias="fontmatrix">messages/fontmatrix_nl.qm</file>
     </qresource>
-    
+
    <qresource prefix="/texts" lang="no" >
         <file alias="fontmatrix">messages/fontmatrix_no.qm</file>
     </qresource>
@@ -83,31 +85,31 @@
     <qresource prefix="/texts" lang="ru" >
         <file alias="fontmatrix">messages/fontmatrix_ru.qm</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="sr" >
         <file alias="fontmatrix">messages/fontmatrix_sr.qm</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="sv" >
         <file alias="fontmatrix">messages/fontmatrix_sv.qm</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="uk" >
 	<file alias="about">messages/about_uk.html</file>
 	<file alias="help">messages/help_uk.html</file>
         <file alias="fontmatrix">messages/fontmatrix_uk.qm</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="zh_CN" >
 	    <file alias="fontmatrix">messages/fontmatrix_zh_CN.qm</file>
     </qresource>
-    
+
     <qresource prefix="/texts" lang="zh_TW" >
 	    <file alias="fontmatrix">messages/fontmatrix_zh_TW.qm</file>
     </qresource>
-    
-    
-    
+
+
+
     <!-- SHAPERS -->
     <qresource prefix="/shapers" >
 	    <file alias="latn.dict">langs/latn.dict</file>

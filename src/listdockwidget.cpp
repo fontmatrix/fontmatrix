@@ -46,15 +46,6 @@ ListDockWidget::ListDockWidget()
 {
 	setupUi(this);
 	fontTree->setIconSize(QSize(32,32));
-// 	tagsetCombo->addItems (typotek::getInstance()->tagsets() );
-
-	QStringList tl_tmp = typotek::tagsList;
-	qDebug() << "TAGLIST\n" << typotek::tagsList.join ( "\n" );
-	tl_tmp.removeAll ( "Activated_On" );
-	tl_tmp.removeAll ( "Activated_Off" );
-
-	tagsCombo->addItems ( tl_tmp );
-	tagsCombo->addItems ( typotek::getInstance()->tagsets() );
 
 	// Folders tree
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
@@ -99,9 +90,11 @@ ListDockWidget::ListDockWidget()
 	searchString->setCompleter(completers.value(currentField));
 
 	folderView->setDragDropMode(QAbstractItemView::DragDrop);
+	
+	initTagCombo();
 
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
-	connect( searchString,SIGNAL(textEdited( const QString& )),this,SLOT(slotFeedTheCompleter(const QString&)));
+	connect( searchString,SIGNAL(returnPressed()),this,SLOT(slotFeedTheCompleter()));
 
 	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(folderView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
@@ -197,8 +190,12 @@ void ListDockWidget::slotFieldChanged(QAction * action)
 }
 
 
-void ListDockWidget::slotFeedTheCompleter(const QString & w)
+void ListDockWidget::slotFeedTheCompleter()
 {
+	QString w(searchString->text());
+	if(w.isEmpty())
+		return;
+	
 	QStringListModel *m = reinterpret_cast<QStringListModel*>( completers.value(currentField)->model() );
 	QStringList l(m->stringList ());
 	if(!l.contains(w))
@@ -290,6 +287,25 @@ void FolderViewMenu::slotImportFile()
 
 FolderViewMenu::~FolderViewMenu()
 {
+
+}
+
+void ListDockWidget::initTagCombo()
+{
+	tagsetIcon = QIcon(":/fontmatrix_tagseteditor.png");
+
+	QStringList tl_tmp = typotek::tagsList;
+	tl_tmp.removeAll ( "Activated_On" );
+	tl_tmp.removeAll ( "Activated_Off" );
+	
+	QStringList ts_tmp = typotek::getInstance()->tagsets();
+
+	tagsCombo->addItem(tr("All activated"),"ALL_ACTIVATED");
+	tagsCombo->addItems ( tl_tmp );
+	foreach(QString tagset, ts_tmp)
+	{
+		tagsCombo->addItem(tagsetIcon,tagset,"TAGSET");
+	}
 
 }
 

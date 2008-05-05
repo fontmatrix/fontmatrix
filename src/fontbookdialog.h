@@ -50,9 +50,6 @@ class FontBookDialog : public QDialog, private Ui::BookExportDialog
 // 		double getTabStyle();
 // 		double getTabSampleText();
 		QString getFileName();
-// 		QSizeF getPageSize();
-// 		QPrinter::PageSize getPageSizeConstant();
-// 		double getFontSize(QString s);
 		bool isOk;
 		bool isTemplate(){return m_isTemplate;}
 		QDomDocument getTemplate(){return m_template;}

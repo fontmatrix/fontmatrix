@@ -978,31 +978,11 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 	return ret;
 }
 
-// void typotek::print()
-// {
-// 	// TODO Provide a decent preview sample, what’s here is just useless.
-// 	QPrinter thePrinter ( QPrinter::HighResolution );
-// // 	FMPrintDialog *dialog = new FMPrintDialog ( &thePrinter, this );
-// 	dialog->setWindowTitle ( tr ( "Fontmatrix - Print" ) );
-//
-// 	if ( dialog->exec() != QDialog::Accepted )
-// 		return;
-// // 	thePrinter.setFullPage ( true );
-// // 	QPainter aPainter ( &thePrinter );
-// // 	theMainView->textScene()->render ( &aPainter );
-// // 	int maxPages = theMainView->glyphsScene()->sceneRect().height() / 600;
-// // 	QRectF prect = aPainter.viewport();
-// // 	for(int i = 0; i < maxPages ; i++)
-// // 	{
-// // 		qDebug() << "Print page " << i;
-// // 		QRectF prect(0, i * 600 , 300, 600);
-// // 		thePrinter.newPage();
-// // 		theMainView->glyphsScene()->render(&aPainter,prect,prect);
-// //
-// // 	}
-// //
-// 	delete dialog;
-// }
+void typotek::resetFilter()
+{
+	theMainView->resetCrumb();
+}
+
 
 void typotek::fontBook()
 {
@@ -1707,6 +1687,7 @@ void typotek::slotMainDockAreaChanged(Qt::DockWidgetArea area)
 	else if(area == Qt::BottomDockWidgetArea)
 		mainDockArea = "Bottom";
 }
+
 
 
 

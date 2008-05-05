@@ -196,6 +196,7 @@ class typotek:public QMainWindow
 		QList<FontItem*> getAllFonts() {return fontMap;};
 		QList<FontItem*> getFonts ( QString pattern, QString field );
 		QList<FontItem*> getCurrentFonts();
+		void resetFilter();
 
 		void addTagMapEntry(QString key, QStringList value){tagsMap[key] = value;};
 		void addTagSetMapEntry(QString key, QStringList value){tagSetMap[key] = value;};

@@ -840,6 +840,7 @@ void MainViewWidget::slotSearch()
 }
 
 // Basically we do the same as in regular search but not clear input field
+// Not used anymore
 void MainViewWidget::slotLiveSearch(const QString & text)
 {
 	qDebug()<<"slotLiveSearch";
@@ -867,14 +868,35 @@ void MainViewWidget::slotLiveSearch(const QString & text)
 
 void MainViewWidget::slotFilterTag ( QString tag )
 {
-	m_lists->fontTree->clear();
-	fontsetHasChanged = true;
-	QString fs ( tag );
-	QString ff ( "tag" );
-
-	currentFonts = typo->getFonts ( fs,ff ) ;
-	currentOrdering = "family";
-	fillTree();
+	int tIdx(m_lists->tagsCombo->currentIndex());
+	if(tIdx < 0)
+		return;
+	
+	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
+	if(key.isEmpty()) // regular tag
+	{
+		m_lists->fontTree->clear();
+		fontsetHasChanged = true;
+		QString fs ( tag );
+		QString ff ( "tag" );
+		currentFonts = typo->getFonts ( fs,ff ) ;
+		currentOrdering = "family";
+		fillTree();
+	}
+	else if(key == "ALL_ACTIVATED")
+	{
+		m_lists->fontTree->clear();
+		fontsetHasChanged = true;
+		QString fs ( "Activated_On" );
+		QString ff ( "tag" );
+		currentFonts = typo->getFonts ( fs,ff ) ;
+		currentOrdering = "family";
+		fillTree();
+	}
+	else if(key == "TAGSET")
+	{
+		slotFilterTagset ( tag );
+	}
 }
 
 void MainViewWidget::slotFilterTagset ( QString set )

@@ -209,6 +209,7 @@ void Systray::newTag(QString name)
 	if(!ttek)
 		ttek = typotek::getInstance();
 	QList<FontItem*> taggedFonts = ttek->getFonts ( name , "tag" );
+	ttek->resetFilter();
 	bool notAtAll = true;
 	bool all = true;
 	for(int i = 0; i < taggedFonts.count() ; ++i)
@@ -328,6 +329,7 @@ void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
 	foreach(QString tag, tags)
 	{
 		QList<FontItem*> taggedFonts = ttek->getFonts ( tag , "tag" );
+		ttek->resetFilter();
 		foreach(FontItem* fit, taggedFonts)
 		{
 			if(fit->path() == nameOfFontWhichCausedThisUpdate)// we’re concerned

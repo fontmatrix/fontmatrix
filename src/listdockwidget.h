@@ -75,6 +75,10 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 
 		FolderViewMenu *folderViewContextMenu;
 
+		QIcon tagsetIcon;
+		
+		void initTagCombo();
+		
 	public slots:
 		void unlockFilter();
 
@@ -83,7 +87,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 // 		void slotFolderItemDoubleclicked(QModelIndex mIdx);
 		void slotFolderPressed(QModelIndex mIdx);
 		void slotFieldChanged(QAction * action);
-		void slotFeedTheCompleter(const QString& w);
+		void slotFeedTheCompleter();
 		void slotFolderViewContextMenu(const QPoint&);
 
 	signals:

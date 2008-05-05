@@ -66,6 +66,7 @@
 	    <file alias="fontmatrix">messages/fontmatrix_fi.qm</file>
 	    <file alias="help">messages/help_fi.html</file>
 	    <file alias="welcome">messages/welcome_fi.html</file>
+	    <file alias="about">messages/about_fi.html</file>
     </qresource>
 
     <qresource prefix="/texts" lang="fr" >

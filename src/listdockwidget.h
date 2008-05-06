@@ -89,6 +89,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void slotFieldChanged(QAction * action);
 		void slotFeedTheCompleter();
 		void slotFolderViewContextMenu(const QPoint&);
+		void slotTabChanged(int i);
 
 	signals:
 		void folderSelectFont(const QString&);

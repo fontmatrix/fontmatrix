@@ -108,6 +108,8 @@ ListDockWidget::ListDockWidget()
 	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(folderView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
 	connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(slotFolderViewContextMenu(const QPoint &)));
+
+	connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(slotTabChanged(int)));
 }
 
 
@@ -334,5 +336,18 @@ void ListDockWidget::settingsDir(const QString &path)
 	settings.setValue("LastUsedFolder", dirPath);
 
 	s = path;
+}
+
+void ListDockWidget::slotTabChanged(int i)
+{
+	if (i == 2) {  // if the new tab is the folder view
+		QSettings settings;
+		QString lastUsedDir = settings.value("LastUsedFolder", QDir::homePath()).toString();
+		QDir d(lastUsedDir);
+		if (!d.exists())
+			lastUsedDir = QDir::homePath();
+
+		folderView->setCurrentIndex(theDirModel->index(lastUsedDir));
+	}
 }
 

@@ -226,8 +226,13 @@ void typotek::open(QString path, bool announce, bool collect)
 	QStringList pathList;
 
 	QFileInfo finfo(path);
-	if (finfo.isDir()) { // importing a directory
-		static QString dir = QDir::homePath(); // first time use the home path then remember the last used dir
+	if (finfo.isDir() || path.isEmpty()) { // importing a directory
+		static QSettings settings;
+		static QString dir = settings.value("LastUsedFolder", QDir::homePath()).toString(); // first time use the home path then remember the last used dir
+		QDir d(dir);
+		if (!d.exists())
+			dir = QDir::homePath();
+
 		QString tmpdir;
 
 		if(!path.isEmpty())
@@ -239,6 +244,7 @@ void typotek::open(QString path, bool announce, bool collect)
 			return; // user choose to cancel the import process
 
 		dir = tmpdir; // only set dir if importing wasn't cancelled
+		settings.setValue("LastUsedFolder", dir);
 
 		QDir theDir ( dir );
 	// 	addFcDirItem(theDir.absolutePath());

@@ -72,7 +72,8 @@ ListDockWidget::ListDockWidget()
 	if(name_meaning.isEmpty())
 		FontItem::fillNamesMeaning();
 
-	currentField = tr("All fields");
+	allFieldName = tr("All fields");
+	currentField = allFieldName;
 	QAction *actn = new QAction(currentField, filterActGroup);
 	actn->setCheckable(true);
 	actn->setChecked(true);
@@ -105,6 +106,7 @@ ListDockWidget::ListDockWidget()
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
 	connect( searchString,SIGNAL(returnPressed()),this,SLOT(slotFeedTheCompleter()));
 
+	connect(folderView, SIGNAL(activated( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(folderView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
 	connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(slotFolderViewContextMenu(const QPoint &)));
@@ -215,6 +217,17 @@ void ListDockWidget::slotFeedTheCompleter()
 		l << w;
 		m->setStringList(l);
 	}
+	// we want "all fields" completer to have all strings completed
+	if(currentField != allFieldName )
+	{
+		m = reinterpret_cast<QStringListModel*>( completers.value(allFieldName)->model() );
+		l = m->stringList ();
+		if(!l.contains(w))
+		{
+			l << w;
+			m->setStringList(l);
+		}
+	}
 }
 
 void ListDockWidget::slotFolderViewContextMenu(const QPoint& p)
@@ -235,13 +248,13 @@ void ListDockWidget::slotFolderViewContextMenu(const QPoint& p)
 
 	folderViewContextMenu->exec(dm->fileInfo(mi), tabWidget->pos() + mapToGlobal(p));
 }
-
+// we want "all fields" completer to have all strings completed
 
 FolderViewMenu::FolderViewMenu() : QMenu()
 {
-	dirAction = new QAction(tr("Import"), 0);
+	dirAction = new QAction(tr("Import Directory"), 0);
 	dirRecursiveAction = new QAction(tr("Import recursively"), 0);
-	fileAction = new QAction("Import", 0);
+	fileAction = new QAction(tr("Import File"), 0);
 
 	addAction(dirAction);
 	addAction(dirRecursiveAction);
@@ -250,18 +263,18 @@ FolderViewMenu::FolderViewMenu() : QMenu()
 	connect(dirAction, SIGNAL(triggered()), this, SLOT(slotImportDir()));
 	connect(dirRecursiveAction, SIGNAL(triggered()), this, SLOT(slotImportDirRecursively()));
 	connect(fileAction, SIGNAL(triggered()), this, SLOT(slotImportFile()));
-}
+}// we want "all fields" completer to have all strings completed
 
 void FolderViewMenu::exec(const QFileInfo &fi, const QPoint &p)
 {
 	if (fi.isDir()) {
-		dirAction->setVisible(true);
-		dirRecursiveAction->setVisible(true);
-		fileAction->setVisible(false);
+		dirAction->setEnabled(true);
+		dirRecursiveAction->setEnabled(true);
+		fileAction->setEnabled(false);
 	} else if (fi.isFile()) {
-		dirAction->setVisible(false);
-		dirRecursiveAction->setVisible(false);
-		fileAction->setVisible(true);
+		dirAction->setEnabled(false);
+		dirRecursiveAction->setEnabled(false);
+		fileAction->setEnabled(true);
 	} else
 		return; // not a file or a directory
 

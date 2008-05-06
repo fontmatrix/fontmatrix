@@ -70,6 +70,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		QMenu *theFilterMenu;
 		QActionGroup *filterActGroup;
 		QString currentField;
+		QString allFieldName;
 
 		QMap<QString, QCompleter*> completers;
 

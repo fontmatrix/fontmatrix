@@ -50,7 +50,7 @@
     </message>
     <message>
       <source>Output</source>
-      <translation>Tuloste</translation>
+      <translation>Tiedostoon</translation>
     </message>
   </context>
   <context>
@@ -146,7 +146,7 @@
     </message>
     <message>
       <source>License Description</source>
-      <translation>Lisenssi</translation>
+      <translation>Lisenssin kuvaus</translation>
     </message>
     <message>
       <source>License Info URL</source>
@@ -182,11 +182,11 @@
     </message>
     <message>
       <source>Downloading %1.</source>
-      <translation type="unfinished" >Ladattu %1.</translation>
+      <translation>Ladataan %1.</translation>
     </message>
     <message>
       <source>Category</source>
-      <translation>Luokka</translation>
+      <translation>Osa</translation>
     </message>
   </context>
   <context>
@@ -230,11 +230,11 @@
 will be shown in the status bar. If you choose not to
 show this dialog anymore you can reset the state
 in preferences.&lt;/qt></source>
-      <translation type="unfinished" />
+      <translation>&lt;qt>Tämän ikkunan sijaan tuotujen fonttien lukumäärä näytetään tilarivillä. Jos poistat tämän ikkunan käytöstä, voit palauttaa sen asetuksista.&lt;/qt></translation>
     </message>
     <message>
       <source>Do not show this dialog again</source>
-      <translation type="unfinished" />
+      <translation>Älä näytä tätä ikkunaa uudestaan</translation>
     </message>
   </context>
   <context>
@@ -292,7 +292,7 @@ in preferences.&lt;/qt></source>
     </message>
     <message>
       <source>Field selection</source>
-      <translation type="unfinished" />
+      <translation>Kentän valinta</translation>
     </message>
     <message>
       <source>F</source>
@@ -307,7 +307,7 @@ in preferences.&lt;/qt></source>
     </message>
     <message>
       <source>All activated</source>
-      <translation type="unfinished" />
+      <translation>Kaikki käytössä olevat</translation>
     </message>
   </context>
   <context>
@@ -326,7 +326,7 @@ in preferences.&lt;/qt></source>
     </message>
     <message>
       <source>Friendly Name</source>
-      <translation>Kuvaus</translation>
+      <translation>Nimi</translation>
     </message>
     <message>
       <source>Glyphs</source>
@@ -957,7 +957,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
       <source>Activation event</source>
-      <translation>Aktivointi-tapahtuma</translation>
+      <translation>Käyttöönottotapahtuma</translation>
     </message>
     <message>
       <source>Cancel</source>
@@ -965,11 +965,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
       <source>Activation of :</source>
-      <translation>Aktivointi:</translation>
+      <translation>Käyttöönotto:</translation>
     </message>
     <message>
       <source>Deactivation of :</source>
-      <translation>Aktivoinnin poisto:</translation>
+      <translation>Käytöstäpoisto:</translation>
     </message>
     <message>
       <source>134View all mapped glyphs</source>
@@ -1073,7 +1073,7 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     </message>
     <message>
       <source>Named Sample Texts</source>
-      <translation>Nimetty esimerkkiteksti</translation>
+      <translation>Nimetyt esimerkkitekstit</translation>
     </message>
     <message>
       <source>Font Size:</source>
@@ -1081,19 +1081,19 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     </message>
     <message>
       <source>Interline:</source>
-      <translation>Interline:</translation>
+      <translation type="unfinished" />
     </message>
     <message>
       <source>Files and Folders</source>
-      <translation>Tiedostot ja kansiot</translation>
+      <translation>Tiedostot ja hakemistot</translation>
     </message>
     <message>
       <source>Templates Folder</source>
-      <translation>Mallikansiot</translation>
+      <translation>Mallihakemistot</translation>
     </message>
     <message>
       <source>Remote directories</source>
-      <translation>Etäkansiot</translation>
+      <translation>Etähakemistot</translation>
     </message>
     <message>
       <source>Remove</source>
@@ -1109,7 +1109,7 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     </message>
     <message>
       <source>is RTL</source>
-      <translation>on RTL</translation>
+      <translation>on tyyppiä oikealta vasemmalle</translation>
     </message>
     <message>
       <source>size</source>
@@ -1137,7 +1137,7 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     </message>
     <message>
       <source>Show names of imported fonts after import process</source>
-      <translation type="unfinished" />
+      <translation>Näytä tuotujen fonttien nimet tuonnin jälkeen</translation>
     </message>
   </context>
   <context>
@@ -1156,7 +1156,7 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     </message>
     <message>
       <source>Select Templates Folder</source>
-      <translation>Valitse mallikansio</translation>
+      <translation>Valitse mallihakemisto</translation>
     </message>
     <message>
       <source>Select Where remote font files will be stored</source>
@@ -1195,8 +1195,7 @@ ijklmnopq
 rstuvxyz
 0123456789
 ,;:!?.</source>
-      <translation>
-ABCDEFGHI
+      <translation>ABCDEFGHI
 JKLMNOPQR
 STUVXYZÅÄÖ
 
@@ -1204,8 +1203,7 @@ abcdefghi
 jklmnopqr
 stuvxyzåäö
 0123456789
-,;:!?. 
-</translation>
+,;:!?. </translation>
     </message>
     <message>
       <source>hamburgefonstiv</source>
@@ -1980,7 +1978,7 @@ stuvxyzåäö
     <name>multiPrintDialog</name>
     <message>
       <source>Dialog</source>
-      <translation type="unfinished" >Valintaikkuna</translation>
+      <translation>Valintaikkuna</translation>
     </message>
     <message>
       <source>Views</source>
@@ -2000,7 +1998,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Playground</source>
-      <translation type="unfinished" >Leikkikenttä</translation>
+      <translation>Leikkikenttä</translation>
     </message>
   </context>
   <context>
@@ -2011,7 +2009,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Dead links</source>
-      <translation>Toimimaton linkki</translation>
+      <translation>Toimimattomat linkit</translation>
     </message>
     <message>
       <source>Select all</source>
@@ -2023,7 +2021,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Activated Not Linked</source>
-      <translation>Aktivoitu, ei linkitetty</translation>
+      <translation>Käytössä, ei linkitetty</translation>
     </message>
     <message>
       <source>Re-link</source>
@@ -2031,11 +2029,11 @@ stuvxyzåäö
     </message>
     <message>
       <source>Deactivate</source>
-      <translation>Poista aktivointi</translation>
+      <translation>Poista käytöstä</translation>
     </message>
     <message>
       <source>Deactivated Linked</source>
-      <translation>Aktivointi poistettu, linkitetty</translation>
+      <translation>Käytöstä poistettu, linkitetty</translation>
     </message>
     <message>
       <source>De-link</source>
@@ -2043,7 +2041,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Activate</source>
-      <translation>Aktivoi</translation>
+      <translation>Ota käyttöön</translation>
     </message>
     <message>
       <source>Close</source>
@@ -2086,7 +2084,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Save the document to disk</source>
-      <translation>Tallenna muutokset levylle</translation>
+      <translation>Tallenna asiakirja</translation>
     </message>
     <message>
       <source>Export font book...</source>
@@ -2122,7 +2120,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>&amp;Tag Sets</source>
-      <translation>&amp;Kokoelmat</translation>
+      <translation>&amp;Kokoelmia</translation>
     </message>
     <message>
       <source>Edit current font</source>
@@ -2162,11 +2160,11 @@ stuvxyzåäö
     </message>
     <message>
       <source>Activate all current</source>
-      <translation>Aktivoi kaikki nykyiset</translation>
+      <translation>Ota kaikki nykyiset käyttöön</translation>
     </message>
     <message>
       <source>Deactivate all current</source>
-      <translation>Poista aktivointi kaikista nykyisistä</translation>
+      <translation>Poista kaikki nykyiset käytöstä</translation>
     </message>
     <message>
       <source>Try to run font editor with the selected font as argument</source>
@@ -2199,20 +2197,20 @@ stuvxyzåäö
     <message>
       <source>You are about to activate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
-      <translation type="unfinished" />
+      <translation>Olet aikeissa ottaa käyttöön runsaasti fontteja. Jos se ei ollut tarkoituksesi, voit vielä perua aikeesi.</translation>
     </message>
     <message>
       <source>You are about to deactivate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
-      <translation type="unfinished" />
+      <translation>Olet aikeissa poistaa käytöstä runsaasti fontteja. Jos se ei ollut tarkoituksesi, voit vielä perua aikeesi.</translation>
     </message>
     <message>
       <source>Canât import this font because itâs broken :</source>
-      <translation type="unfinished" />
+      <translation>Tätä fonttia ei voida tuoda, koska se on viallinen:</translation>
     </message>
     <message>
       <source>Choose the tag for filter exported fonts</source>
-      <translation type="unfinished" />
+      <translation>Valitse tallennettavien fonttien luokka</translation>
     </message>
     <message>
       <source>Choose Directory</source>
@@ -2224,15 +2222,15 @@ it is time to cancel if it was not your intent</source>
     </message>
     <message>
       <source>Export a fontset</source>
-      <translation type="unfinished" />
+      <translation>Tallenna fonttikokoelma</translation>
     </message>
     <message>
       <source>Check Database</source>
-      <translation type="unfinished" />
+      <translation>Tarkista tietokanta</translation>
     </message>
     <message>
       <source>Tag All...</source>
-      <translation type="unfinished" />
+      <translation>Lisää kaikki luokkaan...</translation>
     </message>
     <message>
       <source>Load settings</source>
@@ -2240,7 +2238,7 @@ it is time to cancel if it was not your intent</source>
     </message>
     <message>
       <source>Check for Fontmatrix own dir</source>
-      <translation type="unfinished" />
+      <translation>Tarkista Fontmatrixin oma hakemisto</translation>
     </message>
     <message>
       <source>Loading</source>
@@ -2369,7 +2367,7 @@ it is time to cancel if it was not your intent</source>
     </message>
     <message>
       <source>Fonts imported: %1</source>
-      <translation type="unfinished" />
+      <translation>Tuotuja fontteja: %1</translation>
     </message>
   </context>
 </TS>

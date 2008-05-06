@@ -27,6 +27,7 @@
 #include <QStringListModel>
 #include <QCompleter>
 #include <QStatusBar>
+#include <QSettings>
 
 extern QStringList name_meaning;
 
@@ -56,6 +57,14 @@ ListDockWidget::ListDockWidget()
 	folderView->hideColumn(3);
 	folderView->setContextMenuPolicy(Qt::CustomContextMenu);
 	folderViewContextMenu = 0;
+
+	QSettings settings;
+	QString lastUsedDir = settings.value("LastUsedFolder", QDir::homePath()).toString();
+	QDir d(lastUsedDir);
+	if (!d.exists())
+		lastUsedDir = QDir::homePath();
+
+	folderView->setCurrentIndex(theDirModel->index(lastUsedDir));
 
 	theFilterMenu = new QMenu;
 	filterActGroup = new QActionGroup(theFilterMenu);
@@ -90,7 +99,7 @@ ListDockWidget::ListDockWidget()
 	searchString->setCompleter(completers.value(currentField));
 
 	folderView->setDragDropMode(QAbstractItemView::DragDrop);
-	
+
 	initTagCombo();
 
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
@@ -148,6 +157,7 @@ void ListDockWidget::slotFolderItemclicked(QModelIndex mIdx)
 		QFileInfo pf(path);
 		emit folderSelectFont(pf.absoluteFilePath());
 	}
+	settingsDir(path);
 }
 /*
 void ListDockWidget::slotFolderItemDoubleclicked(QModelIndex mIdx)
@@ -195,7 +205,7 @@ void ListDockWidget::slotFeedTheCompleter()
 	QString w(searchString->text());
 	if(w.isEmpty())
 		return;
-	
+
 	QStringListModel *m = reinterpret_cast<QStringListModel*>( completers.value(currentField)->model() );
 	QStringList l(m->stringList ());
 	if(!l.contains(w))
@@ -297,7 +307,7 @@ void ListDockWidget::initTagCombo()
 	QStringList tl_tmp = typotek::tagsList;
 	tl_tmp.removeAll ( "Activated_On" );
 	tl_tmp.removeAll ( "Activated_Off" );
-	
+
 	QStringList ts_tmp = typotek::getInstance()->tagsets();
 
 	tagsCombo->addItem(tr("All activated"),"ALL_ACTIVATED");
@@ -307,5 +317,22 @@ void ListDockWidget::initTagCombo()
 		tagsCombo->addItem(tagsetIcon,tagset,"TAGSET");
 	}
 
+}
+
+void ListDockWidget::settingsDir(const QString &path)
+{
+	static QString s;
+	if (s == path)
+		return;
+
+	QFileInfo fi(path);
+	QString dirPath = fi.absoluteFilePath();
+	if (fi.isFile())
+		dirPath = fi.absoluteDir().absolutePath();
+
+	QSettings settings;
+	settings.setValue("LastUsedFolder", dirPath);
+
+	s = path;
 }
 

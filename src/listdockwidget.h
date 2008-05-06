@@ -76,9 +76,9 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		FolderViewMenu *folderViewContextMenu;
 
 		QIcon tagsetIcon;
-		
+
 		void initTagCombo();
-		
+		void settingsDir(const QString &path);
 	public slots:
 		void unlockFilter();
 

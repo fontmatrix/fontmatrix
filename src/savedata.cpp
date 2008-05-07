@@ -56,6 +56,10 @@ void SaveData::doSave()
 	{
 		if(!fitem->isLocked() && !fitem->isRemote())
 		{
+			QMap<int, QMap<QString,QString> > Info(fitem->rawInfo());
+			QMap<int, QMap<QString,QString> >::const_iterator infoMap = Info.begin();
+			QMap<int, QMap<QString,QString> >::const_iterator endMap = Info.end();
+			
 			writeStartElement("fontfile");
 			writeAttribute("family", fitem->family());
 			writeAttribute("variant",fitem->variant());
@@ -68,13 +72,6 @@ void SaveData::doSave()
 			writeEndElement();
 			
 			writeStartElement("info");
-			
-			QMap<int, QMap<QString,QString> > Info(fitem->rawInfo());
-			QMap<int, QMap<QString,QString> >::const_iterator infoMap = Info.begin();
-			QMap<int, QMap<QString,QString> >::const_iterator endMap = Info.end();
-			
-// 			qDebug() << "INFO" << Info.count() << infoMap.key()  ;
-			
 			while( infoMap != endMap )
 			{
 // 				qDebug() << "LANG" << infoMap.key() ;
@@ -94,8 +91,8 @@ void SaveData::doSave()
 				
 				++infoMap;
 			}
-			
 			writeEndElement();//info
+			
 			QStringList tl = fitem->tags();
 			foreach(QString tag, tl)
 			{
@@ -103,7 +100,7 @@ void SaveData::doSave()
 				writeCharacters( tag );
 				writeEndElement();
 			}
-			writeEndElement();
+			writeEndElement();//fontfile
 		}
 	}
 

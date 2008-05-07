@@ -87,6 +87,7 @@ void DataLoader::load()
 		fi.family = col.toElement().attributeNode ( "family" ).value();
 		fi.variant = col.toElement().attributeNode ( "variant" ).value();
 		fi.type = col.toElement().attributeNode ( "type" ).value();
+		fi.panose = col.toElement().attributeNode ( "panose" ).value();
 // 			fi.info = col.namedItem ( "info" ).toElement().text();
 		QDomNodeList langlist = col.namedItem ( "info" ).toElement().elementsByTagName ( "lang" );
 		for ( int lIdx ( 0 ); lIdx < langlist.count(); ++lIdx )

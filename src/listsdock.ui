@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>313</width>
+    <width>389</width>
     <height>723</height>
    </rect>
   </property>
@@ -38,7 +38,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2" >
+   <item row="0" column="1" >
     <widget class="QComboBox" name="tagsCombo" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
@@ -54,6 +54,22 @@
      </property>
      <property name="sizeAdjustPolicy" >
       <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" >
+    <widget class="QToolButton" name="panoseButton" >
+     <property name="toolTip" >
+      <string>Switch to panose filtering</string>
+     </property>
+     <property name="text" >
+      <string>P</string>
+     </property>
+     <property name="checkable" >
+      <bool>true</bool>
+     </property>
+     <property name="autoRaise" >
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -161,6 +177,9 @@
      <property name="contextMenuPolicy" >
       <enum>Qt::NoContextMenu</enum>
      </property>
+     <property name="toolTip" >
+      <string/>
+     </property>
      <property name="currentIndex" >
       <number>0</number>
      </property>
@@ -169,8 +188,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>291</width>
-        <height>575</height>
+        <width>367</width>
+        <height>571</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -248,8 +267,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>291</width>
-        <height>575</height>
+        <width>367</width>
+        <height>571</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -276,8 +295,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>291</width>
-        <height>575</height>
+        <width>367</width>
+        <height>571</height>
        </rect>
       </property>
       <attribute name="title" >

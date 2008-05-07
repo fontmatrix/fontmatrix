@@ -61,6 +61,8 @@ QGraphicsScene *FontItem::theOneLineScene = 0;
 QMap<FT_Encoding, QString> charsetMap;
 QMap<int, QString> langIdMap;
 QStringList name_meaning;
+QMap< QString, QMap<int, QString> > panoseMap;
+QMap< int, QString > panoseKeys;
 QList<int> legitimateNonPathChars;
 
 QVector<QRgb> gray256Palette;
@@ -465,7 +467,173 @@ void FontItem::fillInvertedPalette()
 	}
 }
 
-
+void FontItem::fillPanoseMap()
+{
+	// http://www.microsoft.com/OpenType/OTSpec/os2ver0.htm#pan
+	
+	QMap<int, QString> mapModel;
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Text and Display") ;
+	mapModel[ 3 ] = tr("Script") ;
+	mapModel[ 4 ] = tr("Decorative") ;
+	mapModel[ 5 ] = tr("Pictorial") ;
+	
+	panoseMap[tr("Family Type")] = mapModel;
+	panoseKeys[0] = tr("Family Type");
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Cove") ;
+	mapModel[ 3 ] = tr("Obtuse Cove") ;
+	mapModel[ 4 ] = tr("Square Cove") ;
+	mapModel[ 5 ] = tr("Obtuse Square Cove") ;
+	mapModel[ 6 ] = tr("Square") ;
+	mapModel[ 7 ] = tr("Thin") ;
+	mapModel[ 8 ] = tr("Bone") ;
+	mapModel[ 9 ] = tr("Exaggerated") ;
+	mapModel[ 10 ] = tr("Triangle") ;
+	mapModel[ 11 ] = tr("Normal Sans") ;
+	mapModel[ 12 ] = tr("Obtuse Sans") ;
+	mapModel[ 13 ] = tr("Perp Sans") ;
+	mapModel[ 14 ] = tr("Flared") ;
+	mapModel[ 15 ] = tr("Rounded") ;
+	
+	panoseMap[tr("Serif style")] = mapModel;
+	panoseKeys[1] = tr("Serif style") ;
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Very Light") ;
+	mapModel[ 3 ] = tr("Light") ;
+	mapModel[ 4 ] = tr("Thin") ;
+	mapModel[ 5 ] = tr("Book") ;
+	mapModel[ 6 ] = tr("Medium") ;
+	mapModel[ 7 ] = tr("Demi") ;
+	mapModel[ 8 ] = tr("Bold") ;
+	mapModel[ 9 ] = tr("Heavy") ;
+	mapModel[ 10 ] = tr("Black") ;
+	mapModel[ 11 ] = tr("Nord") ;
+	
+	panoseMap[tr("Weight")] = mapModel;
+	panoseKeys[2] = tr("Weight");
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Old Style") ;
+	mapModel[ 3 ] = tr("Modern") ;
+	mapModel[ 4 ] = tr("Even Width") ;
+	mapModel[ 5 ] = tr("Expanded") ;
+	mapModel[ 6 ] = tr("Condensed") ;
+	mapModel[ 7 ] = tr("Very Expanded") ;
+	mapModel[ 8 ] = tr("Very Condensed") ;
+	mapModel[ 9 ] = tr("Monospaced") ;
+	
+	panoseMap[tr("Proportion")] = mapModel;
+	panoseKeys[3] = tr("Proportion");
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("None") ;
+	mapModel[ 3 ] = tr("Very Low") ;
+	mapModel[ 4 ] = tr("Low") ;
+	mapModel[ 5 ] = tr("Medium Low") ;
+	mapModel[ 6 ] = tr("Medium") ;
+	mapModel[ 7 ] = tr("Medium High") ;
+	mapModel[ 8 ] = tr("High") ;
+	mapModel[ 9 ] = tr("Very High") ;
+	
+	panoseMap[tr("Contrast")] = mapModel;
+	panoseKeys[4] = tr("Contrast");
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Gradual/Diagonal") ;
+	mapModel[ 3 ] = tr("Gradual/Transitional") ;
+	mapModel[ 4 ] = tr("Gradual/Vertical") ;
+	mapModel[ 5 ] = tr("Gradual/Horizontal") ;
+	mapModel[ 6 ] = tr("Rapid/Vertical") ;
+	mapModel[ 7 ] = tr("Rapid/Horizontal") ;
+	mapModel[ 8 ] = tr("Instant/Vertical") ;
+	
+	panoseMap[tr("Stroke Variation")] = mapModel;
+	panoseKeys[5] = tr("Stroke Variation");
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Straight Arms/Horizontal") ;
+	mapModel[ 3 ] = tr("Straight Arms/Wedge") ;
+	mapModel[ 4 ] = tr("Straight Arms/Vertical") ;
+	mapModel[ 5 ] = tr("Straight Arms/Single Serif") ;
+	mapModel[ 6 ] = tr("Straight Arms/Double Serif") ;
+	mapModel[ 7 ] = tr("Non-Straight Arms/Horizontal") ;
+	mapModel[ 8 ] = tr("Non-Straight Arms/Wedge") ;
+	mapModel[ 9 ] = tr("Non-Straight Arms/Vertical") ;
+	mapModel[ 10 ] = tr("Non-Straight Arms/Single Serif") ;
+	mapModel[ 11 ] = tr("Non-Straight Arms/Double Serif") ;
+	
+	panoseMap[tr("Arm Style")] = mapModel;
+	panoseKeys[6] = tr("Arm Style");
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Normal/Contact") ;
+	mapModel[ 3 ] = tr("Normal/Weighted") ;
+	mapModel[ 4 ] = tr("Normal/Boxed") ;
+	mapModel[ 5 ] = tr("Normal/Flattened") ;
+	mapModel[ 6 ] = tr("Normal/Rounded") ;
+	mapModel[ 7 ] = tr("Normal/Off Center") ;
+	mapModel[ 8 ] = tr("Normal/Square") ;
+	mapModel[ 9 ] = tr("Oblique/Contact") ;
+	mapModel[ 10 ] = tr("Oblique/Weighted") ;
+	mapModel[ 11 ] = tr("Oblique/Boxed") ;
+	mapModel[ 12 ] = tr("Oblique/Flattened") ;
+	mapModel[ 13 ] = tr("Oblique/Rounded") ;
+	mapModel[ 14 ] = tr("Oblique/Off Center") ;
+	mapModel[ 15 ] = tr("Oblique/Square") ;
+	
+	panoseMap[tr("Letterform")] = mapModel;
+	panoseKeys[7] = tr("Letterform");
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Standard/Trimmed") ;
+	mapModel[ 3 ] = tr("Standard/Pointed") ;
+	mapModel[ 4 ] = tr("Standard/Serifed") ;
+	mapModel[ 5 ] = tr("High/Trimmed") ;
+	mapModel[ 6 ] = tr("High/Pointed") ;
+	mapModel[ 7 ] = tr("High/Serifed") ;
+	mapModel[ 8 ] = tr("Constant/Trimmed") ;
+	mapModel[ 9 ] = tr("Constant/Pointed") ;
+	mapModel[ 10 ] = tr("Constant/Serifed") ;
+	mapModel[ 11 ] = tr("Low/Trimmed") ;
+	mapModel[ 12 ] = tr("Low/Pointed") ;
+	mapModel[ 13 ] = tr("Low/Serifed") ;
+		
+	panoseMap[tr("Midline")] = mapModel;
+	panoseKeys[8] = tr("Midline");
+	mapModel.clear();
+	
+	mapModel[ 0 ] = tr("Any") ;
+	mapModel[ 1 ] = tr("No Fit") ;
+	mapModel[ 2 ] = tr("Constant/Small") ;
+	mapModel[ 3 ] = tr("Constant/Standard") ;
+	mapModel[ 4 ] = tr("Constant/Large") ;
+	mapModel[ 5 ] = tr("Ducking/Small") ;
+	mapModel[ 6 ] = tr("Ducking/Standard") ;
+	mapModel[ 7 ] = tr("Ducking/Large") ;
+	
+	panoseMap[tr("X-Height")] = mapModel;
+	panoseKeys[9] = tr("X-Height");
+}
 
 FontItem::FontItem ( QString path , bool remote, bool faststart )
 {
@@ -493,6 +661,8 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 		fill256Palette();
 	if( invertedGray256Palette.isEmpty() )
 		fillInvertedPalette();
+	if( panoseMap.isEmpty() )
+		fillPanoseMap();
 
 	if ( !theOneLineScene )
 	{
@@ -748,6 +918,12 @@ QString FontItem::value ( QString k )
 	QMap<QString, QString> namap( moreInfo.value(0) ); 
 	return namap.value(k);
 }
+
+QString FontItem::panose(QString k)
+{
+	return panoseInfo.value(k);
+}
+
 
 QString FontItem::name()
 {
@@ -2012,10 +2188,10 @@ QString FontItem::infoText ( bool fromcache )
 	.langnomatch
 	*/
 	QString ret;
-
+	
 	QMap<QString, QStringList> orderedInfo;
 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
-	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type : "+ m_type +" | Charmaps : " + m_charsets.join ( ", " ) +"</div>";
+	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type: "+ m_type +" | Charmaps: " + m_charsets.join ( ", " ) +" | Panose: "+ m_panose +"</div>";
 
 	
 // 	if ( !moreInfo.isEmpty() ) // moreInfo.isNotEmpty
@@ -2432,6 +2608,34 @@ void FontItem::moreInfo_sfnt()
 		}
 	}
 	
+	// Is there an OS/2 table?
+	TT_OS2 *os2 = static_cast<TT_OS2*>( FT_Get_Sfnt_Table(m_face, ft_sfnt_os2) );
+	if(os2 /* and  wantAutoTag*/)
+	{
+		// Just want the panose data
+		m_panose.clear();
+		for(int bI(0); bI < 10; ++bI)
+		{
+			m_panose += QString::number( os2->panose[bI]) ;
+			panoseInfo[ panoseKeys[bI] ] = panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ] ;
+// 			if(os2->panose[bI] > 1 ) // "any" nor "not fit" does not seem rather interesting tags :)
+// 			{
+// 				QString pTag( panoseKeys[bI] +" - "+ panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ]);
+// 				if(!m_tags.contains(pTag) )
+// 				{
+// 					m_tags << pTag;
+// 					if(!typotek::tagsList.contains(pTag))
+// 					{
+// 						typotek::tagsList << pTag;
+// 					}	
+// 				}
+// 			}
+		}
+// 		moreInfo[0]["Panose"] = pan;
+		
+		
+	}
+	
 	releaseFace();
 }
 
@@ -2785,7 +2989,7 @@ void FontItem::fileRemote ( QString f , QString v, QString t, QString i, QPixmap
 }
 
 /// the same, but just for speedup startup with a lot of font files
-void FontItem::fileLocal ( QString f, QString v, QString t, QMap<int, QMap< QString, QString > > i )
+void FontItem::fileLocal ( QString f, QString v, QString t, QString p, QMap<int, QMap< QString, QString > > i )
 {
 	m_family = f;
 	m_variant = v;
@@ -2793,6 +2997,26 @@ void FontItem::fileLocal ( QString f, QString v, QString t, QMap<int, QMap< QStr
 	
 	moreInfo = i;
 }
+
+void FontItem::fileLocal(FontLocalInfo fli)
+{
+	m_family = fli.family;
+	m_variant = fli.variant;
+	m_type = fli.type;
+	moreInfo = fli.info;
+	if(!fli.panose.isEmpty())
+	{
+		m_panose = fli.panose;
+		for(int bI(0); bI < 10; ++bI)
+		{
+			panoseInfo[ panoseKeys[bI] ] = panoseMap.value( panoseKeys[bI] ).value( m_panose.mid(bI,1).toInt() ) ;
+
+		}
+		
+	}
+	
+}
+
 
 /// Finally, we have to download the font file
 int FontItem::getFromNetwork()
@@ -3049,5 +3273,6 @@ QMap< int, QMap < QString , QString > > & FontItem::rawInfo()
 	}
 	 return moreInfo;
 }
+
 
 

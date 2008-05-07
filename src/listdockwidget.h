@@ -71,7 +71,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		QActionGroup *filterActGroup;
 		QString currentField;
 		QString allFieldName;
-
+		
 		QMap<QString, QCompleter*> completers;
 
 		FolderViewMenu *folderViewContextMenu;
@@ -91,6 +91,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void slotFeedTheCompleter();
 		void slotFolderViewContextMenu(const QPoint&);
 		void slotTabChanged(int i);
+		void slotPanoseChecked(bool checked);
 
 	signals:
 		void folderSelectFont(const QString&);

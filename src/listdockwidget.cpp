@@ -30,6 +30,7 @@
 #include <QSettings>
 
 extern QStringList name_meaning;
+extern QMap< QString, QMap<int, QString> > panoseMap;
 
 ListDockWidget* ListDockWidget::instance = 0;
 
@@ -103,6 +104,8 @@ ListDockWidget::ListDockWidget()
 
 	initTagCombo();
 
+	connect( panoseButton, SIGNAL(clicked( bool )), this, SLOT(slotPanoseChecked(bool)));
+	
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
 	connect( searchString,SIGNAL(returnPressed()),this,SLOT(slotFeedTheCompleter()));
 
@@ -248,7 +251,6 @@ void ListDockWidget::slotFolderViewContextMenu(const QPoint& p)
 
 	folderViewContextMenu->exec(dm->fileInfo(mi), tabWidget->pos() + mapToGlobal(p));
 }
-// we want "all fields" completer to have all strings completed
 
 FolderViewMenu::FolderViewMenu() : QMenu()
 {
@@ -317,6 +319,7 @@ FolderViewMenu::~FolderViewMenu()
 
 void ListDockWidget::initTagCombo()
 {
+	tagsCombo->clear();
 	tagsetIcon = QIcon(":/fontmatrix_tagseteditor.png");
 
 	QStringList tl_tmp = typotek::tagsList;
@@ -361,6 +364,31 @@ void ListDockWidget::slotTabChanged(int i)
 			lastUsedDir = QDir::homePath();
 
 		folderView->setCurrentIndex(theDirModel->index(lastUsedDir));
+	}
+}
+
+void ListDockWidget::slotPanoseChecked(bool checked)
+{
+	if(checked)
+	{
+		tagsCombo->clear();
+		if(panoseMap.isEmpty())
+			FontItem::fillPanoseMap();
+		
+		QMap<QString, QMap<int, QString> >::const_iterator cip;
+		QMap<int, QString>::const_iterator cip2;
+		for(cip = panoseMap.constBegin();cip != panoseMap.constEnd(); ++cip)
+		{
+			for(cip2 = cip->constBegin();cip2 != cip->constEnd(); ++cip2)
+			{
+				tagsCombo->addItem(cip.key() + "-" + cip2.value(), "TAG_IS_PANOSE");
+			}
+		}
+		
+	}
+	else
+	{
+		initTagCombo();
 	}
 }
 

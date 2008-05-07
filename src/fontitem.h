@@ -70,6 +70,7 @@ struct FontLocalInfo
 	QString family;
 	QString variant;
 	QString type;
+	QString panose;
 	QMap<int,QMap<QString, QString> > info;
 	QStringList tags;
 	QPixmap pix;
@@ -110,6 +111,7 @@ class FontItem : public QObject
 		double m_size;
 		int m_numGlyphs;
 		int m_numFaces;
+		QString m_panose;
 		
 		void fillCharsetMap();
 		void fillLegitimateSpaces();
@@ -188,7 +190,7 @@ class FontItem : public QObject
 		void moreInfo_type1();
 
 		QMap<int,QMap<QString, QString> > moreInfo;
-		
+		QMap<QString, QString> panoseInfo;
 		
 		
 	private slots:
@@ -223,8 +225,10 @@ class FontItem : public QObject
 		QString infoGlyph ( int index, int code = 0 );
 		QString glyphName(int codepoint);
 		QMap<int,QMap<QString, QString> >& rawInfo();
+		QString panose(){return m_panose;}
 
 		QString value ( QString k );
+		QString panose( QString k );
 
 		double renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth, double fsize, double zindex = 100.0 ,bool record = true );
 		void renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
@@ -278,13 +282,15 @@ class FontItem : public QObject
 		
 		// sfnt names
 		static void fillNamesMeaning();
+		static void fillPanoseMap();
 		
 		bool isValid(){return m_valid;}
 		
 		bool isRemote(){return m_remote;}
 		bool isCached(){return remoteCached;}		
 		void  fileRemote(QString family, QString variant, QString type, QString info, QPixmap pixmap);
-		void  fileLocal(QString family, QString variant, QString type, QMap<int, QMap< QString, QString > > info);
+		void  fileLocal(QString family, QString variant, QString type, QString p, QMap<int, QMap< QString, QString > > info);
+		void  fileLocal(FontLocalInfo);
 		// retval : 1 => Ready; 2 => Wait ; ...
 		int getFromNetwork();
 };

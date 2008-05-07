@@ -61,6 +61,8 @@ void SaveData::doSave()
 			writeAttribute("variant",fitem->variant());
 			writeAttribute("type",fitem->type());
 			writeAttribute("name", fitem->fancyName());
+			if(!fitem->panose().isEmpty())
+				writeAttribute("panose", fitem->panose());
 			writeStartElement("file");
 			writeCharacters(fitem->path());
 			writeEndElement();

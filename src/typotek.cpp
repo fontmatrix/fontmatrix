@@ -799,7 +799,7 @@ void typotek::initDir()
 			qDebug() << "ERROR loading : " << pit.value().file ;
 			continue;
 		}
-		fi->fileLocal ( pit.value().family, pit.value().variant, pit.value().type, pit.value().info );
+		fi->fileLocal ( pit.value() );
 		fi->unLock();
 		if ( tagsMap.value ( fi->path() ).contains ( "Activated_On" ) )
 			fi->setActivated ( true );
@@ -967,6 +967,18 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 			if ( superSet[i]->tags().contains ( rPattern ) )
 			{
 // 				qDebug()<< "TAG MATCH"<<superSet[i]->family();
+				ret.append ( superSet[i] );
+			}
+		}
+	}
+	else if( field.startsWith("Panose/") )
+	{
+		QString sf(field.mid(7));
+		qDebug()<<"PANOSE"<< sf<< rPattern;
+		for ( int i =0; i < superSetCount; ++i )
+		{
+			if ( superSet[i]->panose(sf) == rPattern )
+			{
 				ret.append ( superSet[i] );
 			}
 		}

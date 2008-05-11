@@ -25,6 +25,7 @@ mainviewwidget.cpp
 prefspaneldialog.cpp
 remotedir.cpp
 savedata.cpp
+shortcuts.cpp
 systray.cpp
 tagseteditor.cpp
 textprogression.cpp
@@ -59,6 +60,7 @@ listdockwidget.h
 mainviewwidget.h
 prefspaneldialog.h
 remotedir.h
+shortcuts.h
 systray.h
 tagseteditor.h
 textprogression.h
@@ -97,10 +99,10 @@ ${HARFBUZZ_INCLUDE_DIR}
 ${FONTCONFIG_INCLUDE_DIR}
 )
 
-add_executable(fontmatrix 
-${fontmatrix_SRCS} 
+add_executable(fontmatrix
+${fontmatrix_SRCS}
 ${shaper_SRCS}
-${fontmatrix_MOC_SRCS} 
+${fontmatrix_MOC_SRCS}
 ${fontmatrix_UIS_H}
 ${fontmatrix_RCC_SRCS}
 )

@@ -1224,6 +1224,7 @@ void typotek::slotPrefsPanel(PrefsPanelDialog::PAGE page)
 		pp.initSystrayPrefs ( false,false,false,false,false );
 	pp.initSampleTextPrefs();
 	pp.initFilesAndFolders();
+	pp.initShortcuts();
 	pp.showPage(page);
 	pp.exec();
 }

@@ -15,6 +15,7 @@
 #include <qdialog.h>
 #include <ui_prefs_panel.h>
 
+class QStandardItemModel;
 
 /**
 	@author Pierre Marchand <pierremarc@oep-h.com>
@@ -32,10 +33,12 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void initSystrayPrefs(bool hasSystray, bool isVisible, bool hasActivateAll, bool allConfirmation, bool tagConfirmation);
 		void initSampleTextPrefs();
 		void initFilesAndFolders();
+		void initShortcuts();
 		void showPage(PAGE page);
 
 	private:
 		void doConnect();
+		QStandardItemModel *shortcutModel;
 	private slots:
 		void applySampleText();
 
@@ -64,6 +67,10 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void slotBrowseLocalStorage();
 
 		void slotShowImportedFonts(int i);
+
+		void slotChangeShortcut();
+		void slotClearShortcut();
+		void slotActionSelected(const QModelIndex &mi);
 
 };
 

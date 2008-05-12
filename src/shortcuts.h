@@ -34,7 +34,7 @@ public:
 
 	static Shortcuts* getInstance();
 
-	void add(QAction *a, const QString &description);
+	void add(QAction *a);
 
 	QList<QAction*> getActions();
 
@@ -44,6 +44,8 @@ private:
 	QMap<QString, QAction*> actions;
 
 	static Shortcuts* instance;
+
+	QString settingsKey(QAction *action);
 
 protected:
 	Shortcuts();

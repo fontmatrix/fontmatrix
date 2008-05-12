@@ -15,6 +15,7 @@
 #include <QToolTip>
 #include <QSettings>
 #include <QFileDialog>
+#include <QStandardItemModel>
 
 PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
  : QDialog(parent)
@@ -73,6 +74,23 @@ void PrefsPanelDialog::initFilesAndFolders()
 
 }
 
+void PrefsPanelDialog::initShortcuts()
+{
+	shortcutModel = new QStandardItemModel(0, 3, this);
+	QStandardItem *iText = new QStandardItem(QString("Shortcuts are not quite working yet!"));
+	QStandardItem *iShortcut = new QStandardItem(QString("Ctrl+c"));
+	QStandardItem *iTooltip = new QStandardItem(QString("Tooltip will be here"));
+	QList<QStandardItem *> iRow;
+	iRow << iText << iShortcut << iTooltip;
+	shortcutModel->appendRow(iRow);
+	shortcutModel->setHeaderData(0, Qt::Horizontal, tr("Action"));
+	shortcutModel->setHeaderData(1, Qt::Horizontal, tr("Shortcut"));
+	shortcutModel->setHeaderData(2, Qt::Horizontal, tr("Tooltip"));
+	shortcutList->setModel(shortcutModel);
+	shortcutList->setShowGrid(false);
+
+}
+
 
 void PrefsPanelDialog::doConnect()
 {
@@ -106,6 +124,10 @@ void PrefsPanelDialog::doConnect()
 	connect(localStorageButton,SIGNAL(clicked( )),this,SLOT(slotBrowseLocalStorage()));
 
 	connect(showNamesBox, SIGNAL(stateChanged(int)), this, SLOT(slotShowImportedFonts(int)));
+
+	connect(clearButton, SIGNAL(clicked()), this, SLOT(slotClearShortcut()));
+	connect(changeButton, SIGNAL(clicked()), this, SLOT(slotChangeShortcut()));
+	connect(shortcutList, SIGNAL(activated(const QModelIndex&)), this, SLOT(slotActionSelected(const QModelIndex&)));
 
 	connect(closeButton,SIGNAL(clicked()),this,SLOT(close()));
 }
@@ -288,4 +310,20 @@ void PrefsPanelDialog::slotShowImportedFonts(int show)
 		opposite = Qt::Checked;
 	typotek::getInstance()->showImportedFonts(opposite);
 }
+
+void PrefsPanelDialog::slotChangeShortcut()
+{
+
+}
+
+void PrefsPanelDialog::slotClearShortcut()
+{
+
+}
+
+void PrefsPanelDialog::slotActionSelected(const QModelIndex &mi)
+{
+
+}
+
 

@@ -37,20 +37,25 @@ Shortcuts* Shortcuts::getInstance()
 	return instance;
 }
 
-void Shortcuts::add(QAction *a, const QString &description)
+void Shortcuts::add(QAction *a)
 {
 	if (actions.contains(a->text()))
 		return;
 
-	QString settingsKey = QString("ActionShortcut-%1").arg(a->text());
-	if (settings.contains(settingsKey))
-		a->setShortcut(QKeySequence(settings.value(settingsKey).toString()));
+	QString key = settingsKey(a);
+	if (settings.contains(key))
+		a->setShortcut(QKeySequence(settings.value(key).toString()));
 	actions[a->text()] = a;
 }
 
 QList<QAction*> Shortcuts::getActions()
 {
 	return actions.values();
+}
+
+QString Shortcuts::settingsKey(QAction *action)
+{
+	return QString("ActionShortcut-%1").arg(action->text());
 }
 
 Shortcuts::~Shortcuts()

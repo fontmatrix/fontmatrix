@@ -44,6 +44,8 @@ public:
 
 	void setShortcut(const QString &shortcut, const QString &actionText);
 
+	void clearShortcut(const QString &actionText);
+
 private:
 	QSettings settings;
 

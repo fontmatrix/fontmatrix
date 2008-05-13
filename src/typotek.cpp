@@ -530,59 +530,74 @@ void typotek::createActions()
 
 	exportFontSetAct = new QAction(tr("Export &Fonts"),this);
 	exportFontSetAct->setStatusTip(tr("Export a fontset"));
+	scuts->add(exportFontSetAct);
 	connect( exportFontSetAct,SIGNAL(triggered( )),this,SLOT(slotExportFontSet()));
 
 	printInfoAct = new QAction ( tr ( "Print Info..." ),this );
 	printInfoAct->setStatusTip ( tr ( "Print informations about the current font" ) );
+	scuts->add(printInfoAct);
 	connect ( printInfoAct, SIGNAL ( triggered() ), this, SLOT ( printInfo() ) );
 
 	printSampleAct = new QAction ( tr ( "Print Sample..." ),this );
 	printSampleAct->setStatusTip( tr("Print the sample as a specimen"));
+	scuts->add(printSampleAct);
 	connect (printSampleAct,SIGNAL( triggered() ), this, SLOT ( printSample()) );
 
 	printChartAct = new QAction ( tr ( "Print Chart..." ),this );
 	printChartAct->setStatusTip( tr("Print a chart of the current font"));
+	scuts->add(printChartAct);
 	connect (printChartAct,SIGNAL( triggered() ), this, SLOT ( printChart()) );
 
 	printPlaygroundAct = new QAction ( tr ( "Print Playground..." ),this );
 	printPlaygroundAct->setStatusTip( tr("Print the playground"));
+	scuts->add(printPlaygroundAct);
 	connect (printPlaygroundAct,SIGNAL( triggered() ), this, SLOT ( printPlayground()) );
 
 	printFamilyAct = new QAction ( tr ( "Print Family..." ),this );
 	printFamilyAct->setStatusTip( tr("Print a specimen of the whole family the current face belongs to"));
+	scuts->add(printFamilyAct);
 	connect (printFamilyAct,SIGNAL( triggered() ), this, SLOT ( printFamily()) );
 
 	fontBookAct = new QAction ( QIcon ( ":/fontmatrix_fontbookexport_icon.png" ), tr ( "Export font book..." ),this );
 	fontBookAct->setStatusTip ( tr ( "Export a pdf that show selected fonts" ) );
+	scuts->add(fontBookAct);
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
 
 	exitAct = new QAction ( tr ( "E&xit" ), this );
 	exitAct->setShortcut ( tr ( "Ctrl+Q" ) );
 	exitAct->setStatusTip ( tr ( "Exit the application" ) );
+	scuts->add(exitAct);
 	connect ( exitAct, SIGNAL ( triggered() ), this, SLOT ( close() ) );
 
 
 	aboutAct = new QAction ( tr ( "&About" ), this );
 	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
+	scuts->add(aboutAct);
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
 
 	aboutQtAct = new QAction ( tr ( "About &Qt" ), this );
+	scuts->add(aboutQtAct);
 	connect (aboutQtAct,SIGNAL(triggered()), QApplication::instance(),SLOT(aboutQt()));
 
 	helpAct = new QAction ( tr ( "Help" ), this );
+	scuts->add(helpAct);
 	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( help() ) );
 
 	tagsetAct = new QAction ( tr ( "&Tag Sets" ),this );
 	tagsetAct->setIcon ( QIcon ( ":/fontmatrix_tagseteditor_icon.png" ) );
+	scuts->add(tagsetAct);
 	connect ( tagsetAct,SIGNAL ( triggered( ) ),this,SLOT ( popupTagsetEditor() ) );
 
 	activCurAct = new QAction ( tr ( "Activate all current" ),this );
+	scuts->add(activCurAct);
 	connect ( activCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotActivateCurrents() ) );
 
 	deactivCurAct = new QAction ( tr ( "Deactivate all current" ),this );
+	scuts->add(deactivCurAct);
 	connect ( deactivCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotDeactivateCurrents() ) );
 
 	fonteditorAct = new QAction ( tr ( "Edit current font" ),this );
+	scuts->add(fonteditorAct);
 	connect ( fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont() ) );
 	if ( QFile::exists ( fonteditorPath ) )
 	{
@@ -595,9 +610,11 @@ void typotek::createActions()
 	}
 
 	prefsAct = new QAction ( tr ( "Preferences" ),this );
+	scuts->add(prefsAct);
 	connect ( prefsAct,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanelDefault() ) );
 
 	repairAct = new QAction ( tr("Check Database"), this);
+	scuts->add(repairAct);
 	connect( repairAct, SIGNAL ( triggered() ),this,SLOT (slotRepair()));
 
 	if ( systray )

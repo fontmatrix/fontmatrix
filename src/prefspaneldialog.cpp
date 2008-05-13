@@ -17,6 +17,7 @@
 #include <QSettings>
 #include <QFileDialog>
 #include <QStandardItemModel>
+#include <QMessageBox>
 
 PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
  : QDialog(parent)
@@ -86,22 +87,14 @@ void PrefsPanelDialog::initShortcuts()
 	shortcutLabel->setText("");
 
 	shortcutModel = new QStandardItemModel(0, 3, this);
-	QList<QAction*> alist = Shortcuts::getInstance()->getActions();
-	foreach(QAction *act, alist) {
-		QStandardItem *iText = new QStandardItem(act->text());
-		QStandardItem *iShortcut = new QStandardItem(act->shortcut().toString());
-		QStandardItem *iTooltip = new QStandardItem(act->toolTip());
-		QList<QStandardItem *> iRow;
-		iRow << iText << iShortcut << iTooltip;
-		shortcutModel->appendRow(iRow);
-	}
-	shortcutModel->setHeaderData(0, Qt::Horizontal, tr("Action"));
-	shortcutModel->setHeaderData(1, Qt::Horizontal, tr("Shortcut"));
-	shortcutModel->setHeaderData(2, Qt::Horizontal, tr("Tooltip"));
+	reloadShortcuts();
 	shortcutList->setModel(shortcutModel);
 	shortcutList->setShowGrid(false);
 	shortcutList->setSelectionBehavior(QAbstractItemView::SelectRows);
 	shortcutList->setSelectionMode(QAbstractItemView::SingleSelection);
+	shortcutList->resizeColumnsToContents();
+	shortcutList->resizeRowsToContents();
+	shortcutList->setSortingEnabled(true);
 }
 
 
@@ -398,7 +391,7 @@ void PrefsPanelDialog::keyPressEvent(QKeyEvent *k)
 				shortcutLabel->setText(getKeyText(keyCode));
 				changeButton->setChecked(false);
 				releaseKeyboard();
-				/*shortcutLabel->text(); // There's a new key set*/
+				shortcutSet(shortcutLabel->text());
 		}
 	}
 	if (changeButton->isChecked())
@@ -465,9 +458,67 @@ QString PrefsPanelDialog::getKeyText(int KeyC)
 
 void PrefsPanelDialog::shortcutSet(const QString &shortcut)
 {
-	Shortcuts *tmp = Shortcuts::getInstance();
-	QString reserved = tmp->isReserved(shortcut, 0);
-	if (!reserved.isEmpty()) {
+	QModelIndex index = shortcutList->currentIndex();
+	if (!index.isValid())
+		return;
 
+	int row = index.row();
+	QStandardItem *item = shortcutModel->item(row, 0);
+	QString iText = item->text();
+
+	Shortcuts *tmp = Shortcuts::getInstance();
+	QString reserved = tmp->isReserved(shortcut, iText);
+	if (!reserved.isEmpty()) { // shortcut is already in use
+		if (QMessageBox::question(this, tr("Replace"),
+             "<qt>" + tr("Shortcut is already in use for", "action name will be appended to this") +
+             QString("<br/><b>%1</b>.<br/>").arg(reserved) +
+             tr("Do you still want to assign it?") + "</qt>",
+             QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+		{
+			tmp->clearShortcut(reserved);
+		} else {
+			return; // user choose not to replace an existing shortcut
+		}
+	}
+	tmp->setShortcut(shortcut, iText);
+	reloadShortcuts();
+	setSelected(iText);
+}
+
+void PrefsPanelDialog::reloadShortcuts()
+{
+	QFont font(shortcutList->font());
+	font.setBold(true);
+	shortcutModel->clear();
+	QList<QAction*> alist = Shortcuts::getInstance()->getActions();
+	foreach(QAction *act, alist) {
+		QStandardItem *iText = new QStandardItem(act->text());
+		QStandardItem *iShortcut = new QStandardItem(act->shortcut().toString());
+		iShortcut->setFont(font);
+		QString tooltip = act->toolTip();
+		QString statusTip = act->statusTip();
+		QString tip = tooltip;
+		if (statusTip.length() > tooltip.length())
+			tip = statusTip;
+		QStandardItem *iTooltip = new QStandardItem(tip);
+		QList<QStandardItem *> iRow;
+		iRow << iText << iShortcut << iTooltip;
+		shortcutModel->appendRow(iRow);
+	}
+	shortcutModel->setHeaderData(0, Qt::Horizontal, tr("Action"));
+	shortcutModel->setHeaderData(1, Qt::Horizontal, tr("Shortcut"));
+	shortcutModel->setHeaderData(2, Qt::Horizontal, tr("Tip"));
+	shortcutList->resizeColumnsToContents();
+	shortcutList->resizeRowsToContents();
+	shortcutList->setSortingEnabled(true);
+}
+
+void PrefsPanelDialog::setSelected(const QString &actionText)
+{
+	QList<QStandardItem*> ilist = shortcutModel->findItems(actionText);
+	if (ilist.count() > 0) {
+		int row = ilist.at(0)->row();
+		shortcutList->selectRow(row);
 	}
 }
+

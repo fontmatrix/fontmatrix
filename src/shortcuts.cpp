@@ -81,6 +81,13 @@ void Shortcuts::setShortcut(const QString &shortcut, const QString &actionText)
 	}
 }
 
+void Shortcuts::clearShortcut(const QString &actionText)
+{
+	if (actions.contains(actionText)) {
+		actions[actionText]->setShortcut(QString(""));
+		settings.setValue(settingsKey(actions[actionText]), QString(""));
+	}
+}
 
 Shortcuts::~Shortcuts()
 {

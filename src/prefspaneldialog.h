@@ -53,7 +53,8 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		QString Part3;
 		QString Part4;
 		void shortcutSet(const QString &shortcut);
-
+		void reloadShortcuts();
+		void setSelected(const QString &actionText);
 
 	private slots:
 		void applySampleText();

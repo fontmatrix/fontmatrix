@@ -572,14 +572,29 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout" >
             <item>
-             <widget class="QPushButton" name="changeButton" >
+             <widget class="QToolButton" name="changeButton" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text" >
                <string>Change</string>
+              </property>
+              <property name="checkable" >
+               <bool>true</bool>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="clearButton" >
+             <widget class="QToolButton" name="clearButton" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text" >
                <string>Clear</string>
               </property>
@@ -599,8 +614,8 @@
               </property>
               <property name="sizeHint" stdset="0" >
                <size>
-                <width>158</width>
-                <height>20</height>
+                <width>387</width>
+                <height>26</height>
                </size>
               </property>
              </spacer>

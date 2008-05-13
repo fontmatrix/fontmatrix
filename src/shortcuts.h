@@ -38,6 +38,12 @@ public:
 
 	QList<QAction*> getActions();
 
+	/* returns QString::null if it's not reserved or the action name
+      the shortcut belongs if it's already taken. */
+	QString isReserved(const QString &shortcut, const QString &actionText);
+
+	void setShortcut(const QString &shortcut, const QString &actionText);
+
 private:
 	QSettings settings;
 

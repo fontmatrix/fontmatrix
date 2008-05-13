@@ -32,6 +32,7 @@
 #include "helpwidget.h"
 #include "importedfontsdialog.h"
 #include "listdockwidget.h"
+#include "shortcuts.h"
 #include "systray.h"
 #include "prefspaneldialog.h"
 #include "fontbook.h"
@@ -513,16 +514,18 @@ void typotek::about()
 
 void typotek::createActions()
 {
-
+	Shortcuts *scuts = Shortcuts::getInstance();
 
 	openAct = new QAction ( QIcon ( ":/fontmatrix_import_icon" ), tr ( "&Import..." ), this );
 	openAct->setShortcut ( tr ( "Ctrl+O" ) );
 	openAct->setStatusTip ( tr ( "Import a directory" ) );
+	scuts->add(openAct);
 	connect ( openAct, SIGNAL ( triggered() ), this, SLOT ( open() ) );
 
 	saveAct = new QAction ( tr ( "&Save" ), this );
 	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
 	saveAct->setStatusTip ( tr ( "Save the document to disk" ) );
+	scuts->add(saveAct);
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
 
 	exportFontSetAct = new QAction(tr("Export &Fonts"),this);

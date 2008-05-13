@@ -58,6 +58,30 @@ QString Shortcuts::settingsKey(QAction *action)
 	return QString("ActionShortcut-%1").arg(action->text());
 }
 
+QString Shortcuts::isReserved(const QString &shortcut, const QString &actionText)
+{
+	QString isTaken = QString::null;
+	if (actions.contains(actionText)) {
+		QList<QAction*> alist = actions.values();
+		foreach(QAction *act, alist) {
+			if (act->shortcut() == shortcut) {
+				isTaken = act->text();
+				break;
+			}
+		}
+	}
+	return isTaken;
+}
+
+void Shortcuts::setShortcut(const QString &shortcut, const QString &actionText)
+{
+	if (actions.contains(actionText)) {
+		actions[actionText]->setShortcut(shortcut);
+		settings.setValue(settingsKey(actions[actionText]), shortcut);
+	}
+}
+
+
 Shortcuts::~Shortcuts()
 {
 

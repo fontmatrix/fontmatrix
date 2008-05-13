@@ -11,6 +11,7 @@
 //
 #include "prefspaneldialog.h"
 #include "typotek.h"
+#include "shortcuts.h"
 #include <QDebug>
 #include <QToolTip>
 #include <QSettings>
@@ -76,19 +77,31 @@ void PrefsPanelDialog::initFilesAndFolders()
 
 void PrefsPanelDialog::initShortcuts()
 {
+	Part0 = "";
+	Part1 = "";
+	Part2 = "";
+	Part3 = "";
+	keyCode = 0;
+
+	shortcutLabel->setText("");
+
 	shortcutModel = new QStandardItemModel(0, 3, this);
-	QStandardItem *iText = new QStandardItem(QString("Shortcuts are not quite working yet!"));
-	QStandardItem *iShortcut = new QStandardItem(QString("Ctrl+c"));
-	QStandardItem *iTooltip = new QStandardItem(QString("Tooltip will be here"));
-	QList<QStandardItem *> iRow;
-	iRow << iText << iShortcut << iTooltip;
-	shortcutModel->appendRow(iRow);
+	QList<QAction*> alist = Shortcuts::getInstance()->getActions();
+	foreach(QAction *act, alist) {
+		QStandardItem *iText = new QStandardItem(act->text());
+		QStandardItem *iShortcut = new QStandardItem(act->shortcut().toString());
+		QStandardItem *iTooltip = new QStandardItem(act->toolTip());
+		QList<QStandardItem *> iRow;
+		iRow << iText << iShortcut << iTooltip;
+		shortcutModel->appendRow(iRow);
+	}
 	shortcutModel->setHeaderData(0, Qt::Horizontal, tr("Action"));
 	shortcutModel->setHeaderData(1, Qt::Horizontal, tr("Shortcut"));
 	shortcutModel->setHeaderData(2, Qt::Horizontal, tr("Tooltip"));
 	shortcutList->setModel(shortcutModel);
 	shortcutList->setShowGrid(false);
-
+	shortcutList->setSelectionBehavior(QAbstractItemView::SelectRows);
+	shortcutList->setSelectionMode(QAbstractItemView::SingleSelection);
 }
 
 
@@ -313,7 +326,18 @@ void PrefsPanelDialog::slotShowImportedFonts(int show)
 
 void PrefsPanelDialog::slotChangeShortcut()
 {
-
+	if (changeButton->isChecked())
+	{
+		keyCode = 0;
+		Part0 = "";
+		Part1 = "";
+		Part2 = "";
+		Part3 = "";
+		Part4 = "";
+		grabKeyboard();
+	}
+	else
+		releaseKeyboard();
 }
 
 void PrefsPanelDialog::slotClearShortcut()
@@ -327,3 +351,123 @@ void PrefsPanelDialog::slotActionSelected(const QModelIndex &mi)
 }
 
 
+bool PrefsPanelDialog::event( QEvent* ev )
+{
+	bool ret = QWidget::event( ev );
+	if ( ev->type() == QEvent::KeyPress )
+		keyPressEvent((QKeyEvent*)ev);
+	if ( ev->type() == QEvent::KeyRelease )
+		keyReleaseEvent((QKeyEvent*)ev);
+	return ret;
+}
+
+void PrefsPanelDialog::keyPressEvent(QKeyEvent *k)
+{
+	if (changeButton->isChecked())
+	{
+		QStringList tl;
+		if (!shortcutLabel->text().isEmpty())
+		{
+			tl = shortcutLabel->text().split("+", QString::SkipEmptyParts);
+			Part4 = tl[tl.count()-1];
+			if (Part4 == tr("Alt") || Part4 == tr("Ctrl") || Part4 == tr("Shift") || Part4 == tr("Meta"))
+				Part4 = "";
+		}
+		else
+			Part4 = "";
+		switch (k->key())
+		{
+			case Qt::Key_Meta:
+				Part0 = tr("Meta+");
+				keyCode |= Qt::META;
+				break;
+			case Qt::Key_Shift:
+				Part3 = tr("Shift+");
+				keyCode |= Qt::SHIFT;
+				break;
+			case Qt::Key_Alt:
+				Part2 = tr("Alt+");
+				keyCode |= Qt::ALT;
+				break;
+			case Qt::Key_Control:
+				Part1 = tr("Ctrl+");
+				keyCode |= Qt::CTRL;
+				break;
+			default:
+				keyCode |= k->key();
+				shortcutLabel->setText(getKeyText(keyCode));
+				changeButton->setChecked(false);
+				releaseKeyboard();
+				/*shortcutLabel->text(); // There's a new key set*/
+		}
+	}
+	if (changeButton->isChecked())
+	{
+		shortcutLabel->setText(Part0+Part1+Part2+Part3+Part4);
+	}
+}
+
+void PrefsPanelDialog::keyReleaseEvent(QKeyEvent *k)
+{
+	if (changeButton->isChecked())
+	{
+		if (!shortcutLabel->text().isEmpty())
+		{
+			QStringList tl;
+			tl = shortcutLabel->text().split("+", QString::SkipEmptyParts);
+			Part4 = tl[tl.count()-1];
+			if (Part4 == tr("Alt") || Part4 == tr("Ctrl") || Part4 == tr("Shift") || Part4 == tr("Meta"))
+				Part4 = "";
+		}
+		else
+			Part4 = "";
+		if (k->key() == Qt::Key_Meta)
+		{
+			Part0 = "";
+			keyCode &= ~Qt::META;
+		}
+		if (k->key() == Qt::Key_Shift)
+		{
+			Part3 = "";
+			keyCode &= ~Qt::SHIFT;
+		}
+		if (k->key() == Qt::Key_Alt)
+		{
+			Part2 = "";
+			keyCode &= ~Qt::ALT;
+		}
+		if (k->key() == Qt::Key_Control)
+		{
+			Part1 = "";
+			keyCode &= ~Qt::CTRL;
+		}
+		shortcutLabel->setText(Part0+Part1+Part2+Part3+Part4);
+	}
+}
+
+QString PrefsPanelDialog::getKeyText(int KeyC)
+{
+	if ((KeyC & ~(Qt::META | Qt::CTRL | Qt::ALT | Qt::SHIFT)) == 0)
+		return "";
+	// on OSX Qt translates modifiers to forsaken symbols, arrows and the like
+	// we prefer plain English
+	QString res;
+	if ((KeyC & Qt::META) != 0)
+		res += "Meta+";
+	if ((KeyC & Qt::CTRL) != 0)
+		res += "Ctrl+";
+	if ((KeyC & Qt::ALT) != 0)
+		res += "Alt+";
+	if ((KeyC & Qt::SHIFT) != 0)
+		res += "Shift+";
+	return res + QString(QKeySequence(KeyC & ~(Qt::META | Qt::CTRL | Qt::ALT | Qt::SHIFT)));
+}
+
+void PrefsPanelDialog::shortcutSet(const QString &shortcut)
+{
+	Shortcuts *tmp = Shortcuts::getInstance();
+	QString reserved = tmp->isReserved(shortcut, 0);
+	if (!reserved.isEmpty()) {
+
+	}
+}

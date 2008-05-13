@@ -36,9 +36,25 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void initShortcuts();
 		void showPage(PAGE page);
 
+		bool event( QEvent* ev );
+		void keyPressEvent(QKeyEvent *k);
+		void keyReleaseEvent(QKeyEvent *k);
+		static QString getKeyText(int KeyC);
+
 	private:
 		void doConnect();
 		QStandardItemModel *shortcutModel;
+
+		/* For the keyboard shortcut */
+		int keyCode;
+		QString Part0;
+		QString Part1;
+		QString Part2;
+		QString Part3;
+		QString Part4;
+		void shortcutSet(const QString &shortcut);
+
+
 	private slots:
 		void applySampleText();
 

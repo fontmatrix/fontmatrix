@@ -95,6 +95,7 @@ void PrefsPanelDialog::initShortcuts()
 	shortcutList->resizeColumnsToContents();
 	shortcutList->resizeRowsToContents();
 	shortcutList->setSortingEnabled(true);
+	shortcutList->sortByColumn(0, Qt::AscendingOrder);
 }
 
 

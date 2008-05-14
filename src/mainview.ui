@@ -214,8 +214,8 @@ p, li { white-space: pre-wrap; }
             <height>748</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_5" >
-           <item row="0" column="0" >
+          <layout class="QGridLayout" name="gridLayout" >
+           <item row="0" column="0" colspan="2" >
             <widget class="QComboBox" name="sampleTextCombo" >
              <property name="sizePolicy" >
               <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
@@ -225,7 +225,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="0" column="1" >
+           <item row="0" column="2" >
             <widget class="QPushButton" name="sampleTextButton" >
              <property name="sizePolicy" >
               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
@@ -244,7 +244,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="0" column="2" >
+           <item row="0" column="3" >
             <spacer name="horizontalSpacer_3" >
              <property name="orientation" >
               <enum>Qt::Horizontal</enum>
@@ -257,14 +257,14 @@ p, li { white-space: pre-wrap; }
              </property>
             </spacer>
            </item>
-           <item row="0" column="3" >
+           <item row="0" column="4" >
             <widget class="QLabel" name="label" >
              <property name="text" >
               <string>Font Size</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="4" colspan="2" >
+           <item row="0" column="5" colspan="2" >
             <widget class="QDoubleSpinBox" name="liveFontSizeSpin" >
              <property name="wrapping" >
               <bool>false</bool>
@@ -286,7 +286,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="6" >
+           <item row="1" column="0" colspan="7" >
             <widget class="QTabWidget" name="tabSamples" >
              <property name="currentIndex" >
               <number>1</number>
@@ -384,7 +384,24 @@ p, li { white-space: pre-wrap; }
              </widget>
             </widget>
            </item>
-           <item row="2" column="3" colspan="2" >
+           <item row="2" column="0" >
+            <widget class="QComboBox" name="langCombo" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1" colspan="3" >
+            <widget class="QCheckBox" name="useShaperCheck" >
+             <property name="text" >
+              <string>Use shaper</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4" colspan="2" >
             <spacer name="horizontalSpacer_2" >
              <property name="orientation" >
               <enum>Qt::Horizontal</enum>
@@ -397,7 +414,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </spacer>
            </item>
-           <item row="2" column="5" >
+           <item row="2" column="6" >
             <widget class="QPushButton" name="advanceButton" >
              <property name="text" >
               <string>Advanced</string>
@@ -440,24 +457,7 @@ p, li { white-space: pre-wrap; }
                <string>Advanced</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_4" >
-               <item row="0" column="0" >
-                <widget class="QComboBox" name="langCombo" >
-                 <property name="sizePolicy" >
-                  <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1" >
-                <widget class="QCheckBox" name="useShaperCheck" >
-                 <property name="text" >
-                  <string>Use shaper</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0" colspan="2" >
+               <item row="0" column="0" colspan="2" >
                 <widget class="QTreeWidget" name="OpenTypeTree" >
                  <property name="sizePolicy" >
                   <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -493,8 +493,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>945</width>
-                <height>626</height>
+                <width>100</width>
+                <height>30</height>
                </rect>
               </property>
               <attribute name="label" >

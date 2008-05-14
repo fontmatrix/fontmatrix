@@ -119,6 +119,8 @@ class FontItem : public QObject
 		void fill256Palette();
 		void fillInvertedPalette();
 		
+		QString getAlternateFamilyName();
+		QString getAlternateVariantName();
 		QStringList m_charsets;
 		QList<int> spaceIndex;
 		

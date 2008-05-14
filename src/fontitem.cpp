@@ -442,29 +442,29 @@ void FontItem::fillLangIdMap()
 	langIdMap[0x0480]="UIGHUR_CHINA";
 	langIdMap[0x0481]="MAORI_NEW_ZEALAND";
 	langIdMap[0x04ff]="HUMAN_INTERFACE_DEVICE";
-	
+
 	// Now, what’s the locale code? so we’ll be able to get rid of unused data
 	QString sysLang ( QLocale::languageToString ( QLocale::system ().language() ).toUpper() );
 	QString sysCountry ( QLocale::countryToString ( QLocale::system ().country() ).toUpper() );
-	int langIdMatch(0);
+	int langIdMatch ( 0 );
 	QMap<int,QString>::const_iterator lit;
 	QList<int> locCodes;
-	for(lit = langIdMap.constBegin(); lit != langIdMap.constEnd() ;++lit)
+	for ( lit = langIdMap.constBegin(); lit != langIdMap.constEnd() ;++lit )
 	{
-		if(lit.value().startsWith(sysLang))
+		if ( lit.value().startsWith ( sysLang ) )
 			locCodes << lit.key();
 	}
-	langIdMatch = locCodes.value(0);
-	for(int i(0); i < locCodes.count(); ++i)
+	langIdMatch = locCodes.value ( 0 );
+	for ( int i ( 0 ); i < locCodes.count(); ++i )
 	{
-		if(langIdMap[locCodes.at(i)].contains(sysCountry))
+		if ( langIdMap[locCodes.at ( i ) ].contains ( sysCountry ) )
 		{
-			langIdMatch = locCodes.at(i);
+			langIdMatch = locCodes.at ( i );
 		}
 	}
-	
+
 	theLocalLangCode = langIdMatch;
-	qDebug()<<"LANG"<<theLocalLangCode<<langIdMap[theLocalLangCode];
+	qDebug() <<"LANG"<<theLocalLangCode<<langIdMap[theLocalLangCode];
 }
 
 void FontItem::fill256Palette()
@@ -484,178 +484,178 @@ void FontItem::fill256Palette()
 
 void FontItem::fillInvertedPalette()
 {
-	for (int i = 0; i < 256 ; ++i)
+	for ( int i = 0; i < 256 ; ++i )
 	{
-		invertedGray256Palette << qRgb( i , i,  i);
+		invertedGray256Palette << qRgb ( i , i,  i );
 	}
 }
 
 void FontItem::fillPanoseMap()
 {
 	// http://www.microsoft.com/OpenType/OTSpec/os2ver0.htm#pan
-	
+
 	QMap<int, QString> mapModel;
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Text and Display") ;
-	mapModel[ 3 ] = tr("Script") ;
-	mapModel[ 4 ] = tr("Decorative") ;
-	mapModel[ 5 ] = tr("Pictorial") ;
-	
-	panoseMap[tr("Family Type")] = mapModel;
-	panoseKeys[0] = tr("Family Type");
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Text and Display" ) ;
+	mapModel[ 3 ] = tr ( "Script" ) ;
+	mapModel[ 4 ] = tr ( "Decorative" ) ;
+	mapModel[ 5 ] = tr ( "Pictorial" ) ;
+
+	panoseMap[tr ( "Family Type" ) ] = mapModel;
+	panoseKeys[0] = tr ( "Family Type" );
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Cove") ;
-	mapModel[ 3 ] = tr("Obtuse Cove") ;
-	mapModel[ 4 ] = tr("Square Cove") ;
-	mapModel[ 5 ] = tr("Obtuse Square Cove") ;
-	mapModel[ 6 ] = tr("Square") ;
-	mapModel[ 7 ] = tr("Thin") ;
-	mapModel[ 8 ] = tr("Bone") ;
-	mapModel[ 9 ] = tr("Exaggerated") ;
-	mapModel[ 10 ] = tr("Triangle") ;
-	mapModel[ 11 ] = tr("Normal Sans") ;
-	mapModel[ 12 ] = tr("Obtuse Sans") ;
-	mapModel[ 13 ] = tr("Perp Sans") ;
-	mapModel[ 14 ] = tr("Flared") ;
-	mapModel[ 15 ] = tr("Rounded") ;
-	
-	panoseMap[tr("Serif style")] = mapModel;
-	panoseKeys[1] = tr("Serif style") ;
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Cove" ) ;
+	mapModel[ 3 ] = tr ( "Obtuse Cove" ) ;
+	mapModel[ 4 ] = tr ( "Square Cove" ) ;
+	mapModel[ 5 ] = tr ( "Obtuse Square Cove" ) ;
+	mapModel[ 6 ] = tr ( "Square" ) ;
+	mapModel[ 7 ] = tr ( "Thin" ) ;
+	mapModel[ 8 ] = tr ( "Bone" ) ;
+	mapModel[ 9 ] = tr ( "Exaggerated" ) ;
+	mapModel[ 10 ] = tr ( "Triangle" ) ;
+	mapModel[ 11 ] = tr ( "Normal Sans" ) ;
+	mapModel[ 12 ] = tr ( "Obtuse Sans" ) ;
+	mapModel[ 13 ] = tr ( "Perp Sans" ) ;
+	mapModel[ 14 ] = tr ( "Flared" ) ;
+	mapModel[ 15 ] = tr ( "Rounded" ) ;
+
+	panoseMap[tr ( "Serif style" ) ] = mapModel;
+	panoseKeys[1] = tr ( "Serif style" ) ;
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Very Light") ;
-	mapModel[ 3 ] = tr("Light") ;
-	mapModel[ 4 ] = tr("Thin") ;
-	mapModel[ 5 ] = tr("Book") ;
-	mapModel[ 6 ] = tr("Medium") ;
-	mapModel[ 7 ] = tr("Demi") ;
-	mapModel[ 8 ] = tr("Bold") ;
-	mapModel[ 9 ] = tr("Heavy") ;
-	mapModel[ 10 ] = tr("Black") ;
-	mapModel[ 11 ] = tr("Nord") ;
-	
-	panoseMap[tr("Weight")] = mapModel;
-	panoseKeys[2] = tr("Weight");
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Very Light" ) ;
+	mapModel[ 3 ] = tr ( "Light" ) ;
+	mapModel[ 4 ] = tr ( "Thin" ) ;
+	mapModel[ 5 ] = tr ( "Book" ) ;
+	mapModel[ 6 ] = tr ( "Medium" ) ;
+	mapModel[ 7 ] = tr ( "Demi" ) ;
+	mapModel[ 8 ] = tr ( "Bold" ) ;
+	mapModel[ 9 ] = tr ( "Heavy" ) ;
+	mapModel[ 10 ] = tr ( "Black" ) ;
+	mapModel[ 11 ] = tr ( "Nord" ) ;
+
+	panoseMap[tr ( "Weight" ) ] = mapModel;
+	panoseKeys[2] = tr ( "Weight" );
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Old Style") ;
-	mapModel[ 3 ] = tr("Modern") ;
-	mapModel[ 4 ] = tr("Even Width") ;
-	mapModel[ 5 ] = tr("Expanded") ;
-	mapModel[ 6 ] = tr("Condensed") ;
-	mapModel[ 7 ] = tr("Very Expanded") ;
-	mapModel[ 8 ] = tr("Very Condensed") ;
-	mapModel[ 9 ] = tr("Monospaced") ;
-	
-	panoseMap[tr("Proportion")] = mapModel;
-	panoseKeys[3] = tr("Proportion");
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Old Style" ) ;
+	mapModel[ 3 ] = tr ( "Modern" ) ;
+	mapModel[ 4 ] = tr ( "Even Width" ) ;
+	mapModel[ 5 ] = tr ( "Expanded" ) ;
+	mapModel[ 6 ] = tr ( "Condensed" ) ;
+	mapModel[ 7 ] = tr ( "Very Expanded" ) ;
+	mapModel[ 8 ] = tr ( "Very Condensed" ) ;
+	mapModel[ 9 ] = tr ( "Monospaced" ) ;
+
+	panoseMap[tr ( "Proportion" ) ] = mapModel;
+	panoseKeys[3] = tr ( "Proportion" );
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("None") ;
-	mapModel[ 3 ] = tr("Very Low") ;
-	mapModel[ 4 ] = tr("Low") ;
-	mapModel[ 5 ] = tr("Medium Low") ;
-	mapModel[ 6 ] = tr("Medium") ;
-	mapModel[ 7 ] = tr("Medium High") ;
-	mapModel[ 8 ] = tr("High") ;
-	mapModel[ 9 ] = tr("Very High") ;
-	
-	panoseMap[tr("Contrast")] = mapModel;
-	panoseKeys[4] = tr("Contrast");
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "None" ) ;
+	mapModel[ 3 ] = tr ( "Very Low" ) ;
+	mapModel[ 4 ] = tr ( "Low" ) ;
+	mapModel[ 5 ] = tr ( "Medium Low" ) ;
+	mapModel[ 6 ] = tr ( "Medium" ) ;
+	mapModel[ 7 ] = tr ( "Medium High" ) ;
+	mapModel[ 8 ] = tr ( "High" ) ;
+	mapModel[ 9 ] = tr ( "Very High" ) ;
+
+	panoseMap[tr ( "Contrast" ) ] = mapModel;
+	panoseKeys[4] = tr ( "Contrast" );
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Gradual/Diagonal") ;
-	mapModel[ 3 ] = tr("Gradual/Transitional") ;
-	mapModel[ 4 ] = tr("Gradual/Vertical") ;
-	mapModel[ 5 ] = tr("Gradual/Horizontal") ;
-	mapModel[ 6 ] = tr("Rapid/Vertical") ;
-	mapModel[ 7 ] = tr("Rapid/Horizontal") ;
-	mapModel[ 8 ] = tr("Instant/Vertical") ;
-	
-	panoseMap[tr("Stroke Variation")] = mapModel;
-	panoseKeys[5] = tr("Stroke Variation");
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Gradual/Diagonal" ) ;
+	mapModel[ 3 ] = tr ( "Gradual/Transitional" ) ;
+	mapModel[ 4 ] = tr ( "Gradual/Vertical" ) ;
+	mapModel[ 5 ] = tr ( "Gradual/Horizontal" ) ;
+	mapModel[ 6 ] = tr ( "Rapid/Vertical" ) ;
+	mapModel[ 7 ] = tr ( "Rapid/Horizontal" ) ;
+	mapModel[ 8 ] = tr ( "Instant/Vertical" ) ;
+
+	panoseMap[tr ( "Stroke Variation" ) ] = mapModel;
+	panoseKeys[5] = tr ( "Stroke Variation" );
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Straight Arms/Horizontal") ;
-	mapModel[ 3 ] = tr("Straight Arms/Wedge") ;
-	mapModel[ 4 ] = tr("Straight Arms/Vertical") ;
-	mapModel[ 5 ] = tr("Straight Arms/Single Serif") ;
-	mapModel[ 6 ] = tr("Straight Arms/Double Serif") ;
-	mapModel[ 7 ] = tr("Non-Straight Arms/Horizontal") ;
-	mapModel[ 8 ] = tr("Non-Straight Arms/Wedge") ;
-	mapModel[ 9 ] = tr("Non-Straight Arms/Vertical") ;
-	mapModel[ 10 ] = tr("Non-Straight Arms/Single Serif") ;
-	mapModel[ 11 ] = tr("Non-Straight Arms/Double Serif") ;
-	
-	panoseMap[tr("Arm Style")] = mapModel;
-	panoseKeys[6] = tr("Arm Style");
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Straight Arms/Horizontal" ) ;
+	mapModel[ 3 ] = tr ( "Straight Arms/Wedge" ) ;
+	mapModel[ 4 ] = tr ( "Straight Arms/Vertical" ) ;
+	mapModel[ 5 ] = tr ( "Straight Arms/Single Serif" ) ;
+	mapModel[ 6 ] = tr ( "Straight Arms/Double Serif" ) ;
+	mapModel[ 7 ] = tr ( "Non-Straight Arms/Horizontal" ) ;
+	mapModel[ 8 ] = tr ( "Non-Straight Arms/Wedge" ) ;
+	mapModel[ 9 ] = tr ( "Non-Straight Arms/Vertical" ) ;
+	mapModel[ 10 ] = tr ( "Non-Straight Arms/Single Serif" ) ;
+	mapModel[ 11 ] = tr ( "Non-Straight Arms/Double Serif" ) ;
+
+	panoseMap[tr ( "Arm Style" ) ] = mapModel;
+	panoseKeys[6] = tr ( "Arm Style" );
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Normal/Contact") ;
-	mapModel[ 3 ] = tr("Normal/Weighted") ;
-	mapModel[ 4 ] = tr("Normal/Boxed") ;
-	mapModel[ 5 ] = tr("Normal/Flattened") ;
-	mapModel[ 6 ] = tr("Normal/Rounded") ;
-	mapModel[ 7 ] = tr("Normal/Off Center") ;
-	mapModel[ 8 ] = tr("Normal/Square") ;
-	mapModel[ 9 ] = tr("Oblique/Contact") ;
-	mapModel[ 10 ] = tr("Oblique/Weighted") ;
-	mapModel[ 11 ] = tr("Oblique/Boxed") ;
-	mapModel[ 12 ] = tr("Oblique/Flattened") ;
-	mapModel[ 13 ] = tr("Oblique/Rounded") ;
-	mapModel[ 14 ] = tr("Oblique/Off Center") ;
-	mapModel[ 15 ] = tr("Oblique/Square") ;
-	
-	panoseMap[tr("Letterform")] = mapModel;
-	panoseKeys[7] = tr("Letterform");
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Normal/Contact" ) ;
+	mapModel[ 3 ] = tr ( "Normal/Weighted" ) ;
+	mapModel[ 4 ] = tr ( "Normal/Boxed" ) ;
+	mapModel[ 5 ] = tr ( "Normal/Flattened" ) ;
+	mapModel[ 6 ] = tr ( "Normal/Rounded" ) ;
+	mapModel[ 7 ] = tr ( "Normal/Off Center" ) ;
+	mapModel[ 8 ] = tr ( "Normal/Square" ) ;
+	mapModel[ 9 ] = tr ( "Oblique/Contact" ) ;
+	mapModel[ 10 ] = tr ( "Oblique/Weighted" ) ;
+	mapModel[ 11 ] = tr ( "Oblique/Boxed" ) ;
+	mapModel[ 12 ] = tr ( "Oblique/Flattened" ) ;
+	mapModel[ 13 ] = tr ( "Oblique/Rounded" ) ;
+	mapModel[ 14 ] = tr ( "Oblique/Off Center" ) ;
+	mapModel[ 15 ] = tr ( "Oblique/Square" ) ;
+
+	panoseMap[tr ( "Letterform" ) ] = mapModel;
+	panoseKeys[7] = tr ( "Letterform" );
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Standard/Trimmed") ;
-	mapModel[ 3 ] = tr("Standard/Pointed") ;
-	mapModel[ 4 ] = tr("Standard/Serifed") ;
-	mapModel[ 5 ] = tr("High/Trimmed") ;
-	mapModel[ 6 ] = tr("High/Pointed") ;
-	mapModel[ 7 ] = tr("High/Serifed") ;
-	mapModel[ 8 ] = tr("Constant/Trimmed") ;
-	mapModel[ 9 ] = tr("Constant/Pointed") ;
-	mapModel[ 10 ] = tr("Constant/Serifed") ;
-	mapModel[ 11 ] = tr("Low/Trimmed") ;
-	mapModel[ 12 ] = tr("Low/Pointed") ;
-	mapModel[ 13 ] = tr("Low/Serifed") ;
-		
-	panoseMap[tr("Midline")] = mapModel;
-	panoseKeys[8] = tr("Midline");
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Standard/Trimmed" ) ;
+	mapModel[ 3 ] = tr ( "Standard/Pointed" ) ;
+	mapModel[ 4 ] = tr ( "Standard/Serifed" ) ;
+	mapModel[ 5 ] = tr ( "High/Trimmed" ) ;
+	mapModel[ 6 ] = tr ( "High/Pointed" ) ;
+	mapModel[ 7 ] = tr ( "High/Serifed" ) ;
+	mapModel[ 8 ] = tr ( "Constant/Trimmed" ) ;
+	mapModel[ 9 ] = tr ( "Constant/Pointed" ) ;
+	mapModel[ 10 ] = tr ( "Constant/Serifed" ) ;
+	mapModel[ 11 ] = tr ( "Low/Trimmed" ) ;
+	mapModel[ 12 ] = tr ( "Low/Pointed" ) ;
+	mapModel[ 13 ] = tr ( "Low/Serifed" ) ;
+
+	panoseMap[tr ( "Midline" ) ] = mapModel;
+	panoseKeys[8] = tr ( "Midline" );
 	mapModel.clear();
-	
-	mapModel[ 0 ] = tr("Any") ;
-	mapModel[ 1 ] = tr("No Fit") ;
-	mapModel[ 2 ] = tr("Constant/Small") ;
-	mapModel[ 3 ] = tr("Constant/Standard") ;
-	mapModel[ 4 ] = tr("Constant/Large") ;
-	mapModel[ 5 ] = tr("Ducking/Small") ;
-	mapModel[ 6 ] = tr("Ducking/Standard") ;
-	mapModel[ 7 ] = tr("Ducking/Large") ;
-	
-	panoseMap[tr("X-Height")] = mapModel;
-	panoseKeys[9] = tr("X-Height");
+
+	mapModel[ 0 ] = tr ( "Any" ) ;
+	mapModel[ 1 ] = tr ( "No Fit" ) ;
+	mapModel[ 2 ] = tr ( "Constant/Small" ) ;
+	mapModel[ 3 ] = tr ( "Constant/Standard" ) ;
+	mapModel[ 4 ] = tr ( "Constant/Large" ) ;
+	mapModel[ 5 ] = tr ( "Ducking/Small" ) ;
+	mapModel[ 6 ] = tr ( "Ducking/Standard" ) ;
+	mapModel[ 7 ] = tr ( "Ducking/Large" ) ;
+
+	panoseMap[tr ( "X-Height" ) ] = mapModel;
+	panoseKeys[9] = tr ( "X-Height" );
 }
 
 FontItem::FontItem ( QString path , bool remote, bool faststart )
@@ -682,9 +682,9 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 		fillLegitimateSpaces();
 	if ( gray256Palette.isEmpty() )
 		fill256Palette();
-	if( invertedGray256Palette.isEmpty() )
+	if ( invertedGray256Palette.isEmpty() )
 		fillInvertedPalette();
-	if( panoseMap.isEmpty() )
+	if ( panoseMap.isEmpty() )
 		fillPanoseMap();
 
 	if ( !theOneLineScene )
@@ -747,9 +747,17 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 		m_isOpenType = true;
 	}
 
-	m_type = FT_Get_X11_Font_Format ( m_face );
-	m_family = m_face->family_name;
-	m_variant = m_face->style_name;
+	m_type = FT_Get_X11_Font_Format ( m_face ); 
+	if ( typotek::getInstance()->familySchemeFreetype() || !m_isOpenType )
+	{
+		m_family = m_face->family_name;
+		m_variant = m_face->style_name;
+	}
+	else
+	{
+		m_family = getAlternateFamilyName();
+		m_variant = getAlternateVariantName();
+	}
 	m_numGlyphs = m_face->num_glyphs;
 	m_numFaces = m_face->num_faces;
 
@@ -935,16 +943,16 @@ QString FontItem::value ( QString k )
 		return m_family;
 	else if ( k == "variant" )
 		return m_variant;
-	
+
 	// 0 is default language
 	// TODO inspect all available languages
-	QMap<QString, QString> namap( moreInfo.value(0) ); 
-	return namap.value(k);
+	QMap<QString, QString> namap ( moreInfo.value ( 0 ) );
+	return namap.value ( k );
 }
 
-QString FontItem::panose(QString k)
+QString FontItem::panose ( QString k )
 {
-	return panoseInfo.value(k);
+	return panoseInfo.value ( k );
 }
 
 
@@ -1038,22 +1046,22 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
 		return glyph;
 	}
-	
+
 	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 
 	// Set size
 	FT_Set_Char_Size ( m_face,
-			    size  * 64 ,
+	                   size  * 64 ,
 	                   0,
 	                   QApplication::desktop()->physicalDpiX(),
 	                   QApplication::desktop()->physicalDpiY() );
 
 	// Reload the glyph in device dependant way
-	ft_error = FT_Load_Glyph ( m_face, 
-				   charcode  ,
-       				FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING);
+	ft_error = FT_Load_Glyph ( m_face,
+	                           charcode  ,
+	                           FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING );
 	if ( ft_error )
 	{
 		QPixmap square ( size , size );
@@ -1101,7 +1109,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		glyph->setPixmap ( QPixmap::fromImage ( img ) );
 #else
 		QPixmap aPix ( img.width(), img.height() );
-		aPix.fill(QColor(0,0,0,0));
+		aPix.fill ( QColor ( 0,0,0,0 ) );
 		QPainter aPainter ( &aPix );
 		aPainter.drawImage ( 0,0, img );
 		glyph->setPixmap ( aPix );
@@ -1127,13 +1135,13 @@ double FontItem::renderLine ( QGraphicsScene * scene,
                               double zindex ,
                               bool record )
 {
-	qDebug()<<fancyName()<<"::"<<"renderLine("<<scene<<spec<<lineWidth<<fsize<<zindex<<record<<")";
+	qDebug() <<fancyName() <<"::"<<"renderLine("<<scene<<spec<<lineWidth<<fsize<<zindex<<record<<")";
 	double retValue ( 0.0 );
 	if ( spec.isEmpty() )
 		return retValue;
 
 	ensureFace();
-	
+
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
@@ -2185,7 +2193,7 @@ QString FontItem::infoText ( bool fromcache )
 // 	if ( !m_cacheInfo.isEmpty() && fromcache )
 // 		return m_cacheInfo;
 
-	bool rFace(false);
+	bool rFace ( false );
 	if ( moreInfo.isEmpty() /*|| !fromcache*/ )
 	{
 		ensureFace();
@@ -2211,12 +2219,31 @@ QString FontItem::infoText ( bool fromcache )
 	.langnomatch
 	*/
 	QString ret;
-	
+
+	QString panStringOut;
+	QString panBlockOut;
+	if ( !m_panose.isEmpty() )
+	{
+		qDebug() <<"WE HAVE PANOSE \\o/";
+		panStringOut = " | Panose: " + m_panose;
+		//TODO output Panose as text (in panBlockOut)
+		QMap<QString, QString>::const_iterator pat ( panoseInfo.constBegin() );
+		for ( ;pat != panoseInfo.constEnd(); ++pat )
+		{
+			panBlockOut += "<div class=\"panose_name\">" + pat.key() + "<div>";
+			panBlockOut += "<div class=\"panose_desc\">" + pat.value() + "<div>";
+		}
+	}
+	else
+	{
+		qDebug() <<"ARGH"<< m_family << m_variant;
+	}
+
 	QMap<QString, QStringList> orderedInfo;
 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
-	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type: "+ m_type +" | Charmaps: " + m_charsets.join ( ", " ) +" | Panose: "+ m_panose +"</div>";
+	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type: "+ m_type +" | Charmaps: " + m_charsets.join ( ", " ) + panStringOut +"</div>";
 
-	
+
 // 	if ( !moreInfo.isEmpty() ) // moreInfo.isNotEmpty
 	{
 		QString sysLang = QLocale::languageToString ( QLocale::system ().language() ).toUpper();
@@ -2256,7 +2283,7 @@ QString FontItem::infoText ( bool fromcache )
 				if ( langIdMap[ lit.key() ].contains ( sysLang ) )
 				{
 					QString name_value = mit.value();
-					name_value.replace ( QRegExp ( "(http://.+)\\s*" ), "<a href=\"\\1\">\\1</a>" );//Make HTTP links
+					name_value.replace ( QRegExp ( "(http://S+)" ), "<a href=\"\\1\">\\1</a>" );//Make HTTP links
 					name_value.replace ( "\n","<br/>" );
 					orderedInfo[ mit.key() ] << "<div class="+ styleLangMatch +">" + name_value +"</div>";
 					if ( mit.key() == tr ( "Font Subfamily" ) )
@@ -2276,6 +2303,7 @@ QString FontItem::infoText ( bool fromcache )
 	}
 
 
+
 	for ( int i = 1; i < name_meaning.count(); ++i )
 	{
 		if ( orderedInfo.contains ( name_meaning[i] ) )
@@ -2290,11 +2318,12 @@ QString FontItem::infoText ( bool fromcache )
 			i = 7;
 	}
 
+	ret += panBlockOut;
 // 	m_cacheInfo = ret;
-	
-	if(rFace)
+
+	if ( rFace )
 		releaseFace();
-	
+
 	return ret;
 }
 
@@ -2367,7 +2396,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		if ( theOneLinePreviewPixmap.width() == size_w )
 			return theOneLinePreviewPixmap;
 	}
-	if(!ensureFace())
+	if ( !ensureFace() )
 		return QPixmap();
 	QRectF savedRect = theOneLineScene->sceneRect();
 
@@ -2405,19 +2434,19 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 			++notRenderedGlyphsCount;
 			continue;
 		}
-		
+
 		FT_Set_Char_Size ( m_face,
 		                   fsize  * 64 ,
 		                   0,
 		                   QApplication::desktop()->physicalDpiX(),
 		                   QApplication::desktop()->physicalDpiY() );
-		
-		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING);
+
+		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING );
 		if ( ft_error )
 		{
 			continue;
 		}
-		
+
 		ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
 		if ( ft_error )
 		{
@@ -2425,12 +2454,12 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		}
 
 		if ( pRTL )
-			pen.rx() -= qRound( m_glyph->linearHoriAdvance / 65536 );
+			pen.rx() -= qRound ( m_glyph->linearHoriAdvance / 65536 );
 
 		apainter.drawImage ( pen.x() +  m_glyph->bitmap_left , pen.y() - m_glyph->bitmap_top , glyphImage() );
 
 		if ( !pRTL )
-			pen.rx() += qRound( m_glyph->linearHoriAdvance / 65536 );
+			pen.rx() += qRound ( m_glyph->linearHoriAdvance / 65536 );
 
 	}
 	/// Check if we have drawn something
@@ -2532,9 +2561,9 @@ Code  	Meaning
 */
 void FontItem::moreInfo_sfnt()
 {
-	if(!ensureFace())
+	if ( !ensureFace() )
 		return;
-	
+
 	FT_SfntName tname;
 
 	if ( name_meaning.isEmpty() )
@@ -2542,13 +2571,13 @@ void FontItem::moreInfo_sfnt()
 		fillNamesMeaning();
 	}
 	int tname_count = FT_Get_Sfnt_Name_Count ( m_face );
-	
+
 
 	//TODO check encodings and platforms
 	for ( int i=0; i < tname_count; ++i )
 	{
 		FT_Get_Sfnt_Name ( m_face,i,&tname );
-		if( tname.language_id != 0 && tname.language_id != theLocalLangCode )
+		if ( tname.language_id != 0 && tname.language_id != theLocalLangCode )
 		{
 			continue;
 		}
@@ -2636,16 +2665,16 @@ void FontItem::moreInfo_sfnt()
 			moreInfo[tname.language_id][akey] = avalue;
 		}
 	}
-	
+
 	// Is there an OS/2 table?
-	TT_OS2 *os2 = static_cast<TT_OS2*>( FT_Get_Sfnt_Table(m_face, ft_sfnt_os2) );
-	if(os2 /* and  wantAutoTag*/)
+	TT_OS2 *os2 = static_cast<TT_OS2*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_os2 ) );
+	if ( os2 /* and  wantAutoTag*/ )
 	{
 		// Just want the panose data
 		m_panose.clear();
-		for(int bI(0); bI < 10; ++bI)
+		for ( int bI ( 0 ); bI < 10; ++bI )
 		{
-			m_panose += QString::number( os2->panose[bI]) ;
+			m_panose += QString::number ( os2->panose[bI] ) ;
 			panoseInfo[ panoseKeys[bI] ] = panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ] ;
 // 			if(os2->panose[bI] > 1 ) // "any" nor "not fit" does not seem rather interesting tags :)
 // 			{
@@ -2656,23 +2685,66 @@ void FontItem::moreInfo_sfnt()
 // 					if(!typotek::tagsList.contains(pTag))
 // 					{
 // 						typotek::tagsList << pTag;
-// 					}	
+// 					}
 // 				}
 // 			}
 		}
 // 		moreInfo[0]["Panose"] = pan;
-		
-		
+
+
 	}
-	
+
 	releaseFace();
 }
 
+QString FontItem::getAlternateFamilyName()
+{
+	if ( !ensureFace() )
+		return QString();
+
+	FT_SfntName tname;
+	int tname_count = FT_Get_Sfnt_Name_Count ( m_face );
+	for ( int i=0; i < tname_count; ++i )
+	{
+		FT_Get_Sfnt_Name ( m_face , i , &tname );
+		if ( tname.name_id == 1 && tname.language_id == 0 )
+		{
+			return QString ( QByteArray ( ( const char* ) tname.string, tname.string_len ) );
+		}
+
+	}
+	
+	releaseFace();
+	return QString();
+}
+
+QString FontItem::getAlternateVariantName()
+{
+	if ( !ensureFace() )
+		return QString();
+
+	FT_SfntName tname;
+	int tname_count = FT_Get_Sfnt_Name_Count ( m_face );
+	for ( int i=0; i < tname_count; ++i )
+	{
+		FT_Get_Sfnt_Name ( m_face , i , &tname );
+		if ( tname.name_id == 2 && tname.language_id == 0 )
+		{
+			return QString ( QByteArray ( ( const char* ) tname.string, tname.string_len ) );
+		}
+
+	}
+
+	releaseFace();
+	return QString();
+}
+
+
 void FontItem::moreInfo_type1()
 {
-	if(!ensureFace())
+	if ( !ensureFace() )
 		return;
-	
+
 	PS_FontInfoRec sinfo ;
 	int err = FT_Get_PS_Font_Info ( m_face,&sinfo );
 	if ( err )
@@ -2684,7 +2756,7 @@ void FontItem::moreInfo_type1()
 	moreInfo[0][tr ( "Full font name" ) ] = sinfo.full_name;
 	moreInfo[0][tr ( "Version string" ) ] = sinfo.version;
 	moreInfo[0][tr ( "Description" ) ] = sinfo.notice;
-	
+
 	releaseFace();
 }
 
@@ -2775,7 +2847,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 {
 	ensureFace();
 
-	int ref( fancyGlyphs.count() );
+	int ref ( fancyGlyphs.count() );
 	QRect allRect ( view->rect() );
 	QRect targetRect ( view->mapToScene ( allRect.topLeft() ).toPoint(),  view->mapToScene ( allRect.topRight() ) .toPoint() ) ;
 	qDebug() <<  allRect.topLeft() << view->mapToScene ( allRect.topLeft() );
@@ -2909,7 +2981,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 		else if ( cat == QChar::Symbol_Modifier ) catString = QObject::tr ( "Symbol, Modifier" );
 		else if ( cat == QChar::Symbol_Other ) catString = QObject::tr ( "Symbol, Other" );
 
-		html = "<span style=\""+ itemNameStyle +"\"> "+ tr("Category") + " </span>";
+		html = "<span style=\""+ itemNameStyle +"\"> "+ tr ( "Category" ) + " </span>";
 		html += "<span style=\""+ itemValueStyle +"\"> "+ catString +" </span>";
 
 		textIt->setHtml ( html );
@@ -2942,14 +3014,14 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 			QPixmap altP ( altI.width() * 2, altI.height() * 2 );
 			altP.fill ( Qt::transparent );
 			QPainter altPainter ( &altP );
-			altPainter.setRenderHint(QPainter::Antialiasing,true);
+			altPainter.setRenderHint ( QPainter::Antialiasing,true );
 			altPainter.setBrush ( Qt::black );
-			altPainter.drawRoundRect (  5,
-			                            5,
+			altPainter.drawRoundRect ( 5,
+			                           5,
 			                           altP.width() - 10,
 			                           altP.height()  - 10,
 			                           20,20 );
-			altPainter.drawImage (  altI.width() / 2.0, altI.height() / 2.0 , altI );
+			altPainter.drawImage ( altI.width() / 2.0, altI.height() / 2.0 , altI );
 
 			gpi->setPixmap ( altP );
 
@@ -2970,31 +3042,31 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 
 void FontItem::hideFancyGlyph ( int ref )
 {
-	if ( fancyGlyphs.contains(ref) )
+	if ( fancyGlyphs.contains ( ref ) )
 	{
 		QGraphicsPixmapItem *it = fancyGlyphs.value ( ref );
 		it->scene()->removeItem ( it );
-		fancyGlyphs.remove(ref);
+		fancyGlyphs.remove ( ref );
 		delete it;
 
 	}
-	if ( fancyTexts.contains(ref) )
+	if ( fancyTexts.contains ( ref ) )
 	{
 		QGraphicsTextItem *it = fancyTexts.value ( ref );
 		it->scene()->removeItem ( it );
-		fancyTexts.remove(ref);
+		fancyTexts.remove ( ref );
 		delete it;
 	}
-	if (fancyAlternates.value(ref).count())
+	if ( fancyAlternates.value ( ref ).count() )
 	{
-		QList<QGraphicsPixmapItem*> pil(fancyAlternates.value(ref));
-		for(int pidx(0); pidx < pil.count(); ++pidx)
+		QList<QGraphicsPixmapItem*> pil ( fancyAlternates.value ( ref ) );
+		for ( int pidx ( 0 ); pidx < pil.count(); ++pidx )
 		{
-			QGraphicsPixmapItem *it = pil.at(pidx) ;
+			QGraphicsPixmapItem *it = pil.at ( pidx ) ;
 			it->scene()->removeItem ( it );
 			delete it;
 		}
-		fancyAlternates.remove( ref );
+		fancyAlternates.remove ( ref );
 	}
 }
 
@@ -3023,27 +3095,27 @@ void FontItem::fileLocal ( QString f, QString v, QString t, QString p, QMap<int,
 	m_family = f;
 	m_variant = v;
 	m_type = t;
-	
+
 	moreInfo = i;
 }
 
-void FontItem::fileLocal(FontLocalInfo fli)
+void FontItem::fileLocal ( FontLocalInfo fli )
 {
 	m_family = fli.family;
 	m_variant = fli.variant;
 	m_type = fli.type;
 	moreInfo = fli.info;
-	if(!fli.panose.isEmpty())
+	if ( !fli.panose.isEmpty() )
 	{
 		m_panose = fli.panose;
-		for(int bI(0); bI < 10; ++bI)
+		for ( int bI ( 0 ); bI < 10; ++bI )
 		{
-			panoseInfo[ panoseKeys[bI] ] = panoseMap.value( panoseKeys[bI] ).value( m_panose.mid(bI,1).toInt() ) ;
+			panoseInfo[ panoseKeys[bI] ] = panoseMap.value ( panoseKeys[bI] ).value ( m_panose.mid ( bI,1 ).toInt() ) ;
 
 		}
-		
+
 	}
-	
+
 }
 
 
@@ -3193,22 +3265,22 @@ QString FontItem::activationAFMName()
 	return  prefix.arg ( fi.size() ) + afi.fileName();
 }
 
-QList< int > FontItem::getAlternates(int ccode)
+QList< int > FontItem::getAlternates ( int ccode )
 {
 	QList<int> ret;
-	if(!ensureFace())
+	if ( !ensureFace() )
 		return ret;
 	if ( !otf && m_isOpenType )
 	{
 		otf = new FmOtf ( m_face );
-		if(!otf)
+		if ( !otf )
 			return ret;
 	}
-	
-	int glyphIndex( FT_Get_Char_Index(m_face, ccode) );
+
+	int glyphIndex ( FT_Get_Char_Index ( m_face, ccode ) );
 	QList<OTFSet> setList;
 	setList.clear();
-	
+
 	otf->set_table ( "GSUB" );
 	foreach ( QString script, otf->get_scripts() )
 	{
@@ -3216,45 +3288,45 @@ QList< int > FontItem::getAlternates(int ccode)
 		foreach ( QString lang, otf->get_langs() )
 		{
 			otf->set_lang ( lang );
-			QStringList fl( otf->get_features() );
-			if(fl.contains("aalt"))
+			QStringList fl ( otf->get_features() );
+			if ( fl.contains ( "aalt" ) )
 			{
 				OTFSet set;
 				set.script = script;
 				set.lang = lang;
 				set.gpos_features.clear();
-				set.gsub_features = QStringList("aalt");
+				set.gsub_features = QStringList ( "aalt" );
 				setList << set;
-				qDebug()<< "AALT"<<script<< lang;
-			} 
+				qDebug() << "AALT"<<script<< lang;
+			}
 		}
 	}
-	
+
 	QString spec;
-	spec = QChar(ccode);
-	
-	foreach(OTFSet set, setList)
+	spec = QChar ( ccode );
+
+	foreach ( OTFSet set, setList )
 	{
-		QList<RenderedGlyph> rendered( otf->procstring(spec, set) );
-		if(rendered.at(0).glyph != glyphIndex )
+		QList<RenderedGlyph> rendered ( otf->procstring ( spec, set ) );
+		if ( rendered.at ( 0 ).glyph != glyphIndex )
 		{
-			if(!ret.contains( rendered.at(0).glyph ))
-				ret << rendered.at(0).glyph;
+			if ( !ret.contains ( rendered.at ( 0 ).glyph ) )
+				ret << rendered.at ( 0 ).glyph;
 		}
-		if(!otf->altGlyphs.isEmpty())
+		if ( !otf->altGlyphs.isEmpty() )
 		{
-			QList<int> l(otf->altGlyphs);
-			foreach(int g, l)
+			QList<int> l ( otf->altGlyphs );
+			foreach ( int g, l )
 			{
-				if(!ret.contains(g) && g != glyphIndex )
+				if ( !ret.contains ( g ) && g != glyphIndex )
 					ret << g;
 			}
 		}
 	}
-	
+
 	delete otf;
 	otf = 0;
-	
+
 	releaseFace();
 	return ret;
 }
@@ -3281,16 +3353,16 @@ QImage FontItem::glyphImage()
 	{
 		img.setColorTable ( gray256Palette );
 	}
-	
+
 	return img;
 }
 
 
 QMap< int, QMap < QString , QString > > & FontItem::rawInfo()
 {
-	if(moreInfo.isEmpty())
+	if ( moreInfo.isEmpty() )
 	{
-// 		qDebug()<< m_name <<"WARNING MoreInfo is empty"; 
+// 		qDebug()<< m_name <<"WARNING MoreInfo is empty";
 		if ( m_isOpenType = true /*testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" */ )
 		{
 			moreInfo_sfnt();
@@ -3298,10 +3370,11 @@ QMap< int, QMap < QString , QString > > & FontItem::rawInfo()
 		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )
 		{
 			moreInfo_type1();
-		}	
+		}
 	}
-	 return moreInfo;
+	return moreInfo;
 }
+
 
 
 

@@ -133,9 +133,9 @@ void typotek::initMatrix()
 	m_defaultSampleName = tr("default") ;
 	fontmatrix::fillDockPos();
 
+	readSettings();
 	checkOwnDir();
 	initDir();
-	readSettings();
 
 	theMainView = new MainViewWidget ( this );
 	setCentralWidget ( theMainView );
@@ -683,8 +683,8 @@ void typotek::readSettings()
 	templatesDir = settings.value ( "TemplatesDir", "./").toString();
 	previewSize = settings.value("PreviewSize", 15.0).toDouble();
 	previewRTL = settings.value("PreviewRTL", false).toBool();
-
 	mainDockArea = settings.value("ToolPos", "Left").toString();
+	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
 }
 
 void typotek::writeSettings()

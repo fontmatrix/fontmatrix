@@ -189,6 +189,8 @@ class typotek:public QMainWindow
 		QString mainDockArea;
 
 		QMap<QString, FontItem*> temporaryFonts;
+		
+		bool m_familySchemeFreetype;
 	public:
 		int getFontCount(){return fontMap.count(); }
 		FontItem* getFont ( int i ) ;
@@ -263,6 +265,12 @@ class typotek:public QMainWindow
 		QString defaultSampleName(){return m_defaultSampleName;}
 
 		bool insertTemporaryFont(const QString& path);
+
+	bool familySchemeFreetype() const
+	{
+		return m_familySchemeFreetype;
+	}
+	
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

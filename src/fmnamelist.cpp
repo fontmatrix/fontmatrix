@@ -1,7 +1,7 @@
 //
 // C++ Implementation: fmnamelist
 //
-// Description: 
+// Description:
 //
 //
 // Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
@@ -30,8 +30,8 @@ void FMNameList::keyPressEvent(QKeyEvent * e)
 // 	qDebug()<<"FMNameList::keyPressEvent("<<e<<")";
 	if(e->text().isEmpty())
 		return;
-	
-	
+
+
 	QTreeWidgetItem *item = 0;
 	QString alpha = e->text().toUpper();
 // 	if(e->modifiers().testFlag( Qt::ControlModifier ))
@@ -53,4 +53,43 @@ void FMNameList::keyPressEvent(QKeyEvent * e)
 		}
 	}
 // 	QTreeWidget::keyPressEvent(e);
+}
+
+void FMNameList::slotNextFamily()
+{
+	QTreeWidgetItem *current = currentItem();
+	if (current) {
+		qDebug("current: %d", topLevelItemCount());
+	} else {
+		qDebug("no current: %d", topLevelItemCount());
+	}
+}
+
+void FMNameList::slotPreviousFamily()
+{
+
+}
+
+void FMNameList::slotNextFont()
+{
+	QTreeWidgetItem *current = currentItem();
+	if (current) {
+		QTreeWidgetItem *below = itemBelow(current);
+		setCurrentItem(below);
+		emit currentChanged(below, 0);
+	} else {
+
+	}
+}
+
+void FMNameList::slotPreviousFont()
+{
+	QTreeWidgetItem *current = currentItem();
+	if (current) {
+		QTreeWidgetItem *above = itemAbove(current);
+		setCurrentItem(above);
+		emit currentChanged(above, 0);
+	} else {
+
+	}
 }

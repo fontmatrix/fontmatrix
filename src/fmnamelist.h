@@ -1,7 +1,7 @@
 //
 // C++ Interface: fmnamelist
 //
-// Description: 
+// Description:
 //
 //
 // Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
@@ -16,12 +16,21 @@
 #include <QTreeWidget>
 #include <QString>
 
+class QTreeViewItem;
+
 class FMNameList : public QTreeWidget
 {
 	Q_OBJECT
 	public:
 		FMNameList(QWidget *parent);
 		~FMNameList();
+	public slots:
+		void slotNextFamily();
+		void slotPreviousFamily();
+		void slotNextFont();
+		void slotPreviousFont();
+	signals:
+		void currentChanged(QTreeWidgetItem*, int);
 	protected:
 		void keyPressEvent ( QKeyEvent * e );
 // 	private:

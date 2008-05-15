@@ -119,6 +119,7 @@ class typotek:public QMainWindow
 		QDockWidget *mainDock;
 		QMenu *fileMenu;
 		QMenu *editMenu;
+		QMenu *browseMenu;
 		QMenu *helpMenu;
 		QToolBar *fileToolBar;
 		QToolBar *editToolBar;
@@ -142,6 +143,10 @@ class typotek:public QMainWindow
 		QAction *exportFontSetAct;
 		QAction *repairAct;
 		QAction *tagAll;
+		QAction *nextFamily;
+		QAction *previousFamily;
+		QAction *nextFont;
+		QAction *previousFont;
 
 		QMenu *printMenu;
 		QAction *printInfoAct;
@@ -189,8 +194,9 @@ class typotek:public QMainWindow
 		QString mainDockArea;
 
 		QMap<QString, FontItem*> temporaryFonts;
-		
+
 		bool m_familySchemeFreetype;
+
 	public:
 		int getFontCount(){return fontMap.count(); }
 		FontItem* getFont ( int i ) ;
@@ -270,7 +276,7 @@ class typotek:public QMainWindow
 	{
 		return m_familySchemeFreetype;
 	}
-	
+
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

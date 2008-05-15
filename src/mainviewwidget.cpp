@@ -55,17 +55,17 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	setupUi ( this );
 
 	uRangeIsNotEmpty = false;
-	
+
 	QSettings settings;
 	sampleFontSize = settings.value("SampleFontSize",12.0).toDouble();
 	sampleInterSize = settings.value("SampleInterline",16.0).toDouble();
 	sampleRatio = sampleInterSize / sampleFontSize  ;
 	liveFontSizeSpin->setValue(sampleFontSize);
-	
+
 	iconPS1 =  QIcon(":/icon-PS1");
 	iconTTF =  QIcon(":/icon-TTF");
 	iconOTF =  QIcon(":/icon-OTF");
-	
+
 	theVeryFont = 0;
 	typo = typotek::getInstance();
 	m_lists = ListDockWidget::getInstance();
@@ -73,18 +73,18 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	fontsetHasChanged = true;
 	curGlyph = 0;
 	fancyGlyphInUse = -1;
-		
-	
+
+
 	fillUniPlanes();
 	refillSampleList();
-	
+
 	QFile styleInfo(":/info.css");
 	if(styleInfo.open(QIODevice::ReadOnly))
 	{
 		QString infoStyle = styleInfo.readAll();
 		fontInfoText->document()->setDefaultStyleSheet(infoStyle);
 	}
-	
+
 
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
@@ -105,25 +105,26 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->locker = true;
 	loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 	loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	
+
 	loremView_FT->setScene ( ftScene );
-// 	loremView_FT->setBackgroundBrush ( Qt::lightGray ); 
+// 	loremView_FT->setBackgroundBrush ( Qt::lightGray );
 	loremView_FT->locker = false;
-	
+
 	playScene->setSceneRect ( 0,0,10000,10000 );
 	playView->setScene( playScene );
-	
+
 	sampleText= typo->namedSample (typo->defaultSampleName());
 // 	sampleFontSize = 18;
 // 	sampleInterSize = 20;
 	m_lists->previewList->setRefWidget ( this );
-	
+
 	contextMenuReq = false;
 	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	//CONNECT
 // 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
+	connect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 // 	connect ( m_lists->searchString,SIGNAL ( textEdited ( const QString&)  ),this,SLOT ( slotLiveSearch(const QString&) ) );
 	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
@@ -139,7 +140,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
 	connect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
 	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
-	
+
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView, SIGNAL ( refit() ),this,SLOT ( slotRefitSample() ) );
@@ -147,24 +148,24 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( fitViewCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotFitChanged ( int ) ) );
 	connect (advanceButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchAdvanced()));
 	connect (basicButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchBasic()));
-	
+
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
-	
+
 	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-	
+
 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 	connect ( liveFontSizeSpin, SIGNAL(valueChanged(double)),this,SLOT(slotLiveFontSize(double)));
-	
+
 	connect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	connect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
 	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
-	
+
 	connect ( pushToPlayButton, SIGNAL(clicked ( bool ) ), this, SLOT(slotPushOnPlayground()) );
-	
+
 	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
@@ -191,7 +192,7 @@ void MainViewWidget::fillTree()
 	fillTime.start();
 	m_lists->savePosition();
 	QTreeWidgetItem *curItem = 0;
-	
+
 	// We log expanded families item
 	openKeys.clear();
 	for ( int i=0; i < m_lists->fontTree->topLevelItemCount();++i )
@@ -202,14 +203,14 @@ void MainViewWidget::fillTree()
 				openKeys << topit->child ( j )->text ( 0 );
 	}
 	m_lists->fontTree->clear();
-	
+
 	qDebug("LOGS Time elapsed: %d ms", fillTime.elapsed());
 	fillTime.restart();
-	
+
 	// build the in-memory tree that hold the ordered current fonts set
 	QMap< QChar,QMap< QString,QMap< QString,FontItem*> > > keyList;
 	QMap< QString,QString > realFamilyName;
-	
+
 	for ( int i=0; i < currentFonts.count();++i )
 	{
 		QString family = currentFonts[i]->family();
@@ -228,22 +229,22 @@ void MainViewWidget::fillTree()
 		keyList[ordFamily[0]][ordFamily][variant] = ( currentFonts[i] );
 		realFamilyName[ordFamily] = family;
 	}
-	
+
 	qDebug("MULTI Time elapsed: %d ms", fillTime.elapsed());
 	fillTime.restart();
-	
+
 	// Rebuild the the tree
 	QFont alphaFont ( "helvetica",14,QFont::Bold,false );
-	
+
 	QMap< QChar,QMap< QString,QMap< QString,FontItem*> > >::const_iterator kit;
 	QMap< QString,QMap< QString,FontItem*> >::const_iterator oit;
 	QMap< QString,FontItem*>::const_iterator fit;
-	
+
 	QTime tt(0,0);
 	tt.start();
 	int tttotal(0);
 	int tcount(0);
-	
+
 	for( kit = keyList.constBegin() ; kit != keyList.constEnd() ; ++kit )
 	{
 		QChar firstChar ( kit.key() );
@@ -254,10 +255,10 @@ void MainViewWidget::fillTree()
 		alpha->setBackgroundColor ( 0,Qt::lightGray );
 		alpha->setBackgroundColor ( 1,Qt::lightGray );
 		bool alphaIsUsed = false;
-		
+
 		for (oit = kit.value().constBegin(); oit !=  kit.value().constEnd(); ++ oit )
 		{
-			
+
 			QString fam( realFamilyName[oit.key()] );
 			bool isExpanded = false;
 			QTreeWidgetItem *ord = new QTreeWidgetItem ( alpha );
@@ -271,14 +272,14 @@ void MainViewWidget::fillTree()
 				ord->setExpanded ( true );
 				isExpanded = true;
 			}
-				
+
 			for(fit = oit.value().constBegin(); fit != oit.value().constEnd(); ++fit)
 			{
 				++tcount;
 				tt.restart();
 				FontItem *fPointer = fit.value();
 				QString var( fit.key() );
-				
+
 				QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 				entry->setText ( 0,  var );
 				entry->setText ( 1, fPointer->path() );
@@ -288,14 +289,14 @@ void MainViewWidget::fillTree()
 				{
 					entry->setFlags(Qt::ItemIsSelectable);
 				}
-				
+
 				if(fPointer->type() == "CFF")
 						entry->setIcon(0, iconOTF );
 				else if(fPointer->type() == "TrueType")
 						entry->setIcon(0, iconTTF);
 				else if(fPointer->type() == "Type 1")
 						entry->setIcon(0, iconPS1);
-				
+
 				bool act = fPointer->isActivated();
 				if ( act )
 				{
@@ -312,7 +313,7 @@ void MainViewWidget::fillTree()
 					curItem = entry;
 				tttotal += tt.elapsed();
 			}
-				
+
 			if ( checkyes && chekno )
 				ord->setCheckState ( 0,Qt::PartiallyChecked );
 			else if ( checkyes )
@@ -321,7 +322,7 @@ void MainViewWidget::fillTree()
 			ord->setData ( 0,200,ord->checkState ( 0 ) );
 			ord->setText ( 1,QString::number ( ord->childCount() ) );
 			alphaIsUsed = true;
-				
+
 		}
 		if ( alphaIsUsed )
 		{
@@ -336,7 +337,7 @@ void MainViewWidget::fillTree()
 	qDebug()<<"SUB TREE Time Total: "<<tttotal<<" ms; Iterations : "  << tcount<< "; Average" << (double)tttotal / (double)tcount <<" ms/It";
 	qDebug("TREE Time elapsed: %d ms", fillTime.elapsed());
 	fillTime.restart();
-	
+
 	m_lists->previewList->slotRefill ( currentFonts, fontsetHasChanged );
 	if ( curItem )
 	{
@@ -346,7 +347,7 @@ void MainViewWidget::fillTree()
 		{
 			m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 		}
-		
+
 		QColor scol (255,240,221,255);
 		QColor pcol (255,211,155,255);
 		QFont selFont;
@@ -368,7 +369,7 @@ void MainViewWidget::fillTree()
 	m_lists->fontTree->resizeColumnToContents ( 0 )  ;
 // 	m_lists->fontTree->resizeColumnToContents ( 1 ) ;
 // 	m_lists->fontTree->setColumnWidth(0,200);
-	
+
 	fontsetHasChanged = false;
 	qDebug("END Time elapsed: %d ms", fillTime.elapsed());
 }
@@ -397,21 +398,21 @@ void MainViewWidget::updateTree()
 					varItem->parent()->setFont(0, deselect);
 					varItem->parent()->setBackgroundColor(0, Qt::transparent);
 					varItem->parent()->setBackgroundColor(1, Qt::transparent);
-				}	
+				}
 				else if(varItem->text ( 1 ) == curItemName)
 				{
 					curItem = varItem;
 				}
-				
+
 			}
-		} 
+		}
 	}
-	
+
 	m_lists->previewList->slotRefill ( currentFonts, false );
 	if ( curItem )
 	{
 // 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
-		
+
 		QColor scol (255,240,221,255);
 		QColor pcol (255,211,155,255);
 		QFont selFont;
@@ -509,7 +510,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 				else
 					activation ( afont, cs , false);
 			}
-		
+
 		}
 		else
 		{
@@ -574,7 +575,7 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 	lastIndex = faceIndex;
 	faceIndex = fname;
 	curItemName = faceIndex;
-	
+
 	if ( faceIndex.count() && faceIndex != lastIndex )
 	{
 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
@@ -609,22 +610,22 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		updateTree();
 		abcView->verticalScrollBar()->setValue ( 0 );
 	}
-	
-	
+
+
 }
 
 
 void MainViewWidget::slotInfoFont()
-{	
+{
 	if(theVeryFont)
 	{
 	fontInfoText->clear();
-	fontInfoText->setHtml ( 
+	fontInfoText->setHtml (
 			       "<html>\
 			<head>\
 			<title>" + theVeryFont->fancyName() + "</title>\
 			<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\
-			</head>" +  theVeryFont->infoText(false) + "</html>" 
+			</head>" +  theVeryFont->infoText(false) + "</html>"
 			      );
 	}
 
@@ -647,7 +648,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		f->deRenderAll();
 
 		curGlyph = 0;
-	}	
+	}
 
 	bool wantDeviceDependant = loremView_FT->isVisible();
 
@@ -691,7 +692,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		QString script = langCombo->currentText();
 		bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
 		double adjustedSampleInter = wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize ;
-		
+
 		if( textProgression->inBlock() == TextProgression::BLOCK_TTB )
 		{
 			double marginL = loremScene->sceneRect().width() / 10.0;
@@ -701,9 +702,9 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			QPointF pen ( margin ,   0 );
 			for ( int i=0; i< stl.count(); ++i )
 			{
-				
+
 				pen.ry() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * i;
-				
+
 				if ( processScript )
 				{
 					qDebug() << "render " << stl[i] << " as " << script;
@@ -730,9 +731,9 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			QPointF pen ( 0 , margin );
 			for ( int i=0; i< stl.count(); ++i )
 			{
-				
+
 				pen.rx() = (loremScene->sceneRect().width() * 0.9) - adjustedSampleInter * i;
-				
+
 				if ( processScript )
 				{
 					qDebug() << "render " << stl[i] << " as " << script;
@@ -759,9 +760,9 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			QPointF pen ( 0 , margin );
 			for ( int i=0; i< stl.count(); ++i )
 			{
-				
+
 				pen.rx() = (loremScene->sceneRect().width() * 0.1) + adjustedSampleInter * i;
-				
+
 				if ( processScript )
 				{
 					qDebug() << "render " << stl[i] << " as " << script;
@@ -798,7 +799,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 					if ( lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y()
 						|| lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x()
 						|| lit[i]->sceneBoundingRect().topLeft().y() > allrect.topLeft().y()
-						|| lit[i]->sceneBoundingRect().topRight().y() > allrect.topRight().y() 
+						|| lit[i]->sceneBoundingRect().topRight().y() > allrect.topRight().y()
 					   )
 						allrect = allrect.united ( lit[i]->sceneBoundingRect() );
 				}
@@ -827,13 +828,13 @@ void MainViewWidget::slotSearch()
 
 // 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	QString fs ( m_lists->searchString->text() );
-	
+
 	QList<FontItem*> tmpList;
 	tmpList.clear();
 	tmpList = typo->getFonts ( fs, m_lists->getCurrentField() );
 	currentFonts.clear();
 	currentFonts = tmpList ;
-	
+
 	currentOrdering = "family";
 	fillTree();
 	m_lists->searchString->clear();
@@ -853,14 +854,14 @@ void MainViewWidget::slotLiveSearch(const QString & text)
 // 	if ( m_lists->sensitivityCheck->isChecked() )
 // 	{
 // 		sensitivity = "SENS";
-// 	}	
-	
+// 	}
+
 	QList<FontItem*> tmpList;
 	tmpList.clear();
 	tmpList = typo->getFonts ( text ,ff.arg ( sensitivity ) );
 	currentFonts.clear();
 	currentFonts = tmpList ;
-	
+
 	currentOrdering = "family";
 	fillTree();
 }
@@ -871,7 +872,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 	int tIdx(m_lists->tagsCombo->currentIndex());
 	if(tIdx < 0)
 		return;
-	
+
 	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
 	if(key.isEmpty()) // regular tag
 	{
@@ -1025,7 +1026,7 @@ void MainViewWidget::slotAppendTag ( QString tag )
 void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
 {
 	FMActivate::getInstance()->activate(fit, act);
-	
+
 	if ( updateTree )
 		fillTree();
 }
@@ -1330,7 +1331,7 @@ void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 		{
 			if(p.mid ( 3 ) == stickyRange)
 			{
-				// Here we are, there is not 
+				// Here we are, there is not
 				uniPlaneCombo->addItem ( p.mid ( 3 ), p.mid ( 0,3 ) );
 				stickyIndex = uniPlaneCombo->count() - 1;
 				uRangeIsNotEmpty = false;
@@ -1475,9 +1476,9 @@ void MainViewWidget::refillSampleList()
 {
 	sampleTextCombo->clear();
 	playString->clear();
-	
+
 	playString->addItems( typo->namedSample(typo->defaultSampleName()).split("\n") );
-	
+
 	QStringList sl = typo->namedSamplesNames();
 	for ( int i = 0;i < sl.count(); ++i )
 	{
@@ -1490,7 +1491,7 @@ void MainViewWidget::refillSampleList()
 			sampleTextCombo->addItem ( sl[i] );
 			QStringList nl(typo->namedSample(sl[i]).split("\n")) ;
 			playString->addItems(nl);
-			
+
 		}
 	}
 	sampleTextCombo-> insertItem ( 0,typo->defaultSampleName() );
@@ -1520,7 +1521,7 @@ void MainViewWidget::slotChangeScript()
 // {
 // 	slotView ( true );
 // }
-// 
+//
 // void MainViewWidget::slotSwitchVertUD()
 // {
 // 	slotView ( true );
@@ -1621,7 +1622,7 @@ void MainViewWidget::slotUpdateGViewSingle()
 				qDebug() <<"3.FGI"<<fancyGlyphInUse;
 			}
 			abcView->unlock();
-	
+
 	}
 
 }
@@ -1651,7 +1652,7 @@ void MainViewWidget::slotSwitchCheckState(QListWidgetItem * item)
 		QMenu menu(tagsListWidget);
 		for(int i=0; i< sets.count(); ++i)
 		{
-			
+
 			if(typo->tagsOfSet(sets[i]).contains(item->text()))
 			{
 				QAction *entry = menu.addAction(QString("Remove from %1").arg(sets[i]));
@@ -1678,7 +1679,7 @@ void MainViewWidget::slotSwitchCheckState(QListWidgetItem * item)
 		contextMenuReq = false;
 		return;
 	}
-	
+
 	slotFinalize();
 }
 
@@ -1717,7 +1718,7 @@ void MainViewWidget::slotFinalize()
 		if( tagsListWidget->item ( i )->checkState() == Qt::Unchecked )
 			noTags.append ( tagsListWidget->item ( i )->text() );
 	}
-		
+
 	QStringList sourceTags;
 	for ( int i=0;i<theTaggedFonts.count();++i )
 	{
@@ -1740,7 +1741,7 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 	slotFinalize();
 	theTaggedFonts.clear();
 	theTaggedFonts = fonts;
-	
+
 	bool readOnly(false);
 	for ( int i(0); i < theTaggedFonts.count() ; ++i )
 	{
@@ -1776,7 +1777,7 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 			continue;
 
 		QListWidgetItem *lit;
-		
+
 		{
 			lit = new QListWidgetItem ( cur_tag );
 			lit->setCheckState ( Qt::Unchecked );
@@ -1790,7 +1791,7 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 				lit->setCheckState ( Qt::Checked );
 			else if(YesState > 0 && YesState < theTaggedFonts.count())
 				lit->setCheckState ( Qt::PartiallyChecked);
-			
+
 			tagsListWidget->addItem ( lit );
 			if(readOnly)
 				lit->setFlags(0);// No NoItemFlags in Qt < 4.4
@@ -1814,7 +1815,7 @@ void MainViewWidget::slotRemoveCurrentItem()
 		return;
 	}
 	if( QMessageBox::question ( this, tr("Fontmatrix safe"), tr("You are about to remove a font from Fontmatrix database") +"\n"+curItemName+"\n" + tr("Do you want to continue?"),QMessageBox::Yes |  QMessageBox::No, QMessageBox::No) == QMessageBox::Yes )
-	{ 
+	{
 		theVeryFont->deRenderAll();
 		currentFonts.removeAll(theVeryFont);
 		theTaggedFonts.removeAll(theVeryFont);
@@ -1840,7 +1841,7 @@ void MainViewWidget::slotRemoteFinished()
 	slotUpdateGView();
 	slotUpdateRView();
 	slotUpdateSView();
-	
+
 }
 
 void MainViewWidget::slotProgressionChanged()
@@ -1853,15 +1854,15 @@ void MainViewWidget::slotPushOnPlayground()
 	QString spec(playString->currentText());
 	if(spec.isEmpty())
 		return;
-	
+
 	if(!theVeryFont)
 		return;
-	
+
 	double fSize(playFontSize->value());
-	
+
 	playView->displayGlyphs(spec, theVeryFont, fSize);
 // 	playString->clearEditText();
-		
+
 }
 
 QString MainViewWidget::sampleName()
@@ -1881,7 +1882,7 @@ void MainViewWidget::displayWelcomeMessage()
 		QFile wpngFile( wpng );
 		int pngWidth(fontInfoText->width() * 0.98);
 		qDebug()<<"PNGW = "<< fontInfoText->width();
-		
+
 		if(!wpngFile.open(QIODevice::WriteOnly))
 			qDebug()<<"Unable to write in "<< wpngFile.fileName();
 		else

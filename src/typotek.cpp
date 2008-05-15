@@ -621,7 +621,30 @@ void typotek::createActions()
 		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
 
 	tagAll = new QAction(tr("Tag All..."), this);
+	scuts->add(tagAll);
 	connect(tagAll,SIGNAL(triggered()),this,SLOT(slotTagAll()));
+
+	nextFamily = new QAction(tr("Next Family"), this);
+	nextFamily->setShortcut(Qt::Key_PageDown);
+	scuts->add(nextFamily);
+	connect(nextFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFamily()));
+
+	nextFont = new QAction(tr("Next Font"), this);
+	nextFont->setShortcut(Qt::CTRL | Qt::Key_PageDown);
+	scuts->add(nextFont);
+	connect(nextFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFont()));
+
+	previousFamily = new QAction(tr("Previous Family"), this);
+	previousFamily->setShortcut(Qt::Key_PageUp);
+	scuts->add(previousFamily);
+	connect(previousFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFamily()));
+
+
+	previousFont = new QAction(tr("Previous Font"), this);
+	previousFont->setShortcut(Qt::CTRL | Qt::Key_PageUp);
+	scuts->add(previousFont);
+	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
+
 }
 
 void typotek::createMenus()
@@ -656,6 +679,13 @@ void typotek::createMenus()
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
 
+/* will enable browse menu once the thing fully works
+	browseMenu = menuBar()->addMenu(tr("&Browse"));
+	browseMenu->addAction(nextFamily);
+	browseMenu->addAction(previousFamily);
+	browseMenu->addAction(nextFont);
+	browseMenu->addAction(previousFont);
+*/
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( helpAct );
 	helpMenu->addAction ( aboutAct );
@@ -1742,6 +1772,8 @@ void typotek::slotMainDockAreaChanged(Qt::DockWidgetArea area)
 	else if(area == Qt::BottomDockWidgetArea)
 		mainDockArea = "Bottom";
 }
+
+
 
 
 

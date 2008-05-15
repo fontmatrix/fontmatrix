@@ -80,6 +80,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	QFile styleInfo(":/info.css");
 	QString stIP(QDir::tempPath() + QDir::separator() + "fontmatrix_info.css");
+	if(QFile::exists(stIP))
+	{
+		QFile tmpInfo(stIP);
+		tmpInfo.remove();
+	}
 	styleInfo.copy(stIP);
 	infoCSSUrl = QUrl::fromLocalFile ( stIP );
 	QWebSettings::globalSettings()->setUserStyleSheetUrl(infoCSSUrl);
@@ -618,15 +623,18 @@ void MainViewWidget::slotInfoFont()
 {
 	if(theVeryFont)
 	{
-// 	fontInfoText->clear();
-	fontInfoText->setHtml (
-			       "<html>\
-			<head>\
-			<title>" + theVeryFont->fancyName() + "</title>\
-			<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\
-			</head>" +  theVeryFont->infoText(false) + "</html>"
-			      );
+		QString fIT;
+		fIT += "<html>";
+		fIT += "<head>";
+		fIT += "<title>" + theVeryFont->fancyName() + "</title>";
+		fIT += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
+		fIT += "</head>" +  theVeryFont->infoText(false) + "</html>";
+		fontInfoText->setHtml (fIT);
+// 		qDebug()<<"=========================================================";
+// 		qDebug()<<fIT;
+// 		qDebug()<<"=========================================================";
 	}
+	
 
 }
 

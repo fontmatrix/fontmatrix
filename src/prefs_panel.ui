@@ -26,166 +26,15 @@
       <item row="0" column="0" >
        <widget class="QTabWidget" name="mainTab" >
         <property name="currentIndex" >
-         <number>3</number>
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="tab_2" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>647</width>
-           <height>497</height>
-          </rect>
-         </property>
-         <attribute name="title" >
-          <string>Sample Text</string>
-         </attribute>
-         <layout class="QGridLayout" >
-          <item row="1" column="0" >
-           <widget class="QGroupBox" name="groupBox_2" >
-            <property name="toolTip" >
-             <string/>
-            </property>
-            <property name="title" >
-             <string>Named Sample Texts</string>
-            </property>
-            <layout class="QGridLayout" >
-             <item row="0" column="0" colspan="2" >
-              <widget class="QListWidget" name="sampleTextNamesList" />
-             </item>
-             <item row="0" column="2" colspan="2" >
-              <widget class="QTextEdit" name="namedSampleTextText" />
-             </item>
-             <item row="1" column="0" >
-              <widget class="QLineEdit" name="newSampleTextNameText" />
-             </item>
-             <item row="1" column="1" >
-              <widget class="QPushButton" name="addSampleTextNameButton" >
-               <property name="text" >
-                <string>Add</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2" >
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0" >
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="1" column="3" >
-              <widget class="QPushButton" name="validateNamedSampleTextButton" >
-               <property name="text" >
-                <string>Validate</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="2" column="0" >
-           <layout class="QHBoxLayout" >
-            <item>
-             <widget class="QGroupBox" name="groupBox_3" >
-              <property name="title" >
-               <string>Initial Layout</string>
-              </property>
-              <layout class="QGridLayout" >
-               <item row="0" column="0" >
-                <widget class="QLabel" name="label_2" >
-                 <property name="text" >
-                  <string>Font Size:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1" >
-                <widget class="QDoubleSpinBox" name="fontSizeSpin" >
-                 <property name="suffix" >
-                  <string> pt</string>
-                 </property>
-                 <property name="minimum" >
-                  <double>1.000000000000000</double>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0" >
-                <widget class="QLabel" name="label_3" >
-                 <property name="text" >
-                  <string>Interline:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1" >
-                <widget class="QDoubleSpinBox" name="interLineSpin" >
-                 <property name="suffix" >
-                  <string> pt</string>
-                 </property>
-                 <property name="minimum" >
-                  <double>1.000000000000000</double>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" >
-              <item>
-               <spacer>
-                <property name="orientation" >
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0" >
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" >
-                <item>
-                 <spacer>
-                  <property name="orientation" >
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0" >
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="applySampleTextButton" >
-                  <property name="text" >
-                   <string>Apply</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
         <widget class="QWidget" name="tab" >
          <property name="geometry" >
           <rect>
            <x>0</x>
            <y>0</y>
            <width>647</width>
-           <height>497</height>
+           <height>494</height>
           </rect>
          </property>
          <attribute name="title" >
@@ -394,13 +243,164 @@
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="tab_2" >
+         <property name="geometry" >
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>647</width>
+           <height>494</height>
+          </rect>
+         </property>
+         <attribute name="title" >
+          <string>Sample Text</string>
+         </attribute>
+         <layout class="QGridLayout" >
+          <item row="1" column="0" >
+           <widget class="QGroupBox" name="groupBox_2" >
+            <property name="toolTip" >
+             <string/>
+            </property>
+            <property name="title" >
+             <string>Named Sample Texts</string>
+            </property>
+            <layout class="QGridLayout" >
+             <item row="0" column="0" colspan="2" >
+              <widget class="QListWidget" name="sampleTextNamesList" />
+             </item>
+             <item row="0" column="2" colspan="2" >
+              <widget class="QTextEdit" name="namedSampleTextText" />
+             </item>
+             <item row="1" column="0" >
+              <widget class="QLineEdit" name="newSampleTextNameText" />
+             </item>
+             <item row="1" column="1" >
+              <widget class="QPushButton" name="addSampleTextNameButton" >
+               <property name="text" >
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2" >
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="3" >
+              <widget class="QPushButton" name="validateNamedSampleTextButton" >
+               <property name="text" >
+                <string>Validate</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" >
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QGroupBox" name="groupBox_3" >
+              <property name="title" >
+               <string>Initial Layout</string>
+              </property>
+              <layout class="QGridLayout" >
+               <item row="0" column="0" >
+                <widget class="QLabel" name="label_2" >
+                 <property name="text" >
+                  <string>Font Size:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" >
+                <widget class="QDoubleSpinBox" name="fontSizeSpin" >
+                 <property name="suffix" >
+                  <string> pt</string>
+                 </property>
+                 <property name="minimum" >
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" >
+                <widget class="QLabel" name="label_3" >
+                 <property name="text" >
+                  <string>Interline:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" >
+                <widget class="QDoubleSpinBox" name="interLineSpin" >
+                 <property name="suffix" >
+                  <string> pt</string>
+                 </property>
+                 <property name="minimum" >
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" >
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" >
+                <item>
+                 <spacer>
+                  <property name="orientation" >
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0" >
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="applySampleTextButton" >
+                  <property name="text" >
+                   <string>Apply</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
         <widget class="QWidget" name="tab_3" >
          <property name="geometry" >
           <rect>
            <x>0</x>
            <y>0</y>
            <width>647</width>
-           <height>497</height>
+           <height>494</height>
           </rect>
          </property>
          <attribute name="title" >
@@ -559,7 +559,7 @@
            <x>0</x>
            <y>0</y>
            <width>647</width>
-           <height>497</height>
+           <height>494</height>
           </rect>
          </property>
          <attribute name="title" >

@@ -79,12 +79,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	refillSampleList();
 
 	QFile styleInfo(":/info.css");
-	if(styleInfo.open(QIODevice::ReadOnly))
-	{
-		QString infoStyle = styleInfo.readAll();
-		fontInfoText->document()->setDefaultStyleSheet(infoStyle);
-	}
-
+	QString stIP(QDir::tempPath() + QDir::separator() + "fontmatrix_info.css");
+	styleInfo.copy(stIP);
+	infoCSSUrl = QUrl::fromLocalFile ( stIP );
 
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
@@ -619,7 +616,7 @@ void MainViewWidget::slotInfoFont()
 {
 	if(theVeryFont)
 	{
-	fontInfoText->clear();
+// 	fontInfoText->clear();
 	fontInfoText->setHtml (
 			       "<html>\
 			<head>\
@@ -1875,6 +1872,7 @@ QString MainViewWidget::sampleName()
 
 void MainViewWidget::displayWelcomeMessage()
 {
+	QWebSettings::globalSettings()->setUserStyleSheetUrl(infoCSSUrl);
 	QString welcomeFontName;
 	QString wpng(QDir::tempPath() + QDir::separator() + "FontmatrixWelcome.png");
 	if(typo->getFontCount() > 0)
@@ -1901,15 +1899,15 @@ void MainViewWidget::displayWelcomeMessage()
 	QFile wFile(":/texts/welcome");
 	wFile.open(QIODevice::ReadOnly);
 	QString wString(wFile.readAll());
-	wString.replace("##WELCOME_PNG##", QDir::tempPath() + QDir::separator() + "FontmatrixWelcome.png" );
+	wString.replace("##WELCOME_PNG##", QUrl::fromLocalFile(wpng).toString() );
 	wString.replace("##WELCOME_FONT##", welcomeFontName);
 	fontInfoText->setHtml(wString);
 }
 
-QTextDocument * MainViewWidget::infoDocument()
-{
-	return fontInfoText->document();
-}
+// QTextDocument * MainViewWidget::infoDocument()
+// {
+// 	return fontInfoText->document();
+// }
 
 QGraphicsScene * MainViewWidget::currentSampleScene()
 {

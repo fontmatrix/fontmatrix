@@ -104,6 +104,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		QString currentDownload;
 		
+		QUrl infoCSSUrl;
+		
 		
 	public slots:
 		void slotOrderingChanged ( QString s );
@@ -187,7 +189,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString sampleName();
 		void displayWelcomeMessage();
 		
-		QTextDocument *infoDocument();
+// 		QTextDocument *infoDocument();
 		QGraphicsScene *currentSampleScene();
 		FMPlayGround *getPlayground();
 		

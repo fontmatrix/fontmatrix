@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1003</width>
+    <width>768</width>
     <height>820</height>
    </rect>
   </property>
@@ -22,7 +22,7 @@
   <property name="windowTitle" >
    <string>main view widget</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_7" >
+  <layout class="QGridLayout" name="gridLayout_8" >
    <item row="0" column="0" >
     <widget class="QTabWidget" name="tabView" >
      <property name="enabled" >
@@ -43,6 +43,9 @@
      <property name="statusTip" >
       <string/>
      </property>
+     <property name="layoutDirection" >
+      <enum>Qt::LeftToRight</enum>
+     </property>
      <property name="tabPosition" >
       <enum>QTabWidget::North</enum>
      </property>
@@ -57,7 +60,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>981</width>
+        <width>746</width>
         <height>766</height>
        </rect>
       </property>
@@ -68,47 +71,28 @@
        <iconset resource="application.qrc" >
         <normaloff>:/fontmatrix_info.png</normaloff>:/fontmatrix_info.png</iconset>
       </attribute>
-      <layout class="QGridLayout" >
+      <layout class="QGridLayout" name="gridLayout_7" >
        <item row="0" column="0" >
-        <widget class="QSplitter" name="splitter_2" >
+        <widget class="QSplitter" name="splitter" >
          <property name="orientation" >
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Horizontal</enum>
          </property>
-         <widget class="QTextBrowser" name="fontInfoText" >
+         <widget class="QWebView" native="1" name="fontInfoText" >
           <property name="sizePolicy" >
-           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-            <horstretch>0</horstretch>
-            <verstretch>2</verstretch>
+           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <horstretch>5</horstretch>
+            <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="focusPolicy" >
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="html" >
-           <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;/p>&lt;/body>&lt;/html></string>
-          </property>
-          <property name="openExternalLinks" >
-           <bool>true</bool>
           </property>
          </widget>
-         <widget class="QFrame" name="frame" >
+         <widget class="QWidget" native="1" name="widget" >
           <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-            <horstretch>0</horstretch>
-            <verstretch>1</verstretch>
+           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="frameShape" >
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow" >
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QGridLayout" >
+          <layout class="QGridLayout" name="gridLayout_5" >
            <item row="0" column="0" >
             <widget class="QLabel" name="label_3" >
              <property name="text" >
@@ -118,7 +102,7 @@ p, li { white-space: pre-wrap; }
               <pixmap resource="application.qrc" >:/fontmatrix_tags.png</pixmap>
              </property>
              <property name="alignment" >
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
@@ -140,20 +124,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="0" column="2" >
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>50</width>
-               <height>22</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="0" colspan="3" >
+           <item row="1" column="0" colspan="2" >
             <widget class="QListWidget" name="tagsListWidget" >
              <property name="acceptDrops" >
               <bool>true</bool>
@@ -163,19 +134,15 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="2" column="0" colspan="3" >
-            <layout class="QHBoxLayout" >
-             <item>
-              <widget class="QLineEdit" name="newTagText" />
-             </item>
-             <item>
-              <widget class="QPushButton" name="newTagButton" >
-               <property name="text" >
-                <string>Add Tag</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+           <item row="2" column="0" >
+            <widget class="QLineEdit" name="newTagText" />
+           </item>
+           <item row="2" column="1" >
+            <widget class="QPushButton" name="newTagButton" >
+             <property name="text" >
+              <string>Add Tag</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -188,7 +155,7 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>981</width>
+        <width>746</width>
         <height>766</height>
        </rect>
       </property>
@@ -210,7 +177,7 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>963</width>
+            <width>728</width>
             <height>748</height>
            </rect>
           </property>
@@ -365,7 +332,7 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>941</width>
+                <width>706</width>
                 <height>621</height>
                </rect>
               </property>
@@ -539,7 +506,7 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>981</width>
+        <width>746</width>
         <height>766</height>
        </rect>
       </property>
@@ -613,7 +580,7 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>981</width>
+        <width>746</width>
         <height>766</height>
        </rect>
       </property>
@@ -693,6 +660,12 @@ p, li { white-space: pre-wrap; }
    <class>FMPlayGround</class>
    <extends>QGraphicsView</extends>
    <header>fmplayground.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QWebView</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

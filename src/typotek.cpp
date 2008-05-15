@@ -1535,7 +1535,7 @@ void typotek::printInfo()
 	if ( dialog.exec() != QDialog::Accepted )
 		return;
 	thePrinter.setFullPage ( true );
-	theMainView->infoDocument()->print(&thePrinter);
+// 	theMainView->infoDocument()->print(&thePrinter);
 }
 
 void typotek::printSample()

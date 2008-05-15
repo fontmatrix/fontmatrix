@@ -715,6 +715,8 @@ void typotek::readSettings()
 	previewRTL = settings.value("PreviewRTL", false).toBool();
 	mainDockArea = settings.value("ToolPos", "Left").toString();
 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
+	m_welcomeURL = settings.value("WelcomeURL").toString();
+	
 }
 
 void typotek::writeSettings()
@@ -1535,7 +1537,7 @@ void typotek::printInfo()
 	if ( dialog.exec() != QDialog::Accepted )
 		return;
 	thePrinter.setFullPage ( true );
-// 	theMainView->infoDocument()->print(&thePrinter);
+	theMainView->info()->print(&thePrinter);
 }
 
 void typotek::printSample()

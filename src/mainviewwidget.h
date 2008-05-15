@@ -189,7 +189,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString sampleName();
 		void displayWelcomeMessage();
 		
-// 		QTextDocument *infoDocument();
+		QWebView *info();
 		QGraphicsScene *currentSampleScene();
 		FMPlayGround *getPlayground();
 		

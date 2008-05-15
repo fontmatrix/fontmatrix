@@ -135,10 +135,23 @@
             </widget>
            </item>
            <item row="2" column="0" >
-            <widget class="QLineEdit" name="newTagText" />
+            <widget class="QLineEdit" name="newTagText" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <horstretch>2</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
            <item row="2" column="1" >
             <widget class="QPushButton" name="newTagButton" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+               <horstretch>1</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text" >
               <string>Add Tag</string>
              </property>
@@ -416,8 +429,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>945</width>
-                <height>626</height>
+                <width>112</width>
+                <height>112</height>
                </rect>
               </property>
               <attribute name="label" >
@@ -460,8 +473,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>100</width>
-                <height>30</height>
+                <width>96</width>
+                <height>28</height>
                </rect>
               </property>
               <attribute name="label" >

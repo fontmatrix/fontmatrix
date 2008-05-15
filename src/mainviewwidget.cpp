@@ -82,6 +82,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	QString stIP(QDir::tempPath() + QDir::separator() + "fontmatrix_info.css");
 	styleInfo.copy(stIP);
 	infoCSSUrl = QUrl::fromLocalFile ( stIP );
+	QWebSettings::globalSettings()->setUserStyleSheetUrl(infoCSSUrl);
 
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
@@ -117,7 +118,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	contextMenuReq = false;
 	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-
+	
+	
 	//CONNECT
 // 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
@@ -1872,7 +1874,12 @@ QString MainViewWidget::sampleName()
 
 void MainViewWidget::displayWelcomeMessage()
 {
-	QWebSettings::globalSettings()->setUserStyleSheetUrl(infoCSSUrl);
+	if(!typotek::getInstance()->welcomeURL().isEmpty())
+	{
+		fontInfoText->load(QUrl(typotek::getInstance()->welcomeURL()));
+		return;
+	}
+
 	QString welcomeFontName;
 	QString wpng(QDir::tempPath() + QDir::separator() + "FontmatrixWelcome.png");
 	if(typo->getFontCount() > 0)
@@ -1954,6 +1961,11 @@ void MainViewWidget::slotSwitchAdvanced()
 void MainViewWidget::slotSelectFromFolders(const QString &f)
 {
 	slotFontSelectedByName(f);
+}
+
+QWebView * MainViewWidget::info()
+{
+	return fontInfoText;
 }
 
 

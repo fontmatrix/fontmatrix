@@ -182,6 +182,8 @@ class typotek:public QMainWindow
 		QString templatesDir;
 		double previewSize;
 		bool previewRTL;
+		bool m_familySchemeFreetype;
+		QString m_welcomeURL;
 
 		void addFcDirItem(const QString &dirPath);
 		QStringList getSystemFontDirs();
@@ -195,7 +197,6 @@ class typotek:public QMainWindow
 
 		QMap<QString, FontItem*> temporaryFonts;
 
-		bool m_familySchemeFreetype;
 
 	public:
 		int getFontCount(){return fontMap.count(); }
@@ -276,6 +277,12 @@ class typotek:public QMainWindow
 	{
 		return m_familySchemeFreetype;
 	}
+
+	QString welcomeURL() const
+	{
+		return m_welcomeURL;
+	}
+	
 
 
 	protected:

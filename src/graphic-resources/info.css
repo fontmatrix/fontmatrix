@@ -56,6 +56,7 @@ body.welcome-wrapper{
 
 
 .infoname {
+    float:left;
     background-color : #fff0dd;
     font-family : 'sans-serif';
     font-size : 9pt;
@@ -87,3 +88,17 @@ body.welcome-wrapper{
     margin-bottom : 5px;
   }
 
+#panose_block{
+	background-color:gray;
+}
+
+.panose_name{
+	display:inline;
+	font-size : 10pt;
+	color:red;
+}
+
+.panose_desc{
+	display:inline;
+	font-size:11pt
+}

@@ -2224,14 +2224,14 @@ QString FontItem::infoText ( bool fromcache )
 	QString panBlockOut;
 	if ( !m_panose.isEmpty() )
 	{
-		qDebug() <<"WE HAVE PANOSE \\o/";
+// 		qDebug() <<"WE HAVE PANOSE \\o/";
 		panStringOut = " | Panose: " + m_panose;
 		//TODO output Panose as text (in panBlockOut)
 		QMap<QString, QString>::const_iterator pat ( panoseInfo.constBegin() );
 		for ( ;pat != panoseInfo.constEnd(); ++pat )
 		{
-			panBlockOut += "<div class=\"panose_name\">" + pat.key() + "<div>";
-			panBlockOut += "<div class=\"panose_desc\">" + pat.value() + "<div>";
+			panBlockOut += "<div class=\"panose_name\">" + pat.key() + "</div>";
+			panBlockOut += "<div class=\"panose_desc\">" + pat.value() + "</div>";
 		}
 	}
 	else
@@ -2318,7 +2318,7 @@ QString FontItem::infoText ( bool fromcache )
 			i = 7;
 	}
 
-	ret += panBlockOut;
+	ret += "<div id=\"panose_block\">" + panBlockOut + "</div>";
 // 	m_cacheInfo = ret;
 
 	if ( rFace )

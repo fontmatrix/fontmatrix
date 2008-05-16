@@ -629,7 +629,7 @@ void typotek::createActions()
 	scuts->add(nextFamily);
 	connect(nextFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFamily()));
 
-	nextFont = new QAction(tr("Next Font"), this);
+	nextFont = new QAction(tr("Next Face"), this);
 	nextFont->setShortcut(Qt::Key_Down);
 	scuts->add(nextFont);
 	connect(nextFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFont()));
@@ -640,7 +640,7 @@ void typotek::createActions()
 	connect(previousFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFamily()));
 
 
-	previousFont = new QAction(tr("Previous Font"), this);
+	previousFont = new QAction(tr("Previous Face"), this);
 	previousFont->setShortcut(Qt::Key_Up);
 	scuts->add(previousFont);
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));

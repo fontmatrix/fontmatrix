@@ -35,6 +35,9 @@ class FMNameList : public QTreeWidget
 		void keyPressEvent ( QKeyEvent * e );
 // 	private:
 // 		QString curString;
+	private:
+		bool findAbove(QTreeWidgetItem *current, const QString &role);
+		bool findBelow(QTreeWidgetItem *current, const QString &role);
 };
 
 #endif

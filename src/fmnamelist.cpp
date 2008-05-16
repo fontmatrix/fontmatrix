@@ -57,39 +57,90 @@ void FMNameList::keyPressEvent(QKeyEvent * e)
 
 void FMNameList::slotNextFamily()
 {
-	QTreeWidgetItem *current = currentItem();
-	if (current) {
-		qDebug("current: %d", topLevelItemCount());
-	} else {
-		qDebug("no current: %d", topLevelItemCount());
+	if (!findBelow(currentItem(), "family")) {
+		/* TODO Goto first family on the list */
 	}
 }
 
 void FMNameList::slotPreviousFamily()
 {
-
+	if (!findAbove(currentItem(), "family")) {
+		/*TODO Goto last family on the list */
+	}
 }
 
 void FMNameList::slotNextFont()
 {
-	QTreeWidgetItem *current = currentItem();
-	if (current) {
-		QTreeWidgetItem *below = itemBelow(current);
-		setCurrentItem(below);
-		emit currentChanged(below, 0);
-	} else {
-
+	if (!findBelow(currentItem(), "fontfile")) {
+		/*TODO Goto first font on the list */
 	}
 }
 
 void FMNameList::slotPreviousFont()
 {
-	QTreeWidgetItem *current = currentItem();
+	if (!findAbove(currentItem(), "fontfile")) {
+		/*TODO Goto last font on the list */
+	}
+}
+
+bool FMNameList::findAbove(QTreeWidgetItem *current, const QString &role)
+{
+	QTreeWidgetItem *above = current;
 	if (current) {
-		QTreeWidgetItem *above = itemAbove(current);
+		setCurrentItem(current);
+		above = itemAbove(current);
+		if (!above)
+			return false;
+
+		if (!above->isExpanded())
+			above->setExpanded(true);
+
+		while (above->data ( 0,100 ).toString() != role)
+		{
+			above = itemAbove(above);
+			if (!above)
+				break;
+			else {
+				if (!above->isExpanded())
+					above->setExpanded(true);
+			}
+		}
+	}
+	if (above) {
 		setCurrentItem(above);
 		emit currentChanged(above, 0);
-	} else {
+		return true;
+	} else
+		return false;
+}
 
+bool FMNameList::findBelow(QTreeWidgetItem *current, const QString &role)
+{
+	QTreeWidgetItem *below = current;
+	if (current) {
+		setCurrentItem(current);
+		below = itemBelow(current);
+		if (!below)
+			return false;
+
+		if (!below->isExpanded())
+			below->setExpanded(true);
+
+		while (below->data ( 0,100 ).toString() != role)
+		{
+			below = itemBelow(below);
+			if (!below)
+				break;
+			else {
+				if (!below->isExpanded())
+					below->setExpanded(true);
+			}
+		}
 	}
+	if (below) {
+		setCurrentItem(below);
+		emit currentChanged(below, 0);
+		return true;
+	} else
+		return false;
 }

@@ -630,7 +630,7 @@ void typotek::createActions()
 	connect(nextFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFamily()));
 
 	nextFont = new QAction(tr("Next Font"), this);
-	nextFont->setShortcut(Qt::CTRL | Qt::Key_PageDown);
+	nextFont->setShortcut(Qt::Key_Down);
 	scuts->add(nextFont);
 	connect(nextFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFont()));
 
@@ -641,7 +641,7 @@ void typotek::createActions()
 
 
 	previousFont = new QAction(tr("Previous Font"), this);
-	previousFont->setShortcut(Qt::CTRL | Qt::Key_PageUp);
+	previousFont->setShortcut(Qt::Key_Up);
 	scuts->add(previousFont);
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
@@ -679,13 +679,12 @@ void typotek::createMenus()
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
 
-/* will enable browse menu once the thing fully works
 	browseMenu = menuBar()->addMenu(tr("&Browse"));
 	browseMenu->addAction(nextFamily);
 	browseMenu->addAction(previousFamily);
 	browseMenu->addAction(nextFont);
 	browseMenu->addAction(previousFont);
-*/
+
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( helpAct );
 	helpMenu->addAction ( aboutAct );
@@ -716,7 +715,7 @@ void typotek::readSettings()
 	mainDockArea = settings.value("ToolPos", "Left").toString();
 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
 	m_welcomeURL = settings.value("WelcomeURL").toString();
-	
+
 }
 
 void typotek::writeSettings()

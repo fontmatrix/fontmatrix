@@ -26,13 +26,21 @@ PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
 	double pSize = typotek::getInstance()->getPreviewSize();
 	setupUi(this);
 	fontEditorPath->setText(typotek::getInstance()->fontEditorPath());
-	doConnect();
+	
 	systrayFrame->setCheckable(true);
 	previewWord->setText(typotek::getInstance()->word());
 	previewSizeSpin->setValue(pSize);
 	previewIsRTL->setChecked(typotek::getInstance()->getPreviewRTL());
 	initTagBox->setChecked(typotek::getInstance()->initialTags());
 	showNamesBox->setChecked(typotek::getInstance()->showImportedFonts());
+	familyNameScheme->setChecked(!typotek::getInstance()->familySchemeFreetype());
+	
+	QSettings settings;
+// 	qDebug()<< "ss" << settings.value("SplashScreen",false).toBool();
+	splashCheck->setChecked(settings.value("SplashScreen",false).toBool());
+	
+	
+	doConnect();
 }
 
 
@@ -121,7 +129,8 @@ void PrefsPanelDialog::doConnect()
 	connect(fontEditorBrowse, SIGNAL(clicked()), this, SLOT(slotFontEditorBrowse()));
 
 	connect(initTagBox, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotUseInitialTags(bool)));
-	connect(familyNameScheme,SIGNAL(stateChanged( int )),this,SLOT(slotFamilyNotPreferred(int)));
+	connect(familyNameScheme,SIGNAL(toggled( bool )),this,SLOT(slotFamilyNotPreferred(bool)));
+	connect(splashCheck,SIGNAL(toggled( bool )),this,SLOT(slotSplashScreen(bool)));
 
 	connect(templatesDirBrowse,SIGNAL(clicked( )),this, SLOT(slotTemplatesBrowse()));
 	connect(templatesFolder,SIGNAL(textChanged( const QString& )),this,SLOT(setupTemplates(const QString&)));
@@ -543,12 +552,18 @@ void PrefsPanelDialog::setSelected(const QString &actionText)
 }
 
 
-void PrefsPanelDialog::slotFamilyNotPreferred(int state)
+void PrefsPanelDialog::slotFamilyNotPreferred(bool state)
 {
+	qDebug()<<"slotFamilyNotPreferred("<< state <<")";
 	QSettings settings;
-	if(state == Qt::Unchecked)
-		settings.setValue("FamilyPreferred", false);
-	else
-		settings.setValue("FamilyPreferred", true);
+	settings.setValue("FamilyPreferred", state);
+	typotek::getInstance()->setFamilySchemeFreetype(!state);
+}
+
+void PrefsPanelDialog::slotSplashScreen(bool state)
+{
+	qDebug()<<"slotSplashScreen("<< state <<")";
+	QSettings settings;
+	settings.setValue("SplashScreen", state);
 }
 

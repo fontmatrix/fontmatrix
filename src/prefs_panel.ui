@@ -229,6 +229,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="splashCheck" >
+            <property name="text" >
+             <string>Show splash at startup</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="familyNameScheme" >
             <property name="text" >
              <string>Don’t use preferred name scheme (will affect only newly imported fonts)</string>

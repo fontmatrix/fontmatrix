@@ -278,10 +278,17 @@ class typotek:public QMainWindow
 		return m_familySchemeFreetype;
 	}
 
+	void setFamilySchemeFreetype ( bool theValue )
+	{
+		m_familySchemeFreetype = theValue;
+	}
+	
 	QString welcomeURL() const
 	{
 		return m_welcomeURL;
 	}
+
+	
 	
 
 

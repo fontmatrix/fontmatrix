@@ -101,7 +101,7 @@ void PrefsPanelDialog::initShortcuts()
 
 void PrefsPanelDialog::doConnect()
 {
-	connect(validateNamedSampleTextButton,SIGNAL(released()),this,SLOT(validateSampleName()));
+	connect(namedSampleTextText,SIGNAL(textChanged()),this,SLOT(validateSampleName()));
 	connect(addSampleTextNameButton,SIGNAL(released()),this,SLOT(addSampleName()));
 	connect(newSampleTextNameText,SIGNAL(editingFinished()),this,SLOT(addSampleName()));
 	connect(sampleTextNamesList,SIGNAL(currentTextChanged( const QString& )),this,SLOT(displayNamedText()));
@@ -121,6 +121,7 @@ void PrefsPanelDialog::doConnect()
 	connect(fontEditorBrowse, SIGNAL(clicked()), this, SLOT(slotFontEditorBrowse()));
 
 	connect(initTagBox, SIGNAL(clicked(bool)), typotek::getInstance(), SLOT(slotUseInitialTags(bool)));
+	connect(familyNameScheme,SIGNAL(stateChanged( int )),this,SLOT(slotFamilyNotPreferred(int)));
 
 	connect(templatesDirBrowse,SIGNAL(clicked( )),this, SLOT(slotTemplatesBrowse()));
 	connect(templatesFolder,SIGNAL(textChanged( const QString& )),this,SLOT(setupTemplates(const QString&)));
@@ -539,5 +540,15 @@ void PrefsPanelDialog::setSelected(const QString &actionText)
 		int row = ilist.at(0)->row();
 		shortcutList->selectRow(row);
 	}
+}
+
+
+void PrefsPanelDialog::slotFamilyNotPreferred(int state)
+{
+	QSettings settings;
+	if(state == Qt::Unchecked)
+		settings.setValue("FamilyPreferred", false);
+	else
+		settings.setValue("FamilyPreferred", true);
 }
 

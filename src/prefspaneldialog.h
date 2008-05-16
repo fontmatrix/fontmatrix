@@ -84,6 +84,7 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void slotBrowseLocalStorage();
 
 		void slotShowImportedFonts(int i);
+		void slotFamilyNotPreferred(int state);
 
 		void slotChangeShortcut();
 		void slotClearShortcut();

@@ -57,19 +57,13 @@ ENDIF(QT_FOUND)
 #>> Qt
 
 #<< FreeType2
-SET(FREETYPE_DIR ${CMAKE_MODULE_PATH})
-FIND_PACKAGE(FREETYPE REQUIRED)
+# We give a try to the built-in cmake Freetype.cmake
+FIND_PACKAGE(Freetype REQUIRED)
 IF (FREETYPE_FOUND)
   MESSAGE(STATUS "FreeType2 Library Found OK")
-  INCLUDE(CheckLibraryExists)
-  SET(CMAKE_REQUIRED_LIBRARIES z)
-  CHECK_LIBRARY_EXISTS(libfreetype.so FT_Get_First_Char ${FREETYPE_LIBRARY_DIR} HAVE_FREETYPE_FIRST)
-  CHECK_LIBRARY_EXISTS(libfreetype.so FT_Get_Next_Char  ${FREETYPE_LIBRARY_DIR} HAVE_FREETYPE_NEXT)
 ELSE (FREETYPE_FOUND)
-  MESSAGE(STATUS "No Freetype found")  
+  MESSAGE(FATAL_ERROR "No Freetype found")  
 ENDIF(FREETYPE_FOUND)
-#FIXME: if cflags empty add, otherwise replace as now
-SET(CFLAGS "${LIBFREETYPE_CFLAGS}")
 #>> FreeType2
 
 SET(FONTCONFIG_DIR ${CMAKE_MODULE_PATH})

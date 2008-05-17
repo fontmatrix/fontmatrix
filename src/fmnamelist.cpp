@@ -59,6 +59,7 @@ void FMNameList::slotNextFamily()
 {
 	if (!findBelow(currentItem(), "family")) {
 		/* TODO Goto first family on the list */
+		findBelow(topLevelItem(0), "family");
 	}
 }
 
@@ -73,6 +74,7 @@ void FMNameList::slotNextFont()
 {
 	if (!findBelow(currentItem(), "fontfile")) {
 		/*TODO Goto first font on the list */
+		findBelow(topLevelItem(0), "fontfile");
 	}
 }
 

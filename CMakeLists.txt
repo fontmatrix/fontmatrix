@@ -1,7 +1,7 @@
 # Fontmatrix ./CMakeLists.txt v1
 
 PROJECT(fontmatrix) # the name of your project
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4.0)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 
 SET (VERSION_MAJOR "0")
 SET (VERSION_MINOR "5")

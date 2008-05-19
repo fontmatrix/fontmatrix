@@ -39,11 +39,10 @@ class FMShaperFactory
 {
 	public:
 		enum SHAPER_TYPE{ FONTMATRIX = 1, // our dear own shaper
-		                  HARFBUZZ_QT ,
-		                  HARFBUZZ_PANGO, // When Bedhad will have wrote it
-		                  PANGO,
+		                  HARFBUZZ,
 		                  ICU,
 		                  M17N,
+		                  PANGO,
 		                  OMEGA, // yes, I’ve red something about a C++ binding!
 		                  NOT_A_SHAPER
 	                };

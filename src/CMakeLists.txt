@@ -22,6 +22,7 @@ fontitem.cpp
 fontmatrixshaper.cpp
 harfbuzzqtshaper.cpp
 helpwidget.cpp
+icushaper.cpp
 importedfontsdialog.cpp
 importtags.cpp
 listdockwidget.cpp
@@ -93,6 +94,7 @@ ${QT_QT_INCLUDE_DIR}
 ${FREETYPE_INCLUDE_DIRS}
 ${HARFBUZZ_INCLUDE_DIR}
 ${FONTCONFIG_INCLUDE_DIR}
+${ICU_INCLUDE_DIR}
 )
 
 add_executable(fontmatrix
@@ -105,12 +107,14 @@ ${fontmatrix_RCC_SRCS}
 IF(SHOW_LIBS)
 	MESSAGE(STATUS "Qt4 libs:" ${QT_LIBRARIES})
 	MESSAGE(STATUS "FreeType libs: " ${FREETYPE_LIBRARIES})
+	MESSAGE(STATUS "ICU libs: " ${ICU_LIBRARIES})
 ENDIF(SHOW_LIBS)
 
 target_link_libraries(fontmatrix harfbuzz
 ${QT_LIBRARIES}
 ${FREETYPE_LIBRARIES}
 ${FONTCONFIG_LIBRARIES}
+${ICU_LIBRARIES}
 )
 
 INSTALL(TARGETS fontmatrix

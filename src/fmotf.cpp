@@ -402,7 +402,7 @@ QList<RenderedGlyph> FMOtf::procstring ( QString s, OTFSet set )
 	return ret;
 }
 
-#ifdef FM_OWNSHAPER
+// #ifdef FM_OWNSHAPER
 QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString script )
 {
 // 	QString script = "latn";
@@ -515,7 +515,7 @@ QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString scri
 	return ret;
 	
 }
-#endif
+// #endif
 
 int
 FMOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )

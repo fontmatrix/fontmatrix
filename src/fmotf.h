@@ -32,9 +32,9 @@
 #include <QMap>
 #include <QList>
 
-#ifdef FM_OWNSHAPER
+// #ifdef FM_OWNSHAPER
 #include "fmshaper_own.h"
-#endif
+// #endif
 
 namespace Harfbuzz
 {
@@ -42,9 +42,9 @@ namespace Harfbuzz
 #include <harfbuzz-global.h>
 #include <harfbuzz-gpos.h>
 
-#ifndef FM_OWNSHAPER
+// #ifndef FM_OWNSHAPER
 #include <harfbuzz-shaper.h>
-#endif
+// #endif
 
 }
 
@@ -69,6 +69,7 @@ struct OTFSet
 struct RenderedGlyph
 {
 	int glyph;
+	int log;
 	double xadvance;
 	double yadvance;
 	double xoffset;
@@ -139,9 +140,9 @@ class FMOtf
 		int procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos );
 	public:
 		QList<RenderedGlyph> procstring ( QString s, OTFSet set );
-#ifdef FM_OWNSHAPER
+// #ifdef FM_OWNSHAPER
 		QList<RenderedGlyph> procstring ( QList<Character> shaped , QString script );
-#endif
+// #endif
 		/*
 		  * These functions give access to informations contained in the fontfile
 		 */
@@ -161,6 +162,12 @@ class FMOtf
 //   uint get_position(int,GlyphLayout *);
 //   uint presentAlternates(HB_UInt, Harfbuzz::HB_UShort, QList<Harfbuzz::HB_UShort>);
 		QList<RenderedGlyph> get_position ( Harfbuzz::HB_Buffer abuffer = 0 );
+
+	FT_Face face() const
+	{
+		return _face;
+	}
+	
 
 		friend class FontItem;
 		friend class FMShaper;

@@ -25,10 +25,10 @@ QStringList FMShaperFactory::types()
 	QStringList ret;
 	ret.clear();
 	ret << "FONTMATRIX";
-	ret << "HARFBUZZ_QT";
-// 	ret << "PANGO";
-// 	ret << "ICU";
+	ret << "HARFBUZZ";
+	ret << "ICU";
 // 	ret << "M17N";
+// 	ret << "PANGO";
 // 	ret << "OMEGA";
 	
 	return ret;
@@ -74,7 +74,7 @@ GlyphList FMShaperFactory::doShape ( const QString & aString )
 				qDebug()<< "NEW FontmatrixShaper";
 				shaperImpl = new FontmatrixShaper ( otf, script );
 				break;
-			case HARFBUZZ_QT : 
+			case HARFBUZZ: 
 				qDebug()<< "NEW HarfbuzzQtShaper";
 				shaperImpl = new HarfbuzzQtShaper ( otf, script );
 				break;

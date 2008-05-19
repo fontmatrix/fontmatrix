@@ -15,6 +15,7 @@
 
 #include "fontmatrixshaper.h"
 #include "harfbuzzqtshaper.h"
+#include "icushaper.h"
 
 #include <QDebug>
 
@@ -82,8 +83,10 @@ GlyphList FMShaperFactory::doShape ( const QString & aString )
 // 			break;
 // 			case PANGO: shaperImpl = new PangoShaper ( otf, script );
 // 				break;
-// 			case ICU : shaperImpl = new IcuShaper ( otf, script );
-// 				break;
+			case ICU : 
+				qDebug()<< "NEW IcuShaper";
+				shaperImpl = new IcuShaper ( otf, script );
+				break;
 // 			case M17N : shaperImpl = new M17NShaper ( otf, script );
 // 				break;
 // 			case OMEGA : shaperImpl = new OmegaShaper ( otf, script );

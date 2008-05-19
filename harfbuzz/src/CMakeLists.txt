@@ -1,15 +1,15 @@
-IF(OWN_SHAPER)
-	SET(harfbuzz_SOURCES
-	harfbuzz.c
-	harfbuzz-gsub.c
-	harfbuzz-stream.c
-	harfbuzz-buffer.c
-	harfbuzz-gdef.c
-	harfbuzz-gpos.c
-	harfbuzz-open.c
-	harfbuzz-impl.c
-	)
-ELSE(OWN_SHAPER)
+# IF(OWN_SHAPER)
+# 	SET(harfbuzz_SOURCES
+# 	harfbuzz.c
+# 	harfbuzz-gsub.c
+# 	harfbuzz-stream.c
+# 	harfbuzz-buffer.c
+# 	harfbuzz-gdef.c
+# 	harfbuzz-gpos.c
+# 	harfbuzz-open.c
+# 	harfbuzz-impl.c
+# 	)
+# ELSE(OWN_SHAPER)
 	SET(harfbuzz_SOURCES
 	harfbuzz-arabic.c
 	harfbuzz.c
@@ -31,7 +31,7 @@ ELSE(OWN_SHAPER)
 	harfbuzz-thai.cpp
 	harfbuzz-impl.c
 	)
-ENDIF(OWN_SHAPER)
+# ENDIF(OWN_SHAPER)
 
 
 ADD_LIBRARY(harfbuzz

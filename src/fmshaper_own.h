@@ -75,7 +75,10 @@ class FMOwnShaper
 {
 	public:
 		FMOwnShaper(QString s, QString lang);
+		FMOwnShaper(QString lang);
 		~FMOwnShaper();
+		
+		void fillIn(const QString& s);
 	private:
 		QList<Character> In;
 		QList<Character> Out;
@@ -90,7 +93,6 @@ class FMOwnShaper
 		
 		QString CleanRule(QString rule);
 		int loadRules(QString lang);
-		void fillIn(const QString& s);
 		
 		int Compare(int inIndex, int matchIndex);
 		void Replace(int repIndex, QList<Character> chunk);

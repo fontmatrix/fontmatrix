@@ -90,17 +90,17 @@ namespace
 
 }
 
-FmShaper::FmShaper(FmOtf *anchor)
+FMShaper::FMShaper(FMOtf *anchor)
 	:anchorOTF(anchor)
 {
 	faceisset = langisset = allocated = false;
 	setFont();
-	qDebug() << "FmShaper "<< this <<" created";
+	qDebug() << "FMShaper "<< this <<" created";
 }
 
-FmShaper::~ FmShaper()
+FMShaper::~ FMShaper()
 {
-	qDebug() << "FmShaper "<< this <<" destructor";
+	qDebug() << "FMShaper "<< this <<" destructor";
 	if (faceisset)
 	{
 		if(m.font)
@@ -114,10 +114,10 @@ FmShaper::~ FmShaper()
 			HB_FreeFace(m.face);
 		}
 	}
-	qDebug() << "FmShaper "<< this <<" destroyed";
+	qDebug() << "FMShaper "<< this <<" destroyed";
 }
 
-bool FmShaper::setFont (/*FT_Face face, Harfbuzz::HB_Font font  */)
+bool FMShaper::setFont (/*FT_Face face, Harfbuzz::HB_Font font  */)
 {
 	Harfbuzz::HB_Face hbFace = Harfbuzz::HB_NewFace(anchorOTF->_face,Harfbuzz::hb_getSFntTable);
 	Harfbuzz::HB_Font hbFont = new Harfbuzz::HB_FontRec;
@@ -138,7 +138,7 @@ bool FmShaper::setFont (/*FT_Face face, Harfbuzz::HB_Font font  */)
 }
 
 
-bool FmShaper::setScript ( QString script )
+bool FMShaper::setScript ( QString script )
 {
 	Harfbuzz::HB_Script ret = script2script ( script );
 	if ( ret != Harfbuzz::HB_Script_Common )
@@ -149,9 +149,9 @@ bool FmShaper::setScript ( QString script )
 	return false;
 }
 
-QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
+QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 {
-	qDebug() << "FmShaper::doShape("<<string<<","<<ltr<<")";
+	qDebug() << "FMShaper::doShape("<<string<<","<<ltr<<")";
 	
 	if(!faceisset)
 		setFont();
@@ -237,13 +237,13 @@ QList< RenderedGlyph > FmShaper::doShape(QString string, bool ltr)
 				
 			renderedString << gl;
 	}
-	qDebug() << "EndOf FmShaper::doShape("<<string<<","<<ltr<<")";
+	qDebug() << "EndOf FMShaper::doShape("<<string<<","<<ltr<<")";
 	return renderedString;
 }
 
 
 
-Harfbuzz::HB_Buffer  FmShaper::out_buffer()
+Harfbuzz::HB_Buffer  FMShaper::out_buffer()
 {
 	return m.face->buffer;
 }

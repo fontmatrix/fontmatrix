@@ -86,11 +86,13 @@ struct RenderedGlyph
 	}
 };
 
-class FmOtf
+typedef QList<RenderedGlyph> GlyphList;
+
+class FMOtf
 {
 	public:
-		FmOtf ( FT_Face, double scale = 0.0 );
-		~FmOtf ();
+		FMOtf ( FT_Face, double scale = 0.0 );
+		~FMOtf ();
 
 		QString curString;
 
@@ -119,7 +121,7 @@ class FmOtf
 
 	public:
 
-// 	OTF_GlyphString * FmOtfString() {return &mys;}
+// 	OTF_GlyphString * FMOtfString() {return &mys;}
 // 	int unicode(int gid){ return OTF_get_unicode(my, gid);}
 		int get_glyph ( int index );//{return _buffer->out_string[index].gindex;}
 		QString curTable;
@@ -161,7 +163,7 @@ class FmOtf
 		QList<RenderedGlyph> get_position ( Harfbuzz::HB_Buffer abuffer = 0 );
 
 		friend class FontItem;
-		friend class FmShaper;
+		friend class FMShaper;
 
 
 

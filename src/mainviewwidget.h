@@ -165,11 +165,12 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		//lists
 		void slotSelectFromFolders(const QString&);
 		
+		
 	private slots:
 		void slotLiveFontSize(double);
 		void slotRemoteFinished();
-		void slotSwitchBasic();
-		void slotSwitchAdvanced();
+// 		void slotSwitchBasic();
+// 		void slotSwitchAdvanced();
 		
 	signals:
 		void faceChanged();

@@ -5,6 +5,7 @@ aboutwidget.cpp
 dataexport.cpp
 dataloader.cpp
 fmactivate.cpp
+fmbaseshaper.cpp
 fmglyphsview.cpp
 fmnamelist.cpp
 fmotf.cpp
@@ -13,9 +14,13 @@ fmpreviewlist.cpp
 # fmprintdialog.cpp
 fmrepair.cpp
 fmsampletextview.cpp
+fmshaper.cpp
+fmshaper_own.cpp
 fontbook.cpp
 fontbookdialog.cpp
 fontitem.cpp
+fontmatrixshaper.cpp
+harfbuzzqtshaper.cpp
 helpwidget.cpp
 importedfontsdialog.cpp
 importtags.cpp
@@ -31,16 +36,6 @@ tagseteditor.cpp
 textprogression.cpp
 typotek.cpp
 )
-
-IF(OWN_SHAPER)
-	SET(shaper_SRCS
-	fmshaper_own.cpp
-	)
-ELSE(OWN_SHAPER)
-	SET(shaper_SRCS
-	fmshaper.cpp
-	)
-ENDIF(OWN_SHAPER)
 
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
@@ -102,7 +97,6 @@ ${FONTCONFIG_INCLUDE_DIR}
 
 add_executable(fontmatrix
 ${fontmatrix_SRCS}
-${shaper_SRCS}
 ${fontmatrix_MOC_SRCS}
 ${fontmatrix_UIS_H}
 ${fontmatrix_RCC_SRCS}

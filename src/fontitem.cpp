@@ -19,10 +19,9 @@
  ***************************************************************************/
 #include "fontitem.h"
 #include "fmotf.h"
-#include "fmshaper.h"
 #include "fmglyphsview.h"
 #include "typotek.h"
-#include "fmshaper_own.h"
+#include "fmbaseshaper.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -673,6 +672,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	otf = 0;
 	m_rasterFreetype = false;
 	m_progression = PROGRESSION_LTR;
+	m_shaperType = 1;
 
 	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
@@ -1303,7 +1303,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 		return;
 	ensureFace();
 
-	otf = new FmOtf ( m_face, 0x10000 );// You think "What’s this 0x10000?", so am I! Just accept Harfbuzz black magic :)
+	otf = new FMOtf ( m_face, 0x10000 );// You think "What’s this 0x10000?", so am I! Just accept Harfbuzz black magic :)
 	if ( !otf )
 		return;
 	if ( record )
@@ -1458,27 +1458,41 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 	releaseFace();
 }
 
-#ifdef FM_OWNSHAPER
+
 void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
 {
-	qDebug() <<"Rendered by Me :)";
 	if ( spec.isEmpty() )
 		return;
 	if ( !m_isOpenType )
 		return;
 	ensureFace();
 
-	/// TEST(own shaper)
-
-	QString canon_script = script ;
-	FMOwnShaper os ( spec, canon_script );
-	QList<Character> shaped ( os.GetShaped() );
-	os.DumpOut();
-
-	/// END TEST
-	otf = new FmOtf ( m_face, 0x10000 );
+	otf = new FMOtf ( m_face, 0x10000 );
 	if ( !otf )
 		return;
+	
+	FMShaperFactory *shaperfactory = 0;
+	switch(m_shaperType)
+	{
+		case 0 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
+		break;
+		case 1 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::HARFBUZZ_QT );
+		break;
+		case 2 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::HARFBUZZ_PANGO );
+		break;
+		case 3 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::PANGO );
+		break;
+		case 4 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::ICU );
+		break;
+		case 5 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::M17N);
+		break;
+		case 6 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::OMEGA);
+		break;
+	}
+	
+	GlyphList refGlyph ( shaperfactory->doShape( spec ) );
+	delete shaperfactory;
+			
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
@@ -1488,7 +1502,6 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	double pWidth = lineWidth ;
 	const double distance = 20;
 
-	QList<RenderedGlyph> refGlyph = otf->procstring ( shaped, script );
 
 // 	qDebug() << "Get line "<<spec;
 	delete otf;
@@ -1632,111 +1645,111 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	releaseFace();
 }
 
-#else
+
 /// Shaped line, mostly bug^^non-fully-usable right now :(
-void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth,double fsize, bool record )
-{
-	qDebug() <<"Rendered by HB";
-	if ( spec.isEmpty() )
-		return;
-	if ( !m_isOpenType )
-		return;
-	ensureFace();
+// void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth,double fsize, bool record )
+// {
+// 	qDebug() <<"Rendered by HB";
+// 	if ( spec.isEmpty() )
+// 		return;
+// 	if ( !m_isOpenType )
+// 		return;
+// 	ensureFace();
+// 
+// 	double sizz = fsize;
+// 	double scalefactor = sizz / m_face->units_per_EM;
+// 	double scalefactorHadj = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+// 	double scalefactorVadj = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0 );
+// 
+// 	otf = new FMOtf ( m_face , 0x10000 );
+// 	if ( !otf )
+// 	{
+// 		releaseFace();
+// 		return;
+// 	}
+// 	if ( record )
+// 		sceneList.append ( scene );
+// 
+// 
+// 	FMShaper shaper ( otf );
+// 	if ( !shaper.setScript ( script ) )
+// 	{
+// 		qDebug() << "Can not set script "<<script<< " for " << m_name;
+// 		delete otf;
+// 		otf = 0;
+// 		releaseFace();
+// 		return;
+// 	}
+// 
+// 	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec, ( m_progression == PROGRESSION_RTL ) ? false : true );
+// 
+// 	if ( refGlyph.count() == 0 )
+// 	{
+// 		releaseFace();
+// 		return;
+// 	}
+// 	QPointF pen ( origine );
+// 	if ( m_rasterFreetype )
+// 	{
+// 		for ( int i=0; i < refGlyph.count(); ++i )
+// 		{
+// 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
+// 			if ( !glyph )
+// 				continue;
+// 
+// 
+// // 			if ( m_progression == PROGRESSION_RTL )
+// // 			{
+// // 				pen.rx() += refGlyph[i].xadvance * scalefactorHadj;
+// // 			}
+// 
+// 			if ( record )
+// 				pixList.append ( glyph );
+// 			scene->addItem ( glyph );
+// 			glyph->setZValue ( 100.0 );
+// 
+// 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
+// 			                pen.y() - ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
+// // 			if (  m_progression != PROGRESSION_RTL )
+// 			pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		for ( int i=0; i < refGlyph.count(); ++i )
+// 		{
+// 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
+// 			if ( !glyph )
+// 				continue;
+// 
+// 			if ( record )
+// 				glyphList.append ( glyph );
+// 			scene->addItem ( glyph );
+// 			glyph->setZValue ( 100.0 );
+// 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+// 			//debug
+// 			glyph->setBrush ( QColor ( ( i*255/refGlyph.count() ),0,0,255- ( i*255/refGlyph.count() ) ) );
+// 
+// // 			if ( m_progression == PROGRESSION_RTL )
+// // 			{
+// // 				pen.rx() += refGlyph[i].xadvance * scalefactor;
+// // 			}
+// 
+// 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
+// 			                pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
+// 
+// // 			if (  m_progression != PROGRESSION_RTL )
+// // 			{
+// 			pen.rx() += refGlyph[i].xadvance * scalefactor;
+// // 			}
+// 		}
+// 	}
+// 
+// 	delete otf;
+// 	otf = 0;
+// 	releaseFace();
+// }
 
-	double sizz = fsize;
-	double scalefactor = sizz / m_face->units_per_EM;
-	double scalefactorHadj = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-	double scalefactorVadj = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0 );
-
-	otf = new FmOtf ( m_face , 0x10000 );
-	if ( !otf )
-	{
-		releaseFace();
-		return;
-	}
-	if ( record )
-		sceneList.append ( scene );
-
-
-	FmShaper shaper ( otf );
-	if ( !shaper.setScript ( script ) )
-	{
-		qDebug() << "Can not set script "<<script<< " for " << m_name;
-		delete otf;
-		otf = 0;
-		releaseFace();
-		return;
-	}
-
-	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec, ( m_progression == PROGRESSION_RTL ) ? false : true );
-
-	if ( refGlyph.count() == 0 )
-	{
-		releaseFace();
-		return;
-	}
-	QPointF pen ( origine );
-	if ( m_rasterFreetype )
-	{
-		for ( int i=0; i < refGlyph.count(); ++i )
-		{
-			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
-			if ( !glyph )
-				continue;
-
-
-// 			if ( m_progression == PROGRESSION_RTL )
-// 			{
-// 				pen.rx() += refGlyph[i].xadvance * scalefactorHadj;
-// 			}
-
-			if ( record )
-				pixList.append ( glyph );
-			scene->addItem ( glyph );
-			glyph->setZValue ( 100.0 );
-
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
-			                pen.y() - ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
-// 			if (  m_progression != PROGRESSION_RTL )
-			pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
-		}
-	}
-	else
-	{
-		for ( int i=0; i < refGlyph.count(); ++i )
-		{
-			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
-			if ( !glyph )
-				continue;
-
-			if ( record )
-				glyphList.append ( glyph );
-			scene->addItem ( glyph );
-			glyph->setZValue ( 100.0 );
-			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
-			//debug
-			glyph->setBrush ( QColor ( ( i*255/refGlyph.count() ),0,0,255- ( i*255/refGlyph.count() ) ) );
-
-// 			if ( m_progression == PROGRESSION_RTL )
-// 			{
-// 				pen.rx() += refGlyph[i].xadvance * scalefactor;
-// 			}
-
-			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
-			                pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
-
-// 			if (  m_progression != PROGRESSION_RTL )
-// 			{
-			pen.rx() += refGlyph[i].xadvance * scalefactor;
-// 			}
-		}
-	}
-
-	delete otf;
-	otf = 0;
-	releaseFace();
-}
-#endif
 
 //deprecated
 void FontItem::deRender ( QGraphicsScene *scene )
@@ -2823,17 +2836,17 @@ void FontItem::setActivated ( bool act )
 
 
 
-FmOtf * FontItem::takeOTFInstance()
+FMOtf * FontItem::takeOTFInstance()
 {
 	ensureFace();
 	if ( m_isOpenType )
-		otf = new FmOtf ( m_face );
+		otf = new FMOtf ( m_face );
 	return otf;
 
 	// It is a case where we don’t release face, thr caller have to call releaseOTFInstance;
 }
 
-void FontItem::releaseOTFInstance ( FmOtf * rotf )
+void FontItem::releaseOTFInstance ( FMOtf * rotf )
 {
 	if ( rotf == otf )
 	{
@@ -3272,7 +3285,7 @@ QList< int > FontItem::getAlternates ( int ccode )
 		return ret;
 	if ( !otf && m_isOpenType )
 	{
-		otf = new FmOtf ( m_face );
+		otf = new FMOtf ( m_face );
 		if ( !otf )
 			return ret;
 	}
@@ -3378,3 +3391,15 @@ QMap< int, QMap < QString , QString > > & FontItem::rawInfo()
 
 
 
+
+
+int FontItem::shaperType() const
+{
+	return m_shaperType;
+}
+
+
+void FontItem::setShaperType ( int theValue )
+{
+	m_shaperType = theValue;
+}

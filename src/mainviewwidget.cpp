@@ -18,15 +18,16 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mainviewwidget.h"
-#include "typotek.h"
-#include "fontitem.h"
 #include "fmactivate.h"
-#include "fmpreviewlist.h"
+#include "fmbaseshaper.h"
 #include "fmglyphsview.h"
-#include "listdockwidget.h"
 #include "fmotf.h"
+#include "fmpreviewlist.h"
+#include "fontitem.h"
+#include "listdockwidget.h"
 #include "opentypetags.h"
 #include "systray.h"
+#include "typotek.h"
 
 
 #include <QString>
@@ -120,6 +121,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	sampleFontSize = 18;
 // 	sampleInterSize = 20;
 	m_lists->previewList->setRefWidget ( this );
+	
+	shaperTypeCombo->addItems(FMShaperFactory::types());
 
 	contextMenuReq = false;
 	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -150,8 +153,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( loremView, SIGNAL ( refit() ),this,SLOT ( slotRefitSample() ) );
 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
 	connect ( fitViewCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotFitChanged ( int ) ) );
-	connect (advanceButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchAdvanced()));
-	connect (basicButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchBasic()));
+// 	connect (advanceButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchAdvanced()));
+// 	connect (basicButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchBasic()));
 
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
@@ -669,6 +672,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		theVeryFont->setProgression(PROGRESSION_BTT);
 
 	theVeryFont->setFTRaster ( wantDeviceDependant );
+	theVeryFont->setShaperType(shaperTypeCombo->currentIndex());
 
 	QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
 	QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
@@ -1381,7 +1385,7 @@ void MainViewWidget::fillOTTree()
 	QStringList scripts;
 	if ( theVeryFont && theVeryFont->isOpenType() )
 	{
-		FmOtf * otf = theVeryFont->takeOTFInstance();
+		FMOtf * otf = theVeryFont->takeOTFInstance();
 		foreach ( QString table, otf->get_tables() )
 		{
 			otf->set_table ( table );
@@ -1952,17 +1956,17 @@ void MainViewWidget::resetCrumb()
 	m_lists->filtersCrumb->clear();
 }
 
-void MainViewWidget::slotSwitchBasic()
-{
-	qDebug()<<"slotSwitchBasic";
-	stackedSample->setCurrentIndex(0);
-}
-
-void MainViewWidget::slotSwitchAdvanced()
-{
-	qDebug()<<"slotSwitchAdvanced";
-	stackedSample->setCurrentIndex(1);
-}
+// void MainViewWidget::slotSwitchBasic()
+// {
+// 	qDebug()<<"slotSwitchBasic";
+// 	stackedSample->setCurrentIndex(0);
+// }
+// 
+// void MainViewWidget::slotSwitchAdvanced()
+// {
+// 	qDebug()<<"slotSwitchAdvanced";
+// 	stackedSample->setCurrentIndex(1);
+// }
 
 // Don’t know if it’s really useful
 // It will be used for track down problems at least
@@ -1975,5 +1979,4 @@ QWebView * MainViewWidget::info()
 {
 	return fontInfoText;
 }
-
 

@@ -23,7 +23,7 @@
 
 #include <QDebug>
 
-QList<int> FmOtf::altGlyphs;
+QList<int> FMOtf::altGlyphs;
 
 namespace Harfbuzz
 {
@@ -244,13 +244,13 @@ OTF_name_tag ( QString s )
 //#define DFLT 0xFFFF
 
 
-int FmOtf::get_glyph ( int index )
+int FMOtf::get_glyph ( int index )
 {
 	return _buffer->in_string[index].gindex;
 }
 
 
-FmOtf::FmOtf ( FT_Face f , double scale )
+FMOtf::FMOtf ( FT_Face f , double scale )
 {
 
 	_face = f;
@@ -359,7 +359,7 @@ FmOtf::FmOtf ( FT_Face f , double scale )
 }
 
 
-FmOtf::~FmOtf ()
+FMOtf::~FMOtf ()
 {
 
 	/// All those free lead to segfault in Harfbuzz, we’ll see later,
@@ -375,7 +375,7 @@ FmOtf::~FmOtf ()
 
 }
 
-int FmOtf::procstring ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
+int FMOtf::procstring ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
 {
 	curString = s;
 // 	regAltGlyphs.clear();
@@ -383,7 +383,7 @@ int FmOtf::procstring ( QString s, QString script, QString lang, QStringList gsu
 
 }
 
-QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
+QList<RenderedGlyph> FMOtf::procstring ( QString s, OTFSet set )
 {
 	curString = s;
 	altGlyphs.clear();
@@ -403,7 +403,7 @@ QList<RenderedGlyph> FmOtf::procstring ( QString s, OTFSet set )
 }
 
 #ifdef FM_OWNSHAPER
-QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString script )
+QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString script )
 {
 // 	QString script = "latn";
 	QString lang = "dflt";
@@ -518,7 +518,7 @@ QList< RenderedGlyph > FmOtf::procstring( QList<Character> shaped , QString scri
 #endif
 
 int
-FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
+FMOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
 {
 	Harfbuzz::hb_buffer_clear ( _buffer );
 	int n = s.length ();
@@ -631,7 +631,7 @@ FmOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, 
 
 
 QStringList
-FmOtf::get_tables ()
+FMOtf::get_tables ()
 {
 	QStringList ret;
 
@@ -646,15 +646,15 @@ FmOtf::get_tables ()
 }
 
 void
-FmOtf::set_table ( QString s )
+FMOtf::set_table ( QString s )
 {
 	curTable = s;
 }
 
 QStringList
-FmOtf::get_scripts ()
+FMOtf::get_scripts ()
 {
-//	qDebug("FmOtf::get_scripts ()");
+//	qDebug("FMOtf::get_scripts ()");
 	QStringList ret;
 
 	if ( curTable == "GSUB" && GSUB )
@@ -687,7 +687,7 @@ FmOtf::get_scripts ()
 }
 
 void
-FmOtf::set_script ( QString s )
+FMOtf::set_script ( QString s )
 {
 //	qDebug(QString("set_script (%1)").arg(s));
 	curScriptName = s;
@@ -707,7 +707,7 @@ FmOtf::set_script ( QString s )
 
 
 QStringList
-FmOtf::get_langs ()
+FMOtf::get_langs ()
 {
 	QStringList ret;
 
@@ -744,7 +744,7 @@ FmOtf::get_langs ()
 }
 
 void
-FmOtf::set_lang ( QString s )
+FMOtf::set_lang ( QString s )
 {
 //	qDebug(QString("set_lang (%1)").arg(s));
 	if ( s == "default" || s == "dflt" || s.isEmpty () )
@@ -776,7 +776,7 @@ FmOtf::set_lang ( QString s )
 
 
 QStringList
-FmOtf::get_features ( bool required )
+FMOtf::get_features ( bool required )
 {
 	QStringList ret;
 
@@ -813,7 +813,7 @@ FmOtf::get_features ( bool required )
 }
 
 void
-FmOtf::set_features ( QStringList ls )
+FMOtf::set_features ( QStringList ls )
 {
 	curFeatures = ls;
 }
@@ -826,9 +826,9 @@ FmOtf::set_features ( QStringList ls )
 /**
 Dump all the "uneasy" HB_Buffer into a user-friendy QList :)
 */
-QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
+QList<RenderedGlyph> FMOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 {
-// 	qDebug() << "FmOtf::get_position () for buffer : " << _buffer;
+// 	qDebug() << "FMOtf::get_position () for buffer : " << _buffer;
 	Harfbuzz::HB_Buffer bak_buf = _buffer ;
 	if ( abuffer )
 	{
@@ -907,7 +907,7 @@ QList<RenderedGlyph> FmOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 	return renderedString;
 }
 
-Harfbuzz::HB_UShort FmOtf::manageAlternates(Harfbuzz::HB_UInt pos, Harfbuzz::HB_UShort glyphID, Harfbuzz::HB_UShort num_alternates, Harfbuzz::HB_UShort * alternates, void * data)
+Harfbuzz::HB_UShort FMOtf::manageAlternates(Harfbuzz::HB_UInt pos, Harfbuzz::HB_UShort glyphID, Harfbuzz::HB_UShort num_alternates, Harfbuzz::HB_UShort * alternates, void * data)
 {
 	qDebug()<<"manageAlternates("<<  glyphID <<")";
 	altGlyphs.clear();

@@ -34,6 +34,21 @@ FMOwnShaper::FMOwnShaper(QString s, QString lang)
 	
 }
 
+
+FMOwnShaper::FMOwnShaper(QString lang)
+{
+	Character noop;
+	noop.GroupIndex = 1;
+	Matches << MatchSequence();
+	Matches.last().Properties << noop;
+	Matches.last().Properties.last().isMatchedGroup = true;
+	Replacements << ReplaceSequence();
+	Replacements.last().Properties << noop;
+	Replacements.last().Properties.last().GroupIndex = 1;
+	
+	loadRules(lang);
+}
+
 FMOwnShaper::~ FMOwnShaper()
 {
 }
@@ -106,6 +121,7 @@ int FMOwnShaper::loadRules(QString lang)
 void FMOwnShaper::fillIn(const QString& s)
 {
 	QStringList debug;
+	In.clear();
 	for(int i(0); i < s.count(); ++i)
 	{
 		if(Dictionnary.contains(s[i].unicode()))
@@ -585,6 +601,7 @@ void Character::AddProperty(const QString & prop)
 		CustomProperties << prop;
 	}
 }
+
 
 
 

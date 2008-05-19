@@ -24,12 +24,12 @@
 /**
 	@author Pierre Marchand <pierremarc@oep-h.com>
 */
-class FmShaper
+class FMShaper
 {
 	public:
-		FmShaper(FmOtf *anchor);
+		FMShaper(FMOtf *anchor);
 
-		~FmShaper();
+		~FMShaper();
 		/* Will return false if there is no GSUB nor GPOS table */
 		bool setFont (/*FT_Face face, HB_Font font*/ );
 
@@ -41,7 +41,7 @@ class FmShaper
 		Harfbuzz::HB_Buffer out_buffer();
 
 	private:
-		FmOtf *anchorOTF;
+		FMOtf *anchorOTF;
 		FT_Face anchorFace;
 		Harfbuzz::HB_ShaperItem m;
 

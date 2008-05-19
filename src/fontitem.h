@@ -40,7 +40,7 @@ class QGraphicsScene;
 class QGraphicsRectItem;
 class QGraphicsTextItem;
 struct OTFSet;
-class FmOtf;
+class FMOtf;
 class QGraphicsView;
 
 class QProgressDialog;
@@ -125,7 +125,7 @@ class FontItem : public QObject
 		QList<int> spaceIndex;
 		
 		bool m_isOpenType;
-		FmOtf *otf;
+		FMOtf *otf;
 
 // 		QString m_author;
 // 		QString m_foundry;
@@ -194,6 +194,7 @@ class FontItem : public QObject
 		QMap<int,QMap<QString, QString> > moreInfo;
 		QMap<QString, QString> panoseInfo;
 		
+		int m_shaperType;
 		
 	private slots:
 		void slotDownloadStart(int id);
@@ -273,8 +274,8 @@ class FontItem : public QObject
 
 		void adjustGlyphsPerRow ( int width );
 		bool isOpenType(){return m_isOpenType;};
-		FmOtf *takeOTFInstance();
-		void releaseOTFInstance(FmOtf * rotf);
+		FMOtf *takeOTFInstance();
+		void releaseOTFInstance(FMOtf * rotf);
 		
 		void setFTRaster(bool f){m_rasterFreetype = f;};
 		bool rasterFreetype(){return m_rasterFreetype;};
@@ -295,6 +296,10 @@ class FontItem : public QObject
 		void  fileLocal(FontLocalInfo);
 		// retval : 1 => Ready; 2 => Wait ; ...
 		int getFromNetwork();
+
+	void setShaperType ( int theValue );
+	int shaperType() const;
+	
 };
 
 #endif

@@ -58,7 +58,7 @@ void FMNameList::keyPressEvent(QKeyEvent * e)
 void FMNameList::slotNextFamily()
 {
 	if (!findBelow(currentItem(), "family")) {
-		/* TODO Goto first family on the list */
+		/* Goto first family on the list */
 		findBelow(topLevelItem(0), "family");
 	}
 }
@@ -73,7 +73,7 @@ void FMNameList::slotPreviousFamily()
 void FMNameList::slotNextFont()
 {
 	if (!findBelow(currentItem(), "fontfile")) {
-		/*TODO Goto first font on the list */
+		/*Goto first font on the list */
 		findBelow(topLevelItem(0), "fontfile");
 	}
 }
@@ -81,7 +81,7 @@ void FMNameList::slotNextFont()
 void FMNameList::slotPreviousFont()
 {
 	if (!findAbove(currentItem(), "fontfile")) {
-		/*TODO Goto last font on the list */
+		/*TODO Goto last font on the list! */
 	}
 }
 

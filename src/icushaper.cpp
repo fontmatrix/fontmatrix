@@ -12,6 +12,9 @@
 
 #include "icushaper.h"
 
+#include <iostream>
+using std::cerr; 
+
 
 IcuShaper::IcuShaper ( FMOtf * o, QString s )
 		:FMBaseShaper ( o,s )
@@ -176,12 +179,19 @@ GlyphList IcuShaper::doShape ( const QString & s )
 
 	LEErrorCode err;
 
-	LEUnicode *ts = new LEUnicode[s.count() ];
+	LEUnicode16 *ts = new LEUnicode[s.count() ];
 	for ( int i ( 0 ); i< s.count();++i )
-		ts[i] = ( quint16 ) s[i].unicode();
+	{
+		ts[i] =  s[i].unicode();
+		cerr << "["<< s[i].unicode() << "]";
+	}
+	cerr<< std::endl;
 
 	icuLE->reset();
 	glAllocated = icuLE->layoutChars ( ts, 0, s.count(), s.count(), false, 0, 0, err ) ;
+	
+	if(err)
+		cerr<<"ICU ERROR ("<< err <<")"<<std::endl;
 
 	LEGlyphID *glyphs    = new LEGlyphID[glAllocated];
 	le_int32 *indices   = new le_int32[glAllocated];
@@ -196,12 +206,18 @@ GlyphList IcuShaper::doShape ( const QString & s )
 		RenderedGlyph rg;
 		rg.glyph = glyphs[gIdx];
 		rg.log = indices[gIdx];
-		rg.xadvance = positions[gIdx * 2] - stackX;
-		rg.yadvance = positions[(gIdx * 2) + 1];
+		rg.xadvance = positions[(gIdx + 1) * 2] - stackX;
+		rg.yadvance = positions[((gIdx + 1) * 2) + 1];
 		rg.xoffset = rg.yoffset = 0;
-		stackX =  positions[gIdx * 2] ;
+		stackX +=  rg.xadvance;
 		
 		ret << rg;
+		
+		cerr<< "["<< rg.log <<"]";
+		cerr<< "["<< rg.glyph <<"]";
+		cerr<< "["<< rg.xadvance <<"]";
+		cerr<< "["<< positions[gIdx * 2] <<"]";
+		cerr<< std::endl;
 	}
 	icuLE->reset();
 	
@@ -228,6 +244,7 @@ IcuFontImpl::~ IcuFontImpl()
 
 const void * IcuFontImpl::getFontTable ( LETag tableTag ) const
 {
+	cerr<< "IcuFontImpl::getFontTable" <<std::endl;
 	FT_Face face ( otf->face() );
 	FT_ULong length(0);
 	if ( !FT_Load_Sfnt_Table ( face, tableTag, 0, NULL, &length ) )
@@ -252,7 +269,9 @@ le_int32 IcuFontImpl::getUnitsPerEM() const
 
 LEGlyphID IcuFontImpl::mapCharToGlyph ( LEUnicode32 ch ) const
 {
-	return FT_Get_Char_Index ( otf->face(), ch );
+	int gi(FT_Get_Char_Index ( otf->face(), ch ));
+	cerr << "IcuFontImpl::mapCharToGlyph("<< ch <<") = "<<gi<<std::endl;
+	return gi;
 }
 
 void IcuFontImpl::getGlyphAdvance ( LEGlyphID glyph, LEPoint & advance ) const
@@ -272,6 +291,7 @@ void IcuFontImpl::getGlyphAdvance ( LEGlyphID glyph, LEPoint & advance ) const
 
 le_bool IcuFontImpl::getGlyphPoint ( LEGlyphID glyph, le_int32 pointNumber, LEPoint & point ) const
 {
+	cerr<< "IcuFontImpl::getGlyphPoint" <<std::endl;
 	return false;
 }
 

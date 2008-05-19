@@ -72,6 +72,14 @@ if(ICU_FOUND)
         MESSAGE(STATUS "ICU Found OK")
 ENDIF(ICU_FOUND)
 
+SET(M17N_DIR ${CMAKE_MODULE_PATH})
+FIND_PACKAGE(M17N)
+if(M17N_FOUND)
+	MESSAGE(STATUS "M17N Found OK")
+ELSE(M17N_FOUND)
+	MESSAGE(FATAL_ERROR "M17N Not Found ARGH")
+ENDIF(M17N_FOUND)
+
 # tell cmake to process CMakeLists.txt in that subdirectory
 
 

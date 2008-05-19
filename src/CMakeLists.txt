@@ -26,6 +26,7 @@ icushaper.cpp
 importedfontsdialog.cpp
 importtags.cpp
 listdockwidget.cpp
+m17nshaper.cpp
 main.cpp
 mainviewwidget.cpp
 prefspaneldialog.cpp
@@ -95,6 +96,7 @@ ${FREETYPE_INCLUDE_DIRS}
 ${HARFBUZZ_INCLUDE_DIR}
 ${FONTCONFIG_INCLUDE_DIR}
 ${ICU_INCLUDE_DIR}
+${M17N_INCLUDE_DIR}
 )
 
 add_executable(fontmatrix
@@ -115,6 +117,7 @@ ${QT_LIBRARIES}
 ${FREETYPE_LIBRARIES}
 ${FONTCONFIG_LIBRARIES}
 ${ICU_LIBRARIES}
+${M17N_LIBRARIES}
 )
 
 INSTALL(TARGETS fontmatrix

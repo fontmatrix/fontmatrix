@@ -16,6 +16,7 @@
 #include "fontmatrixshaper.h"
 #include "harfbuzzqtshaper.h"
 #include "icushaper.h"
+#include "m17nshaper.h"
 
 #include <QDebug>
 
@@ -28,7 +29,7 @@ QStringList FMShaperFactory::types()
 	ret << "FONTMATRIX";
 	ret << "HARFBUZZ";
 	ret << "ICU";
-// 	ret << "M17N";
+	ret << "M17N";
 // 	ret << "PANGO";
 // 	ret << "OMEGA";
 	
@@ -87,8 +88,8 @@ GlyphList FMShaperFactory::doShape ( const QString & aString )
 				qDebug()<< "NEW IcuShaper";
 				shaperImpl = new IcuShaper ( otf, script );
 				break;
-// 			case M17N : shaperImpl = new M17NShaper ( otf, script );
-// 				break;
+			case M17N : shaperImpl = new M17NShaper ( otf, script );
+				break;
 // 			case OMEGA : shaperImpl = new OmegaShaper ( otf, script );
 // 				break;
 			default:break;

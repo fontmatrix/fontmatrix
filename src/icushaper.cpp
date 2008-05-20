@@ -317,12 +317,12 @@ float IcuFontImpl::getScaleFactorY() const
 
 le_int32 IcuFontImpl::getAscent() const
 {
-	return 0;
+	return otf->face()->ascender;
 }
 
 le_int32 IcuFontImpl::getDescent() const
 {
-	return 0;
+	return otf->face()->descender;
 }
 
 le_int32 IcuFontImpl::getLeading() const

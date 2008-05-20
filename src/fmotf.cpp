@@ -55,42 +55,6 @@ namespace Harfbuzz
 	}
 }
 
-// Harfbuzz::HB_LineBreakClass HB_GetLineBreakClass ( Harfbuzz::HB_UChar32 ch )
-// {
-// 	return ( Harfbuzz::HB_LineBreakClass ) 0;
-// }
-//
-// void HB_GetUnicodeCharProperties ( Harfbuzz::HB_UChar32 ch, Harfbuzz::HB_CharCategory *category, int *combiningClass )
-// {
-// 	*category = ( Harfbuzz::HB_CharCategory ) QChar::Category ( ch );
-// 	*combiningClass = QChar::CombiningClass ( ch );
-// }
-//
-// Harfbuzz::HB_CharCategory HB_GetUnicodeCharCategory ( Harfbuzz::HB_UChar32 ch )
-// {
-// 	return ( Harfbuzz::HB_CharCategory ) QChar::Category ( ch );
-// }
-//
-// int HB_GetUnicodeCharCombiningClass ( Harfbuzz::HB_UChar32 ch )
-// {
-// 	return QChar::CombiningClass ( ch );
-// }
-//
-// Harfbuzz::HB_UChar16 HB_GetMirroredChar ( Harfbuzz::HB_UChar16 ch )
-// {
-// 	return QChar ( ch ).mirroredChar().unicode();
-// }
-
-// // // Harfbuzz::HB_UShort  AltFunc ( Harfbuzz::HB_UInt    pos,
-// // //                                Harfbuzz::HB_UShort   glyphID,
-// // //                                Harfbuzz::HB_UShort   num_alternates,
-// // //                                Harfbuzz::HB_UShort*  alternates,
-// // //                                )
-// // // {
-// // // 
-// // // 	return ( Harfbuzz::HB_UShort ) 0;
-// // // }
-
 Harfbuzz::HB_UChar32 getChar ( const Harfbuzz::HB_UChar16 *string, Harfbuzz::hb_uint32 length, Harfbuzz::hb_uint32 &i )
 {
 	qDebug() << "HB_UChar32 getChar";
@@ -375,13 +339,6 @@ FMOtf::~FMOtf ()
 
 }
 
-int FMOtf::procstring ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
-{
-	curString = s;
-// 	regAltGlyphs.clear();
-	return procstring1 ( s,script,lang,gsub,gpos );
-
-}
 
 QList<RenderedGlyph> FMOtf::procstring ( QString s, OTFSet set )
 {
@@ -392,7 +349,7 @@ QList<RenderedGlyph> FMOtf::procstring ( QString s, OTFSet set )
 		qDebug ( ) << "Unable to get _buffer("<< _buffer <<")";
 		return QList<RenderedGlyph>();
 	}
-	int numR = procstring1 ( s, set.script, set.lang, set.gsub_features, set.gpos_features );
+	int numR = procstring ( s, set.script, set.lang, set.gsub_features, set.gpos_features );
 	
 	QList<RenderedGlyph> ret = get_position();
 	
@@ -402,7 +359,7 @@ QList<RenderedGlyph> FMOtf::procstring ( QString s, OTFSet set )
 	return ret;
 }
 
-// #ifdef FM_OWNSHAPER
+
 QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString script )
 {
 // 	QString script = "latn";
@@ -515,10 +472,87 @@ QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString scri
 	return ret;
 	
 }
-// #endif
 
-int
-FMOtf::procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
+
+QList< RenderedGlyph > FMOtf::procstring(QList< unsigned int > glyList, QString script, QString lang, QStringList gsub, QStringList gpos)
+{
+	Harfbuzz::hb_buffer_clear ( _buffer );
+	int n = glyList.count();
+	Harfbuzz::HB_Error           error;
+	uint all = 0x1;
+	uint prop;
+	for ( int i = 0; i < n; i++ )
+	{
+		prop = 0;
+		prop |= all;
+		error = Harfbuzz::hb_buffer_add_glyph ( _buffer,
+				glyList[i],
+						prop,
+      i );
+		if ( error !=  Harfbuzz::HB_Err_Ok )
+			qDebug() << "hb_buffer_add_glyph ("<< glyList[i] <<") failed";
+	}
+
+	if ( ! gsub.isEmpty() )
+	{
+		Harfbuzz::HB_GSUB_Clear_Features ( _gsub );
+		set_table ( "GSUB" );
+		set_script ( script );
+		set_lang ( lang );
+		
+		for ( QStringList::iterator ife = gsub.begin (); ife != gsub.end (); ife++ )
+		{
+			Harfbuzz::HB_UShort fidx;
+			error = Harfbuzz::HB_GSUB_Select_Feature ( _gsub,
+					OTF_name_tag ( *ife ),
+							curScript, curLang, &fidx );
+			if ( !error )
+			{
+				Harfbuzz::HB_GSUB_Add_Feature ( _gsub, fidx, ~all );
+			}
+			else
+				qDebug() << QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error );
+		}
+		error = Harfbuzz::HB_GSUB_Apply_String ( _gsub, _buffer );
+		if ( error && error != Harfbuzz::HB_Err_Not_Covered )
+			qDebug () << QString ( "applying gsub features returned %1" ).arg ( error );
+
+	}
+	if ( !gpos.isEmpty() )
+	{
+		Harfbuzz::HB_GPOS_Clear_Features ( _gpos );
+		set_table ( "GPOS" );
+		set_script ( script );
+		set_lang ( lang );
+
+		for ( QStringList::iterator ife = gpos.begin (); ife != gpos.end ();
+				    ife++ )
+		{
+			uint fprop = 0xffff;
+			Harfbuzz::HB_UShort fidx;
+			error = Harfbuzz::HB_GPOS_Select_Feature ( _gpos,
+					OTF_name_tag ( *ife ),
+							curScript, curLang, &fidx );
+			if ( !error )
+			{
+				Harfbuzz::HB_GPOS_Add_Feature ( _gpos, fidx,fprop );
+			}
+			else
+				qDebug () << QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error ) ;
+		}
+		error = Harfbuzz::HB_GPOS_Apply_String ( &hbFont, _gpos, FT_LOAD_NO_SCALE, _buffer,
+		        /*while dvi is true font klass is not used */ true,
+		        /*r2l */ true );
+		if ( error && error != Harfbuzz::HB_Err_Not_Covered )
+			qDebug () << QString ( "applying gpos features  returned %1 ").arg  ( error ) ;
+
+	}
+	
+	return get_position();
+
+}
+
+int FMOtf::procstring( QString s, QString script, QString lang, QStringList gsub, QStringList gpos )
 {
 	Harfbuzz::hb_buffer_clear ( _buffer );
 	int n = s.length ();

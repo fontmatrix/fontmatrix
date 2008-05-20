@@ -135,14 +135,13 @@ class FMOtf
 		/*
 		 * These members functions apply features currently set
 		 */
-	private:
-		int procstring ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos );
-		int procstring1 ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos );
 	public:
+		// Yes there are a lot, doubtless too much.
+		int procstring ( QString s, QString script, QString lang, QStringList gsub, QStringList gpos );
 		QList<RenderedGlyph> procstring ( QString s, OTFSet set );
-// #ifdef FM_OWNSHAPER
 		QList<RenderedGlyph> procstring ( QList<Character> shaped , QString script );
-// #endif
+		QList<RenderedGlyph> procstring ( QList<unsigned int> glyList , QString script, QString lang, QStringList gsub, QStringList gpos );
+
 		/*
 		  * These functions give access to informations contained in the fontfile
 		 */

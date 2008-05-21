@@ -10,7 +10,7 @@ Requirements :
 Build instructions are:
  $ mkdir build
  $ cd build
- $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug] [-DCMAKE_INSTALL_PREFIX:PATH=/install/prefix] 
+ $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug] [-DCMAKE_INSTALL_PREFIX:PATH=/install/prefix] [-DWANT_HARFBUZZ=1] [-DWANT_ICU=1] [-DWANT_M17N=1]
  $ make
  
 At this point, the fontmatrix binary is in build/src/

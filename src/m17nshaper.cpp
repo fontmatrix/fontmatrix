@@ -12,6 +12,8 @@
 
 #include "m17nshaper.h"
 
+#include <QDebug>
+
 M17NShaper * M17NShaper::instance = 0;
 		
 QString OTF_tag_name ( unsigned int tag );
@@ -62,6 +64,7 @@ GlyphList M17NShaper::doShape ( const QString & s )
 /// One again that you can’t just attach a font file or face to :(
 int M17NShaper::impl_get_glyph_id( struct _MFLTFont *font, MFLTGlyphString *gstring, int from, int to )
 {
+	qDebug()<<"M17NShaper::impl_get_glyph_id()";
 	FT_Face face = instance->otf->face();
 	if(!face)
 		return 8; // corresponds to "#define OTF_ERROR_FT_FACE 8" in libotf 
@@ -74,6 +77,7 @@ int M17NShaper::impl_get_glyph_id( struct _MFLTFont *font, MFLTGlyphString *gstr
 }
 int M17NShaper::impl_get_metrics( struct _MFLTFont *font, MFLTGlyphString *gstring, int from, int to )
 {
+	qDebug()<<"M17NShaper::impl_get_metrics";
 	// I wonder if it will be called, normally no...
 	FT_Face face = instance->otf->face();
 	if(!face)
@@ -95,10 +99,26 @@ int M17NShaper::impl_get_metrics( struct _MFLTFont *font, MFLTGlyphString *gstri
 }
 int M17NShaper::impl_check_otf( struct _MFLTFont *font, MFLTOtfSpec *spec )
 {
+	qDebug()<<"M17NShaper::impl_check_otf";
+	QString script ( OTF_tag_name ( spec->script ) );
+	QString lang ( OTF_tag_name ( spec->langsys ) );
+	QStringList subf;
+	QStringList posf;
+	unsigned int* cursor ( 0 );
+	for ( cursor = spec->features[0]; *cursor ; ++cursor )
+	{
+		subf <<  OTF_tag_name ( *cursor );
+	}
+	for ( cursor = spec->features[1]; *cursor ; ++cursor )
+	{
+		posf <<  OTF_tag_name ( *cursor );
+	}
+	qDebug()<<script<<lang<<subf.join(",")<<posf.join(",");
 	return 1; // programming is easy ;-)
 }
 int M17NShaper::impl_drive_otf ( struct _MFLTFont *font, MFLTOtfSpec *spec, MFLTGlyphString *in, int from, int to, MFLTGlyphString *out, MFLTGlyphAdjustment *adjustment )
 {
+	qDebug()<<"M17NShaper::impl_drive_otf";
 	instance->cachedString.clear();
 	QString script ( OTF_tag_name ( spec->script ) );
 	QString lang ( "dflt" );

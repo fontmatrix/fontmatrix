@@ -21,7 +21,8 @@ IcuShaper::IcuShaper ( FMOtf * o, QString s )
 {
 	LEErrorCode err;
 	icuFont = new IcuFontImpl ( otf );
-	icuLE = LayoutEngine::layoutEngineFactory ( icuFont, tagToCode.value ( script ), 0 , err );
+	icuLE = LayoutEngine::layoutEngineFactory ( icuFont, tagToCode.value ( script ), -1 , err );
+	cerr << "ICU ERRCODE "<<err;
 }
 
 IcuShaper::~ IcuShaper()

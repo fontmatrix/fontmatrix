@@ -122,7 +122,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	sampleInterSize = 20;
 	m_lists->previewList->setRefWidget ( this );
 	
-	shaperTypeCombo->addItems(FMShaperFactory::types());
+	QMap<QString, int> sTypes(FMShaperFactory::types());
+	for(QMap<QString, int>::iterator sIt = sTypes.begin(); sIt != sTypes.end() ; ++sIt)
+	{
+		shaperTypeCombo->addItem(sIt.key(), sIt.value());
+	}
 
 	contextMenuReq = false;
 	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -672,7 +676,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		theVeryFont->setProgression(PROGRESSION_BTT);
 
 	theVeryFont->setFTRaster ( wantDeviceDependant );
-	theVeryFont->setShaperType(shaperTypeCombo->currentIndex());
+	theVeryFont->setShaperType(shaperTypeCombo->itemData(  shaperTypeCombo->currentIndex() ).toInt() );
 
 	QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
 	QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );

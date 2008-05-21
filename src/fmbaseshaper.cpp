@@ -14,23 +14,48 @@
 #include "fmbaseshaper.h"
 
 #include "fontmatrixshaper.h"
+
+#ifdef HAVE_HARFBUZZ
 #include "harfbuzzqtshaper.h"
+#endif
+
+#ifdef HAVE_ICU
 #include "icushaper.h"
+#endif
+
+#ifdef HAVE_M17N
 #include "m17nshaper.h"
+#endif
+
+#ifdef HAVE_PANGO
+#include "pangoshaper.h"
+#endif
 
 #include <QDebug>
 
 
 
-QStringList FMShaperFactory::types()
+QMap<QString, int> FMShaperFactory::types()
 {
-	QStringList ret;
+	QMap<QString, int> ret;
 	ret.clear();
-	ret << "FONTMATRIX";
-	ret << "HARFBUZZ";
-	ret << "ICU";
-	ret << "M17N";
-// 	ret << "PANGO";
+	ret["Fontmatrix"] = FONTMATRIX;
+	
+#ifdef HAVE_HARFBUZZ
+	ret["Harfbuzz"] = HARFBUZZ;
+#endif
+	
+#ifdef HAVE_ICU
+	ret["ICU"] = ICU;
+#endif
+	
+#ifdef HAVE_M17N
+	ret["m17n"] = M17N;
+#endif
+	
+#ifdef HAVE_PANGO
+	ret["Pango"] = PANGO;
+#endif
 // 	ret << "OMEGA";
 	
 	return ret;
@@ -75,21 +100,31 @@ GlyphList FMShaperFactory::doShape ( const QString & aString )
 			case FONTMATRIX : 
 				qDebug()<< "NEW FontmatrixShaper";
 				shaperImpl = new FontmatrixShaper ( otf, script );
-				break;
+				break;	
+#ifdef HAVE_HARFBUZZ
 			case HARFBUZZ: 
-				qDebug()<< "NEW HarfbuzzQtShaper";
-				shaperImpl = new HarfbuzzQtShaper ( otf, script );
-				break;
-// 			case HARFBUZZ_PANGO: shaperImpl = new HarbuzzPangoShaper;
-// 			break;
-// 			case PANGO: shaperImpl = new PangoShaper ( otf, script );
-// 				break;
+				qDebug()<< "NEW HarfbuzzShaper";
+				shaperImpl = new HarfbuzzShaper ( otf, script );
+				break;	
+#endif
+#ifdef HAVE_PANGO
+			case PANGO: 
+				qDebug()<< "NEW PangoShaper";
+				shaperImpl = new PangoShaper ( otf, script );
+				break;	
+#endif
+#ifdef HAVE_ICU
 			case ICU : 
 				qDebug()<< "NEW IcuShaper";
 				shaperImpl = new IcuShaper ( otf, script );
+				break;	
+#endif
+#ifdef HAVE_M17N
+			case M17N : 
+				qDebug()<< "NEW M17NShaper";
+				shaperImpl = new M17NShaper ( otf, script );
 				break;
-			case M17N : shaperImpl = new M17NShaper ( otf, script );
-				break;
+#endif
 // 			case OMEGA : shaperImpl = new OmegaShaper ( otf, script );
 // 				break;
 			default:break;

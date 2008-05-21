@@ -14,21 +14,18 @@ fmpreviewlist.cpp
 # fmprintdialog.cpp
 fmrepair.cpp
 fmsampletextview.cpp
-fmshaper.cpp
 fmshaper_own.cpp
 fontbook.cpp
 fontbookdialog.cpp
 fontitem.cpp
 fontmatrixshaper.cpp
-harfbuzzqtshaper.cpp
 helpwidget.cpp
-icushaper.cpp
 importedfontsdialog.cpp
 importtags.cpp
 listdockwidget.cpp
-m17nshaper.cpp
 main.cpp
 mainviewwidget.cpp
+pangoshaper.cpp
 prefspaneldialog.cpp
 remotedir.cpp
 savedata.cpp
@@ -37,6 +34,33 @@ systray.cpp
 tagseteditor.cpp
 textprogression.cpp
 typotek.cpp
+)
+
+IF(HARFBUZZSHAPER)
+	SET(HARFBUZZ_SRCS 
+	harfbuzzqtshaper.cpp
+	fmshaper.cpp)
+ENDIF(HARFBUZZSHAPER)
+
+IF(ICUSHAPER)
+	SET(ICU_SRCS icushaper.cpp)
+ENDIF(ICUSHAPER)
+
+IF(M17NSHAPER)
+	SET(M17N_SRCS
+	m17nshaper.cpp
+	)
+ENDIF(M17NSHAPER)
+
+SET(SHAPERS_SRCS
+${HARFBUZZ_SRCS}
+${ICU_SRCS}
+${M17N_SRCS}
+)
+
+SET(SHAPERS_LIBRARIES
+${ICU_LIBRARIES}
+${M17N_LIBRARIES}
 )
 
 SET(fontmatrix_MOC_HDRS
@@ -101,6 +125,7 @@ ${M17N_INCLUDE_DIR}
 
 add_executable(fontmatrix
 ${fontmatrix_SRCS}
+${SHAPERS_SRCS}
 ${fontmatrix_MOC_SRCS}
 ${fontmatrix_UIS_H}
 ${fontmatrix_RCC_SRCS}
@@ -116,8 +141,7 @@ target_link_libraries(fontmatrix harfbuzz
 ${QT_LIBRARIES}
 ${FREETYPE_LIBRARIES}
 ${FONTCONFIG_LIBRARIES}
-${ICU_LIBRARIES}
-${M17N_LIBRARIES}
+${SHAPERS_LIBRARIES}
 )
 
 INSTALL(TARGETS fontmatrix

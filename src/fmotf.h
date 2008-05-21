@@ -32,20 +32,13 @@
 #include <QMap>
 #include <QList>
 
-// #ifdef FM_OWNSHAPER
 #include "fmshaper_own.h"
-// #endif
 
 namespace Harfbuzz
 {
 #include <harfbuzz.h>
 #include <harfbuzz-global.h>
 #include <harfbuzz-gpos.h>
-
-// #ifndef FM_OWNSHAPER
-#include <harfbuzz-shaper.h>
-// #endif
-
 }
 
 // using namespace std;

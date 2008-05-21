@@ -46,9 +46,9 @@ class FMShaperFactory
 		                  OMEGA, // yes, I’ve red something about a C++ binding!
 		                  NOT_A_SHAPER
 	                };
-			
-		static QStringList types();
-			
+
+		static QMap<QString, int> types();
+
 		FMShaperFactory ( FMOtf *otf, QString script , SHAPER_TYPE st = FONTMATRIX );
 		~FMShaperFactory();
 

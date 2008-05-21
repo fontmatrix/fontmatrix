@@ -1474,18 +1474,19 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 	FMShaperFactory *shaperfactory = 0;
 	switch(m_shaperType)
 	{
-		case 0 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
+		case FMShaperFactory::FONTMATRIX : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
 		break;
-		case 1 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::HARFBUZZ );
+		case FMShaperFactory::HARFBUZZ : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::HARFBUZZ );
 		break;
-		case 2 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::ICU );
+		case FMShaperFactory::ICU : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::ICU );
 		break;
-		case 3 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::M17N );
+		case FMShaperFactory::M17N : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::M17N );
 		break;
-		case 4 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::PANGO );
+		case FMShaperFactory::PANGO : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::PANGO );
 		break;
-		case 5 : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::OMEGA);
+		case FMShaperFactory::OMEGA : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::OMEGA);
 		break;
+		default : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
 	}
 	
 	GlyphList refGlyph ( shaperfactory->doShape( spec ) );

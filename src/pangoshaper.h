@@ -1,5 +1,5 @@
 //
-// C++ Interface: harfbuzzqtshaper
+// C++ Interface: pangoshaper
 //
 // Description: 
 //
@@ -9,21 +9,17 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#ifndef HARFBUZZSHAPER_H
-#define HARFBUZZSHAPER_H
+#ifndef PANGOSHAPER_H
+#define PANGOSHAPER_H
 
 #include "fmbaseshaper.h"
-#include "fmshaper.h"
 
-class HarfbuzzShaper : public FMBaseShaper
+class PangoShaper : public FMBaseShaper
 {
 	public:
-		HarfbuzzShaper(FMOtf* o, QString s);
-		~HarfbuzzShaper();	
-		
+		PangoShaper(FMOtf* o, QString s);
+		~PangoShaper();
 		GlyphList doShape( const QString& s );
-	private:
-		FMShaper *hbqtsh;
 };
 
 #endif

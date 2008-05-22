@@ -230,9 +230,9 @@ QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 		}
 			RenderedGlyph gl;
 			gl.glyph = m.glyphs[gIndex];
-			gl.xadvance = ltr ? ( double ) ( m.advances[gIndex]) :( double ) ( -m.advances[gIndex]) ;
+			gl.xadvance = /*ltr ? */( double ) ( m.advances[gIndex]) /*:( double ) ( -m.advances[gIndex])*/ ;
 			gl.yadvance = 0.0;
-			gl.xoffset = ltr ? ( m.offsets[gIndex].x  - baseCorrection ) : ( baseCorrection - m.offsets[gIndex].x );
+			gl.xoffset = /*ltr ?*/ ( m.offsets[gIndex].x  - baseCorrection ) /*: ( baseCorrection - m.offsets[gIndex].x )*/;
 			gl.yoffset = m.offsets[gIndex].y ;
 				
 			renderedString << gl;

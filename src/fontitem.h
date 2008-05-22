@@ -196,6 +196,9 @@ class FontItem : public QObject
 		
 		int m_shaperType;
 		
+		// if true return width, else return number of _chars_ consumed
+		bool renderReturnWidth;
+		
 	private slots:
 		void slotDownloadStart(int id);
 		void slotDowloadProgress(int done, int total );
@@ -234,8 +237,8 @@ class FontItem : public QObject
 		QString panose( QString k );
 
 		double renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth, double fsize, double zindex = 100.0 ,bool record = true );
-		void renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
-		void renderLine ( QString script, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
+		double renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
+		double renderLine ( QString script, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
 		void renderAll ( QGraphicsScene *scene, int begin_code, int end_code );
 		//return count codes that remain
 		int renderChart(QGraphicsScene *scene, int begin_code, int end_code ,double pwidth, double pheight);
@@ -299,6 +302,13 @@ class FontItem : public QObject
 
 	void setShaperType ( int theValue );
 	int shaperType() const;
+	
+	void setRenderReturnWidth ( bool theValue )
+	{
+		renderReturnWidth = theValue;
+	}
+	
+	
 	
 };
 

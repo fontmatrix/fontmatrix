@@ -1691,7 +1691,9 @@ void typotek::printFamily()
 		sampleFont[fidx] = familyFonts[fidx];
 		bool rasterState(sampleFont[fidx]->rasterFreetype());
 		sampleFont[fidx]->setFTRaster(false);
+		sampleFont[fidx]->setRenderReturnWidth(true);
 		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, sampleString[fidx], QPointF(0.0, 1000.0) , 999999.0, 1000.0, 1, false) ;
+		sampleFont[fidx]->setRenderReturnWidth(false);
 		sampleFont[fidx]->setFTRaster(rasterState);
 		logAscend[fidx] = 1000.0 - tmpScene.itemsBoundingRect().top();
 		logDescend[fidx] = tmpScene.itemsBoundingRect().bottom() - 1000.0;

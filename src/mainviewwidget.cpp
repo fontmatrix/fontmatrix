@@ -715,25 +715,63 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			double margin = ( textProgression->inLine() == TextProgression::INLINE_RTL ) ? marginR : marginL ;
 			double lineWidth = loremScene->sceneRect().width() * 0.8;
 			QPointF pen ( margin ,   0 );
+			int countL(0);
 			for ( int i=0; i< stl.count(); ++i )
 			{
-
-				pen.ry() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * i;
-
+				++countL;
 				if ( processScript )
 				{
-					qDebug() << "render " << stl[i] << " as " << script;
-					f->renderLine ( script ,targetScene,stl[i],pen, lineWidth,sampleFontSize );
+// 					qDebug() << "render " << stl[i] << " as " << script;
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.ry() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * countL;
+						charC = f->renderLine ( script ,targetScene,stl[i].mid(offsetB),pen, lineWidth,sampleFontSize );
+						offsetB += charC;
+						restC -= charC;
+						qDebug()<<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 				else if ( processFeatures )
 				{
 					OTFSet aSet = deFillOTTree();
-					qDebug() << aSet.dump();
-					f->renderLine ( aSet, targetScene,stl[i],pen, lineWidth,sampleFontSize );
+// 					qDebug() << aSet.dump();
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.ry() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * countL;
+						charC = f->renderLine ( aSet, targetScene,stl[i].mid(offsetB),pen, lineWidth,sampleFontSize );
+					offsetB += charC;
+					restC -= charC;
+					qDebug()<<restC;
+					if(restC > 0)
+						++countL;
+				}
+				while(restC > 0);
 				}
 				else
 				{
-					f->renderLine ( targetScene,stl[i],pen,lineWidth, sampleFontSize );
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.ry() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * countL;
+						charC = f->renderLine ( targetScene,stl[i].mid(offsetB),pen,lineWidth, sampleFontSize );
+						offsetB += charC;
+						restC -= charC;
+						qDebug()<<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 			}
 		}
@@ -744,25 +782,63 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			double margin = ( textProgression->inLine() == TextProgression::INLINE_TTB ) ? marginT : marginB ;
 			double lineWidth = loremScene->sceneRect().height() * 0.8;
 			QPointF pen ( 0 , margin );
+			int countL(0);
 			for ( int i=0; i< stl.count(); ++i )
 			{
-
-				pen.rx() = (loremScene->sceneRect().width() * 0.9) - adjustedSampleInter * i;
-
+				++countL;
 				if ( processScript )
 				{
-					qDebug() << "render " << stl[i] << " as " << script;
-					f->renderLine ( script ,targetScene,stl[i],pen,lineWidth, sampleFontSize );
+// 					qDebug() << "render " << stl[i] << " as " << script;
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.rx() = (loremScene->sceneRect().height() * 0.9) - adjustedSampleInter * countL;
+						charC = f->renderLine ( script ,targetScene,stl[i].mid(offsetB),pen, lineWidth,sampleFontSize );
+						offsetB += charC;
+						restC -= charC;
+						qDebug()<<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 				else if ( processFeatures )
 				{
 					OTFSet aSet = deFillOTTree();
-					qDebug() << aSet.dump();
-					f->renderLine ( aSet, targetScene,stl[i],pen,lineWidth, sampleFontSize );
+// 					qDebug() << aSet.dump();
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.rx() = (loremScene->sceneRect().height() * 0.9) - adjustedSampleInter * countL;
+						charC = f->renderLine ( aSet, targetScene,stl[i].mid(offsetB),pen, lineWidth,sampleFontSize );
+						offsetB += charC;
+						restC -= charC;
+						qDebug()<<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 				else
 				{
-					f->renderLine ( targetScene,stl[i],pen,lineWidth, sampleFontSize );
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.rx() = (loremScene->sceneRect().height() * 0.9) - adjustedSampleInter * countL;
+						charC = f->renderLine ( targetScene,stl[i].mid(offsetB),pen,lineWidth, sampleFontSize );
+						offsetB += charC;
+						restC -= charC;
+						qDebug()<<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 			}
 		}
@@ -773,25 +849,63 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			double margin = ( textProgression->inLine() == TextProgression::INLINE_TTB ) ? marginT : marginB ;
 			double lineWidth = loremScene->sceneRect().height() * 0.8;
 			QPointF pen ( 0 , margin );
+			int countL(0);
 			for ( int i=0; i< stl.count(); ++i )
 			{
-
-				pen.rx() = (loremScene->sceneRect().width() * 0.1) + adjustedSampleInter * i;
-
+				++countL;
 				if ( processScript )
 				{
-					qDebug() << "render " << stl[i] << " as " << script;
-					f->renderLine ( script ,targetScene,stl[i],pen,lineWidth,sampleFontSize );
+// 					qDebug() << "render " << stl[i] << " as " << script;
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.rx() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * countL;
+						charC = f->renderLine ( script ,targetScene,stl[i].mid(offsetB),pen, lineWidth,sampleFontSize );
+						offsetB += charC;
+						restC -= charC;
+						qDebug()<<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 				else if ( processFeatures )
 				{
 					OTFSet aSet = deFillOTTree();
-					qDebug() << aSet.dump();
-					f->renderLine ( aSet, targetScene,stl[i],pen,lineWidth, sampleFontSize );
+// 					qDebug() << aSet.dump();
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.rx() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * countL;
+						charC = f->renderLine ( aSet, targetScene,stl[i].mid(offsetB),pen, lineWidth,sampleFontSize );
+						offsetB += charC;
+						restC -= charC;
+						qDebug()<<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 				else
 				{
-					f->renderLine ( targetScene,stl[i],pen, lineWidth,sampleFontSize );
+					int restC(stl[i].count());
+					int offsetB(0);
+					int charC(0);
+					do
+					{
+						pen.rx() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * countL;
+						charC = f->renderLine ( targetScene,stl[i].mid(offsetB),pen,lineWidth, sampleFontSize );
+						offsetB += charC;
+						restC -= charC;
+						qDebug()<<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 			}
 		}

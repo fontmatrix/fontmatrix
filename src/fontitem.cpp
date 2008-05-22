@@ -673,6 +673,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	m_rasterFreetype = false;
 	m_progression = PROGRESSION_LTR;
 	m_shaperType = 1;
+	renderReturnWidth = false;
 
 	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
@@ -1135,7 +1136,7 @@ double FontItem::renderLine ( QGraphicsScene * scene,
                               double zindex ,
                               bool record )
 {
-	qDebug() <<fancyName() <<"::"<<"renderLine("<<scene<<spec<<lineWidth<<fsize<<zindex<<record<<")";
+// 	qDebug() <<fancyName() <<"::"<<"renderLine("<<scene<<spec<<lineWidth<<fsize<<zindex<<record<<")";
 	double retValue ( 0.0 );
 	if ( spec.isEmpty() )
 		return retValue;
@@ -1196,13 +1197,19 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					break;
 				}
 			}
-			retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			if(renderReturnWidth)
+				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 
 			/************************************/
 			if ( record )
 				pixList.append ( glyph );
 			scene->addItem ( glyph );
-			retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			
+			if(renderReturnWidth)
+				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			else
+				retValue += 1;
+			
 			glyph->setPos ( pen.x() + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor, pen.y() - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 			glyph->setZValue ( zindex );
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
@@ -1272,7 +1279,12 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
-			retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			
+			if(renderReturnWidth)
+				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			else
+				retValue += 1;
+			
 			glyph->setPos ( pen );
 			glyph->setZValue ( zindex );
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
@@ -1295,17 +1307,18 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 }
 
 /// Featured line
-void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
+double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
 {
+	double retValue ( 0.0 );
 	if ( spec.isEmpty() )
-		return;
+		return retValue;
 	if ( !m_isOpenType )
-		return;
+		return retValue;
 	ensureFace();
 
 	otf = new FMOtf ( m_face, 0x10000 );// You think "What’s this 0x10000?", so am I! Just accept Harfbuzz black magic :)
 	if ( !otf )
-		return;
+		return retValue;
 	if ( record )
 		sceneList.append ( scene );
 	double sizz = fsize;
@@ -1321,7 +1334,7 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 // 	qDebug() << "Deleted OTF";
 	if ( refGlyph.count() == 0 )
 	{
-		return;
+		return 0;
 	}
 	QPointF pen ( origine );
 
@@ -1375,6 +1388,12 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			/*************************************************/
 			if ( record )
 				pixList.append ( glyph );
+			
+			if(renderReturnWidth)
+				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			else
+				retValue += 1;
+			
 			scene->addItem ( glyph );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
@@ -1439,6 +1458,12 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 			/**********************************************/
 			if ( record )
 				glyphList.append ( glyph );
+			
+			if(renderReturnWidth)
+				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			else
+				retValue += 1;
+			
 			scene->addItem ( glyph );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
 			                pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
@@ -1456,20 +1481,22 @@ void FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QP
 
 
 	releaseFace();
+	return retValue;
 }
 
 
-void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
+double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
 {
+	double retValue(0.0);
 	if ( spec.isEmpty() )
-		return;
+		return 0;
 	if ( !m_isOpenType )
-		return;
+		return 0;
 	ensureFace();
 
 	otf = new FMOtf ( m_face, 0x10000 );
 	if ( !otf )
-		return;
+		return 0;
 	
 	FMShaperFactory *shaperfactory = 0;
 	switch(m_shaperType)
@@ -1508,7 +1535,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 // 	qDebug() << "Deleted OTF";
 	if ( refGlyph.count() == 0 )
 	{
-		return;
+		return 0;
 	}
 	QPointF pen ( origine );
 
@@ -1562,6 +1589,12 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			/*************************************************/
 			if ( record )
 				pixList.append ( glyph );
+			
+			if(renderReturnWidth)
+				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			else
+				retValue += 1;
+			
 			scene->addItem ( glyph );
 			glyph->setZValue ( 100.0 );
 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
@@ -1626,6 +1659,12 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 			/**********************************************/
 			if ( record )
 				glyphList.append ( glyph );
+			
+			if(renderReturnWidth)
+				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
+			else
+				retValue += 1;
+			
 			scene->addItem ( glyph );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
 			                pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
@@ -1642,6 +1681,7 @@ void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec
 
 
 	releaseFace();
+	return retValue;
 }
 
 

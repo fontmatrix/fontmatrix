@@ -872,16 +872,18 @@ QList<RenderedGlyph> FMOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 	bool wantPos = true;
 	for ( uint bIndex = 0 ; bIndex < _buffer->in_length; ++bIndex )
 	{
-// 		qDebug() << "bIndex = "<< bIndex;
+		qDebug() << "bIndex = "<< bIndex;
 		RenderedGlyph gl;
 
 		gl.glyph = _buffer->in_string[bIndex].gindex;
 		if ( gl.glyph == 0 )
 		{
-// 			qDebug() << "glyph skipped";
+			qDebug() << "glyph skipped";
+			// Here we just continue but in the case of an actual lyout engine
+			// we should keep track of empty glyphs positions too.
 			continue;
 		}
-
+		gl.log = _buffer->in_string[bIndex].cluster;
 		Harfbuzz::HB_Position p = 0;
 		if ( wantPos && GPOS )
 		{
@@ -904,7 +906,7 @@ QList<RenderedGlyph> FMOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 		}
 		else
 		{
-// 			qDebug() << p->back;
+			qDebug() << p->back;
 			double backBonus = 0.0;
 			for ( int bb = 0; bb < p->back; ++bb )
 			{

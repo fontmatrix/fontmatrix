@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>469</width>
+    <width>530</width>
     <height>590</height>
    </rect>
   </property>
@@ -63,7 +63,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>447</width>
+        <width>508</width>
         <height>536</height>
        </rect>
       </property>
@@ -172,7 +172,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>447</width>
+        <width>508</width>
         <height>536</height>
        </rect>
       </property>
@@ -278,7 +278,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>425</width>
+            <width>486</width>
             <height>489</height>
            </rect>
           </property>
@@ -517,7 +517,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>447</width>
+        <width>508</width>
         <height>536</height>
        </rect>
       </property>
@@ -584,6 +584,16 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="4" >
+        <widget class="QCheckBox" name="clipboardCheck" >
+         <property name="toolTip" >
+          <string>Copy selected character to clipboard</string>
+         </property>
+         <property name="text" >
+          <string>CTC</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2" >
@@ -591,7 +601,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>447</width>
+        <width>508</width>
         <height>536</height>
        </rect>
       </property>

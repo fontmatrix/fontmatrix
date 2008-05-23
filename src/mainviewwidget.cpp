@@ -46,6 +46,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QTime>
+#include <QClipboard>
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
 
@@ -748,13 +749,14 @@ void MainViewWidget::slotView ( bool needDeRendering )
 					{
 						pen.ry() = (loremScene->sceneRect().height() * 0.1) + adjustedSampleInter * countL;
 						charC = f->renderLine ( aSet, targetScene,stl[i].mid(offsetB),pen, lineWidth,sampleFontSize );
-					offsetB += charC;
-					restC -= charC;
-					qDebug()<<restC;
-					if(restC > 0)
-						++countL;
-				}
-				while(restC > 0);
+// 						++charC;
+						offsetB += charC ;
+						restC -= charC;
+						qDebug()<< charC << offsetB <<restC;
+						if(restC > 0)
+							++countL;
+					}
+					while(restC > 0);
 				}
 				else
 				{
@@ -1694,6 +1696,12 @@ void MainViewWidget::slotShowOneGlyph()
 			if ( curGlyph->data ( 3 ).toInt() > 0 ) // Is a codepoint
 			{
 				fancyGlyphData = curGlyph->data ( 3 ).toInt();
+				if(clipboardCheck->isChecked())
+				{
+					QString simpleC;
+					simpleC += QChar(fancyGlyphData);
+					QApplication::clipboard()->setText(simpleC, QClipboard::Clipboard);
+				}
 				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData );
 			}
 			else // Is a glyph index

@@ -1309,6 +1309,7 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 /// Featured line
 double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
 {
+// 	qDebug()<<"Featured("<< spec <<")";
 	double retValue ( 0.0 );
 	if ( spec.isEmpty() )
 		return retValue;
@@ -1481,12 +1482,13 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 
 
 	releaseFace();
-	return retValue;
+	return retValue + 1;
 }
 
 
 double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
 {
+	qDebug()<<"Featured("<< spec <<")";
 	double retValue(0.0);
 	if ( spec.isEmpty() )
 		return 0;
@@ -1593,7 +1595,7 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 			if(renderReturnWidth)
 				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			else
-				retValue += 1;
+				retValue = refGlyph[i].log;
 			
 			scene->addItem ( glyph );
 			glyph->setZValue ( 100.0 );
@@ -1663,7 +1665,7 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 			if(renderReturnWidth)
 				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			else
-				retValue += 1;
+				retValue = refGlyph[i].log;
 			
 			scene->addItem ( glyph );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
@@ -1681,7 +1683,7 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 
 
 	releaseFace();
-	return retValue;
+	return retValue + 1;
 }
 
 //deprecated

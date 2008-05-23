@@ -1485,10 +1485,10 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 	return retValue + 1;
 }
 
-
+/// Shaped line
 double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
 {
-	qDebug()<<"Featured("<< spec <<")";
+	qDebug()<<"Shaped("<< spec <<")";
 	double retValue(0.0);
 	if ( spec.isEmpty() )
 		return 0;

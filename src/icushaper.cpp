@@ -10,24 +10,31 @@
 //
 //
 
+#include <QDebug>
 #include "icushaper.h"
 
 #include <iostream>
 using std::cerr; 
 
+QString OTF_tag_name ( unsigned int tag );
+unsigned int OTF_name_tag ( QString s );
 
 IcuShaper::IcuShaper ( FMOtf * o, QString s )
 		:FMBaseShaper ( o,s )
 {
-	LEErrorCode err;
+	fillTagToCode();
+	qDebug()<<"IcuShaper::IcuShaper("<< tagToCode.value ( script ) <<")";
+	LEErrorCode err(LE_NO_ERROR);
 	icuFont = new IcuFontImpl ( otf );
-	icuLE = LayoutEngine::layoutEngineFactory ( icuFont, tagToCode.value ( script ), -1 , err );
-	cerr << "ICU ERRCODE "<<err;
+	icuLE = LayoutEngine::layoutEngineFactory ( icuFont,  tagToCode.value ( script ), -1 , err );
+	IcuError(err);
 }
 
 IcuShaper::~ IcuShaper()
 {
 	icuLE->reset();
+	delete icuLE;
+	delete icuFont;
 }
 
 void IcuShaper::fillTagToCode()
@@ -138,37 +145,6 @@ void IcuShaper::fillTagToCode()
 		tagToCode["xsux"] = xsuxScriptCode  ;
 		tagToCode["zxxx"] = zxxxScriptCode  ;
 		tagToCode["zzzz"] = zzzzScriptCode  ;
-		// We won’t use language at first
-// 		tagToCode["ARA"] = araLanguageTag  ;
-// 		tagToCode["ASM"] = asmLanguageTag  ;
-// 		tagToCode["BEN"] = benLanguageTag  ;
-// 		tagToCode["FAR"] = farLanguageTag  ;
-// 		tagToCode["GUJ"] = gujLanguageTag  ;
-// 		tagToCode["HIN"] = hinLanguageTag  ;
-// 		tagToCode["IWR"] = iwrLanguageTag  ;
-// 		tagToCode["JII"] = jiiLanguageTag  ;
-// 		tagToCode["JAN"] = janLanguageTag  ;
-// 		tagToCode["KAN"] = kanLanguageTag  ;
-// 		tagToCode["KOK"] = kokLanguageTag  ;
-// 		tagToCode["KOR"] = korLanguageTag  ;
-// 		tagToCode["KSH"] = kshLanguageTag  ;
-// 		tagToCode["MAL"] = malLanguageTag  ;
-// 		tagToCode["MAR"] = marLanguageTag  ;
-// 		tagToCode["MLR"] = mlrLanguageTag  ;
-// 		tagToCode["MNI"] = mniLanguageTag  ;
-// 		tagToCode["ORI"] = oriLanguageTag  ;
-// 		tagToCode["SAN"] = sanLanguageTag  ;
-// 		tagToCode["SND"] = sndLanguageTag  ;
-// 		tagToCode["SNH"] = snhLanguageTag  ;
-// 		tagToCode["SYR"] = syrLanguageTag  ;
-// 		tagToCode["TAM"] = tamLanguageTag  ;
-// 		tagToCode["TEL"] = telLanguageTag  ;
-// 		tagToCode["THA"] = thaLanguageTag  ;
-// 		tagToCode["URD"] = urdLanguageTag  ;
-// 		tagToCode["ZHP"] = zhpLanguageTag  ;
-// 		tagToCode["ZHS"] = zhsLanguageTag  ;
-// 		tagToCode["ZHT"] = zhtLanguageTag  ;
-
 	}
 }
 
@@ -178,7 +154,7 @@ GlyphList IcuShaper::doShape ( const QString & s )
 	GlyphList ret;
 	int glAllocated ( 0 );
 
-	LEErrorCode err;
+	LEErrorCode err(LE_NO_ERROR);
 
 	LEUnicode16 *ts = new LEUnicode[s.count() ];
 	for ( int i ( 0 ); i< s.count();++i )
@@ -189,31 +165,32 @@ GlyphList IcuShaper::doShape ( const QString & s )
 	cerr<< std::endl;
 
 	icuLE->reset();
-	glAllocated = icuLE->layoutChars ( ts, 0, s.count(), s.count(), false, 0, 0, err ) ;
+	int sCount (s.count());
+	glAllocated = icuLE->layoutChars ( ts, 0,sCount , sCount, false, 0, 0, err ) ;
+	IcuError(err);
 	
-	if(err)
-		cerr<<"ICU ERROR ("<< err <<")"<<std::endl;
+	cerr<<"provided "<<s.count()<< " got "<< glAllocated<< std::endl;
 
 	LEGlyphID *glyphs    = new LEGlyphID[glAllocated];
 	le_int32 *indices   = new le_int32[glAllocated];
 	float     *positions = new float[ ( glAllocated * 2 ) + 2];
-	icuLE->getGlyphs(glyphs, err);
-	icuLE->getCharIndices(indices, err);
-	icuLE->getGlyphPositions(positions, err);
-	float stackX(0.0);
+	icuLE->getGlyphs ( glyphs, err );
+	icuLE->getCharIndices ( indices, err );
+	icuLE->getGlyphPositions ( positions, err );
+	float stackX ( 0.0 );
 
 	for ( int gIdx ( 0 ); gIdx < glAllocated ; ++gIdx )
 	{
 		RenderedGlyph rg;
 		rg.glyph = glyphs[gIdx];
 		rg.log = indices[gIdx];
-		rg.xadvance = positions[(gIdx + 1) * 2] - stackX;
-		rg.yadvance = positions[((gIdx + 1) * 2) + 1];
+		rg.xadvance = positions[ ( gIdx + 1 ) * 2] - stackX;
+		rg.yadvance = positions[ ( ( gIdx + 1 ) * 2 ) + 1];
 		rg.xoffset = rg.yoffset = 0;
 		stackX +=  rg.xadvance;
-		
+
 		ret << rg;
-		
+
 		cerr<< "["<< rg.log <<"]";
 		cerr<< "["<< rg.glyph <<"]";
 		cerr<< "["<< rg.xadvance <<"]";
@@ -221,42 +198,70 @@ GlyphList IcuShaper::doShape ( const QString & s )
 		cerr<< std::endl;
 	}
 	icuLE->reset();
-	
+
 	delete  ts;
 	delete  glyphs;
 	delete  indices;
 	delete  positions;
-	
+
 	return ret;
 }
 
 
+void IcuShaper::IcuError(int err)
+{
+	switch ( err )
+	{
+		case LE_NO_SUBFONT_WARNING  : qDebug()<<"The font does not contain subfonts.";break;
+		case LE_NO_ERROR  : qDebug()<<"No error, no warning.";break;
+		case LE_ILLEGAL_ARGUMENT_ERROR  : qDebug()<<"An illegal argument was detected.";break;
+		case LE_MEMORY_ALLOCATION_ERROR  : qDebug()<<"Memory allocation error.";break;
+		case LE_INDEX_OUT_OF_BOUNDS_ERROR  : qDebug()<<"Trying to access an index that is out of bounds.";break;
+		case LE_NO_LAYOUT_ERROR  : qDebug()<<"You must call layoutChars() first.";break;
+		case LE_INTERNAL_ERROR  : qDebug()<<"An internal error was encountered.";break;
+		case LE_FONT_FILE_NOT_FOUND_ERROR  : qDebug()<<"The requested font file cannot be opened.";break;
+		case LE_MISSING_FONT_TABLE_ERROR  : qDebug()<<"The requested font table does not exist.";break;
+		default:qDebug()<<"NoCode";
+	}
+}
+
+
+
 /// Je suis furieux d’avoir à écrire ça - pm
+
+IcuFontImpl *IcuFontImpl::instance = 0;
 
 IcuFontImpl::IcuFontImpl ( FMOtf * o )
 		:otf ( o )
 {
+	instance = this;
 }
 
 IcuFontImpl::~ IcuFontImpl()
 {
+	foreach(unsigned char* p, tables)
+	{
+		delete p;
+	}
 
 }
 
 const void * IcuFontImpl::getFontTable ( LETag tableTag ) const
 {
-	cerr<< "IcuFontImpl::getFontTable" <<std::endl;
+	qDebug()<< "IcuFontImpl::getFontTable" << OTF_tag_name( tableTag );
 	FT_Face face ( otf->face() );
 	FT_ULong length(0);
 	if ( !FT_Load_Sfnt_Table ( face, tableTag, 0, NULL, &length ) )
 	{
 		if ( length > 0 )
 		{
+			qDebug()<<"Table len"<< length;
 			FT_Byte * bA = new FT_Byte[length];
 			
 			FT_Load_Sfnt_Table ( face, tableTag, 0, bA, &length );
 			
-			return ( const void* ) bA;
+			regTables( tableTag,  bA );
+			return  (const void*) tables.value(tableTag);
 		}
 
 	}
@@ -330,5 +335,4 @@ le_int32 IcuFontImpl::getLeading() const
 {
 	return 0;
 }
-
 

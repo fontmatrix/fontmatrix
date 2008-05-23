@@ -41,9 +41,13 @@ class IcuFontImpl : public LEFontInstance
 		le_int32 	getDescent () const;
 		le_int32 	getLeading () const;
 		
+		static void regTables(LETag   tableTag, unsigned char *t){instance->tables[tableTag] = t;}
+		
 
 	private:
 		FMOtf *otf;
+		static IcuFontImpl *instance;
+		QMap<LETag,unsigned char*> tables;
 };
 
 
@@ -59,8 +63,9 @@ class IcuShaper : public FMBaseShaper
 		LayoutEngine *icuLE;
 		IcuFontImpl *icuFont;
 		
-		mutable QMap<QString, ScriptCodes> tagToCode;
+		mutable QMap<QString, unsigned int> tagToCode;
 		void fillTagToCode();
+		void IcuError(int err);
 };
 
 

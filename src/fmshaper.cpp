@@ -234,7 +234,7 @@ QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 			gl.yadvance = 0.0;
 			gl.xoffset = /*ltr ?*/ ( m.offsets[gIndex].x  - baseCorrection ) /*: ( baseCorrection - m.offsets[gIndex].x )*/;
 			gl.yoffset = m.offsets[gIndex].y ;
-				
+			gl.log = m.log_clusters[gIndex] ;
 			renderedString << gl;
 	}
 	qDebug() << "EndOf FMShaper::doShape("<<string<<","<<ltr<<")";

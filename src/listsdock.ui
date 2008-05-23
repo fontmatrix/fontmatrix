@@ -21,7 +21,7 @@
   <property name="windowTitle" >
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3" >
+  <layout class="QGridLayout" name="gLt_3" >
    <item row="0" column="0" >
     <widget class="QLabel" name="Tags" >
      <property name="sizePolicy" >
@@ -195,7 +195,7 @@
       <attribute name="title" >
        <string>Names</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout" >
+      <layout class="QGridLayout" name="gLt" >
        <item row="0" column="0" >
         <widget class="FMNameList" name="fontTree" >
          <property name="sizePolicy" >
@@ -274,7 +274,7 @@
       <attribute name="title" >
        <string>Previews</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2" >
+      <layout class="QGridLayout" name="gLt_2" >
        <item row="0" column="0" >
         <widget class="FMPreviewList" name="previewList" >
          <property name="sizePolicy" >
@@ -302,7 +302,7 @@
       <attribute name="title" >
        <string>Folders</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_4" >
+      <layout class="QGridLayout" name="gLt_4" >
        <item row="0" column="0" >
         <widget class="QTreeView" name="folderView" />
        </item>

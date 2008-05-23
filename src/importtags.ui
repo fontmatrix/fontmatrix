@@ -16,7 +16,7 @@
    <iconset resource="application.qrc" >
     <normaloff>:/fontmatrix_tags.png</normaloff>:/fontmatrix_tags.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout" >
+  <layout class="QGridLayout" name="gLt" >
    <item rowspan="4" row="0" column="0" >
     <widget class="QLabel" name="label" >
      <property name="frameShape" >

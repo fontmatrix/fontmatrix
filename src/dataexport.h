@@ -40,7 +40,7 @@ class DataExport
 		int copyFiles();
 		int buildIndex();
 		int buildHtml();
-
+		int buildTemplate(const QString& templateDirPath);
 };
 
 #endif

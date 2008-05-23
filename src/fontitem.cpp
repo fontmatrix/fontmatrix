@@ -1392,7 +1392,7 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 			if(renderReturnWidth)
 				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			else
-				retValue += 1;
+				retValue = refGlyph[i].log;
 			
 			scene->addItem ( glyph );
 			glyph->setZValue ( 100.0 );
@@ -1462,7 +1462,7 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 			if(renderReturnWidth)
 				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 			else
-				retValue += 1;
+				retValue = refGlyph[i].log;
 			
 			scene->addItem ( glyph );
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
@@ -1683,112 +1683,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 	releaseFace();
 	return retValue;
 }
-
-
-/// Shaped line, mostly bug^^non-fully-usable right now :(
-// void FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine, double lineWidth,double fsize, bool record )
-// {
-// 	qDebug() <<"Rendered by HB";
-// 	if ( spec.isEmpty() )
-// 		return;
-// 	if ( !m_isOpenType )
-// 		return;
-// 	ensureFace();
-// 
-// 	double sizz = fsize;
-// 	double scalefactor = sizz / m_face->units_per_EM;
-// 	double scalefactorHadj = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-// 	double scalefactorVadj = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0 );
-// 
-// 	otf = new FMOtf ( m_face , 0x10000 );
-// 	if ( !otf )
-// 	{
-// 		releaseFace();
-// 		return;
-// 	}
-// 	if ( record )
-// 		sceneList.append ( scene );
-// 
-// 
-// 	FMShaper shaper ( otf );
-// 	if ( !shaper.setScript ( script ) )
-// 	{
-// 		qDebug() << "Can not set script "<<script<< " for " << m_name;
-// 		delete otf;
-// 		otf = 0;
-// 		releaseFace();
-// 		return;
-// 	}
-// 
-// 	QList<RenderedGlyph> refGlyph = shaper.doShape ( spec, ( m_progression == PROGRESSION_RTL ) ? false : true );
-// 
-// 	if ( refGlyph.count() == 0 )
-// 	{
-// 		releaseFace();
-// 		return;
-// 	}
-// 	QPointF pen ( origine );
-// 	if ( m_rasterFreetype )
-// 	{
-// 		for ( int i=0; i < refGlyph.count(); ++i )
-// 		{
-// 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
-// 			if ( !glyph )
-// 				continue;
-// 
-// 
-// // 			if ( m_progression == PROGRESSION_RTL )
-// // 			{
-// // 				pen.rx() += refGlyph[i].xadvance * scalefactorHadj;
-// // 			}
-// 
-// 			if ( record )
-// 				pixList.append ( glyph );
-// 			scene->addItem ( glyph );
-// 			glyph->setZValue ( 100.0 );
-// 
-// 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset  * scalefactorHadj ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scalefactor  ,
-// 			                pen.y() - ( refGlyph[i].yoffset  * scalefactorVadj ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
-// // 			if (  m_progression != PROGRESSION_RTL )
-// 			pen.rx() += refGlyph[i].xadvance * scalefactorVadj;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		for ( int i=0; i < refGlyph.count(); ++i )
-// 		{
-// 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
-// 			if ( !glyph )
-// 				continue;
-// 
-// 			if ( record )
-// 				glyphList.append ( glyph );
-// 			scene->addItem ( glyph );
-// 			glyph->setZValue ( 100.0 );
-// 			glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
-// 			//debug
-// 			glyph->setBrush ( QColor ( ( i*255/refGlyph.count() ),0,0,255- ( i*255/refGlyph.count() ) ) );
-// 
-// // 			if ( m_progression == PROGRESSION_RTL )
-// // 			{
-// // 				pen.rx() += refGlyph[i].xadvance * scalefactor;
-// // 			}
-// 
-// 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
-// 			                pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
-// 
-// // 			if (  m_progression != PROGRESSION_RTL )
-// // 			{
-// 			pen.rx() += refGlyph[i].xadvance * scalefactor;
-// // 			}
-// 		}
-// 	}
-// 
-// 	delete otf;
-// 	otf = 0;
-// 	releaseFace();
-// }
-
 
 //deprecated
 void FontItem::deRender ( QGraphicsScene *scene )

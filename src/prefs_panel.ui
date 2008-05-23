@@ -269,7 +269,7 @@
          <attribute name="title" >
           <string>Sample Text</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_3" >
+         <layout class="QGridLayout" name="gLt_3" >
           <item row="0" column="0" colspan="2" >
            <widget class="QGroupBox" name="groupBox_2" >
             <property name="toolTip" >
@@ -278,7 +278,7 @@
             <property name="title" >
              <string>Named Sample Texts</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout" >
+            <layout class="QGridLayout" name="gLt" >
              <item row="0" column="0" colspan="2" >
               <widget class="QListWidget" name="sampleTextNamesList" />
              </item>
@@ -310,7 +310,7 @@
             <property name="title" >
              <string>Initial Layout</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_2" >
+            <layout class="QGridLayout" name="gLt_2" >
              <item row="0" column="0" >
               <widget class="QLabel" name="label_2" >
                <property name="text" >

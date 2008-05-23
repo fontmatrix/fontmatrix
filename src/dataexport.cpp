@@ -209,4 +209,75 @@ int DataExport::buildHtml()
 	return fonts.count();
 }
 
+int DataExport::buildTemplate(const QString& templateDirPath)
+{
+	/// A template is the addition of 3 files in a directory
+	/// Which are : TOP CENTER BOTTOM
+	/// In TOP and BOTTOM, just put what you want
+	/// In CENTER, these strings will be replaced:
+	// ##FILENAME##
+	// ##FAMILY##
+	// ##VARIANT##
+	// ##PREVIEW##
+	// ##TAGS##
+	
+	QFile file(exDir.absolutePath() + exDir.separator() +"export.html");
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+	{
+		qDebug() << "Export Warning : Can't open " << file.fileName();
+		return 0;
+	}
+	
+	QDir tDir(templateDirPath);
+	if(!tDir.exists("TOP"))
+		return 0;
+	if(!tDir.exists("CENTER"))
+		return 0;
+	if(!tDir.exists("BOTTOM"))
+		return 0;
+	
+	
+	QFile fileTOP(tDir.filePath("TOP"));
+	QFile fileCENTER(tDir.filePath("CENTER"));
+	QFile fileBOTTOM(tDir.filePath("BOTTOM"));
+	
+	if(!fileTOP.open(QIODevice::ReadOnly | QIODevice::Text))
+		return 0;
+	if(!fileCENTER.open(QIODevice::ReadOnly | QIODevice::Text))
+		return 0;
+	if(!fileBOTTOM.open(QIODevice::ReadOnly | QIODevice::Text))
+		return 0;
+	
+	QString sTOP(fileTOP.readAll());
+	fileTOP.close();
+	QString sCENTER(fileCENTER.readAll());
+	fileCENTER.close();
+	QString sBOTTOM(fileBOTTOM.readAll());
+	fileBOTTOM.close();
+	
+	QTextStream exp(&file);
+	
+	exp << sTOP;
+	for(int fidx( 0 ); fidx < fonts.count() ; ++fidx)
+	{
+		FontItem* fitem(fonts[fidx]);
+		{
+			QString t(sCENTER);
+			QFileInfo ffile(fitem->path());
+			
+			t.replace("##FILENAME##", ffile.fileName() );
+			t.replace("##PREVIEW##",  ffile.fileName()+".png");
+			t.replace("##FAMILY##", fitem->family() );
+			t.replace("##VARIANT##", fitem->variant() );
+			t.replace("##TAGS##", fitem->tags().join(", "));
+			
+			exp << t;
+		}
+	}
+	exp << sBOTTOM;
+	
+	file.close();	
+
+}
+
 

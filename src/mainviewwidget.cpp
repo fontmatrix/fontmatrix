@@ -1601,12 +1601,18 @@ void MainViewWidget::slotSampleChanged()
 	slotView ( true );
 }
 
+#define MAX_PALYSTRING_LEN 30
+
 void MainViewWidget::refillSampleList()
 {
 	sampleTextCombo->clear();
 	playString->clear();
 
-	playString->addItems( typo->namedSample(typo->defaultSampleName()).split("\n") );
+	QStringList pList( typo->namedSample(typo->defaultSampleName()).split("\n") );
+	foreach(QString pString, pList)
+	{
+		playString->addItem(pString.left( MAX_PALYSTRING_LEN ));
+	}
 
 	QStringList sl = typo->namedSamplesNames();
 	for ( int i = 0;i < sl.count(); ++i )
@@ -1619,7 +1625,10 @@ void MainViewWidget::refillSampleList()
 		{
 			sampleTextCombo->addItem ( sl[i] );
 			QStringList nl(typo->namedSample(sl[i]).split("\n")) ;
-			playString->addItems(nl);
+			foreach(QString pString, nl)
+			{
+				playString->addItem(pString.left( MAX_PALYSTRING_LEN ));
+			}
 
 		}
 	}

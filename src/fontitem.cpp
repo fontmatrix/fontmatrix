@@ -1731,11 +1731,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 
 	if ( m_rasterFreetype )
 	{
+		QList<QGraphicsPixmapItem*> mayBeRemoved;
 		for ( int i=0; i < refGlyph.count(); ++i )
 		{
 			QGraphicsPixmapItem *glyph = itemFromGindexPix ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 				continue;
+			if( spec.at(refGlyph[i].log).category() == QChar::Separator_Space )
+			{
+				mayBeRemoved.clear();
+			}
 
 			if ( m_progression == PROGRESSION_RTL )
 			{
@@ -1744,6 +1749,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				if ( pWidth < distance )
 				{
 					delete glyph;
+					
+					retValue -= mayBeRemoved.count() - 1;
+					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
+					{
+						scene->removeItem( rm );
+						if(record)
+							pixList.removeAll(rm);
+						delete rm;
+					}
+					
 					break;
 				}
 			}
@@ -1754,6 +1769,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				if ( pWidth < distance )
 				{
 					delete glyph;
+					
+					retValue -= mayBeRemoved.count() - 1;
+					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
+					{
+						scene->removeItem( rm );
+						if(record)
+							pixList.removeAll(rm);
+						delete rm;
+					}
+					
 					break;
 				}
 			}
@@ -1763,6 +1788,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				if ( pWidth < distance )
 				{
 					delete glyph;
+					
+					retValue -= mayBeRemoved.count() - 1;
+					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
+					{
+						scene->removeItem( rm );
+						if(record)
+							pixList.removeAll(rm);
+						delete rm;
+					}
+					
 					break;
 				}
 			}
@@ -1772,6 +1807,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				if ( pWidth < distance )
 				{
 					delete glyph;
+					
+					retValue -= mayBeRemoved.count() - 1;
+					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
+					{
+						scene->removeItem( rm );
+						if(record)
+							pixList.removeAll(rm);
+						delete rm;
+					}
+					
 					break;
 				}
 			}
@@ -1779,6 +1824,8 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 			/*************************************************/
 			if ( record )
 				pixList.append ( glyph );
+			
+			mayBeRemoved.append(glyph);
 			
 			if(renderReturnWidth)
 				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
@@ -1801,11 +1848,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 	}
 	else
 	{
+		QList<QGraphicsPathItem*> mayBeRemoved;
 		for ( int i=0; i < refGlyph.count(); ++i )
 		{
 			QGraphicsPathItem *glyph = itemFromGindex ( refGlyph[i].glyph , sizz );
 			if ( !glyph )
 				continue;
+			if( spec.at(refGlyph[i].log).category() == QChar::Separator_Space )
+			{
+				mayBeRemoved.clear();
+			}
 
 			if ( m_progression == PROGRESSION_RTL )
 			{
@@ -1814,6 +1866,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				if ( pWidth < distance )
 				{
 					delete glyph;
+					
+					retValue -= mayBeRemoved.count() - 1;
+					foreach(QGraphicsPathItem *rm, mayBeRemoved)
+					{
+						scene->removeItem( rm );
+						if(record)
+							glyphList.removeAll(rm);
+						delete rm;
+					}
+					
 					break;
 				}
 			}
@@ -1824,6 +1886,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				if ( pWidth < distance )
 				{
 					delete glyph;
+					
+					retValue -= mayBeRemoved.count() - 1;
+					foreach(QGraphicsPathItem *rm, mayBeRemoved)
+					{
+						scene->removeItem( rm );
+						if(record)
+							glyphList.removeAll(rm);
+						delete rm;
+					}
+					
 					break;
 				}
 			}
@@ -1833,6 +1905,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				if ( pWidth < distance )
 				{
 					delete glyph;
+					
+					retValue -= mayBeRemoved.count() - 1;
+					foreach(QGraphicsPathItem *rm, mayBeRemoved)
+					{
+						scene->removeItem( rm );
+						if(record)
+							glyphList.removeAll(rm);
+						delete rm;
+					}
+					
 					break;
 				}
 			}
@@ -1842,6 +1924,16 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				if ( pWidth < distance )
 				{
 					delete glyph;
+					
+					retValue -= mayBeRemoved.count() - 1;
+					foreach(QGraphicsPathItem *rm, mayBeRemoved)
+					{
+						scene->removeItem( rm );
+						if(record)
+							glyphList.removeAll(rm);
+						delete rm;
+					}
+					
 					break;
 				}
 			}
@@ -1849,6 +1941,8 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 			/**********************************************/
 			if ( record )
 				glyphList.append ( glyph );
+			
+			mayBeRemoved.append(glyph);
 			
 			if(renderReturnWidth)
 				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;

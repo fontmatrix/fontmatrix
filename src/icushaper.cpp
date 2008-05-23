@@ -181,20 +181,21 @@ GlyphList IcuShaper::doShape ( const QString & s )
 
 	for ( int gIdx ( 0 ); gIdx < glAllocated ; ++gIdx )
 	{
-		RenderedGlyph rg;
-		rg.glyph = glyphs[gIdx];
-		rg.log = indices[gIdx];
-		rg.xadvance = positions[ ( gIdx + 1 ) * 2] - stackX;
-		rg.yadvance = positions[ ( ( gIdx + 1 ) * 2 ) + 1];
-		rg.xoffset = rg.yoffset = 0;
-		stackX +=  rg.xadvance;
+		if(glyphs[gIdx] != 0xFFFF)
+		{
+			RenderedGlyph rg;
+			rg.glyph = glyphs[gIdx];
+			rg.log = indices[gIdx];
+			rg.xadvance = positions[ ( gIdx + 1 ) * 2] - stackX;
+			rg.yadvance = positions[ ( ( gIdx + 1 ) * 2 ) + 1];
+			rg.xoffset = rg.yoffset = 0;
+			stackX +=  rg.xadvance;
+	
+			ret << rg;
+		}
 
-		ret << rg;
-
-		cerr<< "["<< rg.log <<"]";
-		cerr<< "["<< rg.glyph <<"]";
-		cerr<< "["<< rg.xadvance <<"]";
-		cerr<< "["<< positions[gIdx * 2] <<"]";
+		cerr<< "["<< indices[gIdx] <<"]";
+		cerr<< "["<< glyphs[gIdx] <<"]";
 		cerr<< std::endl;
 	}
 	icuLE->reset();

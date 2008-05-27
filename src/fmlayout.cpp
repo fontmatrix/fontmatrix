@@ -24,6 +24,65 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 // 	foreach(Vector v, nodes)
 // 	{debugL << v.n->index;}
 // 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
+	int deep(curList.count() +1);
+	FMLayout* lyt(FMLayout::getLayout());
+	Node* curNode ( this );
+			// cIdx is first glyph of the line
+	int cIdx ( curNode->index );
+			// bIndex is the break which sits on cIdx
+	int bIndex ( lyt->breakList.indexOf ( cIdx ) );
+	bool wantPlus ( true );
+	while ( wantPlus )
+	{
+		++bIndex;
+// 				qDebug()<<"DOGRAPH LOOP "<<bIndex;
+		if ( bIndex  < lyt->breakList.count() )
+		{
+			double di ( lyt->distance ( cIdx, lyt->breakList[bIndex] ) );
+// 			qDebug()<< "C DI"<< lyt->lineWidth(deep) <<di;
+			if ( di >= lyt->lineWidth(deep) )
+			{
+// 				qDebug()<<"LINE"<<cIdx<< lyt->breakList[bIndex];
+// 				qDebug()<< "C DI"<< lyt->lineWidth(deep) <<di;
+				if ( ( bIndex - 1 > 0 ) && ( lyt->breakList[bIndex - 1] != cIdx ) )
+				{
+					int soon ( lyt->breakList[bIndex - 1] );
+					Node* sN = 0;
+					sN = new Node ( soon );
+					double disN = lyt->lineWidth(deep)- lyt->distance ( cIdx, soon );
+					Node::Vector vN ( sN, qAbs ( disN ) );
+					curNode->nodes << vN;
+				}
+
+				int fit ( lyt->breakList[bIndex] );
+				Node* sF = 0;
+				sF = new Node ( fit );
+				double disF =  lyt->lineWidth(deep)- lyt->distance ( cIdx, fit );
+				Node::Vector vF ( sF,qAbs (  2.0 * disF ) );
+				curNode->nodes << vF;
+
+				wantPlus = false;
+
+			}
+		}
+		else // end of breaks list
+		{
+// 					qDebug()<<"END OF BREAKS";
+			int soon ( lyt->breakList[bIndex - 1] );
+			if ( soon != cIdx && !curNode->hasNode ( soon ) )
+			{
+
+				Node* sN = 0;
+				sN = new Node ( soon );
+				double disN = lyt->lineWidth(deep) - lyt->distance ( cIdx, soon );
+				Node::Vector vN ( sN, qAbs ( disN ) );
+				curNode->nodes << vN;
+			}
+
+			wantPlus = false;
+		}
+	}
+
 	curList << index;
 	foreach ( Vector v, nodes )
 	{
@@ -44,10 +103,11 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 
 }
 
-
+FMLayout *FMLayout::instance = 0;
 FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */)
 {
 	rules = new QGraphicsRectItem;
+	instance = this;
 }
 
 FMLayout::~ FMLayout()
@@ -68,6 +128,11 @@ void FMLayout::doLayout ( const GlyphList & spec , double fs )
 
 void FMLayout::doGraph()
 {
+	/**
+	I hit a power issue with my graph thing as in its initial state.
+	So, I’ll try now to cut the tree as it’s built, not far than what’s done in chess programs.
+	
+	*/
 	qDebug() <<"FMLayout::doGraph()";
 	// At first we’ll provide a very simple implementation to test things out
 
@@ -84,96 +149,97 @@ void FMLayout::doGraph()
 	breaks << theString.count();
 	qDebug() <<"BREAKS"<<breaks;
 	int theEnd ( breaks.last() );
+	breakList = breaks;
 // 	return;
 
 	// B) Try to build the shorter graph (be carefull of n) - we’ll try, if possible, to avoid recursive function
-	double constantWidth ( theRect.width() );// here it’s constant but it will have to not be in the future
-
-// 	QMap<int,Node*> crossBreakNode;
-// 	QMap<int,int> crossBreakVectIndex;
-	QList<Node*> toDo;
-	QList<Node*> newNodes;
-	toDo << node;
-	int nodeCounter ( 0 );
-	while ( !toDo.isEmpty() )
-	{
-// 		qDebug()<<"DOGRAPH LOOP 1";
-		newNodes.clear();
-		int nCount ( toDo.count() );
-		for ( int nIdx ( 0 ); nIdx < nCount; ++nIdx )
-		{
-// 			qDebug()<<"DOGRAPH LOOP 2"<<nIdx <<"/"<<nCount;
-			Node* curNode ( toDo[nIdx] );
-			// cIdx is first glyph of the line
-			int cIdx ( curNode->index );
-			// bIndex is the break which sits on cIdx
-			int bIndex ( breaks.indexOf ( cIdx ) );
-			bool wantPlus ( true );
-			while ( wantPlus )
-			{
-				++bIndex;
-// 				qDebug()<<"DOGRAPH LOOP 3"<<plus;
-				if ( bIndex  < breaks.count() )
-				{
-					double di ( distance ( cIdx, breaks[bIndex] ) );
-// 					qDebug()<< "C DI"<< constantWidth<<di;
-					if ( di >= constantWidth )
-					{
-// 						qDebug()<<"LINE"<<cIdx<< breaks[bIndex];
-// 						qDebug()<<"C DI"<< constantWidth<<di;
-						if ( ( bIndex - 1 > 0 ) && ( breaks[bIndex - 1] != cIdx ) )
-						{
-							int soon ( breaks[bIndex - 1] );
-							Node* sN = 0;
-							sN = new Node ( soon );
-							++nodeCounter;
-// 							}
-							double disN = constantWidth - distance ( cIdx, soon );
-							Node::Vector vN ( sN, qAbs ( disN ) );
-							curNode->nodes << vN;
-							newNodes << sN;
-						}
-
-						int fit ( breaks[bIndex] );
-						Node* sF = 0;
-						sF = new Node ( fit );
-						++nodeCounter;
+// 	double constantWidth ( theRect.width() );// here it’s constant but it will have to not be in the future
+// 
+// // 	QMap<int,Node*> crossBreakNode;
+// // 	QMap<int,int> crossBreakVectIndex;
+// 	QList<Node*> toDo;
+// 	QList<Node*> newNodes;
+// 	toDo << node;
+// 	int nodeCounter ( 0 );
+// 	while ( !toDo.isEmpty() )
+// 	{
+// // 		qDebug()<<"DOGRAPH LOOP 1";
+// 		newNodes.clear();
+// 		int nCount ( toDo.count() );
+// 		for ( int nIdx ( 0 ); nIdx < nCount; ++nIdx )
+// 		{
+// // 			qDebug()<<"DOGRAPH LOOP 2"<<nIdx <<"/"<<nCount;
+// 			Node* curNode ( toDo[nIdx] );
+// 			// cIdx is first glyph of the line
+// 			int cIdx ( curNode->index );
+// 			// bIndex is the break which sits on cIdx
+// 			int bIndex ( breaks.indexOf ( cIdx ) );
+// 			bool wantPlus ( true );
+// 			while ( wantPlus )
+// 			{
+// 				++bIndex;
+// // 				qDebug()<<"DOGRAPH LOOP 3"<<plus;
+// 				if ( bIndex  < breaks.count() )
+// 				{
+// 					double di ( distance ( cIdx, breaks[bIndex] ) );
+// // 					qDebug()<< "C DI"<< constantWidth<<di;
+// 					if ( di >= constantWidth )
+// 					{
+// // 						qDebug()<<"LINE"<<cIdx<< breaks[bIndex];
+// // 						qDebug()<<"C DI"<< constantWidth<<di;
+// 						if ( ( bIndex - 1 > 0 ) && ( breaks[bIndex - 1] != cIdx ) )
+// 						{
+// 							int soon ( breaks[bIndex - 1] );
+// 							Node* sN = 0;
+// 							sN = new Node ( soon );
+// 							++nodeCounter;
+// // 							}
+// 							double disN = constantWidth - distance ( cIdx, soon );
+// 							Node::Vector vN ( sN, qAbs ( disN ) );
+// 							curNode->nodes << vN;
+// 							newNodes << sN;
 // 						}
-						double disF = constantWidth - distance ( cIdx, fit );
-						Node::Vector vF ( sF,qAbs (  2.0 * disF ) );
-						curNode->nodes << vF;
-						newNodes << sF;
-
-						wantPlus = false;
-
-					}
-				}
-				else // end of breaks list
-				{
-// // 					qDebug()<<"END OF BREAKS";
-					int soon ( breaks[bIndex - 1] );
-					if ( soon != cIdx && !curNode->hasNode ( soon ) )
-					{
-
-						Node* sN = 0;
-						sN = new Node ( soon );
-						++nodeCounter;
-// 						}
-						double disN = constantWidth - distance ( cIdx, soon );
-						Node::Vector vN ( sN, qAbs ( disN ) );
-						curNode->nodes << vN;
-						newNodes << sN;
-					}
-
-					wantPlus = false;
-				}
-			}
-
-		}
-		toDo.clear();
-		toDo = newNodes;
-	}
-	qDebug() <<nodeCounter<<"Nodes created";
+// 
+// 						int fit ( breaks[bIndex] );
+// 						Node* sF = 0;
+// 						sF = new Node ( fit );
+// 						++nodeCounter;
+// // 						}
+// 						double disF = constantWidth - distance ( cIdx, fit );
+// 						Node::Vector vF ( sF,qAbs (  2.0 * disF ) );
+// 						curNode->nodes << vF;
+// 						newNodes << sF;
+// 
+// 						wantPlus = false;
+// 
+// 					}
+// 				}
+// 				else // end of breaks list
+// 				{
+// // // 					qDebug()<<"END OF BREAKS";
+// 					int soon ( breaks[bIndex - 1] );
+// 					if ( soon != cIdx && !curNode->hasNode ( soon ) )
+// 					{
+// 
+// 						Node* sN = 0;
+// 						sN = new Node ( soon );
+// 						++nodeCounter;
+// // 						}
+// 						double disN = constantWidth - distance ( cIdx, soon );
+// 						Node::Vector vN ( sN, qAbs ( disN ) );
+// 						curNode->nodes << vN;
+// 						newNodes << sN;
+// 					}
+// 
+// 					wantPlus = false;
+// 				}
+// 			}
+// 
+// 		}
+// 		toDo.clear();
+// 		toDo = newNodes;
+// 	}
+// 	qDebug() <<nodeCounter<<"Nodes created";
 
 }
 
@@ -388,4 +454,9 @@ void FMLayout::setTheScene ( QGraphicsScene* theValue )
 void FMLayout::setTheFont ( FontItem* theValue )
 {
 	theFont = theValue;
+}
+
+double FMLayout::lineWidth(int l)
+{
+	return theRect.width();
 }

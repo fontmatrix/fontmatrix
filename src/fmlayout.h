@@ -63,7 +63,10 @@ class FMLayout
 		~FMLayout();
 
 		virtual void doLayout ( const GlyphList& spec , double fs);
-
+		
+		
+		static FMLayout *instance;
+		static FMLayout *getLayout(){return instance;}
 	private://methods
 		/// Build a graph on node
 		virtual void doGraph();
@@ -72,9 +75,12 @@ class FMLayout
 		/// Put lines on stage
 		virtual void doDraw();
 
-		// utils
+	public:// utils
 		double distance ( int start, int end );
 		void resetScene();
+		
+		QList<int> breakList;
+		double lineWidth(int l);
 
 	private:// data
 		// Argued

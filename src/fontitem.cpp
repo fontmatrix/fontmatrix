@@ -3620,3 +3620,108 @@ void FontItem::setShaperType ( int theValue )
 {
 	m_shaperType = theValue;
 }
+
+GlyphList FontItem::glyphs ( QString spec, double fsize )
+{
+	GlyphList ret;
+	if ( spec.isEmpty() || fsize <= 0.0 )
+		return ret;
+	ensureFace();
+	for ( int i ( 0 ); i < spec.count();++i )
+	{
+		QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), fsize );
+		if ( !glyph )
+		{
+			continue;
+		}
+		RenderedGlyph rg;
+		rg.glyph = glyph->data(GLYPH_DATA_GLYPH).toInt();
+		rg.log = i; // We are in a 1/1 relation 
+		rg.xadvance =  glyph->data(GLYPH_DATA_HADVANCE).toDouble();
+		rg.yadvance =  glyph->data(GLYPH_DATA_VADVANCE).toDouble();
+		rg.xoffset = 0;
+		rg.yoffset = 0;
+		
+		ret << rg;
+	}
+	releaseFace();
+	return ret;
+}
+
+GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
+{
+	GlyphList ret;
+	if ( spec.isEmpty() || fsize <= 0.0 || !m_isOpenType) // enough :-)
+		return ret;
+	if(!ensureFace())
+		return ret;
+	
+	otf = new FMOtf ( m_face, 0x10000 );
+	if ( !otf )
+		return ret;
+	
+	ret = otf->procstring ( spec, set );
+	// otf->procstring works in font unit, so...
+	double scalefactor = fsize / m_face->units_per_EM  ;
+	for(int i(0); i < ret.count(); ++i)
+	{
+		ret[i].xadvance *= scalefactor;
+		ret[i].yadvance *= scalefactor;
+		ret[i].xoffset *= scalefactor;
+		ret[i].yoffset *= scalefactor;
+	}
+	
+	delete otf;
+	otf = 0;
+	return ret;
+	releaseFace();
+	return ret;
+}
+
+GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
+{
+	GlyphList ret;
+	if ( spec.isEmpty() || fsize <= 0.0 || !m_isOpenType) // enough :-)
+		return ret;
+	if(!ensureFace())
+		return ret;
+
+	otf = new FMOtf ( m_face, 0x10000 );
+	if ( !otf )
+		return ret;
+	
+	FMShaperFactory *shaperfactory = 0;
+	switch(m_shaperType)
+	{
+		case FMShaperFactory::FONTMATRIX : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
+		break;
+		case FMShaperFactory::HARFBUZZ : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::HARFBUZZ );
+		break;
+		case FMShaperFactory::ICU : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::ICU );
+		break;
+		case FMShaperFactory::M17N : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::M17N );
+		break;
+		case FMShaperFactory::PANGO : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::PANGO );
+		break;
+		case FMShaperFactory::OMEGA : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::OMEGA);
+		break;
+		default : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
+	}
+	
+	ret = shaperfactory->doShape( spec ) ;
+	delete shaperfactory;
+	
+	double scalefactor = fsize / m_face->units_per_EM  ;
+	for(int i(0); i < ret.count(); ++i)
+	{
+		ret[i].xadvance *= scalefactor;
+		ret[i].yadvance *= scalefactor;
+		ret[i].xoffset *= scalefactor;
+		ret[i].yoffset *= scalefactor;
+	}
+	
+	delete otf;
+	otf = 0;
+	releaseFace();
+	return ret;
+}

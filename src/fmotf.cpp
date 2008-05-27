@@ -353,6 +353,13 @@ QList<RenderedGlyph> FMOtf::procstring ( QString s, OTFSet set )
 	
 	QList<RenderedGlyph> ret = get_position();
 	
+	// We need to attach CHAR infos to GLYPHS
+	int sCount(ret.count());
+	for(int si(0);si < sCount; ++si)
+	{
+		ret[si].lChar = s.at(ret[si].log).unicode();
+	}
+	
 	Harfbuzz::hb_buffer_free ( _buffer );
 	_buffer = 0;
 	
@@ -469,6 +476,14 @@ QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString scri
 	QList<RenderedGlyph> ret = get_position();
 	Harfbuzz::hb_buffer_free ( _buffer );
 	_buffer = 0;
+	
+	// We need to attach CHAR infos to GLYPHS
+	int sCount(ret.count());
+	for(int si(0);si < sCount; ++si)
+	{
+		ret[si].lChar = shaped.at(ret[si].log).unicode();
+	}
+	
 	return ret;
 	
 }
@@ -646,8 +661,8 @@ int FMOtf::procstring( QString s, QString script, QString lang, QStringList gsub
 				qDebug () << QString ( "adding gsub feature [%1] failed : %2" ).arg ( *ife ).arg ( error ) ;
 		}
 		error = Harfbuzz::HB_GPOS_Apply_String ( &hbFont, _gpos, FT_LOAD_NO_SCALE, _buffer,
-		        /*while dvi is true font klass is not used */ true,
-		        /*r2l */ true );
+		         true,/*while dvi is true font klass is not used */
+		        true /*r2l  */);
 		if ( error && error != Harfbuzz::HB_Err_Not_Covered )
 			qDebug () << QString ( "applying gpos features to string \"%1\" returned %2" ).arg ( s ).arg ( error ) ;
 
@@ -658,8 +673,6 @@ int FMOtf::procstring( QString s, QString script, QString lang, QStringList gsub
 // 	Harfbuzz::hb_buffer_free ( _buffer );
 	return nret;
 }
-
-
 
 
 

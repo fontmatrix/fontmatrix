@@ -33,6 +33,7 @@
 #include <QList>
 
 #include "fmshaper_own.h"
+#include "fmsharestruct.h"
 
 namespace Harfbuzz
 {
@@ -58,29 +59,6 @@ struct OTFSet
 	QString dump() {return script + "|" +lang+ "|"+ gpos_features.join ( "|" ) + gsub_features.join ( "|" );}
 	bool isEmpty() { return script.isEmpty() && lang.isEmpty() && gpos_features.isEmpty() &&  gsub_features.isEmpty() ;};
 };
-
-struct RenderedGlyph
-{
-	int glyph;
-	int log;
-	double xadvance;
-	double yadvance;
-	double xoffset;
-	double yoffset;
-	quint16 prop;
-	QString dump()
-	{
-		return QString ( "Rendered Glyph(%1)(%6) : XA=%2 XO=%3 YA=%4 YO=%5" )
-		       .arg ( glyph )
-		       .arg ( xadvance )
-		       .arg ( xoffset )
-		       .arg ( yadvance )
-		       .arg ( yoffset )
-		       .arg ( prop );
-	}
-};
-
-typedef QList<RenderedGlyph> GlyphList;
 
 class FMOtf
 {

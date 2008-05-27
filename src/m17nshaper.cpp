@@ -46,18 +46,20 @@ GlyphList M17NShaper::doShape ( const QString & s )
 	if(s.isEmpty())
 		return ret;
 	
+	int sCount(s.count());
+	
 	grrr = mflt_find (s.at(0).unicode(), &mFont);
 	MFLTGlyphString * gs = new MFLTGlyphString;
-	MFLTGlyph * gl = new MFLTGlyph[s.count()];
-	gs->glyph_size = sizeof (MFLTGlyph) * (s.count() );
+	MFLTGlyph * gl = new MFLTGlyph[sCount];
+	gs->glyph_size = sizeof (MFLTGlyph) * ( sCount );
 	gs->glyphs = gl;
-	gs->allocated = s.count() ;
-	for(int i(0); i < s.count(); ++i)
+	gs->allocated = sCount ;
+	for(int i(0); i < sCount ; ++i)
 	{
 		gl[i].c = s[i].unicode();
 	}
 	
-	mflt_run(gs, 0, s.count() , &mFont, grrr);
+	mflt_run(gs, 0, sCount , &mFont, grrr);
 }
 
 

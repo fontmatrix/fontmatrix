@@ -10,6 +10,7 @@ fmglyphsview.cpp
 fmnamelist.cpp
 fmotf.cpp
 fmplayground.cpp
+fmlayout.cpp
 fmpreviewlist.cpp
 # fmprintdialog.cpp
 fmrepair.cpp

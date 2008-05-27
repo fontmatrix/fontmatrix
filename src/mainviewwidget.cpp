@@ -69,6 +69,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	iconTTF =  QIcon(":/icon-TTF");
 	iconOTF =  QIcon(":/icon-OTF");
 
+	textLayout = new FMLayout;
+	
 	theVeryFont = 0;
 	typo = typotek::getInstance();
 	m_lists = ListDockWidget::getInstance();
@@ -704,16 +706,26 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			targetScene = loremScene;
 		else if(loremView_FT->isVisible())
 			targetScene = ftScene;
-		FMLayout lay(targetScene, theVeryFont);
-		lay.setAdjustedSampleInter(wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize);
 		
+		bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
+		QString script = langCombo->currentText();
+		bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
+// 		FMLayout lay(targetScene, theVeryFont);
+		textLayout->setTheFont(theVeryFont);
+		textLayout->setTheScene(targetScene);
+		textLayout->setAdjustedSampleInter(wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize);
+
+		GlyphList list;
+		QString stl( typo->namedSample(sampleTextCombo->currentText() ).replace("\n"," "));
+		if ( processScript )
+			list = theVeryFont->glyphs( stl , sampleFontSize, script );
+		else if(processFeatures)
+			list = theVeryFont->glyphs( stl , sampleFontSize, deFillOTTree());
+		else
+			list = theVeryFont->glyphs( stl , sampleFontSize  );
 		
-		QStringList stl = typo->namedSample ( sampleTextCombo->currentText() ).split ( '\n' );
-		for(int si(0);si < stl.count(); ++si)
-		{
-			GlyphList list( theVeryFont->glyphs(stl[si] , sampleFontSize ) );
-			lay.doLayout(list, sampleFontSize);
-		}
+		textLayout->doLayout(list, sampleFontSize);
+
 		
 	}
 #else

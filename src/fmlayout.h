@@ -19,6 +19,9 @@
 
 class QGraphicsScene;
 class FontItem;
+class QGraphicsPixmapItem;
+class QGraphicsPathItem;
+class QGraphicsRectItem;
 
 /**
  Finally, we want to layout text elsewhere than _in_ the font or _in_ the view.
@@ -56,7 +59,7 @@ class FMLayout
 {
 	public:
 		// Just think that the font must be set
-		FMLayout ( QGraphicsScene* scene, FontItem* font );
+		FMLayout ( /*QGraphicsScene* scene, FontItem* font*/ );
 		~FMLayout();
 
 		virtual void doLayout ( const GlyphList& spec , double fs);
@@ -71,6 +74,7 @@ class FMLayout
 
 		// utils
 		double distance ( int start, int end );
+		void resetScene();
 
 	private:// data
 		// Argued
@@ -78,11 +82,14 @@ class FMLayout
 		FontItem*	theFont;
 		GlyphList theString;
 		QRectF theRect;// Not really argued now, will come soon
+		QGraphicsRectItem *rules;
 
 		// built
 		Node *node;
 		QList<GlyphList> lines;
 		QList<int> indices;
+		QList<QGraphicsPixmapItem *> pixList;
+		QList<QGraphicsPathItem*> glyphList;
 
 		// accessed
 		bool processFeatures;
@@ -144,10 +151,14 @@ class FMLayout
 	{
 		fontSize = theValue;
 	}
+
+	void setTheScene ( QGraphicsScene* theValue );
+
+	void setTheFont ( FontItem* theValue );
+	
 	
 
-
-
+	
 };
 
 

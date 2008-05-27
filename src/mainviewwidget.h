@@ -34,6 +34,7 @@ class QTreeWidgetItem;
 class QGraphicsRectItem;
 class ListDockWidget;
 struct OTFSet;
+class FMLayout;
 
 /**
 MainViewWidget inherits from an ui designed.
@@ -53,6 +54,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsScene *loremScene;
 		QGraphicsScene *ftScene;
 		QGraphicsScene *playScene;
+		FMLayout *textLayout;
 		QStringList ord;
 		QStringList fields;
 		typotek *typo;

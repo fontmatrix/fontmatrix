@@ -45,15 +45,9 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 }
 
 
-FMLayout::FMLayout ( QGraphicsScene * scene, FontItem * font )
-		:theScene ( scene ), theFont ( font )
+FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */)
 {
-	theRect = theScene->sceneRect();
-	theRect.setWidth ( theRect.width() *.8 );
-	theRect.setHeight ( theRect.height() * .8 );
-	origine.rx() = theScene->sceneRect().width() * .1;
-	origine.ry() = theScene->sceneRect().height() * .1;
-
+	rules = new QGraphicsRectItem;
 }
 
 FMLayout::~ FMLayout()
@@ -65,6 +59,7 @@ void FMLayout::doLayout ( const GlyphList & spec , double fs )
 	fontSize = fs;
 	theString = spec;
 	node = new Node ( 0 );
+	resetScene();
 	doGraph();
 	doLines();
 	doDraw();
@@ -130,14 +125,7 @@ void FMLayout::doGraph()
 						{
 							int soon ( breaks[bIndex - 1] );
 							Node* sN = 0;
-// 							if(crossBreakNode.contains(soon))
-// 							{
-// 								sN = crossBreakNode.value(soon);
-// 							}
-// 							else
-// 							{
 							sN = new Node ( soon );
-// 								crossBreakNode[soon] = sN;
 							++nodeCounter;
 // 							}
 							double disN = constantWidth - distance ( cIdx, soon );
@@ -148,40 +136,13 @@ void FMLayout::doGraph()
 
 						int fit ( breaks[bIndex] );
 						Node* sF = 0;
-// 						if(crossBreakNode.contains(fit))
-// 						{
-// 							sF = crossBreakNode.value(fit);
-// 						}
-// 						else
-// 						{
 						sF = new Node ( fit );
-// 							crossBreakNode[fit] = sF;
 						++nodeCounter;
 // 						}
 						double disF = constantWidth - distance ( cIdx, fit );
-						Node::Vector vF ( sF,qAbs ( disF ) );
+						Node::Vector vF ( sF,qAbs (  2.0 * disF ) );
 						curNode->nodes << vF;
 						newNodes << sF;
-
-						if ( bIndex + 1 < breaks.count() )
-						{
-							int late ( breaks[bIndex  + 1] );
-							Node* sL = 0;
-// 							if(crossBreakNode.contains(late))
-// 							{
-// 								sL = crossBreakNode.value(late);
-// 							}
-// 							else
-// 							{
-							sL = new Node ( late );
-// 								crossBreakNode[late] = sL;
-							++nodeCounter;
-// 							}
-							double disL = constantWidth - distance ( cIdx, late );
-							Node::Vector vL ( sL,qAbs ( disL ) );
-							curNode->nodes << vL;
-							newNodes << sL;
-						}
 
 						wantPlus = false;
 
@@ -195,14 +156,7 @@ void FMLayout::doGraph()
 					{
 
 						Node* sN = 0;
-// 						if(crossBreakNode.contains(soon))
-// 						{
-// 							sN = crossBreakNode.value(soon);
-// 						}
-// 						else
-// 						{
 						sN = new Node ( soon );
-// 							crossBreakNode[soon] = sN;
 						++nodeCounter;
 // 						}
 						double disN = constantWidth - distance ( cIdx, soon );
@@ -232,20 +186,56 @@ void FMLayout::doLines()
 	node->sPath ( 0,QList<int>(),indices,score );
 	// la messe est dite ! :-)
 	qDebug() <<"S I"<<score<<indices;
+	double refW(theRect.width());
+	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
+	{
+		bool leadWS(true);
+		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
+		{
+			if(leadWS && QChar(theString.at(ri).lChar).category() == QChar::Separator_Space)
+			{
+				theString[ri].glyph = 0;
+				theString[ri].xadvance = 0;
+				theString[ri].xoffset = 0;
+			}
+			else
+			{
+				leadWS = false;
+			}
+			
+		}
+	}
+	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
+	{
+		QList<int> wsIds;
+		double diff( refW - distance(indices[lIdx-1], indices[lIdx]) );
+		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
+		{
+			if(QChar(theString.at(ri).lChar).category() == QChar::Separator_Space)
+			{
+				wsIds << ri;
+			}			
+		}
+		double shareLost( diff / qMax( 1.0 , (double)wsIds.count() ) );
+		for(int wi(0); wi < wsIds.count(); ++wi)
+		{
+			theString[ wsIds[wi] ].xadvance += shareLost;
+		}
+	}
 }
 
 void FMLayout::doDraw()
 {
 	// Ask paths or pixmaps to theFont for each glyph and draw it on theScene
 	QPointF pen ( origine );
-	double scale = fontSize/theFont->getUnitPerEm();
+	pen.ry() += adjustedSampleInter;
+	double scale = fontSize / theFont->getUnitPerEm();
 	double pixelAdjustX = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
 	double pixelAdjustY = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
 	int m_progression ( theFont->progression() );
 	
 	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
 	{
-// 		qDebug() << "REF"<< indices[lIdx-1]<< indices[lIdx];
 		GlyphList refGlyph;
 		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
 		{
@@ -257,12 +247,14 @@ void FMLayout::doDraw()
 		{
 			for ( int i=0; i < refGlyph.count(); ++i )
 			{
+				if(!refGlyph[i].glyph)
+					continue;
 				QGraphicsPixmapItem *glyph = theFont->itemFromGindexPix ( refGlyph[i].glyph , fontSize );
 				if ( !glyph )
 					continue;
 				if ( m_progression == PROGRESSION_RTL )
 				{
-					pen.rx() -= refGlyph[i].xadvance * pixelAdjustX;
+					pen.rx() -= refGlyph[i].xadvance * pixelAdjustX ;
 				}
 				else if ( m_progression == PROGRESSION_BTT )
 				{
@@ -270,9 +262,10 @@ void FMLayout::doDraw()
 				}
 
 				/*************************************************/
+				pixList << glyph;
 				theScene->addItem ( glyph );
 				glyph->setZValue ( 100.0 );
-				glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble()  ,
+				glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scale  ,
 				                pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
 				/*************************************************/
 
@@ -286,6 +279,8 @@ void FMLayout::doDraw()
 		{
 			for ( int i=0; i < refGlyph.count(); ++i )
 			{
+				if(!refGlyph[i].glyph)
+					continue;
 				QGraphicsPathItem *glyph = theFont->itemFromGindex ( refGlyph[i].glyph , fontSize );
 
 				if ( m_progression == PROGRESSION_RTL )
@@ -297,6 +292,7 @@ void FMLayout::doDraw()
 					pen.ry() -= refGlyph[i].yadvance ;
 				}
 				/**********************************************/
+				glyphList << glyph;
 				theScene->addItem ( glyph );
 				glyph->setPos ( pen.x() + ( refGlyph[i].xoffset ),
 				                pen.y() + ( refGlyph[i].yoffset ) );
@@ -328,5 +324,52 @@ double FMLayout::distance ( int start, int end )
 	return ret;
 }
 
+void FMLayout::resetScene()
+{
+	for ( int i = 0; i < pixList.count(); ++i )
+	{
+		if ( pixList[i]->scene() )
+		{
+			pixList[i]->scene()->removeItem ( pixList[i] );
+			delete pixList[i];
+		}
+	}
+	pixList.clear();
+	for ( int i = 0; i < glyphList.count(); ++i )
+	{
+		if ( glyphList[i]->scene() )
+		{
+			glyphList[i]->scene()->removeItem ( glyphList[i] );
+			delete glyphList[i];
+		}
+	}
+	glyphList.clear();
+}
 
 
+
+
+
+void FMLayout::setTheScene ( QGraphicsScene* theValue )
+{
+	theScene = theValue;
+	QRectF tmpRect = theScene->sceneRect();
+	double sUnitW(tmpRect.width() * .1);
+	double sUnitH(tmpRect.height() * .1);
+	
+	theRect.setX ( 2.0 * sUnitW );
+	theRect.setY ( 2.0 * sUnitH );
+	theRect.setWidth( 6.0 * sUnitW );
+	theRect.setHeight ( 6.0 * sUnitH );
+	origine = theRect.topLeft() ;
+	rules->setRect(theRect);
+	rules->setZValue(9.9);
+// 	if(rules->scene() != theScene)
+		theScene->addItem(rules);
+}
+
+
+void FMLayout::setTheFont ( FontItem* theValue )
+{
+	theFont = theValue;
+}

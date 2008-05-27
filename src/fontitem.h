@@ -114,6 +114,7 @@ class FontItem : public QObject
 		int m_numGlyphs;
 		int m_numFaces;
 		QString m_panose;
+		double unitPerEm;
 		
 		void fillCharsetMap();
 		void fillLegitimateSpaces();
@@ -140,12 +141,7 @@ class FontItem : public QObject
 		int facesRef;
 		FT_GlyphSlot m_glyph;
 		
-		QGraphicsPathItem* itemFromChar ( int charcode, double size );
-		QGraphicsPathItem* itemFromGindex ( int index, double size );
-		
-		QGraphicsPixmapItem* itemFromCharPix ( int charcode, double size );
-		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
-		
+
 		QImage glyphImage();
 		
 		bool m_rasterFreetype;
@@ -241,6 +237,12 @@ class FontItem : public QObject
 		double renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth, double fsize, double zindex = 100.0 ,bool record = true );
 		double renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
 		double renderLine ( QString script, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
+		QGraphicsPathItem* itemFromChar ( int charcode, double size );
+		QGraphicsPathItem* itemFromGindex ( int index, double size );
+		
+		QGraphicsPixmapItem* itemFromCharPix ( int charcode, double size );
+		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
+		
 		/// We prepare ejection of renderLine methods
 		GlyphList glyphs(QString spec, double fsize);
 		GlyphList glyphs(QString spec, double fsize, OTFSet set);
@@ -289,10 +291,10 @@ class FontItem : public QObject
 		void releaseOTFInstance(FMOtf * rotf);
 		
 		void setFTRaster(bool f){m_rasterFreetype = f;};
-		bool rasterFreetype(){return m_rasterFreetype;};
+		bool rasterFreetype()const{return m_rasterFreetype;};
 		
 		void setProgression(int p){m_progression = p;}
-		int progression(){return m_progression;}
+		int progression()const{return m_progression;}
 		
 		// sfnt names
 		static void fillNamesMeaning();
@@ -315,6 +317,9 @@ class FontItem : public QObject
 	{
 		renderReturnWidth = theValue;
 	}
+
+	double getUnitPerEm();
+	
 	
 	
 	

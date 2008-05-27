@@ -674,6 +674,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	m_progression = PROGRESSION_LTR;
 	m_shaperType = 1;
 	renderReturnWidth = false;
+	unitPerEm = 0;
 
 	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
@@ -906,6 +907,7 @@ bool FontItem::ensureFace()
 				}
 			}
 		}
+		unitPerEm = m_face->units_per_EM;
 		m_glyph = m_face->glyph;
 		++facesRef;
 		++fm_num_face_opened;
@@ -965,16 +967,21 @@ QString FontItem::name()
 QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 {
 
+	if(!ensureFace())
+		return 0;
 	uint glyphIndex = 0;
 	currentChar = charcode;
 	glyphIndex = FT_Get_Char_Index ( m_face, charcode );
 
+	releaseFace();
 	return itemFromGindex ( glyphIndex,size );
 
 }
 
 QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 {
+	if(!ensureFace())
+		return 0;
 	int charcode = index ;
 	double scalefactor = size / m_face->units_per_EM;
 	ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_NO_SCALE );
@@ -985,7 +992,9 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 		glyph->setBrush ( QBrush ( Qt::red ) );
 		glyph->setPath ( glyphPath );
+		glyph->setData ( GLYPH_DATA_GLYPH, index);
 		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size );
+		releaseFace();
 		return glyph;
 	}
 
@@ -1005,24 +1014,30 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		glyph->setPen ( pen );
 		glyph->setPath ( errPath );
 		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size  /scalefactor );
+		glyph->setData ( GLYPH_DATA_GLYPH, index);
 	}
 	else
 	{
 		glyph->setBrush ( QBrush ( Qt::SolidPattern ) );
 		glyph->setPath ( glyphPath );
+		glyph->setData ( GLYPH_DATA_GLYPH, index);
 		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) m_glyph->metrics.horiAdvance );
 		glyph->setData ( 5, ( double ) m_glyph->metrics.vertAdvance );
 		glyph->scale ( scalefactor,-scalefactor );
 	}
+	releaseFace();
 	return glyph;
 }
 
 QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 {
+	if(!ensureFace())
+		return 0;
 	uint glyphIndex = 0;
 	currentChar = charcode;
 	glyphIndex = FT_Get_Char_Index ( m_face, charcode );
 
+	releaseFace();
 	return itemFromGindexPix ( glyphIndex,size );
 
 }
@@ -1030,7 +1045,11 @@ QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 
 QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 {
+	if(!ensureFace())
+		return 0;
 	int charcode = index ;
+	
+	double scaleFactor = size / m_face->units_per_EM;
 
 	// Grab metrics in FONT UNIT
 	ft_error = FT_Load_Glyph ( m_face,
@@ -1041,10 +1060,11 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		QPixmap square ( size , size );
 		square.fill ( Qt::red );
 		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
-		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_GLYPH ,index);
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
 		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
+		releaseFace();
 		return glyph;
 	}
 
@@ -1068,10 +1088,11 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		QPixmap square ( size , size );
 		square.fill ( Qt::red );
 		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
-		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_GLYPH ,index );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
 		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
+		releaseFace();
 		return glyph;
 	}
 
@@ -1083,10 +1104,11 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		QPixmap square ( size , size );
 		square.fill ( Qt::red );
 		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
-		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_GLYPH , index );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
 		glyph->setData ( GLYPH_DATA_HADVANCE ,size  / ( size / m_face->units_per_EM ) );
+		releaseFace();
 		return glyph;
 	}
 
@@ -1099,7 +1121,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		QPixmap square ( size , size );
 		square.fill ( Qt::red );
 		glyph->setPixmap ( square );
-		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_GLYPH , index );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
 		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
@@ -1116,13 +1138,14 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		glyph->setPixmap ( aPix );
 #endif
 		// we need to transport more data
-		glyph->setData ( GLYPH_DATA_GLYPH ,"glyph" );
+		glyph->setData ( GLYPH_DATA_GLYPH , index);
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , takeLeftBeforeRender );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP , m_face->glyph->bitmap_top );
 		glyph->setData ( GLYPH_DATA_HADVANCE , takeAdvanceBeforeRender );
 		glyph->setData ( GLYPH_DATA_VADVANCE , takeVertAdvanceBeforeRender );
 	}
 
+	releaseFace();
 	return glyph;
 }
 
@@ -3627,6 +3650,7 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 	if ( spec.isEmpty() || fsize <= 0.0 )
 		return ret;
 	ensureFace();
+	double scalefactor = fsize / m_face->units_per_EM  ;
 	for ( int i ( 0 ); i < spec.count();++i )
 	{
 		QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), fsize );
@@ -3637,11 +3661,11 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 		RenderedGlyph rg;
 		rg.glyph = glyph->data(GLYPH_DATA_GLYPH).toInt();
 		rg.log = i; // We are in a 1/1 relation 
-		rg.xadvance =  glyph->data(GLYPH_DATA_HADVANCE).toDouble();
-		rg.yadvance =  glyph->data(GLYPH_DATA_VADVANCE).toDouble();
+		rg.lChar = spec[i].unicode();
+		rg.xadvance =  glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor;
+		rg.yadvance =  glyph->data(GLYPH_DATA_VADVANCE).toDouble() * scalefactor;
 		rg.xoffset = 0;
 		rg.yoffset = 0;
-		
 		ret << rg;
 	}
 	releaseFace();
@@ -3724,4 +3748,16 @@ GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 	otf = 0;
 	releaseFace();
 	return ret;
+}
+
+
+double FontItem::getUnitPerEm()
+{
+	if(unitPerEm)
+		return unitPerEm;
+	if(ensureFace())
+	{
+		releaseFace();
+	}
+	return unitPerEm;
 }

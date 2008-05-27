@@ -15,6 +15,7 @@
 #include "fmsharestruct.h"
 #include <QString>
 #include <QRectF>
+#include <QPointF>
 
 class QGraphicsScene;
 class FontItem;
@@ -25,6 +26,7 @@ class FontItem;
  I hope it will not be too much more than just copy & paste from FontItem & MainViewWidget - pm
 **/
 
+#define INFINITE 99999999L
 
 struct Node
 {
@@ -32,18 +34,22 @@ struct Node
 	{
 		Node* n;
 		double distance;
-		
-		Vector():n(0),distance(0.0){}
-		Vector(Node* N, double D):n(N),distance(D){}
-		~Vector(){}
+
+		Vector() :n ( 0 ),distance ( 0.0 ) {}
+		Vector ( Node* N, double D ) :n ( N ),distance ( D ) {}
+		~Vector() {}
 	};
-	
+
 	QList<Vector> nodes;
 	int index;
-	
-	Node(){}
-	Node(int i):index(i){}
-	~Node(){foreach(Vector v, nodes){if(v.n)delete v.n;}}
+
+	Node() {}
+	Node ( int i ) :index ( i ) {}
+	~Node() {foreach ( Vector v, nodes ) {if ( v.n ) delete v.n;}}
+
+	bool hasNode ( int idx ) {foreach ( Vector v, nodes ) {if ( v.n->index == idx ) return true;}return false;}
+
+	void sPath ( double dist, QList< int > curList, QList<int>& theList, double& theScore );
 };
 
 class FMLayout
@@ -53,7 +59,7 @@ class FMLayout
 		FMLayout ( QGraphicsScene* scene, FontItem* font );
 		~FMLayout();
 
-		virtual void doLayout ( const GlyphList& spec );
+		virtual void doLayout ( const GlyphList& spec , double fs);
 
 	private://methods
 		/// Build a graph on node
@@ -62,28 +68,31 @@ class FMLayout
 		virtual void doLines();
 		/// Put lines on stage
 		virtual void doDraw();
-		
+
 		// utils
-		double distance(int start, int end);
-		
+		double distance ( int start, int end );
+
 	private:// data
 		// Argued
-		const QGraphicsScene* theScene;
-		const FontItem*	theFont;
+		QGraphicsScene* theScene;
+		FontItem*	theFont;
 		GlyphList theString;
 		QRectF theRect;// Not really argued now, will come soon
-		
+
 		// built
-		Node node;
+		Node *node;
 		QList<GlyphList> lines;
+		QList<int> indices;
 
 		// accessed
 		bool processFeatures;
 		QString script;
 		bool processScript;
+		double fontSize;
 		double adjustedSampleInter;
 		int textProgressionBlock;
 		int textProgressionLine;
+		QPointF origine;
 		
 
 	public: //accessors
@@ -94,10 +103,6 @@ class FMLayout
 		}
 
 
-		bool getProcessFeatures() const
-		{
-			return processFeatures;
-		}
 
 		void setScript ( const QString& theValue )
 		{
@@ -105,21 +110,12 @@ class FMLayout
 		}
 
 
-		QString getScript() const
-		{
-			return script;
-		}
-
 		void setProcessScript ( bool theValue )
 		{
 			processScript = theValue;
 		}
 
 
-		bool getProcessScript() const
-		{
-			return processScript;
-		}
 
 		void setAdjustedSampleInter ( double theValue )
 		{
@@ -127,21 +123,11 @@ class FMLayout
 		}
 
 
-		double getAdjustedSampleInter() const
-		{
-			return adjustedSampleInter;
-		}
-
 		void setTextProgressionBlock ( int theValue )
 		{
 			textProgressionBlock = theValue;
 		}
 
-
-		int getTextProgressionBlock() const
-		{
-			return textProgressionBlock;
-		}
 
 		void setTextProgressionLine ( int theValue )
 		{
@@ -149,10 +135,17 @@ class FMLayout
 		}
 
 
-		int getTextProgressionLine() const
+		void setOrigine ( const QPoint& theValue )
 		{
-			return textProgressionLine;
+			origine = theValue;
 		}
+
+	void setFontSize ( double theValue )
+	{
+		fontSize = theValue;
+	}
+	
+
 
 
 };

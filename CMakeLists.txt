@@ -16,6 +16,10 @@ IF(APPLE)
 	ADD_DEFINITIONS( -DPLATFORM_APPLE )
 ENDIF(APPLE)
 
+IF(NEWTEXT)
+	ADD_DEFINITIONS( -DNEWTEXT )
+ENDIF(NEWTEXT)
+
 #<< harfbuzz (shaper)
 IF(WANT_HARFBUZZ)
 # Since Harfbuzz source code is included into

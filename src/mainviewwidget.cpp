@@ -21,6 +21,7 @@
 #include "fmactivate.h"
 #include "fmbaseshaper.h"
 #include "fmglyphsview.h"
+#include "fmlayout.h"
 #include "fmotf.h"
 #include "fmpreviewlist.h"
 #include "fontitem.h"
@@ -695,7 +696,27 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			// TODO something useful, if possible
 		}
 	}
-
+#ifdef NEWTEXT
+	if ( loremView->isVisible() || loremView_FT->isVisible() )
+	{
+		QGraphicsScene *targetScene;
+		if(loremView->isVisible())
+			targetScene = loremScene;
+		else if(loremView_FT->isVisible())
+			targetScene = ftScene;
+		FMLayout lay(targetScene, theVeryFont);
+		lay.setAdjustedSampleInter(wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize);
+		
+		
+		QStringList stl = typo->namedSample ( sampleTextCombo->currentText() ).split ( '\n' );
+		for(int si(0);si < stl.count(); ++si)
+		{
+			GlyphList list( theVeryFont->glyphs(stl[si] , sampleFontSize ) );
+			lay.doLayout(list, sampleFontSize);
+		}
+		
+	}
+#else
 	if ( loremView->isVisible() || loremView_FT->isVisible() )
 	{
 		QGraphicsScene *targetScene;
@@ -941,6 +962,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		}
 	}
 
+#endif
 	qDebug("VIEW Time elapsed: %d ms", t.elapsed());
 	t.restart();
 	slotInfoFont();

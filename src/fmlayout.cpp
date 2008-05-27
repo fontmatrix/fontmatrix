@@ -189,10 +189,10 @@ void FMLayout::doLines()
 	double refW(theRect.width());
 	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
 	{
-		bool leadWS(true);
+// 		bool leadWS(true);
 		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
 		{
-			if(leadWS && QChar(theString.at(ri).lChar).category() == QChar::Separator_Space)
+			if( QChar(theString.at(ri).lChar).category() == QChar::Separator_Space)
 			{
 				theString[ri].glyph = 0;
 				theString[ri].xadvance = 0;
@@ -200,23 +200,39 @@ void FMLayout::doLines()
 			}
 			else
 			{
-				leadWS = false;
+				break;
+			}
+			
+		}
+// 		bool trailingWS(false);
+		for ( int ri ( indices[lIdx] - 1);ri > indices[lIdx - 1]; --ri )
+		{
+			if( QChar(theString.at(ri).lChar).category() == QChar::Separator_Space)
+			{
+				theString[ri].glyph = 0;
+				theString[ri].xadvance = 0;
+				theString[ri].xoffset = 0;
+			}
+			else
+			{
+				break;
 			}
 			
 		}
 	}
-	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
+	for ( int lIdx ( 1 ); lIdx<indices.count() - 1; ++lIdx )
 	{
 		QList<int> wsIds;
 		double diff( refW - distance(indices[lIdx-1], indices[lIdx]) );
 		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
 		{
-			if(QChar(theString.at(ri).lChar).category() == QChar::Separator_Space)
+			if(theString.at(ri).glyph &&  QChar(theString.at(ri).lChar).category() == QChar::Separator_Space)
 			{
 				wsIds << ri;
 			}			
 		}
 		double shareLost( diff / qMax( 1.0 , (double)wsIds.count() ) );
+		qDebug()<< "D N W"<<diff<<wsIds.count()<< shareLost;
 		for(int wi(0); wi < wsIds.count(); ++wi)
 		{
 			theString[ wsIds[wi] ].xadvance += shareLost;
@@ -315,11 +331,11 @@ void FMLayout::doDraw()
 double FMLayout::distance ( int start, int end )
 {
 // 	qDebug()<<"distance("<<start<<", "<< end<<")";
-	double ret ( 0 );
+	double ret ( 0.0 );
 	if ( end <= start )
 		return ret;
 	for ( int i ( start ); i < end ;++i )
-		ret += theString.at ( i ).xadvance + theString.at ( i ).xoffset;
+		ret += theString.at ( i ).xadvance /*+ theString.at ( i ).xoffset*/;
 
 	return ret;
 }
@@ -364,7 +380,7 @@ void FMLayout::setTheScene ( QGraphicsScene* theValue )
 	origine = theRect.topLeft() ;
 	rules->setRect(theRect);
 	rules->setZValue(9.9);
-// 	if(rules->scene() != theScene)
+	if(rules->scene() != theScene)
 		theScene->addItem(rules);
 }
 

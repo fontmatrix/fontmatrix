@@ -208,7 +208,7 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	instance = this;
 	node = 0;
 
-	FM_LAYOUT_NODE_SOON_F=	2.5;
+	FM_LAYOUT_NODE_SOON_F=	1.25;
 	FM_LAYOUT_NODE_FIT_F=	1.0;
 	FM_LAYOUT_NODE_LATE_F=	500.0;
 	FM_LAYOUT_NODE_END_F=	0.5;
@@ -247,7 +247,6 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	secretMenu->addAction(endplus);
 	secretMenu->addAction(endmoins);
 	
-	soonplus->activate(QAction::Trigger);
 }
 
 FMLayout::~ FMLayout()

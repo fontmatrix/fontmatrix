@@ -73,28 +73,42 @@ QVector<QRgb> invertedGray256Palette;
 
 /** functions set for decomposition
  */
+
+struct SizedPath{
+	QPainterPath* p;
+	double s;
+};
+
 static int _moveTo ( const FT_Vector*  to, void*   user )
 {
-	QPainterPath * p = reinterpret_cast<QPainterPath*> ( user );
-	p->moveTo ( to->x, to->y );
+	SizedPath* sp = reinterpret_cast<SizedPath*> ( user );
+	QPainterPath * p( sp->p );
+	double sf( sp->s );
+	p->moveTo ( to->x * sf , to->y * sf * -1.0 );
 	return 0;
 }
 static int _lineTo ( const FT_Vector*  to, void*   user )
 {
-	QPainterPath * p = reinterpret_cast<QPainterPath*> ( user );
-	p->lineTo ( to->x, to->y );
+	SizedPath* sp = reinterpret_cast<SizedPath*> ( user );
+	QPainterPath * p( sp->p );
+	double sf( sp->s );
+	p->lineTo ( to->x * sf, to->y  * sf * -1.0 );
 	return  0;
 }
 static int _conicTo ( const FT_Vector* control, const FT_Vector*  to, void*   user )
 {
-	QPainterPath * p = reinterpret_cast<QPainterPath*> ( user );
-	p->quadTo ( control->x,control->y,to->x,to->y );
+	SizedPath* sp = reinterpret_cast<SizedPath*> ( user );
+	QPainterPath * p( sp->p );
+	double sf( sp->s );
+	p->quadTo ( control->x * sf,control->y * sf * -1.0,to->x * sf,to->y * sf * -1.0 );
 	return 0;
 }
 static int _cubicTo ( const FT_Vector* control1, const FT_Vector* control2, const FT_Vector*  to, void*   user )
 {
-	QPainterPath * p = reinterpret_cast<QPainterPath*> ( user );
-	p->cubicTo ( control1->x,control1->y,control2->x,control2->y,to->x,to->y );
+	SizedPath* sp = reinterpret_cast<SizedPath*> ( user );
+	QPainterPath * p( sp->p );
+	double sf( sp->s );
+	p->cubicTo ( control1->x * sf,control1->y * sf * -1.0,control2->x * sf,control2->y * sf * -1.0,to->x * sf,to->y  * sf * -1.0);
 	return 0;
 }
 
@@ -1000,7 +1014,11 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 
 	FT_Outline *outline = &m_glyph->outline;
 	QPainterPath glyphPath ( QPointF ( 0.0,0.0 ) );
-	FT_Outline_Decompose ( outline, &outline_funcs, &glyphPath );
+	SizedPath sp;
+	sp.p = &glyphPath;
+	sp.s = scalefactor;
+	FT_Outline_Decompose ( outline, &outline_funcs, &sp );
+	glyphPath.closeSubpath();
 	QGraphicsPathItem *glyph = new  QGraphicsPathItem;
 
 	if ( glyphPath.elementCount() < 3 && !spaceIndex.contains ( index ) )
@@ -1023,7 +1041,7 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		glyph->setData ( GLYPH_DATA_GLYPH, index);
 		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) m_glyph->metrics.horiAdvance );
 		glyph->setData ( 5, ( double ) m_glyph->metrics.vertAdvance );
-		glyph->scale ( scalefactor,-scalefactor );
+// 		glyph->scale ( scalefactor,-scalefactor );
 	}
 	releaseFace();
 	return glyph;
@@ -3667,6 +3685,7 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 		rg.xoffset = 0;
 		rg.yoffset = 0;
 		ret << rg;
+		delete glyph;
 	}
 	releaseFace();
 	return ret;

@@ -19,6 +19,29 @@
 #include <QDesktopWidget>
 #include <QTime>
 
+Node::Node(int i):index ( i )
+{
+}
+
+Node::~Node()
+{
+// 	qDebug()<<"R"<< index;
+	foreach ( Vector v, nodes )
+	{
+		if ( v.n ) delete v.n;
+	}
+}
+
+int Node::count()
+{
+	int c(nodes.count());
+	foreach ( Vector v, nodes )
+	{
+		c += v.n->count();
+	}
+	return c;
+}
+
 void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, double & theScore )
 {
 // 	QList<int> debugL;
@@ -130,6 +153,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 			v.n->sPath ( dist + v.distance, curList, theList, theScore );
 		}
 // 		qDebug()<< "R";
+		delete v.n;
 		nodes.removeFirst();
 	}
 
@@ -149,6 +173,7 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */)
 {
 	rules = new QGraphicsRectItem;
 	instance = this;
+	node = 0;
 }
 
 FMLayout::~ FMLayout()
@@ -157,6 +182,7 @@ FMLayout::~ FMLayout()
 
 void FMLayout::doLayout ( const GlyphList & spec , double fs )
 {
+	qDebug()<<"FMLayout::doLayout()";
 	fontSize = fs;
 	theString = spec;
 	node = new Node ( 0 );
@@ -164,11 +190,15 @@ void FMLayout::doLayout ( const GlyphList & spec , double fs )
 	doGraph();
 	doLines();
 	doDraw();
+	qDebug()<<"N"<<node->count();
 	delete node;
 }
 
 void FMLayout::doGraph()// Has became doBreaks
 {
+	qDebug()<<"FMLayout::doGraph()";
+	QTime t;
+	t.start();
 	/**
 	I hit a power issue with my graph thing as in its initial state.
 	So, I’ll try now to cut the tree as it’s built, not far than what’s done in chess programs.
@@ -187,20 +217,20 @@ void FMLayout::doGraph()// Has became doBreaks
 	}
 	breakList << theString.count();
 	qDebug() <<"BREAKS"<<breakList.count();
+	qDebug()<<"doGraph T(ms)"<<t.elapsed();
 }
 
 void FMLayout::doLines()
 {
 	qDebug() <<"FMLayout::doLines()";
+	QTime t;
+	t.start();
 	// Run through the graph and find the shortest path
 	indices.clear();
 	double score ( INFINITE );
-	QTime t;
-	t.start();
 	node->sPath ( 0,QList<int>(),indices,score );
 	// la messe est dite ! :-)
-	qDebug() <<"S I T"<<score<<indices;
-	qDebug()<<"T(ms)"<<t.elapsed();
+	qDebug() <<"S I"<<score<<indices;
 	double refW(theRect.width());
 	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
 	{
@@ -253,13 +283,18 @@ void FMLayout::doLines()
 			theString[ wsIds[wi] ].xadvance += shareLost;
 		}
 	}
+	qDebug()<<"doLines T(ms)"<<t.elapsed();
 }
 
 void FMLayout::doDraw()
 {
 	// Ask paths or pixmaps to theFont for each glyph and draw it on theScene
+	qDebug()<<"FMLayout::doDraw()";
+	QTime t;
+	t.start();
 	QPointF pen ( origine );
 	pen.ry() += adjustedSampleInter;
+	double pageBottom( theRect.bottom() );
 	double scale = fontSize / theFont->getUnitPerEm();
 	double pixelAdjustX = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
 	double pixelAdjustY = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
@@ -267,6 +302,8 @@ void FMLayout::doDraw()
 	
 	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
 	{
+		if(pen.y() > pageBottom)
+			break;
 		GlyphList refGlyph;
 		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
 		{
@@ -313,7 +350,8 @@ void FMLayout::doDraw()
 				if(!refGlyph[i].glyph)
 					continue;
 				QGraphicsPathItem *glyph = theFont->itemFromGindex ( refGlyph[i].glyph , fontSize );
-
+				glyphList << glyph;
+				
 				if ( m_progression == PROGRESSION_RTL )
 				{
 					pen.rx() -= refGlyph[i].xadvance ;
@@ -323,7 +361,7 @@ void FMLayout::doDraw()
 					pen.ry() -= refGlyph[i].yadvance ;
 				}
 				/**********************************************/
-				glyphList << glyph;
+				
 				theScene->addItem ( glyph );
 				glyph->setPos ( pen.x() + ( refGlyph[i].xoffset ),
 				                pen.y() + ( refGlyph[i].yoffset ) );
@@ -341,6 +379,8 @@ void FMLayout::doDraw()
 		pen.ry() += adjustedSampleInter;
 		pen.rx() = origine.x();
 	}
+	
+	qDebug()<<"doDraw T(ms)"<<t.elapsed();
 }
 
 double FMLayout::distance ( int start, int end )
@@ -357,24 +397,30 @@ double FMLayout::distance ( int start, int end )
 
 void FMLayout::resetScene()
 {
-	for ( int i = 0; i < pixList.count(); ++i )
+	qDebug()<<"FMLayout::resetScene(P"<<pixList.count()<<",G"<<glyphList.count()<<")";
+	QTime t;
+	t.start();
+	int pCount(pixList.count());
+	for ( int i = 0; i < pCount ; ++i )
 	{
 		if ( pixList[i]->scene() )
 		{
 			pixList[i]->scene()->removeItem ( pixList[i] );
-			delete pixList[i];
 		}
+			delete pixList[i];
 	}
 	pixList.clear();
-	for ( int i = 0; i < glyphList.count(); ++i )
+	int gCount(glyphList.count());
+	for ( int i = 0; i < gCount; ++i )
 	{
 		if ( glyphList[i]->scene() )
 		{
 			glyphList[i]->scene()->removeItem ( glyphList[i] );
-			delete glyphList[i];
 		}
+			delete glyphList[i];
 	}
 	glyphList.clear();
+	qDebug()<<"resetScene T(ms)"<<t.elapsed();
 }
 
 
@@ -409,3 +455,6 @@ double FMLayout::lineWidth(int l)
 {
 	return theRect.width();
 }
+
+
+

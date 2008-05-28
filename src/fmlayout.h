@@ -47,12 +47,13 @@ struct Node
 	int index;
 
 	Node() {}
-	Node ( int i ) :index ( i ) {}
-	~Node() {foreach ( Vector v, nodes ) {if ( v.n ) delete v.n;}}
+	Node ( int i ) ;
+	~Node();
 
 	bool hasNode ( int idx ) {foreach ( Vector v, nodes ) {if ( v.n->index == idx ) return true;}return false;}
 
 	void sPath ( double dist, QList< int > curList, QList<int>& theList, double& theScore );
+	int count();
 };
 
 class FMLayout

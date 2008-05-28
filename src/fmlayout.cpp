@@ -17,6 +17,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QTime>
 
 void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, double & theScore )
 {
@@ -26,16 +27,16 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 // 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
 	int deep(curList.count() +1);
 	FMLayout* lyt(FMLayout::getLayout());
-	Node* curNode ( this );
+	nodes.clear();
 			// cIdx is first glyph of the line
-	int cIdx ( curNode->index );
+	int cIdx ( index );
 			// bIndex is the break which sits on cIdx
 	int bIndex ( lyt->breakList.indexOf ( cIdx ) );
 	bool wantPlus ( true );
 	while ( wantPlus )
 	{
 		++bIndex;
-// 				qDebug()<<"DOGRAPH LOOP "<<bIndex;
+// 		qDebug()<<"DOGRAPH LOOP "<<bIndex;
 		if ( bIndex  < lyt->breakList.count() )
 		{
 			double di ( lyt->distance ( cIdx, lyt->breakList[bIndex] ) );
@@ -44,6 +45,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 			{
 // 				qDebug()<<"LINE"<<cIdx<< lyt->breakList[bIndex];
 // 				qDebug()<< "C DI"<< lyt->lineWidth(deep) <<di;
+// 				qDebug()<< "N"<<nodes.count();
 				if ( ( bIndex - 1 > 0 ) && ( lyt->breakList[bIndex - 1] != cIdx ) )
 				{
 					int soon ( lyt->breakList[bIndex - 1] );
@@ -51,7 +53,19 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					sN = new Node ( soon );
 					double disN = lyt->lineWidth(deep)- lyt->distance ( cIdx, soon );
 					Node::Vector vN ( sN, qAbs ( disN ) );
-					curNode->nodes << vN;
+					if(nodes.isEmpty())
+						nodes << vN;
+					else
+					{
+						for(int nI(0);nI<nodes.count();++nI)
+						{
+							if(vN.distance <= nodes[nI].distance)
+							{
+								nodes.insert(nI,vN);
+								break;
+							}
+						}
+					}
 				}
 
 				int fit ( lyt->breakList[bIndex] );
@@ -59,8 +73,20 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 				sF = new Node ( fit );
 				double disF =  lyt->lineWidth(deep)- lyt->distance ( cIdx, fit );
 				Node::Vector vF ( sF,qAbs (  2.0 * disF ) );
-				curNode->nodes << vF;
-
+// 				curNode->nodes << vF;
+				if(nodes.isEmpty())
+					nodes << vF;
+				else
+				{
+					for(int nI(0);nI<nodes.count();++nI)
+					{
+						if(vF.distance <= nodes[nI].distance)
+						{
+							nodes.insert(nI,vF);
+							break;
+						}
+					}
+				}
 				wantPlus = false;
 
 			}
@@ -69,30 +95,45 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		{
 // 					qDebug()<<"END OF BREAKS";
 			int soon ( lyt->breakList[bIndex - 1] );
-			if ( soon != cIdx && !curNode->hasNode ( soon ) )
+			if ( soon != cIdx && !hasNode ( soon ) )
 			{
 
 				Node* sN = 0;
 				sN = new Node ( soon );
 				double disN = lyt->lineWidth(deep) - lyt->distance ( cIdx, soon );
 				Node::Vector vN ( sN, qAbs ( disN ) );
-				curNode->nodes << vN;
+// 				curNode->nodes << vN;
+				if(nodes.isEmpty())
+					nodes << vN;
+				else
+				{
+					for(int nI(0);nI<nodes.count();++nI)
+					{
+						if(vN.distance <= nodes[nI].distance)
+							nodes.insert(nI,vN);
+					}
+				}
 			}
 
 			wantPlus = false;
 		}
 	}
 
+// 	qDebug()<<"N"<<nodes.count();
 	curList << index;
-	foreach ( Vector v, nodes )
+	bool isLeaf(nodes.isEmpty());
+	while( !nodes.isEmpty() )
 	{
+		Vector v = nodes.first() ;
 		if ( dist + v.distance < theScore )
 		{
 			v.n->sPath ( dist + v.distance, curList, theList, theScore );
 		}
+// 		qDebug()<< "R";
+		nodes.removeFirst();
 	}
 
-	if ( nodes.isEmpty() ) // end of text
+	if ( isLeaf ) 
 	{
 		if ( dist < theScore )
 		{
@@ -126,121 +167,26 @@ void FMLayout::doLayout ( const GlyphList & spec , double fs )
 	delete node;
 }
 
-void FMLayout::doGraph()
+void FMLayout::doGraph()// Has became doBreaks
 {
 	/**
 	I hit a power issue with my graph thing as in its initial state.
 	So, I’ll try now to cut the tree as it’s built, not far than what’s done in chess programs.
 	
 	*/
-	qDebug() <<"FMLayout::doGraph()";
 	// At first we’ll provide a very simple implementation to test things out
 
 	// A) where can we break?
-	QList<int> breaks;
-// 	breaks << 0;
+	breakList.clear();
 	for ( int a ( 0 ) ; a < theString.count() ; ++a )
 	{
 		// with the simple we just break at space, I know it’s ugly
 // 		qDebug() << theString[a].lChar<< QChar(theString[a].lChar);
 		if ( QChar ( theString[a].lChar ).category() == QChar::Separator_Space )
-			breaks << a;
+			breakList << a;
 	}
-	breaks << theString.count();
-	qDebug() <<"BREAKS"<<breaks;
-	int theEnd ( breaks.last() );
-	breakList = breaks;
-// 	return;
-
-	// B) Try to build the shorter graph (be carefull of n) - we’ll try, if possible, to avoid recursive function
-// 	double constantWidth ( theRect.width() );// here it’s constant but it will have to not be in the future
-// 
-// // 	QMap<int,Node*> crossBreakNode;
-// // 	QMap<int,int> crossBreakVectIndex;
-// 	QList<Node*> toDo;
-// 	QList<Node*> newNodes;
-// 	toDo << node;
-// 	int nodeCounter ( 0 );
-// 	while ( !toDo.isEmpty() )
-// 	{
-// // 		qDebug()<<"DOGRAPH LOOP 1";
-// 		newNodes.clear();
-// 		int nCount ( toDo.count() );
-// 		for ( int nIdx ( 0 ); nIdx < nCount; ++nIdx )
-// 		{
-// // 			qDebug()<<"DOGRAPH LOOP 2"<<nIdx <<"/"<<nCount;
-// 			Node* curNode ( toDo[nIdx] );
-// 			// cIdx is first glyph of the line
-// 			int cIdx ( curNode->index );
-// 			// bIndex is the break which sits on cIdx
-// 			int bIndex ( breaks.indexOf ( cIdx ) );
-// 			bool wantPlus ( true );
-// 			while ( wantPlus )
-// 			{
-// 				++bIndex;
-// // 				qDebug()<<"DOGRAPH LOOP 3"<<plus;
-// 				if ( bIndex  < breaks.count() )
-// 				{
-// 					double di ( distance ( cIdx, breaks[bIndex] ) );
-// // 					qDebug()<< "C DI"<< constantWidth<<di;
-// 					if ( di >= constantWidth )
-// 					{
-// // 						qDebug()<<"LINE"<<cIdx<< breaks[bIndex];
-// // 						qDebug()<<"C DI"<< constantWidth<<di;
-// 						if ( ( bIndex - 1 > 0 ) && ( breaks[bIndex - 1] != cIdx ) )
-// 						{
-// 							int soon ( breaks[bIndex - 1] );
-// 							Node* sN = 0;
-// 							sN = new Node ( soon );
-// 							++nodeCounter;
-// // 							}
-// 							double disN = constantWidth - distance ( cIdx, soon );
-// 							Node::Vector vN ( sN, qAbs ( disN ) );
-// 							curNode->nodes << vN;
-// 							newNodes << sN;
-// 						}
-// 
-// 						int fit ( breaks[bIndex] );
-// 						Node* sF = 0;
-// 						sF = new Node ( fit );
-// 						++nodeCounter;
-// // 						}
-// 						double disF = constantWidth - distance ( cIdx, fit );
-// 						Node::Vector vF ( sF,qAbs (  2.0 * disF ) );
-// 						curNode->nodes << vF;
-// 						newNodes << sF;
-// 
-// 						wantPlus = false;
-// 
-// 					}
-// 				}
-// 				else // end of breaks list
-// 				{
-// // // 					qDebug()<<"END OF BREAKS";
-// 					int soon ( breaks[bIndex - 1] );
-// 					if ( soon != cIdx && !curNode->hasNode ( soon ) )
-// 					{
-// 
-// 						Node* sN = 0;
-// 						sN = new Node ( soon );
-// 						++nodeCounter;
-// // 						}
-// 						double disN = constantWidth - distance ( cIdx, soon );
-// 						Node::Vector vN ( sN, qAbs ( disN ) );
-// 						curNode->nodes << vN;
-// 						newNodes << sN;
-// 					}
-// 
-// 					wantPlus = false;
-// 				}
-// 			}
-// 
-// 		}
-// 		toDo.clear();
-// 		toDo = newNodes;
-// 	}
-// 	qDebug() <<nodeCounter<<"Nodes created";
-
+	breakList << theString.count();
+	qDebug() <<"BREAKS"<<breakList.count();
 }
 
 void FMLayout::doLines()
@@ -249,9 +195,12 @@ void FMLayout::doLines()
 	// Run through the graph and find the shortest path
 	indices.clear();
 	double score ( INFINITE );
+	QTime t;
+	t.start();
 	node->sPath ( 0,QList<int>(),indices,score );
 	// la messe est dite ! :-)
-	qDebug() <<"S I"<<score<<indices;
+	qDebug() <<"S I T"<<score<<indices;
+	qDebug()<<"T(ms)"<<t.elapsed();
 	double refW(theRect.width());
 	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
 	{
@@ -298,7 +247,7 @@ void FMLayout::doLines()
 			}			
 		}
 		double shareLost( diff / qMax( 1.0 , (double)wsIds.count() ) );
-		qDebug()<< "D N W"<<diff<<wsIds.count()<< shareLost;
+// 		qDebug()<< "D N W"<<diff<<wsIds.count()<< shareLost;
 		for(int wi(0); wi < wsIds.count(); ++wi)
 		{
 			theString[ wsIds[wi] ].xadvance += shareLost;

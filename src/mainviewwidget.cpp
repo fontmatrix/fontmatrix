@@ -102,7 +102,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremScene->setSceneRect ( pageRect );
 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
 	backp->setEnabled ( false );
-	ftScene->setSceneRect ( 0,0,1000,1000 );
+	ftScene->setSceneRect ( 0,0, 597.6, 842.4 );
 
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
@@ -166,6 +166,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
+	
+	connect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
 
 	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 
@@ -715,15 +717,23 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		textLayout->setTheScene(targetScene);
 		textLayout->setAdjustedSampleInter(wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize);
 
-		GlyphList list;
-		QString stl( typo->namedSample(sampleTextCombo->currentText() ).replace("\n"," "));
+		QList<GlyphList> list;
+		QStringList stl( typo->namedSample(sampleTextCombo->currentText() ).split("\n"));
 		if ( processScript )
-			list = theVeryFont->glyphs( stl , sampleFontSize, script );
+		{
+			for(int p(0);p<stl.count();++p)
+				list << theVeryFont->glyphs( stl[p] , sampleFontSize, script );
+		}
 		else if(processFeatures)
-			list = theVeryFont->glyphs( stl , sampleFontSize, deFillOTTree());
+		{
+			for(int p(0);p<stl.count();++p)	
+				list << theVeryFont->glyphs( stl[p] , sampleFontSize, deFillOTTree());
+		}
 		else
-			list = theVeryFont->glyphs( stl , sampleFontSize  );
-		
+		{
+			for(int p(0);p<stl.count();++p)
+				list << theVeryFont->glyphs( stl[p] , sampleFontSize  );
+		}
 		textLayout->doLayout(list, sampleFontSize);
 		
 		

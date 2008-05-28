@@ -12,16 +12,22 @@
 #ifndef FMLAYOUT_H
 #define FMLAYOUT_H
 
-#include "fmsharestruct.h"
+
+#include <QObject>
 #include <QString>
 #include <QRectF>
 #include <QPointF>
+
+#include "fmsharestruct.h"
 
 class QGraphicsScene;
 class FontItem;
 class QGraphicsPixmapItem;
 class QGraphicsPathItem;
 class QGraphicsRectItem;
+
+class QAction;
+class QMenu;
 
 /**
  Finally, we want to layout text elsewhere than _in_ the font or _in_ the view.
@@ -30,6 +36,9 @@ class QGraphicsRectItem;
 **/
 
 #define INFINITE 99999999L
+
+
+
 
 struct Node
 {
@@ -56,18 +65,19 @@ struct Node
 	int count();
 };
 
-class FMLayout
+class FMLayout : public QObject
 {
+	Q_OBJECT
 	public:
 		// Just think that the font must be set
 		FMLayout ( /*QGraphicsScene* scene, FontItem* font*/ );
 		~FMLayout();
 
-		virtual void doLayout ( const GlyphList& spec , double fs);
-		
-		
+		virtual void doLayout ( const QList<GlyphList>& spec , double fs );
+
+
 		static FMLayout *instance;
-		static FMLayout *getLayout(){return instance;}
+		static FMLayout *getLayout() {return instance;}
 	private://methods
 		/// Build a graph on node
 		virtual void doGraph();
@@ -79,14 +89,15 @@ class FMLayout
 	public:// utils
 		double distance ( int start, int end );
 		void resetScene();
-		
+
 		QList<int> breakList;
-		double lineWidth(int l);
+		double lineWidth ( int l );
 
 	private:// data
 		// Argued
 		QGraphicsScene* theScene;
 		FontItem*	theFont;
+		QList<GlyphList> paragraphs;
 		GlyphList theString;
 		QRectF theRect;// Not really argued now, will come soon
 		QGraphicsRectItem *rules;
@@ -107,7 +118,7 @@ class FMLayout
 		int textProgressionBlock;
 		int textProgressionLine;
 		QPointF origine;
-		
+
 
 	public: //accessors
 
@@ -154,18 +165,43 @@ class FMLayout
 			origine = theValue;
 		}
 
-	void setFontSize ( double theValue )
-	{
-		fontSize = theValue;
-	}
+		void setFontSize ( double theValue )
+		{
+			fontSize = theValue;
+		}
 
-	void setTheScene ( QGraphicsScene* theValue );
+		void setTheScene ( QGraphicsScene* theValue );
 
-	void setTheFont ( FontItem* theValue );
-	
-	
+		void setTheFont ( FontItem* theValue );
 
-	
+	public: // Debug
+		QAction *soonplus;
+		QAction *soonmoins;
+		QAction *fitplus;
+		QAction *fitmoins;
+		QAction *lateplus;
+		QAction *latemoins;
+		QAction *endplus;
+		QAction *endmoins;
+	private slots:
+		void slotSP();
+		void slotSM();
+		void slotFP() ;
+		void slotFM() ;
+		void slotLP() ;
+		void slotLM();
+		void slotEP() ;
+		void slotEM();
+	signals:
+		void updateLayout();
+	public:
+		double FM_LAYOUT_NODE_SOON_F;
+		double FM_LAYOUT_NODE_FIT_F;
+		double FM_LAYOUT_NODE_LATE_F;
+		double FM_LAYOUT_NODE_END_F;
+		QMenu * secretMenu;
+
+
 };
 
 

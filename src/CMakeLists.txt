@@ -68,6 +68,7 @@ SET(fontmatrix_MOC_HDRS
 aboutwidget.h
 fmactivate.h
 fmglyphsview.h
+fmlayout.h
 fmnamelist.h
 fmplayground.h
 fmpreviewlist.h

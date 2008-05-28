@@ -42,6 +42,7 @@
 #include "fmrepair.h"
 // #include "fmprintdialog.h"
 #include "fmactivate.h"
+#include "fmlayout.h"
 
 #include "winutils.h"
 
@@ -678,6 +679,9 @@ void typotek::createMenus()
 	editMenu->addAction( repairAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
+	
+	editMenu->addSeparator();
+	editMenu->addMenu(FMLayout::getLayout()->secretMenu);
 
 	browseMenu = menuBar()->addMenu(tr("&Browse"));
 	browseMenu->addAction(nextFamily);

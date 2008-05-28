@@ -192,7 +192,9 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 
 	if ( isLeaf )
 	{
-		if ( dist < theScore )
+		double mDist(dist * dist / deep);
+		double mScore(theScore * theScore / deep);
+		if ( mDist < mScore )
 		{
 			theScore = dist;
 			theList = curList;
@@ -208,10 +210,10 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	instance = this;
 	node = 0;
 
-	FM_LAYOUT_NODE_SOON_F=	1.25;
+	FM_LAYOUT_NODE_SOON_F=	0.625;
 	FM_LAYOUT_NODE_FIT_F=	1.0;
 	FM_LAYOUT_NODE_LATE_F=	500.0;
-	FM_LAYOUT_NODE_END_F=	0.5;
+	FM_LAYOUT_NODE_END_F=	0.25;
 
 	soonplus = new QAction ( "soonplus",this );
 	Shortcuts::getInstance()->add ( soonplus );
@@ -268,7 +270,7 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 // 		qDebug()<<"N"<<node->count();
 		delete node;
 	}
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 }
 
 void FMLayout::doGraph() // Has became doBreaks
@@ -537,33 +539,33 @@ double FMLayout::lineWidth ( int l )
 
 void FMLayout::slotSP() {
 	FM_LAYOUT_NODE_SOON_F *= 2.0;
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 emit updateLayout();}
 void FMLayout::slotSM() {
 	FM_LAYOUT_NODE_SOON_F /= 2.0;
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 	emit updateLayout();}
 void FMLayout::slotFP() {
 	FM_LAYOUT_NODE_FIT_F *= 2.0;
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 	emit updateLayout();}
 void FMLayout::slotFM() {
 	FM_LAYOUT_NODE_FIT_F /= 2.0;
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 	emit updateLayout();}
 void FMLayout::slotLP() {
 	FM_LAYOUT_NODE_LATE_F *= 2.0;
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 	emit updateLayout();}
 void FMLayout::slotLM() {
 	FM_LAYOUT_NODE_LATE_F /= 2.0;
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 	emit updateLayout();}
 void FMLayout::slotEP() {
 	FM_LAYOUT_NODE_END_F *= 2.0;
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 	emit updateLayout();}
 void FMLayout::slotEM() {
 	FM_LAYOUT_NODE_END_F /= 2.0;
-	qDebug() <<"LF"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
 	emit updateLayout();}

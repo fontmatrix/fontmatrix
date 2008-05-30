@@ -22,6 +22,8 @@
 #include <QAction>
 #include <QMenu>
 
+#define OUT_OF_RECT 99999999.0
+
 Node::Node ( int i ) :index ( i )
 {
 }
@@ -145,6 +147,10 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 
 				wantPlus = false;
 
+			}
+			else if(lyt->lineWidth ( deep ) == OUT_OF_RECT )
+			{
+				wantPlus = false;
 			}
 		}
 		else // end of breaks list
@@ -761,6 +767,10 @@ void FMLayout::setTheFont ( FontItem* theValue )
 
 double FMLayout::lineWidth ( int l )
 {
+	if(((double)l * adjustedSampleInter) >  theRect.bottom()) // Out of scope!
+	{
+		return OUT_OF_RECT;
+	}
 	return theRect.width();
 }
 

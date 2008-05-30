@@ -395,7 +395,7 @@ QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString scri
 				orderedFeatures << cProp;
 				props[cProp] = all;
 				all *= 2;
-				qDebug()<< "Feature " << cProp << " has prop mask"<<  QString::number(props[cProp],2) ;
+// 				qDebug()<< "Feature " << cProp << " has prop mask"<<  QString::number(props[cProp],2) ;
 			}
 		}
 	}
@@ -415,7 +415,7 @@ QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString scri
 		
 		curString += QChar(shaped[i].unicode()) ;
 		
-		qDebug() << "Adding "<< QString::number(shaped[i].unicode(),16) << "["<< QString::number( ~prop, 2 )<<"]";
+// 		qDebug() << "Adding "<< QString::number(shaped[i].unicode(),16) << "["<< QString::number( ~prop, 2 )<<"]";
 		if ( error !=  Harfbuzz::HB_Err_Ok )
 			qDebug() << "hb_buffer_add_glyph () failed";
 

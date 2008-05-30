@@ -131,7 +131,7 @@ class FMOtf
 
 //   uint get_position(int,GlyphLayout *);
 //   uint presentAlternates(HB_UInt, Harfbuzz::HB_UShort, QList<Harfbuzz::HB_UShort>);
-		QList<RenderedGlyph> get_position ( Harfbuzz::HB_Buffer abuffer = 0 );
+		GlyphList get_position ( Harfbuzz::HB_Buffer abuffer = 0 );
 
 	FT_Face face() const
 	{

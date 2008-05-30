@@ -3806,6 +3806,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 			
 			if(hl.contains( ret[i].log ))
 			{
+				qDebug()<<"L R"<<hl[ret[i].log].first<<hl[ret[i].log].second;
 				ret[i].isBreak = true;
 				ret[i].hyphen.first = otf->procstring ( hl[ret[i].log].first + "-" , set );
 				for(int f(0); f < ret[i].hyphen.first.count(); ++f)

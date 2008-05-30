@@ -50,10 +50,10 @@ int Node::count()
 
 void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, double & theScore )
 {
-	QList<int> debugL;
-	foreach(Vector v, nodes)
-	{debugL << v.n->index;}
-	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
+// 	QList<int> debugL;
+// 	foreach(Vector v, nodes)
+// 	{debugL << v.n->index;}
+// 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
 	int deep ( curList.count() + 1 );
 	FMLayout* lyt ( FMLayout::getLayout() );
 	nodes.clear();
@@ -65,11 +65,11 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	while ( wantPlus )
 	{
 		++bIndex;
-		qDebug()<<"DOGRAPH LOOP "<<bIndex;
+// 		qDebug()<<"DOGRAPH LOOP "<<bIndex;
 		if ( bIndex  < lyt->breakList.count() )
 		{
 			double di ( lyt->distance ( cIdx, lyt->breakList[bIndex],lyt->theString ) );
-			qDebug()<< "C DI"<< lyt->lineWidth(deep) <<di;
+// 			qDebug()<< "C DI"<< lyt->lineWidth(deep) <<di;
 			if ( di >= lyt->lineWidth ( deep ) )
 			{
 // 				qDebug()<<"LINE"<<cIdx<< lyt->breakList[bIndex];
@@ -155,7 +155,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		}
 		else // end of breaks list
 		{
-			qDebug()<<"END OF BREAKS";
+// 			qDebug()<<"END OF BREAKS";
 			int soon ( lyt->breakList[bIndex - 1] );
 			if ( soon != cIdx && !hasNode ( soon ) )
 			{
@@ -181,7 +181,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		}
 	}
 
-	qDebug()<<"N"<<nodes.count();
+// 	qDebug()<<"N"<<nodes.count();
 	bool isLeaf ( nodes.isEmpty() );
 	curList << (isLeaf ? index-1 : index);
 	while ( !nodes.isEmpty() )
@@ -344,6 +344,9 @@ void FMLayout::doLines()
 	double refW ( theRect.width() );
 	int maxIndex(indices.count() - 1);
 	qDebug()<<"SC IC"<<theString.count()<<indices.count();
+	bool hasHyph(false);
+	GlyphList curHyph;
+	
 	for ( int lIdx ( 0 ); lIdx < maxIndex ; ++lIdx )
 	{
 		int start1( !lIdx ? indices[lIdx] : indices[lIdx] + 1);
@@ -377,17 +380,18 @@ void FMLayout::doLines()
 		
 		GlyphList lg;
 		/// * *
-		if(!inList.first().isBreak && !inList.last().isBreak)
+		if(!hasHyph && !inList.last().isBreak)
 		{
 			qDebug()<<"/// * *";
 			lg = inList;
 		}
 		/// = *
-		else if(inList.first().isBreak && !inList.last().isBreak)
+		else if(hasHyph && !inList.last().isBreak)
 		{
 			qDebug()<<"/// = *";
 			
-			GlyphList hr(inList.first().hyphen.second);
+			GlyphList hr(curHyph);
+			hasHyph = false;
 			
 			for (int ih(0); ih < hr.count(); ++ih)
 			{
@@ -407,11 +411,13 @@ void FMLayout::doLines()
 		
 		}
 		/// * =
-		else if(!inList.first().isBreak && inList.last().isBreak)
-		{
-			GlyphList hr(inList.last().hyphen.first);
-			
+		else if(!hasHyph && inList.last().isBreak)
+		{			
 			qDebug()<<"/// * =";
+			GlyphList hr(inList.last().hyphen.first);
+			hasHyph = true;
+			curHyph = inList.last().hyphen.second;
+			
 			do
 			{
 				inList.takeLast();
@@ -426,16 +432,19 @@ void FMLayout::doLines()
 				lg <<  hr[ih];
 				dgS +="("+ QString(QChar(lg.last().lChar))+")";
 			}
-			qDebug()<<dgS;
+			QString dbh;for(int h(0);h<curHyph.count();++h){dbh+="["+ QString(QChar(curHyph[h].lChar)) +"]";}qDebug()<<dgS<<"="<<dbh;
 		
 		}
 		/// = =
-		else if(inList.first().isBreak && inList.last().isBreak)
+		else if(hasHyph && inList.last().isBreak)
 		{
 			
 			qDebug()<<"/// = =";
-			GlyphList hr(inList.first().hyphen.second);
-			GlyphList hr2(inList.last().hyphen.first);			
+			GlyphList hr(curHyph);	
+			GlyphList hr2(inList.first().hyphen.second);
+			
+			hasHyph = true;
+			curHyph = inList.last().hyphen.second;		
 			
 			for (int ih(0); ih < hr.count(); ++ih)
 			{

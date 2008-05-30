@@ -38,6 +38,11 @@ FMHyphenator::~FMHyphenator()
 
 
 
+/**
+ * 
+ * @param word 
+ * @return 
+ */
 HyphList FMHyphenator::hyphenate(const QString & word) const 
 {
 	HyphList ret;
@@ -68,7 +73,7 @@ HyphList FMHyphenator::hyphenate(const QString & word) const
 		{
 			QString left(ref.left(i+1));
 			QString right(ref.mid(i+1));
-			qDebug()<<"IH L R"<< left << right;
+// 			qDebug()<<"IH L R"<< left << right;
 			if(rep && rep[i])
 			{
 				QStringList repList( QString::fromUtf8( (rep[i]) ).split("=") );

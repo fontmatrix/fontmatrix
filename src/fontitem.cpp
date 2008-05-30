@@ -3869,14 +3869,17 @@ GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 	delete shaperfactory;
 	
 	double scalefactor = fsize / m_face->units_per_EM  ;
+	QString dbgS;
 	for(int i(0); i < ret.count(); ++i)
 	{
 		ret[i].xadvance *= scalefactor;
 		ret[i].yadvance *= scalefactor;
 		ret[i].xoffset *= scalefactor;
 		ret[i].yoffset *= scalefactor;
+		
+		dbgS += QChar(ret[i].lChar);
 	}
-	
+	qDebug()<<"S"<<dbgS;
 	delete otf;
 	otf = 0;
 	releaseFace();

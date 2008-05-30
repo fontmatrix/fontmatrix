@@ -370,6 +370,7 @@ QList<RenderedGlyph> FMOtf::procstring ( QString s, OTFSet set )
 QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString script )
 {
 // 	QString script = "latn";
+	curString.clear();
 	QString lang = "dflt";
 // 	regAltGlyphs.clear();
 	if ( Harfbuzz::hb_buffer_new ( &_buffer ) != Harfbuzz::HB_Err_Ok)
@@ -411,6 +412,9 @@ QList< RenderedGlyph > FMOtf::procstring( QList<Character> shaped , QString scri
 // 			prop |= ~0 ;
 // 		}
 		error = Harfbuzz::hb_buffer_add_glyph ( _buffer, FT_Get_Char_Index ( _face, shaped[i].unicode() ), ~prop, i );
+		
+		curString += QChar(shaped[i].unicode()) ;
+		
 		qDebug() << "Adding "<< QString::number(shaped[i].unicode(),16) << "["<< QString::number( ~prop, 2 )<<"]";
 		if ( error !=  Harfbuzz::HB_Err_Ok )
 			qDebug() << "hb_buffer_add_glyph () failed";
@@ -873,7 +877,7 @@ FMOtf::set_features ( QStringList ls )
 /**
 Dump all the "uneasy" HB_Buffer into a user-friendy QList :)
 */
-QList<RenderedGlyph> FMOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
+GlyphList FMOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 {
 // 	qDebug() << "FMOtf::get_position () for buffer : " << _buffer;
 	Harfbuzz::HB_Buffer bak_buf = _buffer ;
@@ -881,7 +885,7 @@ QList<RenderedGlyph> FMOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 	{
 		_buffer = abuffer;
 	}
-	QList<RenderedGlyph> renderedString;
+	GlyphList renderedString;
 	bool wantPos = true;
 	for ( uint bIndex = 0 ; bIndex < _buffer->in_length; ++bIndex )
 	{

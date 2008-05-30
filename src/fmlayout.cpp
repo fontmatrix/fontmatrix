@@ -50,10 +50,10 @@ int Node::count()
 
 void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, double & theScore )
 {
-// 	QList<int> debugL;
-// 	foreach(Vector v, nodes)
-// 	{debugL << v.n->index;}
-// 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
+	QList<int> debugL;
+	foreach(Vector v, nodes)
+	{debugL << v.n->index;}
+	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
 	int deep ( curList.count() + 1 );
 	FMLayout* lyt ( FMLayout::getLayout() );
 	nodes.clear();
@@ -65,11 +65,11 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	while ( wantPlus )
 	{
 		++bIndex;
-// 		qDebug()<<"DOGRAPH LOOP "<<bIndex;
+		qDebug()<<"DOGRAPH LOOP "<<bIndex;
 		if ( bIndex  < lyt->breakList.count() )
 		{
 			double di ( lyt->distance ( cIdx, lyt->breakList[bIndex],lyt->theString ) );
-// 			qDebug()<< "C DI"<< lyt->lineWidth(deep) <<di;
+			qDebug()<< "C DI"<< lyt->lineWidth(deep) <<di;
 			if ( di >= lyt->lineWidth ( deep ) )
 			{
 // 				qDebug()<<"LINE"<<cIdx<< lyt->breakList[bIndex];
@@ -155,7 +155,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		}
 		else // end of breaks list
 		{
-// 					qDebug()<<"END OF BREAKS";
+			qDebug()<<"END OF BREAKS";
 			int soon ( lyt->breakList[bIndex - 1] );
 			if ( soon != cIdx && !hasNode ( soon ) )
 			{
@@ -181,7 +181,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		}
 	}
 
-// 	qDebug()<<"N"<<nodes.count();
+	qDebug()<<"N"<<nodes.count();
 	bool isLeaf ( nodes.isEmpty() );
 	curList << (isLeaf ? index-1 : index);
 	while ( !nodes.isEmpty() )
@@ -601,14 +601,14 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 	GlyphList gList = gl;
 	if(QChar (gList.first().lChar).category() == QChar::Separator_Space)
 	{
-		while(QChar (gList.first().lChar).category() == QChar::Separator_Space)
+		while(QChar (gList.first().lChar).category() == QChar::Separator_Space && start < end)
 		{
 			++start;
 		}
 	}
 	if(QChar (gList.last().lChar).category() == QChar::Separator_Space)
 	{
-		while(QChar (gList.last().lChar).category() == QChar::Separator_Space)
+		while(QChar (gList.last().lChar).category() == QChar::Separator_Space && end > start)
 		{
 			--end;
 		}

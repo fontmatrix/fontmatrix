@@ -140,6 +140,9 @@ int M17NShaper::impl_drive_otf ( struct _MFLTFont *font, MFLTOtfSpec *spec, MFLT
 	{
 		gl << in->glyphs[i].code;
 	}
+	instance->otf->curString.clear() ;
+	for(int i(from);i < to; ++i)
+		instance->otf->curString += QChar(in->glyphs[i].c);
 	
 	instance->cachedString = instance->otf->procstring(gl,script,lang,subf,posf);
 }

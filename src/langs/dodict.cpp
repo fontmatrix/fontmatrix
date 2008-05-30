@@ -88,7 +88,11 @@ int main(int argc, char *argv[] )
 	
 	if(args.count() == 1 || args.at(1) == "-h" )
 	{
-		QString help("Here a usefull help message\n");
+		QString help("dodict \
+				\n\t-b \tStart of Unicode interval (decimal)\
+				\n\t-e\tEnd of Unicode interval (decimal)\
+				\n\t-s\tName of the script (will produce the file script.dict)\
+				\n\t-c\tthe file containing the category\n");
 		std::cout << help.toStdString() ;
 		return 1;
 	}

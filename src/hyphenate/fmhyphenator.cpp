@@ -23,6 +23,11 @@ FMHyphenator::FMHyphenator(const QString& dictPath)
 	{
 		qDebug()<<"Unable to load dict file:"<<dictPath;
 	}
+	else
+	{
+		dict->lhmin = 3;
+		dict->rhmin = 2;
+	}
 	
 }
 
@@ -61,11 +66,13 @@ HyphList FMHyphenator::hyphenate(const QString & word) const
 	{
 		if(ht[i] & 1)
 		{
-			QString left(ref.left(i));
-			QString right(ref.right(i));
+			QString left(ref.left(i+1));
+			QString right(ref.mid(i+1));
+			qDebug()<<"IH L R"<< left << right;
 			if(rep && rep[i])
 			{
 				QStringList repList( QString::fromUtf8( (rep[i]) ).split("=") );
+				qDebug()<<"IH RL C P"<<repList.join("=")<<cut<<pos;
 				if(repList.count() != 2)
 				{
 					qDebug()<<"OOPS - repList =="<<repList.count() ;

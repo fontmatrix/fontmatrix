@@ -3665,30 +3665,97 @@ void FontItem::setShaperType ( int theValue )
 
 GlyphList FontItem::glyphs ( QString spec, double fsize )
 {
+	qDebug()<<"glyphs ("<< spec<<", "<<fsize<<" )";
+	FMHyphenator *hyph = typotek::getInstance()->getHyphenator();
 	GlyphList ret;
 	if ( spec.isEmpty() || fsize <= 0.0 )
 		return ret;
 	ensureFace();
 	double scalefactor = fsize / m_face->units_per_EM  ;
-	for ( int i ( 0 ); i < spec.count();++i )
+	
+	QStringList stl(spec.split(' ', QString::SkipEmptyParts));
+	
+	QGraphicsPathItem *glyph = itemFromChar ( QChar(' ').unicode() , fsize );
+	RenderedGlyph wSpace(glyph->data(GLYPH_DATA_GLYPH).toInt(),0, glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor ,0,0,0,' ',false);
+	delete glyph;
+	for(QStringList::const_iterator sIt(stl.constBegin());sIt != stl.constEnd(); ++ sIt)
 	{
-		QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), fsize );
-		if ( !glyph )
+		if(sIt != stl.constBegin())
 		{
-			continue;
+			ret << wSpace;
 		}
-		RenderedGlyph rg;
-		rg.glyph = glyph->data(GLYPH_DATA_GLYPH).toInt();
-		rg.log = i; // We are in a 1/1 relation 
-		rg.lChar = spec[i].unicode();
-		rg.xadvance =  glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor;
-		rg.yadvance =  glyph->data(GLYPH_DATA_VADVANCE).toDouble() * scalefactor;
-		rg.xoffset = 0;
-		rg.yoffset = 0;
-		ret << rg;
-		delete glyph;
+		HyphList hl( hyph->hyphenate(*sIt) );
+// 		qDebug()<<"Hyph W C"<<*sIt<<hl.count();
+		
+		for ( int i ( 0 ); i < (*sIt).count();++i )
+		{
+			glyph = itemFromChar ( (*sIt).at ( i ).unicode(), fsize );
+			if ( !glyph )
+			{
+				continue;
+			}
+			RenderedGlyph rg;
+			rg.glyph = glyph->data(GLYPH_DATA_GLYPH).toInt();
+			rg.log = i; // We are in a 1/1 relation 
+			rg.lChar = (*sIt).at ( i ).unicode();
+			rg.xadvance =  glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor;
+			rg.yadvance =  glyph->data(GLYPH_DATA_VADVANCE).toDouble() * scalefactor;
+			rg.xoffset = 0;
+			rg.yoffset = 0;
+			delete glyph;
+			if(hl.contains( i ))
+			{
+				qDebug()<<"H B A"<<i<<hl[i].first<<hl[i].second;
+				rg.isBreak = true;
+				
+				QString bS(hl[i].first + "-");
+				for(int bI(0);bI<bS.count();++bI)
+				{
+// 					qDebug()<<"i bI a"<<i<<bI<<bS.at ( bI );
+					glyph = itemFromChar ( bS.at ( bI ).unicode(), fsize );
+					if ( !glyph )
+					{
+						continue;
+					}
+					RenderedGlyph bg;
+					bg.glyph = glyph->data(GLYPH_DATA_GLYPH).toInt();
+// 					bg.log = ; // We are in a 1/1 relation 
+					bg.lChar = bS.at ( bI ).unicode();
+					bg.xadvance =  glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor;
+					bg.yadvance =  glyph->data(GLYPH_DATA_VADVANCE).toDouble() * scalefactor;
+					bg.xoffset = 0;
+					bg.yoffset = 0;
+					delete glyph;
+					rg.hyphen.first << bg;
+					
+				}
+				bS = hl[i].second;
+				for(int bI(0);bI<bS.count();++bI)
+				{
+					glyph = itemFromChar ( bS.at ( bI ).unicode(), fsize );
+					if ( !glyph )
+					{
+						continue;
+					}
+					RenderedGlyph bg;
+					bg.glyph = glyph->data(GLYPH_DATA_GLYPH).toInt();
+// 					bg.log = i; // We are in a 1/1 relation 
+					bg.lChar = bS.at ( bI ).unicode();
+					bg.xadvance =  glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor;
+					bg.yadvance =  glyph->data(GLYPH_DATA_VADVANCE).toDouble() * scalefactor;
+					bg.xoffset = 0;
+					bg.yoffset = 0;
+					delete glyph;
+					rg.hyphen.second << bg;
+					
+				}
+				
+			}
+			ret << rg;
+		}
 	}
 	releaseFace();
+	qDebug()<<"EndOfGlyphs";
 	return ret;
 }
 
@@ -3705,9 +3772,13 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 	if ( !otf )
 		return Gret;
 	
-	QStringList stl(spec.split(' '));
+	QStringList stl(spec.split(' ',QString::SkipEmptyParts));
 	
-	RenderedGlyph wSpace(0,0,0,0,0,0,' ',false);
+	double scalefactor = fsize / m_face->units_per_EM  ;
+	
+	QGraphicsPathItem *glyph = itemFromChar ( QChar(' ').unicode() , fsize );
+	RenderedGlyph wSpace(glyph->data(GLYPH_DATA_GLYPH).toInt(),0, glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor ,0,0,0,' ',false);
+	delete glyph;
 	for(QStringList::const_iterator sIt(stl.constBegin());sIt != stl.constEnd(); ++ sIt)
 	{
 		if(sIt != stl.constBegin())
@@ -3715,9 +3786,9 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 			Gret << wSpace;
 		}
 		HyphList hl( hyph->hyphenate(*sIt) );
+		qDebug()<<"Hyph W C"<<*sIt<<hl.count();
 		GlyphList ret( otf->procstring ( *sIt , set ) );
 		// otf->procstring works in font unit, so...
-		double scalefactor = fsize / m_face->units_per_EM  ;
 		for(int i(0); i < ret.count(); ++i)
 		{
 			ret[i].xadvance *= scalefactor;
@@ -3728,8 +3799,22 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 			if(hl.contains( ret[i].log ))
 			{
 				ret[i].isBreak = true;
-				ret[i].hyphen.first = otf->procstring ( hl[i].first + "-" , set );
-				ret[i].hyphen.second = otf->procstring ( hl[i].second, set );
+				ret[i].hyphen.first = otf->procstring ( hl[ret[i].log].first + "-" , set );
+				for(int f(0); f < ret[i].hyphen.first.count(); ++f)
+				{
+					ret[i].hyphen.first[f].xadvance *= scalefactor;
+					ret[i].hyphen.first[f].yadvance *= scalefactor;
+					ret[i].hyphen.first[f].xoffset *= scalefactor;
+					ret[i].hyphen.first[f].yoffset *= scalefactor;
+				}
+				ret[i].hyphen.second = otf->procstring ( hl[ret[i].log].second, set );
+				for(int f(0); f < ret[i].hyphen.second.count(); ++f)
+				{
+					ret[i].hyphen.second[f].xadvance *= scalefactor;
+					ret[i].hyphen.second[f].yadvance *= scalefactor;
+					ret[i].hyphen.second[f].xoffset *= scalefactor;
+					ret[i].hyphen.second[f].yoffset *= scalefactor;
+				}
 			}
 		}
 		

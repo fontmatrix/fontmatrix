@@ -919,7 +919,7 @@ QList<RenderedGlyph> FMOtf::get_position ( Harfbuzz::HB_Buffer abuffer )
 		}
 		else
 		{
-			qDebug() << p->back;
+// 			qDebug() << p->back;
 			double backBonus = 0.0;
 			for ( int bb = 0; bb < p->back; ++bb )
 			{

@@ -87,11 +87,12 @@ class FMLayout : public QObject
 		virtual void doDraw();
 
 	public:// utils
-		double distance ( int start, int end );
+		double distance ( int start, int end, const GlyphList& gl );
 		void resetScene();
 
 		QList<int> breakList;
 		QList<int> hyphenList;
+		GlyphList theString;
 		double lineWidth ( int l );
 
 	private:// data
@@ -100,7 +101,6 @@ class FMLayout : public QObject
 		FontItem*	theFont;
 		QList<GlyphList> paragraphs;
 		QList<GlyphList> lines;
-		GlyphList theString;
 		QRectF theRect;// Not really argued now, will come soon
 		QGraphicsRectItem *rules;
 

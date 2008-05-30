@@ -3684,8 +3684,12 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 		{
 			ret << wSpace;
 		}
-		HyphList hl( hyph->hyphenate(*sIt) );
-// 		qDebug()<<"Hyph W C"<<*sIt<<hl.count();
+		HyphList hl;
+		if(hyph)
+		{
+			hl = hyph->hyphenate(*sIt) ;
+			qDebug()<<"Hyph W C"<<*sIt<<hl.count();
+		}
 		
 		for ( int i ( 0 ); i < (*sIt).count();++i )
 		{
@@ -3785,8 +3789,12 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 		{
 			Gret << wSpace;
 		}
-		HyphList hl( hyph->hyphenate(*sIt) );
-		qDebug()<<"Hyph W C"<<*sIt<<hl.count();
+		HyphList hl;
+		if(hyph)
+		{
+			hl = hyph->hyphenate(*sIt) ;
+			qDebug()<<"Hyph W C"<<*sIt<<hl.count();
+		}
 		GlyphList ret( otf->procstring ( *sIt , set ) );
 		// otf->procstring works in font unit, so...
 		for(int i(0); i < ret.count(); ++i)

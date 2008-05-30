@@ -87,7 +87,7 @@ class FMLayout : public QObject
 		virtual void doDraw();
 
 	public:// utils
-		double distance ( int start, int end, const GlyphList& gl );
+		double distance ( int start, int end, const GlyphList& gl , bool power = false );
 		void resetScene();
 
 		QList<int> breakList;

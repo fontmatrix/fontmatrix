@@ -210,11 +210,11 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	instance = this;
 	node = 0;
 
-	FM_LAYOUT_NODE_SOON_F=	0.625;
-	FM_LAYOUT_NODE_FIT_F=	1.0;
-	FM_LAYOUT_NODE_LATE_F=	500.0;
-	FM_LAYOUT_NODE_END_F=	0.25;
-	FM_LAYOUT_HYPHEN_PENALTY = 2.0;
+	FM_LAYOUT_NODE_SOON_F=	625.0;
+	FM_LAYOUT_NODE_FIT_F=	1000.0;
+	FM_LAYOUT_NODE_LATE_F=	2000.0;
+	FM_LAYOUT_NODE_END_F=	500.0;
+	FM_LAYOUT_HYPHEN_PENALTY = 1.2;
 
 	soonplus = new QAction ( "increase before",this );
 	Shortcuts::getInstance()->add ( soonplus );
@@ -273,6 +273,9 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	resetScene();
 	for ( int i ( 0 ); i < spec.count() ; ++ i )
 	{
+		qDebug()<<"Oy Rb"<<origine.y()<<theRect.bottom();
+		if(origine.y() > theRect.bottom())
+			break;
 		theString = spec[i];
 		if(theString.isEmpty())
 			continue;
@@ -587,7 +590,7 @@ void FMLayout::doDraw()
 	qDebug() <<"doDraw T(ms)"<<t.elapsed();
 }
 
-double FMLayout::distance ( int start, int end, const GlyphList& gl )
+double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power  )
 {
 	GlyphList gList = gl;
 	if(QChar (gList.first().lChar).category() == QChar::Separator_Space)
@@ -695,6 +698,8 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl )
 	}
 
 // 	qDebug()<<"SID" ;
+	if(power)
+		return 1000*ret*ret;
 	return ret;
 }
 
@@ -742,10 +747,10 @@ void FMLayout::setTheScene ( QGraphicsScene* theValue )
 	theRect.setWidth ( 6.0 * sUnitW );
 	theRect.setHeight ( 6.0 * sUnitH );
 	origine = theRect.topLeft() ;
-	rules->setRect(theRect);
-	rules->setZValue(9.9);
-	if(rules->scene() != theScene)
-		theScene->addItem(rules);
+// 	rules->setRect(theRect);
+// 	rules->setZValue(9.9);
+// 	if(rules->scene() != theScene)
+// 		theScene->addItem(rules);
 }
 
 
@@ -795,7 +800,7 @@ void FMLayout::slotEM() {
 
 void FMLayout::slotHP()
 {
-	FM_LAYOUT_HYPHEN_PENALTY /= 2.0;
+	FM_LAYOUT_HYPHEN_PENALTY *= 2.0;
 	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();
 }

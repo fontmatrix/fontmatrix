@@ -123,6 +123,7 @@ ${HARFBUZZ_INCLUDE_DIR}
 ${FONTCONFIG_INCLUDE_DIR}
 ${ICU_INCLUDE_DIR}
 ${M17N_INCLUDE_DIR}
+${HYPHENATE_INCLUDE_DIR}
 )
 
 add_executable(fontmatrix
@@ -139,7 +140,7 @@ IF(SHOW_LIBS)
 	MESSAGE(STATUS "ICU libs: " ${ICU_LIBRARIES})
 ENDIF(SHOW_LIBS)
 
-target_link_libraries(fontmatrix harfbuzz
+target_link_libraries(fontmatrix harfbuzz hyphenate
 ${QT_LIBRARIES}
 ${FREETYPE_LIBRARIES}
 ${FONTCONFIG_LIBRARIES}

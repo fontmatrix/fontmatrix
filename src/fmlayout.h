@@ -91,6 +91,7 @@ class FMLayout : public QObject
 		void resetScene();
 
 		QList<int> breakList;
+		QList<int> hyphenList;
 		double lineWidth ( int l );
 
 	private:// data

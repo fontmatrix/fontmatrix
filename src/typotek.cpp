@@ -23,6 +23,7 @@
 #include "typotek.h"
 #include "mainviewwidget.h"
 #include "fontitem.h"
+#include "hyphenate/fmhyphenator.h"
 // #include "typotekadaptator.h"
 
 #include "dataloader.h"
@@ -126,6 +127,7 @@ typotek::typotek()
 	setupDrop();
 	qDebug()<<"Policy"<<sizePolicy().horizontalPolicy();
 
+	hyphenator = 0;
 }
 
 void typotek::initMatrix()
@@ -164,6 +166,20 @@ void typotek::initMatrix()
 	doConnect();
 
 	theMainView->resetCrumb();
+		
+	if(!hyphenator)
+	{
+		QSettings st;
+		QString dP( st.value("DictFile", "hyph.dic").toString() );
+		if(QFileInfo(dP).exists())
+		{
+			hyphenator = new FMHyphenator(dP);
+		}
+		else
+		{
+			qDebug()<<"Err H"<<dP;
+		}
+	}
 
 }
 
@@ -1780,10 +1796,9 @@ void typotek::slotMainDockAreaChanged(Qt::DockWidgetArea area)
 		mainDockArea = "Bottom";
 }
 
-
-
-
-
-
+FMHyphenator* typotek::getHyphenator() const
+{
+	return hyphenator;
+}
 
 

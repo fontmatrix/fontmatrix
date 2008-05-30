@@ -22,6 +22,7 @@
 #include "fmglyphsview.h"
 #include "typotek.h"
 #include "fmbaseshaper.h"
+#include "hyphenate/fmhyphenator.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -3693,32 +3694,52 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 
 GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 {
-	GlyphList ret;
+	FMHyphenator *hyph = typotek::getInstance()->getHyphenator();
+	GlyphList Gret;
 	if ( spec.isEmpty() || fsize <= 0.0 || !m_isOpenType) // enough :-)
-		return ret;
+		return Gret;
 	if(!ensureFace())
-		return ret;
+		return Gret;
 	
 	otf = new FMOtf ( m_face, 0x10000 );
 	if ( !otf )
-		return ret;
+		return Gret;
 	
-	ret = otf->procstring ( spec, set );
-	// otf->procstring works in font unit, so...
-	double scalefactor = fsize / m_face->units_per_EM  ;
-	for(int i(0); i < ret.count(); ++i)
+	QStringList stl(spec.split(' '));
+	
+	RenderedGlyph wSpace(0,0,0,0,0,0,' ',false);
+	for(QStringList::const_iterator sIt(stl.constBegin());sIt != stl.constEnd(); ++ sIt)
 	{
-		ret[i].xadvance *= scalefactor;
-		ret[i].yadvance *= scalefactor;
-		ret[i].xoffset *= scalefactor;
-		ret[i].yoffset *= scalefactor;
+		if(sIt != stl.constBegin())
+		{
+			Gret << wSpace;
+		}
+		HyphList hl( hyph->hyphenate(*sIt) );
+		GlyphList ret( otf->procstring ( *sIt , set ) );
+		// otf->procstring works in font unit, so...
+		double scalefactor = fsize / m_face->units_per_EM  ;
+		for(int i(0); i < ret.count(); ++i)
+		{
+			ret[i].xadvance *= scalefactor;
+			ret[i].yadvance *= scalefactor;
+			ret[i].xoffset *= scalefactor;
+			ret[i].yoffset *= scalefactor;
+			
+			if(hl.contains( ret[i].log ))
+			{
+				ret[i].isBreak = true;
+				ret[i].hyphen.first = otf->procstring ( hl[i].first, set );
+				ret[i].hyphen.second = otf->procstring ( hl[i].second, set );
+			}
+		}
+		
+		Gret << ret;
+		
 	}
-	
 	delete otf;
 	otf = 0;
-	return ret;
 	releaseFace();
-	return ret;
+	return Gret;
 }
 
 GlyphList FontItem::glyphs(QString spec, double fsize, QString script)

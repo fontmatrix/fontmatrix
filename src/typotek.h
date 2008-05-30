@@ -43,6 +43,7 @@ class FontItem;
 class QDockWidget;
 class Systray;
 class RemoteDir;
+class FMHyphenator;
 
 
 
@@ -197,6 +198,7 @@ class typotek:public QMainWindow
 
 		QMap<QString, FontItem*> temporaryFonts;
 
+		FMHyphenator *hyphenator;
 
 	public:
 		int getFontCount(){return fontMap.count(); }
@@ -287,6 +289,9 @@ class typotek:public QMainWindow
 	{
 		return m_welcomeURL;
 	}
+
+	FMHyphenator* getHyphenator() const;
+	
 
 	
 	

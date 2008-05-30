@@ -45,12 +45,6 @@ int Node::count()
 	return c;
 }
 
-// #define NODE_SOON_F	20.0
-// #define NODE_FIT_F	1.0
-// #define NODE_LATE_F	500.0
-// #define NODE_END_F	0.5
-
-
 
 void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, double & theScore )
 {
@@ -287,15 +281,19 @@ void FMLayout::doGraph() // Has became doBreaks
 
 	// A) where can we break?
 	breakList.clear();
+	hyphenList.clear();
 	for ( int a ( 0 ) ; a < theString.count() ; ++a )
 	{
 		// with the simple we just break at space, I know it’s ugly
 // 		qDebug() << theString[a].lChar<< QChar(theString[a].lChar);
 		if ( QChar ( theString[a].lChar ).category() == QChar::Separator_Space )
 			breakList << a;
+		if( theString[a].isBreak )
+			hyphenList << a;
 	}
 	breakList << theString.count();
 	qDebug() <<"BREAKS"<<breakList.count();
+	qDebug() <<"HYPHENS"<<hyphenList.count();
 	qDebug() <<"doGraph T(ms)"<<t.elapsed();
 }
 

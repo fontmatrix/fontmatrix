@@ -3728,7 +3728,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 			if(hl.contains( ret[i].log ))
 			{
 				ret[i].isBreak = true;
-				ret[i].hyphen.first = otf->procstring ( hl[i].first, set );
+				ret[i].hyphen.first = otf->procstring ( hl[i].first + "-" , set );
 				ret[i].hyphen.second = otf->procstring ( hl[i].second, set );
 			}
 		}

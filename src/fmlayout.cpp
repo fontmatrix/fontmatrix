@@ -79,6 +79,8 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					Node* sN = 0;
 					sN = new Node ( soon );
 					double disN = lyt->lineWidth ( deep )- lyt->distance ( cIdx, soon );
+					if(lyt->hyphenList.contains(soon))
+						disN *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
 					Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
 					if ( nodes.isEmpty() )
 						nodes << vN;
@@ -99,6 +101,8 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 				Node* sF = 0;
 				sF = new Node ( fit );
 				double disF =  lyt->lineWidth ( deep )- lyt->distance ( cIdx, fit );
+				if(lyt->hyphenList.contains(fit))
+					disF *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
 				Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
 // 				curNode->nodes << vF;
 				if ( nodes.isEmpty() )
@@ -121,6 +125,8 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					Node* sL = 0;
 					sL = new Node ( late );
 					double disL = lyt->lineWidth ( deep )- lyt->distance ( cIdx, late );
+					if(lyt->hyphenList.contains(late))
+						disL *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
 					Node::Vector vL ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
 					if ( nodes.isEmpty() )
 						nodes << vL;
@@ -208,6 +214,7 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	FM_LAYOUT_NODE_FIT_F=	1.0;
 	FM_LAYOUT_NODE_LATE_F=	500.0;
 	FM_LAYOUT_NODE_END_F=	0.25;
+	FM_LAYOUT_HYPHEN_PENALTY = 2.0;
 
 	soonplus = new QAction ( "increase before",this );
 	Shortcuts::getInstance()->add ( soonplus );
@@ -233,6 +240,14 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	endmoins = new QAction ( "decrease last line",this );
 	Shortcuts::getInstance()->add ( endmoins );
 	connect ( endmoins,SIGNAL ( triggered() ),this, SLOT ( slotEM() ) );
+	hyphenpenaltyplus = new QAction("Increase hyphen penalty",this);
+	Shortcuts::getInstance()->add ( hyphenpenaltyplus );
+	connect ( hyphenpenaltyplus,SIGNAL ( triggered() ),this, SLOT ( slotHP() ) );
+	hyphenpenaltymoins= new QAction("Decrease hyphen penalty",this);
+	Shortcuts::getInstance()->add ( hyphenpenaltymoins );
+	connect ( hyphenpenaltymoins,SIGNAL ( triggered() ),this, SLOT ( slotHM() ) );
+	
+	
 	secretMenu = new QMenu("TLE node weights",0);
 	secretMenu->addAction(soonplus);
 	secretMenu->addAction(soonmoins);
@@ -242,6 +257,8 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	secretMenu->addAction(latemoins);
 	secretMenu->addAction(endplus);
 	secretMenu->addAction(endmoins);
+	secretMenu->addAction(hyphenpenaltyplus);
+	secretMenu->addAction(hyphenpenaltymoins);
 	
 }
 
@@ -263,8 +280,11 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 		doDraw();
 // 		qDebug()<<"N"<<node->count();
 		delete node;
+		lines.clear();
+		breakList.clear();
+		hyphenList.clear();
 	}
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 }
 
 void FMLayout::doGraph() // Has became doBreaks
@@ -289,7 +309,10 @@ void FMLayout::doGraph() // Has became doBreaks
 		if ( QChar ( theString[a].lChar ).category() == QChar::Separator_Space )
 			breakList << a;
 		if( theString[a].isBreak )
+		{
+			breakList << a;
 			hyphenList << a;
+		}
 	}
 	breakList << theString.count();
 	qDebug() <<"BREAKS"<<breakList.count();
@@ -309,46 +332,74 @@ void FMLayout::doLines()
 	// la messe est dite ! :-)
 	qDebug() <<"S I"<<score<<indices;
 	double refW ( theRect.width() );
-	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
-	{
-// 		bool leadWS(true);
-		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
-		{
-			if ( QChar ( theString.at ( ri ).lChar ).category() == QChar::Separator_Space )
-			{
-				theString[ri].glyph = 0;
-				theString[ri].xadvance = 0;
-				theString[ri].xoffset = 0;
-			}
-			else
-			{
-				break;
-			}
-
-		}
-// 		bool trailingWS(false);
-		for ( int ri ( indices[lIdx] - 1 );ri > indices[lIdx - 1]; --ri )
-		{
-			if ( QChar ( theString.at ( ri ).lChar ).category() == QChar::Separator_Space )
-			{
-				theString[ri].glyph = 0;
-				theString[ri].xadvance = 0;
-				theString[ri].xoffset = 0;
-			}
-			else
-			{
-				break;
-			}
-
-		}
-	}
 	for ( int lIdx ( 1 ); lIdx<indices.count() - 1; ++lIdx )
 	{
 		QList<int> wsIds;
 		double diff ( refW - distance ( indices[lIdx-1], indices[lIdx] ) );
-		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
+		GlyphList lg;
+		int start(indices[lIdx-1]);
+		int end(indices[lIdx]);
+		if(!theString.at(start).isBreak && !theString.at(end).isBreak)
 		{
-			if ( theString.at ( ri ).glyph &&  QChar ( theString.at ( ri ).lChar ).category() == QChar::Separator_Space )
+			for ( int i ( start ); i < end ;++i )
+				lg << theString.at ( i );
+		}
+		else if(theString.at(start).isBreak && !theString.at(end).isBreak)
+		{
+			GlyphList hr(theString.at(start).hyphen.second);
+			for (int ih(0); ih < hr.count(); ++ih)
+			{
+				lg << hr[ih];
+			}
+			int bp(start);
+			while ( QChar( theString.at(bp).lChar ).category() != QChar::Separator_Space &&  bp < end ) ++bp ;
+			for ( int i ( bp ); i < end ;++i )
+				lg <<  theString.at ( i );
+		
+		
+		}
+		else if(!theString.at(start).isBreak && theString.at(end).isBreak)
+		{
+			int bp(end);
+			while ( QChar( theString.at(bp).lChar ).category() != QChar::Separator_Space &&  bp > start ) --bp ;
+			--bp;
+		
+			for ( int i ( start ); i < bp ;++i )
+				lg <<  theString.at ( i );
+		
+			GlyphList hr(theString.at(end).hyphen.first);
+			for (int ih(0); ih < hr.count(); ++ih)
+			{
+				lg <<  hr[ih];
+			}
+		
+		}
+		else if(theString.at(start).isBreak && theString.at(end).isBreak)
+		{
+			GlyphList hr(theString.at(start).hyphen.second);
+			for (int ih(0); ih < hr.count(); ++ih)
+			{
+				lg <<  hr[ih];
+			}
+			int bpS(start);
+			while ( QChar( theString.at(bpS).lChar ).category() != QChar::Separator_Space &&  bpS < end ) ++bpS ;
+		
+			int bpE(end);
+			while ( QChar( theString.at(bpE).lChar ).category() != QChar::Separator_Space &&  bpE > start ) --bpE ;
+			--bpE;
+		
+			for ( int i ( bpS); i < bpE ;++i )
+				lg <<  theString.at ( i );
+		
+			GlyphList hr2(theString.at(end).hyphen.first);
+			for (int ih(0); ih < hr2.count(); ++ih)
+			{
+				lg << hr2[ih];
+			}
+		}
+		for ( int ri ( 0 ); ri < lg.count() ; ++ri )
+		{
+			if ( lg.at ( ri ).glyph &&  QChar ( lg.at ( ri ).lChar ).category() == QChar::Separator_Space )
 			{
 				wsIds << ri;
 			}
@@ -357,8 +408,9 @@ void FMLayout::doLines()
 // 		qDebug()<< "D N W"<<diff<<wsIds.count()<< shareLost;
 		for ( int wi ( 0 ); wi < wsIds.count(); ++wi )
 		{
-			theString[ wsIds[wi] ].xadvance += shareLost;
+			lg[ wsIds[wi] ].xadvance += shareLost;
 		}
+		lines << lg;
 	}
 	qDebug() <<"doLines T(ms)"<<t.elapsed();
 }
@@ -377,16 +429,11 @@ void FMLayout::doDraw()
 	double pixelAdjustY = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
 	int m_progression ( theFont->progression() );
 
-	for ( int lIdx ( 1 ); lIdx<indices.count(); ++lIdx )
+	for ( int lIdx ( 0 ); lIdx < lines.count() ; ++lIdx )
 	{
 		if ( pen.y() > pageBottom )
 			break;
-		GlyphList refGlyph;
-		for ( int ri ( indices[lIdx-1] );ri < indices[lIdx]; ++ri )
-		{
-			refGlyph << theString.at ( ri );
-// 			qDebug() <<"A["<< ri <<"]"<<theString.at ( ri ).glyph;
-		}
+		GlyphList refGlyph(lines[lIdx]);
 
 		if ( theFont->rasterFreetype() )
 		{
@@ -463,13 +510,80 @@ void FMLayout::doDraw()
 
 double FMLayout::distance ( int start, int end )
 {
+// 	qDebug()<<"DIS C S E"<<theString.count()<< start<< end;
 // 	qDebug()<<"distance("<<start<<", "<< end<<")";
 	double ret ( 0.0 );
 	if ( end <= start )
+	{
+// 		qDebug()<<"ERR_LOGIC! S E"<< start<< end;
 		return ret;
-	for ( int i ( start ); i < end ;++i )
-		ret += theString.at ( i ).xadvance /*+ theString.at ( i ).xoffset*/;
+	}
+	int EXend(end -1);
+	
+	if(!theString.at(start).isBreak && !theString.at(EXend).isBreak)
+	{
+// 		qDebug()<<"C S E"<<theString.count()<< start<< end ;
+		for ( int i ( start ); i < end ;++i )
+			ret += theString.at ( i ).xadvance /*+ theString.at ( i ).xoffset*/;
+	}
+	else if(theString.at(start).isBreak && !theString.at(EXend).isBreak)
+	{
+// 		qDebug()<<"C S E"<<theString.count()<< start<< end ;
+		GlyphList hr(theString.at(start).hyphen.second);
+		for (int ih(0); ih < hr.count(); ++ih)
+		{
+			ret += hr[ih].xadvance;
+		}
+		int bp(start);
+		while ( QChar( theString.at(bp).lChar ).category() != QChar::Separator_Space &&  bp < end ) ++bp ;
+		for ( int i ( bp ); i < end ;++i )
+			ret += theString.at ( i ).xadvance /*+ theString.at ( i ).xoffset*/;
+		
+		
+	}
+	else if(!theString.at(start).isBreak && theString.at(EXend).isBreak)
+	{
+// 		qDebug()<<"C S E"<<theString.count()<< start<< end ;
+		int bp(end);
+		while ( QChar( theString.at(bp).lChar ).category() != QChar::Separator_Space &&  bp > start ) --bp ;
+		--bp;
+		
+		for ( int i ( start ); i < bp ;++i )
+			ret += theString.at ( i ).xadvance /*+ theString.at ( i ).xoffset*/;
+		
+		GlyphList hr(theString.at(EXend).hyphen.first);
+		for (int ih(0); ih < hr.count(); ++ih)
+		{
+			ret += hr[ih].xadvance;
+		}
+		
+	}
+	else if(theString.at(start).isBreak && theString.at(EXend).isBreak)
+	{
+// 		qDebug()<<"C S E"<<theString.count()<< start<< end ;
+		GlyphList hr(theString.at(start).hyphen.second);
+		for (int ih(0); ih < hr.count(); ++ih)
+		{
+			ret += hr[ih].xadvance;
+		}
+		int bpS(start);
+		while ( QChar( theString.at(bpS).lChar ).category() != QChar::Separator_Space &&  bpS < end ) ++bpS ;
+		
+		int bpE(end);
+		while ( QChar( theString.at(bpE).lChar ).category() != QChar::Separator_Space &&  bpE > start ) --bpE ;
+		--bpE;
+		
+		for ( int i ( bpS); i < bpE ;++i )
+			ret += theString.at ( i ).xadvance /*+ theString.at ( i ).xoffset*/;
+		
+		GlyphList hr2(theString.at(EXend).hyphen.first);
+		for (int ih(0); ih < hr2.count(); ++ih)
+		{
+			ret += hr2[ih].xadvance;
+		}
+	}
 
+	qDebug()<<"SID" ;
 	return ret;
 }
 
@@ -537,33 +651,47 @@ double FMLayout::lineWidth ( int l )
 
 void FMLayout::slotSP() {
 	FM_LAYOUT_NODE_SOON_F *= 2.0;
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 emit updateLayout();}
 void FMLayout::slotSM() {
 	FM_LAYOUT_NODE_SOON_F /= 2.0;
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();}
 void FMLayout::slotFP() {
 	FM_LAYOUT_NODE_FIT_F *= 2.0;
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();}
 void FMLayout::slotFM() {
 	FM_LAYOUT_NODE_FIT_F /= 2.0;
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();}
 void FMLayout::slotLP() {
 	FM_LAYOUT_NODE_LATE_F *= 2.0;
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();}
 void FMLayout::slotLM() {
 	FM_LAYOUT_NODE_LATE_F /= 2.0;
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();}
 void FMLayout::slotEP() {
 	FM_LAYOUT_NODE_END_F *= 2.0;
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();}
 void FMLayout::slotEM() {
 	FM_LAYOUT_NODE_END_F /= 2.0;
-	qDebug() <<"S F L E"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();}
+
+void FMLayout::slotHP()
+{
+	FM_LAYOUT_HYPHEN_PENALTY /= 2.0;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+	emit updateLayout();
+}
+
+void FMLayout::slotHM()
+{
+	FM_LAYOUT_HYPHEN_PENALTY /= 2.0;
+	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+	emit updateLayout();
+}

@@ -99,13 +99,13 @@ class FMLayout : public QObject
 		QGraphicsScene* theScene;
 		FontItem*	theFont;
 		QList<GlyphList> paragraphs;
+		QList<GlyphList> lines;
 		GlyphList theString;
 		QRectF theRect;// Not really argued now, will come soon
 		QGraphicsRectItem *rules;
 
 		// built
 		Node *node;
-		QList<GlyphList> lines;
 		QList<int> indices;
 		QList<QGraphicsPixmapItem *> pixList;
 		QList<QGraphicsPathItem*> glyphList;
@@ -184,6 +184,9 @@ class FMLayout : public QObject
 		QAction *latemoins;
 		QAction *endplus;
 		QAction *endmoins;
+		QAction *hyphenpenaltyplus;
+		QAction *hyphenpenaltymoins;
+		
 	private slots:
 		void slotSP();
 		void slotSM();
@@ -193,6 +196,8 @@ class FMLayout : public QObject
 		void slotLM();
 		void slotEP() ;
 		void slotEM();
+		void slotHP();
+		void slotHM();
 	signals:
 		void updateLayout();
 	public:
@@ -200,6 +205,7 @@ class FMLayout : public QObject
 		double FM_LAYOUT_NODE_FIT_F;
 		double FM_LAYOUT_NODE_LATE_F;
 		double FM_LAYOUT_NODE_END_F;
+		double FM_LAYOUT_HYPHEN_PENALTY;
 		QMenu * secretMenu;
 
 

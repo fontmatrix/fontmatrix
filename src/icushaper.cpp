@@ -185,8 +185,8 @@ GlyphList IcuShaper::doShape ( const QString & s )
 		{
 			RenderedGlyph rg;
 			rg.glyph = glyphs[gIdx];
-// 			rg.log = indices[gIdx];
-			rg.lChar = indices[gIdx];
+			rg.log = indices[gIdx];
+			rg.lChar = s[rg.log].unicode();
 			rg.xadvance = positions[ ( gIdx + 1 ) * 2] - stackX;
 			rg.yadvance = positions[ ( ( gIdx + 1 ) * 2 ) + 1];
 			rg.xoffset = rg.yoffset = 0;

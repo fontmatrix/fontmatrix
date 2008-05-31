@@ -49,6 +49,12 @@ HyphList FMHyphenator::hyphenate(const QString & word) const
 	if(!dict)
 		return ret;
 	
+	QMap<int,QChar> upperLog;
+	for(int i(0);i<word.count();++i)
+	{
+		if(word[i].isUpper())
+			upperLog[i] = word[i];
+	}
 	
 	char ** rep = NULL;
 	int * pos = NULL;
@@ -66,7 +72,7 @@ HyphList FMHyphenator::hyphenate(const QString & word) const
 		return ret;
 	}
 	
-	QString ref(word.toLower().remove('.'));
+	QString ref(word/*.toLower().remove('.')*/);
 	for(int i(0); i < ref.count(); ++i)
 	{
 		if(ht[i] & 1)

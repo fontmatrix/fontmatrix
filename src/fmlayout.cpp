@@ -183,7 +183,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 
 // 	qDebug()<<"N"<<nodes.count();
 	bool isLeaf ( nodes.isEmpty() );
-	curList << (isLeaf ? index-1 : index);
+	curList << index ;//(isLeaf ? index-1 : index);
 	while ( !nodes.isEmpty() )
 	{
 		Vector v = nodes.first() ;
@@ -200,6 +200,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	{
 		double mDist(dist * dist / deep);
 		double mScore(theScore * theScore / deep);
+		qDebug()<<"D S N"<< mDist << mScore << curList;
 		if ( mDist < mScore )
 		{
 			theScore = dist;
@@ -287,7 +288,9 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 			continue;
 		node = new Node ( 0 );
 		doGraph();
+		distCache.clear();
 		doLines();
+		distCache.clear();
 		doDraw();
 // 		qDebug()<<"N"<<node->count();
 		delete node;
@@ -316,11 +319,11 @@ void FMLayout::doGraph() // Has became doBreaks
 	for ( int a ( 0 ) ; a < theString.count() ; ++a )
 	{
 		if ( QChar ( theString[a].lChar ).category() == QChar::Separator_Space )
-			breakList << a;
+			breakList << a+1;
 		if( theString[a].isBreak )
 		{
-			breakList << a;
-			hyphenList << a;
+			breakList << a+1;
+			hyphenList << a+1;
 		}
 	}
 	breakList << theString.count();
@@ -349,10 +352,10 @@ void FMLayout::doLines()
 	
 	for ( int lIdx ( 0 ); lIdx < maxIndex ; ++lIdx )
 	{
-		int start1( !lIdx ? indices[lIdx] : indices[lIdx] + 1);
+		int start1( /*!lIdx ?*/ indices[lIdx] /*: indices[lIdx] + 1*/);
 		int end1(indices[ lIdx + 1 ]);
 		
-		GlyphList inList(theString.mid(start1 , end1 - start1 + 1 ) );
+		GlyphList inList(theString.mid(start1 , end1 - start1 /*+ 1 */) );
 		
 		if(QChar (inList.first().lChar).category() == QChar::Separator_Space)
 		{
@@ -398,12 +401,10 @@ void FMLayout::doLines()
 				lg << hr[ih];
 			}
 			
-			do
+			while( !inList.isEmpty() && QChar( inList.first() .lChar ).category() != QChar::Separator_Space )
 			{
 				inList.takeFirst();
-			}while(QChar( inList.first() .lChar ).category() != QChar::Separator_Space);
-		
-			
+			}
 				
 			for ( int i ( 0 ); i < inList.count() ;++i )
 				lg <<  inList.at ( i );
@@ -421,7 +422,7 @@ void FMLayout::doLines()
 			do
 			{
 				inList.takeLast();
-			}while(QChar( inList.last().lChar ).category() != QChar::Separator_Space);
+			}while(QChar( inList.last().lChar ).category() != QChar::Separator_Space && !inList.isEmpty());
 		
 			QString dgS;
 			for ( int i ( 0 ); i < inList.count() ;++i )
@@ -451,15 +452,15 @@ void FMLayout::doLines()
 				lg <<  hr[ih];
 			}
 			
-			do
+			while( !inList.isEmpty() && QChar( inList.first() .lChar ).category() != QChar::Separator_Space )
 			{
 				inList.takeFirst();
-			}while(QChar( inList.first() .lChar ).category() != QChar::Separator_Space);
+			}
 		
 			do
 			{
 				inList.takeLast();
-			}while(QChar( inList.last().lChar ).category() != QChar::Separator_Space);
+			}while(QChar( inList.last().lChar ).category() != QChar::Separator_Space && !inList.isEmpty());
 		
 // 			QString dgS;
 			for ( int i ( 0 ); i < inList.count() ;++i )
@@ -481,12 +482,12 @@ void FMLayout::doLines()
 		GlyphList& lg(lines[lI]);
 		if(QChar (lg.first().lChar).category() == QChar::Separator_Space)
 		{
-			while(QChar (lg.first().lChar).category() == QChar::Separator_Space)
+			while(QChar (lg.first().lChar).category() == QChar::Separator_Space  && !lg.isEmpty())
 				lg.takeFirst();
 		}
 		if(QChar (lg.last().lChar).category() == QChar::Separator_Space)
 		{
-			while(QChar (lg.last().lChar).category() == QChar::Separator_Space)
+			while(QChar (lg.last().lChar).category() == QChar::Separator_Space  && !lg.isEmpty())
 				lg.takeLast();
 		}
 			
@@ -607,6 +608,11 @@ void FMLayout::doDraw()
 
 double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power  )
 {
+	if(distCache.contains(start))
+	{
+		if(distCache[start].contains(end))
+			return distCache[start][end];
+	}
 	GlyphList gList = gl;
 	if(QChar (gList.first().lChar).category() == QChar::Separator_Space)
 	{
@@ -622,6 +628,14 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 			--end;
 		}
 	}
+	
+	QString dStr;
+	for(int di(start); di < end; ++di )
+	{
+		dStr += QChar(gl[di].lChar);
+	}
+	qDebug()<< "SD"<<dStr;
+	
 // 	qDebug()<<"DIS C S E"<<gList.count()<< start<< end;
 	double ret ( 0.0 );
 	if ( end <= start )
@@ -714,7 +728,11 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 
 // 	qDebug()<<"SID" ;
 	if(power)
+	{
+		distCache[start][end] = 1000*ret*ret;
 		return 1000*ret*ret;
+	}
+// 	distCache[start][end] = ret;
 	return ret;
 }
 

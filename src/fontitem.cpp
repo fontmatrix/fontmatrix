@@ -3688,7 +3688,7 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 		if(hyph)
 		{
 			hl = hyph->hyphenate(*sIt) ;
-			qDebug()<<"Hyph W C"<<*sIt<<hl.count();
+			if(hl.count())qDebug()<<"Hyph W C"<<*sIt<<hl.count();
 		}
 		
 		for ( int i ( 0 ); i < (*sIt).count();++i )
@@ -3711,8 +3711,11 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 			{
 				qDebug()<<"H B A"<<i<<hl[i].first<<hl[i].second;
 				rg.isBreak = true;
-				
-				QString bS(hl[i].first + "-");
+				QString addOnFirst;
+				QString addOnSecond;
+				addOnFirst =  hl[i].first.endsWith("-") ? "": "-";
+				addOnSecond = /*(*sIt).endsWith(".")?".":*/"";
+				QString bS(hl[i].first + addOnFirst);
 				for(int bI(0);bI<bS.count();++bI)
 				{
 // 					qDebug()<<"i bI a"<<i<<bI<<bS.at ( bI );
@@ -3733,7 +3736,7 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 					rg.hyphen.first << bg;
 					
 				}
-				bS = hl[i].second;
+				bS = hl[i].second + addOnSecond ;
 				for(int bI(0);bI<bS.count();++bI)
 				{
 					glyph = itemFromChar ( bS.at ( bI ).unicode(), fsize );
@@ -3808,7 +3811,11 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 			{
 				qDebug()<<"L R"<<hl[ret[i].log].first<<hl[ret[i].log].second;
 				ret[i].isBreak = true;
-				ret[i].hyphen.first = otf->procstring ( hl[ret[i].log].first + "-" , set );
+				QString addOnFirst;
+				QString addOnSecond;
+				addOnFirst =  hl[i].first.endsWith("-") ? "": "-";
+				addOnSecond = (*sIt).endsWith(".")?".":"";
+				ret[i].hyphen.first = otf->procstring ( hl[ret[i].log].first + addOnFirst, set );
 				for(int f(0); f < ret[i].hyphen.first.count(); ++f)
 				{
 					ret[i].hyphen.first[f].xadvance *= scalefactor;
@@ -3816,7 +3823,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 					ret[i].hyphen.first[f].xoffset *= scalefactor;
 					ret[i].hyphen.first[f].yoffset *= scalefactor;
 				}
-				ret[i].hyphen.second = otf->procstring ( hl[ret[i].log].second, set );
+				ret[i].hyphen.second = otf->procstring ( hl[ret[i].log].second + addOnSecond, set );
 				for(int f(0); f < ret[i].hyphen.second.count(); ++f)
 				{
 					ret[i].hyphen.second[f].xadvance *= scalefactor;

@@ -17,6 +17,7 @@
 #include <QString>
 #include <QRectF>
 #include <QPointF>
+#include <QMap>
 
 #include "fmsharestruct.h"
 
@@ -109,6 +110,8 @@ class FMLayout : public QObject
 		QList<int> indices;
 		QList<QGraphicsPixmapItem *> pixList;
 		QList<QGraphicsPathItem*> glyphList;
+		QMap<int, QMap<int, double > > distCache;
+		
 
 		// accessed
 		bool processFeatures;

@@ -75,9 +75,9 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 // 				qDebug()<<"LINE"<<cIdx<< lyt->breakList[bIndex];
 // 				qDebug()<< "C DI"<< lyt->lineWidth(deep) <<di;
 // 				qDebug()<< "N"<<nodes.count();
-				if ( ( bIndex - 1 > 0 ) && ( lyt->breakList[bIndex - 1] != cIdx ) )
+				for (int backIndex(1) ;( bIndex - backIndex > 0 ) && ( lyt->breakList[bIndex - backIndex] != cIdx ); ++backIndex)
 				{
-					int soon ( lyt->breakList[bIndex - 1] );
+					int soon ( lyt->breakList[bIndex - backIndex] );
 					Node* sN = 0;
 					sN = new Node ( soon );
 					double disN = lyt->lineWidth ( deep )- lyt->distance ( cIdx, soon,lyt->theString );
@@ -97,6 +97,8 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 							}
 						}
 					}
+					if(QChar(lyt->theString[soon].lChar).category() == QChar::Separator_Space)
+						break;
 				}
 
 				int fit ( lyt->breakList[bIndex] );
@@ -121,9 +123,9 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					}
 				}
 
-				if ( bIndex + 1 <  lyt->breakList.count() )
+				for (int nextIndex(1); bIndex + nextIndex <  lyt->breakList.count() ; ++nextIndex)
 				{
-					int late ( lyt->breakList[bIndex + 1] );
+					int late ( lyt->breakList[bIndex + nextIndex] );
 					Node* sL = 0;
 					sL = new Node ( late );
 					double disL = lyt->lineWidth ( deep )- lyt->distance ( cIdx, late ,lyt->theString);
@@ -143,6 +145,8 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 							}
 						}
 					}
+					if( late < lyt->theString.count() && QChar(lyt->theString[late].lChar).category() == QChar::Separator_Space)
+						break;
 				}
 
 				wantPlus = false;
@@ -199,7 +203,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	if ( isLeaf )
 	{
 		double mDist(dist * dist / deep);
-		double mScore(theScore * theScore / deep);
+		double mScore(theScore * theScore / theList.count());
 		qDebug()<<"D S N"<< mDist << mScore << curList;
 		if ( mDist < mScore )
 		{
@@ -377,7 +381,7 @@ void FMLayout::doLines()
 			dBk += rg.isBreak ? "#" : "_";
 		}
 		qDebug()<< "S"<<dStr;
-		qDebug()<< "B"<<dBk;
+		qDebug()<< "H"<<dBk;
 		
 // 		qDebug()<<"S E Sib Eib"<<start<<end<<theString.at(start).isBreak<<theString.at(end).isBreak;
 		
@@ -442,7 +446,7 @@ void FMLayout::doLines()
 			
 			qDebug()<<"/// = =";
 			GlyphList hr(curHyph);	
-			GlyphList hr2(inList.first().hyphen.second);
+			GlyphList hr2(inList.last().hyphen.first);
 			
 			hasHyph = true;
 			curHyph = inList.last().hyphen.second;		
@@ -451,6 +455,7 @@ void FMLayout::doLines()
 			{
 				lg <<  hr[ih];
 			}
+			
 			
 			while( !inList.isEmpty() && QChar( inList.first() .lChar ).category() != QChar::Separator_Space )
 			{
@@ -729,8 +734,8 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 // 	qDebug()<<"SID" ;
 	if(power)
 	{
-		distCache[start][end] = 1000*ret*ret;
-		return 1000*ret*ret;
+		distCache[start][end] = ret*ret;
+		return ret*ret;
 	}
 // 	distCache[start][end] = ret;
 	return ret;

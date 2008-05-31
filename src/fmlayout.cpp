@@ -629,12 +629,12 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 		}
 	}
 	
-	QString dStr;
-	for(int di(start); di < end; ++di )
-	{
-		dStr += QChar(gl[di].lChar);
-	}
-	qDebug()<< "SD"<<dStr;
+// 	QString dStr;
+// 	for(int di(start); di < end; ++di )
+// 	{
+// 		dStr += QChar(gl[di].lChar);
+// 	}
+// 	qDebug()<< "SD"<<dStr;
 	
 // 	qDebug()<<"DIS C S E"<<gList.count()<< start<< end;
 	double ret ( 0.0 );

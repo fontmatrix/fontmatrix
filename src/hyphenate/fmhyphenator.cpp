@@ -33,7 +33,8 @@ FMHyphenator::FMHyphenator(const QString& dictPath)
 
 FMHyphenator::~FMHyphenator()
 {
-	
+	if(dict)
+		hnj_hyphen_free (dict);
 }
 
 
@@ -49,12 +50,12 @@ HyphList FMHyphenator::hyphenate(const QString & word) const
 	if(!dict)
 		return ret;
 	
-	QMap<int,QChar> upperLog;
-	for(int i(0);i<word.count();++i)
-	{
-		if(word[i].isUpper())
-			upperLog[i] = word[i];
-	}
+// 	QMap<int,QChar> upperLog;
+// 	for(int i(0);i<word.count();++i)
+// 	{
+// 		if(word[i].isUpper())
+// 			upperLog[i] = word[i];
+// 	}
 	
 	char ** rep = NULL;
 	int * pos = NULL;
@@ -82,25 +83,21 @@ HyphList FMHyphenator::hyphenate(const QString & word) const
 // 			qDebug()<<"IH L R"<< left << right;
 			if(rep && rep[i])
 			{
-				QStringList repList( QString::fromUtf8( (rep[i]) ).split("=") );
-				qDebug()<<"IH RL C P"<<repList.join("=")<<cut<<pos;
-				if(repList.count() != 2)
-				{
-					qDebug()<<"OOPS - repList =="<<repList.count() ;
-					continue;
-				}
-				if(cut)
-				{
-					left.chop( cut[i] );
-
-				}
-				if(pos)
-				{
-					right.remove(0, pos[i]);
-				}
-				left.append( repList[0] );
-				right.insert(0, repList[1]);
+				QString ref2(left + QString::fromUtf8( (rep[i]) ).remove("=") + right);
+// 				QStringList repList( ref2.split("=") );
+				int posI(pos ? pos[i] : 0);
+				int cutI(cut ? cut[i] : 0);
 				
+// 				if(repList.count() != 2)
+// 				{
+// 					qDebug()<<"OOPS - repList =="<<repList.count() ;
+// 					continue;
+// 				}
+				
+				left = ref2.mid(0 , left.count() + posI);
+				right = ref2.mid(left.count()  + cutI);
+				
+				qDebug()<<"L R S C P"<< left<<"=" <<right<<(cut?QString::number( cut[i] ):"-")<<(pos?QString::number( pos[i] ):"-");
 			}
 			ret[i] = QPair<QString, QString>(left, right);
 		}

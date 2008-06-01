@@ -24,27 +24,73 @@
 
 #define OUT_OF_RECT 99999999.0
 
+int fm_layout_total_nod_dbg;
+int fm_layout_total_skip_nod_dbg;
+int fm_layout_total_leaves_dbg;
+
+Node::Vector::Vector():n(0), distance(0.0)
+{
+// 	qDebug()<<"CV empty";
+}
+
+Node::Vector::Vector(Node * N, double D):n ( N ),distance ( D )
+{
+// 	qDebug()<<"CV n d"<<n->index<<distance;
+}
+
+Node::Vector::Vector(const Node::Vector & v)
+	:n (0),distance ( 0 )
+{
+// 	qDebug()<<"CopyV n d"<<v.n<<v.distance;
+}
+
+Node::Vector::~ Vector()
+{
+// 	qDebug()<<"RV"<<n<<distance;
+	if(n)delete n;
+}
+
 Node::Node ( int i ) :index ( i )
 {
+	++fm_layout_total_nod_dbg;
+}
+
+bool Node::hasNode(int idx)
+{
+	for ( int i(0); i < nodes.count(); ++i ) 
+	{
+		if ( nodes[i].n->index == idx ) 
+			return true;
+	}
+	return false;
 }
 
 Node::~Node()
 {
 // 	qDebug()<<"R"<< index;
-	foreach ( Vector v, nodes )
-	{
-		if ( v.n ) delete v.n;
-	}
+// 	foreach ( Vector v, nodes )
+// 	{
+// 		if ( v.n ) delete v.n;
+// 	}
 }
 
 int Node::count()
 {
 	int c ( nodes.count() );
-	foreach ( Vector v, nodes )
+	for ( int i(0); i < c ; ++i )
 	{
-		c += v.n->count();
+		c += nodes[i].n->count();
 	}
 	return c;
+}
+
+void Node::nodes_insert(int idx, Vector & v)
+{
+	
+	nodes.insert(idx,Vector());
+	nodes[idx].distance = v.distance;
+	nodes[idx].n = v.n;
+	v.n = 0;
 }
 
 
@@ -83,16 +129,20 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					double disN = lyt->lineWidth ( deep )- lyt->distance ( cIdx, soon,lyt->theString );
 					if(lyt->hyphenList.contains(soon))
 						disN *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
-					Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
+					
 					if ( nodes.isEmpty() )
-						nodes << vN;
+					{
+						Node::Vector vN( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
+						nodes_insert(0, vN);
+					}
 					else
 					{
+						Node::Vector vN( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
 						for ( int nI ( 0 );nI<nodes.count();++nI )
 						{
 							if ( vN.distance <= nodes[nI].distance )
 							{
-								nodes.insert ( nI,vN );
+								nodes_insert ( nI,vN );
 								break;
 							}
 						}
@@ -107,17 +157,21 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 				double disF =  lyt->lineWidth ( deep )- lyt->distance ( cIdx, fit,lyt->theString );
 				if(lyt->hyphenList.contains(fit))
 					disF *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
-				Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
+				
 // 				curNode->nodes << vF;
 				if ( nodes.isEmpty() )
-					nodes << vF;
+				{
+					Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
+					nodes_insert(0,vF);
+				}
 				else
 				{
+					Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
 					for ( int nI ( 0 );nI<nodes.count();++nI )
 					{
 						if ( vF.distance <= nodes[nI].distance )
 						{
-							nodes.insert ( nI,vF );
+							nodes_insert ( nI,vF );
 							break;
 						}
 					}
@@ -131,16 +185,20 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					double disL = lyt->lineWidth ( deep )- lyt->distance ( cIdx, late ,lyt->theString);
 					if(lyt->hyphenList.contains(late))
 						disL *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
-					Node::Vector vL ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
+					
 					if ( nodes.isEmpty() )
-						nodes << vL;
+					{
+						Node::Vector vL ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
+						nodes_insert(0, vL);
+					}
 					else
 					{
+						Node::Vector vL ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
 						for ( int nI ( 0 );nI<nodes.count();++nI )
 						{
 							if ( vL.distance <= nodes[nI].distance )
 							{
-								nodes.insert ( nI,vL );
+								nodes_insert ( nI,vL );
 								break;
 							}
 						}
@@ -167,16 +225,20 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 				Node* sN = 0;
 				sN = new Node ( soon );
 				double disN = lyt->lineWidth ( deep ) - lyt->distance ( cIdx, soon,lyt->theString );
-				Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
+				
 // 				curNode->nodes << vN;
 				if ( nodes.isEmpty() )
-					nodes << vN;
+				{
+					Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
+					nodes_insert(0, vN);
+				}
 				else
 				{
+					Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
 					for ( int nI ( 0 );nI<nodes.count();++nI )
 					{
 						if ( vN.distance <= nodes[nI].distance )
-							nodes.insert ( nI,vN );
+							nodes_insert ( nI,vN );
 					}
 				}
 			}
@@ -188,30 +250,35 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 // 	qDebug()<<"N"<<nodes.count();
 	bool isLeaf ( nodes.isEmpty() );
 	curList << index ;//(isLeaf ? index-1 : index);
+	
+	double dCorrection( (double)theList.count() / (double)curList.count() );
+	qDebug()<<"COR tl.c cl.c"<<dCorrection<<theList.count()<<curList.count();
 	while ( !nodes.isEmpty() )
 	{
-		Vector v = nodes.first() ;
-		if ( dist + v.distance < theScore )
+// 		Vector v = nodes.first() ;
+		double d1( dist + nodes[0].distance / curList.count() * dCorrection );
+		double d2( theScore / qMax(1.0, (double)theList.count()) );
+		if ( d1  <  d2 )
 		{
-			v.n->sPath ( dist + v.distance, curList, theList, theScore );
+			nodes[0].n->sPath ( dist + nodes[0].distance, curList, theList, theScore );
 		}
-// 		qDebug()<< "R";
-		delete v.n;
+		else
+			++fm_layout_total_skip_nod_dbg;
 		nodes.removeFirst();
 	}
 
 	if ( isLeaf )
 	{
-		double mDist(dist * dist / deep);
-		double mScore(theScore * theScore / theList.count());
+		double mDist( dist / deep);
+		double mScore( theScore / theList.count());
 		qDebug()<<"D S N"<< mDist << mScore << curList;
 		if ( mDist < mScore )
 		{
 			theScore = dist;
 			theList = curList;
 		}
+		++fm_layout_total_leaves_dbg;
 	}
-
 }
 
 FMLayout *FMLayout::instance = 0;
@@ -293,7 +360,11 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 		node = new Node ( 0 );
 		doGraph();
 		distCache.clear();
+		fm_layout_total_leaves_dbg = 0;
+		fm_layout_total_nod_dbg = 0;
+		fm_layout_total_skip_nod_dbg = 0;
 		doLines();
+		qDebug()<<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
 		distCache.clear();
 		doDraw();
 // 		qDebug()<<"N"<<node->count();
@@ -853,3 +924,6 @@ void FMLayout::slotHM()
 	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();
 }
+
+
+

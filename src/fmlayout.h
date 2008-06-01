@@ -34,6 +34,7 @@ class QMenu;
  Finally, we want to layout text elsewhere than _in_ the font or _in_ the view.
  And it’s "peu ou prou" forced if we really want to experiment in Fontmatrix
  I hope it will not be too much more than just copy & paste from FontItem & MainViewWidget - pm
+ It has been quite more! - pm
 **/
 
 #define INFINITE 99999999L
@@ -47,23 +48,30 @@ struct Node
 	{
 		Node* n;
 		double distance;
-
-		Vector() :n ( 0 ),distance ( 0.0 ) {}
-		Vector ( Node* N, double D ) :n ( N ),distance ( D ) {}
-		~Vector() {}
+		
+		
+		Vector();
+		Vector ( Node* N, double D );
+		~Vector() ;
+// 		private:
+		Vector (const Vector& v);
 	};
 
+	
 	QList<Vector> nodes;
 	int index;
 
+	
 	Node() {}
 	Node ( int i ) ;
 	~Node();
 
-	bool hasNode ( int idx ) {foreach ( Vector v, nodes ) {if ( v.n->index == idx ) return true;}return false;}
+	bool hasNode ( int idx ) ;
+	void nodes_insert(int idx, Vector& v);
 
 	void sPath ( double dist, QList< int > curList, QList<int>& theList, double& theScore );
 	int count();
+	
 };
 
 class FMLayout : public QObject

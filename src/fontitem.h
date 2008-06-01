@@ -196,6 +196,8 @@ class FontItem : public QObject
 		
 		// if true return width, else return number of _chars_ consumed
 		bool renderReturnWidth;
+
+		QString url2href(QString value);
 		
 	private slots:
 		void slotDownloadStart(int id);

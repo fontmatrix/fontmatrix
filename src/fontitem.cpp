@@ -2460,6 +2460,22 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 	return retValue ;
 }
 
+
+/**
+ * Make HTTP links out of url in a text string
+ */
+QString FontItem::url2href ( QString value )
+{
+    value.replace ( QRegExp ( "([^/])(www\\.[\\w\\d])" ), "\\1http://\\2" ); // add an http to www. without it
+    QRegExp rx = QRegExp("(http[s]?://\\S+)([\\.\\,;:!?)]\\s)"); // prepare a regexp to "move" punctuation "attached" to url
+    rx.setMinimal(true);
+    value.replace(rx, "\\1 \\2"); // run the prepared regexp twice for ")."
+    value.replace(rx, "\\1 \\2");
+    value.replace ( QRegExp ( "(http[s]?://\\S+)[\\.]?" ), "<a href=\"\\1\">\\1</a>" ); // Make HTTP links
+    value.replace ( QRegExp ( "(</a>)\\s([\\.\\,;:!?)])" ), "\\1\\2" ); // remove extra space after </a>
+    return value;
+} // url2href
+
 QString FontItem::infoText ( bool fromcache )
 {
 // 	if ( !m_cacheInfo.isEmpty() && fromcache )
@@ -2555,7 +2571,7 @@ QString FontItem::infoText ( bool fromcache )
 				if ( langIdMap[ lit.key() ].contains ( sysLang ) )
 				{
 					QString name_value = mit.value();
-					name_value.replace ( QRegExp ( "(http://S+)" ), "<a href=\"\\1\">\\1</a>" );//Make HTTP links
+          name_value = url2href(name_value);
 					name_value.replace ( "\n","<br/>" );
 					orderedInfo[ mit.key() ] << "<div class="+ styleLangMatch +">" + name_value +"</div>";
 					if ( mit.key() == tr ( "Font Subfamily" ) )
@@ -2564,7 +2580,7 @@ QString FontItem::infoText ( bool fromcache )
 				else if ( langIdMap[ lit.key() ] == "DEFAULT" && !localizedKeys.contains ( mit.key() ) )
 				{
 					QString name_value = mit.value();
-					name_value.replace ( QRegExp ( "(http://.+)\\s*" ), "<a href=\"\\1\">\\1</a>" );//Make HTTP links
+          name_value = url2href(name_value);
 					name_value.replace ( "\n","<br/>" );
 					orderedInfo[ mit.key() ] << "<div class="+ styleLangMatch +">" + name_value +"</div>";
 					if ( mit.key() == tr ( "Font Subfamily" ) )

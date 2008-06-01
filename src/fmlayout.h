@@ -27,9 +27,11 @@ class FontItem;
 class QGraphicsPixmapItem;
 class QGraphicsPathItem;
 class QGraphicsRectItem;
-
+class QGraphicsProxyWidget;
+class QProgressBar;
 class QAction;
 class QMenu;
+class QMutex;
 
 /**
  Finally, we want to layout text elsewhere than _in_ the font or _in_ the view.
@@ -74,7 +76,7 @@ struct Node
 	int count();
 	
 };
-
+		
 class FMLayout : public QThread
 {
 	Q_OBJECT
@@ -83,7 +85,7 @@ class FMLayout : public QThread
 		FMLayout ( /*QGraphicsScene* scene, FontItem* font*/ );
 		~FMLayout();
 
-		virtual void doLayout ( const QList<GlyphList>& spec , double fs );
+		void doLayout(const QList<GlyphList>& spec , double fs);
 
 
 		static FMLayout *instance;
@@ -93,7 +95,6 @@ class FMLayout : public QThread
 		virtual void doGraph();
 		/// Build the good list of lines
 		virtual void doLines();
-		
 		
 		void run();
 
@@ -105,6 +106,11 @@ class FMLayout : public QThread
 		QList<int> hyphenList;
 		GlyphList theString;
 		double lineWidth ( int l );
+		QMutex *layoutMutex;
+		bool stopIt;
+		
+	public slots:
+		void stopLayout();		
 
 	private:// data
 		// Argued
@@ -114,6 +120,8 @@ class FMLayout : public QThread
 		QList<GlyphList> lines;
 		QRectF theRect;// Not really argued now, will come soon
 		QGraphicsRectItem *rules;
+		QGraphicsProxyWidget *onSceneProgressBar;
+		QProgressBar *progressBar;
 
 		// built
 		Node *node;
@@ -136,6 +144,10 @@ class FMLayout : public QThread
 
 	public: //accessors
 
+		QRectF getRect()const	
+		{
+			return theRect;
+		}
 		void setProcessFeatures ( bool theValue )
 		{
 			processFeatures = theValue;
@@ -204,6 +216,8 @@ class FMLayout : public QThread
 		/// Put lines on stage
 		virtual void doDraw();
 		
+		void endOfRun();
+		
 		void slotSP();
 		void slotSM();
 		void slotFP() ;
@@ -217,6 +231,7 @@ class FMLayout : public QThread
 	signals:
 		void updateLayout();
 		void layoutFinished();
+		void paragraphFinished(int);
 	public:
 		double FM_LAYOUT_NODE_SOON_F;
 		double FM_LAYOUT_NODE_FIT_F;

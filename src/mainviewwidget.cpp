@@ -48,6 +48,7 @@
 #include <QSettings>
 #include <QTime>
 #include <QClipboard>
+#include <QMutex>
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
 
@@ -168,6 +169,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
 	
 	connect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
+	connect (this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
 
 	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 
@@ -703,6 +705,11 @@ void MainViewWidget::slotView ( bool needDeRendering )
 #ifdef NEWTEXT
 	if ( loremView->isVisible() || loremView_FT->isVisible() )
 	{
+		if(textLayout->isRunning())
+		{
+			emit stopLayout();
+			textLayout->layoutMutex->lock();
+		}
 		QGraphicsScene *targetScene;
 		if(loremView->isVisible())
 			targetScene = loremScene;
@@ -735,37 +742,11 @@ void MainViewWidget::slotView ( bool needDeRendering )
 				list << theVeryFont->glyphs( stl[p] , sampleFontSize  );
 		}
 		textLayout->doLayout(list, sampleFontSize);
-		
-		
 		if (loremView->isVisible() && fitViewCheck->isChecked() )
 		{
-			QRectF allrect, firstrect;
-			bool first = true;
-			QList<QGraphicsItem*> lit = loremScene->items();
-			for ( int i = 0 ; i <lit.count() ; ++i )
-			{
-// 				if ( lit[i]->data ( 1 ).toString() == "glyph" )
-				{
-					if ( first )
-					{
-						firstrect = lit[i]->sceneBoundingRect();
-						first = false;
-
-					}
-					if ( lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y()
-										|| lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x()
-										|| lit[i]->sceneBoundingRect().topLeft().y() > allrect.topLeft().y()
-										|| lit[i]->sceneBoundingRect().topRight().y() > allrect.topRight().y()
-					   )
-						allrect = allrect.united ( lit[i]->sceneBoundingRect() );
-				}
-
-
-			}
-			loremView->fitInView ( allrect, Qt::KeepAspectRatio );
+			loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
 		}
-
-		
+		textLayout->start(QThread::LowestPriority);
 	}
 #else
 	if ( loremView->isVisible() || loremView_FT->isVisible() )

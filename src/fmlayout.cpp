@@ -16,12 +16,17 @@
 #include <QString>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QGraphicsProxyWidget>
+#include <QProgressBar>
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QTime>
 #include <QAction>
 #include <QMenu>
+// #include <QMutexLocker>
+#include <QMutex>
+// #include <QWaitCondition>
 
 #define OUT_OF_RECT 99999999.0
 
@@ -103,6 +108,8 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 // 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
 	int deep ( curList.count() + 1 );
 	FMLayout* lyt ( FMLayout::getLayout() );
+	if(lyt->stopIt)
+		return;
 	nodes.clear();
 	// cIdx is first glyph of the line
 	int cIdx ( index );
@@ -288,8 +295,15 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	rules = new QGraphicsRectItem;
 	instance = this;
 	node = 0;
+	layoutMutex = new QMutex;
+	
+	progressBar = new QProgressBar ;
+	onSceneProgressBar = new QGraphicsProxyWidget ;
+	onSceneProgressBar->setWidget(progressBar);
+	onSceneProgressBar->setZValue(1000);
 	
 	connect(this, SIGNAL(layoutFinished()), this, SLOT(doDraw()));
+	connect(this, SIGNAL(layoutFinished()), this, SLOT(endOfRun()));
 
 	FM_LAYOUT_NODE_SOON_F=	625.0;
 	FM_LAYOUT_NODE_FIT_F=	1000.0;
@@ -374,6 +388,7 @@ void FMLayout::run()
 		distCache.clear();
 		breakList.clear();
 		hyphenList.clear();
+		emit paragraphFinished( i + 1 );
 		
 	}
 	emit layoutFinished();
@@ -381,19 +396,25 @@ void FMLayout::run()
 
 void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 {
-	qDebug() <<"FMLayout::doLayout()";
+	stopIt = false;
 	fontSize = fs;
 	paragraphs = spec;
 	resetScene();
 	lines.clear();
 	
-	start(QThread::LowestPriority);
-	
-// 	doDraw();
-// 	lines.clear();
-	
-// 	theScene->views().first()->invalidateScene(theRect);	
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+	progressBar->reset();
+	progressBar->setRange(0,spec.count());
+	connect(this,SIGNAL(paragraphFinished(int)),progressBar,SLOT(setValue( int )) );
+	theScene->addItem(onSceneProgressBar);
+	onSceneProgressBar->setPos(theScene->views().first()->mapToScene( 20,20 ));
+
+}
+
+void FMLayout::endOfRun()
+{
+	theScene->removeItem(onSceneProgressBar);
+	disconnect(this,SIGNAL(paragraphFinished(int)),progressBar,SLOT(setValue( int )) );
+	layoutMutex->unlock();
 }
 
 void FMLayout::doGraph() // Has became doBreaks
@@ -449,6 +470,8 @@ void FMLayout::doLines()
 	
 	for ( int lIdx ( 0 ); lIdx < maxIndex ; ++lIdx )
 	{
+		if(stopIt)
+			break;
 		int start1( /*!lIdx ?*/ indices[lIdx] /*: indices[lIdx] + 1*/);
 		int end1(indices[ lIdx + 1 ]);
 		
@@ -578,6 +601,8 @@ void FMLayout::doLines()
 	}
 	for(int lI(startLine); lI<lines.count(); ++lI)
 	{
+		if(stopIt)
+			break;
 		qDebug()<<"S/L"<<lI <<"/"<< lines.count();
 		GlyphList& lg(lines[lI]);
 		if(QChar (lg.first().lChar).category() == QChar::Separator_Space)
@@ -629,6 +654,8 @@ void FMLayout::doDraw()
 
 	for ( int lIdx ( 0 ); lIdx < lines.count() ; ++lIdx )
 	{
+		if(stopIt)
+			break;
 		if ( pen.y() > pageBottom )
 			break;
 		GlyphList refGlyph(lines[lIdx]);
@@ -948,6 +975,12 @@ void FMLayout::slotHM()
 	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 	emit updateLayout();
 }
+
+void FMLayout::stopLayout()
+{
+	stopIt = true;
+}
+
 
 
 

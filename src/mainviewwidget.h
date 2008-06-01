@@ -178,6 +178,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void faceChanged();
 		void newTag(QString);
 		void tagAdded(QString);
+		void stopLayout();
 
 	public:
 		QString defaultOrd() {return ord[0];};

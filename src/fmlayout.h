@@ -57,7 +57,7 @@ struct Node
 		Vector ( Node* N, double D );
 		~Vector() ;
 // 		private:
-		Vector (const Vector& v);
+// 		Vector (const Vector& v);
 	};
 
 	
@@ -70,12 +70,14 @@ struct Node
 	~Node();
 
 	bool hasNode ( int idx ) ;
-	void nodes_insert(int idx, Vector& v);
+// 	void nodes_insert(int idx, Vector& v);
 
 	void sPath ( double dist, QList< int > curList, QList<int>& theList, double& theScore );
 	int count();
 	
 };
+
+
 		
 class FMLayout : public QThread
 {
@@ -143,61 +145,16 @@ class FMLayout : public QThread
 
 
 	public: //accessors
-
-		QRectF getRect()const	
-		{
-			return theRect;
-		}
-		void setProcessFeatures ( bool theValue )
-		{
-			processFeatures = theValue;
-		}
-
-
-
-		void setScript ( const QString& theValue )
-		{
-			script = theValue;
-		}
-
-
-		void setProcessScript ( bool theValue )
-		{
-			processScript = theValue;
-		}
-
-
-
-		void setAdjustedSampleInter ( double theValue )
-		{
-			adjustedSampleInter = theValue;
-		}
-
-
-		void setTextProgressionBlock ( int theValue )
-		{
-			textProgressionBlock = theValue;
-		}
-
-
-		void setTextProgressionLine ( int theValue )
-		{
-			textProgressionLine = theValue;
-		}
-
-
-		void setOrigine ( const QPoint& theValue )
-		{
-			origine = theValue;
-		}
-
-		void setFontSize ( double theValue )
-		{
-			fontSize = theValue;
-		}
-
+		QRectF getRect()const{return theRect;}
+		void setProcessFeatures ( bool theValue ){processFeatures = theValue;}
+		void setScript ( const QString& theValue ){script = theValue;}
+		void setProcessScript ( bool theValue )	{processScript = theValue;}
+		void setAdjustedSampleInter ( double theValue ){adjustedSampleInter = theValue;}
+		void setTextProgressionBlock ( int theValue ){textProgressionBlock = theValue;}
+		void setTextProgressionLine ( int theValue ){textProgressionLine = theValue;}
+		void setOrigine ( const QPoint& theValue ){origine = theValue;}
+		void setFontSize ( double theValue ){fontSize = theValue;}
 		void setTheScene ( QGraphicsScene* theValue );
-
 		void setTheFont ( FontItem* theValue );
 
 	public: // Options!
@@ -214,8 +171,7 @@ class FMLayout : public QThread
 		
 	private slots:
 		/// Put lines on stage
-		virtual void doDraw();
-		
+		void doDraw();
 		void endOfRun();
 		
 		void slotSP();

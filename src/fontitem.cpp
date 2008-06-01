@@ -3681,7 +3681,7 @@ void FontItem::setShaperType ( int theValue )
 
 GlyphList FontItem::glyphs ( QString spec, double fsize )
 {
-	qDebug()<<"glyphs ("<< spec<<", "<<fsize<<" )";
+	qDebug()<<"glyphs ("<< spec.left(24) <<", "<<fsize<<" )";
 	FMHyphenator *hyph = typotek::getInstance()->getHyphenator();
 	GlyphList ret;
 	if ( spec.isEmpty() || fsize <= 0.0 )
@@ -3704,7 +3704,7 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 		if(hyph)
 		{
 			hl = hyph->hyphenate(*sIt) ;
-			if(hl.count())qDebug()<<"Hyph W C"<<*sIt<<hl.count();
+// 			if(hl.count())qDebug()<<"Hyph W C"<<*sIt<<hl.count();
 		}
 		
 		for ( int i ( 0 ); i < (*sIt).count();++i )
@@ -3725,7 +3725,7 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 			delete glyph;
 			if(hl.contains( i ))
 			{
-				qDebug()<<"H B A"<<i<<hl[i].first<<hl[i].second;
+// 				qDebug()<<"H B A"<<i<<hl[i].first<<hl[i].second;
 				rg.isBreak = true;
 				QString addOnFirst;
 				QString addOnSecond;
@@ -3812,7 +3812,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 		if(hyph)
 		{
 			hl = hyph->hyphenate(*sIt) ;
-			qDebug()<<"Hyph W C"<<*sIt<<hl.count();
+// 			qDebug()<<"Hyph W C"<<*sIt<<hl.count();
 		}
 		GlyphList ret( otf->procstring ( *sIt , set ) );
 		// otf->procstring works in font unit, so...

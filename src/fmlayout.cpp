@@ -44,16 +44,16 @@ Node::Vector::Vector(Node * N, double D):n ( N ),distance ( D )
 // 	qDebug()<<"CV n d"<<n->index<<distance;
 }
 
-Node::Vector::Vector(const Node::Vector & v)
-	:n (0),distance ( 0 )
-{
-// 	qDebug()<<"CopyV n d"<<v.n<<v.distance;
-}
+// Node::Vector::Vector(const Node::Vector & v)
+// 	:n (0),distance ( 0 )
+// {
+// // 	qDebug()<<"CopyV n d"<<v.n<<v.distance;
+// }
 
 Node::Vector::~ Vector()
 {
 // 	qDebug()<<"RV"<<n<<distance;
-	if(n)delete n;
+// 	if(n)delete n;
 }
 
 Node::Node ( int i ) :index ( i )
@@ -74,10 +74,10 @@ bool Node::hasNode(int idx)
 Node::~Node()
 {
 // 	qDebug()<<"R"<< index;
-// 	foreach ( Vector v, nodes )
-// 	{
-// 		if ( v.n ) delete v.n;
-// 	}
+	for ( int i(0); i < nodes.count(); ++i )
+	{
+		if ( nodes[i].n ) delete nodes[i].n;
+	}
 }
 
 int Node::count()
@@ -90,14 +90,7 @@ int Node::count()
 	return c;
 }
 
-void Node::nodes_insert(int idx, Vector & v)
-{
-	
-	nodes.insert(idx,Vector());
-	nodes[idx].distance = v.distance;
-	nodes[idx].n = v.n;
-	v.n = 0;
-}
+
 
 
 void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, double & theScore )
@@ -109,7 +102,9 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	int deep ( curList.count() + 1 );
 	FMLayout* lyt ( FMLayout::getLayout() );
 	if(lyt->stopIt)
-		return;
+	{
+		theScore = 0;
+	}
 	nodes.clear();
 	// cIdx is first glyph of the line
 	int cIdx ( index );
@@ -138,19 +133,18 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					if(lyt->hyphenList.contains(soon))
 						disN *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
 					
+					Node::Vector vN( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
 					if ( nodes.isEmpty() )
 					{
-						Node::Vector vN( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
-						nodes_insert(0, vN);
+						nodes.insert(0, vN);
 					}
 					else
 					{
-						Node::Vector vN( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
 						for ( int nI ( 0 );nI<nodes.count();++nI )
 						{
 							if ( vN.distance <= nodes[nI].distance )
 							{
-								nodes_insert ( nI,vN );
+								nodes.insert ( nI,vN );
 								break;
 							}
 						}
@@ -166,20 +160,19 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 				if(lyt->hyphenList.contains(fit))
 					disF *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
 				
+					Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
 // 				curNode->nodes << vF;
 				if ( nodes.isEmpty() )
 				{
-					Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
-					nodes_insert(0,vF);
+					nodes.insert(0,vF);
 				}
 				else
 				{
-					Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
 					for ( int nI ( 0 );nI<nodes.count();++nI )
 					{
 						if ( vF.distance <= nodes[nI].distance )
 						{
-							nodes_insert ( nI,vF );
+							nodes.insert ( nI,vF );
 							break;
 						}
 					}
@@ -194,19 +187,18 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					if(lyt->hyphenList.contains(late))
 						disL *= lyt->FM_LAYOUT_HYPHEN_PENALTY; 
 					
+						Node::Vector vL ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
 					if ( nodes.isEmpty() )
 					{
-						Node::Vector vL ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
-						nodes_insert(0, vL);
+						nodes.insert(0, vL);
 					}
 					else
 					{
-						Node::Vector vL ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
 						for ( int nI ( 0 );nI<nodes.count();++nI )
 						{
 							if ( vL.distance <= nodes[nI].distance )
 							{
-								nodes_insert ( nI,vL );
+								nodes.insert ( nI,vL );
 								break;
 							}
 						}
@@ -234,19 +226,18 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 				sN = new Node ( soon );
 				double disN = lyt->lineWidth ( deep ) - lyt->distance ( cIdx, soon,lyt->theString );
 				
+					Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
 // 				curNode->nodes << vN;
 				if ( nodes.isEmpty() )
 				{
-					Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
-					nodes_insert(0, vN);
+					nodes.insert(0, vN);
 				}
 				else
 				{
-					Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
 					for ( int nI ( 0 );nI<nodes.count();++nI )
 					{
 						if ( vN.distance <= nodes[nI].distance )
-							nodes_insert ( nI,vN );
+							nodes.insert ( nI,vN );
 					}
 				}
 			}
@@ -383,8 +374,11 @@ void FMLayout::run()
 		doLines();
 		
 		qDebug()<<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
-		
-		delete node;
+		if(node)
+		{
+			delete node;
+			node = 0;
+		}
 		distCache.clear();
 		breakList.clear();
 		hyphenList.clear();
@@ -401,6 +395,11 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	paragraphs = spec;
 	resetScene();
 	lines.clear();
+	if(node)
+	{
+		delete node;
+		node = 0;
+	}
 	
 	progressBar->reset();
 	progressBar->setRange(0,spec.count());
@@ -412,10 +411,28 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 
 void FMLayout::endOfRun()
 {
+	qDebug()<<"FMLayout::endOfRun()";
 	theScene->removeItem(onSceneProgressBar);
 	disconnect(this,SIGNAL(paragraphFinished(int)),progressBar,SLOT(setValue( int )) );
+	if(node)
+	{
+	qDebug()<<"Nc"<<node->count();
+		delete node;
+		node = 0;
+	}
 	layoutMutex->unlock();
+	if(stopIt)// We’re here after a interruption
+	{
+		emit updateLayout();
+		stopIt = false;
+	}
 }
+
+void FMLayout::stopLayout()
+{
+	stopIt = true;
+}
+
 
 void FMLayout::doGraph() // Has became doBreaks
 {
@@ -432,6 +449,7 @@ void FMLayout::doGraph() // Has became doBreaks
 	// A) where can we break?
 	breakList.clear();
 	hyphenList.clear();
+	
 	for ( int a ( 0 ) ; a < theString.count() ; ++a )
 	{
 		if ( QChar ( theString[a].lChar ).category() == QChar::Separator_Space )
@@ -976,10 +994,6 @@ void FMLayout::slotHM()
 	emit updateLayout();
 }
 
-void FMLayout::stopLayout()
-{
-	stopIt = true;
-}
 
 
 

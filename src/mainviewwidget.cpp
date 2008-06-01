@@ -707,46 +707,48 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	{
 		if(textLayout->isRunning())
 		{
-			emit stopLayout();
-			textLayout->layoutMutex->lock();
-		}
-		QGraphicsScene *targetScene;
-		if(loremView->isVisible())
-			targetScene = loremScene;
-		else if(loremView_FT->isVisible())
-			targetScene = ftScene;
-		
-		bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
-		QString script = langCombo->currentText();
-		bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
-// 		FMLayout lay(targetScene, theVeryFont);
-		textLayout->setTheFont(theVeryFont);
-		textLayout->setTheScene(targetScene);
-		textLayout->setAdjustedSampleInter(wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize);
-
-		QList<GlyphList> list;
-		QStringList stl( typo->namedSample(sampleTextCombo->currentText() ).split("\n"));
-		if ( processScript )
-		{
-			for(int p(0);p<stl.count();++p)
-				list << theVeryFont->glyphs( stl[p] , sampleFontSize, script );
-		}
-		else if(processFeatures)
-		{
-			for(int p(0);p<stl.count();++p)	
-				list << theVeryFont->glyphs( stl[p] , sampleFontSize, deFillOTTree());
+			textLayout->stopLayout();
 		}
 		else
 		{
-			for(int p(0);p<stl.count();++p)
-				list << theVeryFont->glyphs( stl[p] , sampleFontSize  );
+			QGraphicsScene *targetScene;
+			if(loremView->isVisible())
+				targetScene = loremScene;
+			else if(loremView_FT->isVisible())
+				targetScene = ftScene;
+			
+			bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
+			QString script = langCombo->currentText();
+			bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
+	// 		FMLayout lay(targetScene, theVeryFont);
+			textLayout->setTheFont(theVeryFont);
+			textLayout->setTheScene(targetScene);
+			textLayout->setAdjustedSampleInter(wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize);
+	
+			QList<GlyphList> list;
+			QStringList stl( typo->namedSample(sampleTextCombo->currentText() ).split("\n"));
+			if ( processScript )
+			{
+				for(int p(0);p<stl.count();++p)
+					list << theVeryFont->glyphs( stl[p] , sampleFontSize, script );
+			}
+			else if(processFeatures)
+			{
+				for(int p(0);p<stl.count();++p)	
+					list << theVeryFont->glyphs( stl[p] , sampleFontSize, deFillOTTree());
+			}
+			else
+			{
+				for(int p(0);p<stl.count();++p)
+					list << theVeryFont->glyphs( stl[p] , sampleFontSize  );
+			}
+			textLayout->doLayout(list, sampleFontSize);
+			if (loremView->isVisible() && fitViewCheck->isChecked() )
+			{
+				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
+			}
+			textLayout->start(QThread::LowestPriority);
 		}
-		textLayout->doLayout(list, sampleFontSize);
-		if (loremView->isVisible() && fitViewCheck->isChecked() )
-		{
-			loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
-		}
-		textLayout->start(QThread::LowestPriority);
 	}
 #else
 	if ( loremView->isVisible() || loremView_FT->isVisible() )

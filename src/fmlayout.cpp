@@ -393,7 +393,7 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	stopIt = false;
 	fontSize = fs;
 	paragraphs = spec;
-	resetScene();
+// 	resetScene();
 	lines.clear();
 	if(node)
 	{
@@ -660,6 +660,7 @@ void FMLayout::doDraw()
 {
 	// Ask paths or pixmaps to theFont for each glyph and draw it on theScene
 	qDebug() <<"FMLayout::doDraw()";
+	resetScene();
 	QTime t;
 	t.start();
 	QPointF pen ( origine );

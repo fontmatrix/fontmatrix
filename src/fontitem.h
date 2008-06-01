@@ -244,6 +244,8 @@ class FontItem : public QObject
 		
 		QGraphicsPixmapItem* itemFromCharPix ( int charcode, double size );
 		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
+		QGraphicsPixmapItem* itemFromGindexPix_mt ( int index, double size );
+		
 		
 		/// We prepare ejection of renderLine methods
 		GlyphList glyphs(QString spec, double fsize);

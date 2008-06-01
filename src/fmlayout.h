@@ -18,6 +18,7 @@
 #include <QRectF>
 #include <QPointF>
 #include <QMap>
+#include <QThread>
 
 #include "fmsharestruct.h"
 
@@ -74,7 +75,7 @@ struct Node
 	
 };
 
-class FMLayout : public QObject
+class FMLayout : public QThread
 {
 	Q_OBJECT
 	public:
@@ -92,8 +93,9 @@ class FMLayout : public QObject
 		virtual void doGraph();
 		/// Build the good list of lines
 		virtual void doLines();
-		/// Put lines on stage
-		virtual void doDraw();
+		
+		
+		void run();
 
 	public:// utils
 		double distance ( int start, int end, const GlyphList& gl , bool power = false );
@@ -186,7 +188,7 @@ class FMLayout : public QObject
 
 		void setTheFont ( FontItem* theValue );
 
-	public: // Debug
+	public: // Options!
 		QAction *soonplus;
 		QAction *soonmoins;
 		QAction *fitplus;
@@ -199,6 +201,9 @@ class FMLayout : public QObject
 		QAction *hyphenpenaltymoins;
 		
 	private slots:
+		/// Put lines on stage
+		virtual void doDraw();
+		
 		void slotSP();
 		void slotSM();
 		void slotFP() ;
@@ -211,6 +216,7 @@ class FMLayout : public QObject
 		void slotHM();
 	signals:
 		void updateLayout();
+		void layoutFinished();
 	public:
 		double FM_LAYOUT_NODE_SOON_F;
 		double FM_LAYOUT_NODE_FIT_F;

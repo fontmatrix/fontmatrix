@@ -15,6 +15,7 @@
 
 #include <QString>
 #include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -252,7 +253,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	curList << index ;//(isLeaf ? index-1 : index);
 	
 	double dCorrection( (double)theList.count() / (double)curList.count() );
-	qDebug()<<"COR tl.c cl.c"<<dCorrection<<theList.count()<<curList.count();
+// 	qDebug()<<"COR tl.c cl.c"<<dCorrection<<theList.count()<<curList.count();
 	while ( !nodes.isEmpty() )
 	{
 // 		Vector v = nodes.first() ;
@@ -287,6 +288,8 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	rules = new QGraphicsRectItem;
 	instance = this;
 	node = 0;
+	
+	connect(this, SIGNAL(layoutFinished()), this, SLOT(doDraw()));
 
 	FM_LAYOUT_NODE_SOON_F=	625.0;
 	FM_LAYOUT_NODE_FIT_F=	1000.0;
@@ -344,35 +347,52 @@ FMLayout::~ FMLayout()
 {
 }
 
-void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
+void FMLayout::run()
 {
-	qDebug() <<"FMLayout::doLayout()";
-	fontSize = fs;
-	resetScene();
-	for ( int i ( 0 ); i < spec.count() ; ++ i )
+	for ( int i ( 0 ); i < paragraphs.count() ; ++ i )
 	{
-		qDebug()<<"Oy Rb"<<origine.y()<<theRect.bottom();
+// 		qDebug()<<"Oy Rb"<<origine.y()<<theRect.bottom();
 		if(origine.y() > theRect.bottom())
 			break;
-		theString = spec[i];
+		theString = paragraphs[i];
 		if(theString.isEmpty())
 			continue;
 		node = new Node ( 0 );
 		doGraph();
 		distCache.clear();
+		{// Debug output
 		fm_layout_total_leaves_dbg = 0;
 		fm_layout_total_nod_dbg = 0;
 		fm_layout_total_skip_nod_dbg = 0;
+		}
+		
 		doLines();
+		
 		qDebug()<<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
-		distCache.clear();
-		doDraw();
-// 		qDebug()<<"N"<<node->count();
+		
 		delete node;
-		lines.clear();
+		distCache.clear();
 		breakList.clear();
 		hyphenList.clear();
+		
 	}
+	emit layoutFinished();
+}
+
+void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
+{
+	qDebug() <<"FMLayout::doLayout()";
+	fontSize = fs;
+	paragraphs = spec;
+	resetScene();
+	lines.clear();
+	
+	start(QThread::LowestPriority);
+	
+// 	doDraw();
+// 	lines.clear();
+	
+// 	theScene->views().first()->invalidateScene(theRect);	
 	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 }
 
@@ -417,11 +437,13 @@ void FMLayout::doLines()
 	double score ( INFINITE );
 	node->sPath ( 0,QList<int>(),indices,score );
 	// la messe est dite ! :-)
-	qDebug() <<"S I"<<score<<indices;
+// 	qDebug() <<"S I"<<score<<indices;
+	
+	int startLine(lines.count());
 	
 	double refW ( theRect.width() );
 	int maxIndex(indices.count() - 1);
-	qDebug()<<"SC IC"<<theString.count()<<indices.count();
+// 	qDebug()<<"SC IC"<<theString.count()<<indices.count();
 	bool hasHyph(false);
 	GlyphList curHyph;
 	
@@ -499,10 +521,11 @@ void FMLayout::doLines()
 				inList.takeLast();
 			}while(QChar( inList.last().lChar ).category() != QChar::Separator_Space && !inList.isEmpty());
 		
-			QString dgS;
+			
 			for ( int i ( 0 ); i < inList.count() ;++i )
 				lg <<  inList.at ( i );
 		
+			QString dgS;
 			for (int ih(0); ih < hr.count(); ++ih)
 			{
 				lg <<  hr[ih];
@@ -538,23 +561,24 @@ void FMLayout::doLines()
 				inList.takeLast();
 			}while(QChar( inList.last().lChar ).category() != QChar::Separator_Space && !inList.isEmpty());
 		
-// 			QString dgS;
+			QString dgS;
 			for ( int i ( 0 ); i < inList.count() ;++i )
 				lg <<  inList.at ( i );
 		
 			for (int ih(0); ih < hr2.count(); ++ih)
 			{
 				lg <<  hr2[ih];
-// 				dgS +="("+ QString(QChar(lg.last().lChar))+")";
+				dgS +="("+ QString(QChar(lg.last().lChar))+")";
 			}
-// 			qDebug()<<dgS;
+			QString dbh;for(int h(0);h<curHyph.count();++h){dbh+="["+ QString(QChar(curHyph[h].lChar)) +"]";}qDebug()<<dgS<<"="<<dbh;
 		
 		}
 	
 		lines << lg;
 	}
-	for(int lI(0); lI<lines.count(); ++lI)
+	for(int lI(startLine); lI<lines.count(); ++lI)
 	{
+		qDebug()<<"S/L"<<lI <<"/"<< lines.count();
 		GlyphList& lg(lines[lI]);
 		if(QChar (lg.first().lChar).category() == QChar::Separator_Space)
 		{
@@ -567,7 +591,7 @@ void FMLayout::doLines()
 				lg.takeLast();
 		}
 			
-		if(lI != lines.count() - 1) 
+		if(lI != lines.count() - 1 ) // not last line 
 		{
 			QList<int> wsIds;
 			double diff ( refW - distance ( 0, lg.count(), lg ) );
@@ -586,7 +610,7 @@ void FMLayout::doLines()
 			}
 		}
 	}
-	qDebug() <<"doLines T(ms)"<<t.elapsed();
+	qDebug() <<"doLines("<< lines.count() <<") T(ms)"<<t.elapsed();
 }
 
 void FMLayout::doDraw()

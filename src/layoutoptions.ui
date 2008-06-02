@@ -1,0 +1,238 @@
+<ui version="4.0" >
+ <class>LayoutOptionWidget</class>
+ <widget class="QWidget" name="LayoutOptionWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>345</width>
+    <height>270</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2" >
+   <item row="0" column="0" >
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Weights</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" >
+      <item row="0" column="0" >
+       <layout class="QVBoxLayout" name="verticalLayout" >
+        <item>
+         <widget class="QSlider" name="beforeSlid" >
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>1000</number>
+          </property>
+          <property name="tracking" >
+           <bool>false</bool>
+          </property>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition" >
+           <enum>QSlider::NoTicks</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="bScore" >
+          <property name="text" >
+           <string>score</string>
+          </property>
+          <property name="buddy" >
+           <cstring>beforeSlid</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>before</string>
+          </property>
+          <property name="alignment" >
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1" >
+       <layout class="QVBoxLayout" name="verticalLayout_2" >
+        <item>
+         <widget class="QSlider" name="fitSlid" >
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>1000</number>
+          </property>
+          <property name="tracking" >
+           <bool>false</bool>
+          </property>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="eScore" >
+          <property name="text" >
+           <string>score</string>
+          </property>
+          <property name="buddy" >
+           <cstring>fitSlid</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2" >
+          <property name="text" >
+           <string>exact</string>
+          </property>
+          <property name="alignment" >
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="2" >
+       <layout class="QVBoxLayout" name="verticalLayout_3" >
+        <item>
+         <widget class="QSlider" name="afterSlid" >
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>1000</number>
+          </property>
+          <property name="tracking" >
+           <bool>false</bool>
+          </property>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="aScore" >
+          <property name="text" >
+           <string>score</string>
+          </property>
+          <property name="buddy" >
+           <cstring>afterSlid</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_3" >
+          <property name="text" >
+           <string>after</string>
+          </property>
+          <property name="alignment" >
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="3" >
+       <layout class="QVBoxLayout" name="verticalLayout_5" >
+        <item>
+         <widget class="QSlider" name="endSlid" >
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>1000</number>
+          </property>
+          <property name="tracking" >
+           <bool>false</bool>
+          </property>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="endScore" >
+          <property name="text" >
+           <string>score</string>
+          </property>
+          <property name="buddy" >
+           <cstring>endSlid</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_5" >
+          <property name="text" >
+           <string>end</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="4" >
+       <layout class="QVBoxLayout" name="verticalLayout_4" >
+        <item>
+         <widget class="QSlider" name="hyphSlid" >
+          <property name="maximum" >
+           <number>1000</number>
+          </property>
+          <property name="tracking" >
+           <bool>false</bool>
+          </property>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="hPenalty" >
+          <property name="text" >
+           <string>penalty</string>
+          </property>
+          <property name="buddy" >
+           <cstring>hyphSlid</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_4" >
+          <property name="text" >
+           <string>H-penalty</string>
+          </property>
+          <property name="alignment" >
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

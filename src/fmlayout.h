@@ -32,6 +32,8 @@ class QProgressBar;
 class QAction;
 class QMenu;
 class QMutex;
+class FMLayOptWidget;
+class QDialog;
 
 /**
  Finally, we want to layout text elsewhere than _in_ the font or _in_ the view.
@@ -124,6 +126,7 @@ class FMLayout : public QThread
 		QGraphicsRectItem *rules;
 		QGraphicsProxyWidget *onSceneProgressBar;
 		QProgressBar *progressBar;
+		FMLayOptWidget *optionsWidget;
 
 		// built
 		Node *node;
@@ -157,38 +160,21 @@ class FMLayout : public QThread
 		void setTheScene ( QGraphicsScene* theValue );
 		void setTheFont ( FontItem* theValue );
 
-	public: // Options!
-		QAction *soonplus;
-		QAction *soonmoins;
-		QAction *fitplus;
-		QAction *fitmoins;
-		QAction *lateplus;
-		QAction *latemoins;
-		QAction *endplus;
-		QAction *endmoins;
-		QAction *hyphenpenaltyplus;
-		QAction *hyphenpenaltymoins;
-		
+
 	private slots:
 		/// Put lines on stage
 		void doDraw();
 		void endOfRun();
 		
-		void slotSP();
-		void slotSM();
-		void slotFP() ;
-		void slotFM() ;
-		void slotLP() ;
-		void slotLM();
-		void slotEP() ;
-		void slotEM();
-		void slotHP();
-		void slotHM();
+		void slotOption(int v);
+
 	signals:
 		void updateLayout();
 		void layoutFinished();
 		void paragraphFinished(int);
 	public:
+		QDialog *optionDialog;
+		
 		double FM_LAYOUT_NODE_SOON_F;
 		double FM_LAYOUT_NODE_FIT_F;
 		double FM_LAYOUT_NODE_LATE_F;

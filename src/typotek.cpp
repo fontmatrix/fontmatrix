@@ -25,7 +25,7 @@
 #include "fontitem.h"
 #include "hyphenate/fmhyphenator.h"
 // #include "typotekadaptator.h"
-
+#include "fmlayout.h"
 #include "dataloader.h"
 #include "tagseteditor.h"
 #include "savedata.h"
@@ -662,6 +662,9 @@ void typotek::createActions()
 	scuts->add(previousFont);
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
+	layOptAct = new QAction(tr("Layout Options"),this);
+	scuts->add(layOptAct);
+	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
 }
 
 void typotek::createMenus()
@@ -697,7 +700,7 @@ void typotek::createMenus()
 	editMenu->addAction ( prefsAct );
 	
 	editMenu->addSeparator();
-	editMenu->addMenu(FMLayout::getLayout()->secretMenu);
+	editMenu->addAction(layOptAct);
 
 	browseMenu = menuBar()->addMenu(tr("&Browse"));
 	browseMenu->addAction(nextFamily);
@@ -1799,6 +1802,20 @@ void typotek::slotMainDockAreaChanged(Qt::DockWidgetArea area)
 FMHyphenator* typotek::getHyphenator() const
 {
 	return hyphenator;
+}
+
+void typotek::slotSwitchLayOptVisible()
+{
+	if(FMLayout::getLayout()->optionDialog->isVisible())
+	{
+		FMLayout::getLayout()->optionDialog->setVisible(false);
+		layOptAct->setChecked(false);
+	}
+	else
+	{
+		FMLayout::getLayout()->optionDialog->setVisible(true);
+		layOptAct->setChecked(true);
+	}
 }
 
 

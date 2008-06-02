@@ -7,10 +7,11 @@ dataloader.cpp
 fmactivate.cpp
 fmbaseshaper.cpp
 fmglyphsview.cpp
+fmlayoptwidget.cpp
+fmlayout.cpp
 fmnamelist.cpp
 fmotf.cpp
 fmplayground.cpp
-fmlayout.cpp
 fmpreviewlist.cpp
 # fmprintdialog.cpp
 fmrepair.cpp
@@ -68,11 +69,11 @@ SET(fontmatrix_MOC_HDRS
 aboutwidget.h
 fmactivate.h
 fmglyphsview.h
+fmlayoptwidget.h
 fmlayout.h
 fmnamelist.h
 fmplayground.h
 fmpreviewlist.h
-# fmprintdialog.h
 fmrepair.h
 fmsampletextview.h
 fontbookdialog.h
@@ -98,9 +99,9 @@ bookexport.ui
 importedfonts.ui
 importtags.ui
 help.ui
+layoutoptions.ui
 listsdock.ui
 mainview.ui
-# multiprintdialog.ui
 prefs_panel.ui
 repair.ui
 tagset.ui

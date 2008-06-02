@@ -12,7 +12,10 @@
 #include "fmlayout.h"
 #include "fontitem.h"
 #include "shortcuts.h"
+#include "fmlayoptwidget.h"
+#include "typotek.h"
 
+#include <QDialog>
 #include <QString>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -301,51 +304,26 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	FM_LAYOUT_NODE_LATE_F=	2000.0;
 	FM_LAYOUT_NODE_END_F=	500.0;
 	FM_LAYOUT_HYPHEN_PENALTY = 1.2;
-
-	soonplus = new QAction ( "increase before",this );
-	Shortcuts::getInstance()->add ( soonplus );
-	connect ( soonplus,SIGNAL ( triggered() ),this, SLOT ( slotSP() ) );
-	soonmoins = new QAction ( "decrease before",this );
-	Shortcuts::getInstance()->add ( soonmoins );
-	connect ( soonmoins,SIGNAL ( triggered() ),this, SLOT ( slotSM() ) );
-	fitplus = new QAction ( "increase at break",this );
-	Shortcuts::getInstance()->add ( fitplus );
-	connect ( fitplus,SIGNAL ( triggered() ),this, SLOT ( slotFP() ) );
-	fitmoins = new QAction ( "decrease at break",this );
-	Shortcuts::getInstance()->add ( fitmoins );
-	connect ( fitmoins,SIGNAL ( triggered() ),this, SLOT ( slotFM() ) );
-	lateplus = new QAction ( "increase after",this );
-	Shortcuts::getInstance()->add ( lateplus );
-	connect ( lateplus,SIGNAL ( triggered() ),this, SLOT ( slotLP() ) );
-	latemoins = new QAction ( "decrease after",this );
-	Shortcuts::getInstance()->add ( latemoins );
-	connect ( latemoins,SIGNAL ( triggered() ),this, SLOT ( slotLM() ) );
-	endplus = new QAction ( "increase last line",this );
-	Shortcuts::getInstance()->add ( endplus );
-	connect ( endplus,SIGNAL ( triggered() ),this, SLOT ( slotEP() ) );
-	endmoins = new QAction ( "decrease last line",this );
-	Shortcuts::getInstance()->add ( endmoins );
-	connect ( endmoins,SIGNAL ( triggered() ),this, SLOT ( slotEM() ) );
-	hyphenpenaltyplus = new QAction("Increase hyphen penalty",this);
-	Shortcuts::getInstance()->add ( hyphenpenaltyplus );
-	connect ( hyphenpenaltyplus,SIGNAL ( triggered() ),this, SLOT ( slotHP() ) );
-	hyphenpenaltymoins= new QAction("Decrease hyphen penalty",this);
-	Shortcuts::getInstance()->add ( hyphenpenaltymoins );
-	connect ( hyphenpenaltymoins,SIGNAL ( triggered() ),this, SLOT ( slotHM() ) );
 	
+	optionDialog = new QDialog(typotek::getInstance());
+	optionDialog->setWindowTitle(tr("Text engine options"));
 	
-	secretMenu = new QMenu("TLE node weights",0);
-	secretMenu->addAction(soonplus);
-	secretMenu->addAction(soonmoins);
-	secretMenu->addAction(fitplus);
-	secretMenu->addAction(fitmoins);
-	secretMenu->addAction(lateplus);
-	secretMenu->addAction(latemoins);
-	secretMenu->addAction(endplus);
-	secretMenu->addAction(endmoins);
-	secretMenu->addAction(hyphenpenaltyplus);
-	secretMenu->addAction(hyphenpenaltymoins);
+	optionsWidget = new FMLayOptWidget(optionDialog);
+	optionsWidget->setRange(FMLayOptWidget::BEFORE, 1, 10000);
+	optionsWidget->setRange(FMLayOptWidget::EXACT, 1, 10000);
+	optionsWidget->setRange(FMLayOptWidget::AFTER, 1, 10000);
+	optionsWidget->setRange(FMLayOptWidget::END, 1, 10000);
+	optionsWidget->setRange(FMLayOptWidget::HYPHEN, 1, 100);
 	
+	optionsWidget->setValue(FMLayOptWidget::BEFORE,FM_LAYOUT_NODE_SOON_F);
+	optionsWidget->setValue(FMLayOptWidget::EXACT,FM_LAYOUT_NODE_FIT_F);
+	optionsWidget->setValue(FMLayOptWidget::AFTER,FM_LAYOUT_NODE_LATE_F);
+	optionsWidget->setValue(FMLayOptWidget::END,FM_LAYOUT_NODE_END_F);
+	optionsWidget->setValue(FMLayOptWidget::HYPHEN,FM_LAYOUT_HYPHEN_PENALTY * 10);
+	
+	connect(optionsWidget,SIGNAL(valueChanged(int)),this,SLOT(slotOption(int)));
+	
+		
 }
 
 FMLayout::~ FMLayout()
@@ -948,51 +926,38 @@ double FMLayout::lineWidth ( int l )
 }
 
 
-void FMLayout::slotSP() {
-	FM_LAYOUT_NODE_SOON_F *= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-emit updateLayout();}
-void FMLayout::slotSM() {
-	FM_LAYOUT_NODE_SOON_F /= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();}
-void FMLayout::slotFP() {
-	FM_LAYOUT_NODE_FIT_F *= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();}
-void FMLayout::slotFM() {
-	FM_LAYOUT_NODE_FIT_F /= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();}
-void FMLayout::slotLP() {
-	FM_LAYOUT_NODE_LATE_F *= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();}
-void FMLayout::slotLM() {
-	FM_LAYOUT_NODE_LATE_F /= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();}
-void FMLayout::slotEP() {
-	FM_LAYOUT_NODE_END_F *= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();}
-void FMLayout::slotEM() {
-	FM_LAYOUT_NODE_END_F /= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();}
-
-void FMLayout::slotHP()
+void FMLayout::slotOption(int v)
 {
-	FM_LAYOUT_HYPHEN_PENALTY *= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();
-}
-
-void FMLayout::slotHM()
-{
-	FM_LAYOUT_HYPHEN_PENALTY /= 2.0;
-	qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
-	emit updateLayout();
+	if(v == FMLayOptWidget::BEFORE)
+	{
+		FM_LAYOUT_NODE_SOON_F = optionsWidget->getValue( FMLayOptWidget::BEFORE);
+		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+		emit updateLayout();
+	}
+	else if(v == FMLayOptWidget::EXACT)
+	{
+		FM_LAYOUT_NODE_FIT_F = optionsWidget->getValue( FMLayOptWidget::EXACT );
+		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+		emit updateLayout();
+	}
+	else if(v == FMLayOptWidget::AFTER)
+	{
+		FM_LAYOUT_NODE_LATE_F = optionsWidget->getValue( FMLayOptWidget::AFTER );
+		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+		emit updateLayout();
+	}
+	else if(v == FMLayOptWidget::END)
+	{
+		FM_LAYOUT_NODE_END_F = optionsWidget->getValue( FMLayOptWidget::END );
+		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+		emit updateLayout();
+	}
+	else if(v == FMLayOptWidget::HYPHEN)
+	{
+		FM_LAYOUT_HYPHEN_PENALTY = (double)optionsWidget->getValue( FMLayOptWidget::HYPHEN ) / 10.0;
+		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+		emit updateLayout();
+	}
 }
 
 

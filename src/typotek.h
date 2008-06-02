@@ -80,6 +80,7 @@ class typotek:public QMainWindow
 		void slotRepair();
 		void slotTagAll();
 		void slotMainDockAreaChanged(Qt::DockWidgetArea area);
+		void slotSwitchLayOptVisible();
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );
@@ -155,6 +156,8 @@ class typotek:public QMainWindow
 		QAction *printChartAct;
 		QAction *printPlaygroundAct;
 		QAction *printFamilyAct;
+		
+		QAction *layOptAct;
 
 		MainViewWidget *theMainView;
 

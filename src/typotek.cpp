@@ -664,6 +664,7 @@ void typotek::createActions()
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
 	layOptAct = new QAction(tr("Layout Options"),this);
+	layOptAct->setCheckable(true);
 	scuts->add(layOptAct);
 	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
 }

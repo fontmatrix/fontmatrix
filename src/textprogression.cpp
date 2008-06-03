@@ -11,9 +11,11 @@
 //
 #include "textprogression.h"
 
+TextProgression *TextProgression::instance = 0;
 TextProgression::TextProgression(QWidget * parent)
 	:QWidget(parent)
 {
+	instance = this;
 	setupUi(this);
 	
 	connect(inlineBTT,SIGNAL(released()),this,SLOT(forwardStateChanged()));

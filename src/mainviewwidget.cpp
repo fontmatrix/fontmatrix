@@ -112,8 +112,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush ( Qt::lightGray );
 	loremView->locker = true;
-	loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+// 	loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+// 	loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 
 	loremView_FT->setScene ( ftScene );
 // 	loremView_FT->setBackgroundBrush ( Qt::lightGray );
@@ -1318,11 +1318,12 @@ void MainViewWidget::slotFitChanged ( int i )
 	{
 // 		renderZoom->setDisabled ( true );
 // 		renderZoom->setStatusTip ( tr("zoom is disabled, uncheck fit to view to enable zoom") );
+		loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
 		loremView->locker = true;
 		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 	}
-	slotView();
+// 	slotView();
 }
 
 void MainViewWidget::slotRefitSample()

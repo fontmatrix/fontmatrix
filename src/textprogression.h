@@ -24,6 +24,10 @@ class TextProgression : public QWidget, private Ui::TextProgressionWidget
 		
 		Progression inBlock();
 		Progression inLine();
+		
+		static TextProgression* getInstance(){return instance;}
+	private:
+		static TextProgression *instance;
 	signals:
 		void stateChanged();
 	private slots:

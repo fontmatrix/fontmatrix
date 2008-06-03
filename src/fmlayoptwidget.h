@@ -34,7 +34,13 @@ class FMLayOptWidget : public QWidget , private Ui::LayoutOptionWidget
 		void aChanged(int cv);
 		void enChanged(int cv);
 		void hChanged(int cv);
-	
+		
+		void bEdited();
+		void exEdited();
+		void aEdited();
+		void enEdited();
+		void hEdited();
+		
 	signals:
 		/// Indicates which slider has been changed
 		/// It’s up to the receiver to ask the new value;

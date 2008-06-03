@@ -11,6 +11,7 @@
 //
 
 #include "fmlayoptwidget.h"
+#include <QDebug>
 
 FMLayOptWidget::FMLayOptWidget(QWidget * parent)
 	:QWidget(parent)
@@ -22,36 +23,62 @@ FMLayOptWidget::FMLayOptWidget(QWidget * parent)
 	connect(afterSlid,SIGNAL(valueChanged( int )),this,SLOT(aChanged(int)));
 	connect(endSlid,SIGNAL(valueChanged( int )),this,SLOT(enChanged(int)));
 	connect(hyphSlid,SIGNAL(valueChanged( int )),this,SLOT(hChanged(int)));
+	
+	connect(beforeSlid,SIGNAL(sliderReleased ()),this,SLOT(bEdited()));
+	connect(fitSlid,SIGNAL(sliderReleased ()),this,SLOT(exEdited()));
+	connect(afterSlid,SIGNAL(sliderReleased ()),this,SLOT(aEdited()));
+	connect(endSlid,SIGNAL(sliderReleased ()),this,SLOT(enEdited()));
+	connect(hyphSlid,SIGNAL(sliderReleased ()),this,SLOT(hEdited()));
 }
 
 void FMLayOptWidget::bChanged(int cv)
 {
 	bScore->setText(QString::number(cv));
-	emit valueChanged(BEFORE);
 }
 
 void FMLayOptWidget::exChanged(int cv)
 {
 	eScore->setText(QString::number(cv));
-	emit valueChanged(EXACT);
 }
 
 void FMLayOptWidget::aChanged(int cv)
 {
 	aScore->setText(QString::number(cv));
-	emit valueChanged(AFTER);
 }
 
 void FMLayOptWidget::enChanged(int cv)
 {
 	endScore->setText(QString::number(cv));
-	emit valueChanged(END);
 }
 
 void FMLayOptWidget::hChanged(int cv)
 {
-	hPenalty->setText(QString::number(cv));
-	emit valueChanged(HYPHEN);
+	hPenalty->setText(QString::number((double)cv/10.0));
+}
+
+void FMLayOptWidget::bEdited()
+{
+		emit valueChanged(BEFORE);
+}
+
+void FMLayOptWidget::exEdited()
+{
+		emit valueChanged(EXACT);
+}
+
+void FMLayOptWidget::aEdited()
+{
+		emit valueChanged(AFTER);
+}
+
+void FMLayOptWidget::enEdited()
+{
+		emit valueChanged(END);
+}
+
+void FMLayOptWidget::hEdited()
+{
+		emit valueChanged(HYPHEN);
 }
 
 void FMLayOptWidget::setRange(V v, int min, int max)
@@ -113,3 +140,4 @@ double FMLayOptWidget::getValue(V v)
 	}
 	return 0.0;
 }
+

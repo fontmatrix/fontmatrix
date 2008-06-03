@@ -1,7 +1,7 @@
 //
 // C++ Interface: fmhyphenator
 //
-// Description: 
+// Description:
 //
 //
 // Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
@@ -22,17 +22,19 @@
 #include <QList>
 
 typedef QMap<int , QPair<QString, QString>  > HyphList;
-		
+
 class FMHyphenator : public QObject
 {
 	public:
-		FMHyphenator(const QString& dictPath);
+		FMHyphenator (  );
 		~FMHyphenator();
 		
-		HyphList hyphenate(const QString& word) const;
-		
+		bool loadDict ( const QString& dictPath, int leftMin = 1, int rightMin = 1);
+		HyphList hyphenate ( const QString& word ) const;
+
 	private:
-	HyphenDict *dict;
+		QString currentDictPath;
+		HyphenDict *dict;
 };
 
 #endif

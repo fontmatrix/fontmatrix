@@ -15,21 +15,40 @@
 #include <QDebug>
 #include <QStringList>
 
-FMHyphenator::FMHyphenator(const QString& dictPath)
+FMHyphenator::FMHyphenator()
 {
-	/* load the hyphenation dictionary */  
-	
+	dict = 0;
+}
+
+bool FMHyphenator::loadDict(const QString & dictPath, int leftMin, int rightMin)
+{
+	/* load the hyphenation dictionary */ 
+	if(dict) 
+	{
+		if(dictPath != currentDictPath)
+			hnj_hyphen_free (dict);
+		else 
+		{
+			if(dict)
+				return true;
+			else 
+				return false;
+		}
+	}
+
 	if (( dict = hnj_hyphen_load( dictPath.toLocal8Bit() ) ) == 0)
 	{
 		qDebug()<<"Unable to load dict file:"<<dictPath;
+		return false;
 	}
 	else
 	{
-		dict->lhmin = 3;
-		dict->rhmin = 2;
+		dict->lhmin = leftMin;
+		dict->rhmin = rightMin;
 	}
-	
+	return true;
 }
+
 
 FMHyphenator::~FMHyphenator()
 {

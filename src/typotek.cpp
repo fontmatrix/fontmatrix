@@ -173,7 +173,8 @@ void typotek::initMatrix()
 		QString dP( st.value("DictFile", "hyph.dic").toString() );
 		if(QFileInfo(dP).exists())
 		{
-			hyphenator = new FMHyphenator(dP);
+			hyphenator = new FMHyphenator();
+			hyphenator->loadDict(dP);
 		}
 		else
 		{

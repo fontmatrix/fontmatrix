@@ -116,7 +116,7 @@ void FMLayOptWidget::setValue(V v, int value)
 		endScore->setText(QString::number(value));
 		break;
 		case HYPHEN:hyphSlid->setValue(value);
-		hPenalty->setText(QString::number(value));
+		hPenalty->setText(QString::number((double)value/10));
 		break;
 		default:break;
 	}

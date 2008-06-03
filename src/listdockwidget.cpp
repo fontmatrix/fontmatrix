@@ -252,16 +252,27 @@ void ListDockWidget::slotFolderViewContextMenu(const QPoint& p)
 	folderViewContextMenu->exec(dm->fileInfo(mi), tabWidget->pos() + mapToGlobal(p));
 }
 
+/**
+ * Reload the file and folder list in the folder tab
+ */
+void ListDockWidget::refreshTree()
+{
+	theDirModel->refresh(currentFIndex);
+}
+
 FolderViewMenu::FolderViewMenu() : QMenu()
 {
+	dirReload = new QAction(tr("Reload Tree"), 0);
 	dirAction = new QAction(tr("Import Directory"), 0);
 	dirRecursiveAction = new QAction(tr("Import recursively"), 0);
 	fileAction = new QAction(tr("Import File"), 0);
 
+	addAction(dirReload);
 	addAction(dirAction);
 	addAction(dirRecursiveAction);
 	addAction(fileAction);
 
+	connect(dirReload, SIGNAL(triggered()), this, SLOT(slotReloadTree()));
 	connect(dirAction, SIGNAL(triggered()), this, SLOT(slotImportDir()));
 	connect(dirRecursiveAction, SIGNAL(triggered()), this, SLOT(slotImportDirRecursively()));
 	connect(fileAction, SIGNAL(triggered()), this, SLOT(slotImportFile()));
@@ -283,6 +294,11 @@ void FolderViewMenu::exec(const QFileInfo &fi, const QPoint &p)
 	selectedFileOrDir = fi;
 
 	QMenu::exec(p);
+}
+
+void FolderViewMenu::slotReloadTree()
+{
+	ListDockWidget::getInstance()->refreshTree();
 }
 
 void FolderViewMenu::slotImportDir()

@@ -48,6 +48,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		static ListDockWidget* getInstance();
 		static ListDockWidget* instance;
 
+		void refreshTree();
 		void savePosition();
 		void restorePosition();
 
@@ -108,6 +109,7 @@ public:
 	void exec(const QFileInfo &fi, const QPoint &p);
 
 private:
+	QAction *dirReload;
 	QAction *dirAction;
 	QAction *dirRecursiveAction;
 	QAction *fileAction;
@@ -115,6 +117,7 @@ private:
 	QFileInfo selectedFileOrDir;
 
 private slots:
+	void slotReloadTree();
 	void slotImportDir();
 	void slotImportDirRecursively();
 	void slotImportFile();

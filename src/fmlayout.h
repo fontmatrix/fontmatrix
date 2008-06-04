@@ -174,6 +174,7 @@ class FMLayout : public QThread
 		void updateLayout();
 		void layoutFinished();
 		void paragraphFinished(int);
+		void paintFinished();
 	public:
 		QDialog *optionDialog;
 		

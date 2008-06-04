@@ -1061,7 +1061,7 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 	}
 	else if(field == tr ( "Unicode" ))
 	{
-		/// WARNING - Unicode fiels does not support negation.
+		/// WARNING - Unicode fields does not support negation.
 		int startC(0xFFFFFFFF);
 		int endC(0);
 		int patCount(rPattern.count());
@@ -1593,6 +1593,18 @@ void typotek::printSample()
 	FontItem * font(theMainView->selectedFont());
 	if(!font)
 		return;
+	QGraphicsScene *ls (theMainView->currentSampleScene());
+	if( FMLayout::getLayout()->isRunning() )
+	{
+		connect(FMLayout::getLayout(), SIGNAL(paintFinished()), this,SLOT(printSample()));
+// 		waitLayoutForPrint = false;
+		return;
+	}
+	else
+	{
+		disconnect(FMLayout::getLayout(), SIGNAL(paintFinished()), this,SLOT(printSample()));
+// 		waitLayoutForPrint = true;
+	}
 
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);
@@ -1603,7 +1615,7 @@ void typotek::printSample()
 	thePrinter.setFullPage ( true );
 	QPainter aPainter ( &thePrinter );
 
-	theMainView->currentSampleScene()->render(&aPainter);
+	ls->render(&aPainter);
 
 }
 

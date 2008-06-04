@@ -793,6 +793,7 @@ void FMLayout::doDraw()
 	}
 
 	qDebug() <<"doDraw T(ms)"<<t.elapsed();
+	emit paintFinished();
 }
 
 double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power )

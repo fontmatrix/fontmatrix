@@ -202,6 +202,8 @@ class typotek:public QMainWindow
 		QMap<QString, FontItem*> temporaryFonts;
 
 		FMHyphenator *hyphenator;
+		
+// 		bool waitLayoutForPrint;
 
 	public:
 		int getFontCount(){return fontMap.count(); }

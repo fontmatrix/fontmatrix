@@ -39,6 +39,8 @@ PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
 // 	qDebug()<< "ss" << settings.value("SplashScreen",false).toBool();
 	splashCheck->setChecked(settings.value("SplashScreen",false).toBool());
 	
+	namedSampleTextText->setText(tr("Please select an item in the list or create a new one."));
+	namedSampleTextText->setEnabled(false);
 	
 	doConnect();
 }
@@ -174,6 +176,7 @@ void PrefsPanelDialog::addSampleName()
 
 void PrefsPanelDialog::displayNamedText()
 {
+	namedSampleTextText->setEnabled(true);
 	QString name(sampleTextNamesList->currentItem()->text());
 	qDebug() << "name is "<< name;
 	QString text(typotek::getInstance()->namedSample(name));

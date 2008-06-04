@@ -50,6 +50,8 @@
 #include <QClipboard>
 #include <QMutex>
 #include <QDesktopWidget>
+#include <QGLWidget>
+
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
 
@@ -110,7 +112,16 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
 
+	QGLFormat glfmt;
+// 	glfmt.setAlpha(true);
+// 	glfmt.setDirectRendering(true);
+	glfmt.setSampleBuffers(true);
+	//glfmt.setSamples(int);
+	QGLWidget *glwgt = new QGLWidget(glfmt);
+	qDebug()<<"GL:: A DR S"<<glwgt->format().alpha()<<glwgt->format().directRendering()<<glwgt->format().sampleBuffers();
 	loremView->setScene ( loremScene );
+	if(glwgt->format().sampleBuffers()) // seems necessary to get antialias
+		loremView->setViewport(glwgt);
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush ( Qt::lightGray );
 	loremView->locker = false;

@@ -2096,35 +2096,19 @@ QByteArray FontItem::pixarray ( uchar * b, int len )
 
 int FontItem::countCoverage ( int begin_code, int end_code )
 {
-	ensureFace();
+	if(!ensureFace())
+		return 0;
+// 	qDebug()<<"CC B E"<<begin_code<<end_code;
 	FT_ULong  charcode = begin_code ;
 	FT_UInt   gindex = 0;
 	int count = 0;
 	if ( begin_code >= 0 )
 	{
-// 		if ( hasUnicode )
+		for ( ;charcode <= end_code ; ++charcode)
 		{
-			while ( charcode <= end_code )
-			{
-				charcode = FT_Get_Next_Char ( m_face, charcode, &gindex );
-				if ( !gindex )
-					break;
+			if( FT_Get_Char_Index ( m_face, charcode))
 				++count;
-			}
 		}
-// 		else
-// 		{
-// 			while ( charcode <= end_code )
-// 			{
-// 				if ( charcode < m_numGlyphs )
-// 				{
-// 					++charcode;
-// 					++count;
-// 				}
-// 				else
-// 					break;
-// 			}
-// 		}
 	}
 	else
 	{
@@ -2139,7 +2123,7 @@ int FontItem::countCoverage ( int begin_code, int end_code )
 		}
 	}
 	releaseFace();
-	return count - 1;//something weird with freetype which put a valid glyph at the beginning of each lang ??? Or a bug here...
+	return count;//something weird with freetype which put a valid glyph at the beginning of each lang ??? Or a bug here...
 }
 
 void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code )
@@ -2664,7 +2648,7 @@ QString FontItem::toElement()
 	return ret.arg ( name() ).arg ( tags().join ( "</tag><tag>" ) );
 }
 
-QGraphicsPathItem * FontItem::hasCodepoint ( int code )
+QGraphicsPathItem * FontItem::hasCodepointLoaded ( int code )
 {
 	for ( int i=0;i< glyphList.count();++i )
 	{

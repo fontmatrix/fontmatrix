@@ -1293,7 +1293,7 @@ void MainViewWidget::slotReloadTagsetList()
 // 		return;
 // 	if ( !theVeryFont )
 // 		return;
-// // 	QGraphicsPathItem *pit = theVeryFont->hasCodepoint ( codepoint );
+// // 	QGraphicsPathItem *pit = theVeryFont->hasCodepointLoaded ( codepoint );
 // 	if ( !pit )
 // 		return;
 //

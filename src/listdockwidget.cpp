@@ -79,6 +79,14 @@ ListDockWidget::ListDockWidget()
 	actn->setCheckable(true);
 	actn->setChecked(true);
 	theFilterMenu->addAction(actn);
+	
+	QString uniFName(tr("Unicode"));
+	actn = new QAction(uniFName, filterActGroup);
+	actn->setCheckable(true);
+	theFilterMenu->addAction(actn);
+	QStringListModel *uModel = new QStringListModel;
+	completers[uniFName] = new QCompleter(this);
+	completers[uniFName]->setModel(uModel);
 
 	QStringListModel *lModel = new QStringListModel;
 	completers[currentField] = new QCompleter(this);
@@ -86,7 +94,7 @@ ListDockWidget::ListDockWidget()
 
 	for(int gIdx(0); gIdx < name_meaning.count() ; ++gIdx)
 	{
-		qDebug()<<"ADD Name action"<< name_meaning[gIdx];
+// 		qDebug()<<"ADD Name action"<< name_meaning[gIdx];
 		actn = new QAction(name_meaning[gIdx], filterActGroup);
 		actn->setCheckable(true);
 		theFilterMenu->addAction(actn);
@@ -94,9 +102,11 @@ ListDockWidget::ListDockWidget()
 		completers[name_meaning[gIdx]] = new QCompleter(this);
 		completers[name_meaning[gIdx]]->setModel(lModel);
 	}
+	
 
 	fieldButton->setMenu(theFilterMenu);
 	fieldButton->setToolTip(currentField);
+	fieldButton->setText( allFieldName.mid(0,1) );
 
 	searchString->setCompleter(completers.value(currentField));
 
@@ -166,33 +176,6 @@ void ListDockWidget::slotFolderItemclicked(QModelIndex mIdx)
 	}
 	settingsDir(path);
 }
-/*
-void ListDockWidget::slotFolderItemDoubleclicked(QModelIndex mIdx)
-{
-	qDebug()<<"DOUBLE_ClIC"<<theDirModel->data(mIdx,QDirModel::FilePathRole).toString();
-	// Want to import?
-	if(theDirModel->isDir(mIdx) && theDirModel->hasChildren(mIdx))
-	{
-		QDir dir(theDirModel->data(mIdx,QDirModel::FilePathRole).toString());
-		QStringList tmplist(dir.entryList(ffilter));
-		QStringList flist;
-		for(int i(0); i < tmplist.count();++i)
-			flist << dir.absoluteFilePath( tmplist[i] );
-
-		qDebug()<<"WANT"<<flist.join("::");
-		if(!flist.isEmpty())
-			typotek::getInstance()->open(flist);
-	}
-	else
-	{
-		QStringList flist(theDirModel->data(mIdx,QDirModel::FilePathRole).toString());
-		qDebug()<<"WANT"<<flist.join("::");
-		if(!flist.isEmpty())
-			typotek::getInstance()->open(flist);
-	}
-
-}
-*/
 
 void ListDockWidget::slotFolderPressed(QModelIndex mIdx)
 {
@@ -203,6 +186,7 @@ void ListDockWidget::slotFieldChanged(QAction * action)
 {
 	currentField = action->text();
 	fieldButton->setToolTip(currentField);
+	fieldButton->setText( currentField.mid(0,1) );
 	searchString->setCompleter(completers.value(currentField));
 }
 

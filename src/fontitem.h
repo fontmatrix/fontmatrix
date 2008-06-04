@@ -266,7 +266,7 @@ class FontItem : public QObject
 		
 		QString toElement();
 		
-		QGraphicsPathItem* hasCodepoint ( int code );
+		QGraphicsPathItem* hasCodepointLoaded ( int code );
 		
 		void trimSpacesIndex();
 		

@@ -1059,6 +1059,30 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 			}
 		}
 	}
+	else if(field == tr ( "Unicode" ))
+	{
+		/// WARNING - Unicode fiels does not support negation.
+		int startC(0xFFFFFFFF);
+		int endC(0);
+		int patCount(rPattern.count());
+		for(int a(0); a < patCount; ++a)
+		{
+			unsigned int ca(rPattern[a].unicode());
+			if( ca < startC)
+				startC = ca;
+			if(ca > endC)
+				endC = ca;
+		}
+		for ( int i =0; i < superSetCount; ++i )
+		{
+			int cc(superSet[i]->countCoverage ( startC, endC ) );
+			if ( cc >= patCount )
+			{
+				qDebug()<<"U U+ fam r"<< startC<< endC<<superSet[i]->family()<<cc;
+				ret.append ( superSet[i] );
+			}
+		}
+	}
 	else if ( field == tr ( "All fields" ) )
 	{
 		for ( int i =0; i < superSetCount; ++i )

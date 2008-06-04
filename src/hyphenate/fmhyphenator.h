@@ -29,7 +29,7 @@ class FMHyphenator : public QObject
 		FMHyphenator (  );
 		~FMHyphenator();
 		
-		bool loadDict ( const QString& dictPath, int leftMin = 1, int rightMin = 1);
+		bool loadDict ( const QString& dictPath, int leftMin = 2, int rightMin = 3);
 		HyphList hyphenate ( const QString& word ) const;
 
 	private:

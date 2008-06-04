@@ -1605,12 +1605,12 @@ void typotek::printChart()
 
 	qDebug()<<"Paper :"<<pWidth<<pHeight;
 	qDebug()<<"Resolution :"<<pFactor;
-	qDebug()<<"P/R*72:"<<pWidth / pFactor * 72<< pHeight / pFactor * 72;
+	qDebug()<<"P/R*72:"<<pWidth / pFactor * 72.0<< pHeight / pFactor * 72.0;
 
 	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
 
 
-	QRectF sourceR( 0, 0, pWidth / pFactor * 72, pHeight / pFactor * 72);
+	QRectF sourceR( 0, 0, pWidth / pFactor * 72.0, pHeight / pFactor * 72.0);
 	QGraphicsScene pScene(sourceR);
 
 	int maxCharcode(0x10FFFF);

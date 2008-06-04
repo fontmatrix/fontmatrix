@@ -182,8 +182,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 	thePrinter.setPageSize ( mapPSize[paperSize] );
 	thePrinter.setFullPage ( true );
 // 	qDebug() << thePrinter.pageSize() << thePrinter.pageRect() << thePrinter.paperRect() << thePrinter.resolution() ;
-	double paperWidth  =  thePrinter.pageRect().width() / thePrinter.resolution() * 72;
-	double paperHeight =  thePrinter.pageRect().height() / thePrinter.resolution() * 72;
+	double paperWidth  =  thePrinter.pageRect().width() / thePrinter.resolution() * 72.0;
+	double paperHeight =  thePrinter.pageRect().height() / thePrinter.resolution() * 72.0;
 // 	qDebug()<< paperSize << paperWidth << paperHeight;
 	QGraphicsScene theScene;
 	theScene.setSceneRect ( 0,0,paperWidth,paperHeight );

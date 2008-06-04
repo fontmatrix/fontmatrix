@@ -144,6 +144,7 @@ class FMLayout : public QThread
 		double adjustedSampleInter;
 		int textProgressionBlock;
 		int textProgressionLine;
+		bool deviceIndy;
 		QPointF origine;
 
 
@@ -152,11 +153,12 @@ class FMLayout : public QThread
 		void setProcessFeatures ( bool theValue ){processFeatures = theValue;}
 		void setScript ( const QString& theValue ){script = theValue;}
 		void setProcessScript ( bool theValue )	{processScript = theValue;}
-		void setAdjustedSampleInter ( double theValue ){adjustedSampleInter = theValue;}
+		void setAdjustedSampleInter ( double theValue );
 		void setTextProgressionBlock ( int theValue ){textProgressionBlock = theValue;}
 		void setTextProgressionLine ( int theValue ){textProgressionLine = theValue;}
 		void setOrigine ( const QPoint& theValue ){origine = theValue;}
-		void setFontSize ( double theValue ){fontSize = theValue;}
+		void setFontSize ( bool theValue ){fontSize = theValue;}
+		void setDeviceIndy( double theValue ){deviceIndy = theValue;}
 		void setTheScene ( QGraphicsScene* theValue );
 		void setTheFont ( FontItem* theValue );
 

@@ -49,6 +49,7 @@
 #include <QTime>
 #include <QClipboard>
 #include <QMutex>
+#include <QDesktopWidget>
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
 
@@ -103,7 +104,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremScene->setSceneRect ( pageRect );
 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
 	backp->setEnabled ( false );
-	ftScene->setSceneRect ( 0,0, 597.6, 842.4 );
+	ftScene->setSceneRect ( 0,0, 597.6 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0, 842.4 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0);
+	qDebug()<<"FT"<<ftScene->sceneRect();
 
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
@@ -111,7 +113,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setScene ( loremScene );
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush ( Qt::lightGray );
-	loremView->locker = true;
+	loremView->locker = false;
 // 	loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 // 	loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 
@@ -720,29 +722,32 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
 			QString script = langCombo->currentText();
 			bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
-	// 		FMLayout lay(targetScene, theVeryFont);
+
 			textLayout->setTheFont(theVeryFont);
+			textLayout->setDeviceIndy(!wantDeviceDependant);
 			textLayout->setTheScene(targetScene);
-			textLayout->setAdjustedSampleInter(wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize);
-	
+			textLayout->setAdjustedSampleInter( sampleInterSize );
+			
+			double fSize(sampleFontSize);
+			
 			QList<GlyphList> list;
 			QStringList stl( typo->namedSample(sampleTextCombo->currentText() ).split("\n"));
 			if ( processScript )
 			{
 				for(int p(0);p<stl.count();++p)
-					list << theVeryFont->glyphs( stl[p] , sampleFontSize, script );
+					list << theVeryFont->glyphs( stl[p] , fSize, script );
 			}
 			else if(processFeatures)
 			{
 				for(int p(0);p<stl.count();++p)	
-					list << theVeryFont->glyphs( stl[p] , sampleFontSize, deFillOTTree());
+					list << theVeryFont->glyphs( stl[p] , fSize, deFillOTTree());
 			}
 			else
 			{
 				for(int p(0);p<stl.count();++p)
-					list << theVeryFont->glyphs( stl[p] , sampleFontSize  );
+					list << theVeryFont->glyphs( stl[p] , fSize  );
 			}
-			textLayout->doLayout(list, sampleFontSize);
+			textLayout->doLayout(list, fSize);
 			if (loremView->isVisible() && fitViewCheck->isChecked() )
 			{
 				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
@@ -762,7 +767,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
 		QString script = langCombo->currentText();
 		bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
-		double adjustedSampleInter = wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72) ): sampleInterSize ;
+		double adjustedSampleInter = wantDeviceDependant ? ( sampleInterSize *((double)physicalDpiY() / 72.0) ): sampleInterSize ;
 
 		if( textProgression->inBlock() == TextProgression::BLOCK_TTB )
 		{

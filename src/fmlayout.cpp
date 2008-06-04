@@ -464,13 +464,15 @@ void FMLayout::doLines()
 	// Run through the graph and find the shortest path
 	indices.clear();
 	double score ( INFINITE );
+	
 	node->sPath ( 0,QList<int>(),indices,score );
+	
+	distCache.clear();
 	// la messe est dite ! :-)
 // 	qDebug() <<"S I"<<score<<indices;
 
 	int startLine ( lines.count() );
 
-	double refW ( theRect.width() );
 	int maxIndex ( indices.count() - 1 );
 // 	qDebug()<<"SC IC"<<theString.count()<<indices.count();
 	bool hasHyph ( false );
@@ -614,12 +616,15 @@ void FMLayout::doLines()
 
 	TextProgression *tp = TextProgression::getInstance();
 	bool verticalLayout ( tp->inBlock() == TextProgression::INLINE_BTT || tp->inBlock() == TextProgression::INLINE_TTB );
+	
+
 	for ( int lI ( startLine ); lI<lines.count(); ++lI )
 	{
 		if ( stopIt )
 			break;
-		qDebug() <<"S/L"<<lI <<"/"<< lines.count();
+
 		GlyphList& lg ( lines[lI] );
+		
 		if ( QChar ( lg.first().lChar ).category() == QChar::Separator_Space )
 		{
 			while ( QChar ( lg.first().lChar ).category() == QChar::Separator_Space  && !lg.isEmpty() )
@@ -630,11 +635,24 @@ void FMLayout::doLines()
 			while ( QChar ( lg.last().lChar ).category() == QChar::Separator_Space  && !lg.isEmpty() )
 				lg.takeLast();
 		}
+		
+		double refW ( lineWidth( lI ) );
+		double actualW( distance ( 0, lg.count(), lg ) );
+		double diff ( refW - actualW );
+		if(!deviceIndy)
+		{
+// 			qDebug()<< "R1 A1"<<refW<<actualW;
+			refW =  refW * 72.0  / ( double ) QApplication::desktop()->physicalDpiX() ;
+			actualW = actualW * 72.0 / ( double ) QApplication::desktop()->physicalDpiX();
+// 			qDebug()<< "R2 A2"<<refW<<actualW;
+			diff = refW - actualW ;
+			
+		}
 
 		if ( lI != lines.count() - 1 ) // not last line
 		{
 			QList<int> wsIds;
-			double diff ( refW - distance ( 0, lg.count(), lg ) );
+// 			qDebug()<< "Ref Dis"<< refW << distance ( 0, lg.count(), lg );
 			for ( int ri ( 0 ); ri < lg.count() ; ++ri )
 			{
 				if ( lg.at ( ri ).glyph &&  QChar ( lg.at ( ri ).lChar ).category() == QChar::Separator_Space )
@@ -643,7 +661,10 @@ void FMLayout::doLines()
 				}
 			}
 			double shareLost ( diff / qMax ( 1.0 , ( double ) wsIds.count() ) );
-			qDebug() << "D N W"<<diff<<wsIds.count() << shareLost;
+//  			if(!oldIndy)
+// 				shareLost *= ( double ) QApplication::desktop()->physicalDpiX() / 72.0;
+// 			qDebug() << "D N W"<<diff<<wsIds.count() << shareLost ;
+// 			qDebug()<<"R D F"<< refW << actualW << actualW + ((double)wsIds.count() * shareLost);
 			if ( verticalLayout )
 			{
 				for ( int wi ( 0 ); wi < wsIds.count(); ++wi )
@@ -660,7 +681,8 @@ void FMLayout::doLines()
 			}
 		}
 	}
-	qDebug() <<"doLines("<< lines.count() <<") T(ms)"<<t.elapsed();
+// 	qDebug() <<"doLines("<< lines.count() <<") T(ms)"<<t.elapsed();
+
 }
 
 void FMLayout::doDraw()
@@ -687,7 +709,7 @@ void FMLayout::doDraw()
 			break;
 		GlyphList refGlyph ( lines[lIdx] );
 
-		if ( theFont->rasterFreetype() )
+		if ( !deviceIndy )
 		{
 			for ( int i=0; i < refGlyph.count(); ++i )
 			{
@@ -767,7 +789,7 @@ void FMLayout::doDraw()
 			pen.ry() = origine.y();
 			pen.rx() += adjustedSampleInter;
 		}
-		qDebug() <<"P"<<pen;
+// 		qDebug() <<"P"<<pen;
 	}
 
 	qDebug() <<"doDraw T(ms)"<<t.elapsed();
@@ -981,6 +1003,8 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 	}
 
 // 	qDebug()<<"SID" ;
+	if(!deviceIndy)
+		ret *= ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
 	if ( power )
 	{
 		distCache[start][end] = ret*ret;
@@ -1026,7 +1050,7 @@ void FMLayout::setTheScene ( QGraphicsScene* theValue )
 	double sUnitH ( tmpRect.height() * .1 );
 
 	theRect.setX ( 2.0 * sUnitW );
-	theRect.setY ( 2.0 * sUnitH );
+	theRect.setY ( 1.0 * sUnitH );
 	theRect.setWidth ( 6.0 * sUnitW );
 	theRect.setHeight ( 6.0 * sUnitH );
 // 	rules->setRect(theRect);
@@ -1103,6 +1127,11 @@ void FMLayout::slotOption ( int v )
 		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 		emit updateLayout();
 	}
+}
+
+void FMLayout::setAdjustedSampleInter(double theValue)
+{
+	adjustedSampleInter = !deviceIndy ? theValue * ( double ) QApplication::desktop()->physicalDpiX() / 72.0 : theValue;
 }
 
 

@@ -216,55 +216,38 @@
           <attribute name="title" >
            <string>Absolute view</string>
           </attribute>
-          <layout class="QGridLayout" >
-           <item row="0" column="0" >
-            <layout class="QHBoxLayout" >
-             <item>
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0" >
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="fitViewCheck" >
-               <property name="layoutDirection" >
-                <enum>Qt::RightToLeft</enum>
-               </property>
-               <property name="text" >
-                <string>Fit to View</string>
-               </property>
-               <property name="checked" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QToolButton" name="antiAliasButton" >
-               <property name="text" >
-                <string/>
-               </property>
-               <property name="icon" >
-                <iconset resource="application.qrc" >
-                 <normaloff>:/fontmatrix_antialias.png</normaloff>:/fontmatrix_antialias.png</iconset>
-               </property>
-               <property name="checkable" >
-                <bool>true</bool>
-               </property>
-               <property name="checked" >
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
+          <layout class="QGridLayout" name="gridLayout_2" >
+           <item row="0" column="1" >
+            <widget class="QCheckBox" name="fitViewCheck" >
+             <property name="layoutDirection" >
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text" >
+              <string>Fit to View</string>
+             </property>
+             <property name="checked" >
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
-           <item row="1" column="0" >
+           <item row="0" column="2" >
+            <widget class="QToolButton" name="antiAliasButton" >
+             <property name="text" >
+              <string/>
+             </property>
+             <property name="icon" >
+              <iconset resource="application.qrc" >
+               <normaloff>:/fontmatrix_antialias.png</normaloff>:/fontmatrix_antialias.png</iconset>
+             </property>
+             <property name="checkable" >
+              <bool>true</bool>
+             </property>
+             <property name="checked" >
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="3" >
             <widget class="FMSampleTextView" name="loremView" >
              <property name="focusPolicy" >
               <enum>Qt::NoFocus</enum>

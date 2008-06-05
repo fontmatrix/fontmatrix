@@ -103,9 +103,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	ftScene =  new QGraphicsScene;
 	playScene = new QGraphicsScene;
 	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
+	
 	loremScene->setSceneRect ( pageRect );
 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
 	backp->setEnabled ( false );
+	
 	ftScene->setSceneRect ( 0,0, 597.6 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0, 842.4 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0);
 	qDebug()<<"FT"<<ftScene->sceneRect();
 
@@ -116,7 +118,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	glfmt.setAlpha(true);
 // 	glfmt.setDirectRendering(true);
 	glfmt.setSampleBuffers(true);
-	//glfmt.setSamples(int);
+	
 	QGLWidget *glwgt = new QGLWidget(glfmt);
 	qDebug()<<"GL:: A DR S"<<glwgt->format().alpha()<<glwgt->format().directRendering()<<glwgt->format().sampleBuffers();
 	loremView->setScene ( loremScene );
@@ -125,19 +127,18 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush ( Qt::lightGray );
 	loremView->locker = false;
-// 	loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-// 	loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+	loremView->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+	loremView->setTransformationAnchor(QGraphicsView::NoAnchor);
+	loremView->setTransform ( QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0,( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0 ),false );
 
 	loremView_FT->setScene ( ftScene );
-// 	loremView_FT->setBackgroundBrush ( Qt::lightGray );
 	loremView_FT->locker = false;
 
 	playScene->setSceneRect ( 0,0,10000,10000 );
 	playView->setScene( playScene );
 
 	sampleText= typo->namedSample (typo->defaultSampleName());
-// 	sampleFontSize = 18;
-// 	sampleInterSize = 20;
+	
 	m_lists->previewList->setRefWidget ( this );
 	
 	QMap<QString, int> sTypes(FMShaperFactory::types());
@@ -1204,17 +1205,28 @@ void MainViewWidget::slotEditAll()
 
 void MainViewWidget::slotZoom ( int z )
 {
-	QGraphicsView * concernedView;
-	if(loremView_FT->isVisible())
-		concernedView = loremView_FT;
-	else if(loremView->isVisible())
-		concernedView = loremView;
-	else if(playView->isVisible())
-		concernedView = playView;
-	double delta =  1.0 + (z/1000.0) ;
+	double delta =  1.0 + ( z/1000.0 ) ;
 	QTransform trans;
 	trans.scale ( delta,delta );
-	concernedView->setTransform ( trans, (z == 0) ? false : true );
+
+	QGraphicsView * concernedView;
+	if ( loremView_FT->isVisible() )
+		concernedView = loremView_FT;
+	else if ( loremView->isVisible() )
+	{
+		concernedView = loremView;
+		if ( delta == 1.0 )
+		{
+			trans =  QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,
+			                      0,0,
+			                      ( double ) QApplication::desktop()->physicalDpiX() / 72.0,
+			                      0,0 );
+		}
+	}
+	else if ( playView->isVisible() )
+		concernedView = playView;
+
+	concernedView->setTransform ( trans, ( z == 0 ) ? false : true );
 
 }
 
@@ -1324,7 +1336,7 @@ void MainViewWidget::slotFitChanged ( int i )
 	{
 // 		renderZoom->setDisabled ( false );
 // 		renderZoom->setStatusTip ( tr("zoom is enabled") );
-		loremView->setTransform ( QTransform ( 1,0,0,1,0,0 ),false );
+		loremView->setTransform ( QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0,( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0 ),false );
 		loremView->locker = false;
 		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
 		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );

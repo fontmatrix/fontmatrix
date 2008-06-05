@@ -149,18 +149,17 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	contextMenuReq = false;
 	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	
+	/// I keep the widgets if someone finally thinks they are useful but I think they aren’t - pm
+	antiAliasButton->setVisible(false);
+	fitViewCheck->setVisible(false);
 	
 	//CONNECT
-// 	connect ( m_lists->tagsetCombo,SIGNAL ( activated ( const QString ) ),this,SLOT ( slotFilterTagset ( QString ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
-// 	connect ( m_lists->searchString,SIGNAL ( textEdited ( const QString&)  ),this,SLOT ( slotLiveSearch(const QString&) ) );
 	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
-// 	connect ( m_lists->viewActivatedButton,SIGNAL ( released() ),this,SLOT ( slotViewActivated() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
-// 	connect ( m_lists->removeButton, SIGNAL(released()),this,SLOT(slotRemoveCurrentItem()));
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
@@ -172,11 +171,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-	connect ( loremView, SIGNAL ( refit() ),this,SLOT ( slotRefitSample() ) );
-	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
-	connect ( fitViewCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotFitChanged ( int ) ) );
-// 	connect (advanceButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchAdvanced()));
-// 	connect (basicButton,SIGNAL(clicked(  )),this,SLOT(slotSwitchBasic()));
+// 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
+// 	connect ( fitViewCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotFitChanged ( int ) ) );
 
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
@@ -192,6 +188,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( liveFontSizeSpin, SIGNAL(valueChanged(double)),this,SLOT(slotLiveFontSize(double)));
 
 	connect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
+	connect ( saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
+	connect ( resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
+	
 	connect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
 	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
@@ -1601,6 +1600,20 @@ void MainViewWidget::fillOTTree()
 						f << OTTagMeans ( feature );
 						QTreeWidgetItem *feature_item = new QTreeWidgetItem ( lang_item, f );
 						feature_item->setCheckState ( 0, Qt::Unchecked );
+						if(table == "GPOS")
+						{
+							if(typo->getDefaultOTFScript() == script && typo->getDefaultOTFLang() == lang && typo->getDefaultOTFGPOS().contains(feature) )
+							{
+								feature_item->setCheckState ( 0, Qt::Checked );
+							}
+						}
+						else if(table == "GSUB")
+						{
+							if(typo->getDefaultOTFScript() == script && typo->getDefaultOTFLang() == lang && typo->getDefaultOTFGSUB().contains(feature) )
+							{
+								feature_item->setCheckState ( 0, Qt::Checked );
+							}
+						}
 					}
 				}
 			}
@@ -1663,6 +1676,25 @@ OTFSet MainViewWidget::deFillOTTree()
 // 	qDebug() << "endOf";
 	return ret;
 
+}
+
+
+void MainViewWidget::slotDefaultOTF()
+{
+	OTFSet ots(deFillOTTree());
+	
+	typo->setDefaultOTFScript(ots.script);
+	typo->setDefaultOTFLang(ots.lang);
+	typo->setDefaultOTFGPOS(ots.gpos_features);
+	typo->setDefaultOTFGSUB(ots.gsub_features);
+}
+
+void MainViewWidget::slotResetOTF()
+{
+	typo->setDefaultOTFScript(QString());
+	typo->setDefaultOTFLang(QString());
+	typo->setDefaultOTFGPOS(QStringList());
+	typo->setDefaultOTFGSUB(QStringList());
 }
 
 void MainViewWidget::slotFeatureChanged()

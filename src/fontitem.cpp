@@ -3814,7 +3814,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 				QString addOnFirst;
 				QString addOnSecond;
 				addOnFirst =  hl[i].first.endsWith("-") ? "": "-";
-				addOnSecond = (*sIt).endsWith(".")?".":"";
+// 				addOnSecond = (*sIt).endsWith(".")?".":"";
 				ret[i].hyphen.first = otf->procstring ( hl[ret[i].log].first + addOnFirst, set );
 				for(int f(0); f < ret[i].hyphen.first.count(); ++f)
 				{

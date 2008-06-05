@@ -204,6 +204,10 @@ class typotek:public QMainWindow
 		FMHyphenator *hyphenator;
 		
 // 		bool waitLayoutForPrint;
+		QString defaultOTFScript;
+		QString defaultOTFLang;
+		QStringList defaultOTFGPOS;
+		QStringList defaultOTFGSUB;
 
 	public:
 		int getFontCount(){return fontMap.count(); }
@@ -296,11 +300,15 @@ class typotek:public QMainWindow
 	}
 
 	FMHyphenator* getHyphenator() const;
-	
 
-	
-	
-
+	void setDefaultOTFScript ( const QString& theValue );
+	QString getDefaultOTFScript() const;
+	void setDefaultOTFLang ( const QString& theValue );
+	QString getDefaultOTFLang() const;
+	void setDefaultOTFGPOS ( const QStringList& theValue );
+	QStringList getDefaultOTFGPOS() const;
+	void setDefaultOTFGSUB ( const QStringList& theValue );
+	QStringList getDefaultOTFGSUB() const;
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

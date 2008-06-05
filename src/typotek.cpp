@@ -740,7 +740,10 @@ void typotek::readSettings()
 	mainDockArea = settings.value("ToolPos", "Left").toString();
 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
 	m_welcomeURL = settings.value("WelcomeURL").toString();
-
+	defaultOTFScript = settings.value("OTFScript").toString();
+	defaultOTFLang = settings.value("OTFLang").toString();
+	defaultOTFGPOS = settings.value("OTFGPOS").toString().split(";",QString::SkipEmptyParts);
+	defaultOTFGSUB = settings.value("OTFGSUB").toString().split(";",QString::SkipEmptyParts);
 }
 
 void typotek::writeSettings()
@@ -1857,3 +1860,72 @@ void typotek::slotSwitchLayOptVisible()
 }
 
 
+
+
+QString typotek::getDefaultOTFScript() const
+{
+	return defaultOTFScript;
+}
+
+
+void typotek::setDefaultOTFScript ( const QString& theValue )
+{
+	if(theValue != defaultOTFScript)
+	{
+		QSettings st;
+		st.setValue("OTFScript" , theValue);
+	}
+	defaultOTFScript = theValue;
+	
+}
+
+
+QString typotek::getDefaultOTFLang() const
+{
+	return defaultOTFLang;
+}
+
+
+void typotek::setDefaultOTFLang ( const QString& theValue )
+{
+	if(theValue != defaultOTFLang)
+	{
+		QSettings st;
+		st.setValue("OTFLang" , theValue);
+	}
+	defaultOTFLang = theValue;
+}
+
+
+QStringList typotek::getDefaultOTFGPOS() const
+{
+	return defaultOTFGPOS;
+}
+
+
+void typotek::setDefaultOTFGPOS ( const QStringList& theValue )
+{
+	if(theValue != defaultOTFGPOS)
+	{
+		QSettings st;
+		st.setValue("OTFGPOS" , theValue.join(";"));
+	}
+	defaultOTFGPOS = theValue;
+}
+
+
+QStringList typotek::getDefaultOTFGSUB() const
+{
+	return defaultOTFGSUB;
+}
+
+
+void typotek::setDefaultOTFGSUB ( const QStringList& theValue )
+{
+	if(theValue != defaultOTFGSUB)
+	{
+		QSettings st;
+		st.setValue("OTFGSUB" , theValue.join(";"));
+	}
+	defaultOTFGSUB = theValue;
+}

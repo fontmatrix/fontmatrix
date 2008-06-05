@@ -1073,10 +1073,10 @@ void FMLayout::setTheScene ( QGraphicsScene* theValue )
 	theRect.setY ( 1.0 * sUnitH );
 	theRect.setWidth ( 6.0 * sUnitW );
 	theRect.setHeight ( 6.0 * sUnitH );
-	rules->setRect(theRect);
-	rules->setZValue(9.9);
-	if(rules->scene() != theScene)
-		theScene->addItem(rules);
+// 	rules->setRect(theRect);
+// 	rules->setZValue(9.9);
+// 	if(rules->scene() != theScene)
+// 		theScene->addItem(rules);
 }
 
 void FMLayout::setTheFont ( FontItem* theValue )

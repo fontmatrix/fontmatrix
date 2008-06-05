@@ -382,7 +382,7 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	else if ( tp->inLine() == TextProgression::INLINE_BTT )
 		origine.ry() = theRect.bottom();
 	else if ( tp->inLine() == TextProgression::INLINE_TTB )
-		origine.ry() == theRect.top();
+		origine.ry() = theRect.top();
 
 	if ( tp->inBlock() == TextProgression::BLOCK_TTB )
 		origine.ry() = theRect.top();
@@ -391,6 +391,8 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 		origine.rx() = theRect.left();
 
+	qDebug()<<"L B R O"<<tp->inLine() << tp->inBlock()<<theRect<<origine;
+	
 	progressBar->reset();
 	progressBar->setRange ( 0,spec.count() );
 	connect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
@@ -692,21 +694,37 @@ void FMLayout::doDraw()
 	resetScene();
 	QTime t;
 	t.start();
+	TextProgression *tp = TextProgression::getInstance();
 	QPointF pen ( origine );
-	pen.ry() += adjustedSampleInter;
+	if( tp->inLine() != TextProgression::INLINE_BTT )
+		pen.ry() += adjustedSampleInter;
+	if( tp->inBlock() == TextProgression::BLOCK_RTL )
+		pen.rx() -= adjustedSampleInter;
+	
+	double pageTop(theRect.top());
+	double pageRight(theRect.right());
 	double pageBottom ( theRect.bottom() );
+	double pageLeft(theRect.left());
+	
 	double scale = fontSize / theFont->getUnitPerEm();
 	double pixelAdjustX = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
 	double pixelAdjustY = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
 
-	TextProgression *tp = TextProgression::getInstance();
 
 	for ( int lIdx ( 0 ); lIdx < lines.count() ; ++lIdx )
 	{
 		if ( stopIt )
 			break;
-		if ( pen.y() > pageBottom )
+		if ( tp->inLine() != TextProgression::INLINE_BTT &&  pen.y() > pageBottom )
 			break;
+		else if(tp->inLine() == TextProgression::INLINE_BTT || tp->inLine() == TextProgression::INLINE_TTB)
+		{
+			if(tp->inBlock() == TextProgression::BLOCK_RTL && pen.x() < pageLeft)
+				break;
+			else if(tp->inBlock() == TextProgression::BLOCK_LTR && pen.x() > pageRight)
+				break;
+		}
+		
 		GlyphList refGlyph ( lines[lIdx] );
 
 		if ( !deviceIndy )
@@ -781,12 +799,18 @@ void FMLayout::doDraw()
 		}
 		else if ( tp->inBlock() == TextProgression::BLOCK_RTL )
 		{
-			pen.ry() = origine.y();
+			if(tp->inLine() == TextProgression::INLINE_TTB)
+				pen.ry() = origine.y() + adjustedSampleInter;
+			else
+				pen.ry() = origine.y();
 			pen.rx() -= adjustedSampleInter;
 		}
 		else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 		{
-			pen.ry() = origine.y();
+			if(tp->inLine() == TextProgression::INLINE_TTB)
+				pen.ry() = origine.y() + adjustedSampleInter;
+			else
+				pen.ry() = origine.y();
 			pen.rx() += adjustedSampleInter;
 		}
 // 		qDebug() <<"P"<<pen;
@@ -820,7 +844,8 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 		}
 	}
 	TextProgression *tp = TextProgression::getInstance();
-	bool verticalLayout ( tp->inBlock() == TextProgression::INLINE_BTT || tp->inBlock() == TextProgression::INLINE_TTB );
+	bool verticalLayout ( tp->inLine() == TextProgression::INLINE_BTT || tp->inLine() == TextProgression::INLINE_TTB );
+// 	qDebug()<<"IB VL"<<tp->inLine()<<verticalLayout;
 // 	QString dStr;
 // 	for(int di(start); di < end; ++di )
 // 	{
@@ -840,21 +865,20 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 	{
 		if ( !gList.at ( start ).isBreak && !gList.at ( EXend ).isBreak )
 		{
-			// 		qDebug()<<". ." ;
 			for ( int i ( start ); i < end ;++i )
-				ret += gList.at ( i ).yadvance /*+ gList.at ( i ).xoffset*/;
+			{
+// 				qDebug()<<"Ya"<< gList.at ( i ).yadvance;
+				ret += gList.at ( i ).yadvance;
+			}
 		}
 		else if ( gList.at ( start ).isBreak && !gList.at ( EXend ).isBreak )
 		{
-			// 		qDebug()<<"- ." ;
 			GlyphList hr ( gList.at ( start ).hyphen.second );
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
-				// 			qDebug()<<"ih"<<ih;
 				ret += hr[ih].yadvance;
 			}
 			int bp ( start );
-			// 		qDebug()<<"bp"<<bp;
 			while ( bp < end )
 			{
 				if ( QChar ( gList.at ( bp ).lChar ).category() != QChar::Separator_Space )
@@ -865,21 +889,17 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 
 			for ( int i ( bp ); i < end ;++i )
 			{
-				// 			qDebug()<<"i tS.xa"<<i<<gList.at ( i ).xadvance;
 				ret += gList.at ( i ).yadvance ;
 			}
-
-
 		}
 		else if ( !gList.at ( start ).isBreak && gList.at ( EXend ).isBreak )
 		{
-			// 		qDebug()<<". -" ;
 			int bp ( end );
 			while ( QChar ( gList.at ( bp ).lChar ).category() != QChar::Separator_Space &&  bp > start ) --bp ;
 			--bp;
 
 			for ( int i ( start ); i < bp ;++i )
-				ret += gList.at ( i ).yadvance /*+ gList.at ( i ).xoffset*/;
+				ret += gList.at ( i ).yadvance;
 
 			GlyphList hr ( gList.at ( EXend ).hyphen.first );
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
@@ -890,7 +910,6 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 		}
 		else if ( gList.at ( start ).isBreak && gList.at ( EXend ).isBreak )
 		{
-			// 		qDebug()<<"- -" ;
 			GlyphList hr ( gList.at ( start ).hyphen.second );
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
@@ -910,7 +929,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool power 
 			--bpE;
 
 			for ( int i ( bpS ); i < bpE ;++i )
-				ret += gList.at ( i ).yadvance /*+ gList.at ( i ).xoffset*/;
+				ret += gList.at ( i ).yadvance;
 
 			GlyphList hr2 ( gList.at ( EXend ).hyphen.first );
 			for ( int ih ( 0 ); ih < hr2.count(); ++ih )
@@ -1054,10 +1073,10 @@ void FMLayout::setTheScene ( QGraphicsScene* theValue )
 	theRect.setY ( 1.0 * sUnitH );
 	theRect.setWidth ( 6.0 * sUnitW );
 	theRect.setHeight ( 6.0 * sUnitH );
-// 	rules->setRect(theRect);
-// 	rules->setZValue(9.9);
-// 	if(rules->scene() != theScene)
-// 		theScene->addItem(rules);
+	rules->setRect(theRect);
+	rules->setZValue(9.9);
+	if(rules->scene() != theScene)
+		theScene->addItem(rules);
 }
 
 void FMLayout::setTheFont ( FontItem* theValue )
@@ -1068,9 +1087,10 @@ void FMLayout::setTheFont ( FontItem* theValue )
 double FMLayout::lineWidth ( int l )
 {
 	TextProgression *tp = TextProgression::getInstance();
+	double offset ( ( double ) l * adjustedSampleInter ) ;
 	if ( tp->inBlock() == TextProgression::BLOCK_TTB )
 	{
-		if ( theRect.top() + ( ( double ) l * adjustedSampleInter ) >  theRect.bottom() ) // Out of scope!
+		if ( theRect.top() + offset >  theRect.bottom() ) 
 		{
 			return OUT_OF_RECT;
 		}
@@ -1078,19 +1098,19 @@ double FMLayout::lineWidth ( int l )
 	}
 	else if ( tp->inBlock() == TextProgression::BLOCK_RTL )
 	{
-		if ( theRect.right() - ( ( double ) l * adjustedSampleInter ) <  theRect.left() ) // Out of scope!
+		if ( theRect.right() - offset <  theRect.left() ) 
 		{
 			return OUT_OF_RECT;
 		}
-		return theRect.height();
+		return theRect.height() - adjustedSampleInter;
 	}
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 	{
-		if ( theRect.left() + ( ( double ) l * adjustedSampleInter ) >  theRect.right() ) // Out of scope!
+		if ( theRect.left() + offset >  theRect.right() ) 
 		{
 			return OUT_OF_RECT;
 		}
-		return theRect.height();
+		return theRect.height() - adjustedSampleInter;
 	}
 
 	return OUT_OF_RECT;

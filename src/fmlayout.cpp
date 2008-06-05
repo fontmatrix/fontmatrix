@@ -245,12 +245,13 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	bool isLeaf ( nodes.isEmpty() );
 	curList << index ;//(isLeaf ? index-1 : index);
 
-	double dCorrection ( ( double ) theList.count() / ( double ) curList.count() );
+// 	double dCorrection ( ( double ) theList.count() / ( double ) curList.count() );
+// 	dCorrection = 1.0;
 // 	qDebug()<<"COR tl.c cl.c"<<dCorrection<<theList.count()<<curList.count();
 	while ( !nodes.isEmpty() )
 	{
 // 		Vector v = nodes.first() ;
-		double d1 ( dist + nodes[0].distance / curList.count() * dCorrection );
+		double d1 ( dist + nodes[0].distance / curList.count() /** dCorrection*/ );
 		double d2 ( theScore / qMax ( 1.0, ( double ) theList.count() ) );
 		if ( d1  <  d2 )
 		{
@@ -291,11 +292,11 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
 	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( endOfRun() ) );
 
-	FM_LAYOUT_NODE_SOON_F=	625.0;
+	FM_LAYOUT_NODE_SOON_F=	1200.0;
 	FM_LAYOUT_NODE_FIT_F=	1000.0;
 	FM_LAYOUT_NODE_LATE_F=	2000.0;
-	FM_LAYOUT_NODE_END_F=	500.0;
-	FM_LAYOUT_HYPHEN_PENALTY = 1.2;
+	FM_LAYOUT_NODE_END_F=	2500.0;
+	FM_LAYOUT_HYPHEN_PENALTY = 1.5;
 
 	optionDialog = new QDialog ( typotek::getInstance() );
 	optionDialog->setWindowTitle ( tr ( "Text engine options" ) );
@@ -651,7 +652,7 @@ void FMLayout::doLines()
 			
 		}
 
-		if ( lI != lines.count() - 1 ) // not last line
+		if ( lI != lines.count() - 1 || actualW > refW ) // not last line or last line is too long
 		{
 			QList<int> wsIds;
 // 			qDebug()<< "Ref Dis"<< refW << distance ( 0, lg.count(), lg );
@@ -1090,26 +1091,26 @@ double FMLayout::lineWidth ( int l )
 	double offset ( ( double ) l * adjustedSampleInter ) ;
 	if ( tp->inBlock() == TextProgression::BLOCK_TTB )
 	{
-		if ( theRect.top() + offset >  theRect.bottom() ) 
-		{
-			return OUT_OF_RECT;
-		}
+// 		if ( theRect.top() + offset >  theRect.bottom() ) 
+// 		{
+// 			return OUT_OF_RECT;
+// 		}
 		return theRect.width();
 	}
 	else if ( tp->inBlock() == TextProgression::BLOCK_RTL )
 	{
-		if ( theRect.right() - offset <  theRect.left() ) 
-		{
-			return OUT_OF_RECT;
-		}
+// 		if ( theRect.right() - offset <  theRect.left() ) 
+// 		{
+// 			return OUT_OF_RECT;
+// 		}
 		return theRect.height() - adjustedSampleInter;
 	}
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 	{
-		if ( theRect.left() + offset >  theRect.right() ) 
-		{
-			return OUT_OF_RECT;
-		}
+// 		if ( theRect.left() + offset >  theRect.right() ) 
+// 		{
+// 			return OUT_OF_RECT;
+// 		}
 		return theRect.height() - adjustedSampleInter;
 	}
 

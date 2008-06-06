@@ -50,7 +50,10 @@
 #include <QClipboard>
 #include <QMutex>
 #include <QDesktopWidget>
+
+#ifdef HAVE_QTOPENGL
 #include <QGLWidget>
+#endif
 
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
@@ -114,16 +117,15 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
 
+	loremView->setScene ( loremScene );
+#ifdef HAVE_QTOPENGL
 	QGLFormat glfmt;
-// 	glfmt.setAlpha(true);
-// 	glfmt.setDirectRendering(true);
 	glfmt.setSampleBuffers(true);
-	
 	QGLWidget *glwgt = new QGLWidget(glfmt);
 	qDebug()<<"GL:: A DR S"<<glwgt->format().alpha()<<glwgt->format().directRendering()<<glwgt->format().sampleBuffers();
-	loremView->setScene ( loremScene );
 	if(glwgt->format().sampleBuffers()) // seems necessary to get antialias
 		loremView->setViewport(glwgt);
+#endif
 	loremView->setRenderHint ( QPainter::Antialiasing, true );
 	loremView->setBackgroundBrush ( Qt::lightGray );
 	loremView->locker = false;

@@ -163,6 +163,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 
+	connect (ftViewButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPage()));
+	connect (absViewButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPage()));
+	connect (openTypeButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPage()));
+	connect (settingsButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPage()));
+	
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
 	connect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
@@ -1938,7 +1943,7 @@ QGraphicsScene * MainViewWidget::currentSampleScene()
 	if(!loremView->isVisible())
 	{
 		tabView->setCurrentIndex(1);
-		tabSamples->setCurrentIndex(0);
+		stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
 		slotView(true);
 	}
 	return loremScene;
@@ -1984,4 +1989,19 @@ QWebView * MainViewWidget::info()
 {
 	return fontInfoText;
 }
+
+void MainViewWidget::slotChangeViewPage()
+{
+	QString butName( sender()->objectName() );
+	if(butName == "ftViewButton" )
+		stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
+	else if(butName == "absViewButton")
+		stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
+	else if(butName == "openTypeButton")
+		stackedViews->setCurrentIndex(VIEW_PAGE_OPENTYPE);
+	else if(butName == "settingsButton")
+		stackedViews->setCurrentIndex(VIEW_PAGE_SETTINGS);
+}
+
+
 

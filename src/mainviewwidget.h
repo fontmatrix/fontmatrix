@@ -25,6 +25,11 @@
 #include <QStringList>
 #include <QIcon>
 
+#define VIEW_PAGE_FREETYPE 0
+#define VIEW_PAGE_ABSOLUTE 1
+#define VIEW_PAGE_OPENTYPE 2
+#define VIEW_PAGE_SETTINGS 3
+
 class QGraphicsScene;
 class typotek;
 class FontItem;
@@ -174,6 +179,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 
 		void slotDefaultOTF();
 		void slotResetOTF();
+		
+		void slotChangeViewPage();
 		
 		
 	signals:

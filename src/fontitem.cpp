@@ -2450,13 +2450,14 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
  */
 QString FontItem::url2href ( QString value )
 {
+    QString punctuationAfter = "\\.\\,;:!?)»\"'";
     value.replace ( QRegExp ( "([^/])(www\\.[\\w\\d])" ), "\\1http://\\2" ); // add an http to www. without it
-    QRegExp rx = QRegExp("(http[s]?://\\S+)([\\.\\,;:!?)](?:\\s|$))"); // prepare a regexp to 
+    QRegExp rx = QRegExp("(http[s]?://\\S+)(["+punctuationAfter+"](?:\\s|$))"); // prepare a regexp to 
     rx.setMinimal(true);
     value.replace(rx, "\\1 \\2"); // add a space before  punctuation "attached" to url
     value.replace(rx, "\\1 \\2"); // run the prepared regexp twice for ")."
     value.replace ( QRegExp ( "(http[s]?://\\S+)[\\.]?" ), "<a href=\"\\1\">\\1</a>" ); // Make HTTP links
-    value.replace ( QRegExp ( "(</a>)\\s([\\.\\,;:!?)])" ), "\\1\\2" ); // remove extra space after </a>
+    value.replace ( QRegExp ( "(</a>)\\s(["+punctuationAfter+"])" ), "\\1\\2" ); // remove extra space after </a>
     return value;
 } // url2href
 

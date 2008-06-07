@@ -860,7 +860,13 @@ void typotek::initDir()
 {
 	qDebug() <<"initDir()";
 	DataLoader loader ( &fontsdata );
-	loader.load();
+	int lRes(loader.load());
+	if( lRes == FONTDATA_VERSION_MISMATCH )
+	{
+		QMessageBox::warning ( this, tr("Fontmatrix - data warning"),
+				       tr("Your database has not been loaded because of a version mismatch.\nIt is not a problem, you just lost fonts references, tags & sample texts. If you badly need to keep these datas, do not quit Fontmatrix before you have copied the database*. At this point and with a minimum of XML skill, you should be able to get old database into new format.\n\n*database is") + QString(" " +QDir::homePath()+ QString(QDir::separator()) + ".fontmatrix.data"),
+	     QMessageBox::Ok, QMessageBox::NoButton );
+	}
 	/// load font files
 	qDebug() <<"load font files";
 // 	QStringList pathList = loader.fontList();

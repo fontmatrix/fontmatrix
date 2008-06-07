@@ -42,7 +42,7 @@ DataLoader::~DataLoader()
 {
 }
 
-void DataLoader::load()
+int DataLoader::load()
 {
 
 	QDomDocument doc ( "fontdata" );
@@ -56,17 +56,24 @@ void DataLoader::load()
 			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
 		}
 		m_typo->setWord ( QObject::tr ( "hamburgefonstiv" ), false );
-		return;
+		return FONTDATA_NO_FILE;
 	}
 	if ( !doc.setContent ( m_file ) )
 	{
 		m_file->close();
 		m_typo->statusBar()->showMessage ( QString ( "ERROR loading xml for %1" ).arg ( m_file->fileName() ),3000 );
-		return;
+		return FONTDATA_NO_CONTENT;
 	}
 	m_file->close();
 	m_typo->statusBar()->showMessage ( QString ( "loading %1" ).arg ( m_file->fileName() ) );
 
+	QDomElement rootElement(doc.documentElement());
+	if(rootElement.nodeName() != "fontmatrix")
+		return FONTDATA_NOT_FONTMATRIX;
+	if(rootElement.attributeNode("version").value() != "1.1")
+		return FONTDATA_VERSION_MISMATCH;
+	
+	
 	QStringList collectedTags;
 
 
@@ -178,6 +185,8 @@ void DataLoader::load()
 		pWord = col.toElement().text();
 	}
 	m_typo->setWord ( pWord, false );
+	
+	return FONTDATA_OK;
 }
 
 

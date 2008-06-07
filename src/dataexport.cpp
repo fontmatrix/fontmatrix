@@ -88,7 +88,7 @@ int DataExport::buildIndex()
 	
 	xmlStream.writeStartDocument();
 	xmlStream.writeStartElement("fontmatrix");
-	xmlStream.writeAttribute("version", "1.0");
+	xmlStream.writeAttribute("version", "1.1");
 	
 	for(int fidx( 0 ); fidx < fonts.count() ; ++fidx)
 	{

@@ -48,7 +48,7 @@ void SaveData::doSave()
 {
 	writeStartDocument();
 	writeStartElement("fontmatrix");
-	writeAttribute("version", "1.0");
+	writeAttribute("version", "1.1");
 	
 	//save fonts
 	QList<FontItem*> flist = m_typo->getAllFonts();

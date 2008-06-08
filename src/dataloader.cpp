@@ -44,34 +44,56 @@ DataLoader::~DataLoader()
 
 int DataLoader::load()
 {
-
 	QDomDocument doc ( "fontdata" );
-
+	QStringList fallbackSample ( QObject::tr ( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?." ).split ( "\n" ) );
+	QString defaultWord(QObject::tr ( "hamburgefonstiv" ));
 	if ( !m_file->open ( QFile::ReadOnly ) )
 	{
-		// Ensure that there are default samples and preview text
-		QStringList fallbackSample ( QObject::tr ( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?." ).split ( "\n" ) );
 		for ( uint i = 0; i < fallbackSample.count(); ++i )
 		{
 			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
 		}
-		m_typo->setWord ( QObject::tr ( "hamburgefonstiv" ), false );
+		m_typo->setWord ( defaultWord , false );
+		
 		return FONTDATA_NO_FILE;
 	}
 	if ( !doc.setContent ( m_file ) )
 	{
 		m_file->close();
 		m_typo->statusBar()->showMessage ( QString ( "ERROR loading xml for %1" ).arg ( m_file->fileName() ),3000 );
+		
+		for ( uint i = 0; i < fallbackSample.count(); ++i )
+		{
+			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
+		}
+		m_typo->setWord ( defaultWord , false );
+		
 		return FONTDATA_NO_CONTENT;
 	}
+	
 	m_file->close();
-	m_typo->statusBar()->showMessage ( QString ( "loading %1" ).arg ( m_file->fileName() ) );
-
 	QDomElement rootElement(doc.documentElement());
+	
 	if(rootElement.nodeName() != "fontmatrix")
+	{
+		for ( uint i = 0; i < fallbackSample.count(); ++i )
+		{
+			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
+		}
+		m_typo->setWord ( defaultWord , false );
+		
 		return FONTDATA_NOT_FONTMATRIX;
+	}
 	if(rootElement.attributeNode("version").value() != "1.1")
+	{
+		for ( uint i = 0; i < fallbackSample.count(); ++i )
+		{
+			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
+		}
+		m_typo->setWord ( defaultWord , false );
+		
 		return FONTDATA_VERSION_MISMATCH;
+	}
 	
 	
 	QStringList collectedTags;

@@ -12,6 +12,7 @@
 #include "prefspaneldialog.h"
 #include "typotek.h"
 #include "shortcuts.h"
+#include "hyphenate/fmhyphenator.h"
 #include <QDebug>
 #include <QToolTip>
 #include <QSettings>
@@ -26,7 +27,7 @@ PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
 	double pSize = typotek::getInstance()->getPreviewSize();
 	setupUi(this);
 	fontEditorPath->setText(typotek::getInstance()->fontEditorPath());
-	
+
 	systrayFrame->setCheckable(true);
 	previewWord->setText(typotek::getInstance()->word());
 	previewSizeSpin->setValue(pSize);
@@ -34,14 +35,14 @@ PrefsPanelDialog::PrefsPanelDialog(QWidget *parent)
 	initTagBox->setChecked(typotek::getInstance()->initialTags());
 	showNamesBox->setChecked(typotek::getInstance()->showImportedFonts());
 	familyNameScheme->setChecked(!typotek::getInstance()->familySchemeFreetype());
-	
+
 	QSettings settings;
 // 	qDebug()<< "ss" << settings.value("SplashScreen",false).toBool();
 	splashCheck->setChecked(settings.value("SplashScreen",false).toBool());
-	
+
 	namedSampleTextText->setText(tr("Please select an item in the list or create a new one."));
 	namedSampleTextText->setEnabled(false);
-	
+
 	doConnect();
 }
 
@@ -74,6 +75,9 @@ void PrefsPanelDialog::initSampleTextPrefs()
 	QSettings settings;
 	fontSizeSpin->setValue( settings.value("SampleFontSize",12.0).toDouble() );
 	interLineSpin->setValue( settings.value("SampleInterline",16.0).toDouble() );
+	dictEdit->setText(settings.value("HyphenationDict", "").toString());
+	leftBox->setValue(settings.value("HyphLeft", 2).toInt());
+	rightBox->setValue(settings.value("HyphRight", 3).toInt());
 }
 
 void PrefsPanelDialog::initFilesAndFolders()
@@ -115,6 +119,7 @@ void PrefsPanelDialog::doConnect()
 	connect(addSampleTextNameButton,SIGNAL(released()),this,SLOT(addSampleName()));
 	connect(newSampleTextNameText,SIGNAL(editingFinished()),this,SLOT(addSampleName()));
 	connect(sampleTextNamesList,SIGNAL(currentTextChanged( const QString& )),this,SLOT(displayNamedText()));
+	connect(dictButton, SIGNAL(clicked()), this, SLOT(slotDictDialog()));
 	connect(applySampleTextButton,SIGNAL(released()),this,SLOT(applySampleText()));
 
 	connect(systrayFrame, SIGNAL(clicked(bool)), this, SLOT(setSystrayVisible(bool)));
@@ -156,6 +161,21 @@ void PrefsPanelDialog::applySampleText()
 {
 	typotek::getInstance()->changeFontSizeSettings( fontSizeSpin->value(), interLineSpin->value() );
 	typotek::getInstance()->forwardUpdateView();
+	FMHyphenator *hyphenator = typotek::getInstance()->getHyphenator();
+	QSettings s;
+	if (hyphenator->loadDict(dictEdit->text(), leftBox->value(), rightBox->value())) {
+		s.setValue("HyphenationDict", dictEdit->text());
+		s.setValue("HyphLeft", leftBox->value());
+		s.setValue("HyphRight", rightBox->value());
+		qDebug("ONNISTUI");
+	} else { // use the previous values
+		dictEdit->setText(s.value("HyphenationDict", "").toString());
+		leftBox->setValue(s.value("HyphLeft", 2).toInt());
+		rightBox->setValue(s.value("HyphRight", 3).toInt());
+		s.setValue("HyphenationDict", "");
+		s.setValue("HyphLeft", 2);
+		s.setValue("HyphRight", 3);
+	}
 }
 
 void PrefsPanelDialog::addSampleName()
@@ -569,4 +589,12 @@ void PrefsPanelDialog::slotSplashScreen(bool state)
 	QSettings settings;
 	settings.setValue("SplashScreen", state);
 }
+
+void PrefsPanelDialog::slotDictDialog()
+{
+	QString s = QFileDialog::getOpenFileName(this, tr("Select hyphenation dictionary"), QDir::homePath());
+	if (!s.isEmpty())
+		dictEdit->setText(s);
+}
+
 

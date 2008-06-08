@@ -166,18 +166,26 @@ void typotek::initMatrix()
 	doConnect();
 
 	theMainView->resetCrumb();
-		
+
 	if(!hyphenator)
 	{
 		QSettings st;
-		QString dP( st.value("DictFile", "hyph.dic").toString() );
+		QString dP( st.value("HyphenationDict", "hyph.dic").toString() );
 		if(QFileInfo(dP).exists())
 		{
 			hyphenator = new FMHyphenator();
-			hyphenator->loadDict(dP);
+			if (!hyphenator->loadDict(dP, st.value("HyphLeft", 2).toInt(), st.value("HyphRight", 3).toInt())) {
+				st.setValue("HyphenationDict", "");
+				st.setValue("HyphLeft", 2);
+				st.setValue("HyphRight", 3);
+			}
 		}
 		else
 		{
+			hyphenator = new FMHyphenator(); // init the hyphenator anyway for the prefs
+			st.setValue("HyphenationDict", "");
+			st.setValue("HyphLeft", 2);
+			st.setValue("HyphRight", 3);
 			qDebug()<<"Err H"<<dP;
 		}
 	}
@@ -700,7 +708,7 @@ void typotek::createMenus()
 	editMenu->addAction( repairAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
-	
+
 	editMenu->addSeparator();
 	editMenu->addAction(layOptAct);
 
@@ -1882,7 +1890,7 @@ void typotek::setDefaultOTFScript ( const QString& theValue )
 		st.setValue("OTFScript" , theValue);
 	}
 	defaultOTFScript = theValue;
-	
+
 }
 
 

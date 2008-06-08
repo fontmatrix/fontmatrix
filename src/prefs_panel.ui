@@ -26,15 +26,15 @@
       <item row="0" column="0" >
        <widget class="QTabWidget" name="mainTab" >
         <property name="currentIndex" >
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab" >
          <property name="geometry" >
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>647</width>
-           <height>494</height>
+           <width>653</width>
+           <height>493</height>
           </rect>
          </property>
          <attribute name="title" >
@@ -262,15 +262,15 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>647</width>
-           <height>494</height>
+           <width>653</width>
+           <height>493</height>
           </rect>
          </property>
          <attribute name="title" >
           <string>Sample Text</string>
          </attribute>
-         <layout class="QGridLayout" name="gLt_3" >
-          <item row="0" column="0" colspan="2" >
+         <layout class="QVBoxLayout" name="verticalLayout_3" >
+          <item>
            <widget class="QGroupBox" name="groupBox_2" >
             <property name="toolTip" >
              <string/>
@@ -305,7 +305,7 @@
             </layout>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2" >
+          <item>
            <widget class="QGroupBox" name="groupBox_3" >
             <property name="title" >
              <string>Initial Layout</string>
@@ -354,25 +354,84 @@
             </layout>
            </widget>
           </item>
-          <item row="2" column="0" >
-           <spacer name="horizontalSpacer_2" >
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
+          <item>
+           <widget class="QGroupBox" name="groupBox_8" >
+            <property name="title" >
+             <string>Hyphenation</string>
             </property>
-            <property name="sizeHint" stdset="0" >
-             <size>
-              <width>541</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="1" >
-           <widget class="QPushButton" name="applySampleTextButton" >
-            <property name="text" >
-             <string>Apply</string>
-            </property>
+            <layout class="QGridLayout" name="gLt_3" >
+             <item row="0" column="3" >
+              <widget class="QLabel" name="label_5" >
+               <property name="text" >
+                <string>Left:</string>
+               </property>
+               <property name="buddy" >
+                <cstring>fontSizeSpin</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="5" >
+              <widget class="QLabel" name="label_6" >
+               <property name="text" >
+                <string>Right:</string>
+               </property>
+               <property name="buddy" >
+                <cstring>interLineSpin</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" >
+              <widget class="QLineEdit" name="dictEdit" />
+             </item>
+             <item row="0" column="0" >
+              <widget class="QLabel" name="label_7" >
+               <property name="text" >
+                <string>Dictionary:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2" >
+              <widget class="QToolButton" name="dictButton" >
+               <property name="toolTip" >
+                <string>Browse</string>
+               </property>
+               <property name="text" >
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4" >
+              <widget class="QSpinBox" name="leftBox" />
+             </item>
+             <item row="0" column="6" >
+              <widget class="QSpinBox" name="rightBox" />
+             </item>
+            </layout>
            </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2" >
+            <item>
+             <spacer name="horizontalSpacer_2" >
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>541</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="applySampleTextButton" >
+              <property name="text" >
+               <string>Apply</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -381,8 +440,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>647</width>
-           <height>494</height>
+           <width>653</width>
+           <height>493</height>
           </rect>
          </property>
          <attribute name="title" >
@@ -540,8 +599,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>647</width>
-           <height>494</height>
+           <width>653</width>
+           <height>493</height>
           </rect>
          </property>
          <attribute name="title" >

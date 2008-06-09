@@ -30,6 +30,9 @@ FMSampleTextView::FMSampleTextView(QWidget* parent)
 	theRect = 0;
 	isSelecting = false;
 	isPanning = false;
+	setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+	setTransformationAnchor(QGraphicsView::NoAnchor);
+	setRenderHint ( QPainter::Antialiasing, true );
 }
 
 
@@ -59,8 +62,8 @@ void FMSampleTextView::mousePressEvent(QMouseEvent * e)
 		ensureTheRect();
 		mouseStartPoint = mapToScene( e->pos() );
 		isSelecting = true;
-		QRectF arect(mouseStartPoint, QSizeF());
-		theRect->setRect(arect);
+// 		QRectF arect(mouseStartPoint, QSizeF());
+// 		theRect->setRect(arect);
 	}
 	
 }
@@ -111,7 +114,7 @@ void FMSampleTextView::mouseMoveEvent(QMouseEvent * e)
 	if(!isSelecting)
 		return;
 	
-	QRect r(mouseStartPoint.toPoint(),mapToScene(e->pos()).toPoint());
+	QRectF r(mouseStartPoint,mapToScene(e->pos()));
 	theRect->setRect(r);
 }
 

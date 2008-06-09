@@ -50,6 +50,7 @@
 #include <QClipboard>
 #include <QMutex>
 #include <QDesktopWidget>
+#include <QButtonGroup>
 
 #ifdef HAVE_QTOPENGL
 #include <QGLWidget>
@@ -77,6 +78,12 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	iconOTF =  QIcon(":/icon-OTF");
 
 	textLayout = new FMLayout;
+	
+	radioRenderGroup = new QButtonGroup;
+	radioRenderGroup->addButton(freetypeRadio);
+	radioRenderGroup->addButton(nativeRadio);
+	stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
+	splitter_2->restoreState(settings.value("SplitterViewState").toByteArray());
 	
 	theVeryFont = 0;
 	typo = typotek::getInstance();
@@ -108,8 +115,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
 	
 	loremScene->setSceneRect ( pageRect );
-	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
-	backp->setEnabled ( false );
+// 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
+// 	backp->setEnabled ( false );
 	
 	ftScene->setSceneRect ( 0,0, 597.6 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0, 842.4 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0);
 	qDebug()<<"FT"<<ftScene->sceneRect();
@@ -126,11 +133,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	if(glwgt->format().sampleBuffers()) // seems necessary to get antialias
 		loremView->setViewport(glwgt);
 #endif
-	loremView->setRenderHint ( QPainter::Antialiasing, true );
-	loremView->setBackgroundBrush ( Qt::lightGray );
+// 	loremView->setBackgroundBrush ( Qt::lightGray );
 	loremView->locker = false;
-	loremView->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
-	loremView->setTransformationAnchor(QGraphicsView::NoAnchor);
 	loremView->setTransform ( QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0,( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0 ),false );
 
 	loremView_FT->setScene ( ftScene );
@@ -165,10 +169,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 
-	connect (ftViewButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPage()));
-	connect (absViewButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPage()));
-	connect (openTypeButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPage()));
-	connect (settingsButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPage()));
+	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
+	connect (openTypeButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPageSetting()));
+	connect (settingsButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPageSetting()));
 	
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
@@ -1992,17 +1995,33 @@ QWebView * MainViewWidget::info()
 	return fontInfoText;
 }
 
-void MainViewWidget::slotChangeViewPage()
+void MainViewWidget::slotChangeViewPageSetting()
 {
 	QString butName( sender()->objectName() );
-	if(butName == "ftViewButton" )
-		stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
-	else if(butName == "absViewButton")
-		stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
-	else if(butName == "openTypeButton")
-		stackedViews->setCurrentIndex(VIEW_PAGE_OPENTYPE);
+	if(butName == "openTypeButton")
+		stackedTools->setCurrentIndex(VIEW_PAGE_OPENTYPE);
 	else if(butName == "settingsButton")
-		stackedViews->setCurrentIndex(VIEW_PAGE_SETTINGS);
+		stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
+}
+
+void MainViewWidget::slotChangeViewPage(QAbstractButton* but)
+{
+	QString radioName( but->objectName() );
+	
+	if(radioName == "freetypeRadio" )
+		stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
+	else if(radioName == "nativeRadio" )
+		stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
+	
+	slotView(true);
+}
+
+QByteArray MainViewWidget::splitterState(int spl)
+{
+	if(spl == SPLITTER_VIEW_1)
+		return splitter_2->saveState();
+	
+	return QByteArray();
 }
 
 

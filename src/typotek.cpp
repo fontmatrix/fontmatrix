@@ -386,6 +386,8 @@ void typotek::open(QString path, bool announce, bool collect)
 		shouldAskTali = true;
 	}
 	theMainView->slotReloadFontList();
+	
+	save();
 }
 
 void typotek::open ( QStringList files )
@@ -463,6 +465,7 @@ void typotek::open ( QStringList files )
 	}
 
 	theMainView->slotReloadFontList();
+	save();
 }
 
 /// Neede at least for the "Browse Font Dirs" feature
@@ -760,6 +763,7 @@ void typotek::writeSettings()
 	settings.setValue ( "pos", pos() );
 	settings.setValue ( "size", size() );
 	settings.setValue( "ToolPos", mainDockArea );
+	settings.setValue( "SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
 
 }
 

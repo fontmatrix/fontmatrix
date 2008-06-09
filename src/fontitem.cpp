@@ -964,6 +964,13 @@ QString FontItem::value ( QString k )
 
 	// 0 is default language
 	// TODO inspect all available languages
+	if(moreInfo.isEmpty())
+	{
+		if(isOpenType())
+			moreInfo_sfnt();
+		else
+			moreInfo_type1();
+	}
 	QMap<QString, QString> namap ( moreInfo.value ( 0 ) );
 	return namap.value ( k );
 }
@@ -2450,7 +2457,7 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
  */
 QString FontItem::url2href ( QString value )
 {
-    QString punctuationAfter = "\\.\\,;:!?)»\"'";
+    QString punctuationAfter = "\\.\\,;:!?)ï¿½\"'";
     value.replace ( QRegExp ( "([^/])(www\\.[\\w\\d])" ), "\\1http://\\2" ); // add an http to www. without it
     QRegExp rx = QRegExp("(http[s]?://\\S+)(["+punctuationAfter+"](?:\\s|$))"); // prepare a regexp to 
     rx.setMinimal(true);

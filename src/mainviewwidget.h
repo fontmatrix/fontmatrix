@@ -27,8 +27,10 @@
 
 #define VIEW_PAGE_FREETYPE 0
 #define VIEW_PAGE_ABSOLUTE 1
-#define VIEW_PAGE_OPENTYPE 2
-#define VIEW_PAGE_SETTINGS 3
+#define VIEW_PAGE_OPENTYPE 0
+#define VIEW_PAGE_SETTINGS 1
+
+#define SPLITTER_VIEW_1 1
 
 class QGraphicsScene;
 class typotek;
@@ -37,6 +39,7 @@ class QTextEdit;
 class QGridLayout;
 class QTreeWidgetItem;
 class QGraphicsRectItem;
+class QButtonGroup;
 class ListDockWidget;
 struct OTFSet;
 class FMLayout;
@@ -113,6 +116,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		QUrl infoCSSUrl;
 		
+		QButtonGroup *radioRenderGroup;
 		
 	public slots:
 		void slotOrderingChanged ( QString s );
@@ -180,7 +184,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotDefaultOTF();
 		void slotResetOTF();
 		
-		void slotChangeViewPage();
+		void slotChangeViewPageSetting();
+		void slotChangeViewPage(QAbstractButton* );
 		
 		
 	signals:
@@ -208,6 +213,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		void addFilterToCrumb(QString filter);
 		void resetCrumb();
+		
+		QByteArray splitterState(int spl);
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

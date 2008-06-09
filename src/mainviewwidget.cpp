@@ -84,6 +84,12 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	radioRenderGroup->addButton(nativeRadio);
 	stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
 	splitter_2->restoreState(settings.value("SplitterViewState").toByteArray());
+	toolPanelWidth = splitter_2->sizes().at(1);
+	if(toolPanelWidth == 0)
+	{
+		settingsButton->setChecked(false);
+		toolPanelWidth = splitter_2->width()/3;
+	}
 	
 	theVeryFont = 0;
 	typo = typotek::getInstance();
@@ -170,8 +176,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
-	connect (openTypeButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPageSetting()));
-	connect (settingsButton,SIGNAL(clicked( )),this,SLOT(slotChangeViewPageSetting()));
+	connect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	connect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
@@ -1995,13 +2001,61 @@ QWebView * MainViewWidget::info()
 	return fontInfoText;
 }
 
-void MainViewWidget::slotChangeViewPageSetting()
+void MainViewWidget::slotChangeViewPageSetting(bool ch)
 {
+// 	qDebug()<<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
 	QString butName( sender()->objectName() );
 	if(butName == "openTypeButton")
+	{
+		if(settingsButton->isChecked())
+			settingsButton->setChecked(false);
+		
+		if(!ch)
+		{
+			if(splitter_2->sizes().at(1) > 0)
+			{
+				toolPanelWidth = splitter_2->sizes().at(1) ;
+				QList<int> li;
+				li << splitter_2->width() << 0;
+				splitter_2->setSizes(li);
+			}
+		}
+		else 
+		{
+			if(splitter_2->sizes().at(1) == 0)
+			{
+				QList<int> li;
+				li << splitter_2->width() - toolPanelWidth << toolPanelWidth;
+				splitter_2->setSizes(li);
+			}
+		}
 		stackedTools->setCurrentIndex(VIEW_PAGE_OPENTYPE);
+	}
 	else if(butName == "settingsButton")
+	{
+		if(openTypeButton->isChecked())
+			openTypeButton->setChecked(false);
+		if(!ch)
+		{
+			if(splitter_2->sizes().at(1) > 0)
+			{
+				toolPanelWidth = splitter_2->sizes().at(1) ;
+				QList<int> li;
+				li << splitter_2->width() << 0;
+				splitter_2->setSizes(li);
+			}
+		}
+		else 
+		{
+			if(splitter_2->sizes().at(1) == 0)
+			{
+				QList<int> li;
+				li << splitter_2->width() - toolPanelWidth << toolPanelWidth;
+				splitter_2->setSizes(li);
+			}
+		}
 		stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
+	}
 }
 
 void MainViewWidget::slotChangeViewPage(QAbstractButton* but)

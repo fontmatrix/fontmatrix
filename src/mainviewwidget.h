@@ -117,6 +117,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QUrl infoCSSUrl;
 		
 		QButtonGroup *radioRenderGroup;
+		int toolPanelWidth;
 		
 	public slots:
 		void slotOrderingChanged ( QString s );
@@ -184,7 +185,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotDefaultOTF();
 		void slotResetOTF();
 		
-		void slotChangeViewPageSetting();
+		void slotChangeViewPageSetting(bool);
 		void slotChangeViewPage(QAbstractButton* );
 		
 		

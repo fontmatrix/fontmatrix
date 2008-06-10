@@ -23,9 +23,30 @@
 #include <QScrollBar>
 #include <QDebug>
 
+#ifdef HAVE_QTOPENGL
+#include <QGLWidget>
+#endif
+
 FMSampleTextView::FMSampleTextView(QWidget* parent)
  : QGraphicsView(parent)
 {
+#ifdef HAVE_QTOPENGL
+	QGLFormat glfmt;
+	glfmt.setSampleBuffers(true);
+	QGLWidget *glwgt = new QGLWidget(glfmt);
+// 	qDebug()<<"GL:: A DR S"<<glwgt->format().alpha()<<glwgt->format().directRendering()<<glwgt->format().sampleBuffers();
+// 	setViewport(glwgt);
+	if(glwgt->format().sampleBuffers())
+	{
+		setViewport(glwgt);
+		qDebug()<<"opengl enabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+	}
+	else
+	{
+		qDebug()<<"opengl disabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+	}
+#endif
+	
 	setInteractive(true);
 	theRect = 0;
 	isSelecting = false;

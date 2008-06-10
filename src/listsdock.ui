@@ -22,6 +22,15 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gLt_3" >
+   <property name="horizontalSpacing" >
+    <number>-1</number>
+   </property>
+   <property name="verticalSpacing" >
+    <number>2</number>
+   </property>
+   <property name="margin" >
+    <number>2</number>
+   </property>
    <item row="0" column="0" >
     <widget class="QLabel" name="Tags" >
      <property name="sizePolicy" >
@@ -188,14 +197,17 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>367</width>
-        <height>571</height>
+        <width>381</width>
+        <height>602</height>
        </rect>
       </property>
       <attribute name="title" >
        <string>Names</string>
       </attribute>
       <layout class="QGridLayout" name="gLt" >
+       <property name="margin" >
+        <number>2</number>
+       </property>
        <item row="0" column="0" >
         <widget class="FMNameList" name="fontTree" >
          <property name="sizePolicy" >
@@ -267,14 +279,17 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>367</width>
-        <height>571</height>
+        <width>381</width>
+        <height>585</height>
        </rect>
       </property>
       <attribute name="title" >
        <string>Previews</string>
       </attribute>
       <layout class="QGridLayout" name="gLt_2" >
+       <property name="margin" >
+        <number>2</number>
+       </property>
        <item row="0" column="0" >
         <widget class="FMPreviewList" name="previewList" >
          <property name="sizePolicy" >
@@ -295,14 +310,20 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>367</width>
-        <height>571</height>
+        <width>381</width>
+        <height>585</height>
        </rect>
       </property>
       <attribute name="title" >
        <string>Folders</string>
       </attribute>
       <layout class="QGridLayout" name="gLt_4" >
+       <property name="margin" >
+        <number>2</number>
+       </property>
+       <property name="horizontalSpacing" >
+        <number>-1</number>
+       </property>
        <item row="0" column="0" >
         <widget class="QTreeView" name="folderView" />
        </item>

@@ -52,10 +52,6 @@
 #include <QDesktopWidget>
 #include <QButtonGroup>
 
-#ifdef HAVE_QTOPENGL
-#include <QGLWidget>
-#endif
-
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
 
@@ -88,6 +84,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	if(toolPanelWidth == 0)
 	{
 		settingsButton->setChecked(false);
+		stackedTools->hide();
 		toolPanelWidth = splitter_2->width()/3;
 	}
 	
@@ -131,15 +128,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
 
 	loremView->setScene ( loremScene );
-#ifdef HAVE_QTOPENGL
-	QGLFormat glfmt;
-	glfmt.setSampleBuffers(true);
-	QGLWidget *glwgt = new QGLWidget(glfmt);
-	qDebug()<<"GL:: A DR S"<<glwgt->format().alpha()<<glwgt->format().directRendering()<<glwgt->format().sampleBuffers();
-	if(glwgt->format().sampleBuffers()) // seems necessary to get antialias
-		loremView->setViewport(glwgt);
-#endif
-// 	loremView->setBackgroundBrush ( Qt::lightGray );
 	loremView->locker = false;
 	loremView->setTransform ( QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0,( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0 ),false );
 
@@ -163,8 +151,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	
 	/// I keep the widgets if someone finally thinks they are useful but I think they aren’t - pm
-	antiAliasButton->setVisible(false);
-	fitViewCheck->setVisible(false);
+// 	antiAliasButton->setVisible(false);
+// 	fitViewCheck->setVisible(false);
 	
 	//CONNECT
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
@@ -176,6 +164,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
+// 	connect (splitter_2, SIGNAL(splitterMoved( int, int )),this,SLOT(slotMonitorViewToolsSize(int, int)));
 	connect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	connect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	
@@ -775,7 +764,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 					list << theVeryFont->glyphs( stl[p] , fSize  );
 			}
 			textLayout->doLayout(list, fSize);
-			if (loremView->isVisible() && fitViewCheck->isChecked() )
+			if (loremView->isVisible() /*&& fitViewCheck->isChecked()*/ )
 			{
 				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
 			}
@@ -1099,34 +1088,34 @@ void MainViewWidget::slotSwitchAntiAlias ( bool aa )
 	loremView->setRenderHint ( QPainter::Antialiasing, aa );
 }
 
-void MainViewWidget::slotFitChanged ( int i )
-{
-	if ( i == Qt::Unchecked )
-	{
-// 		renderZoom->setDisabled ( false );
-// 		renderZoom->setStatusTip ( tr("zoom is enabled") );
-		loremView->setTransform ( QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0,( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0 ),false );
-		loremView->locker = false;
-		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-	}
-	else
-	{
-// 		renderZoom->setDisabled ( true );
-// 		renderZoom->setStatusTip ( tr("zoom is disabled, uncheck fit to view to enable zoom") );
-		loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
-		loremView->locker = true;
-		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	}
-// 	slotView();
-}
+// void MainViewWidget::slotFitChanged ( int i )
+// {
+// 	if ( i == Qt::Unchecked )
+// 	{
+// // 		renderZoom->setDisabled ( false );
+// // 		renderZoom->setStatusTip ( tr("zoom is enabled") );
+// 		loremView->setTransform ( QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0,( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0 ),false );
+// 		loremView->locker = false;
+// 		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
+// 		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
+// 	}
+// 	else
+// 	{
+// // 		renderZoom->setDisabled ( true );
+// // 		renderZoom->setStatusTip ( tr("zoom is disabled, uncheck fit to view to enable zoom") );
+// 		loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
+// 		loremView->locker = true;
+// 		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+// 		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+// 	}
+// // 	slotView();
+// }
 
-void MainViewWidget::slotRefitSample()
-{
-	if ( fitViewCheck->isChecked() )
-		slotView();
-}
+// void MainViewWidget::slotRefitSample()
+// {
+// 	if ( fitViewCheck->isChecked() )
+// 		slotView();
+// }
 
 void MainViewWidget::slotViewAll()
 {
@@ -1526,7 +1515,7 @@ void MainViewWidget::refillSampleList()
 
 void MainViewWidget::slotFTRasterChanged()
 {
-	fitViewCheck->setChecked(false);
+// 	fitViewCheck->setChecked(false);
 	slotView ( true );
 }
 
@@ -2005,55 +1994,31 @@ void MainViewWidget::slotChangeViewPageSetting(bool ch)
 {
 // 	qDebug()<<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
 	QString butName( sender()->objectName() );
+	if(!ch)
+	{
+		toolPanelWidth = splitter_2->sizes().at(1) ;
+		stackedTools->hide();
+	}
+	else 
+	{
+		stackedTools->show();
+		if(splitter_2->sizes().at(1) == 0)
+		{
+			QList<int> li;
+			li << splitter_2->width() - toolPanelWidth << toolPanelWidth;
+			splitter_2->setSizes(li);
+		}
+	}
 	if(butName == "openTypeButton")
 	{
 		if(settingsButton->isChecked())
 			settingsButton->setChecked(false);
-		
-		if(!ch)
-		{
-			if(splitter_2->sizes().at(1) > 0)
-			{
-				toolPanelWidth = splitter_2->sizes().at(1) ;
-				QList<int> li;
-				li << splitter_2->width() << 0;
-				splitter_2->setSizes(li);
-			}
-		}
-		else 
-		{
-			if(splitter_2->sizes().at(1) == 0)
-			{
-				QList<int> li;
-				li << splitter_2->width() - toolPanelWidth << toolPanelWidth;
-				splitter_2->setSizes(li);
-			}
-		}
 		stackedTools->setCurrentIndex(VIEW_PAGE_OPENTYPE);
 	}
 	else if(butName == "settingsButton")
 	{
 		if(openTypeButton->isChecked())
 			openTypeButton->setChecked(false);
-		if(!ch)
-		{
-			if(splitter_2->sizes().at(1) > 0)
-			{
-				toolPanelWidth = splitter_2->sizes().at(1) ;
-				QList<int> li;
-				li << splitter_2->width() << 0;
-				splitter_2->setSizes(li);
-			}
-		}
-		else 
-		{
-			if(splitter_2->sizes().at(1) == 0)
-			{
-				QList<int> li;
-				li << splitter_2->width() - toolPanelWidth << toolPanelWidth;
-				splitter_2->setSizes(li);
-			}
-		}
 		stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
 	}
 }
@@ -2077,6 +2042,20 @@ QByteArray MainViewWidget::splitterState(int spl)
 	
 	return QByteArray();
 }
+
+// void MainViewWidget::slotMonitorViewToolsSize(int hdl, int sz)
+// {
+// 	if(splitter_2->sizes().at(1) == 0 )
+// 	{
+// 		if(settingsButton->isChecked())
+// 			settingsButton->setChecked(false);
+// 		if(openTypeButton->isChecked())
+// 			openTypeButton->setChecked(false);
+// 		
+// 		toolPanelWidth = splitter_2->width() / 3 ;
+// 		stackedTools->hide();
+// 	}
+// }
 
 
 

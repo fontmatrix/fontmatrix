@@ -145,8 +145,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotReloadTagsetList();
 // 		void slotShowCodePoint();
 		void slotSwitchAntiAlias(bool aa);
-		void slotFitChanged(int i);
-		void slotRefitSample();
+// 		void slotFitChanged(int i);
+// 		void slotRefitSample();
 		void slotItemOpened(QTreeWidgetItem * item);
 		void slotViewAll();
 		void slotViewActivated();
@@ -187,6 +187,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		void slotChangeViewPageSetting(bool);
 		void slotChangeViewPage(QAbstractButton* );
+// 		void slotMonitorViewToolsSize(int hdl,int sz);
 		
 		
 	signals:
@@ -219,7 +220,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;
-
 };
 
 #endif

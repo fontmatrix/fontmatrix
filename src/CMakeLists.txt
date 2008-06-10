@@ -1,41 +1,41 @@
 # Fontmatrix src/CMakeLists.txt v1
 
 set(fontmatrix_SRCS
-aboutwidget.cpp
-dataexport.cpp
-dataloader.cpp
-fmactivate.cpp
-fmbaseshaper.cpp
-fmglyphsview.cpp
-fmlayoptwidget.cpp
-fmlayout.cpp
-fmnamelist.cpp
-fmotf.cpp
-fmplayground.cpp
-fmpreviewlist.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/aboutwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmglyphsview.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmlayoptwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmlayout.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmnamelist.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmotf.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmplayground.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmpreviewlist.cpp
 # fmprintdialog.cpp
-fmrepair.cpp
-fmsampletextview.cpp
-fmshaper_own.cpp
-fontbook.cpp
-fontbookdialog.cpp
-fontitem.cpp
-fontmatrixshaper.cpp
-helpwidget.cpp
-importedfontsdialog.cpp
-importtags.cpp
-listdockwidget.cpp
-main.cpp
-mainviewwidget.cpp
-pangoshaper.cpp
-prefspaneldialog.cpp
-remotedir.cpp
-savedata.cpp
-shortcuts.cpp
-systray.cpp
-tagseteditor.cpp
-textprogression.cpp
-typotek.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmrepair.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmsampletextview.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmshaper_own.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fontbook.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fontbookdialog.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fontitem.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fontmatrixshaper.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/helpwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/importedfontsdialog.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/importtags.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/pangoshaper.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/prefspaneldialog.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/remotedir.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/shortcuts.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/systray.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/tagseteditor.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/textprogression.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/typotek.cpp
 )
 
 IF(HARFBUZZSHAPER)
@@ -109,29 +109,36 @@ textprogression.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
 
-SET(fontmatrix_TSS
-fontmatrix_da.ts
-fontmatrix_de.ts
-fontmatrix_en.ts
-fontmatrix_fi.ts
-fontmatrix_fr.ts
-fontmatrix_hi.ts
-fontmatrix_nb.ts
-fontmatrix_nl.ts
-fontmatrix_no.ts
-fontmatrix_ru.ts
-fontmatrix_sr.ts
-fontmatrix_sv.ts
-fontmatrix_uk.ts
-fontmatrix_zh_CN.ts
-fontmatrix_zh_TW.ts
-)
-QT4_ADD_TRANSLATION(fontmatrix_QMS ${fontmatrix_TSS})
 
 SET(fontmatrix_RCCS
 application.qrc
 )
 QT4_ADD_RESOURCES(fontmatrix_RCC_SRCS ${fontmatrix_RCCS})
+
+
+ADD_SUBDIRECTORY(messages)
+# SET(fontmatrix_TSS
+# fontmatrix-da.ts
+# fontmatrix-de.ts
+# fontmatrix-en.ts
+# fontmatrix-fi.ts
+# fontmatrix-fr.ts
+# fontmatrix-hi.ts
+# fontmatrix-nb.ts
+# fontmatrix-nl.ts
+# fontmatrix-no.ts
+# fontmatrix-ru.ts
+# fontmatrix-sr.ts
+# fontmatrix-sv.ts
+# fontmatrix-uk.ts
+# fontmatrix-zh_CN.ts
+# fontmatrix-zh_TW.ts
+# )
+# 
+# 
+# QT4_CREATE_TRANSLATION(fontmatrix_QMS ${fontmatrix_SRCS} ${fontmatrix_TSS})
+# #QT4_ADD_TRANSLATION(fontmatrix_QMS ${fontmatrix_TSS})
+
 
 include_directories(
 ${CMAKE_CURRENT_SOURCE_DIR}
@@ -152,7 +159,7 @@ ${SHAPERS_SRCS}
 ${fontmatrix_MOC_SRCS}
 ${fontmatrix_UIS_H}
 ${fontmatrix_RCC_SRCS}
-${fontmatrix_QMS}
+# ${fontmatrix_QMS}
 )
 
 IF(SHOW_LIBS)
@@ -171,3 +178,10 @@ ${SHAPERS_LIBRARIES}
 INSTALL(TARGETS fontmatrix
       RUNTIME DESTINATION bin
 )
+
+SET(QMDIR "${CMAKE_INSTALL_PREFIX}/share/fontmatrix/qm/")
+INSTALL(FILES
+  ${fontmatrix_QMS}
+  DESTINATION ${QMDIR}
+)
+

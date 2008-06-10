@@ -33,6 +33,8 @@
 
 #include "typotek.h"
 #include "listdockwidget.h"
+#include "messages/fmlocales.h"
+
 
 bool __FM_SHOW_FONTLOADED;
 
@@ -51,15 +53,20 @@ int main ( int argc, char *argv[] )
 	QApplication app ( argc, argv );
 	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );
 	
+	QString QMDirPath = PREFIX;
+	QString dirsep(QDir::separator());
+	QMDirPath +=  dirsep + "share" + dirsep + "fontmatrix" + dirsep + "qm";
+	
+	QString QMFilePathComplete("fontmatrix-" + sysLoc() );
+	
 	QTranslator translator;
-	if(translator.load(":/texts/fontmatrix"))
+	if(translator.load(QMFilePathComplete, QMDirPath))
 	{
 		app.installTranslator(&translator);
 	}
 	else
 	{
-		QFile f(":/texts/fontmatrix");
-		qDebug()<< "Unable to load"<< f.fileName() ;
+		qDebug()<< "Unable to load"<< QMFilePathComplete<<"in"<< QMDirPath;
 	}
 
 

@@ -50,20 +50,20 @@
 
 <!-- We’ll try to keep these items alphabetically order by language -->
     <qresource prefix="/texts" lang="da" >
-        <file alias="fontmatrix">messages/fontmatrix_da.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_da.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="de" >
         <file alias="about">messages/about_de.html</file>
-        <file alias="fontmatrix">messages/fontmatrix_de.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_de.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="en" >
-	    <file alias="fontmatrix">messages/fontmatrix_en.qm</file>
+<!-- 	    <file alias="fontmatrix">messages/fontmatrix_en.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="fi" >
-	    <file alias="fontmatrix">messages/fontmatrix_fi.qm</file>
+<!-- 	    <file alias="fontmatrix">messages/fontmatrix_fi.qm</file> -->
 	    <file alias="help">messages/help_fi.html</file>
 	    <file alias="welcome">messages/welcome_fi.html</file>
 	    <file alias="about">messages/about_fi.html</file>
@@ -72,41 +72,41 @@
     <qresource prefix="/texts" lang="fr" >
         <file alias="about">messages/about_fr.html</file>
         <file alias="help">messages/help_fr.html</file>
-        <file alias="fontmatrix">messages/fontmatrix_fr.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_fr.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="nl" >
-        <file alias="fontmatrix">messages/fontmatrix_nl.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_nl.qm</file> -->
     </qresource>
 
    <qresource prefix="/texts" lang="no" >
-        <file alias="fontmatrix">messages/fontmatrix_no.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_no.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="ru" >
-        <file alias="fontmatrix">messages/fontmatrix_ru.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_ru.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="sr" >
-        <file alias="fontmatrix">messages/fontmatrix_sr.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_sr.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="sv" >
-        <file alias="fontmatrix">messages/fontmatrix_sv.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_sv.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="uk" >
 	<file alias="about">messages/about_uk.html</file>
 	<file alias="help">messages/help_uk.html</file>
-        <file alias="fontmatrix">messages/fontmatrix_uk.qm</file>
+<!--         <file alias="fontmatrix">messages/fontmatrix_uk.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="zh_CN" >
-	    <file alias="fontmatrix">messages/fontmatrix_zh_CN.qm</file>
+<!-- 	    <file alias="fontmatrix">messages/fontmatrix_zh_CN.qm</file> -->
     </qresource>
 
     <qresource prefix="/texts" lang="zh_TW" >
-	    <file alias="fontmatrix">messages/fontmatrix_zh_TW.qm</file>
+<!-- 	    <file alias="fontmatrix">messages/fontmatrix_zh_TW.qm</file> -->
     </qresource>
 
 

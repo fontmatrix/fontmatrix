@@ -39,7 +39,7 @@ typotek.cpp
 )
 
 IF(HARFBUZZSHAPER)
-	SET(HARFBUZZ_SRCS 
+	SET(HARFBUZZ_SRCS
 	harfbuzzqtshaper.cpp
 	fmshaper.cpp)
 ENDIF(HARFBUZZSHAPER)
@@ -109,6 +109,25 @@ textprogression.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
 
+SET(fontmatrix_TSS
+fontmatrix_da.ts
+fontmatrix_de.ts
+fontmatrix_en.ts
+fontmatrix_fi.ts
+fontmatrix_fr.ts
+fontmatrix_hi.ts
+fontmatrix_nb.ts
+fontmatrix_nl.ts
+fontmatrix_no.ts
+fontmatrix_ru.ts
+fontmatrix_sr.ts
+fontmatrix_sv.ts
+fontmatrix_uk.ts
+fontmatrix_zh_CN.ts
+fontmatrix_zh_TW.ts
+)
+QT4_ADD_TRANSLATION(fontmatrix_QMS ${fontmatrix_TSS})
+
 SET(fontmatrix_RCCS
 application.qrc
 )
@@ -133,6 +152,7 @@ ${SHAPERS_SRCS}
 ${fontmatrix_MOC_SRCS}
 ${fontmatrix_UIS_H}
 ${fontmatrix_RCC_SRCS}
+${fontmatrix_QMS}
 )
 
 IF(SHOW_LIBS)

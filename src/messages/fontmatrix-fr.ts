@@ -1294,7 +1294,7 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Ajuster Ã la vue|</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="689"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="693"/>
         <source>main view widget</source>
         <translation type="unfinished">composant vue principale</translation>
     </message>
@@ -1319,12 +1319,12 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Ft</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="725"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="729"/>
         <source>OpenType Features</source>
         <translation type="unfinished">Fonctionnalités OpenType</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="726"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="730"/>
         <source>Friendly Name</source>
         <translation type="unfinished">Appellation complète</translation>
     </message>
@@ -1334,7 +1334,7 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Appliquer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="759"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="763"/>
         <source>Glyphs</source>
         <translation type="unfinished">Glyphes</translation>
     </message>
@@ -1344,12 +1344,12 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Couverture de lâintervalle Unicode :</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="703"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="707"/>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
         <translation type="unfinished">Un clic droit sur une étiquette vous donne l’ocaasion de l’ajouter ou la retirer d’une collection</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="750"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="754"/>
         <source>Clicking on a glyph will show details about it</source>
         <translation type="unfinished">Pointer un dessin montre des donnÃ©es qui lui sont associÃ©es</translation>
     </message>
@@ -1383,12 +1383,12 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
         <translation type="obsolete">Texte insensÃ©</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="712"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="716"/>
         <source>Font Information</source>
         <translation type="unfinished">Informations</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="745"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="749"/>
         <source>Sample Text</source>
         <translation type="unfinished">Exemple</translation>
     </message>
@@ -1403,7 +1403,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
         <translation type="obsolete">FreeType comme si vous y étiez</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="742"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="746"/>
         <source>Use shaper</source>
         <translation type="unfinished">Utiliser un moteur de mise en forme</translation>
     </message>
@@ -1413,7 +1413,7 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
         <translation type="obsolete">De droite à gauche</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="746"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="750"/>
         <source>Coverage of Unicode Interval :</source>
         <translation type="unfinished">Couverture Unicode :</translation>
     </message>
@@ -1451,12 +1451,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Rendu par FreeType</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="732"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="736"/>
         <source>Font Size</source>
         <translation type="unfinished">Taille de fonte</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="760"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="764"/>
         <source> pt</source>
         <translation type="unfinished"> pt</translation>
     </message>
@@ -1466,123 +1466,123 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Avancé</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="743"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="747"/>
         <source>Text Progression</source>
         <translation type="unfinished">Directions</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="762"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="766"/>
         <source>Playground</source>
         <translation type="unfinished">Aire de jeu</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="738"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="742"/>
         <source>part I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="744"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="748"/>
         <source>part II</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="700"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="704"/>
         <source>Nothing selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="708"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="712"/>
         <source>Add a tag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="715"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="719"/>
         <source>Settings</source>
         <translation type="unfinished">Paramètres</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="718"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="722"/>
         <source>S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="721"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="725"/>
         <source>OpenType</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="724"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="728"/>
         <source>O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="727"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="731"/>
         <source>Save as default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="728"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="732"/>
         <source>Reset Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="729"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="733"/>
         <source>SampleText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="730"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="734"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="731"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="735"/>
         <source>Layout</source>
         <translation type="unfinished">Mise en place</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="735"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="739"/>
         <source>Rendering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="736"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="740"/>
         <source>FreeType</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="737"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="741"/>
         <source>Native Qt objects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="739"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="743"/>
         <source>World is wide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="740"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="744"/>
         <source>Shaper type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="741"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="745"/>
         <source>Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="755"/>
-        <source>Copy selected character to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="758"/>
-        <source>CTC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="761"/>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="765"/>
         <source>push</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="759"/>
+        <source>Set Mode &quot;Copy Character to Clipboard&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="762"/>
+        <source>C</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

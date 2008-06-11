@@ -16,8 +16,8 @@ fontmatrix-zh_CN.ts
 fontmatrix-zh_TW.ts
 )
 
-QT4_CREATE_TRANSLATION(fontmatrix_QMS ${fontmatrix_SRCS} ${fontmatrix_UIS_H} ${fontmatrix_TSS})
-#QT4_ADD_TRANSLATION(fontmatrix_QMS ${fontmatrix_TSS})
+# QT4_CREATE_TRANSLATION(fontmatrix_QMS ${fontmatrix_SRCS} ${fontmatrix_UIS_H} ${fontmatrix_TSS})
+QT4_ADD_TRANSLATION(fontmatrix_QMS ${fontmatrix_TSS})
 
 ADD_CUSTOM_TARGET( translation
 	ALL

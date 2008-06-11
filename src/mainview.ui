@@ -607,8 +607,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>244</width>
-                 <height>307</height>
+                 <width>199</width>
+                 <height>195</height>
                 </rect>
                </property>
                <attribute name="label" >
@@ -787,7 +787,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="6" >
+       <item row="2" column="0" colspan="7" >
         <widget class="FMGlyphsView" name="abcView" >
          <property name="focusPolicy" >
           <enum>Qt::NoFocus</enum>
@@ -803,17 +803,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="4" >
-        <widget class="QCheckBox" name="clipboardCheck" >
-         <property name="toolTip" >
-          <string>Copy selected character to clipboard</string>
-         </property>
-         <property name="text" >
-          <string>CTC</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="4" >
+       <item row="1" column="1" colspan="5" >
         <widget class="Line" name="line" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
@@ -832,6 +822,26 @@
          </property>
          <property name="orientation" >
           <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4" >
+        <widget class="QToolButton" name="clipboardCheck" >
+         <property name="toolTip" >
+          <string>Set Mode "Copy Character to Clipboard"</string>
+         </property>
+         <property name="text" >
+          <string>C</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="application.qrc" >
+           <normaloff>:/action-copy-char</normaloff>:/action-copy-char</iconset>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <property name="autoRaise" >
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -992,7 +1002,6 @@
   <tabstop>tagsListWidget</tabstop>
   <tabstop>playString</tabstop>
   <tabstop>uniPlaneCombo</tabstop>
-  <tabstop>clipboardCheck</tabstop>
   <tabstop>saveDefOTFBut</tabstop>
   <tabstop>resetDefOTFBut</tabstop>
  </tabstops>

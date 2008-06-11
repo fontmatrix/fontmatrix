@@ -115,30 +115,7 @@ application.qrc
 )
 QT4_ADD_RESOURCES(fontmatrix_RCC_SRCS ${fontmatrix_RCCS})
 
-
 ADD_SUBDIRECTORY(messages)
-# SET(fontmatrix_TSS
-# fontmatrix-da.ts
-# fontmatrix-de.ts
-# fontmatrix-en.ts
-# fontmatrix-fi.ts
-# fontmatrix-fr.ts
-# fontmatrix-hi.ts
-# fontmatrix-nb.ts
-# fontmatrix-nl.ts
-# fontmatrix-no.ts
-# fontmatrix-ru.ts
-# fontmatrix-sr.ts
-# fontmatrix-sv.ts
-# fontmatrix-uk.ts
-# fontmatrix-zh_CN.ts
-# fontmatrix-zh_TW.ts
-# )
-# 
-# 
-# QT4_CREATE_TRANSLATION(fontmatrix_QMS ${fontmatrix_SRCS} ${fontmatrix_TSS})
-# #QT4_ADD_TRANSLATION(fontmatrix_QMS ${fontmatrix_TSS})
-
 
 include_directories(
 ${CMAKE_CURRENT_SOURCE_DIR}
@@ -159,7 +136,6 @@ ${SHAPERS_SRCS}
 ${fontmatrix_MOC_SRCS}
 ${fontmatrix_UIS_H}
 ${fontmatrix_RCC_SRCS}
-# ${fontmatrix_QMS}
 )
 
 IF(SHOW_LIBS)
@@ -179,9 +155,4 @@ INSTALL(TARGETS fontmatrix
       RUNTIME DESTINATION bin
 )
 
-SET(QMDIR "${CMAKE_INSTALL_PREFIX}/share/fontmatrix/qm/")
-INSTALL(FILES
-  ${fontmatrix_QMS}
-  DESTINATION ${QMDIR}
-)
 

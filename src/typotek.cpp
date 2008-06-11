@@ -1080,7 +1080,7 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 			}
 		}
 	}
-	else if(field == tr ( "Unicode" ))
+	else if(field == tr ( "Unicode character" ))
 	{
 		/// WARNING - Unicode fields does not support negation.
 		int startC(0xFFFFFFFF);

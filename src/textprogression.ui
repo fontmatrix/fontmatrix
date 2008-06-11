@@ -13,6 +13,12 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <property name="verticalSpacing" >
+    <number>-1</number>
+   </property>
    <item row="0" column="0" >
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
@@ -22,6 +28,12 @@
       <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gLt_2" >
+      <property name="verticalSpacing" >
+       <number>0</number>
+      </property>
+      <property name="margin" >
+       <number>0</number>
+      </property>
       <item row="0" column="0" >
        <widget class="QRadioButton" name="inlineLTR" >
         <property name="toolTip" >
@@ -77,6 +89,12 @@
       <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gLt" >
+      <property name="verticalSpacing" >
+       <number>0</number>
+      </property>
+      <property name="margin" >
+       <number>0</number>
+      </property>
       <item row="0" column="0" >
        <widget class="QRadioButton" name="blockTTB" >
         <property name="toolTip" >

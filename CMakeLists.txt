@@ -151,12 +151,16 @@ INSTALL(FILES
   fontmatrix.desktop
   DESTINATION ${DESKTOPDIR}
 )
-
+SET(MANDIR "share/man/")
 SET(ICONDIR "share/icons/hicolor/48x48/apps/")
 # ADD_DEFINITIONS("-DICONDIR=\\\"${CMAKE_INSTALL_PREFIX}/${ICONDIR}\\\"")
 INSTALL(FILES
   fontmatrix.png
   DESTINATION ${ICONDIR}
+)
+INSTALL(FILES
+fontmatrix.1
+  DESTINATION ${MANDIR}man1
 )
 
 

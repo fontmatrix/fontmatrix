@@ -80,7 +80,7 @@ ListDockWidget::ListDockWidget()
 	actn->setChecked(true);
 	theFilterMenu->addAction(actn);
 	
-	QString uniFName(tr("Unicode"));
+	QString uniFName(tr("Unicode character"));
 	actn = new QAction(uniFName, filterActGroup);
 	actn->setCheckable(true);
 	theFilterMenu->addAction(actn);

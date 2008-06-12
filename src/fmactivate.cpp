@@ -30,6 +30,103 @@ FMActivate * FMActivate::getInstance()
 	return instance;
 }
 
+#ifdef APPLE
+void FMActivate::activate(FontItem * fit, bool act)
+{
+	qDebug() << "Activation of " << fit->path() << act;
+	if ( act )
+	{
+
+		if ( !fit->isLocked() )
+		{
+			if ( !fit->isActivated() )
+			{
+				fit->setActivated ( true );
+
+// 				QFileInfo fofi ( fit->path() );
+
+				if ( !QFile::copy ( fit->path() , typotek::getInstance()->getManagedDir() + "/" + fit->activationName() ) )
+				{
+					qDebug() << "unable to copy " << fit->path() ;
+				}
+				else
+				{
+					qDebug() << fit->path() << " copied" ;
+					if ( !fit->afm().isEmpty() )
+					{
+						
+// 						QFileInfo afm ( fit->afm() );
+						if ( !QFile::copy( fit->afm(), typotek::getInstance()->getManagedDir() + "/" + fit->activationAFMName() ) )
+						{
+							qDebug() << "unable to copy " << fit->afm();
+						}
+						else
+						{
+							qDebug() << fit->afm() << "copied"; 
+						}
+					}
+					else
+					{
+						qDebug()<<"There is no AFM file attached to "<<fit->path();
+					}
+				}
+			}
+			else
+			{
+				qDebug() << "\tYet activated";
+			}
+
+		}
+		else
+		{
+			qDebug() << "\tIs Locked";
+		}
+
+	}
+	else
+	{
+
+		if ( !fit->isLocked() )
+		{
+			if ( fit->isActivated() )
+			{
+				fit->setActivated ( false );
+// 				QFileInfo fofi ( fit->path() );
+				if ( !QFile::remove ( typotek::getInstance()->getManagedDir() + "/" + fit->activationName() ) )
+				{
+					qDebug() << "unable to unlink " << fit->name() ;
+				}
+				else
+				{
+					if ( !fit->afm().isEmpty() )
+					{
+// 						QFileInfo afm ( fit->afm() );
+						if ( !QFile::remove ( typotek::getInstance()->getManagedDir() + "/" + fit->activationAFMName() ) )
+						{
+							qDebug() << "unable to unlink " << fit->afm() ;
+						}
+					}
+// 					typo->adaptator()->private_signal ( 0, fofi.fileName() );
+				}
+			}
+
+		}
+		else
+		{
+			qDebug() << "\tIs Locked";
+		}
+	}
+	
+	emit activationEvent ( fit->path() );
+}
+
+#elif _WIN32
+void FMActivate::activate(FontItem * fit, bool act)
+{
+	//TODO implement activation/deactivation for Windows
+}
+
+#else // fontconfig
 void FMActivate::activate(FontItem * fit, bool act)
 {
 	qDebug() << "Activation of " << fit->path() << act;
@@ -120,4 +217,4 @@ void FMActivate::activate(FontItem * fit, bool act)
 // 	typo->save();
 }
 
-
+#endif

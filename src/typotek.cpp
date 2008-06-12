@@ -708,7 +708,11 @@ void typotek::createMenus()
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( fonteditorAct );
+#ifdef APPLE
+#elif _WIN32
+#else
 	editMenu->addAction( repairAct );
+#endif
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
 
@@ -785,21 +789,40 @@ void typotek::fillTagsList()
 
 void typotek::checkOwnDir()
 {
-	qDebug()<<"checkOwnDir()";
 	relayStartingStepIn(tr("Check for Fontmatrix own dir"));
-	QString fontmanaged ( "/.fontmatrix" ); // Where activated fonts are sym-linked
+	QString sep(QDir::separator());
+#ifdef APPLE
+	
+	managedDir.setPath(QDir::homePath() + sep + "Library" + sep + "Fonts");
+	managedDir.setPath ( QDir::homePath() + fontmanaged );
+	if ( !managedDir.exists() )
+		managedDir.mkpath ( QDir::homePath() + fontmanaged );
+	fontsdata.setFileName ( QDir::homePath() + sep +"fontmatrix.data" );
+	
+#elif _WIN32
+	// For win we do not hide things because it does 
+	// not work yet. So if you need to debug it will be simpler.
+	QString fontmanaged ( sep + "fontmatrix" ); 
+	managedDir.setPath ( QDir::homePath() + fontmanaged );
+	if ( !managedDir.exists() )
+		managedDir.mkpath ( QDir::homePath() + fontmanaged );
+	fontsdata.setFileName ( QDir::homePath() + sep +"fontmatrix.data" );
+#else
+	QString fontmanaged ( sep + ".fontmatrix" ); // Where activated fonts are sym-linked
 	managedDir.setPath ( QDir::homePath() + fontmanaged );
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + fontmanaged );
 
 	addFcDirItem( managedDir.absolutePath() );
-	fontsdata.setFileName ( QDir::homePath() + "/.fontmatrix.data" );
+	fontsdata.setFileName ( QDir::homePath() + sep + ".fontmatrix.data" );
+#endif
 	QSettings settings;
 	m_remoteTmpDir = settings.value("RemoteTmpDir", QDir::tempPath()).toString();
 }
 
 void typotek::addFcDirItem(const QString & dirPath)
 {
+#ifdef HAVE_FONTCONFIG
 	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
 	if ( !fcfile.open ( QFile::ReadWrite ) )
 	{
@@ -843,6 +866,7 @@ void typotek::addFcDirItem(const QString & dirPath)
 		}
 		fcfile.close();
 	}
+#endif
 }
 
 QStringList typotek::getSystemFontDirs()

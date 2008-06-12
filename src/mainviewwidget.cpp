@@ -196,8 +196,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	connect ( saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
 	connect ( resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
-	
+	connect ( shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
 	connect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+	
 	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 

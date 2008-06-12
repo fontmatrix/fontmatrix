@@ -2491,6 +2491,7 @@ QString FontItem::infoText ( bool fromcache )
 	/**
 	Selectors are :
 	#headline
+	#file
 	#technote
 	.infoblock
 	.infoname
@@ -2521,6 +2522,7 @@ QString FontItem::infoText ( bool fromcache )
 
 	QMap<QString, QStringList> orderedInfo;
 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
+	ret += "<div id=\"file\">" + m_path + "</div>\n" ;
 	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type: "+ m_type +" | Charmaps: " + m_charsets.join ( ", " ) + panStringOut +"</div>";
 
 

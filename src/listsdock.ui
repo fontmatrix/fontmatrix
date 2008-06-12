@@ -258,16 +258,11 @@
           <number>1</number>
          </property>
          <property name="columnCount" >
-          <number>2</number>
+          <number>1</number>
          </property>
          <column>
           <property name="text" >
            <string>Names</string>
-          </property>
-         </column>
-         <column>
-          <property name="text" >
-           <string>Files</string>
           </property>
          </column>
         </widget>

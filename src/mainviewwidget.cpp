@@ -300,7 +300,7 @@ void MainViewWidget::fillTree()
 			QString fam( realFamilyName[oit.key()] );
 			bool isExpanded = false;
 			QTreeWidgetItem *ord = new QTreeWidgetItem ( alpha );
-			ord->setText ( 0, fam);
+			
 			ord->setData ( 0,100,"family" );
 			ord->setCheckState ( 0,Qt::Unchecked );
 			bool chekno = false;
@@ -320,8 +320,8 @@ void MainViewWidget::fillTree()
 
 				QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 				entry->setText ( 0,  var );
-				entry->setText ( 1, fPointer->path() );
-				entry->setToolTip( 1, fPointer->path() );
+// 				entry->setText ( 1, fPointer->path() );
+				entry->setToolTip( 0, fPointer->path() );
 				entry->setData ( 0, 100, "fontfile" );
 				if(fPointer->isLocked() || fPointer->isRemote() )
 				{
@@ -344,10 +344,10 @@ void MainViewWidget::fillTree()
 				{
 					chekno = true;
 				}
-				entry->setCheckState ( 1, act ?  Qt::Checked : Qt::Unchecked );
-				entry->setData ( 0,200, entry->checkState ( 1 ) );
+				entry->setCheckState ( 0 , act ?  Qt::Checked : Qt::Unchecked );
+				entry->setData ( 0,200, entry->checkState ( 0 ) );
 
-				if ( entry->text ( 1 ) == curItemName )
+				if ( entry->toolTip( 0 ) == curItemName )
 					curItem = entry;
 				tttotal += tt.elapsed();
 			}
@@ -358,7 +358,8 @@ void MainViewWidget::fillTree()
 				ord->setCheckState ( 0,Qt::Checked );
 			// track checkState
 			ord->setData ( 0,200,ord->checkState ( 0 ) );
-			ord->setText ( 1,QString::number ( ord->childCount() ) );
+			ord->setText ( 0, fam + "  ["+ QString::number ( ord->childCount() ) +"]");
+// 			ord->setText ( 1, QString::number ( ord->childCount() ) );
 			alphaIsUsed = true;
 
 		}
@@ -394,7 +395,7 @@ void MainViewWidget::fillTree()
 		curItem->parent()->setBackgroundColor ( 1,pcol );
 		curItem->parent()->setFont(0, selFont);
 		curItem->setBackgroundColor ( 0,scol );
-		curItem->setBackgroundColor ( 1,scol );
+// 		curItem->setBackgroundColor ( 1,scol );
 		curItem->setFont(0,selFont);
 
 
@@ -428,7 +429,7 @@ void MainViewWidget::updateTree()
 			for (int varIdx(0); varIdx < varCount; ++ varIdx)
 			{
 				QTreeWidgetItem *varItem( famItem->child(varIdx) );
-				if( varItem->text ( 1 ) == lastIndex )
+				if( varItem->toolTip( 0 ) == lastIndex )
 				{
 					varItem->setFont(0, deselect);
 					varItem->setBackgroundColor(0, Qt::transparent);
@@ -437,7 +438,7 @@ void MainViewWidget::updateTree()
 					varItem->parent()->setBackgroundColor(0, Qt::transparent);
 					varItem->parent()->setBackgroundColor(1, Qt::transparent);
 				}
-				else if(varItem->text ( 1 ) == curItemName)
+				else if(varItem->toolTip(0) == curItemName)
 				{
 					curItem = varItem;
 				}
@@ -456,10 +457,10 @@ void MainViewWidget::updateTree()
 		QFont selFont;
 		selFont.setBold(true);
 		curItem->parent()->setBackgroundColor ( 0,pcol );
-		curItem->parent()->setBackgroundColor ( 1,pcol );
+// 		curItem->parent()->setBackgroundColor ( 1,pcol );
 		curItem->parent()->setFont(0, selFont);
 		curItem->setBackgroundColor ( 0,scol );
-		curItem->setBackgroundColor ( 1,scol );
+// 		curItem->setBackgroundColor ( 1,scol );
 		curItem->setFont(0,selFont);
 		if(!curItem->parent()->isExpanded())
 			curItem->parent()->setExpanded(true);
@@ -517,10 +518,10 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 		for ( int i=0; i < item->childCount(); ++i )
 		{
 			hasChild = true;
-			if ( item->child ( i )->text ( 1 ) == curItemName )
+			if ( item->child( i )->toolTip(0) == curItemName )
 				wantView = false;
-			names << item->child ( i )->text ( 1 ) ;
-			variantMap[item->child ( i )->text ( 0 ) ] = item->child ( i )->text ( 1 ) ;
+			names << item->child( i )->toolTip( 0 ) ;
+			variantMap[item->child ( i )->text ( 0 ) ] = item->child ( i )->toolTip(0) ;
 		}
 		slotFontActionByNames ( names );
 		int oldc = item->data ( 0,200 ).toInt();
@@ -538,7 +539,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			QList<FontItem*> todo;
 			for ( int i=0; i<item->childCount(); ++i )
 			{
-				todo << typo->getFont ( item->child ( i )->text ( 1 ) );
+				todo << typo->getFont ( item->child ( i )->toolTip(0) );
 			}
 			for (int fIndex(0);fIndex < todo.count(); ++fIndex)
 			{
@@ -579,8 +580,8 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 	if ( item->data ( 0,100 ).toString() == "fontfile" )
 	{
-		QString fontname(item->text ( 1 ));
-		bool wantActivate = (item->checkState(1) == Qt::Checked) ? true : false;
+		QString fontname(item->toolTip(0));
+		bool wantActivate = (item->checkState(0) == Qt::Checked) ? true : false;
 		m_lists->previewList->slotSelect(fontname);
 		slotFontSelectedByName(fontname);
 		if ( !theVeryFont->isLocked() )

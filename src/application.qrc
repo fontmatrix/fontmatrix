@@ -9,6 +9,7 @@
     <file alias="fontmatrix_about.png" >graphic-resources/about-graphic.png</file>
     <file alias="fontmatrix_info.png" >graphic-resources/font-info.png</file>
     <file alias="fontmatrix_glypg.png" >graphic-resources/font-glyph.png</file>
+    <file alias="fontmatrix_playground.png" >graphic-resources/font-playground.png</file>
     <file alias="fontmatrix_tags.png" >graphic-resources/font-tag.png</file>
     <file alias="fontmatrix_tags_graphic.png" >graphic-resources/fontmatrix-tag-graphic.png</file>
     <file alias="fontmatrix_sampletext.png" >graphic-resources/font-sampletext.png</file>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22"
+   height="22"
+   id="svg2310"
+   sodipodi:version="0.32"
+   inkscape:version="0.46+devel"
+   sodipodi:docname="application-fontmatrix-systray-vectors.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/vlada/homosapiens/fontmatrix/src/icons/fontmatrix-systray.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   version="1.0">
+  <defs
+     id="defs2312">
+    <linearGradient
+       id="linearGradient4456">
+      <stop
+         style="stop-color:#9c0f0f;stop-opacity:1;"
+         offset="0"
+         id="stop4458" />
+      <stop
+         style="stop-color:#4f0707;stop-opacity:1;"
+         offset="1"
+         id="stop4460" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3171">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3173" />
+      <stop
+         style="stop-color:#930000;stop-opacity:1;"
+         offset="1"
+         id="stop3175" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective2397" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-50 : 600 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="700 : 600 : 1"
+       inkscape:persp3d-origin="300 : 400 : 1"
+       id="perspective3394" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3171"
+       id="linearGradient3177"
+       x1="38.808681"
+       y1="32.606827"
+       x2="6.9347034"
+       y2="19.818819"
+       gradientUnits="userSpaceOnUse" />
+    <inkscape:perspective
+       id="perspective3677"
+       inkscape:persp3d-origin="32 : 21.333333 : 1"
+       inkscape:vp_z="64 : 32 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 32 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4456"
+       id="linearGradient4462"
+       x1="17.805128"
+       y1="23.935667"
+       x2="84.181808"
+       y2="65.167358"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.313709"
+     inkscape:cx="-0.18557765"
+     inkscape:cy="0.77188003"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     gridtolerance="10"
+     inkscape:object-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     objecttolerance="5"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="969"
+     inkscape:window-height="870"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     width="16px">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2907"
+       visible="true"
+       enabled="true"
+       color="#0000ff"
+       opacity="0.05882353"
+       empcolor="#0000ff"
+       empopacity="0.12156863"
+       dotted="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2315">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>FontMatrix application icon</dc:title>
+        <dc:date>13.11.2007.</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Vladimir Savic</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Pierre Marchand</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/3.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-nc-sa/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:prohibits
+           rdf:resource="http://creativecommons.org/ns#CommercialUse" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       style="fill:url(#linearGradient4462);fill-opacity:1;stroke:none"
+       id="rect2318"
+       width="64"
+       height="64"
+       x="4.181818"
+       y="5.4545455"
+       transform="matrix(0.2711071,7.2642914e-2,-7.2642914e-2,0.2711071,3.9116601,-1.7825454)" />
+    <path
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.19932199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bauhaus Std"
+       d="m -0.36371343,-4.2618044 0,15.4873804 7.51573923,4.669786 0,23.950024 11.5905372,7.61392 0,-24.483045 c 5.795269,2.763589 8.692904,7.401844 8.692904,10.254642 l 0,6.584455 11.590537,9.396331 0,-13.652979 c 0,-7.120513 -2.632741,-14.802631 -14.488172,-22.871787 z"
+       id="path2941"
+       transform="matrix(0.3451091,-0.117895,0,0.3369679,0.5317708,3.0182113)"
+       sodipodi:nodetypes="ccccccccccsc"
+       inkscape:export-filename="/home/vlada/path3169.png"
+       inkscape:export-xdpi="96.019997"
+       inkscape:export-ydpi="96.019997" />
+    <path
+       sodipodi:nodetypes="ccccccc"
+       transform="matrix(0.3451091,-0.117895,0,0.3369679,7.6067708,5.1392613)"
+       id="path3169"
+       d="m 27.218144,36.816242 0,13.243101 11.047231,8.073004 1e-06,-17.799766 c 0,-11.870567 -2.354329,-19.278731 -18.562971,-30.8849342 1.420658,3.4646882 4.618105,10.5186622 4.618105,19.4185452 2.897634,3.387301 2.897634,4.849406 2.897634,7.95005 z"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffd9b0;fill-opacity:1;stroke:url(#linearGradient3177);stroke-width:2.19932204000000020;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:2.10000000000000009;stroke-dasharray:none;stroke-opacity:1;font-family:Bauhaus Std"
+       inkscape:export-filename="/home/vlada/path3169.png"
+       inkscape:export-xdpi="96.019997"
+       inkscape:export-ydpi="96.019997" />
+  </g>
+</svg>

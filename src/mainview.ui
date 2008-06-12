@@ -56,7 +56,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex" >
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="elideMode" >
       <enum>Qt::ElideRight</enum>
@@ -67,7 +67,7 @@
         <x>0</x>
         <y>0</y>
         <width>650</width>
-        <height>565</height>
+        <height>568</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -185,7 +185,7 @@
         <x>0</x>
         <y>0</y>
         <width>650</width>
-        <height>565</height>
+        <height>568</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -312,8 +312,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>371</width>
-             <height>565</height>
+             <width>439</width>
+             <height>568</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout" >
@@ -447,8 +447,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>244</width>
-             <height>565</height>
+             <width>181</width>
+             <height>568</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3" >
@@ -715,7 +715,7 @@
         <x>0</x>
         <y>0</y>
         <width>650</width>
-        <height>565</height>
+        <height>568</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -780,19 +780,23 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="7" >
-        <widget class="FMGlyphsView" name="abcView" >
-         <property name="focusPolicy" >
-          <enum>Qt::NoFocus</enum>
+       <item row="0" column="4" >
+        <widget class="QToolButton" name="clipboardCheck" >
+         <property name="toolTip" >
+          <string>Set Mode "Copy Character to Clipboard"</string>
          </property>
-         <property name="statusTip" >
-          <string>Clicking on a glyph will show details about it</string>
+         <property name="text" >
+          <string>C</string>
          </property>
-         <property name="frameShape" >
-          <enum>QFrame::NoFrame</enum>
+         <property name="icon" >
+          <iconset resource="application.qrc" >
+           <normaloff>:/action-copy-char</normaloff>:/action-copy-char</iconset>
          </property>
-         <property name="rubberBandSelectionMode" >
-          <enum>Qt::IntersectsItemBoundingRect</enum>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <property name="autoRaise" >
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -818,23 +822,19 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="4" >
-        <widget class="QToolButton" name="clipboardCheck" >
-         <property name="toolTip" >
-          <string>Set Mode "Copy Character to Clipboard"</string>
+       <item row="2" column="0" colspan="7" >
+        <widget class="FMGlyphsView" name="abcView" >
+         <property name="focusPolicy" >
+          <enum>Qt::NoFocus</enum>
          </property>
-         <property name="text" >
-          <string>C</string>
+         <property name="statusTip" >
+          <string>Clicking on a glyph will show details about it</string>
          </property>
-         <property name="icon" >
-          <iconset resource="application.qrc" >
-           <normaloff>:/action-copy-char</normaloff>:/action-copy-char</iconset>
+         <property name="frameShape" >
+          <enum>QFrame::NoFrame</enum>
          </property>
-         <property name="checkable" >
-          <bool>true</bool>
-         </property>
-         <property name="autoRaise" >
-          <bool>true</bool>
+         <property name="rubberBandSelectionMode" >
+          <enum>Qt::IntersectsItemBoundingRect</enum>
          </property>
         </widget>
        </item>
@@ -846,19 +846,17 @@
         <x>0</x>
         <y>0</y>
         <width>650</width>
-        <height>565</height>
+        <height>568</height>
        </rect>
       </property>
       <attribute name="title" >
        <string>Playground</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_12" >
-       <property name="margin" >
-        <number>0</number>
-       </property>
-       <property name="spacing" >
-        <number>0</number>
-       </property>
+      <attribute name="icon" >
+       <iconset resource="application.qrc" >
+        <normaloff>:/fontmatrix_playground.png</normaloff>:/fontmatrix_playground.png</iconset>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_10" >
        <item row="0" column="0" >
         <layout class="QGridLayout" name="gridLayout_7" >
          <property name="leftMargin" >

@@ -172,5 +172,6 @@ void FMSampleTextView::wheelEvent(QWheelEvent * e)
 
 void FMSampleTextView::showEvent(QShowEvent * event)
 {
-	emit pleaseUpdateMe();
+// 	emit pleaseUpdateMe();
+	QGraphicsView::showEvent(event);
 }

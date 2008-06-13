@@ -214,7 +214,7 @@ class typotek:public QMainWindow
 		FontItem* getFont ( int i ) ;
 		FontItem* getFont ( QString s );
 		QList<FontItem*> getAllFonts() {return fontMap;};
-		QList<FontItem*> getFonts ( QString pattern, QString field );
+		QList<FontItem*> getFonts ( QString pattern, QString field , bool mark = true);
 		QList<FontItem*> getCurrentFonts();
 		void resetFilter();
 

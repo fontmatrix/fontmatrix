@@ -1049,12 +1049,13 @@ void typotek::slotRemoteIsReady()
 
 
 
-QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
+QList< FontItem * > typotek::getFonts ( QString pattern, QString field , bool mark)
 {
 
 	if ( pattern.isEmpty() )
 	{
-		theMainView->resetCrumb();
+		if(mark)
+			theMainView->resetCrumb();
 		return fontMap;
 	}
 
@@ -1072,11 +1073,13 @@ QList< FontItem * > typotek::getFonts ( QString pattern, QString field )
 
 	if ( superSet.isEmpty() )
 	{
-		theMainView->resetCrumb();
+		if(mark)
+			theMainView->resetCrumb();
 		superSet = fontMap;
 	}
 
-	theMainView->addFilterToCrumb ( pattern );
+	if(mark)
+		theMainView->addFilterToCrumb ( pattern );
 	int superSetCount ( superSet.count() );
 
 	qDebug() <<"PATERN ="<< rPattern<<": FIELD ="<< field<<":"<< superSetCount;
@@ -1779,8 +1782,26 @@ void typotek::printFamily()
 	QMap<int , QString> sampleString;
 	QMap<int , FontItem*> sampleFont;
 
-	QStringList stl(namedSample ( theMainView->sampleName() ).split ( '\n' ));
-	QList<FontItem*> familyFonts( getFonts(theMainView->selectedFont()->family(), "family"));
+	QStringList stl1(namedSample ( theMainView->sampleName() ).split ( QRegExp("\\W") ));
+	if(stl1.count() < 10 )
+	{
+		QMessageBox::information(this,"Fontmatrix",tr("Not enough text to make a sample"));
+		return;
+	}
+	QStringList stl;
+	int idxS(0);
+	int idxE( random() % 9 );
+	while((idxS + idxE) < stl1.count())
+	{
+		QString t(QStringList(stl1.mid(idxS,idxE)).join( " " ));
+		qDebug()<<"s e T"<<idxS<<idxE<<t;
+		if(!t.isEmpty())
+			stl << t;
+		
+		idxS += idxE;
+		idxE = random() % 9;
+	}
+	QList<FontItem*> familyFonts( getFonts(theMainView->selectedFont()->family(), "family", false));
 
 // 	if(familyFonts.count() > stl.count())
 	{

@@ -101,9 +101,12 @@ class FMLayout : public QThread
 		virtual void doLines();
 		
 		void run();
+		
+		void clearCaches();
 
 	public:// utils
-		double distance ( int start, int end, const GlyphList& gl , bool power = false );
+		double distance ( int start, int end, const GlyphList& gl , bool strip = false );
+		int sepCount( int start, int end, const GlyphList& gl);
 		void resetScene();
 
 		QList<int> breakList;
@@ -134,6 +137,8 @@ class FMLayout : public QThread
 		QList<QGraphicsPixmapItem *> pixList;
 		QList<QGraphicsPathItem*> glyphList;
 		QMap<int, QMap<int, double > > distCache;
+		QMap<int, QMap<int, double > > stripCache;
+		QMap<int, QMap<int, int > > sepCache;
 		
 
 		// accessed
@@ -183,6 +188,7 @@ class FMLayout : public QThread
 		double FM_LAYOUT_NODE_LATE_F;
 		double FM_LAYOUT_NODE_END_F;
 		double FM_LAYOUT_HYPHEN_PENALTY;
+		double FM_LAYOUT_MAX_COMPRESSION;
 		QMenu * secretMenu;
 
 

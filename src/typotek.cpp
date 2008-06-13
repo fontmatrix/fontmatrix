@@ -791,14 +791,15 @@ void typotek::checkOwnDir()
 {
 	relayStartingStepIn(tr("Check for Fontmatrix own dir"));
 	QString sep(QDir::separator());
+// #define PLATFORM_APPLE
 #ifdef PLATFORM_APPLE
 	
 	managedDir.setPath(QDir::homePath() + sep + "Library" + sep + "Fonts");
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + sep + "Library" + sep + "Fonts" );
-	if(!QDir::exists(QDir::homePath() + sep + "Library" + sep + "Fontmatrix"))
+	QDir dbDir;
+	if(!dbDir.exists(QDir::homePath() + sep + "Library" + sep + "Fontmatrix"))
 	{
-		QDir dbDir;
 		dbDir.mkpath (QDir::homePath() + sep + "Library" + sep + "Fontmatrix");
 	}
 	fontsdata.setFileName ( QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep +"fontmatrix.data" );

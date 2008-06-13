@@ -869,6 +869,7 @@ int FMLayout::sepCount(int start, int end, const GlyphList & gl)
 
 double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip )
 {
+// 	qDebug()<<"distance(start ="<<start<<",end"<<end<<",strip"<<strip<<" )";
 	if(!strip)
 	{
 		if ( distCache.contains ( start ) )
@@ -1034,7 +1035,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 			{
 				if(strip)
 				{
-					if( QChar ( gList.last().lChar ).category() != QChar::Separator_Space)
+					if( QChar ( gList.at(i).lChar ).category() != QChar::Separator_Space)
 						ret += gList.at ( i ).xadvance;
 				}
 				else
@@ -1065,7 +1066,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 				// 			qDebug()<<"i tS.xa"<<i<<gList.at ( i ).xadvance;
 				if(strip)
 				{
-					if( QChar ( gList.last().lChar ).category() != QChar::Separator_Space)
+					if( QChar ( gList.at(i).lChar ).category() != QChar::Separator_Space)
 						ret += gList.at ( i ).xadvance;
 				}
 				else
@@ -1085,7 +1086,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 			{
 				if(strip)
 				{
-					if( QChar ( gList.last().lChar ).category() != QChar::Separator_Space)
+					if( QChar ( gList.at(i).lChar ).category() != QChar::Separator_Space)
 						ret += gList.at ( i ).xadvance;
 				}
 				else
@@ -1123,7 +1124,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 			{
 				if(strip)
 				{
-					if( QChar ( gList.last().lChar ).category() != QChar::Separator_Space)
+					if( QChar ( gList.at(i).lChar ).category() != QChar::Separator_Space)
 						ret += gList.at ( i ).xadvance;
 				}
 				else

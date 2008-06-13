@@ -30,7 +30,7 @@ FMActivate * FMActivate::getInstance()
 	return instance;
 }
 
-#ifdef APPLE
+#ifdef PLATFORM_APPLE
 void FMActivate::activate(FontItem * fit, bool act)
 {
 	qDebug() << "Activation of " << fit->path() << act;

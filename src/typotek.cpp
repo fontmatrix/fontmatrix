@@ -708,7 +708,7 @@ void typotek::createMenus()
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( fonteditorAct );
-#ifdef APPLE
+#ifdef PLATFORM_APPLE
 #elif _WIN32
 #else
 	editMenu->addAction( repairAct );
@@ -791,7 +791,7 @@ void typotek::checkOwnDir()
 {
 	relayStartingStepIn(tr("Check for Fontmatrix own dir"));
 	QString sep(QDir::separator());
-#ifdef APPLE
+#ifdef PLATFORM_APPLE
 	
 	managedDir.setPath(QDir::homePath() + sep + "Library" + sep + "Fonts");
 	managedDir.setPath ( QDir::homePath() + fontmanaged );

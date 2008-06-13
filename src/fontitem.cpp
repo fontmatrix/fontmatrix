@@ -3145,8 +3145,9 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	pix.fill ( QColor ( 30,0,0,120 ) );
 	QPainter painter ( &pix );
 	painter.setBrush ( Qt::white );
-	painter.setPen ( QPen ( QColor ( 0,0,255,120 ) ) );
+	painter.setPen ( QPen ( QBrush( QColor ( 0,0,0,255 ) ), 3/*, Qt::DashLine*/ ) );
 	painter.drawRoundRect ( subRect,5,5 );
+	painter.setPen ( QPen ( QColor ( 0,0,255,120 ) ) );
 
 	ft_error = FT_Set_Pixel_Sizes ( m_face, 0, subRect.height() * 0.8 );
 	if ( ft_error )
@@ -3270,7 +3271,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	}
 
 // 	qDebug()<< textIt->toHtml();
-	QPointF tPos ( subRect.left() + 20.0 , subRect.bottom() );
+	QPointF tPos ( subRect.left() + 20.0 , subRect.bottom() + 2 );
 	textIt->setPos ( view->mapToScene ( tPos.toPoint() ) );
 	textIt->setZValue ( 2000000 );
 	textIt->setEnabled ( true );

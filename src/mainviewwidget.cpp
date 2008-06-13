@@ -733,9 +733,15 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		{
 			QGraphicsScene *targetScene;
 			if(loremView->isVisible())
+			{
+				loremView->unSheduleUpdate();
 				targetScene = loremScene;
+			}
 			else if(loremView_FT->isVisible())
+			{
+				loremView_FT->unSheduleUpdate();
 				targetScene = ftScene;
+			}
 			
 			bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
 			QString script = langCombo->currentText();
@@ -772,6 +778,11 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			}
 			textLayout->start(QThread::LowestPriority);
 		}
+	}
+	else if(!loremView->isVisible() && !loremView_FT->isVisible())
+	{
+		loremView->sheduleUpdate();
+		loremView_FT->sheduleUpdate();
 	}
 	qDebug("VIEW Time elapsed: %d ms", t.elapsed());
 	t.restart();

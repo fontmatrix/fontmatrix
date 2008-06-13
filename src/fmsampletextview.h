@@ -36,6 +36,8 @@ class FMSampleTextView : public QGraphicsView
 
 		~FMSampleTextView();
 		
+		void sheduleUpdate();
+		void unSheduleUpdate();
 		bool locker;
 
 	protected:
@@ -56,6 +58,7 @@ class FMSampleTextView : public QGraphicsView
 		QGraphicsRectItem *theRect;
 		bool isSelecting;
 		bool isPanning;
+		bool hasPendingUpdate;
 		
 		void ensureTheRect();
 

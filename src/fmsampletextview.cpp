@@ -27,32 +27,33 @@
 #include <QGLWidget>
 #endif
 
-FMSampleTextView::FMSampleTextView(QWidget* parent)
- : QGraphicsView(parent)
+FMSampleTextView::FMSampleTextView ( QWidget* parent )
+		: QGraphicsView ( parent ),
+		hasPendingUpdate ( false )
 {
 #ifdef HAVE_QTOPENGL
 	QGLFormat glfmt;
-	glfmt.setSampleBuffers(true);
-	QGLWidget *glwgt = new QGLWidget(glfmt);
+	glfmt.setSampleBuffers ( true );
+	QGLWidget *glwgt = new QGLWidget ( glfmt );
 // 	qDebug()<<"GL:: A DR S"<<glwgt->format().alpha()<<glwgt->format().directRendering()<<glwgt->format().sampleBuffers();
 // 	setViewport(glwgt);
-	if(glwgt->format().sampleBuffers())
+	if ( glwgt->format().sampleBuffers() )
 	{
-		setViewport(glwgt);
-		qDebug()<<"opengl enabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+		setViewport ( glwgt );
+		qDebug() <<"opengl enabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
 	}
 	else
 	{
-		qDebug()<<"opengl disabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+		qDebug() <<"opengl disabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
 	}
 #endif
-	
-	setInteractive(true);
+
+	setInteractive ( true );
 	theRect = 0;
 	isSelecting = false;
 	isPanning = false;
-	setAlignment(Qt::AlignTop | Qt::AlignHCenter);
-	setTransformationAnchor(QGraphicsView::NoAnchor);
+	setAlignment ( Qt::AlignTop | Qt::AlignHCenter );
+	setTransformationAnchor ( QGraphicsView::NoAnchor );
 	setRenderHint ( QPainter::Antialiasing, true );
 }
 
@@ -61,19 +62,19 @@ FMSampleTextView::~FMSampleTextView()
 {
 }
 
-void FMSampleTextView::resizeEvent(QResizeEvent * event)
+void FMSampleTextView::resizeEvent ( QResizeEvent * event )
 {
 	emit refit();
 }
 
-void FMSampleTextView::mousePressEvent(QMouseEvent * e)
+void FMSampleTextView::mousePressEvent ( QMouseEvent * e )
 {
-	if(!scene())
+	if ( !scene() )
 		return;
-	if(locker)
+	if ( locker )
 		return;
-	
-	if( e->button() == Qt::MidButton )
+
+	if ( e->button() == Qt::MidButton )
 	{
 		mouseStartPoint =  e->pos() ;
 		isPanning = true;
@@ -81,97 +82,111 @@ void FMSampleTextView::mousePressEvent(QMouseEvent * e)
 	else
 	{
 		ensureTheRect();
-		mouseStartPoint = mapToScene( e->pos() );
+		mouseStartPoint = mapToScene ( e->pos() );
 		isSelecting = true;
 // 		QRectF arect(mouseStartPoint, QSizeF());
 // 		theRect->setRect(arect);
 	}
-	
+
 }
 
-void FMSampleTextView::mouseReleaseEvent(QMouseEvent * e)
+void FMSampleTextView::mouseReleaseEvent ( QMouseEvent * e )
 {
-	if(isPanning)
+	if ( isPanning )
 	{
 		isPanning = false;
 		return;
 	}
-	if(!isSelecting)
+	if ( !isSelecting )
 		return;
 // 	qDebug()<<"End mouse is "<< mapToScene( e->pos()).toPoint();
-	if(mouseStartPoint.toPoint() == mapToScene( e->pos()).toPoint())
+	if ( mouseStartPoint.toPoint() == mapToScene ( e->pos() ).toPoint() )
 	{
 		// scale(1,1)
 // 		qDebug() << "Re-init transformation";
-		emit pleaseZoom(0);
+		emit pleaseZoom ( 0 );
 		isSelecting = false;
-		theRect->setRect(QRectF());
+		theRect->setRect ( QRectF() );
 		return;
 	}
 
-	QRect zoomRect(mouseStartPoint.toPoint(),mapToScene( e->pos()).toPoint());
-	ensureVisible(zoomRect);
+	QRect zoomRect ( mouseStartPoint.toPoint(),mapToScene ( e->pos() ).toPoint() );
+	ensureVisible ( zoomRect );
 	isSelecting = false;
 // 	qDebug() << "release " << theRect->scenePos();
-	fitInView(theRect->sceneBoundingRect(), Qt::KeepAspectRatio);
-	theRect->setRect(QRectF());
-	
-	
-	
+	fitInView ( theRect->sceneBoundingRect(), Qt::KeepAspectRatio );
+	theRect->setRect ( QRectF() );
+
+
+
 }
 
-void FMSampleTextView::mouseMoveEvent(QMouseEvent * e)
+void FMSampleTextView::mouseMoveEvent ( QMouseEvent * e )
 {
-	if(isPanning)
+	if ( isPanning )
 	{
-		QPointF pos(e->pos());
-		int vDelta( mouseStartPoint.y() - pos.y() );
-		int hDelta( mouseStartPoint.x() - pos.x() );
-		verticalScrollBar()->setValue( verticalScrollBar()->value() + vDelta );
-		horizontalScrollBar()->setValue( horizontalScrollBar()->value() + hDelta);
+		QPointF pos ( e->pos() );
+		int vDelta ( mouseStartPoint.y() - pos.y() );
+		int hDelta ( mouseStartPoint.x() - pos.x() );
+		verticalScrollBar()->setValue ( verticalScrollBar()->value() + vDelta );
+		horizontalScrollBar()->setValue ( horizontalScrollBar()->value() + hDelta );
 		mouseStartPoint = pos;
 		return;
 	}
-	if(!isSelecting)
+	if ( !isSelecting )
 		return;
-	
-	QRectF r(mouseStartPoint,mapToScene(e->pos()));
-	theRect->setRect(r);
+
+	QRectF r ( mouseStartPoint,mapToScene ( e->pos() ) );
+	theRect->setRect ( r );
 }
 
 void FMSampleTextView::ensureTheRect()
 {
-	if(theRect)
+	if ( theRect )
 		return;
-	theRect = scene()->addRect(QRectF(),QPen ( QColor(10,10,200)), QColor(10,10,200,100));
-	theRect->setZValue(1000.0);
+	theRect = scene()->addRect ( QRectF(),QPen ( QColor ( 10,10,200 ) ), QColor ( 10,10,200,100 ) );
+	theRect->setZValue ( 1000.0 );
 }
 
 
 
 
-void FMSampleTextView::wheelEvent(QWheelEvent * e)
+void FMSampleTextView::wheelEvent ( QWheelEvent * e )
 {
 // 	qDebug() << "log wheel event " << e->delta();
 // 	QGraphicsView::wheelEvent(e);
-	if(locker)
+	if ( locker )
 		return;
-	
-	if(e->modifiers().testFlag(Qt::ControlModifier) && e->orientation() == Qt::Vertical  )
+
+	if ( e->modifiers().testFlag ( Qt::ControlModifier ) && e->orientation() == Qt::Vertical )
 	{
-		emit pleaseZoom(e->delta());
+		emit pleaseZoom ( e->delta() );
 	}
 	else
 	{
-	if(e->orientation() == Qt::Vertical )
-		verticalScrollBar()->setValue(verticalScrollBar()->value() - e->delta());
-	if(e->orientation() == Qt::Horizontal)
-		horizontalScrollBar()->setValue(horizontalScrollBar()->value() - e->delta());
+		if ( e->orientation() == Qt::Vertical )
+			verticalScrollBar()->setValue ( verticalScrollBar()->value() - e->delta() );
+		if ( e->orientation() == Qt::Horizontal )
+			horizontalScrollBar()->setValue ( horizontalScrollBar()->value() - e->delta() );
 	}
 }
 
-void FMSampleTextView::showEvent(QShowEvent * event)
+void FMSampleTextView::showEvent ( QShowEvent * event )
 {
-// 	emit pleaseUpdateMe();
-	QGraphicsView::showEvent(event);
+	if ( hasPendingUpdate )
+	{
+		hasPendingUpdate = false;
+		emit pleaseUpdateMe();
+	}
+	QGraphicsView::showEvent ( event );
+}
+
+void FMSampleTextView::sheduleUpdate()
+{
+	hasPendingUpdate = true;
+}
+
+void FMSampleTextView::unSheduleUpdate()
+{
+	hasPendingUpdate = false;
 }

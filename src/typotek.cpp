@@ -796,7 +796,7 @@ void typotek::checkOwnDir()
 	managedDir.setPath(QDir::homePath() + sep + "Library" + sep + "Fonts");
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + sep + "Library" + sep + "Fonts" );
-	fontsdata.setFileName ( QDir::homePath() + sep +"fontmatrix.data" );
+	fontsdata.setFileName ( QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep +"fontmatrix.data" );
 	
 #elif _WIN32
 	// For win we do not hide things because it does 

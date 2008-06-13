@@ -796,6 +796,11 @@ void typotek::checkOwnDir()
 	managedDir.setPath(QDir::homePath() + sep + "Library" + sep + "Fonts");
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + sep + "Library" + sep + "Fonts" );
+	if(!QDir::exists(QDir::homePath() + sep + "Library" + sep + "Fontmatrix"))
+	{
+		QDir dbDir;
+		dbDir.mkpath (QDir::homePath() + sep + "Library" + sep + "Fontmatrix");
+	}
 	fontsdata.setFileName ( QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep +"fontmatrix.data" );
 	
 #elif _WIN32

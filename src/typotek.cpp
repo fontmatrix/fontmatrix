@@ -794,7 +794,6 @@ void typotek::checkOwnDir()
 #ifdef PLATFORM_APPLE
 	
 	managedDir.setPath(QDir::homePath() + sep + "Library" + sep + "Fonts");
-	managedDir.setPath ( QDir::homePath() + fontmanaged );
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + fontmanaged );
 	fontsdata.setFileName ( QDir::homePath() + sep +"fontmatrix.data" );

@@ -129,7 +129,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	loremView->setScene ( loremScene );
 	loremView->locker = false;
-	loremView->setTransform ( QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0,( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0 ),false );
+	double horiScaleT (( double ) QApplication::desktop()->physicalDpiX() / 72.0);
+	double vertScaleT ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0);
+	QTransform adjustAbsoluteViewT( horiScaleT , 0, 0,vertScaleT, 0, 0 );
+	qDebug()<<"m"<< adjustAbsoluteViewT;
+	loremView->setTransform ( adjustAbsoluteViewT , false );
 
 	loremView_FT->setScene ( ftScene );
 	loremView_FT->locker = false;
@@ -772,10 +776,10 @@ void MainViewWidget::slotView ( bool needDeRendering )
 					list << theVeryFont->glyphs( stl[p] , fSize  );
 			}
 			textLayout->doLayout(list, fSize);
-			if (loremView->isVisible() /*&& fitViewCheck->isChecked()*/ )
-			{
-				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
-			}
+// 			if (loremView->isVisible() /*&& fitViewCheck->isChecked()*/ )
+// 			{
+// 				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
+// 			}
 			textLayout->start(QThread::LowestPriority);
 		}
 	}
@@ -784,7 +788,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		loremView->sheduleUpdate();
 		loremView_FT->sheduleUpdate();
 	}
-	qDebug("VIEW Time elapsed: %d ms", t.elapsed());
+// 	qDebug("VIEW Time elapsed: %d ms", t.elapsed());
 	t.restart();
 	slotInfoFont();
 	qDebug("INFO Time elapsed: %d ms", t.elapsed());
@@ -988,10 +992,11 @@ void MainViewWidget::slotZoom ( int z )
 		concernedView = loremView;
 		if ( delta == 1.0 )
 		{
-			trans =  QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,
-			                      0,0,
-			                      ( double ) QApplication::desktop()->physicalDpiX() / 72.0,
-			                      0,0 );
+			double horiScaleT (( double ) QApplication::desktop()->physicalDpiX() / 72.0);
+			double vertScaleT ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0);
+			QTransform adjustAbsoluteViewT( horiScaleT , 0, 0,vertScaleT, 0, 0 );
+			qDebug()<<"m"<< adjustAbsoluteViewT;
+			trans =  adjustAbsoluteViewT;
 		}
 	}
 	else if ( playView->isVisible() )

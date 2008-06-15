@@ -113,25 +113,28 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		{
 			// additive width of glyphs
 			double di ( lyt->distance ( cIdx, lyt->breakList[bIndex],lyt->theString ) );
-			// additive width of glyphs without spaces
-			double stripDi(lyt->distance ( cIdx, lyt->breakList[bIndex],lyt->theString , true ) );
-			// number of spaces
-// 			double countSep(lyt->distance ( cIdx, lyt->breakList[bIndex],lyt->theString ) );
-			// total space width
-			double totalSpace(di - stripDi);
-			// Uniq space width
-// 			double uniqSpace(totalSpace / countSep);
-			
 			if ( di >= lyt->lineWidth ( deep ) )
 			{
+				/// BEFORE
 				for ( int backIndex ( 1 ) ; ( bIndex - backIndex > 0 ) && ( lyt->breakList[bIndex - backIndex] != cIdx ); ++backIndex )
 				{
 					int soon ( lyt->breakList[bIndex - backIndex] );
-					double disN = lyt->lineWidth ( deep ) - lyt->distance ( cIdx, soon,lyt->theString );
-					double sharedDist( (totalSpace - disN) * 100 / totalSpace  );
-					qDebug()<<"di sdi TS dN SD"<< di<< stripDi<<totalSpace<<disN<<sharedDist;
-					if(sharedDist < lyt->FM_LAYOUT_MAX_COMPRESSION)
+					double needWidth(lyt->distance ( cIdx, soon ,lyt->theString ));
+					double needWidthStripped(lyt->distance ( cIdx, soon ,lyt->theString , true ) );
+					double spaceWidth(needWidth - needWidthStripped);
+					
+					double disN = needWidth - lyt->lineWidth ( deep ) ;
+					
+					double compressValue( disN * 100.0 / spaceWidth  );
+// 					qDebug()<<"PRE spaceWidth("<<spaceWidth<<") disN("<<disN<<") compressValue("<<compressValue<<")";
+					if(compressValue > lyt->FM_LAYOUT_MAX_COMPRESSION)
+					{
 						break;
+					}
+// 					else
+// 						qDebug()<<"["<<cIdx<<","<<soon<<"]spaceWidth("<<spaceWidth<<") disN("<<disN<<") compressValue("<<compressValue<<")";
+					
+					
 					Node* sN = 0;
 					sN = new Node ( soon );
 					if ( lyt->hyphenList.contains ( soon ) )
@@ -156,38 +159,66 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					if ( QChar ( lyt->theString[soon].lChar ).category() == QChar::Separator_Space )
 						break;
 				}
-
-				int fit ( lyt->breakList[bIndex] );
-				Node* sF = 0;
-				sF = new Node ( fit );
-				double disF =  lyt->lineWidth ( deep )- lyt->distance ( cIdx, fit,lyt->theString );
-				if ( lyt->hyphenList.contains ( fit ) )
-					disF *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
-
-				Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
-// 				curNode->nodes << vF;
-				if ( nodes.isEmpty() )
+				/// AT CLOSEST BREAK (after)
 				{
-					nodes.insert ( 0,vF );
-				}
-				else
-				{
-					for ( int nI ( 0 );nI<nodes.count();++nI )
+					int fit ( lyt->breakList[bIndex] );
+					
+					double needWidth(lyt->distance ( cIdx, fit,lyt->theString ));
+					double needWidthStripped(lyt->distance ( cIdx, fit ,lyt->theString , true ) );
+					double spaceWidth(needWidth - needWidthStripped);
+					
+					double disF =  needWidth - lyt->lineWidth ( deep );
+					
+					double compressValue( disF * 100.0 / spaceWidth  );
+					if(compressValue <= lyt->FM_LAYOUT_MAX_COMPRESSION)
 					{
-						if ( vF.distance <= nodes[nI].distance )
+						qDebug()<<"["<<cIdx<<","<<fit<<"]("<< lyt->sepCount(cIdx, fit ,lyt->theString) <<") spaceWidth("<<spaceWidth<<") disF("<<disF<<") compressValue("<<compressValue<<")";
+
+						Node* sF = 0;
+						sF = new Node ( fit );
+						if ( lyt->hyphenList.contains ( fit ) )
+							disF *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
+		
+						Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
+		// 				curNode->nodes << vF;
+						if ( nodes.isEmpty() )
 						{
-							nodes.insert ( nI,vF );
-							break;
+							nodes.insert ( 0,vF );
+						}
+						else
+						{
+							for ( int nI ( 0 );nI<nodes.count();++nI )
+							{
+								if ( vF.distance <= nodes[nI].distance )
+								{
+									nodes.insert ( nI,vF );
+									break;
+								}
+							}
 						}
 					}
 				}
-
+				/// AFTER
 				for ( int nextIndex ( 1 ); bIndex + nextIndex <  lyt->breakList.count() ; ++nextIndex )
 				{
 					int late ( lyt->breakList[bIndex + nextIndex] );
+					double needWidth(lyt->distance ( cIdx, late ,lyt->theString ));
+					double needWidthStripped(lyt->distance ( cIdx, late ,lyt->theString , true ) );
+					double spaceWidth(needWidth - needWidthStripped);
+					
+					double disL = needWidth - lyt->lineWidth ( deep );
+					
+					double compressValue(  disL * 100.0 / spaceWidth  );
+					if(compressValue > lyt->FM_LAYOUT_MAX_COMPRESSION)
+					{
+// 						qDebug()<<"break_ cV ="<<compressValue;
+						break;
+					}
+					else
+						qDebug()<<"["<<cIdx<<","<<late<<"]spaceWidth("<<spaceWidth<<") disL("<<disL<<") compressValue("<<compressValue<<")";
+					
 					Node* sL = 0;
 					sL = new Node ( late );
-					double disL = lyt->lineWidth ( deep )- lyt->distance ( cIdx, late ,lyt->theString );
 					if ( lyt->hyphenList.contains ( late ) )
 						disL *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
 
@@ -519,8 +550,8 @@ void FMLayout::doLines()
 			dStr += QChar ( rg.lChar );
 			dBk += rg.isBreak ? "#" : "_";
 		}
-// 		qDebug() << "S"<<dStr;
-// 		qDebug() << "H"<<dBk;
+		qDebug() << "S"<<dStr;
+		qDebug() << "H"<<dBk;
 
 // 		qDebug()<<"S E Sib Eib"<<start<<end<<theString.at(start).isBreak<<theString.at(end).isBreak;
 
@@ -867,6 +898,7 @@ int FMLayout::sepCount(int start, int end, const GlyphList & gl)
 	return ret;
 }
 
+// please move this method to GlyphList itself
 double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip )
 {
 // 	qDebug()<<"distance(start ="<<start<<",end"<<end<<",strip"<<strip<<" )";
@@ -888,23 +920,29 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 	}
 	int storeStart(start);
 	int storeEnd(end);
-
+	bool hasHyph(false);
+	GlyphList hyphList;
+	if(start>0 && gl[start - 1].isBreak)
+	{
+		hasHyph = true;
+		hyphList = gl[start - 1].hyphen.second;
+	}
 	GlyphList gList = gl;
-	if ( QChar ( gList.first().lChar ).category() == QChar::Separator_Space )
-	{
-		while ( QChar ( gList.first().lChar ).category() == QChar::Separator_Space && start < end )
-		{
-			++start;
-		}
-	}
-	if ( QChar ( gList.last().lChar ).category() == QChar::Separator_Space )
-	{
-		while ( QChar ( gList.last().lChar ).category() == QChar::Separator_Space && end > start )
-		{
-			--end;
-		}
-	}
-	
+// 	if ( QChar ( gList.first().lChar ).category() == QChar::Separator_Space )
+// 	{
+// 		while ( QChar ( gList.first().lChar ).category() == QChar::Separator_Space && start < end )
+// 		{
+// 			++start;
+// 		}
+// 	}
+// 	if ( QChar ( gList.last().lChar ).category() == QChar::Separator_Space )
+// 	{
+// 		while ( QChar ( gList.last().lChar ).category() == QChar::Separator_Space && end > start )
+// 		{
+// 			--end;
+// 		}
+// 	}
+// 	
 	TextProgression *tp = TextProgression::getInstance();
 	bool verticalLayout ( tp->inLine() == TextProgression::INLINE_BTT || tp->inLine() == TextProgression::INLINE_TTB );
 // 	qDebug()<<"IB VL"<<tp->inLine()<<verticalLayout;
@@ -925,7 +963,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 	int EXend ( end -1 );
 	if ( verticalLayout )
 	{
-		if ( !gList.at ( start ).isBreak && !gList.at ( EXend ).isBreak )
+		if ( !hasHyph && !gList.at ( EXend ).isBreak )
 		{
 			for ( int i ( start ); i < end ;++i )
 			{
@@ -939,9 +977,9 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 					ret += gList.at ( i ).yadvance;
 			}
 		}
-		else if ( gList.at ( start ).isBreak && !gList.at ( EXend ).isBreak )
+		else if ( hasHyph && !gList.at ( EXend ).isBreak )
 		{
-			GlyphList hr ( gList.at ( start ).hyphen.second );
+			GlyphList hr ( gList.at ( start - 1).hyphen.second );
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
 				ret += hr[ih].yadvance;
@@ -966,11 +1004,11 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 					ret += gList.at ( i ).yadvance ;
 			}
 		}
-		else if ( !gList.at ( start ).isBreak && gList.at ( EXend ).isBreak )
+		else if ( !hasHyph && gList.at ( EXend ).isBreak )
 		{
 			int bp ( end );
 			while ( QChar ( gList.at ( bp ).lChar ).category() != QChar::Separator_Space &&  bp > start ) --bp ;
-			--bp;
+			++bp;
 
 			for ( int i ( start ); i < bp ;++i )
 			{
@@ -989,9 +1027,9 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 			}
 
 		}
-		else if ( gList.at ( start ).isBreak && gList.at ( EXend ).isBreak )
+		else if ( hasHyph && gList.at ( EXend ).isBreak )
 		{
-			GlyphList hr ( gList.at ( start ).hyphen.second );
+			GlyphList hr ( hyphList );
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
 				ret += hr[ih].yadvance;
@@ -1007,7 +1045,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 
 			int bpE ( end );
 			while ( QChar ( gList.at ( bpE ).lChar ).category() != QChar::Separator_Space &&  bpE > start ) --bpE ;
-			--bpE;
+			++bpE;
 
 			for ( int i ( bpS ); i < bpE ;++i )
 			{
@@ -1028,9 +1066,9 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 	}
 	else
 	{
-		if ( !gList.at ( start ).isBreak && !gList.at ( EXend ).isBreak )
+		if ( !hasHyph && !gList.at ( EXend ).isBreak )
 		{
-			// 		qDebug()<<". ." ;
+					qDebug()<<". ." ;
 			for ( int i ( start ); i < end ;++i )
 			{
 				if(strip)
@@ -1042,10 +1080,10 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 					ret += gList.at ( i ).xadvance /*+ gList.at ( i ).xoffset*/;
 			}
 		}
-		else if ( gList.at ( start ).isBreak && !gList.at ( EXend ).isBreak )
+		else if ( hasHyph && !gList.at ( EXend ).isBreak )
 		{
-			// 		qDebug()<<"- ." ;
-			GlyphList hr ( gList.at ( start ).hyphen.second );
+					qDebug()<<"- ." ;
+			GlyphList hr ( hyphList );
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
 				// 			qDebug()<<"ih"<<ih;
@@ -1075,12 +1113,12 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 
 
 		}
-		else if ( !gList.at ( start ).isBreak && gList.at ( EXend ).isBreak )
+		else if ( !hasHyph && gList.at ( EXend ).isBreak )
 		{
-			// 		qDebug()<<". -" ;
+					qDebug()<<". -" ;
 			int bp ( end );
 			while ( QChar ( gList.at ( bp ).lChar ).category() != QChar::Separator_Space &&  bp > start ) --bp ;
-			--bp;
+			++bp;
 
 			for ( int i ( start ); i < bp ;++i )
 			{
@@ -1099,14 +1137,17 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 			}
 
 		}
-		else if ( gList.at ( start ).isBreak && gList.at ( EXend ).isBreak )
+		else if ( hasHyph && gList.at ( EXend ).isBreak )
 		{
-			// 		qDebug()<<"- -" ;
-			GlyphList hr ( gList.at ( start ).hyphen.second );
+					qDebug()<<"- -" ;
+// 			QString debStr;
+			GlyphList hr ( hyphList);
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
+// 				debStr += QChar(hr[ih].lChar);
 				ret += hr[ih].xadvance;
 			}
+			
 			int bpS ( start );
 			while ( bpS < end )
 			{
@@ -1118,7 +1159,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 
 			int bpE ( end );
 			while ( QChar ( gList.at ( bpE ).lChar ).category() != QChar::Separator_Space &&  bpE > start ) --bpE ;
-			--bpE;
+			++bpE;
 
 			for ( int i ( bpS ); i < bpE ;++i )
 			{
@@ -1128,13 +1169,18 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 						ret += gList.at ( i ).xadvance;
 				}
 				else
+				{
+// 					debStr += QChar(gList.at( i ).lChar);
 					ret += gList.at ( i ).xadvance /*+ gList.at ( i ).xoffset*/;
+				}
 			}
 			GlyphList hr2 ( gList.at ( EXend ).hyphen.first );
 			for ( int ih ( 0 ); ih < hr2.count(); ++ih )
 			{
+// 				debStr += QChar(hr2[ih].lChar);
 				ret += hr2[ih].xadvance;
 			}
+// 			qDebug()<<"D(= =)"<<debStr;
 		}
 	}
 

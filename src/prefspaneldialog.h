@@ -28,7 +28,7 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 
 		~PrefsPanelDialog();
 
-		enum PAGE{PAGE_GENERAL,PAGE_SAMPLETEXT,PAGE_FILES};
+		enum PAGE{PAGE_GENERAL,PAGE_SAMPLETEXT,PAGE_FILES,PAGE_SHORTCUTS};
 
 		void initSystrayPrefs(bool hasSystray, bool isVisible, bool hasActivateAll, bool allConfirmation, bool tagConfirmation);
 		void initSampleTextPrefs();
@@ -57,6 +57,7 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void setSelected(const QString &actionText);
 
 	private slots:
+		void slotSelectPage(QListWidgetItem * item);
 		void applySampleText();
 
 		void addSampleName();

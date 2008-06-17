@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>691</width>
-    <height>620</height>
+    <width>730</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -16,680 +16,634 @@
    <iconset resource="application.qrc" >
     <normaloff>:/fontmatrix_icon.png</normaloff>:/fontmatrix_icon.png</iconset>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" colspan="2" >
-    <widget class="QGroupBox" name="groupBox_7" >
-     <property name="title" >
-      <string>Preferences</string>
+  <layout class="QGridLayout" name="gridLayout_2" >
+   <item row="0" column="1" colspan="2" >
+    <widget class="QStackedWidget" name="stackedPrefs" >
+     <property name="currentIndex" >
+      <number>0</number>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QTabWidget" name="mainTab" >
-        <property name="currentIndex" >
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="tab" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>647</width>
-           <height>494</height>
-          </rect>
+     <widget class="QWidget" name="page" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>555</width>
+        <height>485</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5" >
+       <item row="0" column="0" >
+        <widget class="QGroupBox" name="systrayFrame" >
+         <property name="title" >
+          <string>Show Fontmatrix in System Tray</string>
          </property>
-         <attribute name="title" >
-          <string>General</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout" >
+         <property name="flat" >
+          <bool>false</bool>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <property name="checked" >
+          <bool>false</bool>
+         </property>
+         <layout class="QVBoxLayout" name="_2" >
           <item>
-           <widget class="QGroupBox" name="systrayFrame" >
+           <widget class="QCheckBox" name="closeToSystray" >
+            <property name="text" >
+             <string>Close to System Tray</string>
+            </property>
+            <property name="checked" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="activateAllFrame" >
             <property name="title" >
-             <string>Show Fontmatrix in System Tray</string>
+             <string>Show "All" actions</string>
             </property>
             <property name="flat" >
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="checkable" >
              <bool>true</bool>
             </property>
-            <property name="checked" >
-             <bool>false</bool>
-            </property>
-            <layout class="QVBoxLayout" >
+            <layout class="QVBoxLayout" name="_3" >
              <item>
-              <widget class="QCheckBox" name="closeToSystray" >
+              <widget class="QCheckBox" name="activateAllConfirmation" >
                <property name="text" >
-                <string>Close to System Tray</string>
+                <string>Ask confirmation when activating or deactivating all fonts</string>
                </property>
                <property name="checked" >
                 <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QGroupBox" name="activateAllFrame" >
-               <property name="title" >
-                <string>Show "All" actions</string>
-               </property>
-               <property name="flat" >
-                <bool>true</bool>
-               </property>
-               <property name="checkable" >
-                <bool>true</bool>
-               </property>
-               <layout class="QVBoxLayout" >
-                <item>
-                 <widget class="QCheckBox" name="activateAllConfirmation" >
-                  <property name="text" >
-                   <string>Ask confirmation when activating or deactivating all fonts</string>
-                  </property>
-                  <property name="checked" >
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="tagsConfirmation" >
-               <property name="text" >
-                <string>Ask confirmation when activating or deactivating fonts by tags</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox" >
-            <property name="title" >
-             <string>Preview Word</string>
-            </property>
-            <layout class="QGridLayout" >
-             <item row="0" column="0" >
-              <widget class="QLineEdit" name="previewWord" >
-               <property name="minimumSize" >
-                <size>
-                 <width>300</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" >
-              <widget class="QCheckBox" name="previewIsRTL" >
-               <property name="text" >
-                <string>is RTL</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2" >
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0" >
-                <size>
-                 <width>41</width>
-                 <height>31</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="0" column="3" >
-              <widget class="QLabel" name="label" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-                 <horstretch>1</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text" >
-                <string>size</string>
-               </property>
-               <property name="alignment" >
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="4" >
-              <widget class="QDoubleSpinBox" name="previewSizeSpin" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-                 <horstretch>2</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="wrapping" >
-                <bool>false</bool>
-               </property>
-               <property name="frame" >
-                <bool>true</bool>
-               </property>
-               <property name="suffix" >
-                <string> pt</string>
-               </property>
-               <property name="decimals" >
-                <number>1</number>
-               </property>
-               <property name="minimum" >
-                <double>1.000000000000000</double>
-               </property>
-               <property name="value" >
-                <double>10.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_4" >
-            <property name="title" >
-             <string>Font Editor</string>
-            </property>
-            <layout class="QHBoxLayout" >
-             <item>
-              <widget class="QLineEdit" name="fontEditorPath" >
-               <property name="minimumSize" >
-                <size>
-                 <width>300</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="toolTip" >
-                <string>Add the full path to your preferred font editor</string>
-               </property>
-               <property name="text" >
-                <string>/usr/bin/fontforge</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="fontEditorBrowse" >
-               <property name="text" >
-                <string>Browse...</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0" >
-                <size>
-                 <width>151</width>
-                 <height>22</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="initTagBox" >
+           <widget class="QCheckBox" name="tagsConfirmation" >
             <property name="text" >
-             <string>Ask for tag names when importing fonts</string>
+             <string>Ask confirmation when activating or deactivating fonts by tags</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Preview Word</string>
+         </property>
+         <layout class="QGridLayout" name="_4" >
+          <item row="0" column="0" >
+           <widget class="QLineEdit" name="previewWord" >
+            <property name="minimumSize" >
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QCheckBox" name="previewIsRTL" >
+            <property name="text" >
+             <string>is RTL</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0" >
+             <size>
+              <width>41</width>
+              <height>31</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="3" >
+           <widget class="QLabel" name="label" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text" >
+             <string>size</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4" >
+           <widget class="QDoubleSpinBox" name="previewSizeSpin" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+              <horstretch>2</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="wrapping" >
+             <bool>false</bool>
+            </property>
+            <property name="frame" >
+             <bool>true</bool>
+            </property>
+            <property name="suffix" >
+             <string> pt</string>
+            </property>
+            <property name="decimals" >
+             <number>1</number>
+            </property>
+            <property name="minimum" >
+             <double>1.000000000000000</double>
+            </property>
+            <property name="value" >
+             <double>10.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QGroupBox" name="groupBox_4" >
+         <property name="title" >
+          <string>Font Editor</string>
+         </property>
+         <layout class="QHBoxLayout" name="_5" >
+          <item>
+           <widget class="QLineEdit" name="fontEditorPath" >
+            <property name="minimumSize" >
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="toolTip" >
+             <string>Add the full path to your preferred font editor</string>
+            </property>
+            <property name="text" >
+             <string>/usr/bin/fontforge</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="showNamesBox" >
+           <widget class="QPushButton" name="fontEditorBrowse" >
             <property name="text" >
-             <string>Show names of imported fonts after import process</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="splashCheck" >
-            <property name="text" >
-             <string>Show splash at startup</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="familyNameScheme" >
-            <property name="text" >
-             <string>Don’t use preferred name scheme (will affect only newly imported fonts)</string>
+             <string>Browse...</string>
             </property>
            </widget>
           </item>
           <item>
            <spacer>
             <property name="orientation" >
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0" >
              <size>
-              <width>629</width>
-              <height>31</height>
+              <width>151</width>
+              <height>22</height>
              </size>
             </property>
            </spacer>
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_2" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>647</width>
-           <height>494</height>
-          </rect>
+       </item>
+       <item row="3" column="0" >
+        <widget class="QCheckBox" name="initTagBox" >
+         <property name="text" >
+          <string>Ask for tag names when importing fonts</string>
          </property>
-         <attribute name="title" >
-          <string>Sample Text</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_3" >
-          <item>
-           <widget class="QGroupBox" name="groupBox_2" >
-            <property name="toolTip" >
-             <string/>
-            </property>
-            <property name="title" >
-             <string>Named Sample Texts</string>
-            </property>
-            <layout class="QGridLayout" name="gLt" >
-             <item row="0" column="0" colspan="2" >
-              <widget class="QListWidget" name="sampleTextNamesList" />
-             </item>
-             <item rowspan="2" row="0" column="2" >
-              <widget class="QTextEdit" name="namedSampleTextText" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-                 <horstretch>2</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" >
-              <widget class="QLineEdit" name="newSampleTextNameText" />
-             </item>
-             <item row="1" column="1" >
-              <widget class="QPushButton" name="addSampleTextNameButton" >
-               <property name="text" >
-                <string>Add</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_3" >
-            <property name="title" >
-             <string>Initial Layout</string>
-            </property>
-            <layout class="QGridLayout" name="gLt_2" >
-             <item row="0" column="0" >
-              <widget class="QLabel" name="label_2" >
-               <property name="text" >
-                <string>Font Size:</string>
-               </property>
-               <property name="buddy" >
-                <cstring>fontSizeSpin</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" >
-              <widget class="QDoubleSpinBox" name="fontSizeSpin" >
-               <property name="suffix" >
-                <string> pt</string>
-               </property>
-               <property name="minimum" >
-                <double>1.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2" >
-              <widget class="QLabel" name="label_3" >
-               <property name="text" >
-                <string>Interline:</string>
-               </property>
-               <property name="buddy" >
-                <cstring>interLineSpin</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="3" >
-              <widget class="QDoubleSpinBox" name="interLineSpin" >
-               <property name="suffix" >
-                <string> pt</string>
-               </property>
-               <property name="minimum" >
-                <double>1.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_8" >
-            <property name="title" >
-             <string>Hyphenation</string>
-            </property>
-            <layout class="QGridLayout" name="gLt_3" >
-             <item row="0" column="3" >
-              <widget class="QLabel" name="label_5" >
-               <property name="text" >
-                <string>Left:</string>
-               </property>
-               <property name="buddy" >
-                <cstring>fontSizeSpin</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="5" >
-              <widget class="QLabel" name="label_6" >
-               <property name="text" >
-                <string>Right:</string>
-               </property>
-               <property name="buddy" >
-                <cstring>interLineSpin</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" >
-              <widget class="QLineEdit" name="dictEdit" />
-             </item>
-             <item row="0" column="0" >
-              <widget class="QLabel" name="label_7" >
-               <property name="text" >
-                <string>Dictionary:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2" >
-              <widget class="QToolButton" name="dictButton" >
-               <property name="toolTip" >
-                <string>Browse</string>
-               </property>
-               <property name="text" >
-                <string>...</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="4" >
-              <widget class="QSpinBox" name="leftBox" />
-             </item>
-             <item row="0" column="6" >
-              <widget class="QSpinBox" name="rightBox" />
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" >
-            <item>
-             <spacer name="horizontalSpacer_2" >
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0" >
-               <size>
-                <width>541</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="applySampleTextButton" >
-              <property name="text" >
-               <string>Apply</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
         </widget>
-        <widget class="QWidget" name="tab_3" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>647</width>
-           <height>494</height>
-          </rect>
+       </item>
+       <item row="4" column="0" >
+        <widget class="QCheckBox" name="showNamesBox" >
+         <property name="text" >
+          <string>Show names of imported fonts after import process</string>
          </property>
-         <attribute name="title" >
-          <string>Files and Folders</string>
-         </attribute>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QGroupBox" name="groupBox_5" >
-            <property name="title" >
-             <string>Templates Folder</string>
+        </widget>
+       </item>
+       <item row="5" column="0" >
+        <widget class="QCheckBox" name="splashCheck" >
+         <property name="text" >
+          <string>Show splash at startup</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" >
+        <widget class="QCheckBox" name="familyNameScheme" >
+         <property name="text" >
+          <string>Don’t use preferred name scheme (will affect only newly imported fonts)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" >
+        <spacer name="verticalSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>848</width>
+        <height>792</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4" >
+       <item row="0" column="0" >
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="toolTip" >
+          <string/>
+         </property>
+         <property name="title" >
+          <string>Named Sample Texts</string>
+         </property>
+         <layout class="QGridLayout" name="gLt" >
+          <item row="0" column="0" colspan="2" >
+           <widget class="QListWidget" name="sampleTextNamesList" />
+          </item>
+          <item rowspan="2" row="0" column="2" >
+           <widget class="QTextEdit" name="namedSampleTextText" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+              <horstretch>2</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <layout class="QGridLayout" >
-             <item row="0" column="0" >
-              <widget class="QLineEdit" name="templatesFolder" >
-               <property name="minimumSize" >
-                <size>
-                 <width>300</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" >
-              <widget class="QPushButton" name="templatesDirBrowse" >
-               <property name="text" >
-                <string>Browse...</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2" >
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0" >
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
            </widget>
           </item>
           <item row="1" column="0" >
-           <widget class="QGroupBox" name="groupBox_6" >
-            <property name="title" >
-             <string>Remote directories</string>
+           <widget class="QLineEdit" name="newSampleTextNameText" />
+          </item>
+          <item row="1" column="1" >
+           <widget class="QPushButton" name="addSampleTextNameButton" >
+            <property name="text" >
+             <string>Add</string>
             </property>
-            <layout class="QGridLayout" >
-             <item row="0" column="0" >
-              <layout class="QHBoxLayout" >
-               <item>
-                <widget class="QLineEdit" name="newUrlText" >
-                 <property name="text" >
-                  <string>http://</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="remoteDirAdd" >
-                 <property name="minimumSize" >
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="text" >
-                  <string>Add</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="0" >
-              <layout class="QHBoxLayout" >
-               <item>
-                <widget class="QListWidget" name="remoteDirList" />
-               </item>
-               <item>
-                <layout class="QVBoxLayout" >
-                 <item>
-                  <widget class="QPushButton" name="remoteDirRemove" >
-                   <property name="text" >
-                    <string>Remove</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer>
-                   <property name="orientation" >
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0" >
-                    <size>
-                     <width>100</width>
-                     <height>41</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-             <item row="2" column="0" >
-              <widget class="Line" name="line" >
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" >
-              <layout class="QHBoxLayout" >
-               <item>
-                <widget class="QLabel" name="label_4" >
-                 <property name="text" >
-                  <string>Local storage</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="localStorageLine" />
-               </item>
-               <item>
-                <widget class="QPushButton" name="localStorageButton" >
-                 <property name="text" >
-                  <string>Browse...</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
            </widget>
           </item>
-          <item row="2" column="0" >
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QGroupBox" name="groupBox_3" >
+         <property name="title" >
+          <string>Initial Layout</string>
+         </property>
+         <layout class="QGridLayout" name="gLt_2" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>Font Size:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>fontSizeSpin</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QDoubleSpinBox" name="fontSizeSpin" >
+            <property name="suffix" >
+             <string> pt</string>
+            </property>
+            <property name="minimum" >
+             <double>1.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>Interline:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>interLineSpin</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3" >
+           <widget class="QDoubleSpinBox" name="interLineSpin" >
+            <property name="suffix" >
+             <string> pt</string>
+            </property>
+            <property name="minimum" >
+             <double>1.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QGroupBox" name="groupBox_8" >
+         <property name="title" >
+          <string>Hyphenation</string>
+         </property>
+         <layout class="QGridLayout" name="gLt_3" >
+          <item row="0" column="3" >
+           <widget class="QLabel" name="label_5" >
+            <property name="text" >
+             <string>Left:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>fontSizeSpin</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5" >
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>Right:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>interLineSpin</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QLineEdit" name="dictEdit" />
+          </item>
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_7" >
+            <property name="text" >
+             <string>Dictionary:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
+           <widget class="QToolButton" name="dictButton" >
+            <property name="toolTip" >
+             <string>Browse</string>
+            </property>
+            <property name="text" >
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4" >
+           <widget class="QSpinBox" name="leftBox" />
+          </item>
+          <item row="0" column="6" >
+           <widget class="QSpinBox" name="rightBox" />
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0" >
+        <layout class="QHBoxLayout" name="horizontalLayout_2" >
+         <item>
+          <spacer name="horizontalSpacer_2" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>541</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="applySampleTextButton" >
+           <property name="text" >
+            <string>Apply</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_3" >
+      <layout class="QGridLayout" name="gridLayout_3" >
+       <item row="0" column="0" >
+        <widget class="QGroupBox" name="groupBox_5" >
+         <property name="title" >
+          <string>Templates Folder</string>
+         </property>
+         <layout class="QGridLayout" name="_6" >
+          <item row="0" column="0" >
+           <widget class="QLineEdit" name="templatesFolder" >
+            <property name="minimumSize" >
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QPushButton" name="templatesDirBrowse" >
+            <property name="text" >
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
            <spacer>
             <property name="orientation" >
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0" >
              <size>
-              <width>629</width>
-              <height>31</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
            </spacer>
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_4" >
-         <property name="geometry" >
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>647</width>
-           <height>494</height>
-          </rect>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QGroupBox" name="groupBox_6" >
+         <property name="title" >
+          <string>Remote directories</string>
          </property>
-         <attribute name="title" >
-          <string>Shortcuts</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_2" >
-          <item>
-           <widget class="QTableView" name="shortcutList" >
-            <property name="editTriggers" >
-             <set>QAbstractItemView::NoEditTriggers</set>
+         <layout class="QGridLayout" name="_7" >
+          <item row="0" column="0" >
+           <layout class="QHBoxLayout" name="_8" >
+            <item>
+             <widget class="QLineEdit" name="newUrlText" >
+              <property name="text" >
+               <string>http://</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="remoteDirAdd" >
+              <property name="minimumSize" >
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text" >
+               <string>Add</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0" >
+           <layout class="QHBoxLayout" name="_9" >
+            <item>
+             <widget class="QListWidget" name="remoteDirList" />
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="_10" >
+              <item>
+               <widget class="QPushButton" name="remoteDirRemove" >
+                <property name="text" >
+                 <string>Remove</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>100</width>
+                  <height>41</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0" >
+           <widget class="Line" name="line" >
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout" >
+          <item row="3" column="0" >
+           <layout class="QHBoxLayout" name="_11" >
             <item>
-             <widget class="QToolButton" name="changeButton" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
+             <widget class="QLabel" name="label_4" >
               <property name="text" >
-               <string>Change</string>
-              </property>
-              <property name="checkable" >
-               <bool>true</bool>
+               <string>Local storage</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="clearButton" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text" >
-               <string>Remove</string>
-              </property>
-             </widget>
+             <widget class="QLineEdit" name="localStorageLine" />
             </item>
             <item>
-             <widget class="QLabel" name="shortcutLabel" >
+             <widget class="QPushButton" name="localStorageButton" >
               <property name="text" >
-               <string>TextLabel</string>
+               <string>Browse...</string>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer" >
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0" >
-               <size>
-                <width>387</width>
-                <height>26</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
          </layout>
         </widget>
-       </widget>
-      </item>
-     </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_4" >
+      <layout class="QGridLayout" name="gridLayout" >
+       <item row="0" column="0" >
+        <widget class="QTableView" name="shortcutList" >
+         <property name="editTriggers" >
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <layout class="QHBoxLayout" name="horizontalLayout" >
+         <item>
+          <widget class="QToolButton" name="changeButton" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Change</string>
+           </property>
+           <property name="checkable" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="clearButton" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="shortcutLabel" >
+           <property name="text" >
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>387</width>
+             <height>26</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+      <zorder>layoutWidget_2</zorder>
+      <zorder>shortcutList</zorder>
+      <zorder>horizontalSpacer</zorder>
+      <zorder>horizontalSpacer</zorder>
+     </widget>
     </widget>
    </item>
-   <item row="1" column="0" >
+   <item row="1" column="1" >
     <spacer>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
@@ -702,11 +656,52 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="1" >
+   <item row="1" column="2" >
     <widget class="QPushButton" name="closeButton" >
      <property name="text" >
       <string>Close</string>
      </property>
+    </widget>
+   </item>
+   <item rowspan="2" row="0" column="0" >
+    <widget class="QListWidget" name="catList" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font" >
+      <font>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+       <strikeout>false</strikeout>
+      </font>
+     </property>
+     <property name="spacing" >
+      <number>5</number>
+     </property>
+     <item>
+      <property name="text" >
+       <string>General</string>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string>Sample text</string>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string>Files &amp; Folders</string>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string>Shotcuts</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>

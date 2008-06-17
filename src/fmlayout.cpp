@@ -172,7 +172,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					double compressValue( disF * 100.0 / spaceWidth  );
 					if(compressValue <= lyt->FM_LAYOUT_MAX_COMPRESSION)
 					{
-						qDebug()<<"["<<cIdx<<","<<fit<<"]("<< lyt->sepCount(cIdx, fit ,lyt->theString) <<") spaceWidth("<<spaceWidth<<") disF("<<disF<<") compressValue("<<compressValue<<")";
+// 						qDebug()<<"["<<cIdx<<","<<fit<<"]("<< lyt->sepCount(cIdx, fit ,lyt->theString) <<") spaceWidth("<<spaceWidth<<") disF("<<disF<<") compressValue("<<compressValue<<")";
 
 						Node* sF = 0;
 						sF = new Node ( fit );
@@ -214,8 +214,8 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 // 						qDebug()<<"break_ cV ="<<compressValue;
 						break;
 					}
-					else
-						qDebug()<<"["<<cIdx<<","<<late<<"]spaceWidth("<<spaceWidth<<") disL("<<disL<<") compressValue("<<compressValue<<")";
+// 					else
+// 						qDebug()<<"["<<cIdx<<","<<late<<"]spaceWidth("<<spaceWidth<<") disL("<<disL<<") compressValue("<<compressValue<<")";
 					
 					Node* sL = 0;
 					sL = new Node ( late );
@@ -1068,7 +1068,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 	{
 		if ( !hasHyph && !gList.at ( EXend ).isBreak )
 		{
-					qDebug()<<". ." ;
+// 					qDebug()<<". ." ;
 			for ( int i ( start ); i < end ;++i )
 			{
 				if(strip)
@@ -1082,7 +1082,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 		}
 		else if ( hasHyph && !gList.at ( EXend ).isBreak )
 		{
-					qDebug()<<"- ." ;
+// 					qDebug()<<"- ." ;
 			GlyphList hr ( hyphList );
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
@@ -1115,7 +1115,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 		}
 		else if ( !hasHyph && gList.at ( EXend ).isBreak )
 		{
-					qDebug()<<". -" ;
+// 					qDebug()<<". -" ;
 			int bp ( end );
 			while ( QChar ( gList.at ( bp ).lChar ).category() != QChar::Separator_Space &&  bp > start ) --bp ;
 			++bp;
@@ -1139,7 +1139,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 		}
 		else if ( hasHyph && gList.at ( EXend ).isBreak )
 		{
-					qDebug()<<"- -" ;
+// 					qDebug()<<"- -" ;
 // 			QString debStr;
 			GlyphList hr ( hyphList);
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )

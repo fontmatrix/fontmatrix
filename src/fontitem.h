@@ -145,6 +145,8 @@ class FontItem : public QObject
 		QImage glyphImage();
 		
 		bool m_rasterFreetype;
+		unsigned int m_FTHintMode;
+// 		unsigned int m_FTRenderMode;not yet implemented
 		
 		bool ensureLibrary();
 		bool ensureFace();
@@ -323,9 +325,8 @@ class FontItem : public QObject
 	}
 
 	double getUnitPerEm();
-	
-	
-	
+	void setFTHintMode ( unsigned int theValue );
+	unsigned int getFTHintMode() const;
 	
 };
 

@@ -75,7 +75,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	textLayout = new FMLayout;
 	
-	radioRenderGroup = new QButtonGroup;
+	radioRenderGroup = new QButtonGroup();
 	radioRenderGroup->addButton(freetypeRadio);
 	radioRenderGroup->addButton(nativeRadio);
 	stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
@@ -87,6 +87,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 		stackedTools->hide();
 		toolPanelWidth = splitter_2->width()/3;
 	}
+	radioFTHintingGroup = new QButtonGroup(freetypeRadio);
+	radioFTHintingGroup->addButton(noHinting);
+	radioFTHintingGroup->addButton(lightHinting);
+	radioFTHintingGroup->addButton(normalHinting);
 	
 	theVeryFont = 0;
 	typo = typotek::getInstance();
@@ -168,6 +172,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
+	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
 // 	connect (splitter_2, SIGNAL(splitterMoved( int, int )),this,SLOT(slotMonitorViewToolsSize(int, int)));
 	connect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	connect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
@@ -697,6 +702,11 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	}
 
 	bool wantDeviceDependant = loremView_FT->isVisible();
+	unsigned int storedHinting(theVeryFont->getFTHintMode());
+	if(wantDeviceDependant)
+	{
+		theVeryFont->setFTHintMode(hinting());
+	}
 
 	if(textProgression->inLine() == TextProgression::INLINE_LTR )
 		theVeryFont->setProgression(PROGRESSION_LTR );
@@ -2046,9 +2056,15 @@ void MainViewWidget::slotChangeViewPage(QAbstractButton* but)
 	QString radioName( but->objectName() );
 	
 	if(radioName == "freetypeRadio" )
+	{
 		stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
+		hintingSelect->show();
+	}
 	else if(radioName == "nativeRadio" )
+	{
 		stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
+		hintingSelect->hide();
+	}
 	
 	slotView(true);
 }
@@ -2074,6 +2090,21 @@ QByteArray MainViewWidget::splitterState(int spl)
 // 		stackedTools->hide();
 // 	}
 // }
+
+unsigned int MainViewWidget::hinting()
+{
+	if(noHinting->isChecked())
+		return FT_LOAD_NO_HINTING ;
+	else if(lightHinting->isChecked())
+		return FT_LOAD_TARGET_LIGHT;
+	else if(normalHinting->isChecked())
+		return FT_LOAD_TARGET_NORMAL;
+}
+
+void MainViewWidget::slotHintChanged(int )
+{
+	slotView(true);
+}
 
 
 

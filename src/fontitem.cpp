@@ -690,6 +690,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	m_shaperType = 1;
 	renderReturnWidth = false;
 	unitPerEm = 0;
+	m_FTHintMode = 0;
 
 	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
@@ -1071,32 +1072,11 @@ QGraphicsPixmapItem * FontItem::itemFromCharPix ( int charcode, double size )
 
 QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 {
-	if(!ensureFace())
+	if ( !ensureFace() )
 		return 0;
 	int charcode = index ;
-	
+
 	double scaleFactor = size / m_face->units_per_EM;
-
-	// Grab metrics in FONT UNIT
-	ft_error = FT_Load_Glyph ( m_face,
-	                           charcode  ,
-	                           FT_LOAD_NO_SCALE );
-	if ( ft_error )
-	{
-		QPixmap square ( size , size );
-		square.fill ( Qt::red );
-		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
-		glyph->setData ( GLYPH_DATA_GLYPH ,index);
-		glyph->setData ( GLYPH_DATA_BITMAPLEFT , 0 );
-		glyph->setData ( GLYPH_DATA_BITMAPTOP,size );
-		glyph->setData ( GLYPH_DATA_HADVANCE ,size / ( size / m_face->units_per_EM ) );
-		releaseFace();
-		return glyph;
-	}
-
-	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 
 	// Set size
 	FT_Set_Char_Size ( m_face,
@@ -1105,10 +1085,10 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	                   QApplication::desktop()->physicalDpiX(),
 	                   QApplication::desktop()->physicalDpiY() );
 
-	// Reload the glyph in device dependant way
+	// Grab metrics in FONT UNIT
 	ft_error = FT_Load_Glyph ( m_face,
 	                           charcode  ,
-	                           FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING );
+	                           FT_LOAD_NO_SCALE  );
 	if ( ft_error )
 	{
 		QPixmap square ( size , size );
@@ -1122,9 +1102,16 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		return glyph;
 	}
 
+	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+	
+	if(m_FTHintMode != FT_LOAD_NO_HINTING)
+	{
+		ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT | m_FTHintMode  );
+	}
 	// Render the glyph into a grayscale bitmap
-	ft_error = FT_Render_Glyph ( m_face->glyph,
-	                             FT_RENDER_MODE_NORMAL );
+	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
 	if ( ft_error )
 	{
 		QPixmap square ( size , size );
@@ -1164,7 +1151,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		glyph->setPixmap ( aPix );
 #endif
 		// we need to transport more data
-		glyph->setData ( GLYPH_DATA_GLYPH , index);
+		glyph->setData ( GLYPH_DATA_GLYPH , index );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , takeLeftBeforeRender );
 		glyph->setData ( GLYPH_DATA_BITMAPTOP , m_face->glyph->bitmap_top );
 		glyph->setData ( GLYPH_DATA_HADVANCE , takeAdvanceBeforeRender );
@@ -3916,3 +3903,18 @@ double FontItem::getUnitPerEm()
 	}
 	return unitPerEm;
 }
+
+
+
+unsigned int FontItem::getFTHintMode() const
+{
+	return m_FTHintMode;
+}
+
+
+void FontItem::setFTHintMode ( unsigned int theValue )
+{
+	m_FTHintMode = theValue;
+}
+
+

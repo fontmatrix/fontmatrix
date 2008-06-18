@@ -185,7 +185,7 @@
         <x>0</x>
         <y>0</y>
         <width>650</width>
-        <height>568</height>
+        <height>565</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -312,8 +312,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>439</width>
-             <height>568</height>
+             <width>371</width>
+             <height>565</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout" >
@@ -447,8 +447,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>181</width>
-             <height>568</height>
+             <width>244</width>
+             <height>565</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3" >
@@ -578,6 +578,9 @@
                </item>
                <item row="2" column="0" >
                 <layout class="QVBoxLayout" name="verticalLayout" >
+                 <property name="spacing" >
+                  <number>0</number>
+                 </property>
                  <item>
                   <widget class="QRadioButton" name="freetypeRadio" >
                    <property name="sizePolicy" >
@@ -592,6 +595,42 @@
                    <property name="checked" >
                     <bool>true</bool>
                    </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QWidget" native="1" name="hintingSelect" >
+                   <layout class="QGridLayout" name="gridLayout_11" >
+                    <property name="topMargin" >
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin" >
+                     <number>0</number>
+                    </property>
+                    <item row="1" column="0" >
+                     <widget class="QRadioButton" name="noHinting" >
+                      <property name="text" >
+                       <string>No hinting</string>
+                      </property>
+                      <property name="checked" >
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0" >
+                     <widget class="QRadioButton" name="lightHinting" >
+                      <property name="text" >
+                       <string>Light Hinting</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0" >
+                     <widget class="QRadioButton" name="normalHinting" >
+                      <property name="text" >
+                       <string>Normal Hinting</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                  <item>

@@ -117,6 +117,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QUrl infoCSSUrl;
 		
 		QButtonGroup *radioRenderGroup;
+		QButtonGroup *radioFTHintingGroup;
+		
+		unsigned int hinting();
+		
 		int toolPanelWidth;
 		
 	public slots:
@@ -187,6 +191,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		void slotChangeViewPageSetting(bool);
 		void slotChangeViewPage(QAbstractButton* );
+		void slotHintChanged(int);
 // 		void slotMonitorViewToolsSize(int hdl,int sz);
 		
 		

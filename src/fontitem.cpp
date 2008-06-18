@@ -1106,7 +1106,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
 	
-	if(m_FTHintMode != FT_LOAD_NO_HINTING)
+// 	if(m_FTHintMode != FT_LOAD_NO_HINTING)
 	{
 		ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT | m_FTHintMode  );
 	}

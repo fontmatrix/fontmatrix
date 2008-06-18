@@ -2058,12 +2058,12 @@ void MainViewWidget::slotChangeViewPage(QAbstractButton* but)
 	if(radioName == "freetypeRadio" )
 	{
 		stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
-		hintingSelect->show();
+		hintingSelect->setEnabled(true);
 	}
 	else if(radioName == "nativeRadio" )
 	{
 		stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
-		hintingSelect->hide();
+		hintingSelect->setEnabled(false);
 	}
 	
 	slotView(true);

@@ -74,6 +74,7 @@ ListDockWidget::ListDockWidget()
 		FontItem::fillNamesMeaning();
 
 	allFieldName = tr("All fields");
+	maxFieldStringWidth = allFieldName.count();
 	currentField = allFieldName;
 	QAction *actn = new QAction(currentField, filterActGroup);
 	actn->setCheckable(true);
@@ -106,7 +107,7 @@ ListDockWidget::ListDockWidget()
 
 	fieldButton->setMenu(theFilterMenu);
 	fieldButton->setToolTip(currentField);
-	fieldButton->setText( allFieldName.mid(0,1) );
+	fieldButton->setText( allFieldName );
 
 	searchString->setCompleter(completers.value(currentField));
 
@@ -186,7 +187,7 @@ void ListDockWidget::slotFieldChanged(QAction * action)
 {
 	currentField = action->text();
 	fieldButton->setToolTip(currentField);
-	fieldButton->setText( currentField.mid(0,1) );
+	fieldButton->setText( fieldString( currentField ) );
 	searchString->setCompleter(completers.value(currentField));
 }
 
@@ -390,5 +391,16 @@ void ListDockWidget::slotPanoseChecked(bool checked)
 	{
 		initTagCombo();
 	}
+}
+
+QString ListDockWidget::fieldString(const QString & f)
+{
+	if(f.count() <= allFieldName.count())
+		return f;
+	if(f.mid(0,maxFieldStringWidth - 1).at(maxFieldStringWidth -2) == QChar(0x20) )
+	{
+		return f.mid(0,maxFieldStringWidth - 1);
+	}
+	return f.mid(0,maxFieldStringWidth - 1) + ".";
 }
 

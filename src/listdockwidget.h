@@ -81,6 +81,9 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 
 		void initTagCombo();
 		void settingsDir(const QString &path);
+		
+		QString fieldString(const QString& f);
+		int maxFieldStringWidth;
 	public slots:
 		void unlockFilter();
 

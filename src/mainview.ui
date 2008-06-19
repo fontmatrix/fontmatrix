@@ -59,7 +59,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex" >
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="elideMode" >
       <enum>Qt::ElideRight</enum>
@@ -69,8 +69,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>658</width>
-        <height>565</height>
+        <width>650</width>
+        <height>564</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -188,8 +188,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>658</width>
-        <height>565</height>
+        <width>650</width>
+        <height>564</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -236,7 +236,7 @@
              <string>Settings</string>
             </property>
             <property name="text" >
-             <string>Settings</string>
+             <string>Display Settings</string>
             </property>
             <property name="checkable" >
              <bool>true</bool>
@@ -328,8 +328,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>384</width>
-             <height>565</height>
+             <width>369</width>
+             <height>564</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout" >
@@ -398,7 +398,7 @@
              <number>0</number>
             </property>
             <property name="horizontalSpacing" >
-             <number>-1</number>
+             <number>4</number>
             </property>
             <item row="0" column="0" colspan="3" >
              <widget class="QTreeWidget" name="OpenTypeTree" >
@@ -463,8 +463,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>244</width>
-             <height>565</height>
+             <width>251</width>
+             <height>564</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_3" >

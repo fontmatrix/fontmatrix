@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>654</width>
+    <width>662</width>
     <height>601</height>
    </rect>
   </property>
@@ -24,6 +24,9 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_8" >
    <property name="margin" >
+    <number>0</number>
+   </property>
+   <property name="spacing" >
     <number>0</number>
    </property>
    <item row="0" column="0" >
@@ -66,7 +69,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>650</width>
+        <width>658</width>
         <height>565</height>
        </rect>
       </property>
@@ -84,32 +87,48 @@
        <item row="0" column="0" >
         <widget class="QSplitter" name="splitter" >
          <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Vertical</enum>
          </property>
          <widget class="QWebView" native="1" name="fontInfoText" >
           <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
-            <horstretch>5</horstretch>
-            <verstretch>0</verstretch>
+           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+            <horstretch>0</horstretch>
+            <verstretch>5</verstretch>
            </sizepolicy>
           </property>
          </widget>
          <widget class="QWidget" native="1" name="widget" >
           <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
             <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
+            <verstretch>1</verstretch>
            </sizepolicy>
           </property>
-          <layout class="QGridLayout" name="gLt_5" >
-           <property name="verticalSpacing" >
-            <number>0</number>
-           </property>
+          <layout class="QGridLayout" name="gridLayout_12" >
            <property name="margin" >
-            <number>0</number>
+            <number>3</number>
            </property>
-           <item row="0" column="0" >
+           <property name="spacing" >
+            <number>2</number>
+           </property>
+           <item row="0" column="0" colspan="2" >
+            <widget class="QListWidget" name="tagsListWidget" >
+             <property name="acceptDrops" >
+              <bool>true</bool>
+             </property>
+             <property name="statusTip" >
+              <string>Right mouse click on a tag to add it or remove it from TagSet</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" >
             <widget class="QLabel" name="titleLabel" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Preferred" hsizetype="MinimumExpanding" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="font" >
               <font>
                <pointsize>10</pointsize>
@@ -121,57 +140,42 @@
              <property name="text" >
               <string>Nothing selected</string>
              </property>
+             <property name="textFormat" >
+              <enum>Qt::PlainText</enum>
+             </property>
+             <property name="scaledContents" >
+              <bool>true</bool>
+             </property>
              <property name="alignment" >
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
-            </widget>
-           </item>
-           <item row="1" column="0" >
-            <widget class="QListWidget" name="tagsListWidget" >
-             <property name="acceptDrops" >
-              <bool>true</bool>
-             </property>
-             <property name="statusTip" >
-              <string>Right mouse click on a tag to add it or remove it from TagSet</string>
+             <property name="buddy" >
+              <cstring>tagsListWidget</cstring>
              </property>
             </widget>
            </item>
-           <item row="2" column="0" >
-            <layout class="QHBoxLayout" name="horizontalLayout" >
-             <item>
-              <widget class="QLineEdit" name="newTagText" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-                 <horstretch>4</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="newTagButton" >
-               <property name="sizePolicy" >
-                <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="toolTip" >
-                <string>Add a tag</string>
-               </property>
-               <property name="text" >
-                <string/>
-               </property>
-               <property name="icon" >
-                <iconset resource="application.qrc" >
-                 <normaloff>:/fontmatrix_tags.png</normaloff>:/fontmatrix_tags.png</iconset>
-               </property>
-               <property name="flat" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
+           <item row="1" column="1" >
+            <widget class="QPushButton" name="newTagButton" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip" >
+              <string>Add a tag</string>
+             </property>
+             <property name="text" >
+              <string>Add</string>
+             </property>
+             <property name="icon" >
+              <iconset resource="application.qrc" >
+               <normaloff>:/fontmatrix_tags.png</normaloff>:/fontmatrix_tags.png</iconset>
+             </property>
+             <property name="flat" >
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -184,7 +188,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>650</width>
+        <width>658</width>
         <height>565</height>
        </rect>
       </property>
@@ -215,18 +219,24 @@
            <number>0</number>
           </property>
           <item row="1" column="0" >
-           <widget class="QToolButton" name="settingsButton" >
+           <widget class="FMVerticalButton" name="settingsButton" >
             <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+             <sizepolicy vsizetype="Expanding" hsizetype="Fixed" >
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="maximumSize" >
+             <size>
+              <width>24</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="toolTip" >
              <string>Settings</string>
             </property>
             <property name="text" >
-             <string>S</string>
+             <string>Settings</string>
             </property>
             <property name="checkable" >
              <bool>true</bool>
@@ -243,18 +253,24 @@
            </widget>
           </item>
           <item row="2" column="0" >
-           <widget class="QToolButton" name="openTypeButton" >
+           <widget class="FMVerticalButton" name="openTypeButton" >
             <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+             <sizepolicy vsizetype="Expanding" hsizetype="Fixed" >
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="maximumSize" >
+             <size>
+              <width>24</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="toolTip" >
              <string>OpenType</string>
             </property>
             <property name="text" >
-             <string>O</string>
+             <string>OpenType</string>
             </property>
             <property name="checkable" >
              <bool>true</bool>
@@ -312,7 +328,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>371</width>
+             <width>384</width>
              <height>565</height>
             </rect>
            </property>
@@ -510,19 +526,19 @@
                  <item>
                   <widget class="QPushButton" name="sampleTextButton" >
                    <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                    <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="maximumSize" >
                     <size>
-                     <width>32</width>
-                     <height>16777215</height>
+                     <width>51</width>
+                     <height>24</height>
                     </size>
                    </property>
                    <property name="text" >
-                    <string>...</string>
+                    <string>edit</string>
                    </property>
                   </widget>
                  </item>
@@ -753,7 +769,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>650</width>
+        <width>658</width>
         <height>565</height>
        </rect>
       </property>
@@ -821,11 +837,17 @@
        </item>
        <item row="0" column="4" >
         <widget class="QToolButton" name="clipboardCheck" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip" >
           <string>Set Mode "Copy Character to Clipboard"</string>
          </property>
          <property name="text" >
-          <string>C</string>
+          <string>Copy</string>
          </property>
          <property name="icon" >
           <iconset resource="application.qrc" >
@@ -833,6 +855,9 @@
          </property>
          <property name="checkable" >
           <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
          </property>
          <property name="autoRaise" >
           <bool>true</bool>
@@ -884,7 +909,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>650</width>
+        <width>658</width>
         <height>565</height>
        </rect>
       </property>
@@ -1011,9 +1036,13 @@
    <header>QWebView</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>FMVerticalButton</class>
+   <extends>QToolButton</extends>
+   <header>fmverticalbutton.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>tabView</tabstop>
   <tabstop>openTypeButton</tabstop>
   <tabstop>sampleTextCombo</tabstop>
   <tabstop>sampleTextButton</tabstop>
@@ -1022,7 +1051,6 @@
   <tabstop>pushToPlayButton</tabstop>
   <tabstop>playView</tabstop>
   <tabstop>settingsButton</tabstop>
-  <tabstop>newTagText</tabstop>
   <tabstop>newTagButton</tabstop>
   <tabstop>playFontSize</tabstop>
   <tabstop>tagsListWidget</tabstop>

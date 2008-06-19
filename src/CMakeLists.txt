@@ -17,6 +17,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmpreviewlist.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmrepair.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmsampletextview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmshaper_own.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmverticalbutton.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontbook.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontbookdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontitem.cpp

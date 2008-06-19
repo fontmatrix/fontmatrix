@@ -51,6 +51,7 @@
 #include <QMutex>
 #include <QDesktopWidget>
 #include <QButtonGroup>
+#include <QInputDialog>
 
 // #include <QTimeLine>
 // #include <QGraphicsItemAnimation>
@@ -1734,19 +1735,18 @@ void MainViewWidget::slotSwitchCheckState(QListWidgetItem * item)
 
 void MainViewWidget::slotNewTag()
 {
-	if ( newTagText->text().isEmpty() )
-		return;
-	if ( typotek::tagsList.contains ( newTagText->text() ) )
+	QString nTag;
+	bool ok;
+	nTag = QInputDialog::getText(this,"Fontmatrix",tr("Add new tag"),QLineEdit::Normal, QString() , &ok );
+	if ( !ok || nTag.isEmpty() || typotek::tagsList.contains ( nTag ))
 		return;
 
-	typotek::tagsList.append ( newTagText->text() );
-	QListWidgetItem *lit = new QListWidgetItem ( newTagText->text() );
+	typotek::tagsList.append ( nTag );
+	QListWidgetItem *lit = new QListWidgetItem ( nTag );
 	lit->setCheckState ( Qt::Checked );
 	tagsListWidget->addItem ( lit );
 	slotFinalize();
-	emit tagAdded(newTagText->text());
-	newTagText->clear();
-
+	emit tagAdded(nTag);
 }
 
 void MainViewWidget::slotContextMenu(QPoint pos)

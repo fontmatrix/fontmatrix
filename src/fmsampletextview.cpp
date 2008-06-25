@@ -50,6 +50,7 @@ FMSampleTextView::FMSampleTextView ( QWidget* parent )
 
 	setInteractive ( true );
 	theRect = 0;
+	fPage = 0;
 	isSelecting = false;
 	isPanning = false;
 	setAlignment ( Qt::AlignTop | Qt::AlignHCenter );
@@ -189,4 +190,13 @@ void FMSampleTextView::sheduleUpdate()
 void FMSampleTextView::unSheduleUpdate()
 {
 	hasPendingUpdate = false;
+}
+
+void FMSampleTextView::fakePage()
+{
+	if(fPage)
+		return;
+	
+	fPage = scene()->addRect ( sceneRect() ,QPen ( QColor ( Qt::black ) ), QColor ( Qt::white ) );
+	setBackgroundBrush(Qt::lightGray);
 }

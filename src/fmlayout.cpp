@@ -324,10 +324,10 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	node = 0;
 	layoutMutex = new QMutex;
 
-	progressBar = new QProgressBar ;
-	onSceneProgressBar = new QGraphicsProxyWidget ;
-	onSceneProgressBar->setWidget ( progressBar );
-	onSceneProgressBar->setZValue ( 1000 );
+// 	progressBar = new QProgressBar ;
+// 	onSceneProgressBar = new QGraphicsProxyWidget ;
+// 	onSceneProgressBar->setWidget ( progressBar );
+// 	onSceneProgressBar->setZValue ( 1000 );
 
 	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
 	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( endOfRun() ) );
@@ -366,54 +366,49 @@ FMLayout::~ FMLayout()
 
 void FMLayout::run()
 {
-	for ( int i ( 0 ); i < paragraphs.count() ; ++ i )
+	if(justRedraw)
+		emit layoutFinished();
+	else
 	{
-// 		qDebug()<<"Oy Rb"<<origine.y()<<theRect.bottom();
-		if ( origine.y() > theRect.bottom() )
-			break;
-		theString = paragraphs[i];
-		if ( theString.isEmpty() )
-			continue;
-		node = new Node ( 0 );
-		doGraph();
-		clearCaches();
+		for ( int i ( 0 ); i < paragraphs.count() ; ++ i )
 		{
-			// Debug output
-			fm_layout_total_leaves_dbg = 0;
-			fm_layout_total_nod_dbg = 0;
-			fm_layout_total_skip_nod_dbg = 0;
+	// 		qDebug()<<"Oy Rb"<<origine.y()<<theRect.bottom();
+			if ( origine.y() > theRect.bottom() )
+				break;
+			theString = paragraphs[i];
+			if ( theString.isEmpty() )
+				continue;
+			node = new Node ( 0 );
+			doGraph();
+			clearCaches();
+			{
+				// Debug output
+				fm_layout_total_leaves_dbg = 0;
+				fm_layout_total_nod_dbg = 0;
+				fm_layout_total_skip_nod_dbg = 0;
+			}
+	
+			doLines();
+	
+			qDebug() <<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
+			if ( node )
+			{
+				delete node;
+				node = 0;
+			}
+			clearCaches();
+			breakList.clear();
+			hyphenList.clear();
+			emit paragraphFinished ( i + 1 );
+	
 		}
-
-		doLines();
-
-		qDebug() <<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
-		if ( node )
-		{
-			delete node;
-			node = 0;
-		}
-		clearCaches();
-		breakList.clear();
-		hyphenList.clear();
-		emit paragraphFinished ( i + 1 );
-
+		emit layoutFinished();
 	}
-	emit layoutFinished();
 }
 
 void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 {
 	stopIt = false;
-	fontSize = fs;
-	paragraphs = spec;
-// 	resetScene();
-	lines.clear();
-	if ( node )
-	{
-		delete node;
-		node = 0;
-	}
-
 
 	TextProgression *tp = TextProgression::getInstance();
 
@@ -433,13 +428,32 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 		origine.rx() = theRect.left();
 
-	qDebug()<<"L B R O"<<tp->inLine() << tp->inBlock()<<theRect<<origine;
+	if( origine == lastOrigine && fontSize == fs && paragraphs == spec )
+	{
+		justRedraw = true;
+	}
+	else
+	{
+		justRedraw = false;
+		lines.clear();
+	}
+	lastOrigine = origine;
+	fontSize = fs;
+	paragraphs = spec;
+
+	if ( node )
+	{
+		delete node;
+		node = 0;
+	}
+
+// 	qDebug()<<"L B R O"<<tp->inLine() << tp->inBlock()<<theRect<<origine;
 	
-	progressBar->reset();
-	progressBar->setRange ( 0,spec.count() );
-	connect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
-	theScene->addItem ( onSceneProgressBar );
-	onSceneProgressBar->setPos ( theScene->views().first()->mapToScene ( 20,20 ) );
+// 	progressBar->reset();
+// 	progressBar->setRange ( 0,spec.count() );
+// 	connect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
+// 	theScene->addItem ( onSceneProgressBar );
+// 	onSceneProgressBar->setPos ( theScene->views().first()->mapToScene ( 20,20 ) );
 
 
 }
@@ -447,8 +461,8 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 void FMLayout::endOfRun()
 {
 	qDebug() <<"FMLayout::endOfRun()";
-	theScene->removeItem ( onSceneProgressBar );
-	disconnect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
+// 	theScene->removeItem ( onSceneProgressBar );
+// 	disconnect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
 	if ( node )
 	{
 		qDebug() <<"Nc"<<node->count();

@@ -139,7 +139,8 @@ class FMLayout : public QThread
 		QMap<int, QMap<int, double > > distCache;
 		QMap<int, QMap<int, double > > stripCache;
 		QMap<int, QMap<int, int > > sepCache;
-		
+		bool justRedraw;
+		QPointF lastOrigine;
 
 		// accessed
 		bool processFeatures;
@@ -151,7 +152,6 @@ class FMLayout : public QThread
 		int textProgressionLine;
 		bool deviceIndy;
 		QPointF origine;
-
 
 	public: //accessors
 		QRectF getRect()const{return theRect;}

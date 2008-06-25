@@ -127,7 +127,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	backp->setEnabled ( false );
 	
 	ftScene->setSceneRect ( 0,0, 597.6 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0, 842.4 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0);
-	qDebug()<<"FT"<<ftScene->sceneRect();
+	
 
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
@@ -137,11 +137,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	double horiScaleT (( double ) QApplication::desktop()->physicalDpiX() / 72.0);
 	double vertScaleT ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0);
 	QTransform adjustAbsoluteViewT( horiScaleT , 0, 0,vertScaleT, 0, 0 );
-	qDebug()<<"m"<< adjustAbsoluteViewT;
 	loremView->setTransform ( adjustAbsoluteViewT , false );
 
 	loremView_FT->setScene ( ftScene );
 	loremView_FT->locker = false;
+	loremView_FT->fakePage();
 
 	playScene->setSceneRect ( 0,0,10000,10000 );
 	playView->setScene( playScene );

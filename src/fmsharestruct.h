@@ -44,6 +44,24 @@ struct RenderedGlyph
 	RenderedGlyph():glyph(0),log(0),xadvance(0),yadvance(0),xoffset(0),yoffset(0),lChar(0),isBreak(false){}
 	RenderedGlyph(int g,int l,double xa,double ya,double xo,double yo,unsigned short c,bool b)
 	:glyph(g),log(l),xadvance(xa),yadvance(ya),xoffset(xo),yoffset(yo),lChar(c),isBreak(b){}
+
+	bool operator==( const RenderedGlyph& other ) const{
+		if(glyph != other.glyph)
+			return false;
+		else if(lChar != other.lChar)
+			return false;
+		else if(xadvance != other.xadvance)
+			return false;
+		else if(yadvance != other.yadvance)
+			return false;
+		else if(xoffset != other.xoffset)
+			return false;
+		else if(yoffset != other.yoffset)
+			return false;
+		else if(isBreak != other.isBreak)
+			return false;
+		return true;
+	}
 };
 
 typedef QList<RenderedGlyph> GlyphList;

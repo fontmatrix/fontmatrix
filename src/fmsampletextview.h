@@ -36,6 +36,7 @@ class FMSampleTextView : public QGraphicsView
 
 		~FMSampleTextView();
 		
+		void fakePage();
 		void sheduleUpdate();
 		void unSheduleUpdate();
 		bool locker;
@@ -56,6 +57,7 @@ class FMSampleTextView : public QGraphicsView
 	private:
 		QPointF mouseStartPoint;
 		QGraphicsRectItem *theRect;
+		QGraphicsRectItem *fPage;
 		bool isSelecting;
 		bool isPanning;
 		bool hasPendingUpdate;

@@ -3119,7 +3119,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	int ref ( fancyGlyphs.count() );
 	QRect allRect ( view->rect() );
 	QRect targetRect ( view->mapToScene ( allRect.topLeft() ).toPoint(),  view->mapToScene ( allRect.topRight() ) .toPoint() ) ;
-	qDebug() <<  allRect.topLeft() << view->mapToScene ( allRect.topLeft() );
+// 	qDebug() <<  allRect.topLeft() << view->mapToScene ( allRect.topLeft() );
 
 	// We’ll try to have a square subRect that fit in view ;-)
 	int squareSideUnit = qMin ( allRect.width() ,  allRect.height() ) * 0.1;
@@ -3269,7 +3269,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 
 
 	// Alternates
-	if ( !charcodeIsAGlyphIndex )
+	if ( !charcodeIsAGlyphIndex && m_isOpenType )
 	{
 		QList<int> alts ( getAlternates ( charcode ) );
 		qDebug() << "PALTS"<<alts;

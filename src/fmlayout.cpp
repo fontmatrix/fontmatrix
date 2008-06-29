@@ -323,6 +323,7 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	instance = this;
 	node = 0;
 	layoutMutex = new QMutex;
+	optionHasChanged = true;
 
 // 	progressBar = new QProgressBar ;
 // 	onSceneProgressBar = new QGraphicsProxyWidget ;
@@ -428,12 +429,13 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 		origine.rx() = theRect.left();
 
-	if( origine == lastOrigine && fontSize == fs && paragraphs == spec )
+	if( !optionHasChanged && origine == lastOrigine && fontSize == fs && paragraphs == spec )
 	{
 		justRedraw = true;
 	}
 	else
 	{
+		optionHasChanged = false;
 		justRedraw = false;
 		lines.clear();
 	}
@@ -446,16 +448,6 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 		delete node;
 		node = 0;
 	}
-
-// 	qDebug()<<"L B R O"<<tp->inLine() << tp->inBlock()<<theRect<<origine;
-	
-// 	progressBar->reset();
-// 	progressBar->setRange ( 0,spec.count() );
-// 	connect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
-// 	theScene->addItem ( onSceneProgressBar );
-// 	onSceneProgressBar->setPos ( theScene->views().first()->mapToScene ( 20,20 ) );
-
-
 }
 
 void FMLayout::endOfRun()
@@ -1294,6 +1286,8 @@ double FMLayout::lineWidth ( int l )
 
 void FMLayout::slotOption ( int v )
 {
+	optionHasChanged = true;
+	
 	if ( v == FMLayOptWidget::BEFORE )
 	{
 		FM_LAYOUT_NODE_SOON_F = optionsWidget->getValue ( FMLayOptWidget::BEFORE );

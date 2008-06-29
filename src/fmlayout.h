@@ -92,7 +92,6 @@ class FMLayout : public QThread
 		void doLayout(const QList<GlyphList>& spec , double fs);
 
 
-		static FMLayout *instance;
 		static FMLayout *getLayout() {return instance;}
 	private://methods
 		/// Build a graph on node
@@ -121,6 +120,7 @@ class FMLayout : public QThread
 
 	private:// data
 		// Argued
+		static FMLayout *instance;
 		QGraphicsScene* theScene;
 		FontItem*	theFont;
 		QList<GlyphList> paragraphs;
@@ -140,6 +140,7 @@ class FMLayout : public QThread
 		QMap<int, QMap<int, double > > stripCache;
 		QMap<int, QMap<int, int > > sepCache;
 		bool justRedraw;
+		bool optionHasChanged;
 		QPointF lastOrigine;
 
 		// accessed

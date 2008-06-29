@@ -56,6 +56,7 @@
 #include <QDir>
 // #include <QDBusConnection>
 #include <QProgressDialog>
+#include <QProgressBar>
 #include <QDomDocument>
 #include <QProcess>
 #include <QDockWidget>
@@ -147,13 +148,6 @@ void typotek::initMatrix()
 		systray = new Systray();
 	else
 		systray = 0;
-
-
-	QFont statusFontFont ( "sans-serif",8,QFont::Bold,false );
-	curFontPresentation = new QLabel ( tr ( "Nothing Selected" ) );
-	curFontPresentation->setAlignment ( Qt::AlignRight );
-	curFontPresentation->setFont ( statusFontFont );
-	statusBar()->addPermanentWidget ( curFontPresentation );
 
 	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
 	mainDock->setWidget ( ListDockWidget::getInstance() );
@@ -736,6 +730,16 @@ void typotek::createMenus()
 void typotek::createStatusBar()
 {
 	statusBar()->showMessage ( tr ( "Ready" ) );
+	
+	statusProgressBar = new QProgressBar(this);
+	statusProgressBar->setMaximumSize(200,20);
+	statusBar()->addPermanentWidget(statusProgressBar);
+	
+	QFont statusFontFont ( "sans-serif",10 );
+	curFontPresentation = new QLabel ( tr ( "Nothing Selected" ) );
+	curFontPresentation->setAlignment ( Qt::AlignRight );
+	curFontPresentation->setFont ( statusFontFont );
+	statusBar()->addPermanentWidget ( curFontPresentation );
 }
 
 void typotek::readSettings()
@@ -1996,4 +2000,28 @@ void typotek::setDefaultOTFGSUB ( const QStringList& theValue )
 		st.setValue("OTFGSUB" , theValue.join(";"));
 	}
 	defaultOTFGSUB = theValue;
+}
+
+void typotek::startProgressJob(int max)
+{
+	statusProgressBar->reset();
+	statusProgressBar->setRange(0,max);
+}
+
+void typotek::runProgressJob(int i)
+{
+	if(i)
+	{
+		statusProgressBar->setValue(i);
+	}
+	else
+	{
+		int v(statusProgressBar->value());
+		statusProgressBar->setValue( ++v );
+	}
+}
+
+void typotek::endProgressJob()
+{
+	statusProgressBar->reset();
 }

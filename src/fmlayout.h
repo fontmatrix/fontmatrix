@@ -173,13 +173,14 @@ class FMLayout : public QThread
 		/// Put lines on stage
 		void doDraw();
 		void endOfRun();
+		void endOfParagraph();
 		
 		void slotOption(int v);
 
 	signals:
 		void updateLayout();
 		void layoutFinished();
-		void paragraphFinished(int);
+		void paragraphFinished();
 		void paintFinished();
 	public:
 		QDialog *optionDialog;

@@ -44,7 +44,7 @@ class QDockWidget;
 class Systray;
 class RemoteDir;
 class FMHyphenator;
-
+class QProgressBar;
 
 
 class typotek:public QMainWindow
@@ -158,6 +158,8 @@ class typotek:public QMainWindow
 		QAction *printFamilyAct;
 		
 		QAction *layOptAct;
+		
+		QProgressBar *statusProgressBar;
 
 		MainViewWidget *theMainView;
 
@@ -309,6 +311,10 @@ class typotek:public QMainWindow
 	QStringList getDefaultOTFGPOS() const;
 	void setDefaultOTFGSUB ( const QStringList& theValue );
 	QStringList getDefaultOTFGSUB() const;
+	
+	void startProgressJob(int max);
+	void runProgressJob(int i = 0);
+	void endProgressJob();
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

@@ -21,7 +21,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
-#include <QProgressBar>
+// #include <QProgressBar>
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -330,6 +330,7 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 // 	onSceneProgressBar->setWidget ( progressBar );
 // 	onSceneProgressBar->setZValue ( 1000 );
 
+	connect ( this, SIGNAL ( paragraphFinished() ), this, SLOT( endOfParagraph() ) );
 	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
 	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( endOfRun() ) );
 
@@ -400,7 +401,8 @@ void FMLayout::run()
 			clearCaches();
 			breakList.clear();
 			hyphenList.clear();
-			emit paragraphFinished ( i + 1 );
+// 			emit paragraphFinished ( i + 1 );
+			emit paragraphFinished();
 	
 		}
 		emit layoutFinished();
@@ -432,16 +434,18 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	if( !optionHasChanged && origine == lastOrigine && fontSize == fs && paragraphs == spec )
 	{
 		justRedraw = true;
+		typotek::getInstance()->startProgressJob( lines.count() );
 	}
 	else
 	{
-		optionHasChanged = false;
 		justRedraw = false;
 		lines.clear();
+		typotek::getInstance()->startProgressJob( paragraphs.count() + ( theRect.height() / fs*1.20 ) );// layout AND draw
 	}
 	lastOrigine = origine;
 	fontSize = fs;
 	paragraphs = spec;
+	optionHasChanged = false;
 
 	if ( node )
 	{
@@ -464,9 +468,12 @@ void FMLayout::endOfRun()
 	layoutMutex->unlock();
 	if ( stopIt ) // We’re here after a interruption
 	{
-		emit updateLayout();
 		stopIt = false;
+		typotek::getInstance()->endProgressJob();
+		emit updateLayout();
 	}
+	else
+		typotek::getInstance()->endProgressJob();
 }
 
 void FMLayout::stopLayout()
@@ -862,11 +869,14 @@ void FMLayout::doDraw()
 				pen.ry() = origine.y();
 			pen.rx() += adjustedSampleInter;
 		}
+		
+		typotek::getInstance()->runProgressJob();
 // 		qDebug() <<"P"<<pen;
 	}
 
 	qDebug() <<"doDraw T(ms)"<<t.elapsed();
 	emit paintFinished();
+	theScene->update(theRect);
 }
 
 int FMLayout::sepCount(int start, int end, const GlyphList & gl)
@@ -1330,6 +1340,11 @@ void FMLayout::clearCaches()
 	sepCache.clear();
 	distCache.clear();
 	stripCache.clear();
+}
+
+void FMLayout::endOfParagraph()
+{
+	typotek::getInstance()->runProgressJob();
 }
 
 

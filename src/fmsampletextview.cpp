@@ -21,6 +21,8 @@
 #include <QMouseEvent>
 #include <QGraphicsRectItem>
 #include <QScrollBar>
+#include <QApplication>
+#include <QCursor>
 #include <QDebug>
 
 #ifdef HAVE_QTOPENGL
@@ -79,6 +81,7 @@ void FMSampleTextView::mousePressEvent ( QMouseEvent * e )
 	{
 		mouseStartPoint =  e->pos() ;
 		isPanning = true;
+		QApplication::setOverrideCursor (QCursor(Qt::ClosedHandCursor));
 	}
 	else
 	{
@@ -96,6 +99,7 @@ void FMSampleTextView::mouseReleaseEvent ( QMouseEvent * e )
 	if ( isPanning )
 	{
 		isPanning = false;
+		QApplication::restoreOverrideCursor();
 		return;
 	}
 	if ( !isSelecting )

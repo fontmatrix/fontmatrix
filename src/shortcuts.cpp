@@ -39,13 +39,13 @@ Shortcuts* Shortcuts::getInstance()
 
 void Shortcuts::add(QAction *a)
 {
-	if (actions.contains(a->text()))
+	if (actions.contains(cleanName(a)))
 		return;
 
 	QString key = settingsKey(a);
 	if (settings.contains(key))
 		a->setShortcut(QKeySequence(settings.value(key).toString()));
-	actions[a->text()] = a;
+	actions[cleanName(a)] = a;
 }
 
 QList<QAction*> Shortcuts::getActions()
@@ -55,13 +55,25 @@ QList<QAction*> Shortcuts::getActions()
 
 QString Shortcuts::settingsKey(QAction *action)
 {
-	return QString("ActionShortcut-%1").arg(action->text());
+	return QString("ActionShortcut-%1").arg(cleanName(action));
+}
+
+QString Shortcuts::cleanName(QAction *action)
+{
+	return cleanName(action->text());
+}
+
+QString Shortcuts::cleanName(const QString &s)
+{
+
+	QString h = s;
+	return h.remove("&");
 }
 
 QString Shortcuts::isReserved(const QString &shortcut, const QString &actionText)
 {
 	QString isTaken = QString::null;
-	if (actions.contains(actionText)) {
+	if (actions.contains(cleanName(actionText))) {
 		QList<QAction*> alist = actions.values();
 		foreach(QAction *act, alist) {
 			if (act->shortcut() == shortcut) {
@@ -75,17 +87,17 @@ QString Shortcuts::isReserved(const QString &shortcut, const QString &actionText
 
 void Shortcuts::setShortcut(const QString &shortcut, const QString &actionText)
 {
-	if (actions.contains(actionText)) {
-		actions[actionText]->setShortcut(shortcut);
-		settings.setValue(settingsKey(actions[actionText]), shortcut);
+	if (actions.contains(cleanName(actionText))) {
+		actions[cleanName(actionText)]->setShortcut(shortcut);
+		settings.setValue(settingsKey(actions[cleanName(actionText)]), shortcut);
 	}
 }
 
 void Shortcuts::clearShortcut(const QString &actionText)
 {
-	if (actions.contains(actionText)) {
-		actions[actionText]->setShortcut(QString(""));
-		settings.setValue(settingsKey(actions[actionText]), QString(""));
+	if (actions.contains(cleanName(actionText))) {
+		actions[cleanName(actionText)]->setShortcut(QString(""));
+		settings.setValue(settingsKey(actions[cleanName(actionText)]), QString(""));
 	}
 }
 

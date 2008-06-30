@@ -562,9 +562,10 @@ void PrefsPanelDialog::reloadShortcuts()
 	font.setBold ( true );
 	shortcutModel->clear();
 	QList<QAction*> alist = Shortcuts::getInstance()->getActions();
+	Shortcuts *scuts = Shortcuts::getInstance();
 	foreach ( QAction *act, alist )
 	{
-		QStandardItem *iText = new QStandardItem ( act->text() );
+		QStandardItem *iText = new QStandardItem ( scuts->cleanName(act->text()) );
 		QStandardItem *iShortcut = new QStandardItem ( act->shortcut().toString() );
 		iShortcut->setFont ( font );
 		QString tooltip = act->toolTip();
@@ -587,7 +588,7 @@ void PrefsPanelDialog::reloadShortcuts()
 
 void PrefsPanelDialog::setSelected ( const QString &actionText )
 {
-	QList<QStandardItem*> ilist = shortcutModel->findItems ( actionText );
+	QList<QStandardItem*> ilist = shortcutModel->findItems ( Shortcuts::getInstance()->cleanName(actionText) );
 	if ( ilist.count() > 0 )
 	{
 		int row = ilist.at ( 0 )->row();

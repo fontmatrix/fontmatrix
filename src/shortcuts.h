@@ -46,6 +46,9 @@ public:
 
 	void clearShortcut(const QString &actionText);
 
+	QString cleanName(QAction *action); // without & chars
+	QString cleanName(const QString &s);  // same with a string
+
 private:
 	QSettings settings;
 

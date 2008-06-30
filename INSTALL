@@ -2,6 +2,7 @@ Here is a quick overview of what you need to do in order
 to have fontmatrix up an running.
 
 Requirements :
+	- CMake (>=2.6.0)
 	- Qt 4.4 (with QtWebKit)
 	- Freetype2 (>=2.3.5)
 *not to mention that you need the developpement packages.

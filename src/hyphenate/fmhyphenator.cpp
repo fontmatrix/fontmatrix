@@ -14,10 +14,13 @@
 
 #include <QDebug>
 #include <QStringList>
+#include <QTextCodec>
+#include <QFile>
 
 FMHyphenator::FMHyphenator()
 {
 	dict = 0;
+	textCodec = 0;
 }
 
 bool FMHyphenator::loadDict(const QString & dictPath, int leftMin, int rightMin)
@@ -43,6 +46,12 @@ bool FMHyphenator::loadDict(const QString & dictPath, int leftMin, int rightMin)
 	}
 	else
 	{
+		QFile df(dictPath);
+		if( df.open(QIODevice::ReadOnly) )
+			textCodec = QTextCodec::codecForName(df.readLine());
+		else
+			textCodec = 0;
+		df.close();
 		dict->lhmin = leftMin;
 		dict->rhmin = rightMin;
 	}
@@ -79,7 +88,7 @@ HyphList FMHyphenator::hyphenate(const QString & word) const
 	char ** rep = NULL;
 	int * pos = NULL;
 	int * cut = NULL;
-	QByteArray hw( word.toLower().remove('.').toUtf8() );
+	QByteArray hw( textCodec ? textCodec->fromUnicode( word.toLower().remove('.') ) :  word.toLower().remove('.').toLocal8Bit() );
 	QByteArray ht( hw.count() + 5, '0' );
 	char *lcword = hw.data();
 	char *hyphens = ht.data();

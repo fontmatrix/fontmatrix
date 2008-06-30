@@ -110,6 +110,7 @@ class FontItem : public QObject
 		QString m_styleFlags;
 		QString m_family;
 		QString m_variant;
+		QString m_fileSize;
 		double m_size;
 		int m_numGlyphs;
 		int m_numFaces;

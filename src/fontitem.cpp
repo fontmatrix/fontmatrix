@@ -721,6 +721,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 
 	QFileInfo infopath ( m_path );
 	m_name = infopath.fileName();
+	m_fileSize = QString::number( infopath.size() , 10 ) ;
 
 
 

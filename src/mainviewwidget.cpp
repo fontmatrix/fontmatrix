@@ -740,21 +740,24 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 	if ( loremView->isVisible() || loremView_FT->isVisible() )
 	{
+		qDebug()<<"lv(ft) is visible";
 		if(textLayout->isRunning())
 		{
+			qDebug()<<"tl is running";
 			textLayout->stopLayout();
 		}
 		else
 		{
+			qDebug()<<"tl is NOT running";
 			QGraphicsScene *targetScene;
+			loremView_FT->unSheduleUpdate();
+			loremView->unSheduleUpdate();
 			if(loremView->isVisible())
 			{
-				loremView->unSheduleUpdate();
 				targetScene = loremScene;
 			}
 			else if(loremView_FT->isVisible())
 			{
-				loremView_FT->unSheduleUpdate();
 				targetScene = ftScene;
 			}
 			
@@ -800,9 +803,9 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		loremView_FT->sheduleUpdate();
 	}
 // 	qDebug("VIEW Time elapsed: %d ms", t.elapsed());
-	t.restart();
-	slotInfoFont();
-	qDebug("INFO Time elapsed: %d ms", t.elapsed());
+// 	t.restart();
+// 	slotInfoFont();
+// 	qDebug("INFO Time elapsed: %d ms", t.elapsed());
 // 	renderingLock = false;
 
 }

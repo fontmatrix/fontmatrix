@@ -3808,7 +3808,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 			
 			if(hl.contains( ret[i].log ))
 			{
-				qDebug()<<"L R"<<hl[ret[i].log].first<<hl[ret[i].log].second;
+// 				qDebug()<<"L R"<<hl[ret[i].log].first<<hl[ret[i].log].second;
 				ret[i].isBreak = true;
 				QString addOnFirst;
 				QString addOnSecond;

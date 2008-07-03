@@ -127,8 +127,6 @@ class FMLayout : public QThread
 		QList<GlyphList> lines;
 		QRectF theRect;// Not really argued now, will come soon
 		QGraphicsRectItem *rules;
-		QGraphicsProxyWidget *onSceneProgressBar;
-		QProgressBar *progressBar;
 		FMLayOptWidget *optionsWidget;
 
 		// built

@@ -332,7 +332,7 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 
 	connect ( this, SIGNAL ( paragraphFinished() ), this, SLOT( endOfParagraph() ) );
 	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
-	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( endOfRun() ) );
+	connect ( this, SIGNAL ( paintFinished() ), this, SLOT ( endOfRun() ) );
 
 	FM_LAYOUT_NODE_SOON_F=	1200.0;
 	FM_LAYOUT_NODE_FIT_F=	1000.0;
@@ -431,13 +431,16 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 		origine.rx() = theRect.left();
 
+	qDebug()<<"LO"<<lastOrigine<<"O"<<origine<<"options"<<optionHasChanged;
 	if( !optionHasChanged && origine == lastOrigine && fontSize == fs && paragraphs == spec )
 	{
 		justRedraw = true;
 		typotek::getInstance()->startProgressJob( lines.count() );
+		qDebug()<<"LAYOUT O : lines "<<lines.count();
 	}
 	else
 	{
+		qDebug()<<"LAYOUT 1";
 		justRedraw = false;
 		lines.clear();
 		typotek::getInstance()->startProgressJob( paragraphs.count() + ( theRect.height() / fs*1.20 ) );// layout AND draw
@@ -461,10 +464,10 @@ void FMLayout::endOfRun()
 // 	disconnect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
 	if ( node )
 	{
-		qDebug() <<"Nc"<<node->count();
 		delete node;
 		node = 0;
 	}
+	qDebug()<<"EOR A"<<lines.count();
 	layoutMutex->unlock();
 	if ( stopIt ) // We’re here after a interruption
 	{
@@ -474,6 +477,8 @@ void FMLayout::endOfRun()
 	}
 	else
 		typotek::getInstance()->endProgressJob();
+	
+	qDebug()<<"EOR B"<<lines.count();
 }
 
 void FMLayout::stopLayout()

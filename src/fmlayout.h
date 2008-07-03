@@ -34,6 +34,7 @@ class QMenu;
 class QMutex;
 class FMLayOptWidget;
 class QDialog;
+class QGridLayout;
 
 /**
  Finally, we want to layout text elsewhere than _in_ the font or _in_ the view.
@@ -128,6 +129,7 @@ class FMLayout : public QThread
 		QRectF theRect;// Not really argued now, will come soon
 		QGraphicsRectItem *rules;
 		FMLayOptWidget *optionsWidget;
+		QGridLayout *optionLayout;
 
 		// built
 		Node *node;

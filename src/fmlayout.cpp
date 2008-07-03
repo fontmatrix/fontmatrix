@@ -17,6 +17,7 @@
 #include "textprogression.h"
 
 #include <QDialog>
+#include <QGridLayout>
 #include <QString>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -343,22 +344,26 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 
 	optionDialog = new QDialog ( typotek::getInstance() );
 	optionDialog->setWindowTitle ( tr ( "Text engine options" ) );
-
-	optionsWidget = new FMLayOptWidget ( optionDialog );
+	optionLayout =  new QGridLayout(optionDialog) ;
+	
+	optionsWidget = new FMLayOptWidget;
 	optionsWidget->setRange ( FMLayOptWidget::BEFORE, 1, 10000 );
 	optionsWidget->setRange ( FMLayOptWidget::EXACT, 1, 10000 );
 	optionsWidget->setRange ( FMLayOptWidget::AFTER, 1, 10000 );
 	optionsWidget->setRange ( FMLayOptWidget::END, 1, 10000 );
 	optionsWidget->setRange ( FMLayOptWidget::HYPHEN, 1, 100 );
+	optionsWidget->setRange ( FMLayOptWidget::SPACE, 1, 100 );
 
 	optionsWidget->setValue ( FMLayOptWidget::BEFORE,FM_LAYOUT_NODE_SOON_F );
 	optionsWidget->setValue ( FMLayOptWidget::EXACT,FM_LAYOUT_NODE_FIT_F );
 	optionsWidget->setValue ( FMLayOptWidget::AFTER,FM_LAYOUT_NODE_LATE_F );
 	optionsWidget->setValue ( FMLayOptWidget::END,FM_LAYOUT_NODE_END_F );
 	optionsWidget->setValue ( FMLayOptWidget::HYPHEN,FM_LAYOUT_HYPHEN_PENALTY * 10 );
+	optionsWidget->setValue ( FMLayOptWidget::SPACE,FM_LAYOUT_MAX_COMPRESSION );
+	
+	optionLayout->addWidget(optionsWidget,0,0);
 
 	connect ( optionsWidget,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotOption ( int ) ) );
-
 
 }
 
@@ -1306,31 +1311,31 @@ void FMLayout::slotOption ( int v )
 	if ( v == FMLayOptWidget::BEFORE )
 	{
 		FM_LAYOUT_NODE_SOON_F = optionsWidget->getValue ( FMLayOptWidget::BEFORE );
-		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 		emit updateLayout();
 	}
 	else if ( v == FMLayOptWidget::EXACT )
 	{
 		FM_LAYOUT_NODE_FIT_F = optionsWidget->getValue ( FMLayOptWidget::EXACT );
-		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 		emit updateLayout();
 	}
 	else if ( v == FMLayOptWidget::AFTER )
 	{
 		FM_LAYOUT_NODE_LATE_F = optionsWidget->getValue ( FMLayOptWidget::AFTER );
-		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 		emit updateLayout();
 	}
 	else if ( v == FMLayOptWidget::END )
 	{
 		FM_LAYOUT_NODE_END_F = optionsWidget->getValue ( FMLayOptWidget::END );
-		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
 		emit updateLayout();
 	}
 	else if ( v == FMLayOptWidget::HYPHEN )
 	{
 		FM_LAYOUT_HYPHEN_PENALTY = ( double ) optionsWidget->getValue ( FMLayOptWidget::HYPHEN ) / 10.0;
-		qDebug() <<"S F L E H"<<FM_LAYOUT_NODE_SOON_F<<FM_LAYOUT_NODE_FIT_F<<FM_LAYOUT_NODE_LATE_F<<FM_LAYOUT_NODE_END_F<<FM_LAYOUT_HYPHEN_PENALTY;
+		emit updateLayout();
+	}
+	else if ( v == FMLayOptWidget::SPACE )
+	{
+		FM_LAYOUT_MAX_COMPRESSION = optionsWidget->getValue ( FMLayOptWidget::SPACE );
 		emit updateLayout();
 	}
 }

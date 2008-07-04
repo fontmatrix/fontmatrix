@@ -380,7 +380,7 @@ void ListDockWidget::slotPanoseChecked(bool checked)
 		QMap<int, QString>::const_iterator cip2;
 		for(cip = panoseMap.constBegin();cip != panoseMap.constEnd(); ++cip)
 		{
-			for(cip2 = cip->constBegin();cip2 != cip->constEnd(); ++cip2)
+			for(cip2 = cip->constBegin() + 2 ;cip2 != cip->constEnd(); ++cip2)
 			{
 				tagsCombo->addItem(cip.key() + "-" + cip2.value(), "TAG_IS_PANOSE");
 			}

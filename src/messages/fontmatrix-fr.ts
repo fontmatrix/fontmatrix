@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="fr">
+<defaultcodec></defaultcodec>
 <context>
     <name>About</name>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_about.h" line="159"/>
+        <location filename="../about.ui" line="19"/>
         <source>About Fontmatrix</source>
-        <translation type="unfinished">À propos de Fontmatrix</translation>
+        <translation>À propos de Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_about.h" line="162"/>
+        <location filename="../about.ui" line="82"/>
         <source>TextLabel</source>
-        <translation type="unfinished">étiquette</translation>
+        <translation>étiquette</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_about.h" line="164"/>
+        <location filename="../about.ui" line="93"/>
         <source>The Project</source>
-        <translation type="unfinished">Le projet</translation>
+        <translation>Le projet</translation>
     </message>
     <message>
         <location filename="../about.ui" line="101"/>
@@ -23,19 +24,19 @@
         <translation type="obsolete">Les gens</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_about.h" line="165"/>
+        <location filename="../about.ui" line="125"/>
         <source>The People</source>
-        <translation type="unfinished">Les gens</translation>
+        <translation>Les gens</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_about.h" line="163"/>
+        <location filename="../about.ui" line="32"/>
         <source>Splash</source>
-        <translation type="unfinished"></translation>
+        <translation>splash</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_about.h" line="166"/>
+        <location filename="../about.ui" line="173"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer</translation>
     </message>
 </context>
 <context>
@@ -119,9 +120,9 @@
         <translation type="obsolete">Fichier</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_bookexport.h" line="125"/>
+        <location filename="../bookexport.ui" line="55"/>
         <source>Browse...</source>
-        <translation type="unfinished">Parcourir...</translation>
+        <translation>Parcourir...</translation>
     </message>
     <message>
         <location filename="../bookexport.ui" line="99"/>
@@ -129,9 +130,9 @@
         <translation type="obsolete">Format du papier</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_bookexport.h" line="123"/>
+        <location filename="../bookexport.ui" line="13"/>
         <source>Export Font Book</source>
-        <translation type="unfinished">Exporte un catalogue de fontes</translation>
+        <translation>Exporte un catalogue de fontes</translation>
     </message>
     <message>
         <location filename="../bookexport.ui" line="23"/>
@@ -154,9 +155,9 @@
         <translation type="obsolete">Pas de patron</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_bookexport.h" line="124"/>
+        <location filename="../bookexport.ui" line="45"/>
         <source>Output</source>
-        <translation type="unfinished">Destination</translation>
+        <translation>Destination</translation>
     </message>
     <message>
         <location filename="../bookexport.ui" line="96"/>
@@ -212,32 +213,32 @@
 <context>
     <name>FMLayout</name>
     <message>
-        <location filename="../fmlayout.cpp" line="302"/>
+        <location filename="../fmlayout.cpp" line="346"/>
         <source>Text engine options</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de mise en page</translation>
     </message>
 </context>
 <context>
     <name>FolderViewMenu</name>
     <message>
-        <location filename="../listdockwidget.cpp" line="249"/>
-        <source>Reload Tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../listdockwidget.cpp" line="250"/>
-        <source>Import Directory</source>
-        <translation type="unfinished"></translation>
+        <source>Reload Tree</source>
+        <translation>Recharger</translation>
     </message>
     <message>
         <location filename="../listdockwidget.cpp" line="251"/>
-        <source>Import recursively</source>
-        <translation type="unfinished"></translation>
+        <source>Import Directory</source>
+        <translation>Importer un répertoire</translation>
     </message>
     <message>
         <location filename="../listdockwidget.cpp" line="252"/>
+        <source>Import recursively</source>
+        <translation>Importer un répertoire récursivement</translation>
+    </message>
+    <message>
+        <location filename="../listdockwidget.cpp" line="253"/>
         <source>Import File</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer un fichier</translation>
     </message>
 </context>
 <context>
@@ -342,7 +343,7 @@
         <translation>Nom de famille</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="2578"/>
+        <location filename="../fontitem.cpp" line="2568"/>
         <source>Font Subfamily</source>
         <translation>Variante</translation>
     </message>
@@ -352,12 +353,12 @@
         <translation>Identifiant unique</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3036"/>
+        <location filename="../fontitem.cpp" line="3026"/>
         <source>Full font name</source>
         <translation>Nom complet</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3037"/>
+        <location filename="../fontitem.cpp" line="3027"/>
         <source>Version string</source>
         <translation>Version</translation>
     </message>
@@ -382,7 +383,7 @@
         <translation>Créateur</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3038"/>
+        <location filename="../fontitem.cpp" line="3028"/>
         <source>Description</source>
         <translation>Description</translation>
     </message>
@@ -437,12 +438,12 @@
         <translation>Identifiant CID</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3427"/>
+        <location filename="../fontitem.cpp" line="3418"/>
         <source>Fontmatrix - Download</source>
         <translation>Fontmatrix - téléchargement</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3428"/>
+        <location filename="../fontitem.cpp" line="3419"/>
         <source>Downloading %1.</source>
         <translation>Télécharge %1.</translation>
     </message>
@@ -962,7 +963,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3264"/>
+        <location filename="../fontitem.cpp" line="3255"/>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
@@ -970,9 +971,9 @@
 <context>
     <name>Help</name>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_help.h" line="49"/>
+        <location filename="../help.ui" line="13"/>
         <source>Fontmatrix Help</source>
-        <translation type="unfinished">Aide de Fontmatrix</translation>
+        <translation>Aide de Fontmatrix</translation>
     </message>
 </context>
 <context>
@@ -983,27 +984,27 @@
         <translation type="obsolete">Dialogue</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_importtags.h" line="99"/>
+        <location filename="../importtags.ui" line="45"/>
         <source>Add</source>
-        <translation type="unfinished">Ajout</translation>
+        <translation>Ajout</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_importtags.h" line="100"/>
+        <location filename="../importtags.ui" line="72"/>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_importtags.h" line="97"/>
+        <location filename="../importtags.ui" line="13"/>
         <source>Fontmatrix - Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontmatrix - étiquettes</translation>
     </message>
 </context>
 <context>
     <name>ImportedFonts</name>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_importedfonts.h" line="97"/>
+        <location filename="../importedfonts.ui" line="13"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialogue</translation>
+        <translation>Dialogue</translation>
     </message>
     <message>
         <location filename="../importedfonts.ui" line="26"/>
@@ -1011,27 +1012,29 @@
         <translation type="obsolete">Fontes importÃ©es</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_importedfonts.h" line="98"/>
+        <location filename="../importedfonts.ui" line="24"/>
         <source>Imported Fonts</source>
-        <translation type="unfinished">Fontes importées</translation>
+        <translation>Fontes importées</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_importedfonts.h" line="99"/>
+        <location filename="../importedfonts.ui" line="58"/>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_importedfonts.h" line="105"/>
+        <location filename="../importedfonts.ui" line="78"/>
         <source>&lt;qt&gt;Instead of showing this dialog imported font count
 will be shown in the status bar. If you choose not to
 show this dialog anymore you can reset the state
 in preferences.&lt;/qt&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;qt&gt;Plutôt que de montrer ce message,
+un décompte des fontes importées sera visible dans la bar d’état.
+Votre choix pourra être changé dans les préférences&lt;/qt&gt;</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_importedfonts.h" line="108"/>
+        <location filename="../importedfonts.ui" line="84"/>
         <source>Do not show this dialog again</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne plus montrer ce message</translation>
     </message>
 </context>
 <context>
@@ -1050,62 +1053,72 @@ in preferences.&lt;/qt&gt;</source>
 <context>
     <name>LayoutOptionWidget</name>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="208"/>
+        <location filename="../layoutoptions.ui" line="19"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="209"/>
+        <location filename="../layoutoptions.ui" line="25"/>
         <source>Weights</source>
-        <translation type="unfinished"></translation>
+        <translation>Poids</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="216"/>
+        <location filename="../layoutoptions.ui" line="294"/>
         <source>score</source>
-        <translation type="unfinished"></translation>
+        <translation>score</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="211"/>
+        <location filename="../layoutoptions.ui" line="91"/>
         <source>before</source>
-        <translation type="unfinished"></translation>
+        <translation>Avant</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="213"/>
+        <location filename="../layoutoptions.ui" line="137"/>
         <source>exact</source>
-        <translation type="unfinished"></translation>
+        <translation>Exact</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="215"/>
+        <location filename="../layoutoptions.ui" line="235"/>
         <source>after</source>
-        <translation type="unfinished"></translation>
+        <translation>Aprés</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="217"/>
+        <location filename="../layoutoptions.ui" line="307"/>
         <source>end</source>
-        <translation type="unfinished"></translation>
+        <translation>Fin</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="218"/>
+        <location filename="../layoutoptions.ui" line="360"/>
         <source>penalty</source>
-        <translation type="unfinished"></translation>
+        <translation>Pénalité</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_layoutoptions.h" line="219"/>
+        <location filename="../layoutoptions.ui" line="373"/>
         <source>H-penalty</source>
-        <translation type="unfinished"></translation>
+        <translation>Pénalité de coupure</translation>
+    </message>
+    <message>
+        <location filename="../layoutoptions.ui" line="429"/>
+        <source>space</source>
+        <translation>Espace</translation>
+    </message>
+    <message>
+        <location filename="../layoutoptions.ui" line="442"/>
+        <source>max compression</source>
+        <translation>compression maximum</translation>
     </message>
 </context>
 <context>
     <name>ListDock</name>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="234"/>
+        <location filename="../listsdock.ui" line="52"/>
         <source>Filter view by chosing tag</source>
-        <translation type="unfinished">Filtre en fonction des étiquettes</translation>
+        <translation>Filtre en fonction des étiquettes</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="230"/>
+        <location filename="../listsdock.ui" line="22"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="138"/>
@@ -1118,14 +1131,14 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Filtre en fonction des collections</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="264"/>
+        <location filename="../listsdock.ui" line="270"/>
         <source>Names</source>
-        <translation type="unfinished">Noms</translation>
+        <translation>Noms</translation>
     </message>
     <message>
         <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="263"/>
         <source>Files</source>
-        <translation type="unfinished">Fichiers</translation>
+        <translation type="obsolete">Fichiers</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="226"/>
@@ -1133,9 +1146,9 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Aperçu</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="253"/>
+        <location filename="../listsdock.ui" line="165"/>
         <source>Show complete collection of available fonts</source>
-        <translation type="unfinished">Montre toutes les fontes disponibles</translation>
+        <translation>Montre toutes les fontes disponibles</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="248"/>
@@ -1185,7 +1198,7 @@ in preferences.&lt;/qt&gt;</source>
     <message>
         <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="231"/>
         <source>Tag:</source>
-        <translation type="unfinished">Étiquettes :</translation>
+        <translation type="obsolete">Étiquettes :</translation>
     </message>
     <message>
         <location filename="../listsdock.ui" line="90"/>
@@ -1230,42 +1243,47 @@ in preferences.&lt;/qt&gt;</source>
     <message>
         <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="243"/>
         <source>Filter:</source>
-        <translation type="unfinished">Filtre :</translation>
+        <translation type="obsolete">Filtre :</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="239"/>
+        <location filename="../listsdock.ui" line="68"/>
         <source>Switch to panose filtering</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre par attributs Panose</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="242"/>
-        <source>P</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="246"/>
+        <location filename="../listsdock.ui" line="109"/>
         <source>Field selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Choix du champ</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="249"/>
+        <location filename="../listsdock.ui" line="112"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="250"/>
+        <location filename="../listsdock.ui" line="143"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>tl</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="265"/>
+        <location filename="../listsdock.ui" line="287"/>
         <source>Previews</source>
-        <translation type="unfinished"></translation>
+        <translation>Aperçu</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_listsdock.h" line="266"/>
+        <location filename="../listsdock.ui" line="318"/>
         <source>Folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossiers</translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="71"/>
+        <source>Panose</source>
+        <translation>Panose</translation>
+    </message>
+    <message>
+        <location filename="../listsdock.ui" line="168"/>
+        <source>reset</source>
+        <translation>Vider</translation>
     </message>
 </context>
 <context>
@@ -1273,17 +1291,17 @@ in preferences.&lt;/qt&gt;</source>
     <message>
         <location filename="../listdockwidget.cpp" line="76"/>
         <source>All fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous</translation>
     </message>
     <message>
-        <location filename="../listdockwidget.cpp" line="83"/>
-        <source>Unicode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../listdockwidget.cpp" line="331"/>
+        <location filename="../listdockwidget.cpp" line="332"/>
         <source>All activated</source>
-        <translation type="unfinished"></translation>
+        <translation>Toutes les fontes actives</translation>
+    </message>
+    <message>
+        <location filename="../listdockwidget.cpp" line="84"/>
+        <source>Unicode character</source>
+        <translation>Caractère unicode</translation>
     </message>
 </context>
 <context>
@@ -1294,9 +1312,9 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Ajuster Ã la vue|</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="693"/>
+        <location filename="../mainview.ui" line="23"/>
         <source>main view widget</source>
-        <translation type="unfinished">composant vue principale</translation>
+        <translation>composant vue principale</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="145"/>
@@ -1319,14 +1337,14 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Ft</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="729"/>
+        <location filename="../mainview.ui" line="422"/>
         <source>OpenType Features</source>
-        <translation type="unfinished">Fonctionnalités OpenType</translation>
+        <translation>Fonctionnalités OpenType</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="730"/>
+        <location filename="../mainview.ui" line="427"/>
         <source>Friendly Name</source>
-        <translation type="unfinished">Appellation complète</translation>
+        <translation>Appellation complète</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="271"/>
@@ -1334,9 +1352,9 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Appliquer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="763"/>
+        <location filename="../mainview.ui" line="777"/>
         <source>Glyphs</source>
-        <translation type="unfinished">Glyphes</translation>
+        <translation>Glyphes</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="308"/>
@@ -1344,14 +1362,14 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Couverture de lâintervalle Unicode :</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="707"/>
+        <location filename="../mainview.ui" line="120"/>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
-        <translation type="unfinished">Un clic droit sur une étiquette vous donne l’ocaasion de l’ajouter ou la retirer d’une collection</translation>
+        <translation>Un clic droit sur une étiquette vous donne l’ocaasion de l’ajouter ou la retirer d’une collection</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="754"/>
+        <location filename="../mainview.ui" line="895"/>
         <source>Clicking on a glyph will show details about it</source>
-        <translation type="unfinished">Pointer un dessin montre des donnÃ©es qui lui sont associÃ©es</translation>
+        <translation>Pointer un dessin montre des donnÃ©es qui lui sont associÃ©es</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="348"/>
@@ -1383,14 +1401,14 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
         <translation type="obsolete">Texte insensÃ©</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="716"/>
+        <location filename="../mainview.ui" line="77"/>
         <source>Font Information</source>
-        <translation type="unfinished">Informations</translation>
+        <translation>Informations</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="749"/>
+        <location filename="../mainview.ui" line="196"/>
         <source>Sample Text</source>
-        <translation type="unfinished">Exemple</translation>
+        <translation>Exemple</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="284"/>
@@ -1403,9 +1421,9 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
         <translation type="obsolete">FreeType comme si vous y étiez</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="746"/>
+        <location filename="../mainview.ui" line="746"/>
         <source>Use shaper</source>
-        <translation type="unfinished">Utiliser un moteur de mise en forme</translation>
+        <translation>Utiliser un moteur de mise en forme</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="387"/>
@@ -1413,9 +1431,9 @@ p, li { white-space: pre-wrap; }(new line)&lt;/style&gt;&lt;/head&gt;&lt;body st
         <translation type="obsolete">De droite à gauche</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="750"/>
+        <location filename="../mainview.ui" line="815"/>
         <source>Coverage of Unicode Interval :</source>
-        <translation type="unfinished">Couverture Unicode :</translation>
+        <translation>Couverture Unicode :</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="70"/>
@@ -1451,14 +1469,14 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Rendu par FreeType</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="736"/>
+        <location filename="../mainview.ui" line="558"/>
         <source>Font Size</source>
-        <translation type="unfinished">Taille de fonte</translation>
+        <translation>Taille de fonte</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="764"/>
+        <location filename="../mainview.ui" line="941"/>
         <source> pt</source>
-        <translation type="unfinished"> pt</translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="356"/>
@@ -1468,122 +1486,122 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="747"/>
         <source>Text Progression</source>
-        <translation type="unfinished">Directions</translation>
+        <translation type="obsolete">Directions</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="766"/>
+        <location filename="../mainview.ui" line="917"/>
         <source>Playground</source>
-        <translation type="unfinished">Aire de jeu</translation>
+        <translation>Aire de jeu</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="742"/>
-        <source>part I</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="748"/>
-        <source>part II</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="704"/>
+        <location filename="../mainview.ui" line="141"/>
         <source>Nothing selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Rien</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="712"/>
+        <location filename="../mainview.ui" line="166"/>
         <source>Add a tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une étiquette</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="719"/>
+        <location filename="../mainview.ui" line="236"/>
         <source>Settings</source>
-        <translation type="unfinished">Paramètres</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="722"/>
-        <source>S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="725"/>
+        <location filename="../mainview.ui" line="273"/>
         <source>OpenType</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenType</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="728"/>
-        <source>O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="731"/>
+        <location filename="../mainview.ui" line="448"/>
         <source>Save as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer comme modèle</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="732"/>
+        <location filename="../mainview.ui" line="455"/>
         <source>Reset Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Vider le modèle</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="733"/>
+        <location filename="../mainview.ui" line="502"/>
         <source>SampleText</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="734"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exemple</translation>
     </message>
     <message>
         <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="735"/>
         <source>Layout</source>
-        <translation type="unfinished">Mise en place</translation>
+        <translation type="obsolete">Mise en place</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="739"/>
-        <source>Rendering</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="740"/>
+        <location filename="../mainview.ui" line="609"/>
         <source>FreeType</source>
-        <translation type="unfinished"></translation>
+        <translation>FreeType</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="741"/>
+        <location filename="../mainview.ui" line="661"/>
         <source>Native Qt objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Éléments Qt natifs</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="743"/>
+        <location filename="../mainview.ui" line="673"/>
         <source>World is wide</source>
-        <translation type="unfinished"></translation>
+        <translation>Le monde est vaste</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="744"/>
+        <location filename="../mainview.ui" line="727"/>
         <source>Shaper type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de moteur</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="745"/>
+        <location filename="../mainview.ui" line="711"/>
         <source>Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Écriture</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="765"/>
+        <location filename="../mainview.ui" line="982"/>
         <source>push</source>
-        <translation type="unfinished"></translation>
+        <translation>Mettre</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="759"/>
+        <location filename="../mainview.ui" line="847"/>
         <source>Set Mode &quot;Copy Character to Clipboard&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Passe en mode «Copie le caractère dans le presse-papier»</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_mainview.h" line="762"/>
-        <source>C</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainview.ui" line="169"/>
+        <source>Add</source>
+        <translation>Ajout</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="239"/>
+        <source>Display Settings</source>
+        <translation>Montre les paramètres</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="541"/>
+        <source>edit</source>
+        <translation>Édition</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="628"/>
+        <source>No hinting</source>
+        <translation>Sans instruction</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="638"/>
+        <source>Light Hinting</source>
+        <translation>Instructions lumineuses</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="645"/>
+        <source>Normal Hinting</source>
+        <translation>Instructions normales</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="850"/>
+        <source>Copy</source>
+        <translation>Copie</translation>
     </message>
 </context>
 <context>
@@ -1604,749 +1622,754 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Le zoom est exclusif de l’ajustement</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1138"/>
+        <location filename="../mainviewwidget.cpp" line="1170"/>
         <source>000Basic Latin</source>
         <translation>000Latin de base</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1139"/>
+        <location filename="../mainviewwidget.cpp" line="1171"/>
         <source>001Latin-1 Supplement</source>
         <translation>001Supplement Latin-1</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1140"/>
+        <location filename="../mainviewwidget.cpp" line="1172"/>
         <source>002Latin Extended-A</source>
         <translation>002Latin étendu A</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1141"/>
+        <location filename="../mainviewwidget.cpp" line="1173"/>
         <source>003Latin Extended-B</source>
         <translation>003Latin étendu B</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1142"/>
+        <location filename="../mainviewwidget.cpp" line="1174"/>
         <source>004IPA Extensions</source>
         <translation>004Alphabet phonétique international (API)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1143"/>
+        <location filename="../mainviewwidget.cpp" line="1175"/>
         <source>005Spacing Modifier Letters</source>
         <translation>005Lettres modificatives avec chasse</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1144"/>
+        <location filename="../mainviewwidget.cpp" line="1176"/>
         <source>006Combining Diacritical Marks</source>
         <translation>006Diacritiques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1145"/>
+        <location filename="../mainviewwidget.cpp" line="1177"/>
         <source>007Greek and Coptic</source>
         <translation>007Grec et copte</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1146"/>
+        <location filename="../mainviewwidget.cpp" line="1178"/>
         <source>008Cyrillic</source>
         <translation>008Cyrillique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1147"/>
+        <location filename="../mainviewwidget.cpp" line="1179"/>
         <source>009Cyrillic Supplement</source>
         <translation>009Supplément cyrillique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1148"/>
+        <location filename="../mainviewwidget.cpp" line="1180"/>
         <source>010Armenian</source>
         <translation>010Arménien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1149"/>
+        <location filename="../mainviewwidget.cpp" line="1181"/>
         <source>011Hebrew</source>
         <translation>011Hébreu</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1150"/>
+        <location filename="../mainviewwidget.cpp" line="1182"/>
         <source>012Arabic</source>
         <translation>012Arabe</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1151"/>
+        <location filename="../mainviewwidget.cpp" line="1183"/>
         <source>013Syriac</source>
         <translation>013Syriaque</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1152"/>
+        <location filename="../mainviewwidget.cpp" line="1184"/>
         <source>014Arabic Supplement</source>
         <translation>014Supplément arabe</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1153"/>
+        <location filename="../mainviewwidget.cpp" line="1185"/>
         <source>015Thaana</source>
         <translation>015Thâna</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1154"/>
+        <location filename="../mainviewwidget.cpp" line="1186"/>
         <source>016N&apos;Ko</source>
         <translation>016N&apos;Ko</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1155"/>
+        <location filename="../mainviewwidget.cpp" line="1187"/>
         <source>017Devanagari</source>
         <translation>017Dévanâgarî</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1156"/>
+        <location filename="../mainviewwidget.cpp" line="1188"/>
         <source>018Bengali</source>
         <translation>018Bengali</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1157"/>
+        <location filename="../mainviewwidget.cpp" line="1189"/>
         <source>019Gurmukhi</source>
         <translation>019Gourmoukhî</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1158"/>
+        <location filename="../mainviewwidget.cpp" line="1190"/>
         <source>020Gujarati</source>
         <translation>020Goudjerate</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1159"/>
+        <location filename="../mainviewwidget.cpp" line="1191"/>
         <source>021Oriya</source>
         <translation>021Oriya</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1160"/>
+        <location filename="../mainviewwidget.cpp" line="1192"/>
         <source>022Tamil</source>
         <translation>022Tamoul</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1161"/>
+        <location filename="../mainviewwidget.cpp" line="1193"/>
         <source>023Telugu</source>
         <translation>023Télougou</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1162"/>
+        <location filename="../mainviewwidget.cpp" line="1194"/>
         <source>024Kannada</source>
         <translation>024Kannara</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1163"/>
+        <location filename="../mainviewwidget.cpp" line="1195"/>
         <source>025Malayalam</source>
         <translation>025Malayalam</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1164"/>
+        <location filename="../mainviewwidget.cpp" line="1196"/>
         <source>026Sinhala</source>
         <translation>026Singhalais</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1165"/>
+        <location filename="../mainviewwidget.cpp" line="1197"/>
         <source>027Thai</source>
         <translation>027Thai</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1166"/>
+        <location filename="../mainviewwidget.cpp" line="1198"/>
         <source>028Lao</source>
         <translation>028Lao</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1167"/>
+        <location filename="../mainviewwidget.cpp" line="1199"/>
         <source>029Tibetan</source>
         <translation>029Tibétain</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1168"/>
+        <location filename="../mainviewwidget.cpp" line="1200"/>
         <source>030Burmese</source>
         <translation>030Birman</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1169"/>
+        <location filename="../mainviewwidget.cpp" line="1201"/>
         <source>031Georgian</source>
         <translation>031Géorgien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1170"/>
+        <location filename="../mainviewwidget.cpp" line="1202"/>
         <source>032Hangul Jamo</source>
         <translation>032Jamos hangûl</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1171"/>
+        <location filename="../mainviewwidget.cpp" line="1203"/>
         <source>033Ethiopic</source>
         <translation>033Éthiopien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1172"/>
+        <location filename="../mainviewwidget.cpp" line="1204"/>
         <source>034Ethiopic Supplement</source>
         <translation>034Supplément Éthiopien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1173"/>
+        <location filename="../mainviewwidget.cpp" line="1205"/>
         <source>035Cherokee</source>
         <translation>035Chérokî</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1174"/>
+        <location filename="../mainviewwidget.cpp" line="1206"/>
         <source>036Unified Canadian Aboriginal Syllabics</source>
         <translation>036Syllabaires autochtones canadiens unifiés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1175"/>
+        <location filename="../mainviewwidget.cpp" line="1207"/>
         <source>037Ogham</source>
         <translation>037Ogam</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1176"/>
+        <location filename="../mainviewwidget.cpp" line="1208"/>
         <source>038Runic</source>
         <translation>038Runes</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1177"/>
+        <location filename="../mainviewwidget.cpp" line="1209"/>
         <source>039Tagalog</source>
         <translation>039Tagalog</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1178"/>
+        <location filename="../mainviewwidget.cpp" line="1210"/>
         <source>040Hanun&#xc3;&#xb3;o</source>
         <translation>040Hanounóo</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1179"/>
+        <location filename="../mainviewwidget.cpp" line="1211"/>
         <source>041Buhid</source>
         <translation>041Bouhide</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1180"/>
+        <location filename="../mainviewwidget.cpp" line="1212"/>
         <source>042Tagbanwa</source>
         <translation>042Tagbanoua</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1181"/>
+        <location filename="../mainviewwidget.cpp" line="1213"/>
         <source>043Khmer</source>
         <translation>043Khmer</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1182"/>
+        <location filename="../mainviewwidget.cpp" line="1214"/>
         <source>044Mongolian</source>
         <translation>044Mongol</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1183"/>
+        <location filename="../mainviewwidget.cpp" line="1215"/>
         <source>045Limbu</source>
         <translation>045Limbou</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1184"/>
+        <location filename="../mainviewwidget.cpp" line="1216"/>
         <source>046Tai Le</source>
         <translation>046Taï-le</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1185"/>
+        <location filename="../mainviewwidget.cpp" line="1217"/>
         <source>047New Tai Lue</source>
         <translation>047Nouveau Taï-le</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1186"/>
+        <location filename="../mainviewwidget.cpp" line="1218"/>
         <source>048Khmer Symbols</source>
         <translation>048Symboles khmer</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1187"/>
+        <location filename="../mainviewwidget.cpp" line="1219"/>
         <source>049Buginese</source>
         <translation>049Buginese</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1188"/>
+        <location filename="../mainviewwidget.cpp" line="1220"/>
         <source>050Balinese</source>
         <translation>050Balinese</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1189"/>
+        <location filename="../mainviewwidget.cpp" line="1221"/>
         <source>051Lepcha</source>
         <translation>051Lepcha</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1190"/>
+        <location filename="../mainviewwidget.cpp" line="1222"/>
         <source>052Phonetic Extensions</source>
         <translation>052Supplément phonétique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1191"/>
+        <location filename="../mainviewwidget.cpp" line="1223"/>
         <source>053Phonetic Extensions Supplement</source>
         <translation>053Extensions au supplément phonétique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1192"/>
+        <location filename="../mainviewwidget.cpp" line="1224"/>
         <source>054Combining Diacritical Marks Supplement</source>
         <translation>054Supplément Signes Diacritiques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1193"/>
+        <location filename="../mainviewwidget.cpp" line="1225"/>
         <source>055Latin Extended Additional</source>
         <translation>055Latin étendu additionnel</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1194"/>
+        <location filename="../mainviewwidget.cpp" line="1226"/>
         <source>056Greek Extended</source>
         <translation>056Grec étendu</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1195"/>
+        <location filename="../mainviewwidget.cpp" line="1227"/>
         <source>057General Punctuation</source>
         <translation>057Ponctution générale</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1196"/>
+        <location filename="../mainviewwidget.cpp" line="1228"/>
         <source>058Superscripts and Subscripts</source>
         <translation>058Exposants et indices</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1197"/>
+        <location filename="../mainviewwidget.cpp" line="1229"/>
         <source>059Currency Symbols</source>
         <translation>059Symboles monétaires</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1198"/>
+        <location filename="../mainviewwidget.cpp" line="1230"/>
         <source>060Combining Diacritical Marks for Symbols</source>
         <translation>060Signes combinatoires pour symboles</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1199"/>
+        <location filename="../mainviewwidget.cpp" line="1231"/>
         <source>061Letterlike Symbols</source>
         <translation>061Symboles de type letrre</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1200"/>
+        <location filename="../mainviewwidget.cpp" line="1232"/>
         <source>062Number Forms</source>
         <translation>062Formes numérales</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1201"/>
+        <location filename="../mainviewwidget.cpp" line="1233"/>
         <source>063Arrows</source>
         <translation>063Flèches</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1202"/>
+        <location filename="../mainviewwidget.cpp" line="1234"/>
         <source>064Mathematical Operators</source>
         <translation>064Opérateurs mathématiques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1203"/>
+        <location filename="../mainviewwidget.cpp" line="1235"/>
         <source>065Miscellaneous Technical</source>
         <translation>065Signes techniques divers</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1204"/>
+        <location filename="../mainviewwidget.cpp" line="1236"/>
         <source>066Control Pictures</source>
         <translation>066Pictogrammes de commande</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1205"/>
+        <location filename="../mainviewwidget.cpp" line="1237"/>
         <source>067Optical Character Recognition</source>
         <translation>067Reconnaissance optique de caractères</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1206"/>
+        <location filename="../mainviewwidget.cpp" line="1238"/>
         <source>068Enclosed Alphanumerics</source>
         <translation>068Alphanumériques cerclés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1207"/>
+        <location filename="../mainviewwidget.cpp" line="1239"/>
         <source>069Box Drawing</source>
         <translation>069Filets</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1208"/>
+        <location filename="../mainviewwidget.cpp" line="1240"/>
         <source>070Block Elements</source>
         <translation>070Pavés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1209"/>
+        <location filename="../mainviewwidget.cpp" line="1241"/>
         <source>071Geometric Shapes</source>
         <translation>071Formes géométriques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1210"/>
+        <location filename="../mainviewwidget.cpp" line="1242"/>
         <source>072Miscellaneous Symbols</source>
         <translation>072Symboles divers</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1211"/>
+        <location filename="../mainviewwidget.cpp" line="1243"/>
         <source>073Dingbats</source>
         <translation>073Casseau</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1212"/>
+        <location filename="../mainviewwidget.cpp" line="1244"/>
         <source>074Miscellaneous Mathematical Symbols-A</source>
         <translation>074Divers symboles mathématiques - A</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1213"/>
+        <location filename="../mainviewwidget.cpp" line="1245"/>
         <source>075Supplemental Arrows-A</source>
         <translation>075Supplément B de flèches</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1214"/>
+        <location filename="../mainviewwidget.cpp" line="1246"/>
         <source>076Braille Patterns</source>
         <translation>076Combinaisons brailles</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1215"/>
+        <location filename="../mainviewwidget.cpp" line="1247"/>
         <source>077Supplemental Arrows-B</source>
         <translation>077Supplément B de flèches</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1216"/>
+        <location filename="../mainviewwidget.cpp" line="1248"/>
         <source>078Miscellaneous Mathematical Symbols-B</source>
         <translation>078Divers symboles mathématiques-B</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1217"/>
+        <location filename="../mainviewwidget.cpp" line="1249"/>
         <source>079Supplemental Mathematical Operators</source>
         <translation>079Opérateurs mathématiques supplémentaires</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1218"/>
+        <location filename="../mainviewwidget.cpp" line="1250"/>
         <source>080Miscellaneous Symbols and Arrows</source>
         <translation>080Divers symboles et flèches</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1219"/>
+        <location filename="../mainviewwidget.cpp" line="1251"/>
         <source>081Glagolitic</source>
         <translation>081Glagolitique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1220"/>
+        <location filename="../mainviewwidget.cpp" line="1252"/>
         <source>082Latin Extended-C</source>
         <translation>082Latin étendu-C</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1221"/>
+        <location filename="../mainviewwidget.cpp" line="1253"/>
         <source>083Coptic</source>
         <translation>083Copte</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1222"/>
+        <location filename="../mainviewwidget.cpp" line="1254"/>
         <source>084Georgian Supplement</source>
         <translation>084Supplément géeorgien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1223"/>
+        <location filename="../mainviewwidget.cpp" line="1255"/>
         <source>085Tifinagh</source>
         <translation>085Alphabet Tifinagh</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1224"/>
+        <location filename="../mainviewwidget.cpp" line="1256"/>
         <source>086Ethiopic Extended</source>
         <translation>086Ethiopien étendu</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1225"/>
+        <location filename="../mainviewwidget.cpp" line="1257"/>
         <source>087Supplemental Punctuation</source>
         <translation>087Ponctuation supplémentaire</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1226"/>
+        <location filename="../mainviewwidget.cpp" line="1258"/>
         <source>088CJK Radicals Supplement</source>
         <translation>088Formes supplémentaires des clés CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1227"/>
+        <location filename="../mainviewwidget.cpp" line="1259"/>
         <source>089Kangxi Radicals</source>
         <translation>089Clés chinoises (Kangxi)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1228"/>
+        <location filename="../mainviewwidget.cpp" line="1260"/>
         <source>090Ideographic Description Characters</source>
         <translation>090Description idéophonographiques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1229"/>
+        <location filename="../mainviewwidget.cpp" line="1261"/>
         <source>091CJK Symbols and Punctuation</source>
         <translation>091Symboles et ponctuation CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1230"/>
+        <location filename="../mainviewwidget.cpp" line="1262"/>
         <source>092Hiragana</source>
         <translation>092Hiragana</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1231"/>
+        <location filename="../mainviewwidget.cpp" line="1263"/>
         <source>093Katakana</source>
         <translation>093Katakana</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1232"/>
+        <location filename="../mainviewwidget.cpp" line="1264"/>
         <source>094Bopomofo</source>
         <translation>094Bopomofo</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1233"/>
+        <location filename="../mainviewwidget.cpp" line="1265"/>
         <source>095Hangul Compatibility Jamo</source>
         <translation>095Jamos de compatibilité hangûls</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1234"/>
+        <location filename="../mainviewwidget.cpp" line="1266"/>
         <source>096Kanbun</source>
         <translation>096Kanboun</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1235"/>
+        <location filename="../mainviewwidget.cpp" line="1267"/>
         <source>097Bopomofo Extended</source>
         <translation>097Bopomofo étendu</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1236"/>
+        <location filename="../mainviewwidget.cpp" line="1268"/>
         <source>098CJK Strokes</source>
         <translation>098Contours CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1237"/>
+        <location filename="../mainviewwidget.cpp" line="1269"/>
         <source>099Katakana Phonetic Extensions</source>
         <translation>099Extensions phonétiques Katakana</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1238"/>
+        <location filename="../mainviewwidget.cpp" line="1270"/>
         <source>100Enclosed CJK Letters and Months</source>
         <translation>100Lettres et mois CJC cerclés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1239"/>
+        <location filename="../mainviewwidget.cpp" line="1271"/>
         <source>101CJK Compatibility</source>
         <translation>101Compatibilité CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1240"/>
+        <location filename="../mainviewwidget.cpp" line="1272"/>
         <source>102CJK Unified Ideographs Extension A</source>
         <translation>102Supplément A aux idéophonogrammes unifiés CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1241"/>
+        <location filename="../mainviewwidget.cpp" line="1273"/>
         <source>103Yijing Hexagram Symbols</source>
         <translation>103Hexagrammes du Classique des mutations ou Yi-king</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1242"/>
+        <location filename="../mainviewwidget.cpp" line="1274"/>
         <source>104CJK Unified Ideographs</source>
         <translation>104Idéophonogrammes unifiés CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1243"/>
+        <location filename="../mainviewwidget.cpp" line="1275"/>
         <source>105Yi Syllables</source>
         <translation>105Syllabaire yi des Monts frais</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1244"/>
+        <location filename="../mainviewwidget.cpp" line="1276"/>
         <source>106Yi Radicals</source>
         <translation>106Clés yi</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1245"/>
+        <location filename="../mainviewwidget.cpp" line="1277"/>
         <source>107Modifier Tone Letters</source>
         <translation>107Lettres modificatives de la tonalité</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1246"/>
+        <location filename="../mainviewwidget.cpp" line="1278"/>
         <source>108Latin Extended-D</source>
         <translation>108Latin étendu-D</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1247"/>
+        <location filename="../mainviewwidget.cpp" line="1279"/>
         <source>109Syloti Nagri</source>
         <translation>109Sylotî nagrî</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1248"/>
+        <location filename="../mainviewwidget.cpp" line="1280"/>
         <source>110Phags-pa</source>
         <translation>110Phagspa</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1249"/>
+        <location filename="../mainviewwidget.cpp" line="1281"/>
         <source>111Hangul Syllables</source>
         <translation>111Hangûl</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1250"/>
+        <location filename="../mainviewwidget.cpp" line="1282"/>
         <source>112High Surrogates</source>
         <translation>112Demi-zone haute</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1251"/>
+        <location filename="../mainviewwidget.cpp" line="1283"/>
         <source>113High Private Use Surrogates</source>
         <translation>113Partie à usage privé de la demi-zonz haute</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1252"/>
+        <location filename="../mainviewwidget.cpp" line="1284"/>
         <source>114Low Surrogates</source>
         <translation>114Demi-zone basse</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1253"/>
+        <location filename="../mainviewwidget.cpp" line="1285"/>
         <source>115Private Use Area</source>
         <translation>115Zonz à usage privé</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1254"/>
+        <location filename="../mainviewwidget.cpp" line="1286"/>
         <source>116CJK Compatibility Ideographs</source>
         <translation>116Idéogrammes de compatibilité CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1255"/>
+        <location filename="../mainviewwidget.cpp" line="1287"/>
         <source>117Alphabetic Presentation Forms</source>
         <translation>117Formes de présentation alphabétique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1256"/>
+        <location filename="../mainviewwidget.cpp" line="1288"/>
         <source>118Arabic Presentation Forms-A</source>
         <translation>118Formes A de présentation arabe</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1257"/>
+        <location filename="../mainviewwidget.cpp" line="1289"/>
         <source>119Variation Selectors</source>
         <translation>119Sélecteurs de variante</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1258"/>
+        <location filename="../mainviewwidget.cpp" line="1290"/>
         <source>120Vertical Forms</source>
         <translation>120Formes verticales</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1259"/>
+        <location filename="../mainviewwidget.cpp" line="1291"/>
         <source>121Combining Half Marks</source>
         <translation>121Demi-signes combinatoires</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1260"/>
+        <location filename="../mainviewwidget.cpp" line="1292"/>
         <source>122CJK Compatibility Forms</source>
         <translation>122Formes de compatibilité CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1261"/>
+        <location filename="../mainviewwidget.cpp" line="1293"/>
         <source>123Small Form Variants</source>
         <translation>123Petites variantes de forme</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1262"/>
+        <location filename="../mainviewwidget.cpp" line="1294"/>
         <source>124Arabic Presentation Forms-B</source>
         <translation>124Formes B de présentation arabe</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1263"/>
+        <location filename="../mainviewwidget.cpp" line="1295"/>
         <source>125Halfwidth and Fullwidth Forms</source>
         <translation>125Formes de demi et pleine chasse</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1264"/>
+        <location filename="../mainviewwidget.cpp" line="1296"/>
         <source>126Specials</source>
         <translation>126Caractères spéciaux</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1266"/>
+        <location filename="../mainviewwidget.cpp" line="1298"/>
         <source>127Supplementary Multilingual Plane (SMP)</source>
         <translation>127Plan Multilingue Supplémentaire (PMS)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1267"/>
+        <location filename="../mainviewwidget.cpp" line="1299"/>
         <source>128Supplementary Ideographic Plane (SIP)</source>
         <translation>128Plan Supplémentaires des Idéogrammes (PSI)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1268"/>
+        <location filename="../mainviewwidget.cpp" line="1300"/>
         <source>129unassigned</source>
         <translation>129Non-assigné</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1269"/>
+        <location filename="../mainviewwidget.cpp" line="1301"/>
         <source>130Supplementary Special-purpose Plane (SSP)</source>
         <translation>130Plan Suplémentaire à Usage Spécial (PSUS)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1270"/>
+        <location filename="../mainviewwidget.cpp" line="1302"/>
         <source>131Private Use Area 1 (PUA)</source>
         <translation>131Zone à usage privé 1 (ZUP)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1271"/>
+        <location filename="../mainviewwidget.cpp" line="1303"/>
         <source>132Private Use Area 2 (PUA)</source>
         <translation>132Zone à usage privé 2 (ZUP)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1272"/>
+        <location filename="../mainviewwidget.cpp" line="1304"/>
         <source>133Un-Mapped Glyphs</source>
         <translation>133Glyphs non référencés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1010"/>
+        <location filename="../mainviewwidget.cpp" line="1042"/>
         <source>Activation event</source>
         <translation>événement</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1010"/>
+        <location filename="../mainviewwidget.cpp" line="1042"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1013"/>
+        <location filename="../mainviewwidget.cpp" line="1045"/>
         <source>Activation of :</source>
         <translation>Activation de :</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1013"/>
+        <location filename="../mainviewwidget.cpp" line="1045"/>
         <source>Deactivation of :</source>
         <translation>Désactivation de :</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1273"/>
+        <location filename="../mainviewwidget.cpp" line="1305"/>
         <source>134View all mapped glyphs</source>
         <translation>134Voir toutes les glyphes référencées</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="644"/>
+        <location filename="../mainviewwidget.cpp" line="656"/>
         <source>Names</source>
         <translation>Noms</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1835"/>
+        <location filename="../mainviewwidget.cpp" line="1866"/>
         <source>Fontmatrix takes care of you</source>
         <translation>Fontmatrix prends soin de vous</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1835"/>
+        <location filename="../mainviewwidget.cpp" line="1866"/>
         <source> is activated.
 If you want to remove it from Fontmatrix database, please deactivate it first.</source>
         <translation> est activée.
 Avant de la supprimer, vous devez la désactiver.</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1838"/>
+        <location filename="../mainviewwidget.cpp" line="1869"/>
         <source>Fontmatrix safe</source>
         <translation>Fontmatrix </translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1838"/>
+        <location filename="../mainviewwidget.cpp" line="1869"/>
         <source>You are about to remove a font from Fontmatrix database</source>
         <translation>Vous êtes sur le point de supprimer une fonte de la base de données</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1838"/>
+        <location filename="../mainviewwidget.cpp" line="1869"/>
         <source>Do you want to continue?</source>
         <translation>Voulez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1923"/>
+        <location filename="../mainviewwidget.cpp" line="1954"/>
         <source>Welcome to Fontmatrix</source>
-        <translation type="unfinished"></translation>
+        <translation>Bienvenue dans Fontmatrix</translation>
+    </message>
+    <message>
+        <location filename="../mainviewwidget.cpp" line="1743"/>
+        <source>Add new tag</source>
+        <translation>Ajouter une étiquette</translation>
     </message>
 </context>
 <context>
     <name>PrefsPanel</name>
     <message>
-        <location filename="../prefs_panel.ui" line="128"/>
+        <location filename="../prefs_panel.ui" line="691"/>
         <source>Sample text</source>
-        <translation type="obsolete">Texte insensÃ©</translation>
+        <translation>Exemple de texte</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="576"/>
+        <location filename="../prefs_panel.ui" line="13"/>
         <source>Preferences Panel</source>
-        <translation type="unfinished">Préférences</translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="137"/>
@@ -2354,9 +2377,9 @@ Avant de la supprimer, vous devez la désactiver.</translation>
         <translation type="obsolete">Textes insensÃ©s nommÃ©s</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="628"/>
+        <location filename="../prefs_panel.ui" line="514"/>
         <source>Add</source>
-        <translation type="unfinished">Ajout</translation>
+        <translation>Ajout</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="276"/>
@@ -2379,19 +2402,19 @@ Avant de la supprimer, vous devez la désactiver.</translation>
         <translation type="obsolete">Interligne</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="611"/>
+        <location filename="../prefs_panel.ui" line="350"/>
         <source> pt</source>
-        <translation type="unfinished">pt</translation>
+        <translation>pt</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="622"/>
+        <location filename="../prefs_panel.ui" line="433"/>
         <source>Apply</source>
-        <translation type="unfinished">Appliquer</translation>
+        <translation>Appliquer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="599"/>
+        <location filename="../prefs_panel.ui" line="686"/>
         <source>General</source>
-        <translation type="unfinished">Général</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="32"/>
@@ -2409,9 +2432,9 @@ Avant de la supprimer, vous devez la désactiver.</translation>
         <translation type="obsolete">Rendre disponible Tout dÃ©sactiver et Tout activer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="581"/>
+        <location filename="../prefs_panel.ui" line="75"/>
         <source>Ask confirmation when activating or deactivating all fonts</source>
-        <translation type="unfinished">Demande confirmation avant de tout désactiver ou activer</translation>
+        <translation>Demande confirmation avant de tout désactiver ou activer</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="79"/>
@@ -2424,14 +2447,14 @@ Avant de la supprimer, vous devez la désactiver.</translation>
         <translation type="obsolete">Le mot aperÃ§u</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="578"/>
+        <location filename="../prefs_panel.ui" line="38"/>
         <source>Show Fontmatrix in System Tray</source>
-        <translation type="unfinished">Montrer Fontmatrix dans la boîte à miniatures</translation>
+        <translation>Montrer Fontmatrix dans la boîte à miniatures</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="579"/>
+        <location filename="../prefs_panel.ui" line="53"/>
         <source>Close to System Tray</source>
-        <translation type="unfinished">Fermer &quot;miniaturise&quot; dans la boîte à miniatures</translation>
+        <translation>Fermer &quot;miniaturise&quot; dans la boîte à miniatures</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="54"/>
@@ -2439,294 +2462,299 @@ Avant de la supprimer, vous devez la désactiver.</translation>
         <translation type="obsolete">Rendre disponible Tout désactiver et Tout activer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="582"/>
+        <location filename="../prefs_panel.ui" line="88"/>
         <source>Ask confirmation when activating or deactivating fonts by tags</source>
-        <translation type="unfinished">Demande confirmation avant de désactiver ou activer par étiquette</translation>
+        <translation>Demande confirmation avant de désactiver ou activer par étiquette</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="583"/>
+        <location filename="../prefs_panel.ui" line="98"/>
         <source>Preview Word</source>
-        <translation type="unfinished">Le mot aperçu</translation>
+        <translation>Le mot aperçu</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="587"/>
+        <location filename="../prefs_panel.ui" line="181"/>
         <source>Font Editor</source>
-        <translation type="unfinished">Éditeur de police</translation>
+        <translation>Éditeur de police</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="593"/>
+        <location filename="../prefs_panel.ui" line="196"/>
         <source>/usr/bin/fontforge</source>
-        <translation type="unfinished">/usr/bin/fontforge</translation>
+        <translation>/usr/bin/fontforge</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="631"/>
+        <location filename="../prefs_panel.ui" line="573"/>
         <source>Browse...</source>
-        <translation type="unfinished">Parcourir...</translation>
+        <translation>Parcourir...</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="595"/>
+        <location filename="../prefs_panel.ui" line="226"/>
         <source>Ask for tag names when importing fonts</source>
-        <translation type="unfinished">Demande un nom d’étiquette à l’import</translation>
+        <translation>Demande un nom d’étiquette à l’import</translation>
     </message>
     <message>
         <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="623"/>
         <source>Sample Text</source>
-        <translation type="unfinished">Exemple</translation>
+        <translation type="obsolete">Exemple</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="605"/>
+        <location filename="../prefs_panel.ui" line="282"/>
         <source>Named Sample Texts</source>
-        <translation type="unfinished">Exemples nommés</translation>
+        <translation>Exemples nommés</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="608"/>
+        <location filename="../prefs_panel.ui" line="320"/>
         <source>Font Size:</source>
-        <translation type="unfinished">Taille de fonte</translation>
+        <translation>Taille de fonte :</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="610"/>
+        <location filename="../prefs_panel.ui" line="340"/>
         <source>Interline:</source>
-        <translation type="unfinished">Interligne</translation>
+        <translation>Interligne :</translation>
     </message>
     <message>
         <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="632"/>
         <source>Files and Folders</source>
-        <translation type="unfinished">Fichiers et répertoires</translation>
+        <translation type="obsolete">Fichiers et répertoires</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="624"/>
+        <location filename="../prefs_panel.ui" line="454"/>
         <source>Templates Folder</source>
-        <translation type="unfinished">Répertoire des modèles</translation>
+        <translation>Répertoire des modèles</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="626"/>
+        <location filename="../prefs_panel.ui" line="493"/>
         <source>Remote directories</source>
-        <translation type="unfinished">Répertoires distants</translation>
+        <translation>Répertoires distants</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="634"/>
+        <location filename="../prefs_panel.ui" line="621"/>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="577"/>
         <source>Preferences</source>
-        <translation type="unfinished">Préférences</translation>
+        <translation type="obsolete">Préférences</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="580"/>
+        <location filename="../prefs_panel.ui" line="63"/>
         <source>Show &quot;All&quot; actions</source>
-        <translation type="unfinished">Montre les actions globales</translation>
+        <translation>Montre les actions globales</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="584"/>
+        <location filename="../prefs_panel.ui" line="114"/>
         <source>is RTL</source>
-        <translation type="unfinished">de droite à gauche</translation>
+        <translation>de droite à gauche</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="585"/>
+        <location filename="../prefs_panel.ui" line="140"/>
         <source>size</source>
-        <translation type="unfinished">taille</translation>
+        <translation>taille</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="607"/>
+        <location filename="../prefs_panel.ui" line="314"/>
         <source>Initial Layout</source>
-        <translation type="unfinished">Mise en page initiale</translation>
+        <translation>Mise en page initiale</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="627"/>
+        <location filename="../prefs_panel.ui" line="501"/>
         <source>http://</source>
-        <translation type="unfinished">http://</translation>
+        <translation>http://</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="630"/>
+        <location filename="../prefs_panel.ui" line="563"/>
         <source>Local storage</source>
-        <translation type="unfinished">Emplacement de stockage locale</translation>
+        <translation>Emplacement de stockage locale</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="637"/>
+        <location filename="../prefs_panel.ui" line="661"/>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="590"/>
+        <location filename="../prefs_panel.ui" line="193"/>
         <source>Add the full path to your preferred font editor</source>
-        <translation type="unfinished">Ajouter le chemin vers votre éditeur de fontes</translation>
+        <translation>Ajouter le chemin vers votre éditeur de fontes</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="596"/>
+        <location filename="../prefs_panel.ui" line="233"/>
         <source>Show names of imported fonts after import process</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les fontes importées à la fin</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="597"/>
+        <location filename="../prefs_panel.ui" line="240"/>
         <source>Show splash at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Écran de démarrage</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="598"/>
+        <location filename="../prefs_panel.ui" line="247"/>
         <source>Don’t use preferred name scheme (will affect only newly imported fonts)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="612"/>
+        <location filename="../prefs_panel.ui" line="363"/>
         <source>Hyphenation</source>
-        <translation type="unfinished"></translation>
+        <translation>Coupure</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="613"/>
+        <location filename="../prefs_panel.ui" line="369"/>
         <source>Left:</source>
-        <translation type="unfinished"></translation>
+        <translation>gauche :</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="614"/>
+        <location filename="../prefs_panel.ui" line="379"/>
         <source>Right:</source>
-        <translation type="unfinished"></translation>
+        <translation>droite :</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="615"/>
+        <location filename="../prefs_panel.ui" line="392"/>
         <source>Dictionary:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dictionnaire :</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="618"/>
+        <location filename="../prefs_panel.ui" line="399"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="621"/>
+        <location filename="../prefs_panel.ui" line="402"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="633"/>
+        <location filename="../prefs_panel.ui" line="605"/>
         <source>Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="635"/>
+        <location filename="../prefs_panel.ui" line="628"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>tl</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_prefs_panel.h" line="636"/>
-        <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <location filename="../prefs_panel.ui" line="696"/>
+        <source>Files &amp; Folders</source>
+        <translation>Fichiers et répertoires</translation>
+    </message>
+    <message>
+        <location filename="../prefs_panel.ui" line="701"/>
+        <source>Shotcuts</source>
+        <translation>Raccourcis</translation>
     </message>
 </context>
 <context>
     <name>PrefsPanelDialog</name>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="58"/>
+        <location filename="../prefspaneldialog.cpp" line="59"/>
         <source>Looks like your setup does not have a system tray available.</source>
         <translation>Il semble que vous ne disposez pas de boîte à miniatures</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="189"/>
+        <location filename="../prefspaneldialog.cpp" line="195"/>
         <source>A text</source>
         <translation>Un text</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="265"/>
+        <location filename="../prefspaneldialog.cpp" line="271"/>
         <source>Select font editor</source>
         <translation>Éditeur de police</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="283"/>
+        <location filename="../prefspaneldialog.cpp" line="297"/>
         <source>Select Templates Folder</source>
         <translation>Séctionnez un répertoire contenant les modèles</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="341"/>
+        <location filename="../prefspaneldialog.cpp" line="356"/>
         <source>Select Where remote font files will be stored</source>
         <translation>Sélectionnez où les fontes distantes seront entreposées</translation>
     </message>
     <message>
         <location filename="../prefspaneldialog.cpp" line="43"/>
         <source>Please select an item in the list or create a new one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner une entrée dans la liste ou en créer une.</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="464"/>
+        <location filename="../prefspaneldialog.cpp" line="480"/>
         <source>Alt</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="464"/>
+        <location filename="../prefspaneldialog.cpp" line="480"/>
         <source>Ctrl</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="464"/>
+        <location filename="../prefspaneldialog.cpp" line="480"/>
         <source>Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="464"/>
+        <location filename="../prefspaneldialog.cpp" line="480"/>
         <source>Meta</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="426"/>
+        <location filename="../prefspaneldialog.cpp" line="442"/>
         <source>Meta+</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta+</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="430"/>
+        <location filename="../prefspaneldialog.cpp" line="446"/>
         <source>Shift+</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="434"/>
+        <location filename="../prefspaneldialog.cpp" line="450"/>
         <source>Alt+</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="438"/>
+        <location filename="../prefspaneldialog.cpp" line="454"/>
         <source>Ctrl+</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="524"/>
+        <location filename="../prefspaneldialog.cpp" line="541"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplacer</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="526"/>
+        <location filename="../prefspaneldialog.cpp" line="543"/>
         <source>Shortcut is already in use for</source>
         <comment>action name will be appended to this</comment>
-        <translation type="unfinished"></translation>
+        <translation>Raccourci déjà utilisé pour </translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="527"/>
+        <location filename="../prefspaneldialog.cpp" line="544"/>
         <source>Do you still want to assign it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous vraiment lui assigner ?</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="560"/>
+        <location filename="../prefspaneldialog.cpp" line="581"/>
         <source>Action</source>
-        <translation type="unfinished">Action</translation>
+        <translation>Action</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="561"/>
+        <location filename="../prefspaneldialog.cpp" line="582"/>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Raccourcis</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="562"/>
+        <location filename="../prefspaneldialog.cpp" line="583"/>
         <source>Tip</source>
-        <translation type="unfinished"></translation>
+        <translation>Astuce</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="595"/>
+        <location filename="../prefspaneldialog.cpp" line="617"/>
         <source>Select hyphenation dictionary</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez un dictionnaire de coupures</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../fontitem.cpp" line="2643"/>
+        <location filename="../fontitem.cpp" line="2633"/>
         <source>codepoint is U+</source>
         <translation>le point de code est U+</translation>
     </message>
@@ -3439,152 +3467,152 @@ mnopqrstuvxyz
         <translation type="obsolete">défaut</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3233"/>
+        <location filename="../fontitem.cpp" line="3224"/>
         <source>Mark, NonSpacing</source>
         <translation>Repère, sans chasse</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3234"/>
+        <location filename="../fontitem.cpp" line="3225"/>
         <source>Mark, SpacingCombining</source>
         <translation>Repère, combinatoire</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3235"/>
+        <location filename="../fontitem.cpp" line="3226"/>
         <source>Mark, Enclosing</source>
         <translation>Repère, fermant</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3236"/>
+        <location filename="../fontitem.cpp" line="3227"/>
         <source>Number, DecimalDigit</source>
         <translation>Nombre, chiffre décimal</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3237"/>
+        <location filename="../fontitem.cpp" line="3228"/>
         <source>Number, Letter</source>
         <translation>Nombre, lettre</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3238"/>
+        <location filename="../fontitem.cpp" line="3229"/>
         <source>Number, Other</source>
         <translation>Nombre, autre</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3239"/>
+        <location filename="../fontitem.cpp" line="3230"/>
         <source>Separator, Space</source>
         <translation>Séparateur, espace</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3240"/>
+        <location filename="../fontitem.cpp" line="3231"/>
         <source>Separator, Line</source>
         <translation>Séparateur, ligne</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3241"/>
+        <location filename="../fontitem.cpp" line="3232"/>
         <source>Separator, Paragraph</source>
         <translation>Séparateur, paragraphe</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3242"/>
+        <location filename="../fontitem.cpp" line="3233"/>
         <source>Other, Control</source>
         <translation>Autre, contrôle</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3243"/>
+        <location filename="../fontitem.cpp" line="3234"/>
         <source>Other, Format</source>
         <translation>Autre, formatage</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3244"/>
+        <location filename="../fontitem.cpp" line="3235"/>
         <source>Other, Surrogate</source>
         <translation>Autre, substitut</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3245"/>
+        <location filename="../fontitem.cpp" line="3236"/>
         <source>Other, PrivateUse</source>
         <translation>Autre, usage privé</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3246"/>
+        <location filename="../fontitem.cpp" line="3237"/>
         <source>Other, NotAssigned</source>
         <translation>Autre, non assigné</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3247"/>
+        <location filename="../fontitem.cpp" line="3238"/>
         <source>Letter, Uppercase</source>
         <translation>Lettre, haut de casse</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3248"/>
+        <location filename="../fontitem.cpp" line="3239"/>
         <source>Letter, Lowercase</source>
         <translation>Lettre, bas de casse</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3249"/>
+        <location filename="../fontitem.cpp" line="3240"/>
         <source>Letter, Titlecase</source>
         <translation>Lettre, casse de titrage</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3250"/>
+        <location filename="../fontitem.cpp" line="3241"/>
         <source>Letter, Modifier</source>
         <translation>Lettre, modificateur</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3251"/>
+        <location filename="../fontitem.cpp" line="3242"/>
         <source>Letter, Other</source>
         <translation>Lettre, autre</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3252"/>
+        <location filename="../fontitem.cpp" line="3243"/>
         <source>Punctuation, Connector</source>
         <translation>Ponctuation, connecteur</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3253"/>
+        <location filename="../fontitem.cpp" line="3244"/>
         <source>Punctuation, Dash</source>
         <translation>Ponctuation, trait</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3254"/>
+        <location filename="../fontitem.cpp" line="3245"/>
         <source>Punctuation, Open</source>
         <translation>Ponctuation, ouverture</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3255"/>
+        <location filename="../fontitem.cpp" line="3246"/>
         <source>Punctuation, Close</source>
         <translation>Ponctuation, fermeture</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3256"/>
+        <location filename="../fontitem.cpp" line="3247"/>
         <source>Punctuation, InitialQuote</source>
         <translation>Ponctutatio, début de citation</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3257"/>
+        <location filename="../fontitem.cpp" line="3248"/>
         <source>Punctuation, FinalQuote</source>
         <translation>Ponctutatio, fin de citation</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3258"/>
+        <location filename="../fontitem.cpp" line="3249"/>
         <source>Punctuation, Other</source>
         <translation>Ponctuation, autre</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3259"/>
+        <location filename="../fontitem.cpp" line="3250"/>
         <source>Symbol, Math</source>
         <translation>Symbole, mathématiques</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3260"/>
+        <location filename="../fontitem.cpp" line="3251"/>
         <source>Symbol, Currency</source>
         <translation>Symbole, monnaie</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3261"/>
+        <location filename="../fontitem.cpp" line="3252"/>
         <source>Symbol, Modifier</source>
         <translation>Symbole, mdificateur</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3262"/>
+        <location filename="../fontitem.cpp" line="3253"/>
         <source>Symbol, Other</source>
         <translation>Symbol, autre</translation>
     </message>
@@ -3638,9 +3666,9 @@ mnopqrstuvxyz
 <context>
     <name>TagSetDialog</name>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="245"/>
+        <location filename="../tagset.ui" line="115"/>
         <source>Add selected tag to current set.</source>
-        <translation type="unfinished">Ajouter l’étiquette à la collection.</translation>
+        <translation>Ajouter l’étiquette à la collection.</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="118"/>
@@ -3648,19 +3676,19 @@ mnopqrstuvxyz
         <translation type="obsolete">Ajout</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="249"/>
+        <location filename="../tagset.ui" line="138"/>
         <source>Collections</source>
-        <translation type="unfinished">Collections</translation>
+        <translation>Collections</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="250"/>
+        <location filename="../tagset.ui" line="153"/>
         <source>New</source>
-        <translation type="unfinished">Nouveau</translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="251"/>
+        <location filename="../tagset.ui" line="160"/>
         <source>delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="187"/>
@@ -3668,19 +3696,19 @@ mnopqrstuvxyz
         <translation type="obsolete">Supprimer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="239"/>
+        <location filename="../tagset.ui" line="19"/>
         <source>TagSet editor</source>
-        <translation type="unfinished">Éditeur de collections</translation>
+        <translation>Éditeur de collections</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="253"/>
+        <location filename="../tagset.ui" line="231"/>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="241"/>
+        <location filename="../tagset.ui" line="64"/>
         <source>Collections of Tags</source>
-        <translation type="unfinished">Collections d’étiquettes</translation>
+        <translation>Collections d’étiquettes</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="80"/>
@@ -3688,193 +3716,193 @@ mnopqrstuvxyz
         <translation type="obsolete">Ãtiquettes disponibles</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="242"/>
+        <location filename="../tagset.ui" line="80"/>
         <source>Available Tags</source>
-        <translation type="unfinished">Étiquettes disponibles</translation>
+        <translation>Étiquettes disponibles</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="248"/>
+        <location filename="../tagset.ui" line="118"/>
         <source>Add</source>
-        <translation type="unfinished">Ajout</translation>
+        <translation>Ajout</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_tagset.h" line="252"/>
+        <location filename="../tagset.ui" line="187"/>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>TextProgressionWidget</name>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="108"/>
+        <location filename="../textprogression.ui" line="13"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="109"/>
+        <location filename="../textprogression.ui" line="25"/>
         <source>Inline progression</source>
-        <translation type="unfinished">En-ligne</translation>
+        <translation>En-ligne</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="137"/>
+        <location filename="../textprogression.ui" line="101"/>
         <source>e.g. Latin text</source>
-        <translation type="unfinished">ex. : texte en français</translation>
+        <translation>ex. : texte en français</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="152"/>
+        <location filename="../textprogression.ui" line="127"/>
         <source>Left to right</source>
-        <translation type="unfinished">de gauche à droite</translation>
+        <translation>de gauche à droite</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="118"/>
+        <location filename="../textprogression.ui" line="53"/>
         <source>e.g. Arabic text</source>
-        <translation type="unfinished">ex. : texte en arabe</translation>
+        <translation>ex. : texte en arabe</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="146"/>
+        <location filename="../textprogression.ui" line="117"/>
         <source>Right to left</source>
-        <translation type="unfinished">de droite à gauche</translation>
+        <translation>de droite à gauche</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="124"/>
+        <location filename="../textprogression.ui" line="63"/>
         <source>e.g. Traditional Chinese &amp; Japanese text</source>
-        <translation type="unfinished">ex. : text traditionnel en chinois</translation>
+        <translation>ex. : texte traditionnel en chinois &amp; en japonais</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="140"/>
+        <location filename="../textprogression.ui" line="104"/>
         <source>Top to bottom</source>
-        <translation type="unfinished">de haut en bas</translation>
+        <translation>de haut en bas</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="130"/>
+        <location filename="../textprogression.ui" line="73"/>
         <source>e.g. Runic text</source>
-        <translation type="unfinished">ex. : texte Runique</translation>
+        <translation>ex. : texte Runique</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="133"/>
+        <location filename="../textprogression.ui" line="76"/>
         <source>Bottom to top</source>
-        <translation type="unfinished">de bas en haut</translation>
+        <translation>de bas en haut</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="134"/>
+        <location filename="../textprogression.ui" line="86"/>
         <source>Block progression</source>
-        <translation type="unfinished">Morceaux</translation>
+        <translation>Morceaux</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="149"/>
+        <location filename="../textprogression.ui" line="124"/>
         <source>e.g. Traditional Mongolian text</source>
-        <translation type="unfinished">ex. : texte en mongol</translation>
+        <translation>ex. : texte en mongol</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_textprogression.h" line="143"/>
+        <location filename="../textprogression.ui" line="114"/>
         <source>e.g. Tarditionnal Chinese &amp; Japanes text</source>
-        <translation type="unfinished">ex. : text traditionnel en chinois</translation>
+        <translation>ex. : text traditionnel en chinois &amp; en japonais</translation>
     </message>
 </context>
 <context>
     <name>repairDialog</name>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="188"/>
+        <location filename="../repair.ui" line="13"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialogue</translation>
+        <translation>Dialogue</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="191"/>
+        <location filename="../repair.ui" line="23"/>
         <source>Dead links</source>
-        <translation type="unfinished">Liens morts</translation>
+        <translation>Liens morts</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="196"/>
+        <location filename="../repair.ui" line="134"/>
         <source>Select all</source>
-        <translation type="unfinished">Sélectionne tout</translation>
+        <translation>Sélectionne tout</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="190"/>
+        <location filename="../repair.ui" line="59"/>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="195"/>
+        <location filename="../repair.ui" line="67"/>
         <source>Activated Not Linked</source>
-        <translation type="unfinished">Activée Non Liées</translation>
+        <translation>Activée Non Liées</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="193"/>
+        <location filename="../repair.ui" line="103"/>
         <source>Re-link</source>
-        <translation type="unfinished">Re-lie</translation>
+        <translation>Re-lie</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="194"/>
+        <location filename="../repair.ui" line="110"/>
         <source>Deactivate</source>
-        <translation type="unfinished">Désactive</translation>
+        <translation>Désactive</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="199"/>
+        <location filename="../repair.ui" line="118"/>
         <source>Deactivated Linked</source>
-        <translation type="unfinished">Liées Désactivées</translation>
+        <translation>Liées Désactivées</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="197"/>
+        <location filename="../repair.ui" line="154"/>
         <source>De-link</source>
-        <translation type="unfinished">Dé-lie</translation>
+        <translation>Dé-lie</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="198"/>
+        <location filename="../repair.ui" line="161"/>
         <source>Activate</source>
-        <translation type="unfinished">Active</translation>
+        <translation>Active</translation>
     </message>
     <message>
-        <location filename="../../../../../../../fontmatrix-build/src/ui_repair.h" line="200"/>
+        <location filename="../repair.ui" line="187"/>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
 </context>
 <context>
     <name>typotek</name>
     <message>
-        <location filename="../typotek.cpp" line="219"/>
+        <location filename="../typotek.cpp" line="213"/>
         <source>Fontmatrix</source>
         <translation>Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="223"/>
+        <location filename="../typotek.cpp" line="217"/>
         <source>The program will keep running in the system tray. To terminate the program, choose &lt;b&gt;Exit&lt;/b&gt; in the context menu of the system tray entry.</source>
         <translation>L’application continuera à vivre dans la boîte à miniatures, pour l’achever, selectionnez l’entrée &lt;b&gt;Quitter&lt;/b&gt; du menu contextuel de l’icône et tirer.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="268"/>
+        <location filename="../typotek.cpp" line="262"/>
         <source>Add Directory</source>
         <translation>Ajouter un répertoire</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="548"/>
+        <location filename="../typotek.cpp" line="542"/>
         <source>&amp;Import...</source>
         <translation>&amp;Importer...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="549"/>
+        <location filename="../typotek.cpp" line="543"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="550"/>
+        <location filename="../typotek.cpp" line="544"/>
         <source>Import a directory</source>
         <translation>Importer un répertoire</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="554"/>
         <source>&amp;Save</source>
-        <translation>Enregi&amp;strer</translation>
+        <translation type="obsolete">Enregi&amp;strer</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="555"/>
+        <location filename="../typotek.cpp" line="549"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="556"/>
         <source>Save the document to disk</source>
-        <translation>Enregistrer</translation>
+        <translation type="obsolete">Enregistrer</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="422"/>
@@ -3887,27 +3915,27 @@ mnopqrstuvxyz
         <translation type="obsolete">Imprime un specimen de la fonte courante</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="590"/>
+        <location filename="../typotek.cpp" line="584"/>
         <source>Export font book...</source>
         <translation>Livre de fontes...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="591"/>
+        <location filename="../typotek.cpp" line="585"/>
         <source>Export a pdf that show selected fonts</source>
         <translation>Exporte un document PDF exposant les fontes visibles</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="595"/>
+        <location filename="../typotek.cpp" line="589"/>
         <source>E&amp;xit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="596"/>
+        <location filename="../typotek.cpp" line="590"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="597"/>
+        <location filename="../typotek.cpp" line="591"/>
         <source>Exit the application</source>
         <translation>Éteint Fontmatrix</translation>
     </message>
@@ -3917,22 +3945,22 @@ mnopqrstuvxyz
         <translation type="obsolete">Ãditer le mot aperÃ§u</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="602"/>
+        <location filename="../typotek.cpp" line="596"/>
         <source>&amp;About</source>
         <translation>À &amp;propos</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="603"/>
+        <location filename="../typotek.cpp" line="597"/>
         <source>Show the Typotek&apos;s About box</source>
         <translation>À propos de Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="611"/>
+        <location filename="../typotek.cpp" line="605"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="615"/>
+        <location filename="../typotek.cpp" line="609"/>
         <source>&amp;Tag Sets</source>
         <translation>&amp;Collection d’étiquettes</translation>
     </message>
@@ -3947,7 +3975,7 @@ mnopqrstuvxyz
         <translation type="obsolete">DÃ©sactive les fontes visibles</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="628"/>
+        <location filename="../typotek.cpp" line="622"/>
         <source>Edit current font</source>
         <translation>Éditer la fonte sélectionnée</translation>
     </message>
@@ -3957,12 +3985,12 @@ mnopqrstuvxyz
         <translation type="obsolete">Essaie de lancer Fontforge avec la fontes sÃ©lectionnÃ©e comme argument</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="641"/>
+        <location filename="../typotek.cpp" line="635"/>
         <source>Preferences</source>
         <translation>Préférences</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="685"/>
+        <location filename="../typotek.cpp" line="679"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
@@ -3972,12 +4000,12 @@ mnopqrstuvxyz
         <translation type="obsolete">Édition</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="724"/>
+        <location filename="../typotek.cpp" line="722"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="734"/>
+        <location filename="../typotek.cpp" line="732"/>
         <source>Ready</source>
         <translation>Prêt</translation>
     </message>
@@ -3987,12 +4015,12 @@ mnopqrstuvxyz
         <translation type="obsolete">Imprime un specimen</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1213"/>
+        <location filename="../typotek.cpp" line="1249"/>
         <source>There is no font selected</source>
         <translation>Il n’y a pas de fonte sélectionnée</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1303"/>
+        <location filename="../typotek.cpp" line="1339"/>
         <source>Support of DragNDrop over http is sheduled but not yet effective</source>
         <translation>Le &quot;glisser-déposer&quot; ne marche pas encore pour des ressources sur le web</translation>
     </message>
@@ -4007,12 +4035,12 @@ mnopqrstuvxyz
         <translation type="obsolete">Entrez un mot</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1328"/>
+        <location filename="../typotek.cpp" line="1364"/>
         <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
         <translation>Je gère pas çà</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1368"/>
+        <location filename="../typotek.cpp" line="1404"/>
         <source>You provided an empty string, it&#xe2;&#x80;&#x99;s not fair</source>
         <translation>Une blague </translation>
     </message>
@@ -4022,22 +4050,22 @@ mnopqrstuvxyz
         <translation type="obsolete">&quot;default&quot; est un mot réservé</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="620"/>
+        <location filename="../typotek.cpp" line="614"/>
         <source>Activate all current</source>
         <translation>Active les fontes visibles</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="624"/>
+        <location filename="../typotek.cpp" line="618"/>
         <source>Deactivate all current</source>
         <translation>Désactive les fontes visibles</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1469"/>
+        <location filename="../typotek.cpp" line="1505"/>
         <source>Try to run font editor with the selected font as argument</source>
         <translation>Essaie de lancer Fontforge avec la fonte sélectionnée comme argument</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1474"/>
+        <location filename="../typotek.cpp" line="1510"/>
         <source>You don&apos;t seem to have font editor installed. Path to font editor can be set in preferences.</source>
         <translation>Il semble que vous ne disposez pas de boîte à miniatures</translation>
     </message>
@@ -4047,7 +4075,7 @@ mnopqrstuvxyz
         <translation type="obsolete">Listes</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="153"/>
+        <location filename="../typotek.cpp" line="739"/>
         <source>Nothing Selected</source>
         <translation>Aucune sélection</translation>
     </message>
@@ -4059,290 +4087,313 @@ The string you type will be split by &quot;#&quot; to obtain a tags list.</sourc
 La chaîne que vous fournissez va être scindée par le caractère &quot;#&quot;</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="425"/>
+        <location filename="../typotek.cpp" line="419"/>
         <source>Importing font files... </source>
         <translation>Importe les fichiers de fonte...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="425"/>
+        <location filename="../typotek.cpp" line="419"/>
         <source>cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="429"/>
+        <location filename="../typotek.cpp" line="423"/>
         <source>Import</source>
         <translation>Importe</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1177"/>
+        <location filename="../typotek.cpp" line="1213"/>
         <source>Fontmatrix care</source>
         <translation>Fontmatrix prends soin de vous</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1171"/>
+        <location filename="../typotek.cpp" line="1207"/>
         <source>You are about to activate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
         <translation>Vous allez activer un paquet de fontes
 C’est le moment ou janmais d’annuler</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1177"/>
+        <location filename="../typotek.cpp" line="1213"/>
         <source>You are about to deactivate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
         <translation>Vous allez désactiver un paquet de fontesC’est le moment ou janmais d’annuler</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="450"/>
+        <location filename="../typotek.cpp" line="444"/>
         <source>Can&#xe2;&#x80;&#x99;t import this font because it&#xe2;&#x80;&#x99;s broken :</source>
         <translation>Cette fonte ne peut être importée car elle est cassée :</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="512"/>
+        <location filename="../typotek.cpp" line="506"/>
         <source>Choose the tag for filter exported fonts</source>
         <translation>Choisissez une étiquette pour filtrer les fontes qui seront exportées</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="518"/>
+        <location filename="../typotek.cpp" line="512"/>
         <source>Choose Directory</source>
         <translation>Choisissez un répertoire</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="560"/>
+        <location filename="../typotek.cpp" line="554"/>
         <source>Export &amp;Fonts</source>
         <translation>Export des &amp;Fontes</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="561"/>
+        <location filename="../typotek.cpp" line="555"/>
         <source>Export a fontset</source>
         <translation>Exporte un choix de fontes</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="645"/>
+        <location filename="../typotek.cpp" line="639"/>
         <source>Check Database</source>
         <translation>Vérifie la base</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="652"/>
+        <location filename="../typotek.cpp" line="646"/>
         <source>Tag All...</source>
         <translation>Étiquette tout...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="739"/>
+        <location filename="../typotek.cpp" line="747"/>
         <source>Load settings</source>
         <translation>Chargement des paramètres</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="789"/>
+        <location filename="../typotek.cpp" line="796"/>
         <source>Check for Fontmatrix own dir</source>
         <translation>Vérification du répertoire</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="888"/>
+        <location filename="../typotek.cpp" line="921"/>
         <source>Loading</source>
         <translation>Chargement</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="888"/>
+        <location filename="../typotek.cpp" line="921"/>
         <source>fonts present in database</source>
         <translation>fontes dans la base de données</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="981"/>
+        <location filename="../typotek.cpp" line="1014"/>
         <source>Catching</source>
         <translation>Récupère</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="981"/>
+        <location filename="../typotek.cpp" line="1014"/>
         <source>font descriptions from network</source>
         <translation>descriptions de fontes depuis le réseau</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="915"/>
+        <location filename="../typotek.cpp" line="948"/>
         <source>Collected System Font</source>
         <translation>Fontes système</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="948"/>
+        <location filename="../typotek.cpp" line="981"/>
         <source>Adding</source>
         <translation>Ajoute</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="948"/>
+        <location filename="../typotek.cpp" line="981"/>
         <source>fonts from system directories</source>
         <translation>fontes provenant des répertoires systèmes</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="971"/>
+        <location filename="../typotek.cpp" line="1004"/>
         <source>fonts available from system</source>
         <translation>fontes mises à disposition par le système</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1022"/>
+        <location filename="../typotek.cpp" line="1055"/>
         <source>font descriptions imported from network</source>
         <translation>descriptions de fontes importées depuis le réseau</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="158"/>
+        <location filename="../typotek.cpp" line="152"/>
         <source>Browse Fonts</source>
         <translation>Parcourir</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="136"/>
+        <location filename="../typotek.cpp" line="137"/>
         <source>default</source>
         <translation>défaut</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1374"/>
+        <location filename="../typotek.cpp" line="1410"/>
         <source>&quot;default&quot; is a reserved</source>
         <translation>&quot;défaut&quot; est réservé</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="464"/>
+        <location filename="../typotek.cpp" line="458"/>
         <source>Fonts imported: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontes importées : %1</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="559"/>
+        <source>Print Info...</source>
+        <translation>Imprimer les informations...</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="560"/>
+        <source>Print informations about the current font</source>
+        <translation>Imprime des informations relatives à la fonte sélectionnée</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="564"/>
+        <source>Print Sample...</source>
+        <translation>Imprimer l’exemple...</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="565"/>
-        <source>Print Info...</source>
-        <translation type="unfinished"></translation>
+        <source>Print the sample as a specimen</source>
+        <translation>Imprime la page d’exemple dans la fonte sélectionnée</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="566"/>
-        <source>Print informations about the current font</source>
-        <translation type="unfinished"></translation>
+        <location filename="../typotek.cpp" line="569"/>
+        <source>Print Chart...</source>
+        <translation>Imprimer le tableau...</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="570"/>
-        <source>Print Sample...</source>
-        <translation type="unfinished"></translation>
+        <source>Print a chart of the current font</source>
+        <translation>Imprime la table Unicode de la fonte courante</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="571"/>
-        <source>Print the sample as a specimen</source>
-        <translation type="unfinished"></translation>
+        <location filename="../typotek.cpp" line="574"/>
+        <source>Print Playground...</source>
+        <translation>Imprimer l’aire de jeu...</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="575"/>
-        <source>Print Chart...</source>
-        <translation type="unfinished"></translation>
+        <source>Print the playground</source>
+        <translation>Imprime le contenu de l’aire de jeu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="576"/>
-        <source>Print a chart of the current font</source>
-        <translation type="unfinished"></translation>
+        <location filename="../typotek.cpp" line="579"/>
+        <source>Print Family...</source>
+        <translation>Imprime la famille...</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="580"/>
-        <source>Print Playground...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="581"/>
-        <source>Print the playground</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="585"/>
-        <source>Print Family...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="586"/>
         <source>Print a specimen of the whole family the current face belongs to</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprime un specimen de la famille àlaquelle la fonte sélectionnée appartient</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="607"/>
+        <location filename="../typotek.cpp" line="601"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>À propos de &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="656"/>
+        <location filename="../typotek.cpp" line="650"/>
         <source>Next Family</source>
-        <translation type="unfinished"></translation>
+        <translation>Famille suivante</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="661"/>
+        <location filename="../typotek.cpp" line="655"/>
         <source>Next Face</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonte suivante</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="660"/>
+        <source>Previous Family</source>
+        <translation>Famille précèdente</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="666"/>
-        <source>Previous Family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="672"/>
         <source>Previous Face</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonte pécèdente</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="677"/>
+        <location filename="../typotek.cpp" line="671"/>
         <source>Layout Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de mise en page</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="692"/>
+        <location filename="../typotek.cpp" line="686"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprime</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="703"/>
+        <location filename="../typotek.cpp" line="697"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Édition</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="718"/>
+        <location filename="../typotek.cpp" line="716"/>
         <source>&amp;Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Parcourir</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="878"/>
+        <location filename="../typotek.cpp" line="911"/>
         <source>Fontmatrix - data warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontmatrix - attention aux données</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="879"/>
+        <location filename="../typotek.cpp" line="912"/>
         <source>Your database has not been loaded because of a version mismatch.
 It is not a problem, you just lost fonts references, tags &amp; sample texts. If you badly need to keep these datas, do not quit Fontmatrix before you have copied the database*. At this point and with a minimum of XML skill, you should be able to get old database into new format.
 
 *database is</source>
-        <translation type="unfinished"></translation>
+        <translation>Your database has not been loaded because of a version mismatch.
+It is not a problem, you just lost fonts references, tags &amp; sample texts. If you badly need to keep these datas, do not quit Fontmatrix before you have copied the database*. At this point and with a minimum of XML skill, you should be able to get old database into new format.
+
+*database is</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1083"/>
-        <source>Unicode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="1107"/>
+        <location filename="../typotek.cpp" line="1143"/>
         <source>All fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1598"/>
+        <location filename="../typotek.cpp" line="1634"/>
         <source>Welcome maessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Bienvenue dans Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1632"/>
+        <location filename="../typotek.cpp" line="1640"/>
         <source>Print Infos</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer les informations</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1651"/>
+        <location filename="../typotek.cpp" line="1687"/>
         <source>Print Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer le tableau</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1716"/>
+        <location filename="../typotek.cpp" line="1752"/>
         <source>Print Playground</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer l’aire de jeu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1739"/>
+        <location filename="../typotek.cpp" line="1775"/>
         <source>Print Family</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprime la famille</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="548"/>
+        <source>&amp;Sync</source>
+        <translation>&amp;Synchroniser</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="550"/>
+        <source>Sync with the DB file</source>
+        <translation>Synchroniser l’état de l’application et la base de donnée</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1119"/>
+        <source>Unicode character</source>
+        <translation>Caractère unicode</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1668"/>
+        <source>Print Sample</source>
+        <translation>Imprimer l’exemple</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1797"/>
+        <source>Not enough text to make a sample</source>
+        <translation>Pas assez de texte pour construire un example</translation>
     </message>
 </context>
 </TS>

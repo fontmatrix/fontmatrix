@@ -804,7 +804,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	}
 // 	qDebug("VIEW Time elapsed: %d ms", t.elapsed());
 // 	t.restart();
-// 	slotInfoFont();
+	slotInfoFont();
 // 	qDebug("INFO Time elapsed: %d ms", t.elapsed());
 // 	renderingLock = false;
 

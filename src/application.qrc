@@ -6,7 +6,6 @@
     <file alias="fontmatrix_systray_icon.png" >icons/fontmatrix-systray.png</file>
     <file alias="icon_fake_partiallychecked" >icons/icon_warning-32.png</file>
     <file alias="fontmatrix_splash.png" >graphic-resources/splashscreen-670x470.png</file>
-    <file alias="fontmatrix_about.png" >graphic-resources/about-graphic.png</file>
     <file alias="fontmatrix_info.png" >graphic-resources/font-info.png</file>
     <file alias="fontmatrix_glypg.png" >graphic-resources/font-glyph.png</file>
     <file alias="fontmatrix_playground.png" >graphic-resources/font-playground.png</file>

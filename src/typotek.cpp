@@ -545,9 +545,9 @@ void typotek::createActions()
 	scuts->add(openAct);
 	connect ( openAct, SIGNAL ( triggered() ), this, SLOT ( open() ) );
 
-	saveAct = new QAction ( tr ( "&Save" ), this );
+	saveAct = new QAction ( tr ( "&Sync" ), this );
 	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
-	saveAct->setStatusTip ( tr ( "Save the document to disk" ) );
+	saveAct->setStatusTip ( tr ( "Sync with the DB file" ) );
 	scuts->add(saveAct);
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
 
@@ -1665,7 +1665,7 @@ void typotek::printSample()
 
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Infos") +" - " + font->fancyName() );
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Sample") +" - " + font->fancyName() );
 
 	if ( dialog.exec() != QDialog::Accepted )
 		return;

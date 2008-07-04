@@ -16,19 +16,27 @@ SET ( fontmatrix_TSS
       fontmatrix-zh_TW.ts
     )
 
-IF ( IS_TRANSLATOR )
-	QT4_CREATE_TRANSLATION ( fontmatrix_QMS ${fontmatrix_SRCS} ${fontmatrix_UIS_H} ${fontmatrix_TSS} )
-ELSE( IS_TRANSLATOR )
+IF ( TRANSLATOR )
+	MESSAGE(STATUS "We are glad to see you handle the fontmatrix-${TRANSLATOR}.ts file, thank you very much")
+	QT4_CREATE_TRANSLATION ( fontmatrix_QMS ${fontmatrix_SRCS} ${fontmatrix_UIS} "fontmatrix-${TRANSLATOR}.ts")
 	QT4_ADD_TRANSLATION ( fontmatrix_QMS ${fontmatrix_TSS} )
-ENDIF( IS_TRANSLATOR )
+ELSE( TRANSLATOR )
+	QT4_ADD_TRANSLATION ( fontmatrix_QMS ${fontmatrix_TSS} )
+ENDIF( TRANSLATOR )
 
-ADD_CUSTOM_TARGET ( translation
-                    ALL
-                    DEPENDS  ${fontmatrix_QMS}
-                  )
+ADD_CUSTOM_TARGET ( translation ALL DEPENDS ${fontmatrix_QMS} )
 
-SET ( QMDIR "${CMAKE_INSTALL_PREFIX}/share/fontmatrix/qm/" )
-INSTALL ( FILES
-          ${fontmatrix_QMS}
-          DESTINATION ${QMDIR}
-        )
+IF(UNIX AND NOT APPLE)
+	INSTALL ( FILES ${fontmatrix_QMS} DESTINATION ${FONTMATRIX_QMDIR} )
+ENDIF(UNIX AND NOT APPLE)
+
+IF(APPLE)
+	ADD_EXECUTABLE ( fontmatrix MACOSX_BUNDLE ${fontmatrix_QMS} )
+	SET_SOURCE_FILES_PROPERTIES( ${fontmatrix_QMS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+# 	INSTALL ( TARGETS fontmatrix BUNDLE DESTINATION  ${FONTMATRIX_BUNDLE_RESOURCE})
+ENDIF(APPLE)
+
+IF(WIN32)
+	INSTALL ( FILES ${fontmatrix_QMS} DESTINATION ${FONTMATRIX_QMDIR} )
+ENDIF(WIN32)
+

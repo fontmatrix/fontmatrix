@@ -95,18 +95,18 @@ QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 
 
 SET(fontmatrix_UIS
-about.ui
-bookexport.ui
-importedfonts.ui
-importtags.ui
-help.ui
-layoutoptions.ui
-listsdock.ui
-mainview.ui
-prefs_panel.ui
-repair.ui
-tagset.ui
-textprogression.ui
+${CMAKE_CURRENT_SOURCE_DIR}/about.ui
+${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
+${CMAKE_CURRENT_SOURCE_DIR}/importedfonts.ui
+${CMAKE_CURRENT_SOURCE_DIR}/importtags.ui
+${CMAKE_CURRENT_SOURCE_DIR}/help.ui
+${CMAKE_CURRENT_SOURCE_DIR}/layoutoptions.ui
+${CMAKE_CURRENT_SOURCE_DIR}/listsdock.ui
+${CMAKE_CURRENT_SOURCE_DIR}/mainview.ui
+${CMAKE_CURRENT_SOURCE_DIR}/prefs_panel.ui
+${CMAKE_CURRENT_SOURCE_DIR}/repair.ui
+${CMAKE_CURRENT_SOURCE_DIR}/tagset.ui
+${CMAKE_CURRENT_SOURCE_DIR}/textprogression.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
 
@@ -131,29 +131,73 @@ ${M17N_INCLUDE_DIR}
 ${HYPHENATE_INCLUDE_DIR}
 )
 
-add_executable(fontmatrix
-${fontmatrix_SRCS}
-${SHAPERS_SRCS}
-${fontmatrix_MOC_SRCS}
-${fontmatrix_UIS_H}
-${fontmatrix_RCC_SRCS}
-)
 
-IF(SHOW_LIBS)
-	MESSAGE(STATUS "Qt4 libs:" ${QT_LIBRARIES})
-	MESSAGE(STATUS "FreeType libs: " ${FREETYPE_LIBRARIES})
-	MESSAGE(STATUS "ICU libs: " ${ICU_LIBRARIES})
-ENDIF(SHOW_LIBS)
+# IF(SHOW_LIBS)
+# 	MESSAGE(STATUS "Qt4 libs:" ${QT_LIBRARIES})
+# 	MESSAGE(STATUS "FreeType libs: " ${FREETYPE_LIBRARIES})
+# 	MESSAGE(STATUS "ICU libs: " ${ICU_LIBRARIES})
+# ENDIF(SHOW_LIBS)
 
-target_link_libraries(fontmatrix harfbuzz hyphenate
-${QT_LIBRARIES}
-${FREETYPE_LIBRARIES}
-${FONTCONFIG_LIBRARIES}
-${SHAPERS_LIBRARIES}
-)
+IF(UNIX AND NOT APPLE)
+	add_executable(fontmatrix
+	${fontmatrix_SRCS}
+	${SHAPERS_SRCS}
+	${fontmatrix_MOC_SRCS}
+	${fontmatrix_UIS_H}
+	${fontmatrix_RCC_SRCS}
+	)
 
-INSTALL(TARGETS fontmatrix
-      RUNTIME DESTINATION bin
-)
+	target_link_libraries(fontmatrix harfbuzz hyphenate
+	${QT_LIBRARIES}
+	${FREETYPE_LIBRARIES}
+	${FONTCONFIG_LIBRARIES}
+	${SHAPERS_LIBRARIES}
+	)
+	
+	INSTALL(TARGETS fontmatrix
+	RUNTIME DESTINATION ${FONTMATRIX_BIN}
+	)
+ENDIF(UNIX AND NOT APPLE)
 
+IF(APPLE)
+	add_executable(fontmatrix MACOSX_BUNDLE
+	${fontmatrix_SRCS}
+	${SHAPERS_SRCS}
+	${fontmatrix_MOC_SRCS}
+	${fontmatrix_UIS_H}
+	${fontmatrix_RCC_SRCS}
+	)
 
+	target_link_libraries(fontmatrix harfbuzz hyphenate
+	${QT_LIBRARIES}
+	${FREETYPE_LIBRARIES}
+	${SHAPERS_LIBRARIES}
+	)
+	
+	SET_SOURCE_FILES_PROPERTIES( fontmatrix PROPERTIES MACOSX_PACKAGE_LOCATION MacOSX )
+#  do we need it or not? we’ll see
+# 	
+# 	INSTALL(TARGETS fontmatrix
+# 	BUNDLE DESTINATION ${FONTMATRIX_BUNDLE_BIN}
+# 	)
+ENDIF(APPLE)
+
+IF(WIN32)
+	add_executable(fontmatrix WIN32
+	${fontmatrix_SRCS}
+	${SHAPERS_SRCS}
+	${fontmatrix_MOC_SRCS}
+	${fontmatrix_UIS_H}
+	${fontmatrix_RCC_SRCS}
+	)
+
+	target_link_libraries(fontmatrix harfbuzz hyphenate
+	${QT_LIBRARIES}
+	${FREETYPE_LIBRARIES}
+	${SHAPERS_LIBRARIES}
+	)
+	
+	INSTALL(TARGETS fontmatrix
+	RUNTIME DESTINATION ${FONTMATRIX_BIN}
+	)
+ENDIF(WIN32)

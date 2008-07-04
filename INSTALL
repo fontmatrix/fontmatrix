@@ -11,7 +11,7 @@ Requirements :
 Build instructions are:
  $ mkdir build
  $ cd build
- $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug] [-DCMAKE_INSTALL_PREFIX:PATH=/install/prefix] [-DWANT_HARFBUZZ:bool=true] [-DWANT_ICU:bool=true] [-DWANT_M17N:bool=true] [-DIS_TRANSLATOR:bool=true]
+ $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug] [-DCMAKE_INSTALL_PREFIX:PATH=/install/prefix] [-DWANT_HARFBUZZ:bool=true] [-DWANT_ICU:bool=true] [-DWANT_M17N:bool=true] [-DTRANSLATOR:string=locale*]
  $ make
  
 At this point, the fontmatrix binary is in build/src/
@@ -23,3 +23,10 @@ If you encounter problems or just have questions or if you have
 suggestions, please take time to suscribe to the undertype-users
 mailing list ( https://mail.gna.org/listinfo/undertype-users ).
 If you want to reach us quickly, come to #fontmatrix at Freenode.
+
+*for instance, locale is one of da de en fi fr hi nb nl no ru sr sv uk zh_CN zh_TW
+If you want to help in translating. For other languages just send
+a message to the mailing list, we’ll prepare the files and provide
+instructions. For languages already listed, pass -DTRANSLATOR:string=locale
+to cmake then run "make translation" to update the ts file before you
+edit it with Qt4 Linguist program.

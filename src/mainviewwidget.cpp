@@ -115,6 +115,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	styleInfo.copy(stIP);
 	infoCSSUrl = QUrl::fromLocalFile ( stIP );
 	QWebSettings::globalSettings()->setUserStyleSheetUrl(infoCSSUrl);
+	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
@@ -171,6 +172,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
+	
+	connect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
+	connect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
+	connect( fontInfoText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
+	connect( fontInfoText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
 
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
 	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
@@ -2108,6 +2114,32 @@ void MainViewWidget::slotHintChanged(int )
 {
 	slotView(true);
 }
+
+void MainViewWidget::slotWebStart()
+{
+// 	qDebug()<<"slotWebStart";
+	typo->startProgressJob(100);
+}
+
+void MainViewWidget::slotWebFinished(bool status)
+{
+// 	qDebug()<<"slotWebinished"<<status;
+	typo->endProgressJob();
+}
+
+void MainViewWidget::slotWebLoad(int i)
+{
+// 	qDebug()<<"slotWebLoad("<<i<<")";
+	typo->runProgressJob(i);
+}
+
+void MainViewWidget::slotWebLink(const QUrl & url)
+{
+	qDebug()<<"slotWebLink("<<url<<")";
+	typo->showStatusMessage(tr("Load") + " " + url.toString());
+	fontInfoText->load(url);
+}
+
 
 
 

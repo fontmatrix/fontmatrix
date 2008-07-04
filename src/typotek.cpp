@@ -734,6 +734,7 @@ void typotek::createStatusBar()
 	statusProgressBar = new QProgressBar(this);
 	statusProgressBar->setMaximumSize(200,20);
 	statusBar()->addPermanentWidget(statusProgressBar);
+	statusProgressBar->hide();
 	
 	QFont statusFontFont ( "sans-serif",10 );
 	curFontPresentation = new QLabel ( tr ( "Nothing Selected" ) );
@@ -2006,6 +2007,7 @@ void typotek::startProgressJob(int max)
 {
 	statusProgressBar->reset();
 	statusProgressBar->setRange(0,max);
+	statusProgressBar->show();
 }
 
 void typotek::runProgressJob(int i)
@@ -2023,5 +2025,6 @@ void typotek::runProgressJob(int i)
 
 void typotek::endProgressJob()
 {
+	statusProgressBar->hide();
 	statusProgressBar->reset();
 }

@@ -194,6 +194,11 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotHintChanged(int);
 // 		void slotMonitorViewToolsSize(int hdl,int sz);
 		
+		void slotWebLink(const QUrl & url );
+		void slotWebStart();
+		void slotWebLoad(int i);
+		void slotWebFinished(bool);
+		
 		
 	signals:
 		void faceChanged();

@@ -116,7 +116,34 @@ application.qrc
 )
 QT4_ADD_RESOURCES(fontmatrix_RCC_SRCS ${fontmatrix_RCCS})
 
-ADD_SUBDIRECTORY(messages)
+SET ( fontmatrix_TSS
+      messages/fontmatrix-da.ts
+      messages/fontmatrix-de.ts
+      messages/fontmatrix-en.ts
+      messages/fontmatrix-fi.ts
+      messages/fontmatrix-fr.ts
+      messages/fontmatrix-hi.ts
+      messages/fontmatrix-nb.ts
+      messages/fontmatrix-nl.ts
+      messages/fontmatrix-no.ts
+      messages/fontmatrix-ru.ts
+      messages/fontmatrix-sr.ts
+      messages/fontmatrix-sv.ts
+      messages/fontmatrix-uk.ts
+      messages/fontmatrix-zh_CN.ts
+      messages/fontmatrix-zh_TW.ts
+    )
+
+IF ( TRANSLATOR )
+	MESSAGE(STATUS "We are glad to see you handle the fontmatrix-${TRANSLATOR}.ts file, thank you very much")
+	add_custom_command(TARGET translation
+ 			PRE_BUILD 
+			COMMAND ${QT_LUPDATE_EXECUTABLE} ARGS ${fontmatrix_SRCS} ${fontmatrix_UIS} -ts "fontmatrix-${TRANSLATOR}.ts")
+ENDIF( TRANSLATOR )
+QT4_ADD_TRANSLATION ( fontmatrix_QMS ${fontmatrix_TSS} )
+ADD_CUSTOM_TARGET ( translation ALL DEPENDS ${fontmatrix_QMS} )
+
+# ADD_SUBDIRECTORY(messages)
 
 include_directories(
 ${CMAKE_CURRENT_SOURCE_DIR}
@@ -157,6 +184,7 @@ IF(UNIX AND NOT APPLE)
 	INSTALL(TARGETS fontmatrix
 	RUNTIME DESTINATION ${FONTMATRIX_BIN}
 	)
+	INSTALL ( FILES ${fontmatrix_QMS} DESTINATION ${FONTMATRIX_QMDIR} )
 ENDIF(UNIX AND NOT APPLE)
 
 IF(APPLE)
@@ -167,6 +195,31 @@ IF(APPLE)
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
 	)
+	
+	# here we’ll poupulate the bundle in order to make it
+	# self containing regarding external libs (Qt4 & Freetype)
+	# and resources such as QM files.
+	# NOTE: Mac users are not expected to build Fontmatrix
+	# themselves, thus paths are hard coded because it works on the Mac
+	# where we use to build it, period.
+	SET(PROGNAME fontmatrix)
+	
+	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
+        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
+        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale
+        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/lib
+        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
+        COMMAND cp ARGS ${fontmatrix_QMS} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale/
+         COMMAND cp ARGS ${FREETYPE_LIBRARIES} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/lib/
+        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtCore.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
+        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtGui.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
+        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtXml.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
+        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtSvg.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
+        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtNetwork.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
+        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtWebKit.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
+        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtOpenGL.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
+       )
+
 
 	target_link_libraries(fontmatrix harfbuzz hyphenate
 	${QT_LIBRARIES}
@@ -175,6 +228,7 @@ IF(APPLE)
 	)
 	
 	SET_SOURCE_FILES_PROPERTIES( fontmatrix PROPERTIES MACOSX_PACKAGE_LOCATION MacOSX )
+	SET_SOURCE_FILES_PROPERTIES( ${fontmatrix_QMS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
 #  do we need it or not? we’ll see
 # 	
 # 	INSTALL(TARGETS fontmatrix
@@ -200,4 +254,5 @@ IF(WIN32)
 	INSTALL(TARGETS fontmatrix
 	RUNTIME DESTINATION ${FONTMATRIX_BIN}
 	)
+	INSTALL ( FILES ${fontmatrix_QMS} DESTINATION ${FONTMATRIX_QMDIR} )
 ENDIF(WIN32)

@@ -202,15 +202,18 @@ IF(APPLE)
 	# NOTE: Mac users are not expected to build Fontmatrix
 	# themselves, thus paths are hard coded because it works on the Mac
 	# where we use to build it, period.
-	SET(PROGNAME fontmatrix)
 	
+	ADD_CUSTOM_COMMAND( TARGET translation POST_BUILD
+        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale
+        COMMAND cp ARGS ${fontmatrix_QMS} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale/
+	)
+	
+	SET(PROGNAME fontmatrix)
 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
         COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
-        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale
         COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/lib
         COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-        COMMAND cp ARGS ${fontmatrix_QMS} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale/
-         COMMAND cp ARGS ${FREETYPE_LIBRARIES} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/lib/
+        COMMAND cp ARGS ${FREETYPE_LIBRARIES} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/lib/
         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtCore.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtGui.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtXml.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks

@@ -203,12 +203,13 @@ IF(APPLE)
 	# themselves, thus paths are hard coded because it works on the Mac
 	# where we use to build it, period.
 	
+	SET(PROGNAME fontmatrix)
+	
 	ADD_CUSTOM_COMMAND( TARGET translation POST_BUILD
         COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale
         COMMAND cp ARGS ${fontmatrix_QMS} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale/
 	)
 	
-	SET(PROGNAME fontmatrix)
 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
         COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
         COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/lib

@@ -196,6 +196,12 @@ IF(APPLE)
 	${fontmatrix_RCC_SRCS}
 	)
 	
+	target_link_libraries(fontmatrix harfbuzz hyphenate
+	${QT_LIBRARIES}
+	${FREETYPE_LIBRARIES}
+	${SHAPERS_LIBRARIES}
+	)
+
 	# here we’ll poupulate the bundle in order to make it
 	# self containing regarding external libs (Qt4 & Freetype)
 	# and resources such as QM files.
@@ -204,6 +210,13 @@ IF(APPLE)
 	# where we use to build it, period.
 	
 	SET(PROGNAME fontmatrix)
+	SET_SOURCE_FILES_PROPERTIES( fontmatrix PROPERTIES MACOSX_PACKAGE_LOCATION MacOSX )
+	SET_SOURCE_FILES_PROPERTIES( ${fontmatrix_QMS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+	
+	
+	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
+	COMMAND cp ARGS  "${CMAKE_SOURCE_DIR}/src/icons/application-fontmatrix_128.png" ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/
+	)
 	
 	ADD_CUSTOM_COMMAND( TARGET translation POST_BUILD
         COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale
@@ -224,15 +237,6 @@ IF(APPLE)
         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtOpenGL.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
        )
 
-
-	target_link_libraries(fontmatrix harfbuzz hyphenate
-	${QT_LIBRARIES}
-	${FREETYPE_LIBRARIES}
-	${SHAPERS_LIBRARIES}
-	)
-	
-	SET_SOURCE_FILES_PROPERTIES( fontmatrix PROPERTIES MACOSX_PACKAGE_LOCATION MacOSX )
-	SET_SOURCE_FILES_PROPERTIES( ${fontmatrix_QMS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
 #  do we need it or not? we’ll see
 # 	
 # 	INSTALL(TARGETS fontmatrix

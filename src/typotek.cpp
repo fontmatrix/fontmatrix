@@ -1800,7 +1800,7 @@ void typotek::printFamily()
 	}
 	QStringList stl;
 	int idxS(0);
-	int idxE( random() % 9 );
+	int idxE( qrand() % 9 );
 	while((idxS + idxE) < stl1.count())
 	{
 		QString t(QStringList(stl1.mid(idxS,idxE)).join( " " ));
@@ -1809,7 +1809,7 @@ void typotek::printFamily()
 			stl << t;
 		
 		idxS += idxE;
-		idxE = random() % 9;
+		idxE = qrand() % 9;
 	}
 	QList<FontItem*> familyFonts( getFonts(theMainView->selectedFont()->family(), "family", false));
 

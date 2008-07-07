@@ -52,10 +52,16 @@ int main ( int argc, char *argv[] )
 	Q_INIT_RESOURCE ( application );
 	QApplication app ( argc, argv );
 	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );
-	
+
+#ifndef _WIN32
 	QString QMDirPath = PREFIX;
 	QString dirsep(QDir::separator());
 	QMDirPath +=  dirsep + "share" + dirsep + "fontmatrix" + dirsep + "qm";
+#else
+	QString QMDirPath = QApplication::applicationDirPath();
+	QString dirsep(QDir::separator());
+	QMDirPath +=  dirsep + "share" + dirsep + "qm";
+#endif
 	
 	QString QMFilePathComplete("fontmatrix-" + sysLoc() );
 	

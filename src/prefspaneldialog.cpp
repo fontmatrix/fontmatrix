@@ -311,7 +311,7 @@ void PrefsPanelDialog::slotAddRemote()
 {
 	QString rem ( newUrlText->text() );
 	remoteDirList->addItem ( rem );
-	QStringList remList();
+	QStringList remList;
 	QSettings settings;
 	QList<QVariant> tmpL ( settings.value ( "RemoteDirectories" ).toList() );
 	tmpL << rem;

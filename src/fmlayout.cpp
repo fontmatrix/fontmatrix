@@ -602,9 +602,12 @@ void FMLayout::doLines()
 			{
 				inList.takeFirst();
 			}
-
-			for ( int i ( 0 ); i < inList.count() ;++i )
-				lg <<  inList.at ( i );
+			
+			if(!inList.isEmpty())
+			{
+				for ( int i ( 0 ); i < inList.count() ;++i )
+					lg <<  inList.at ( i );
+			}
 
 
 		}
@@ -615,16 +618,19 @@ void FMLayout::doLines()
 			GlyphList hr ( inList.last().hyphen.first );
 			hasHyph = true;
 			curHyph = inList.last().hyphen.second;
-
+			
 			do
 			{
 				inList.takeLast();
 			}
-			while ( QChar ( inList.last().lChar ).category() != QChar::Separator_Space && !inList.isEmpty() );
+			while ( !inList.isEmpty() && QChar ( inList.last().lChar ).category() != QChar::Separator_Space  );
 
 
-			for ( int i ( 0 ); i < inList.count() ;++i )
-				lg <<  inList.at ( i );
+			if(!inList.isEmpty())
+			{
+				for ( int i ( 0 ); i < inList.count() ;++i )
+					lg <<  inList.at ( i );
+			}
 
 			QString dgS;
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
@@ -646,33 +652,39 @@ void FMLayout::doLines()
 
 			hasHyph = true;
 			curHyph = inList.last().hyphen.second;
-
+			
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
 				lg <<  hr[ih];
 			}
 
-
 			while ( !inList.isEmpty() && QChar ( inList.first() .lChar ).category() != QChar::Separator_Space )
 			{
 				inList.takeFirst();
 			}
-
-			do
+			
+			if(!inList.isEmpty())
 			{
-				inList.takeLast();
+				do
+				{
+					inList.takeLast();
+				}
+				while ( !inList.isEmpty() &&  QChar ( inList.last().lChar ).category() != QChar::Separator_Space );
 			}
-			while ( QChar ( inList.last().lChar ).category() != QChar::Separator_Space && !inList.isEmpty() );
-
+			
 			QString dgS;
-			for ( int i ( 0 ); i < inList.count() ;++i )
-				lg <<  inList.at ( i );
-
+			if(!inList.isEmpty())
+			{
+				for ( int i ( 0 ); i < inList.count() ;++i )
+					lg <<  inList.at ( i );
+			}
+			
 			for ( int ih ( 0 ); ih < hr2.count(); ++ih )
 			{
 				lg <<  hr2[ih];
 				dgS +="("+ QString ( QChar ( lg.last().lChar ) ) +")";
 			}
+			
 			QString dbh;for ( int h ( 0 );h<curHyph.count();++h ) {dbh+="["+ QString ( QChar ( curHyph[h].lChar ) ) +"]";}
 			qDebug() <<dgS<<"="<<dbh;
 
@@ -684,7 +696,7 @@ void FMLayout::doLines()
 	TextProgression *tp = TextProgression::getInstance();
 	bool verticalLayout ( tp->inBlock() == TextProgression::INLINE_BTT || tp->inBlock() == TextProgression::INLINE_TTB );
 	
-
+	qDebug()<<"lines finished";
 	for ( int lI ( startLine ); lI<lines.count(); ++lI )
 	{
 		if ( stopIt )
@@ -749,7 +761,7 @@ void FMLayout::doLines()
 			}
 		}
 	}
-// 	qDebug() <<"doLines("<< lines.count() <<") T(ms)"<<t.elapsed();
+	qDebug() <<"doneLines:"<< lines.count() ;
 
 }
 

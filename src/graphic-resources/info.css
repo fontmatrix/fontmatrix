@@ -63,7 +63,7 @@ body.welcome-wrapper {
 
 #technote {
 /*    background-color : #ddd;*/
-    background-image : url('techinfobar.png');
+    background-image : url('css-tech-info.png');
     background-repeat : repeat-x;
     color : black;
     font-family : 'sans-serif';
@@ -90,7 +90,7 @@ body.welcome-wrapper {
 
 .infoname {
     background-color : #aac;
-    background-image : url('leviinfobar.png');
+    background-image : url('css-info-propertyname.png');
     background-repeat : repeat-y;
     float : left;
     font-family : 'sans-serif';
@@ -106,7 +106,7 @@ body.welcome-wrapper {
 
 .langmatch {
     background-color : #fff0dd;
-    background-image : url('senka.png');
+    background-image : url('css-shadow.png');
     background-position : top left;
     background-repeat : repeat-y;
     border-top-color : #aac;
@@ -129,7 +129,7 @@ body.welcome-wrapper {
 
 .langundefined {
     background-color : #fff0dd;
-    background-image : url('senka.png');
+    background-image : url('css-shadow.png');
     background-position : top left;
     background-repeat : repeat-y;
     border-right-color : #aac;
@@ -153,7 +153,7 @@ body.welcome-wrapper {
 .langnomatch {
     /* perhaps only French, but foreign languages have to be italicized */ font-size : 12pt;
     background-color : #fff0dd;
-    background-image : url('senka.png');
+    background-image : url('css-shadow.png');
     background-position : top left;
     background-repeat : repeat-y;
     display : inline;

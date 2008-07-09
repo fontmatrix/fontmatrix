@@ -20,6 +20,7 @@
 #include "fontbookdialog.h"
 #include "fontitem.h"
 #include "typotek.h"
+#include "fmpaths.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -213,10 +214,10 @@ void FontBookDialog::fillTemplates()
 		
 	}
 	// Here we insert default templates provided by Fontmatrix
-	templatesMap["Default template"] = ":/template_default";
-	templatesPreviewMap["Default template"] = QPixmap(":/template_default_preview");
-	templatesMap["Default template (oneliner)"] = ":/template_oneline";
-	templatesPreviewMap["Default template (oneliner)"] =  QPixmap(":/template_oneline_preview");
+	templatesMap["Default template"] = FMPaths::FMResourcesDir() + "template_default";
+	templatesPreviewMap["Default template"] = QPixmap(FMPaths::FMResourcesDir() +"template_default_preview");
+	templatesMap["Default template (oneliner)"] = FMPaths::FMResourcesDir() +"template_oneline";
+	templatesPreviewMap["Default template (oneliner)"] =  QPixmap(FMPaths::FMResourcesDir() +"template_oneline_preview");
 	
 	templatesList->addItems(templatesMap.keys());	
 }

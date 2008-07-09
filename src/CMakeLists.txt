@@ -11,6 +11,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmlayoptwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayout.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmnamelist.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmotf.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmpaths.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmplayground.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmpreviewlist.cpp
 # fmprintdialog.cpp

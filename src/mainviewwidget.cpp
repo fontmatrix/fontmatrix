@@ -23,6 +23,7 @@
 #include "fmglyphsview.h"
 #include "fmlayout.h"
 #include "fmotf.h"
+#include "fmpaths.h"
 #include "fmpreviewlist.h"
 #include "fontitem.h"
 #include "listdockwidget.h"
@@ -105,16 +106,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	fillUniPlanes();
 	refillSampleList();
 
-	QFile styleInfo(":/info.css");
-	QString stIP(QDir::tempPath() + QDir::separator() + "fontmatrix_info.css");
-	if(QFile::exists(stIP))
-	{
-		QFile tmpInfo(stIP);
-		tmpInfo.remove();
-	}
-	styleInfo.copy(stIP);
-	infoCSSUrl = QUrl::fromLocalFile ( stIP );
-	QWebSettings::globalSettings()->setUserStyleSheetUrl(infoCSSUrl);
 	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 
 	abcScene = new QGraphicsScene;
@@ -679,6 +670,7 @@ void MainViewWidget::slotInfoFont()
 		fIT += "<head>";
 		fIT += "<title>" + theVeryFont->fancyName() + "</title>";
 		fIT += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
+		fIT += "<link rel='stylesheet' href='file://" + FMPaths::FMResourcesDir() + "info.css' type='text/css' />";
 		fIT += "</head>" +  theVeryFont->infoText(false) + "</html>";
 		fontInfoText->setHtml (fIT);
 // 		qDebug()<<"=========================================================";
@@ -1962,7 +1954,7 @@ void MainViewWidget::displayWelcomeMessage()
 			typo->setPreviewSize( bkPr );
 		}
 	}
-	QFile wFile(":/texts/welcome");
+	QFile wFile(FMPaths::FMResourcesDir() + "welcome_"+ FMPaths::sysLoc() + ".html");
 	wFile.open(QIODevice::ReadOnly);
 	QString wString(wFile.readAll());
 	wString.replace("##WELCOME_PNG##", QUrl::fromLocalFile(wpng).toString() );

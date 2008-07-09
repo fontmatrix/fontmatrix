@@ -147,11 +147,42 @@ IF(UNIX AND NOT APPLE)
 	ENDIF(FONTCONFIG_FOUND)
 ENDIF(UNIX AND NOT APPLE)
 
+
+SET(FM_TEMPLATES_FILES
+src/graphic-resources/one_line_template.xml
+src/graphic-resources/oneline_template.png
+src/graphic-resources/fontbook_default.xml
+src/graphic-resources/default_template.png
+)
+SET(FM_STYLE_FILES
+src/graphic-resources/html-css/info.css
+src/graphic-resources/html-css/img/css-info-propertyname.png
+src/graphic-resources/html-css/img/css-info-property.png
+src/graphic-resources/html-css/img/css-shadow.png
+src/graphic-resources/html-css/img/css-tech-info.png
+)
+SET(FM_WELCOME_FILES
+src/messages/welcome_da.html
+src/messages/welcome_de.html
+src/messages/welcome_en.html
+src/messages/welcome_fi.html
+src/messages/welcome_fr.html
+src/messages/welcome_hi.html
+src/messages/welcome_nb.html
+src/messages/welcome_nl.html
+src/messages/welcome_no.html
+src/messages/welcome_ru.html
+src/messages/welcome_sr.html
+src/messages/welcome_sv.html
+src/messages/welcome_uk.html
+src/messages/welcome_zh_CN.html
+src/messages/welcome_zh_TW.html
+)
+
 # tell cmake to process CMakeLists.txt in that subdirectory
 SET(HYPHENATE_DIR src/hyphenate)
 ADD_SUBDIRECTORY(${HYPHENATE_DIR})
 SET(HYPHENATE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}${HYPHENATE_DIR})
-
 
 ADD_SUBDIRECTORY(src)
 
@@ -160,42 +191,12 @@ ADD_SUBDIRECTORY(src)
 
 
 ######## Installation ##################
-	SET(FM_TEMPLATES_FILES
-	src/graphic-resources/one_line_template.xml
-	src/graphic-resources/oneline_template.png
-	src/graphic-resources/fontbook_default.xml
-	src/graphic-resources/default_template.png
-	)
-	SET(FM_STYLE_FILES
-	src/graphic-resources/html-css/info.css
-	src/graphic-resources/html-css/img/css-info-propertyname.png
-	src/graphic-resources/html-css/img/css-info-property.png
-	src/graphic-resources/html-css/img/css-shadow.png
-	src/graphic-resources/html-css/img/css-tech-info.png
-	)
-	SET(FM_WELCOME_FILES
-	src/messages/welcome_da.html
-	src/messages/welcome_de.html
-	src/messages/welcome_en.html
-	src/messages/welcome_fi.html
-	src/messages/welcome_fr.html
-	src/messages/welcome_hi.html
-	src/messages/welcome_nb.html
-	src/messages/welcome_nl.html
-	src/messages/welcome_no.html
-	src/messages/welcome_ru.html
-	src/messages/welcome_sr.html
-	src/messages/welcome_sv.html
-	src/messages/welcome_uk.html
-	src/messages/welcome_zh_CN.html
-	src/messages/welcome_zh_TW.html
-	)
-	
+
 IF(UNIX AND NOT APPLE)
 	SET(DESKTOPDIR "share/applications/")
 	SET(MANDIR "share/man/")
 	SET(ICONDIR "share/icons/hicolor/48x48/apps/")
-	SET(GRAPHICSDIR "share/fontmatrix/resources/")
+	SET(RESOURCESDIR "share/fontmatrix/resources/")
 	
 	INSTALL(FILES
 	fontmatrix.desktop
@@ -216,18 +217,22 @@ IF(UNIX AND NOT APPLE)
 	${FM_TEMPLATES_FILES}
 	${FM_STYLE_FILES}
 	${FM_WELCOME_FILES}
-	DESTINATION "${GRAPHICSDIR}"
+	DESTINATION "${RESOURCESDIR}"
 	)
 ENDIF(UNIX AND NOT APPLE)
 
 IF(APPLE)
-	SET(MACOSX_BUNDLE_ICON_FILE "application-fontmatrix_128.png")
-	SET(MACOSX_BUNDLE_GUI_IDENTIFIER "org.undertype.fontmatrix")
-	SET(MACOSX_BUNDLE_NAME "fontmatrix")
+# we do not "install" on apple’s OS
 ENDIF(APPLE)
 
 IF(WIN32)
-# nothing for atm
+	SET(RESOURCESDIR "share/resources/")
+	INSTALL(FILES
+	${FM_TEMPLATES_FILES}
+	${FM_STYLE_FILES}
+	${FM_WELCOME_FILES}
+	DESTINATION "${RESOURCESDIR}"
+	)
 ENDIF(WIN32)
 
 SET(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})

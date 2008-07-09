@@ -213,10 +213,17 @@ IF(APPLE)
 	SET(PROGNAME fontmatrix)
 	SET_SOURCE_FILES_PROPERTIES( fontmatrix PROPERTIES MACOSX_PACKAGE_LOCATION MacOSX )
 	SET_SOURCE_FILES_PROPERTIES( ${fontmatrix_QMS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+	SET(MACOSX_BUNDLE_ICON_FILE "application-fontmatrix_128.png")
+	SET(MACOSX_BUNDLE_GUI_IDENTIFIER "org.undertype.fontmatrix")
+	SET(MACOSX_BUNDLE_NAME "fontmatrix")
 	
 	
 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
 	COMMAND cp ARGS  "${CMAKE_SOURCE_DIR}/src/icons/application-fontmatrix_128.png" ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/
+	)
+	
+	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
+	COMMAND cp ARGS ${FM_TEMPLATES_FILES} ${FM_STYLE_FILES} ${FM_WELCOME_FILES} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/
 	)
 	
 	ADD_CUSTOM_COMMAND( TARGET translation POST_BUILD
@@ -238,11 +245,6 @@ IF(APPLE)
         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtOpenGL.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
        )
 
-#  do we need it or not? we’ll see
-# 	
-# 	INSTALL(TARGETS fontmatrix
-# 	BUNDLE DESTINATION ${FONTMATRIX_BUNDLE_BIN}
-# 	)
 ENDIF(APPLE)
 
 IF(WIN32)

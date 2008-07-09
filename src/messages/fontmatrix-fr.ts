@@ -300,7 +300,7 @@
 <context>
     <name>FontBookDialog</name>
     <message>
-        <location filename="../fontbookdialog.cpp" line="109"/>
+        <location filename="../fontbookdialog.cpp" line="110"/>
         <source>Save fontBook</source>
         <translation>Sauvegarde le catalogue</translation>
     </message>
@@ -343,7 +343,7 @@
         <translation>Nom de famille</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="2568"/>
+        <location filename="../fontitem.cpp" line="2570"/>
         <source>Font Subfamily</source>
         <translation>Variante</translation>
     </message>
@@ -353,12 +353,12 @@
         <translation>Identifiant unique</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3026"/>
+        <location filename="../fontitem.cpp" line="3028"/>
         <source>Full font name</source>
         <translation>Nom complet</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3027"/>
+        <location filename="../fontitem.cpp" line="3029"/>
         <source>Version string</source>
         <translation>Version</translation>
     </message>
@@ -383,7 +383,7 @@
         <translation>Créateur</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3028"/>
+        <location filename="../fontitem.cpp" line="3030"/>
         <source>Description</source>
         <translation>Description</translation>
     </message>
@@ -438,12 +438,12 @@
         <translation>Identifiant CID</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3418"/>
+        <location filename="../fontitem.cpp" line="3420"/>
         <source>Fontmatrix - Download</source>
         <translation>Fontmatrix - téléchargement</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3419"/>
+        <location filename="../fontitem.cpp" line="3421"/>
         <source>Downloading %1.</source>
         <translation>Télécharge %1.</translation>
     </message>
@@ -963,9 +963,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3255"/>
+        <location filename="../fontitem.cpp" line="3257"/>
         <source>Category</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2515"/>
+        <source>Glyphs count</source>
+        <translation>Nombre de glyphes</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2516"/>
+        <source>Font Type</source>
+        <translation>Type de fonte</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2517"/>
+        <source>Charmaps List</source>
+        <translation>Cartes de caractères</translation>
     </message>
 </context>
 <context>
@@ -1622,746 +1637,746 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Le zoom est exclusif de l’ajustement</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1176"/>
+        <location filename="../mainviewwidget.cpp" line="1168"/>
         <source>000Basic Latin</source>
         <translation>000Latin de base</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1177"/>
+        <location filename="../mainviewwidget.cpp" line="1169"/>
         <source>001Latin-1 Supplement</source>
         <translation>001Supplement Latin-1</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1178"/>
+        <location filename="../mainviewwidget.cpp" line="1170"/>
         <source>002Latin Extended-A</source>
         <translation>002Latin étendu A</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1179"/>
+        <location filename="../mainviewwidget.cpp" line="1171"/>
         <source>003Latin Extended-B</source>
         <translation>003Latin étendu B</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1180"/>
+        <location filename="../mainviewwidget.cpp" line="1172"/>
         <source>004IPA Extensions</source>
         <translation>004Alphabet phonétique international (API)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1181"/>
+        <location filename="../mainviewwidget.cpp" line="1173"/>
         <source>005Spacing Modifier Letters</source>
         <translation>005Lettres modificatives avec chasse</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1182"/>
+        <location filename="../mainviewwidget.cpp" line="1174"/>
         <source>006Combining Diacritical Marks</source>
         <translation>006Diacritiques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1183"/>
+        <location filename="../mainviewwidget.cpp" line="1175"/>
         <source>007Greek and Coptic</source>
         <translation>007Grec et copte</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1184"/>
+        <location filename="../mainviewwidget.cpp" line="1176"/>
         <source>008Cyrillic</source>
         <translation>008Cyrillique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1185"/>
+        <location filename="../mainviewwidget.cpp" line="1177"/>
         <source>009Cyrillic Supplement</source>
         <translation>009Supplément cyrillique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1186"/>
+        <location filename="../mainviewwidget.cpp" line="1178"/>
         <source>010Armenian</source>
         <translation>010Arménien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1187"/>
+        <location filename="../mainviewwidget.cpp" line="1179"/>
         <source>011Hebrew</source>
         <translation>011Hébreu</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1188"/>
+        <location filename="../mainviewwidget.cpp" line="1180"/>
         <source>012Arabic</source>
         <translation>012Arabe</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1189"/>
+        <location filename="../mainviewwidget.cpp" line="1181"/>
         <source>013Syriac</source>
         <translation>013Syriaque</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1190"/>
+        <location filename="../mainviewwidget.cpp" line="1182"/>
         <source>014Arabic Supplement</source>
         <translation>014Supplément arabe</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1191"/>
+        <location filename="../mainviewwidget.cpp" line="1183"/>
         <source>015Thaana</source>
         <translation>015Thâna</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1192"/>
+        <location filename="../mainviewwidget.cpp" line="1184"/>
         <source>016N&apos;Ko</source>
         <translation>016N&apos;Ko</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1193"/>
+        <location filename="../mainviewwidget.cpp" line="1185"/>
         <source>017Devanagari</source>
         <translation>017Dévanâgarî</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1194"/>
+        <location filename="../mainviewwidget.cpp" line="1186"/>
         <source>018Bengali</source>
         <translation>018Bengali</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1195"/>
+        <location filename="../mainviewwidget.cpp" line="1187"/>
         <source>019Gurmukhi</source>
         <translation>019Gourmoukhî</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1196"/>
+        <location filename="../mainviewwidget.cpp" line="1188"/>
         <source>020Gujarati</source>
         <translation>020Goudjerate</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1197"/>
+        <location filename="../mainviewwidget.cpp" line="1189"/>
         <source>021Oriya</source>
         <translation>021Oriya</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1198"/>
+        <location filename="../mainviewwidget.cpp" line="1190"/>
         <source>022Tamil</source>
         <translation>022Tamoul</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1199"/>
+        <location filename="../mainviewwidget.cpp" line="1191"/>
         <source>023Telugu</source>
         <translation>023Télougou</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1200"/>
+        <location filename="../mainviewwidget.cpp" line="1192"/>
         <source>024Kannada</source>
         <translation>024Kannara</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1201"/>
+        <location filename="../mainviewwidget.cpp" line="1193"/>
         <source>025Malayalam</source>
         <translation>025Malayalam</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1202"/>
+        <location filename="../mainviewwidget.cpp" line="1194"/>
         <source>026Sinhala</source>
         <translation>026Singhalais</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1203"/>
+        <location filename="../mainviewwidget.cpp" line="1195"/>
         <source>027Thai</source>
         <translation>027Thai</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1204"/>
+        <location filename="../mainviewwidget.cpp" line="1196"/>
         <source>028Lao</source>
         <translation>028Lao</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1205"/>
+        <location filename="../mainviewwidget.cpp" line="1197"/>
         <source>029Tibetan</source>
         <translation>029Tibétain</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1206"/>
+        <location filename="../mainviewwidget.cpp" line="1198"/>
         <source>030Burmese</source>
         <translation>030Birman</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1207"/>
+        <location filename="../mainviewwidget.cpp" line="1199"/>
         <source>031Georgian</source>
         <translation>031Géorgien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1208"/>
+        <location filename="../mainviewwidget.cpp" line="1200"/>
         <source>032Hangul Jamo</source>
         <translation>032Jamos hangûl</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1209"/>
+        <location filename="../mainviewwidget.cpp" line="1201"/>
         <source>033Ethiopic</source>
         <translation>033Éthiopien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1210"/>
+        <location filename="../mainviewwidget.cpp" line="1202"/>
         <source>034Ethiopic Supplement</source>
         <translation>034Supplément Éthiopien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1211"/>
+        <location filename="../mainviewwidget.cpp" line="1203"/>
         <source>035Cherokee</source>
         <translation>035Chérokî</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1212"/>
+        <location filename="../mainviewwidget.cpp" line="1204"/>
         <source>036Unified Canadian Aboriginal Syllabics</source>
         <translation>036Syllabaires autochtones canadiens unifiés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1213"/>
+        <location filename="../mainviewwidget.cpp" line="1205"/>
         <source>037Ogham</source>
         <translation>037Ogam</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1214"/>
+        <location filename="../mainviewwidget.cpp" line="1206"/>
         <source>038Runic</source>
         <translation>038Runes</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1215"/>
+        <location filename="../mainviewwidget.cpp" line="1207"/>
         <source>039Tagalog</source>
         <translation>039Tagalog</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1216"/>
+        <location filename="../mainviewwidget.cpp" line="1208"/>
         <source>040Hanun&#xc3;&#xb3;o</source>
         <translation>040Hanounóo</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1217"/>
+        <location filename="../mainviewwidget.cpp" line="1209"/>
         <source>041Buhid</source>
         <translation>041Bouhide</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1218"/>
+        <location filename="../mainviewwidget.cpp" line="1210"/>
         <source>042Tagbanwa</source>
         <translation>042Tagbanoua</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1219"/>
+        <location filename="../mainviewwidget.cpp" line="1211"/>
         <source>043Khmer</source>
         <translation>043Khmer</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1220"/>
+        <location filename="../mainviewwidget.cpp" line="1212"/>
         <source>044Mongolian</source>
         <translation>044Mongol</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1221"/>
+        <location filename="../mainviewwidget.cpp" line="1213"/>
         <source>045Limbu</source>
         <translation>045Limbou</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1222"/>
+        <location filename="../mainviewwidget.cpp" line="1214"/>
         <source>046Tai Le</source>
         <translation>046Taï-le</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1223"/>
+        <location filename="../mainviewwidget.cpp" line="1215"/>
         <source>047New Tai Lue</source>
         <translation>047Nouveau Taï-le</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1224"/>
+        <location filename="../mainviewwidget.cpp" line="1216"/>
         <source>048Khmer Symbols</source>
         <translation>048Symboles khmer</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1225"/>
+        <location filename="../mainviewwidget.cpp" line="1217"/>
         <source>049Buginese</source>
         <translation>049Buginese</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1226"/>
+        <location filename="../mainviewwidget.cpp" line="1218"/>
         <source>050Balinese</source>
         <translation>050Balinese</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1227"/>
+        <location filename="../mainviewwidget.cpp" line="1219"/>
         <source>051Lepcha</source>
         <translation>051Lepcha</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1228"/>
+        <location filename="../mainviewwidget.cpp" line="1220"/>
         <source>052Phonetic Extensions</source>
         <translation>052Supplément phonétique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1229"/>
+        <location filename="../mainviewwidget.cpp" line="1221"/>
         <source>053Phonetic Extensions Supplement</source>
         <translation>053Extensions au supplément phonétique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1230"/>
+        <location filename="../mainviewwidget.cpp" line="1222"/>
         <source>054Combining Diacritical Marks Supplement</source>
         <translation>054Supplément Signes Diacritiques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1231"/>
+        <location filename="../mainviewwidget.cpp" line="1223"/>
         <source>055Latin Extended Additional</source>
         <translation>055Latin étendu additionnel</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1232"/>
+        <location filename="../mainviewwidget.cpp" line="1224"/>
         <source>056Greek Extended</source>
         <translation>056Grec étendu</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1233"/>
+        <location filename="../mainviewwidget.cpp" line="1225"/>
         <source>057General Punctuation</source>
         <translation>057Ponctution générale</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1234"/>
+        <location filename="../mainviewwidget.cpp" line="1226"/>
         <source>058Superscripts and Subscripts</source>
         <translation>058Exposants et indices</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1235"/>
+        <location filename="../mainviewwidget.cpp" line="1227"/>
         <source>059Currency Symbols</source>
         <translation>059Symboles monétaires</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1236"/>
+        <location filename="../mainviewwidget.cpp" line="1228"/>
         <source>060Combining Diacritical Marks for Symbols</source>
         <translation>060Signes combinatoires pour symboles</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1237"/>
+        <location filename="../mainviewwidget.cpp" line="1229"/>
         <source>061Letterlike Symbols</source>
         <translation>061Symboles de type letrre</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1238"/>
+        <location filename="../mainviewwidget.cpp" line="1230"/>
         <source>062Number Forms</source>
         <translation>062Formes numérales</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1239"/>
+        <location filename="../mainviewwidget.cpp" line="1231"/>
         <source>063Arrows</source>
         <translation>063Flèches</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1240"/>
+        <location filename="../mainviewwidget.cpp" line="1232"/>
         <source>064Mathematical Operators</source>
         <translation>064Opérateurs mathématiques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1241"/>
+        <location filename="../mainviewwidget.cpp" line="1233"/>
         <source>065Miscellaneous Technical</source>
         <translation>065Signes techniques divers</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1242"/>
+        <location filename="../mainviewwidget.cpp" line="1234"/>
         <source>066Control Pictures</source>
         <translation>066Pictogrammes de commande</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1243"/>
+        <location filename="../mainviewwidget.cpp" line="1235"/>
         <source>067Optical Character Recognition</source>
         <translation>067Reconnaissance optique de caractères</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1244"/>
+        <location filename="../mainviewwidget.cpp" line="1236"/>
         <source>068Enclosed Alphanumerics</source>
         <translation>068Alphanumériques cerclés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1245"/>
+        <location filename="../mainviewwidget.cpp" line="1237"/>
         <source>069Box Drawing</source>
         <translation>069Filets</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1246"/>
+        <location filename="../mainviewwidget.cpp" line="1238"/>
         <source>070Block Elements</source>
         <translation>070Pavés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1247"/>
+        <location filename="../mainviewwidget.cpp" line="1239"/>
         <source>071Geometric Shapes</source>
         <translation>071Formes géométriques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1248"/>
+        <location filename="../mainviewwidget.cpp" line="1240"/>
         <source>072Miscellaneous Symbols</source>
         <translation>072Symboles divers</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1249"/>
+        <location filename="../mainviewwidget.cpp" line="1241"/>
         <source>073Dingbats</source>
         <translation>073Casseau</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1250"/>
+        <location filename="../mainviewwidget.cpp" line="1242"/>
         <source>074Miscellaneous Mathematical Symbols-A</source>
         <translation>074Divers symboles mathématiques - A</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1251"/>
+        <location filename="../mainviewwidget.cpp" line="1243"/>
         <source>075Supplemental Arrows-A</source>
         <translation>075Supplément B de flèches</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1252"/>
+        <location filename="../mainviewwidget.cpp" line="1244"/>
         <source>076Braille Patterns</source>
         <translation>076Combinaisons brailles</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1253"/>
+        <location filename="../mainviewwidget.cpp" line="1245"/>
         <source>077Supplemental Arrows-B</source>
         <translation>077Supplément B de flèches</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1254"/>
+        <location filename="../mainviewwidget.cpp" line="1246"/>
         <source>078Miscellaneous Mathematical Symbols-B</source>
         <translation>078Divers symboles mathématiques-B</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1255"/>
+        <location filename="../mainviewwidget.cpp" line="1247"/>
         <source>079Supplemental Mathematical Operators</source>
         <translation>079Opérateurs mathématiques supplémentaires</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1256"/>
+        <location filename="../mainviewwidget.cpp" line="1248"/>
         <source>080Miscellaneous Symbols and Arrows</source>
         <translation>080Divers symboles et flèches</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1257"/>
+        <location filename="../mainviewwidget.cpp" line="1249"/>
         <source>081Glagolitic</source>
         <translation>081Glagolitique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1258"/>
+        <location filename="../mainviewwidget.cpp" line="1250"/>
         <source>082Latin Extended-C</source>
         <translation>082Latin étendu-C</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1259"/>
+        <location filename="../mainviewwidget.cpp" line="1251"/>
         <source>083Coptic</source>
         <translation>083Copte</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1260"/>
+        <location filename="../mainviewwidget.cpp" line="1252"/>
         <source>084Georgian Supplement</source>
         <translation>084Supplément géeorgien</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1261"/>
+        <location filename="../mainviewwidget.cpp" line="1253"/>
         <source>085Tifinagh</source>
         <translation>085Alphabet Tifinagh</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1262"/>
+        <location filename="../mainviewwidget.cpp" line="1254"/>
         <source>086Ethiopic Extended</source>
         <translation>086Ethiopien étendu</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1263"/>
+        <location filename="../mainviewwidget.cpp" line="1255"/>
         <source>087Supplemental Punctuation</source>
         <translation>087Ponctuation supplémentaire</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1264"/>
+        <location filename="../mainviewwidget.cpp" line="1256"/>
         <source>088CJK Radicals Supplement</source>
         <translation>088Formes supplémentaires des clés CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1265"/>
+        <location filename="../mainviewwidget.cpp" line="1257"/>
         <source>089Kangxi Radicals</source>
         <translation>089Clés chinoises (Kangxi)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1266"/>
+        <location filename="../mainviewwidget.cpp" line="1258"/>
         <source>090Ideographic Description Characters</source>
         <translation>090Description idéophonographiques</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1267"/>
+        <location filename="../mainviewwidget.cpp" line="1259"/>
         <source>091CJK Symbols and Punctuation</source>
         <translation>091Symboles et ponctuation CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1268"/>
+        <location filename="../mainviewwidget.cpp" line="1260"/>
         <source>092Hiragana</source>
         <translation>092Hiragana</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1269"/>
+        <location filename="../mainviewwidget.cpp" line="1261"/>
         <source>093Katakana</source>
         <translation>093Katakana</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1270"/>
+        <location filename="../mainviewwidget.cpp" line="1262"/>
         <source>094Bopomofo</source>
         <translation>094Bopomofo</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1271"/>
+        <location filename="../mainviewwidget.cpp" line="1263"/>
         <source>095Hangul Compatibility Jamo</source>
         <translation>095Jamos de compatibilité hangûls</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1272"/>
+        <location filename="../mainviewwidget.cpp" line="1264"/>
         <source>096Kanbun</source>
         <translation>096Kanboun</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1273"/>
+        <location filename="../mainviewwidget.cpp" line="1265"/>
         <source>097Bopomofo Extended</source>
         <translation>097Bopomofo étendu</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1274"/>
+        <location filename="../mainviewwidget.cpp" line="1266"/>
         <source>098CJK Strokes</source>
         <translation>098Contours CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1275"/>
+        <location filename="../mainviewwidget.cpp" line="1267"/>
         <source>099Katakana Phonetic Extensions</source>
         <translation>099Extensions phonétiques Katakana</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1276"/>
+        <location filename="../mainviewwidget.cpp" line="1268"/>
         <source>100Enclosed CJK Letters and Months</source>
         <translation>100Lettres et mois CJC cerclés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1277"/>
+        <location filename="../mainviewwidget.cpp" line="1269"/>
         <source>101CJK Compatibility</source>
         <translation>101Compatibilité CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1278"/>
+        <location filename="../mainviewwidget.cpp" line="1270"/>
         <source>102CJK Unified Ideographs Extension A</source>
         <translation>102Supplément A aux idéophonogrammes unifiés CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1279"/>
+        <location filename="../mainviewwidget.cpp" line="1271"/>
         <source>103Yijing Hexagram Symbols</source>
         <translation>103Hexagrammes du Classique des mutations ou Yi-king</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1280"/>
+        <location filename="../mainviewwidget.cpp" line="1272"/>
         <source>104CJK Unified Ideographs</source>
         <translation>104Idéophonogrammes unifiés CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1281"/>
+        <location filename="../mainviewwidget.cpp" line="1273"/>
         <source>105Yi Syllables</source>
         <translation>105Syllabaire yi des Monts frais</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1282"/>
+        <location filename="../mainviewwidget.cpp" line="1274"/>
         <source>106Yi Radicals</source>
         <translation>106Clés yi</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1283"/>
+        <location filename="../mainviewwidget.cpp" line="1275"/>
         <source>107Modifier Tone Letters</source>
         <translation>107Lettres modificatives de la tonalité</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1284"/>
+        <location filename="../mainviewwidget.cpp" line="1276"/>
         <source>108Latin Extended-D</source>
         <translation>108Latin étendu-D</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1285"/>
+        <location filename="../mainviewwidget.cpp" line="1277"/>
         <source>109Syloti Nagri</source>
         <translation>109Sylotî nagrî</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1286"/>
+        <location filename="../mainviewwidget.cpp" line="1278"/>
         <source>110Phags-pa</source>
         <translation>110Phagspa</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1287"/>
+        <location filename="../mainviewwidget.cpp" line="1279"/>
         <source>111Hangul Syllables</source>
         <translation>111Hangûl</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1288"/>
+        <location filename="../mainviewwidget.cpp" line="1280"/>
         <source>112High Surrogates</source>
         <translation>112Demi-zone haute</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1289"/>
+        <location filename="../mainviewwidget.cpp" line="1281"/>
         <source>113High Private Use Surrogates</source>
         <translation>113Partie à usage privé de la demi-zonz haute</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1290"/>
+        <location filename="../mainviewwidget.cpp" line="1282"/>
         <source>114Low Surrogates</source>
         <translation>114Demi-zone basse</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1291"/>
+        <location filename="../mainviewwidget.cpp" line="1283"/>
         <source>115Private Use Area</source>
         <translation>115Zonz à usage privé</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1292"/>
+        <location filename="../mainviewwidget.cpp" line="1284"/>
         <source>116CJK Compatibility Ideographs</source>
         <translation>116Idéogrammes de compatibilité CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1293"/>
+        <location filename="../mainviewwidget.cpp" line="1285"/>
         <source>117Alphabetic Presentation Forms</source>
         <translation>117Formes de présentation alphabétique</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1294"/>
+        <location filename="../mainviewwidget.cpp" line="1286"/>
         <source>118Arabic Presentation Forms-A</source>
         <translation>118Formes A de présentation arabe</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1295"/>
+        <location filename="../mainviewwidget.cpp" line="1287"/>
         <source>119Variation Selectors</source>
         <translation>119Sélecteurs de variante</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1296"/>
+        <location filename="../mainviewwidget.cpp" line="1288"/>
         <source>120Vertical Forms</source>
         <translation>120Formes verticales</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1297"/>
+        <location filename="../mainviewwidget.cpp" line="1289"/>
         <source>121Combining Half Marks</source>
         <translation>121Demi-signes combinatoires</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1298"/>
+        <location filename="../mainviewwidget.cpp" line="1290"/>
         <source>122CJK Compatibility Forms</source>
         <translation>122Formes de compatibilité CJC</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1299"/>
+        <location filename="../mainviewwidget.cpp" line="1291"/>
         <source>123Small Form Variants</source>
         <translation>123Petites variantes de forme</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1300"/>
+        <location filename="../mainviewwidget.cpp" line="1292"/>
         <source>124Arabic Presentation Forms-B</source>
         <translation>124Formes B de présentation arabe</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1301"/>
+        <location filename="../mainviewwidget.cpp" line="1293"/>
         <source>125Halfwidth and Fullwidth Forms</source>
         <translation>125Formes de demi et pleine chasse</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1302"/>
+        <location filename="../mainviewwidget.cpp" line="1294"/>
         <source>126Specials</source>
         <translation>126Caractères spéciaux</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1304"/>
+        <location filename="../mainviewwidget.cpp" line="1296"/>
         <source>127Supplementary Multilingual Plane (SMP)</source>
         <translation>127Plan Multilingue Supplémentaire (PMS)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1305"/>
+        <location filename="../mainviewwidget.cpp" line="1297"/>
         <source>128Supplementary Ideographic Plane (SIP)</source>
         <translation>128Plan Supplémentaires des Idéogrammes (PSI)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1306"/>
+        <location filename="../mainviewwidget.cpp" line="1298"/>
         <source>129unassigned</source>
         <translation>129Non-assigné</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1307"/>
+        <location filename="../mainviewwidget.cpp" line="1299"/>
         <source>130Supplementary Special-purpose Plane (SSP)</source>
         <translation>130Plan Suplémentaire à Usage Spécial (PSUS)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1308"/>
+        <location filename="../mainviewwidget.cpp" line="1300"/>
         <source>131Private Use Area 1 (PUA)</source>
         <translation>131Zone à usage privé 1 (ZUP)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1309"/>
+        <location filename="../mainviewwidget.cpp" line="1301"/>
         <source>132Private Use Area 2 (PUA)</source>
         <translation>132Zone à usage privé 2 (ZUP)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1310"/>
+        <location filename="../mainviewwidget.cpp" line="1302"/>
         <source>133Un-Mapped Glyphs</source>
         <translation>133Glyphs non référencés</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1048"/>
+        <location filename="../mainviewwidget.cpp" line="1040"/>
         <source>Activation event</source>
         <translation>événement</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1048"/>
+        <location filename="../mainviewwidget.cpp" line="1040"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1051"/>
+        <location filename="../mainviewwidget.cpp" line="1043"/>
         <source>Activation of :</source>
         <translation>Activation de :</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1051"/>
+        <location filename="../mainviewwidget.cpp" line="1043"/>
         <source>Deactivation of :</source>
         <translation>Désactivation de :</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1311"/>
+        <location filename="../mainviewwidget.cpp" line="1303"/>
         <source>134View all mapped glyphs</source>
         <translation>134Voir toutes les glyphes référencées</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="662"/>
+        <location filename="../mainviewwidget.cpp" line="653"/>
         <source>Names</source>
         <translation>Noms</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1872"/>
+        <location filename="../mainviewwidget.cpp" line="1864"/>
         <source>Fontmatrix takes care of you</source>
         <translation>Fontmatrix prends soin de vous</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1872"/>
+        <location filename="../mainviewwidget.cpp" line="1864"/>
         <source> is activated.
 If you want to remove it from Fontmatrix database, please deactivate it first.</source>
         <translation> est activée.
 Avant de la supprimer, vous devez la désactiver.</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1875"/>
+        <location filename="../mainviewwidget.cpp" line="1867"/>
         <source>Fontmatrix safe</source>
         <translation>Fontmatrix </translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1875"/>
+        <location filename="../mainviewwidget.cpp" line="1867"/>
         <source>You are about to remove a font from Fontmatrix database</source>
         <translation>Vous êtes sur le point de supprimer une fonte de la base de données</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1875"/>
+        <location filename="../mainviewwidget.cpp" line="1867"/>
         <source>Do you want to continue?</source>
         <translation>Voulez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1960"/>
+        <location filename="../mainviewwidget.cpp" line="1952"/>
         <source>Welcome to Fontmatrix</source>
         <translation>Bienvenue dans Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1749"/>
+        <location filename="../mainviewwidget.cpp" line="1741"/>
         <source>Add new tag</source>
         <translation>Ajouter une étiquette</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="2139"/>
+        <location filename="../mainviewwidget.cpp" line="2132"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Charge</translation>
     </message>
 </context>
 <context>
@@ -2759,7 +2774,7 @@ Avant de la supprimer, vous devez la désactiver.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../fontitem.cpp" line="2633"/>
+        <location filename="../fontitem.cpp" line="2635"/>
         <source>codepoint is U+</source>
         <translation>le point de code est U+</translation>
     </message>
@@ -3472,152 +3487,152 @@ mnopqrstuvxyz
         <translation type="obsolete">défaut</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3224"/>
+        <location filename="../fontitem.cpp" line="3226"/>
         <source>Mark, NonSpacing</source>
         <translation>Repère, sans chasse</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3225"/>
+        <location filename="../fontitem.cpp" line="3227"/>
         <source>Mark, SpacingCombining</source>
         <translation>Repère, combinatoire</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3226"/>
+        <location filename="../fontitem.cpp" line="3228"/>
         <source>Mark, Enclosing</source>
         <translation>Repère, fermant</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3227"/>
+        <location filename="../fontitem.cpp" line="3229"/>
         <source>Number, DecimalDigit</source>
         <translation>Nombre, chiffre décimal</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3228"/>
+        <location filename="../fontitem.cpp" line="3230"/>
         <source>Number, Letter</source>
         <translation>Nombre, lettre</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3229"/>
+        <location filename="../fontitem.cpp" line="3231"/>
         <source>Number, Other</source>
         <translation>Nombre, autre</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3230"/>
+        <location filename="../fontitem.cpp" line="3232"/>
         <source>Separator, Space</source>
         <translation>Séparateur, espace</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3231"/>
+        <location filename="../fontitem.cpp" line="3233"/>
         <source>Separator, Line</source>
         <translation>Séparateur, ligne</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3232"/>
+        <location filename="../fontitem.cpp" line="3234"/>
         <source>Separator, Paragraph</source>
         <translation>Séparateur, paragraphe</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3233"/>
+        <location filename="../fontitem.cpp" line="3235"/>
         <source>Other, Control</source>
         <translation>Autre, contrôle</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3234"/>
+        <location filename="../fontitem.cpp" line="3236"/>
         <source>Other, Format</source>
         <translation>Autre, formatage</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3235"/>
+        <location filename="../fontitem.cpp" line="3237"/>
         <source>Other, Surrogate</source>
         <translation>Autre, substitut</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3236"/>
+        <location filename="../fontitem.cpp" line="3238"/>
         <source>Other, PrivateUse</source>
         <translation>Autre, usage privé</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3237"/>
+        <location filename="../fontitem.cpp" line="3239"/>
         <source>Other, NotAssigned</source>
         <translation>Autre, non assigné</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3238"/>
+        <location filename="../fontitem.cpp" line="3240"/>
         <source>Letter, Uppercase</source>
         <translation>Lettre, haut de casse</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3239"/>
+        <location filename="../fontitem.cpp" line="3241"/>
         <source>Letter, Lowercase</source>
         <translation>Lettre, bas de casse</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3240"/>
+        <location filename="../fontitem.cpp" line="3242"/>
         <source>Letter, Titlecase</source>
         <translation>Lettre, casse de titrage</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3241"/>
+        <location filename="../fontitem.cpp" line="3243"/>
         <source>Letter, Modifier</source>
         <translation>Lettre, modificateur</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3242"/>
+        <location filename="../fontitem.cpp" line="3244"/>
         <source>Letter, Other</source>
         <translation>Lettre, autre</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3243"/>
+        <location filename="../fontitem.cpp" line="3245"/>
         <source>Punctuation, Connector</source>
         <translation>Ponctuation, connecteur</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3244"/>
+        <location filename="../fontitem.cpp" line="3246"/>
         <source>Punctuation, Dash</source>
         <translation>Ponctuation, trait</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3245"/>
+        <location filename="../fontitem.cpp" line="3247"/>
         <source>Punctuation, Open</source>
         <translation>Ponctuation, ouverture</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3246"/>
+        <location filename="../fontitem.cpp" line="3248"/>
         <source>Punctuation, Close</source>
         <translation>Ponctuation, fermeture</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3247"/>
+        <location filename="../fontitem.cpp" line="3249"/>
         <source>Punctuation, InitialQuote</source>
         <translation>Ponctutatio, début de citation</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3248"/>
+        <location filename="../fontitem.cpp" line="3250"/>
         <source>Punctuation, FinalQuote</source>
         <translation>Ponctutatio, fin de citation</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3249"/>
+        <location filename="../fontitem.cpp" line="3251"/>
         <source>Punctuation, Other</source>
         <translation>Ponctuation, autre</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3250"/>
+        <location filename="../fontitem.cpp" line="3252"/>
         <source>Symbol, Math</source>
         <translation>Symbole, mathématiques</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3251"/>
+        <location filename="../fontitem.cpp" line="3253"/>
         <source>Symbol, Currency</source>
         <translation>Symbole, monnaie</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3252"/>
+        <location filename="../fontitem.cpp" line="3254"/>
         <source>Symbol, Modifier</source>
         <translation>Symbole, mdificateur</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3253"/>
+        <location filename="../fontitem.cpp" line="3255"/>
         <source>Symbol, Other</source>
         <translation>Symbol, autre</translation>
     </message>

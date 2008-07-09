@@ -137,12 +137,14 @@ SET ( fontmatrix_TSS
 
 IF ( TRANSLATOR )
 	MESSAGE(STATUS "We are glad to see you handle the fontmatrix-${TRANSLATOR}.ts file, thank you very much")
-	add_custom_command(TARGET translation
- 			PRE_BUILD 
-			COMMAND ${QT_LUPDATE_EXECUTABLE} ARGS ${fontmatrix_SRCS} ${fontmatrix_UIS} -ts "fontmatrix-${TRANSLATOR}.ts")
+	ADD_CUSTOM_TARGET(translation 
+			COMMAND ${QT_LUPDATE_EXECUTABLE}  ${fontmatrix_SRCS} ${fontmatrix_UIS} -ts "fontmatrix-${TRANSLATOR}.ts"
+			DEPENDS ${fontmatrix_SRCS} ${fontmatrix_UIS}
+			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/messages"
+			)
 ENDIF( TRANSLATOR )
 QT4_ADD_TRANSLATION ( fontmatrix_QMS ${fontmatrix_TSS} )
-ADD_CUSTOM_TARGET ( translation ALL DEPENDS ${fontmatrix_QMS} )
+ADD_CUSTOM_TARGET ( translation_release ALL DEPENDS ${fontmatrix_QMS} )
 
 # ADD_SUBDIRECTORY(messages)
 

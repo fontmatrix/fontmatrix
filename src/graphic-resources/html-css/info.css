@@ -1,56 +1,20 @@
-
-/* info.css */
-
-
-body {
-    background-color : #f0f0f0;
-  }
-
-/******* Welcome message *********/
-
-
-
-body.welcome-wrapper {
-    background-color: #f0f0f0;
-  }
-
-/* The name of the font */
-
-
-
-#welcome-font {
-    margin-right : 16px;
-    color : white;
-    font-size : 10pt;
-  }
-
-
-.welcome-par {
-    margin-right: 16px;
-    margin-left: 32px;
-    background-color: #f0f0f0;
-    color: #ddd;
-  }
-
-/* Qt seems to not so well handle heritance */
-
-
-
-.welcome-listitem {
-    text-indent: 20px;
-    background-color: #f0f0f0;
-    color: #ddd;
-  }
-
 /******* Informations ************/
 
+*{
+border:0;
+margin:0;
+padding:0;
+}
+
+body{
+background-color : #fefefe;
+}
 
 #headline {
-    text-shadow: #99b 4px 4px 2px;
-    background-color : #ddd;
+    text-shadow: black 4px 4px 2px;
+    background-color : #ff3f00;
     color : white;
-    /* display : inline;
-    */ font-family : 'sans-serif';
+    font-family : 'sans-serif';
     font-size : 18pt;
     font-weight : bold;
     line-height : 30pt;
@@ -60,191 +24,112 @@ body.welcome-wrapper {
     padding-top : 4pt;
   }
 
-
-#technote {
-/*    background-color : #ddd;*/
-    background-image : url('css-tech-info.png');
-    background-repeat : repeat-x;
-    color : black;
-    font-family : 'sans-serif';
+#file {
+	text-align:right;
+    background-color : #ddd;
+    color : #333;
+    font-family : monospace;
     font-size : 10pt;
-    line-height : 10pt;
-    margin-bottom : 10pt;
-    text-align : center;
-  }
+}
 
+#general{
+float:left;
+width:75%;
+}
 
 .infoblock {
-    font-family : 'sans-serif';
-    font-size : 11pt;
-    /* border-bottom : 1px dashed white;
-    */ margin-bottom: 7pt;
-    text-indent : 3px;
-  }
-
-/*.infoblock  a {
-    color:#a44;
-  }*/
-
+clear:both;
+}
+.infoblock:hover .langundefined {
+border-left : 10pt solid red ;
+color:black;
+}
+.infoblock:hover .infoname
+{
+color:red;
+}
 
 
 .infoname {
-    background-color : #aac;
-    background-image : url('css-info-propertyname.png');
+text-align:right;
+    background-color : #fefefe;
+    color:#333;
+/*     background-image : url('css-info-propertyname.png'); */
     background-repeat : repeat-y;
     float : left;
     font-family : 'sans-serif';
     font-size : 10pt;
     font-style : italic;
+    font-weight : bold;
     line-height : 200%;
-    margin-right : -30pt;
-    padding-left : 3pt;
-    padding-top : 2px;
-    width : 150px;
+    padding-right : 1%;
+    width : 30%;
   }
 
 
 .langmatch {
-    background-color : #fff0dd;
-    background-image : url('css-shadow.png');
-    background-position : top left;
-    background-repeat : repeat-y;
-    border-top-color : #aac;
-    border-top-style : solid;
-    border-top-width : 2px;
-    border-right-color : #aac;
-    border-right-style : solid;
-    border-right-width : 2px;
+    color: #333;
+    background-color : #fefefe;
+    margin-left : 31%;
+    border-left : 10pt solid gray ;
+    padding-left: 6pt;
     font-family : 'sans-serif';
     font-size : 10pt;
-    margin-left : 140px;
-    margin-top: -2px;
-    line-height : 140%;
-    padding-bottom : 0;
-    padding-left : 25px;
-    padding-right : 1em;
-    padding-top : 2px;
+    line-height : 20pt;
   }
 
 
 .langundefined {
-    background-color : #fff0dd;
-    background-image : url('css-shadow.png');
-    background-position : top left;
-    background-repeat : repeat-y;
-    border-right-color : #aac;
-    border-right-style : solid;
-    border-right-width : 2px;
-    border-top-color : #aac;
-    border-top-style : solid;
-    border-top-width : 2px;
+    color: #444;
+    background-color : #fefefe;
+    margin-left : 31%;
+    border-left : 10pt solid gray ;
+    padding-left: 6pt;
     font-family : 'sans-serif';
     font-size : 10pt;
-    line-height : 140%;
-    margin-left : 140px;
-    margin-top : -2px;
-    padding-bottom : 0;
-    padding-left : 25px;
-    padding-right : 1em;
-    padding-top : 2px;
+    line-height : 20pt;
   }
 
 
 .langnomatch {
-    /* perhaps only French, but foreign languages have to be italicized */ font-size : 12pt;
-    background-color : #fff0dd;
-    background-image : url('css-shadow.png');
-    background-position : top left;
-    background-repeat : repeat-y;
-    display : inline;
+    color: #444;
+    background-color : #fefefe;
+    margin-left : 31%;
+    border-left : 10pt solid gray ;
+    padding-left: 6pt;
     font-family : 'sans-serif';
     font-style : italic;
-    padding-bottom : 0;
-    padding-left : 1em;
-    padding-right : 1em;
-    padding-top : 0;
+    font-size : 10pt;
+    line-height : 20pt;
   }
 
 
 #panose_block {
-display:table;
-width:100%;
-    background-color : #aac;
-/*    height : 100%;*/
-    margin-top : 3pt;
-  }
-
-
-#panose_block:before {
-     float : left;
-     color : white;
-    content : "PANOSE";
-
-/*     display : block;*/
-     font-size : 20pt;
-    font-style : italic;
-    /* height : inherit;
-    *//* margin-top : 15px;
-    */ /* padding-left : 3px;*/
+    background-color : #fafafa;
+    margin-left:75%;
+    padding:1pt;
+    border-left: 2px solid black;
   }
 
 
 .panose_name {
-width:40%;
-float:left;
-/*display:block;*/
+text-align:left;
+font-style:italic;
     font-size : 9pt;
-
-    color : red;
-/*    float : left;*/
-/*    font-variant : small-caps;*/
+    color : gray;
   }
 
 
 .panose_desc {
-width:50%;
-    float:right;
-    background-color:#888;
-    margin:3pt;
-    line-height:20pt;
+text-align:center;
     font-size:11pt;
+    color:#333;
   }
 
-
-.panose_desc:after {
-    content: " ";
-  }
-
-
-.panose_desc:first-letter {
-    font-size: 200%;
-    float: left ;
-    background-color:white;
-  }
 
 
 .panose_desc:hover {
-    background-color:#eee;
-  }
-
-/*#file {
-    background-color : #000000;
-    color : #d0d0d0;
-    font-family : monospace;
-    font-size : 8pt;
-    margin-top : -10pt;
-    padding-left : 6pt;
-  }*/
-
-
-#file {
-    float:right;
-    background-color : #ddd;
-    color : #333;
-    font-family : monospace;
-    font-size : 8pt;
-    margin-top : -20pt;
-    padding-left : 6pt;
-    padding-right: 5px;
+    background-color:white;
+    color:black;
   }
 

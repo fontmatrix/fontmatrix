@@ -2494,8 +2494,7 @@ QString FontItem::infoText ( bool fromcache )
 	if ( !m_panose.isEmpty() )
 	{
 // 		qDebug() <<"WE HAVE PANOSE \\o/";
-		panStringOut = " | Panose: " + m_panose;
-		//TODO output Panose as text (in panBlockOut)
+// 		panStringOut = " | Panose: " + m_panose;
 		QMap<QString, QString>::const_iterator pat ( panoseInfo.constBegin() );
 		for ( ;pat != panoseInfo.constEnd(); ++pat )
 		{
@@ -2511,8 +2510,11 @@ QString FontItem::infoText ( bool fromcache )
 	QMap<QString, QStringList> orderedInfo;
 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
 	ret += "<div id=\"file\">" + m_path + "</div>\n" ;
-	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type: "+ m_type +" | Charmaps: " + m_charsets.join ( ", " ) + panStringOut +"</div>";
-
+// 	ret += "<div id=\"search\"><a href=\"http://www.myfonts.com/search?search[text]="+ m_family +"\">On myfonts</a>";
+// 	ret += "<div id=\"technote\">"+ QString::number ( m_numGlyphs ) + " glyphs | Type: "+ m_type +" | Charmaps: " + m_charsets.join ( ", " ) + panStringOut +"</div>";
+	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+QObject::tr("Glyphs count")+"</div><div class=\"langundefined\">"+ QString::number ( m_numGlyphs ) +"</div></div>";
+	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+QObject::tr("Font Type")+"</div><div class=\"langundefined\">"+ m_type +"</div></div>";
+	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+QObject::tr("Charmaps List")+"</div><div class=\"langundefined\">"+ m_charsets.join ( ", " ) +"</div></div>";
 
 // 	if ( !moreInfo.isEmpty() ) // moreInfo.isNotEmpty
 	{

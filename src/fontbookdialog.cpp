@@ -214,10 +214,10 @@ void FontBookDialog::fillTemplates()
 		
 	}
 	// Here we insert default templates provided by Fontmatrix
-	templatesMap["Default template"] = FMPaths::FMResourcesDir() + "template_default";
-	templatesPreviewMap["Default template"] = QPixmap(FMPaths::FMResourcesDir() +"template_default_preview");
-	templatesMap["Default template (oneliner)"] = FMPaths::FMResourcesDir() +"template_oneline";
-	templatesPreviewMap["Default template (oneliner)"] =  QPixmap(FMPaths::FMResourcesDir() +"template_oneline_preview");
+	templatesMap["Default template"] = FMPaths::ResourcesDir() + "template_default";
+	templatesPreviewMap["Default template"] = QPixmap(FMPaths::ResourcesDir() +"template_default_preview");
+	templatesMap["Default template (oneliner)"] = FMPaths::ResourcesDir() +"template_oneline";
+	templatesPreviewMap["Default template (oneliner)"] =  QPixmap(FMPaths::ResourcesDir() +"template_oneline_preview");
 	
 	templatesList->addItems(templatesMap.keys());	
 }

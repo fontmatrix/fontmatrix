@@ -670,7 +670,7 @@ void MainViewWidget::slotInfoFont()
 		fIT += "<head>";
 		fIT += "<title>" + theVeryFont->fancyName() + "</title>";
 		fIT += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
-		fIT += "<link rel='stylesheet' href='file://" + FMPaths::FMResourcesDir() + "info.css' type='text/css' />";
+		fIT += "<link rel='stylesheet' href='file://" + FMPaths::ResourcesDir() + "info.css' type='text/css' />";
 		fIT += "</head>" +  theVeryFont->infoText(false) + "</html>";
 		fontInfoText->setHtml (fIT);
 // 		qDebug()<<"=========================================================";
@@ -1954,9 +1954,10 @@ void MainViewWidget::displayWelcomeMessage()
 			typo->setPreviewSize( bkPr );
 		}
 	}
-	QFile wFile(FMPaths::FMResourcesDir() + "welcome_"+ FMPaths::sysLoc() + ".html");
-	wFile.open(QIODevice::ReadOnly);
-	QString wString(wFile.readAll());
+	QFile wFile(FMPaths::ResourcesDir() + "welcome_"+ FMPaths::sysLoc() + ".html");
+	wFile.open(QIODevice::ReadOnly | QIODevice::Text);
+	QByteArray wArray(wFile.readAll());
+	QString wString(QString::fromUtf8(wArray.data(),wArray.length()));
 	wString.replace("##WELCOME_PNG##", QUrl::fromLocalFile(wpng).toString() );
 	wString.replace("##WELCOME_FONT##", welcomeFontName);
 	fontInfoText->setHtml(wString);

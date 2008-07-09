@@ -20,10 +20,10 @@ class FMPaths
 
 		static QString sysLoc();
 
-		static QString FMTranslationsDir();
+		static QString TranslationsDir();
 
-		static QString FMTranslationFile();
+		static QString TranslationFile();
 
-		static QString FMResourcesDir();
+		static QString ResourcesDir();
 };
 #endif

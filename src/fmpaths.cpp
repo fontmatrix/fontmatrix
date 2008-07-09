@@ -53,15 +53,15 @@ QString FMPaths::sysLoc()
 	
 }
 
-QString FMPaths::FMTranslationsDir()
+QString FMPaths::TranslationsDir()
 {
-	if(getThis()->FMPathsDB.contains("FMTranslationsDir"))
-		return getThis()->FMPathsDB["FMTranslationsDir"];
+	if(getThis()->FMPathsDB.contains("TranslationsDir"))
+		return getThis()->FMPathsDB["TranslationsDir"];
 #ifdef PLATFORM_APPLE
 	QString QMDirPath = QApplication::applicationDirPath();
 	QString dirsep(QDir::separator());
 	QMDirPath +=  dirsep + ".." + dirsep + "Resources" + dirsep + "locale" + dirsep;	
-#elseif _WIN32
+#elif _WIN32
 	QString QMDirPath = QApplication::applicationDirPath();
 	QString dirsep(QDir::separator());
 	QMDirPath +=  dirsep + "share" + dirsep + "qm" + dirsep;
@@ -70,29 +70,29 @@ QString FMPaths::FMTranslationsDir()
 	QString dirsep(QDir::separator());
 	QMDirPath +=  dirsep + "share" + dirsep + "fontmatrix" + dirsep + "qm" + dirsep;
 #endif
-	getThis()->FMPathsDB["FMTranslationsDir"] = QMDirPath;
+	getThis()->FMPathsDB["TranslationsDir"] = QMDirPath;
 	return QMDirPath;
 }
 
-QString FMPaths::FMTranslationFile()
+QString FMPaths::TranslationFile()
 {
-	if(getThis()->FMPathsDB.contains("FMTranslationFile"))
-		return getThis()->FMPathsDB["FMTranslationFile"];
+	if(getThis()->FMPathsDB.contains("TranslationFile"))
+		return getThis()->FMPathsDB["TranslationFile"];
 	
 	QString QMFilePathComplete("fontmatrix-" + sysLoc() );
-	getThis()->FMPathsDB["FMTranslationFile"] = QMFilePathComplete;
+	getThis()->FMPathsDB["TranslationFile"] = QMFilePathComplete;
 	return QMFilePathComplete;
 }
 
-QString FMPaths::FMResourcesDir()
+QString FMPaths::ResourcesDir()
 {
-	if(getThis()->FMPathsDB.contains("FMResourcesDir"))
-		return getThis()->FMPathsDB["FMResourcesDir"];
+	if(getThis()->FMPathsDB.contains("ResourcesDir"))
+		return getThis()->FMPathsDB["ResourcesDir"];
 #ifdef PLATFORM_APPLE
 	QString QMDirPath = QApplication::applicationDirPath();
 	QString dirsep(QDir::separator());
 	QMDirPath +=  dirsep + ".." + dirsep + "Resources" + dirsep ;	
-#elseif _WIN32
+#elif _WIN32
 	QString QMDirPath = QApplication::applicationDirPath();
 	QString dirsep(QDir::separator());
 	QMDirPath +=  dirsep + "share" + dirsep + "resources" + dirsep;
@@ -101,8 +101,8 @@ QString FMPaths::FMResourcesDir()
 	QString dirsep(QDir::separator());
 	QMDirPath +=  dirsep + "share" + dirsep + "fontmatrix" + dirsep + "resources" + dirsep;
 #endif
-	getThis()->FMPathsDB["FMResourcesDir"] = QMDirPath;
-	return getThis()->FMPathsDB["FMResourcesDir"];
+	getThis()->FMPathsDB["ResourcesDir"] = QMDirPath;
+	return getThis()->FMPathsDB["ResourcesDir"];
 }
 
 

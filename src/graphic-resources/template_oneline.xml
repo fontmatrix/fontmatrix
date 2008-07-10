@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
 	<name>Oneliner</name>
-	<preview>oneline_template.png</preview>
+	<preview>template_oneline.png</preview>
 	<papersize bboxx="0" bboxy="30" bboxw="0" bboxh="760">A4</papersize>
 	
 	<context level="page"><!-- page | family | subfamily -->

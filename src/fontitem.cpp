@@ -2480,7 +2480,6 @@ QString FontItem::infoText ( bool fromcache )
 	Selectors are :
 	#headline
 	#file
-	#technote
 	.infoblock
 	.infoname
 	.langmatch

@@ -2,7 +2,7 @@
 <template>
 	<name>test from def</name>
 	<papersize bboxx="0" bboxy="30" bboxw="0" bboxh="760">A4</papersize>
-	<preview>default_template.png</preview>
+	<preview>template_default.png</preview>
 	
 	<context level="page">
 		<text>##FAMILY## ##SUBFAMILY##</text>

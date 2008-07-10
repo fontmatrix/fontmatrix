@@ -149,10 +149,10 @@ ENDIF(UNIX AND NOT APPLE)
 
 
 SET(FM_TEMPLATES_FILES
-src/graphic-resources/one_line_template.xml
-src/graphic-resources/oneline_template.png
-src/graphic-resources/fontbook_default.xml
-src/graphic-resources/default_template.png
+src/graphic-resources/template_oneline.xml
+src/graphic-resources/template_oneline.png
+src/graphic-resources/template_default.xml
+src/graphic-resources/template_default.png
 )
 SET(FM_STYLE_FILES
 src/graphic-resources/html-css/info.css

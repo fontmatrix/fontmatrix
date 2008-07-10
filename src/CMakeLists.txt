@@ -212,40 +212,55 @@ IF(APPLE)
 	# themselves, thus paths are hard coded because it works on the Mac
 	# where we use to build it, period.
 	
+	# See:
+	# http://doc.trolltech.com/4.4/deployment-mac.html
+	# http://developer.apple.com/documentation/CoreFoundation/Conceptual/CFBundles/CFBundles.html
+	
 	SET(PROGNAME fontmatrix)
-	SET_SOURCE_FILES_PROPERTIES( fontmatrix PROPERTIES MACOSX_PACKAGE_LOCATION MacOSX )
-	SET_SOURCE_FILES_PROPERTIES( ${fontmatrix_QMS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
-	SET(MACOSX_BUNDLE_ICON_FILE "application-fontmatrix_128.png")
+	
+	SET(MACOSX_BUNDLE_BUNDLE_NAME "fontmatrix")
+	SET(MACOSX_BUNDLE_ICON_FILE "fontmatrix.icns")
 	SET(MACOSX_BUNDLE_GUI_IDENTIFIER "org.undertype.fontmatrix")
-	SET(MACOSX_BUNDLE_NAME "fontmatrix")
+	SET(MACOSX_BUNDLE_LONG_VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
+	SET(MACOSX_BUNDLE_SHORT_VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}")
+	SET(MACOSX_BUNDLE_BUNDLE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
+	SET(MACOSX_BUNDLE_COPYRIGHT "© Fontmatrix team - 2007, 2008")
 	
+	SET(BUNDLE_RESOURCES_DIR	"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/")
+	SET(BUNDLE_LOCALES_DIR		"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Locales/")
+# 	SET(BUNDLE_FRAMEWORKS_DIR	"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Frameworks/")
+# 	SET(BUNDLE_LIBRARIES_DIR	"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/")
 	
+# bundles general resources
 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
-	COMMAND cp ARGS  "${CMAKE_SOURCE_DIR}/src/icons/application-fontmatrix_128.png" ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/
+	COMMAND mkdir ARGS -p ${BUNDLE_RESOURCES_DIR}
+	COMMAND cp ARGS  "${CMAKE_SOURCE_DIR}/src/icons/fontmatrix.icns" ${BUNDLE_RESOURCES_DIR}
+	COMMAND cp ARGS ${FM_TEMPLATES_FILES} ${FM_STYLE_FILES} ${FM_WELCOME_FILES}  ${BUNDLE_RESOURCES_DIR}
 	)
-	
-	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
-	COMMAND cp ARGS ${FM_TEMPLATES_FILES} ${FM_STYLE_FILES} ${FM_WELCOME_FILES} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/
-	)
-	
+# bundles QM files
 	ADD_CUSTOM_COMMAND( TARGET translation POST_BUILD
-        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale
-        COMMAND cp ARGS ${fontmatrix_QMS} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/locale/
+        COMMAND mkdir ARGS -p ${BUNDLE_LOCALES_DIR}
+        COMMAND cp ARGS ${fontmatrix_QMS} ${BUNDLE_LOCALES_DIR}
 	)
-	
-	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
-        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources
-        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/lib
-        COMMAND mkdir ARGS -p ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-        COMMAND cp ARGS ${FREETYPE_LIBRARIES} ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/lib/
-        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtCore.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtGui.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtXml.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtSvg.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtNetwork.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtWebKit.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-        COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtOpenGL.framework ${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Frameworks
-       )
+# bundles libraries
+# 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
+# 	COMMAND mkdir ARGS -p ${BUNDLE_LIBRARIES_DIR}
+# 	COMMAND cp ARGS ${FREETYPE_LIBRARIES} ${BUNDLE_LIBRARIES_DIR}
+# 	)
+# bundles frameworks
+# 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
+#         COMMAND mkdir ARGS -p ${BUNDLE_FRAMEWORKS_DIR}
+#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtCore.framework ${BUNDLE_FRAMEWORKS_DIR}
+#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtGui.framework ${BUNDLE_FRAMEWORKS_DIR}
+#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtXml.framework ${BUNDLE_FRAMEWORKS_DIR}
+#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtSvg.framework ${BUNDLE_FRAMEWORKS_DIR}
+#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtNetwork.framework ${BUNDLE_FRAMEWORKS_DIR}
+#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtWebKit.framework ${BUNDLE_FRAMEWORKS_DIR}
+#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtOpenGL.framework ${BUNDLE_FRAMEWORKS_DIR}
+#        )
+	ADD_CUSTOM_COMMAND(TARGET ${PROGNAME} POST_BUILD
+	${CMAKE_COMMAND} ARGS -Dinput_file=${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/${PROGNAME} -P ${CMAKE_MODULE_PATH}/OwnIngestOSXBundleLibraries.cmake
+	)
 
 ENDIF(APPLE)
 

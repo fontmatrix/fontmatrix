@@ -186,8 +186,8 @@ MACRO(COPY_LIBRARY_INTO_BUNDLE clib_bundle clib_libsrc clib_dstlibs clib_fixups)
 # "${clib_bundle}/Contents/MacOS"
 #
   IF("${clib_libsrc}" MATCHES ".framework/.*/.*/.*")
-    GET_FILENAME_COMPONENT(fw_src "${clib_libsrc}" ABSOLUTE)
-    GET_FILENAME_COMPONENT(fw_srcdir "${clib_libsrc}/../../.." ABSOLUTE)
+    SET(fw_src "/Library/Frameworks/${clib_libsrc}")
+    GET_FILENAME_COMPONENT(fw_srcdir "${fw_src}/../../.." ABSOLUTE)
     GET_FILENAME_COMPONENT(fwdirname "${fw_srcdir}" NAME)
     STRING(REGEX REPLACE "^(.*)\\.framework$" "\\1" fwname "${fwdirname}")
     STRING(REGEX REPLACE "^.*/${fwname}\\.framework/(.*)$" "\\1" fwlibname "${clib_libsrc}")

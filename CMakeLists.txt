@@ -149,40 +149,40 @@ ENDIF(UNIX AND NOT APPLE)
 
 
 SET(FM_TEMPLATES_FILES
-src/graphic-resources/template_oneline.xml
-src/graphic-resources/template_oneline.png
-src/graphic-resources/template_default.xml
-src/graphic-resources/template_default.png
+${CMAKE_SOURCE_DIR}/src/graphic-resources/template_oneline.xml
+${CMAKE_SOURCE_DIR}/src/graphic-resources/template_oneline.png
+${CMAKE_SOURCE_DIR}/src/graphic-resources/template_default.xml
+${CMAKE_SOURCE_DIR}/src/graphic-resources/template_default.png
 )
 SET(FM_STYLE_FILES
-src/graphic-resources/html-css/info.css
-src/graphic-resources/html-css/img/css-info-propertyname.png
-src/graphic-resources/html-css/img/css-info-property.png
-src/graphic-resources/html-css/img/css-shadow.png
-src/graphic-resources/html-css/img/css-tech-info.png
+${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/info.css
+${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-info-propertyname.png
+${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-info-property.png
+${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-shadow.png
+${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-tech-info.png
 )
 SET(FM_WELCOME_FILES
-src/messages/welcome_da.html
-src/messages/welcome_de.html
-src/messages/welcome_en.html
-src/messages/welcome_fi.html
-src/messages/welcome_fr.html
-src/messages/welcome_hi.html
-src/messages/welcome_nb.html
-src/messages/welcome_nl.html
-src/messages/welcome_no.html
-src/messages/welcome_ru.html
-src/messages/welcome_sr.html
-src/messages/welcome_sv.html
-src/messages/welcome_uk.html
-src/messages/welcome_zh_CN.html
-src/messages/welcome_zh_TW.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_da.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_de.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_en.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_fi.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_fr.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_hi.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_nb.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_nl.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_no.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_ru.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_sr.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_sv.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_uk.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_zh_CN.html
+${CMAKE_SOURCE_DIR}/src/messages/welcome_zh_TW.html
 )
 
 # tell cmake to process CMakeLists.txt in that subdirectory
 SET(HYPHENATE_DIR src/hyphenate)
 ADD_SUBDIRECTORY(${HYPHENATE_DIR})
-SET(HYPHENATE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}${HYPHENATE_DIR})
+SET(HYPHENATE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/${HYPHENATE_DIR})
 
 ADD_SUBDIRECTORY(src)
 

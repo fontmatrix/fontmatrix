@@ -46,11 +46,11 @@
     </message>
     <message>
       <source>Export Font Book</source>
-      <translation>Tallenna fonttikirja</translation>
+      <translation>Tee fonttikirja</translation>
     </message>
     <message>
       <source>Output</source>
-      <translation type="unfinished" >Tiedostoon</translation>
+      <translation>Tiedostoon</translation>
     </message>
   </context>
   <context>
@@ -83,7 +83,7 @@
     <name>FontAction</name>
     <message>
       <source>Form</source>
-      <translation type="unfinished" >Lomake</translation>
+      <translation>Lomake</translation>
     </message>
     <message>
       <source>Add Tag</source>
@@ -121,11 +121,11 @@
     </message>
     <message>
       <source>Unique font identifier</source>
-      <translation>Yksilöllinen fonttitunniste</translation>
+      <translation>Yksilöllinen tunniste</translation>
     </message>
     <message>
       <source>Full font name</source>
-      <translation>Fontin koko nimi</translation>
+      <translation>Fontin täydellinen nimi</translation>
     </message>
     <message>
       <source>Version string</source>
@@ -615,6 +615,18 @@
       <source>X-Height</source>
       <translation>X-korkeus</translation>
     </message>
+    <message>
+      <source>Glyphs count</source>
+      <translation>Merkkien määrä</translation>
+    </message>
+    <message>
+      <source>Font Type</source>
+      <translation>Fonttityyppi</translation>
+    </message>
+    <message>
+      <source>Charmaps List</source>
+      <translation>Luettelo merkkikartoista</translation>
+    </message>
   </context>
   <context>
     <name>Help</name>
@@ -687,7 +699,7 @@ in preferences.&lt;/qt></source>
     </message>
     <message>
       <source>score</source>
-      <translation type="unfinished" />
+      <translation>pisteet</translation>
     </message>
     <message>
       <source>before</source>
@@ -695,7 +707,7 @@ in preferences.&lt;/qt></source>
     </message>
     <message>
       <source>exact</source>
-      <translation>tasan</translation>
+      <translation>tarkka</translation>
     </message>
     <message>
       <source>after</source>
@@ -703,15 +715,15 @@ in preferences.&lt;/qt></source>
     </message>
     <message>
       <source>end</source>
-      <translation type="unfinished" />
+      <translation>loppu</translation>
     </message>
     <message>
       <source>penalty</source>
-      <translation type="unfinished" />
+      <translation>rangaistus</translation>
     </message>
     <message>
       <source>H-penalty</source>
-      <translation type="unfinished" />
+      <translation>h-rangaistus</translation>
     </message>
     <message>
       <source>space</source>
@@ -770,7 +782,7 @@ in preferences.&lt;/qt></source>
     </message>
     <message>
       <source>reset</source>
-      <translation>palauta</translation>
+      <translation>tyhjennä</translation>
     </message>
   </context>
   <context>
@@ -1587,7 +1599,7 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     </message>
     <message>
       <source>Font Size:</source>
-      <translation>Fonttikoko:</translation>
+      <translation>Fonttikoko</translation>
     </message>
     <message>
       <source>Templates Folder</source>
@@ -1642,12 +1654,8 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
       <translation>Näytä latausikkuna käynnistettäessä</translation>
     </message>
     <message>
-      <source>Don’t use preferred name scheme (will affect only newly imported fonts)</source>
-      <translation>Älä käytä suositeltua nimeämistyyliä. Vaikuttaa ainoastaan uusiin fontteihin.</translation>
-    </message>
-    <message>
       <source>Interline:</source>
-      <translation type="unfinished" />
+      <translation>Riviväli</translation>
     </message>
     <message>
       <source>Hyphenation</source>
@@ -1692,6 +1700,10 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
       <source>Shotcuts</source>
       <translation>Oikopolut</translation>
+    </message>
+    <message>
+      <source>Don’t use preferred name scheme (will affect only newly imported fonts)</source>
+      <translation>Älä käytä suositeltua nimeämistapaa (vaikuttaa ainoastaan uusiin fontteihin)</translation>
     </message>
   </context>
   <context>
@@ -1830,7 +1842,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Access All Alternates</source>
-      <translation type="unfinished" >Salli kaikki vaihtoehdot</translation>
+      <translation>Salli kaikki vaihtoehdot</translation>
     </message>
     <message>
       <source>Above-Base Forms</source>
@@ -2046,11 +2058,11 @@ stuvxyzåäö
     </message>
     <message>
       <source>Mark, NonSpacing</source>
-      <translation type="unfinished" />
+      <translation>Merkki, ei väli</translation>
     </message>
     <message>
       <source>Mark, SpacingCombining</source>
-      <translation type="unfinished" />
+      <translation>Merkki, yhdistävä väli</translation>
     </message>
     <message>
       <source>Mark, Enclosing</source>
@@ -2058,7 +2070,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Number, DecimalDigit</source>
-      <translation type="unfinished" />
+      <translation>Numero, desimaalinumero</translation>
     </message>
     <message>
       <source>Number, Letter</source>
@@ -2250,23 +2262,23 @@ stuvxyzåäö
     </message>
     <message>
       <source>Cursive Positioning</source>
-      <translation type="unfinished" />
+      <translation>Kursiivisijoittelu</translation>
     </message>
     <message>
       <source>Default Processing</source>
-      <translation type="unfinished" />
+      <translation>Oletuskäsittely</translation>
     </message>
     <message>
       <source>Terminal Forms #2</source>
-      <translation type="unfinished" />
+      <translation>Terminaalimuodot #2</translation>
     </message>
     <message>
       <source>Terminal Forms #3</source>
-      <translation type="unfinished" />
+      <translation>Terminaalimuodot #3</translation>
     </message>
     <message>
       <source>Terminal Forms</source>
-      <translation type="unfinished" />
+      <translation>Terminaalimuodot</translation>
     </message>
     <message>
       <source>Half Forms</source>
@@ -2278,7 +2290,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Horizontal Kana Alternates</source>
-      <translation type="unfinished" />
+      <translation>Vaakasuorat Kana-vaihtoehdot</translation>
     </message>
     <message>
       <source>Hangul</source>
@@ -2306,15 +2318,15 @@ stuvxyzåäö
     </message>
     <message>
       <source>JIS83 Forms</source>
-      <translation type="unfinished" />
+      <translation>JIS83-muodot</translation>
     </message>
     <message>
       <source>JIS90 Forms</source>
-      <translation type="unfinished" />
+      <translation>JIS90-muodot</translation>
     </message>
     <message>
       <source>JIS2004 Forms</source>
-      <translation type="unfinished" />
+      <translation>JIS2004-muodot</translation>
     </message>
     <message>
       <source>Left Bounds</source>
@@ -2394,7 +2406,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Required Ligatures</source>
-      <translation type="unfinished" />
+      <translation>Vaaditut ligatuurit</translation>
     </message>
     <message>
       <source>Reph Form</source>
@@ -2418,7 +2430,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Simplified Forms</source>
-      <translation type="unfinished" />
+      <translation>Yksinkertaistetut muodot</translation>
     </message>
     <message>
       <source>Trailing Jamo Forms</source>
@@ -2446,10 +2458,7 @@ stuvxyzåäö
     </message>
     <message>
       <source>Vowel Jamo Forms</source>
-      <translation>
-
-
-</translation>
+      <translation type="unfinished" />
     </message>
     <message>
       <source>Vertical Kana Alternates</source>
@@ -2502,7 +2511,7 @@ stuvxyzåäö
     <name>TagSetDialog</name>
     <message>
       <source>TagSet editor</source>
-      <translation type="unfinished" >Muokkaa kokoelmia</translation>
+      <translation>Muokkaa kokoelmia</translation>
     </message>
     <message>
       <source>Collections of Tags</source>
@@ -2832,7 +2841,7 @@ it is time to cancel if it was not your intent</source>
     </message>
     <message>
       <source>Export &amp;Fonts</source>
-      <translation>Vie &amp;fontteja</translation>
+      <translation>Kerää &amp;fontteja</translation>
     </message>
     <message>
       <source>Export a fontset</source>
@@ -3001,7 +3010,7 @@ it is time to cancel if it was not your intent</source>
     </message>
     <message>
       <source>Layout Options</source>
-      <translation type="unfinished" />
+      <translation>Sijoitteluasetukset</translation>
     </message>
     <message>
       <source>&amp;Browse</source>

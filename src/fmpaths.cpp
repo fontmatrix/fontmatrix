@@ -11,6 +11,7 @@
 //
 #include "fmpaths.h"
 
+#include <QApplication>
 
 FMPaths *FMPaths::instance = 0;
 FMPaths * FMPaths::getThis()

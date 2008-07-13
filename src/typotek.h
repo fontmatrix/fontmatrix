@@ -45,6 +45,7 @@ class Systray;
 class RemoteDir;
 class FMHyphenator;
 class QProgressBar;
+class HelpWidget;
 
 
 class typotek:public QMainWindow
@@ -74,6 +75,7 @@ class typotek:public QMainWindow
 		void slotEditFont();
 		void about();
 		void help();
+		void updateHelpWindowsStatus();
 // 		void slotWord();
 		void slotExportFontSet();
 		void slotRemoteIsReady();
@@ -81,6 +83,7 @@ class typotek:public QMainWindow
 		void slotTagAll();
 		void slotMainDockAreaChanged(Qt::DockWidgetArea area);
 		void slotSwitchLayOptVisible();
+		void slotUpdateLayOptStatus();
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );
@@ -156,6 +159,8 @@ class typotek:public QMainWindow
 		QAction *printChartAct;
 		QAction *printPlaygroundAct;
 		QAction *printFamilyAct;
+		
+		HelpWidget *theHelp;
 		
 		QAction *layOptAct;
 		

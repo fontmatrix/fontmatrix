@@ -28,11 +28,15 @@
 */
 class HelpWidget : public QDialog, private Ui::Help
 {
-Q_OBJECT
-public:
-	HelpWidget(QWidget *parent);
+		Q_OBJECT
+	public:
+		HelpWidget ( QWidget *parent );
+		~HelpWidget();
 
-    ~HelpWidget();
+	private slots:
+		void slotIsClosing();
+	signals:
+		void close();
 
 };
 

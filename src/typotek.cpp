@@ -129,6 +129,7 @@ typotek::typotek()
 	qDebug()<<"Policy"<<sizePolicy().horizontalPolicy();
 
 	hyphenator = 0;
+	theHelp = 0;
 }
 
 void typotek::initMatrix()
@@ -153,7 +154,8 @@ void typotek::initMatrix()
 	mainDock->setWidget ( ListDockWidget::getInstance() );
 	addDockWidget ( fontmatrix::DockPosition[mainDockArea], mainDock );
 
-
+	theHelp = new HelpWidget( this );
+	
 	createActions();
 	createMenus();
 	createStatusBar();
@@ -191,12 +193,14 @@ void typotek::initMatrix()
 
 void typotek::doConnect()
 {
-	// later ?
-
 	if(getSystray())
 		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( QString ) ), getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 
 	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
+	connect(theHelp,SIGNAL(close()),this,SLOT(updateHelpWindowsStatus()));
+	connect(FMLayout::getLayout()->optionDialog,SIGNAL(finished( int )),this,SLOT(slotUpdateLayOptStatus()));
+	
+
 
 }
 
@@ -603,6 +607,8 @@ void typotek::createActions()
 	connect (aboutQtAct,SIGNAL(triggered()), QApplication::instance(),SLOT(aboutQt()));
 
 	helpAct = new QAction ( tr ( "Help" ), this );
+	helpAct->setCheckable(true);
+	helpAct->setChecked(false);
 	scuts->add(helpAct);
 	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( help() ) );
 
@@ -1217,9 +1223,29 @@ void typotek::slotDeactivateCurrents()
 
 void typotek::help()
 {
-	HelpWidget theHelp ( this );
-	theHelp.exec();
+	if(theHelp->isVisible())
+	{
+		theHelp->hide();
+	}
+	else
+	{
+		theHelp->show();
+	}
+	updateHelpWindowsStatus();
 }
+
+void typotek::updateHelpWindowsStatus()
+{
+	if(theHelp->isVisible())
+	{
+		helpAct->setChecked(true);
+	}
+	else
+	{
+		helpAct->setChecked(false);
+	}		
+}
+
 
 FontItem* typotek::getFont ( QString s )
 {
@@ -1923,16 +1949,25 @@ void typotek::slotSwitchLayOptVisible()
 	if(FMLayout::getLayout()->optionDialog->isVisible())
 	{
 		FMLayout::getLayout()->optionDialog->setVisible(false);
-		layOptAct->setChecked(false);
 	}
 	else
 	{
 		FMLayout::getLayout()->optionDialog->setVisible(true);
-		layOptAct->setChecked(true);
 	}
+	slotUpdateLayOptStatus();
 }
 
-
+void typotek::slotUpdateLayOptStatus()
+{
+	if(FMLayout::getLayout()->optionDialog->isVisible())
+	{
+		layOptAct->setChecked(true);
+	}
+	else
+	{
+		layOptAct->setChecked(false);
+	}
+}
 
 
 QString typotek::getDefaultOTFScript() const
@@ -2028,3 +2063,5 @@ void typotek::endProgressJob()
 	statusProgressBar->hide();
 	statusProgressBar->reset();
 }
+
+

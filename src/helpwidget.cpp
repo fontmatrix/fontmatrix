@@ -25,11 +25,17 @@ HelpWidget::HelpWidget(QWidget *parent)
 	setupUi(this);
 	theText->setOpenExternalLinks ( true );
 	theText->setSource(QUrl("qrc:/texts/help"));
+	connect(this,SIGNAL(finished( int )),this,SLOT(slotIsClosing()));
 }
 
 
 HelpWidget::~HelpWidget()
 {
+}
+
+void HelpWidget::slotIsClosing()
+{
+	emit close();
 }
 
 

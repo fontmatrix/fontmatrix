@@ -1196,10 +1196,8 @@ QList<FontItem*> typotek::getCurrentFonts()
 void typotek::popupTagsetEditor()
 {
 	TagSetEditor ed(this);
-	connect ( &ed,SIGNAL ( signalNewTagset() ),theMainView,SLOT ( slotReloadTagsetList() ) );
 	ed.exec();
-	disconnect ( &ed,SIGNAL ( signalNewTagset() ),theMainView,SLOT ( slotReloadTagsetList() ) );
-	theMainView->slotReloadTagsetList();
+	ListDockWidget::getInstance()->reloadTagsCombo();
 }
 
 void typotek::keyPressEvent ( QKeyEvent * event )

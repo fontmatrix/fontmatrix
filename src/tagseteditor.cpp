@@ -76,7 +76,7 @@ void TagSetEditor::slotNewSet()
 	tagsOfSetList->clear();
 	m_typo->addTagSetMapEntry(newSetText->text(), QStringList());
 	setList->item(setList->count() - 1)->setSelected(true) ;
-	emit signalNewTagset();
+	
 	newSetText->clear();
 	
 }

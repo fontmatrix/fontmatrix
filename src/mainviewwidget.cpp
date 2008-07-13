@@ -864,7 +864,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		return;
 
 	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
-	if(key.isEmpty()) // regular tag
+	if(key == "TAG") // regular tag
 	{
 		m_lists->fontTree->clear();
 		fontsetHasChanged = true;
@@ -1088,64 +1088,11 @@ void MainViewWidget::slotReloadFontList()
 	fillTree();
 }
 
-void MainViewWidget::slotReloadTagsetList()
-{
-// 	m_lists->tagsetCombo->clear();
-	m_lists->tagsCombo->addItems ( typo->tagsets() );
-}
-
-// void MainViewWidget::slotShowCodePoint()
-// {
-// // 	QString codetext = codepointSelectText->text();
-// 	bool ok;
-// // 	int codepoint = codetext.toInt ( &ok, 16 );
-// 	if ( !ok )
-// 		return;
-// 	if ( !theVeryFont )
-// 		return;
-// // 	QGraphicsPathItem *pit = theVeryFont->hasCodepointLoaded ( codepoint );
-// 	if ( !pit )
-// 		return;
-//
-// 	abcView->fitInView ( pit, Qt::KeepAspectRatio );
-//
-//
-//
-// }
-
 void MainViewWidget::slotSwitchAntiAlias ( bool aa )
 {
 	loremView->setRenderHint ( QPainter::Antialiasing, aa );
 }
 
-// void MainViewWidget::slotFitChanged ( int i )
-// {
-// 	if ( i == Qt::Unchecked )
-// 	{
-// // 		renderZoom->setDisabled ( false );
-// // 		renderZoom->setStatusTip ( tr("zoom is enabled") );
-// 		loremView->setTransform ( QTransform ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0,( double ) QApplication::desktop()->physicalDpiX() / 72.0,0,0 ),false );
-// 		loremView->locker = false;
-// 		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-// 		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-// 	}
-// 	else
-// 	{
-// // 		renderZoom->setDisabled ( true );
-// // 		renderZoom->setStatusTip ( tr("zoom is disabled, uncheck fit to view to enable zoom") );
-// 		loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
-// 		loremView->locker = true;
-// 		loremView->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-// 		loremView->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-// 	}
-// // 	slotView();
-// }
-
-// void MainViewWidget::slotRefitSample()
-// {
-// 	if ( fitViewCheck->isChecked() )
-// 		slotView();
-// }
 
 void MainViewWidget::slotViewAll()
 {

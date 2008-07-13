@@ -323,19 +323,28 @@ void ListDockWidget::initTagCombo()
 	tagsCombo->clear();
 	tagsetIcon = QIcon(":/fontmatrix_tagseteditor.png");
 
-	QStringList tl_tmp = typotek::tagsList;
-	tl_tmp.removeAll ( "Activated_On" );
-	tl_tmp.removeAll ( "Activated_Off" );
+	tagsCombo->addItem(tr("All activated"),"ALL_ACTIVATED");
 
 	QStringList ts_tmp = typotek::getInstance()->tagsets();
-
-	tagsCombo->addItem(tr("All activated"),"ALL_ACTIVATED");
-	tagsCombo->addItems ( tl_tmp );
 	foreach(QString tagset, ts_tmp)
 	{
 		tagsCombo->addItem(tagsetIcon,tagset,"TAGSET");
 	}
+	
+	QStringList tl_tmp = typotek::tagsList;
+	tl_tmp.removeAll ( "Activated_On" );
+	tl_tmp.removeAll ( "Activated_Off" );
+	tl_tmp.sort();
+	foreach(QString tag, tl_tmp )
+	{
+		tagsCombo->addItem(tag, "TAG");
+	}
 
+}
+
+void ListDockWidget::reloadTagsCombo()
+{
+	initTagCombo();
 }
 
 void ListDockWidget::settingsDir(const QString &path)
@@ -403,4 +412,5 @@ QString ListDockWidget::fieldString(const QString & f)
 	}
 	return f.mid(0,maxFieldStringWidth - 1) + ".";
 }
+
 

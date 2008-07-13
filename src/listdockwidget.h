@@ -86,10 +86,10 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		int maxFieldStringWidth;
 	public slots:
 		void unlockFilter();
+		void reloadTagsCombo();
 
 	private slots:
 		void slotFolderItemclicked(QModelIndex mIdx);
-// 		void slotFolderItemDoubleclicked(QModelIndex mIdx);
 		void slotFolderPressed(QModelIndex mIdx);
 		void slotFieldChanged(QAction * action);
 		void slotFeedTheCompleter();

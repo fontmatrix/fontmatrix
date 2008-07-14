@@ -68,7 +68,7 @@
 <context>
     <name>FMLayout</name>
     <message>
-        <location filename="../fmlayout.cpp" line="343"/>
+        <location filename="../fmlayout.cpp" line="346"/>
         <source>Text engine options</source>
         <translation>Параметры текстового движка</translation>
     </message>
@@ -122,7 +122,7 @@
 <context>
     <name>FontBookDialog</name>
     <message>
-        <location filename="../fontbookdialog.cpp" line="109"/>
+        <location filename="../fontbookdialog.cpp" line="110"/>
         <source>Save fontBook</source>
         <translation>Сохранить каталог шрифтов</translation>
     </message>
@@ -145,7 +145,7 @@
         <translation>Гарнитура</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="2567"/>
+        <location filename="../fontitem.cpp" line="2570"/>
         <source>Font Subfamily</source>
         <translation>Начертание</translation>
     </message>
@@ -155,12 +155,12 @@
         <translation>Уникальный идентификатор шрифта</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3025"/>
+        <location filename="../fontitem.cpp" line="3028"/>
         <source>Full font name</source>
         <translation>Полное название шрифта</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3026"/>
+        <location filename="../fontitem.cpp" line="3029"/>
         <source>Version string</source>
         <translation>Строка версии</translation>
     </message>
@@ -185,7 +185,7 @@
         <translation>Дизайнер</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3027"/>
+        <location filename="../fontitem.cpp" line="3030"/>
         <source>Description</source>
         <translation>Описание</translation>
     </message>
@@ -240,17 +240,17 @@
         <translation>Имя для поиска по PostScript CID</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3417"/>
+        <location filename="../fontitem.cpp" line="3420"/>
         <source>Fontmatrix - Download</source>
         <translation>Fontmatrix — Скачать</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3418"/>
+        <location filename="../fontitem.cpp" line="3421"/>
         <source>Downloading %1.</source>
         <translation>Скачивается %1.</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3254"/>
+        <location filename="../fontitem.cpp" line="3257"/>
         <source>Category</source>
         <translation>Категория</translation>
     </message>
@@ -597,142 +597,142 @@
     <message>
         <location filename="../fontitem.cpp" line="624"/>
         <source>Normal/Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой, окружность</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="625"/>
         <source>Normal/Weighted</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой, утяжеленный</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="626"/>
         <source>Normal/Boxed</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой, оквадраченный</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="627"/>
         <source>Normal/Flattened</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой, плоский</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="628"/>
         <source>Normal/Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой, закругленный</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="629"/>
         <source>Normal/Off Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой, со смещенным центром</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="630"/>
         <source>Normal/Square</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой, квадрат</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="631"/>
         <source>Oblique/Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Наклонный, окружность</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="632"/>
         <source>Oblique/Weighted</source>
-        <translation type="unfinished"></translation>
+        <translation>Наклонный, утяжеленный</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="633"/>
         <source>Oblique/Boxed</source>
-        <translation type="unfinished"></translation>
+        <translation>Наклонный, оквадраченный</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="634"/>
         <source>Oblique/Flattened</source>
-        <translation type="unfinished"></translation>
+        <translation>Наклонный, плоский</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="635"/>
         <source>Oblique/Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Наклонный, закругленный</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="636"/>
         <source>Oblique/Off Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Наклонный, со смещенным центром</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="637"/>
         <source>Oblique/Square</source>
-        <translation type="unfinished"></translation>
+        <translation>Наклонный, квадрат</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="640"/>
         <source>Letterform</source>
-        <translation type="unfinished"></translation>
+        <translation>Форма символа</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="645"/>
         <source>Standard/Trimmed</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычная, вершина укорочена</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="646"/>
         <source>Standard/Pointed</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычная, вершина остроконечна</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="647"/>
         <source>Standard/Serifed</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычная, вершина с засечкой</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="648"/>
         <source>High/Trimmed</source>
-        <translation type="unfinished"></translation>
+        <translation>Высокая, вершина укорочена</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="649"/>
         <source>High/Pointed</source>
-        <translation type="unfinished"></translation>
+        <translation>Высокая, вершина остроконечна</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="650"/>
         <source>High/Serifed</source>
-        <translation type="unfinished"></translation>
+        <translation>Высокая, вершина с засечкой</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="651"/>
         <source>Constant/Trimmed</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянная, вершина укорочена</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="652"/>
         <source>Constant/Pointed</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянная, вершина остроконечна</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="653"/>
         <source>Constant/Serifed</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянная, вершина с засечкой</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="654"/>
         <source>Low/Trimmed</source>
-        <translation type="unfinished"></translation>
+        <translation>Низкая, вершина укорочена</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="655"/>
         <source>Low/Pointed</source>
-        <translation type="unfinished"></translation>
+        <translation>Низкая, вершина остроконечна</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="656"/>
         <source>Low/Serifed</source>
-        <translation type="unfinished"></translation>
+        <translation>Низкая, вершина с засечкой</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="659"/>
         <source>Midline</source>
-        <translation type="unfinished"></translation>
+        <translation>Средняя линия</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="664"/>
@@ -768,6 +768,21 @@
         <location filename="../fontitem.cpp" line="672"/>
         <source>X-Height</source>
         <translation>Рост строчных</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2515"/>
+        <source>Glyphs count</source>
+        <translation>Число глифов</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2516"/>
+        <source>Font Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="2517"/>
+        <source>Charmaps List</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -847,49 +862,59 @@ in preferences.&lt;/qt&gt;</source>
 <context>
     <name>LayoutOptionWidget</name>
     <message>
-        <location filename="../layoutoptions.ui" line="13"/>
+        <location filename="../layoutoptions.ui" line="19"/>
         <source>Form</source>
         <translation type="unfinished">Form</translation>
     </message>
     <message>
-        <location filename="../layoutoptions.ui" line="19"/>
+        <location filename="../layoutoptions.ui" line="25"/>
         <source>Weights</source>
-        <translation type="unfinished"></translation>
+        <translation>Насыщенность</translation>
     </message>
     <message>
-        <location filename="../layoutoptions.ui" line="175"/>
+        <location filename="../layoutoptions.ui" line="294"/>
         <source>score</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../layoutoptions.ui" line="56"/>
+        <location filename="../layoutoptions.ui" line="91"/>
         <source>before</source>
-        <translation type="unfinished"></translation>
+        <translation>До</translation>
     </message>
     <message>
-        <location filename="../layoutoptions.ui" line="99"/>
+        <location filename="../layoutoptions.ui" line="137"/>
         <source>exact</source>
-        <translation type="unfinished"></translation>
+        <translation>Точно</translation>
     </message>
     <message>
-        <location filename="../layoutoptions.ui" line="142"/>
+        <location filename="../layoutoptions.ui" line="235"/>
         <source>after</source>
-        <translation type="unfinished"></translation>
+        <translation>После</translation>
     </message>
     <message>
-        <location filename="../layoutoptions.ui" line="185"/>
+        <location filename="../layoutoptions.ui" line="307"/>
         <source>end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../layoutoptions.ui" line="209"/>
+        <location filename="../layoutoptions.ui" line="360"/>
         <source>penalty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../layoutoptions.ui" line="219"/>
+        <location filename="../layoutoptions.ui" line="373"/>
         <source>H-penalty</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layoutoptions.ui" line="429"/>
+        <source>space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../layoutoptions.ui" line="442"/>
+        <source>max compression</source>
+        <translation>Макс. сжатие</translation>
     </message>
 </context>
 <context>
@@ -910,7 +935,7 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Метка:</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="48"/>
+        <location filename="../listsdock.ui" line="52"/>
         <source>Filter view by chosing tag</source>
         <translation>Отфильтровать список шрифтов выбором метки</translation>
     </message>
@@ -923,7 +948,7 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Показывать только шрифты с этим набором меток</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="266"/>
+        <location filename="../listsdock.ui" line="270"/>
         <source>Names</source>
         <translation>Названия</translation>
     </message>
@@ -933,7 +958,7 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Файлы</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="161"/>
+        <location filename="../listsdock.ui" line="165"/>
         <source>Show complete collection of available fonts</source>
         <translation>Показать всю коллекцию шрифтов</translation>
     </message>
@@ -954,32 +979,32 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Удалить</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="105"/>
+        <location filename="../listsdock.ui" line="109"/>
         <source>Field selection</source>
         <translation>Выбор поля</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="108"/>
+        <location filename="../listsdock.ui" line="112"/>
         <source>F</source>
         <translation>П</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="139"/>
+        <location filename="../listsdock.ui" line="143"/>
         <source>TextLabel</source>
         <translation>TextLabel</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="283"/>
+        <location filename="../listsdock.ui" line="287"/>
         <source>Previews</source>
         <translation>Эскизы</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="314"/>
+        <location filename="../listsdock.ui" line="318"/>
         <source>Folders</source>
         <translation>Каталоги</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="64"/>
+        <location filename="../listsdock.ui" line="68"/>
         <source>Switch to panose filtering</source>
         <translation>Переключить на фильтрацию PANOSE</translation>
     </message>
@@ -989,14 +1014,14 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">P</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="67"/>
+        <location filename="../listsdock.ui" line="71"/>
         <source>Panose</source>
-        <translation type="unfinished"></translation>
+        <translation>Panose</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="164"/>
+        <location filename="../listsdock.ui" line="168"/>
         <source>reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить</translation>
     </message>
 </context>
 <context>
@@ -1007,7 +1032,7 @@ in preferences.&lt;/qt&gt;</source>
         <translation>Все поля</translation>
     </message>
     <message>
-        <location filename="../listdockwidget.cpp" line="332"/>
+        <location filename="../listdockwidget.cpp" line="326"/>
         <source>All activated</source>
         <translation>Все активированные</translation>
     </message>
@@ -1030,12 +1055,12 @@ in preferences.&lt;/qt&gt;</source>
         <translation>main view widget</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="74"/>
+        <location filename="../mainview.ui" line="77"/>
         <source>Font Information</source>
         <translation>Информация о шрифте</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="135"/>
+        <location filename="../mainview.ui" line="120"/>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
         <translation>Щелкните правой клавишей мыши метку, чтобы добавить или удалить ее из набора меток</translation>
     </message>
@@ -1045,7 +1070,7 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Добавить метку</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="192"/>
+        <location filename="../mainview.ui" line="196"/>
         <source>Sample Text</source>
         <translation>Образец текста</translation>
     </message>
@@ -1055,12 +1080,12 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">+-~</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="542"/>
+        <location filename="../mainview.ui" line="558"/>
         <source>Font Size</source>
         <translation>Кегль шрифта</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="916"/>
+        <location filename="../mainview.ui" line="941"/>
         <source> pt</source>
         <translation> pt</translation>
     </message>
@@ -1085,17 +1110,17 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Расширенные параметры</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="730"/>
+        <location filename="../mainview.ui" line="746"/>
         <source>Use shaper</source>
         <translation>Использовать шейпер</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="406"/>
+        <location filename="../mainview.ui" line="422"/>
         <source>OpenType Features</source>
         <translation>Возможности OpenType</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="411"/>
+        <location filename="../mainview.ui" line="427"/>
         <source>Friendly Name</source>
         <translation>Их удобочитаемое название</translation>
     </message>
@@ -1105,27 +1130,27 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Направление письма</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="761"/>
+        <location filename="../mainview.ui" line="777"/>
         <source>Glyphs</source>
         <translation>Знаки</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="799"/>
+        <location filename="../mainview.ui" line="815"/>
         <source>Coverage of Unicode Interval :</source>
-        <translation>Покрытие блока Unicode:</translation>
+        <translation>Охват блока Unicode:</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="870"/>
+        <location filename="../mainview.ui" line="895"/>
         <source>Clicking on a glyph will show details about it</source>
         <translation>Щелкните по символу для подробного просмотра</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="892"/>
+        <location filename="../mainview.ui" line="917"/>
         <source>Playground</source>
         <translation>Песочница</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="122"/>
+        <location filename="../mainview.ui" line="141"/>
         <source>Nothing selected</source>
         <translation>Ничего не выбрано</translation>
     </message>
@@ -1135,42 +1160,42 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Основные параметры</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="957"/>
+        <location filename="../mainview.ui" line="982"/>
         <source>push</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="160"/>
+        <location filename="../mainview.ui" line="166"/>
         <source>Add a tag</source>
         <translation>Добавить метку</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="226"/>
+        <location filename="../mainview.ui" line="236"/>
         <source>Settings</source>
         <translation>Параметры</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="229"/>
         <source>S</source>
-        <translation>П</translation>
+        <translation type="obsolete">П</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="254"/>
+        <location filename="../mainview.ui" line="273"/>
         <source>OpenType</source>
         <translation>OpenType</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="257"/>
         <source>O</source>
-        <translation>O</translation>
+        <translation type="obsolete">O</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="432"/>
+        <location filename="../mainview.ui" line="448"/>
         <source>Save as default</source>
         <translation>Запомнить</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="439"/>
+        <location filename="../mainview.ui" line="455"/>
         <source>Reset Default</source>
         <translation>Сбросить</translation>
     </message>
@@ -1180,14 +1205,14 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Часть 1</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="486"/>
+        <location filename="../mainview.ui" line="502"/>
         <source>SampleText</source>
         <translation>Образец текста</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="525"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="526"/>
@@ -1200,12 +1225,12 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Отрисовка</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="593"/>
+        <location filename="../mainview.ui" line="609"/>
         <source>FreeType</source>
         <translation>Отрисовка через FreeType</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="645"/>
+        <location filename="../mainview.ui" line="661"/>
         <source>Native Qt objects</source>
         <translation>Отрисовка средствами Qt</translation>
     </message>
@@ -1215,17 +1240,17 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Часть 2</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="657"/>
+        <location filename="../mainview.ui" line="673"/>
         <source>World is wide</source>
         <translation>Мир велик</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="711"/>
+        <location filename="../mainview.ui" line="727"/>
         <source>Shaper type</source>
         <translation>Тип шейпера</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="695"/>
+        <location filename="../mainview.ui" line="711"/>
         <source>Script</source>
         <translation>Письменность</translation>
     </message>
@@ -1240,763 +1265,793 @@ in preferences.&lt;/qt&gt;</source>
         <translation type="obsolete">Скопировать</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="825"/>
+        <location filename="../mainview.ui" line="847"/>
         <source>Set Mode &quot;Copy Character to Clipboard&quot;</source>
         <translation>Включить режим копирования символов в буфер обмена</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="828"/>
         <source>C</source>
-        <translation>К</translation>
+        <translation type="obsolete">К</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="612"/>
+        <location filename="../mainview.ui" line="628"/>
         <source>No hinting</source>
         <translation>Без инструктирования</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="622"/>
+        <location filename="../mainview.ui" line="638"/>
         <source>Light Hinting</source>
         <translation>Простое инструктирование</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="629"/>
+        <location filename="../mainview.ui" line="645"/>
         <source>Normal Hinting</source>
         <translation>Обычное инструктирование</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="169"/>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="239"/>
+        <source>Display Settings</source>
+        <translation>Параметры отображения</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="541"/>
+        <source>edit</source>
+        <translation>Изменить</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="850"/>
+        <source>Copy</source>
+        <translation>Копировать</translation>
     </message>
 </context>
 <context>
     <name>MainViewWidget</name>
     <message>
-        <location filename="../mainviewwidget.cpp" line="655"/>
+        <location filename="../mainviewwidget.cpp" line="653"/>
         <source>Names</source>
         <translation>Названия</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1038"/>
+        <location filename="../mainviewwidget.cpp" line="1040"/>
         <source>Activation event</source>
         <translation>Действие активации</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1038"/>
+        <location filename="../mainviewwidget.cpp" line="1040"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1041"/>
+        <location filename="../mainviewwidget.cpp" line="1043"/>
         <source>Activation of :</source>
         <translation>Активация:</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1041"/>
+        <location filename="../mainviewwidget.cpp" line="1043"/>
         <source>Deactivation of :</source>
         <translation>Деактивация:</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1166"/>
+        <location filename="../mainviewwidget.cpp" line="1115"/>
         <source>000Basic Latin</source>
         <translation>000Основной латинский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1167"/>
+        <location filename="../mainviewwidget.cpp" line="1116"/>
         <source>001Latin-1 Supplement</source>
         <translation>001Латинский, дополнение 1</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1168"/>
+        <location filename="../mainviewwidget.cpp" line="1117"/>
         <source>002Latin Extended-A</source>
         <translation>002Латинский, расширение А</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1169"/>
+        <location filename="../mainviewwidget.cpp" line="1118"/>
         <source>003Latin Extended-B</source>
         <translation>003Латинский, расширение B</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1170"/>
+        <location filename="../mainviewwidget.cpp" line="1119"/>
         <source>004IPA Extensions</source>
         <translation>004Расширения IPA</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1171"/>
+        <location filename="../mainviewwidget.cpp" line="1120"/>
         <source>005Spacing Modifier Letters</source>
         <translation>005Модификаторы пробелов</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1172"/>
+        <location filename="../mainviewwidget.cpp" line="1121"/>
         <source>006Combining Diacritical Marks</source>
         <translation>006Комбинированные диакритические знаки</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1173"/>
+        <location filename="../mainviewwidget.cpp" line="1122"/>
         <source>007Greek and Coptic</source>
         <translation>007Греческий и коптский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1174"/>
+        <location filename="../mainviewwidget.cpp" line="1123"/>
         <source>008Cyrillic</source>
         <translation>008Кириллица</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1175"/>
+        <location filename="../mainviewwidget.cpp" line="1124"/>
         <source>009Cyrillic Supplement</source>
         <translation>009Кириллица, дополнительные</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1176"/>
+        <location filename="../mainviewwidget.cpp" line="1125"/>
         <source>010Armenian</source>
         <translation>010Армянский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1177"/>
+        <location filename="../mainviewwidget.cpp" line="1126"/>
         <source>011Hebrew</source>
         <translation>011Иврит</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1178"/>
+        <location filename="../mainviewwidget.cpp" line="1127"/>
         <source>012Arabic</source>
         <translation>012Арабский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1179"/>
+        <location filename="../mainviewwidget.cpp" line="1128"/>
         <source>013Syriac</source>
         <translation>013Сирийский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1180"/>
+        <location filename="../mainviewwidget.cpp" line="1129"/>
         <source>014Arabic Supplement</source>
         <translation>014Арабские дополнительные</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1181"/>
+        <location filename="../mainviewwidget.cpp" line="1130"/>
         <source>015Thaana</source>
         <translation>015Таана</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1182"/>
+        <location filename="../mainviewwidget.cpp" line="1131"/>
         <source>016N&apos;Ko</source>
         <translation>016Н&apos;ко</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1183"/>
+        <location filename="../mainviewwidget.cpp" line="1132"/>
         <source>017Devanagari</source>
         <translation>017Деванагари</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1184"/>
+        <location filename="../mainviewwidget.cpp" line="1133"/>
         <source>018Bengali</source>
         <translation>018Бенгали</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1185"/>
+        <location filename="../mainviewwidget.cpp" line="1134"/>
         <source>019Gurmukhi</source>
         <translation>019Гурмухи</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1186"/>
+        <location filename="../mainviewwidget.cpp" line="1135"/>
         <source>020Gujarati</source>
         <translation>020Гуджарати</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1187"/>
+        <location filename="../mainviewwidget.cpp" line="1136"/>
         <source>021Oriya</source>
         <translation>021Орийя</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1188"/>
+        <location filename="../mainviewwidget.cpp" line="1137"/>
         <source>022Tamil</source>
         <translation>022Тамильский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1189"/>
+        <location filename="../mainviewwidget.cpp" line="1138"/>
         <source>023Telugu</source>
         <translation>023Телугу</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1190"/>
+        <location filename="../mainviewwidget.cpp" line="1139"/>
         <source>024Kannada</source>
         <translation>024Каннада</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1191"/>
+        <location filename="../mainviewwidget.cpp" line="1140"/>
         <source>025Malayalam</source>
         <translation>025Малайский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1192"/>
+        <location filename="../mainviewwidget.cpp" line="1141"/>
         <source>026Sinhala</source>
         <translation>026Сингалезский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1193"/>
+        <location filename="../mainviewwidget.cpp" line="1142"/>
         <source>027Thai</source>
         <translation>027Тайский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1194"/>
+        <location filename="../mainviewwidget.cpp" line="1143"/>
         <source>028Lao</source>
         <translation>028Лаосский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1195"/>
+        <location filename="../mainviewwidget.cpp" line="1144"/>
         <source>029Tibetan</source>
         <translation>029Тибетский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1196"/>
+        <location filename="../mainviewwidget.cpp" line="1145"/>
         <source>030Burmese</source>
         <translation>030Мьянмский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1197"/>
+        <location filename="../mainviewwidget.cpp" line="1146"/>
         <source>031Georgian</source>
         <translation>031Грузинский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1198"/>
+        <location filename="../mainviewwidget.cpp" line="1147"/>
         <source>032Hangul Jamo</source>
         <translation>032Хангул Ямо</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1199"/>
+        <location filename="../mainviewwidget.cpp" line="1148"/>
         <source>033Ethiopic</source>
         <translation>033Эфиопский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1200"/>
+        <location filename="../mainviewwidget.cpp" line="1149"/>
         <source>034Ethiopic Supplement</source>
         <translation>034Эфиопские дополнения</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1201"/>
+        <location filename="../mainviewwidget.cpp" line="1150"/>
         <source>035Cherokee</source>
         <translation>035Чероки</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1202"/>
+        <location filename="../mainviewwidget.cpp" line="1151"/>
         <source>036Unified Canadian Aboriginal Syllabics</source>
         <translation>036Слоги канадских аборигенов</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1203"/>
+        <location filename="../mainviewwidget.cpp" line="1152"/>
         <source>037Ogham</source>
         <translation>037Огхам</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1204"/>
+        <location filename="../mainviewwidget.cpp" line="1153"/>
         <source>038Runic</source>
         <translation>038Рунический</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1205"/>
+        <location filename="../mainviewwidget.cpp" line="1154"/>
         <source>039Tagalog</source>
         <translation>039Тагалог</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1206"/>
+        <location filename="../mainviewwidget.cpp" line="1155"/>
         <source>040Hanun&#xc3;&#xb3;o</source>
         <translation>040Хануноо</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1207"/>
+        <location filename="../mainviewwidget.cpp" line="1156"/>
         <source>041Buhid</source>
         <translation>041Бухид</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1208"/>
+        <location filename="../mainviewwidget.cpp" line="1157"/>
         <source>042Tagbanwa</source>
         <translation>042Тагбанва</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1209"/>
+        <location filename="../mainviewwidget.cpp" line="1158"/>
         <source>043Khmer</source>
         <translation>043Кхмерский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1210"/>
+        <location filename="../mainviewwidget.cpp" line="1159"/>
         <source>044Mongolian</source>
         <translation>044Монгольский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1211"/>
+        <location filename="../mainviewwidget.cpp" line="1160"/>
         <source>045Limbu</source>
         <translation>045Лимбу</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1212"/>
+        <location filename="../mainviewwidget.cpp" line="1161"/>
         <source>046Tai Le</source>
         <translation>046Тайский Ле</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1213"/>
+        <location filename="../mainviewwidget.cpp" line="1162"/>
         <source>047New Tai Lue</source>
         <translation>047Новый Тайский Ле</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1214"/>
+        <location filename="../mainviewwidget.cpp" line="1163"/>
         <source>048Khmer Symbols</source>
         <translation>048Кхмерские символы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1215"/>
+        <location filename="../mainviewwidget.cpp" line="1164"/>
         <source>049Buginese</source>
         <translation>049Бугинский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1216"/>
+        <location filename="../mainviewwidget.cpp" line="1165"/>
         <source>050Balinese</source>
         <translation>050Балинезийский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1217"/>
+        <location filename="../mainviewwidget.cpp" line="1166"/>
         <source>051Lepcha</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1218"/>
+        <location filename="../mainviewwidget.cpp" line="1167"/>
         <source>052Phonetic Extensions</source>
         <translation>052Фонетические расширения</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1219"/>
+        <location filename="../mainviewwidget.cpp" line="1168"/>
         <source>053Phonetic Extensions Supplement</source>
         <translation>053Дополнительные фонетические расширения</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1220"/>
+        <location filename="../mainviewwidget.cpp" line="1169"/>
         <source>054Combining Diacritical Marks Supplement</source>
         <translation>054Дополнительные комбинированные диакритические знаки</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1221"/>
+        <location filename="../mainviewwidget.cpp" line="1170"/>
         <source>055Latin Extended Additional</source>
         <translation>055Латиница расширенная дополнительная</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1222"/>
+        <location filename="../mainviewwidget.cpp" line="1171"/>
         <source>056Greek Extended</source>
         <translation>056Греческий расширенный</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1223"/>
+        <location filename="../mainviewwidget.cpp" line="1172"/>
         <source>057General Punctuation</source>
         <translation>057Общая пунктуация</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1224"/>
+        <location filename="../mainviewwidget.cpp" line="1173"/>
         <source>058Superscripts and Subscripts</source>
         <translation>058Надстрочные и подстрочные</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1225"/>
+        <location filename="../mainviewwidget.cpp" line="1174"/>
         <source>059Currency Symbols</source>
         <translation>059Символы валют</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1226"/>
+        <location filename="../mainviewwidget.cpp" line="1175"/>
         <source>060Combining Diacritical Marks for Symbols</source>
         <translation>060Комбинированные диакритические знаки для символов</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1227"/>
+        <location filename="../mainviewwidget.cpp" line="1176"/>
         <source>061Letterlike Symbols</source>
         <translation>061Буквообразные символы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1228"/>
+        <location filename="../mainviewwidget.cpp" line="1177"/>
         <source>062Number Forms</source>
         <translation>062Формы чисел</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1229"/>
+        <location filename="../mainviewwidget.cpp" line="1178"/>
         <source>063Arrows</source>
         <translation>063Стрелки</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1230"/>
+        <location filename="../mainviewwidget.cpp" line="1179"/>
         <source>064Mathematical Operators</source>
         <translation>064Математические операторы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1231"/>
+        <location filename="../mainviewwidget.cpp" line="1180"/>
         <source>065Miscellaneous Technical</source>
         <translation>065Различные технические символы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1232"/>
+        <location filename="../mainviewwidget.cpp" line="1181"/>
         <source>066Control Pictures</source>
         <translation>066Управляющие картинки</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1233"/>
+        <location filename="../mainviewwidget.cpp" line="1182"/>
         <source>067Optical Character Recognition</source>
         <translation>067Оптическое распознавание символов</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1234"/>
+        <location filename="../mainviewwidget.cpp" line="1183"/>
         <source>068Enclosed Alphanumerics</source>
         <translation>068Алфавитно-цифровые символы в рамке</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1235"/>
+        <location filename="../mainviewwidget.cpp" line="1184"/>
         <source>069Box Drawing</source>
         <translation>069Для рисования рамок</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1236"/>
+        <location filename="../mainviewwidget.cpp" line="1185"/>
         <source>070Block Elements</source>
         <translation>070Блочные элементы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1237"/>
+        <location filename="../mainviewwidget.cpp" line="1186"/>
         <source>071Geometric Shapes</source>
         <translation>071Геометрические фигуры</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1238"/>
+        <location filename="../mainviewwidget.cpp" line="1187"/>
         <source>072Miscellaneous Symbols</source>
         <translation>072Различные символы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1239"/>
+        <location filename="../mainviewwidget.cpp" line="1188"/>
         <source>073Dingbats</source>
         <translation>073Условные знаки</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1240"/>
+        <location filename="../mainviewwidget.cpp" line="1189"/>
         <source>074Miscellaneous Mathematical Symbols-A</source>
         <translation>074Различные математические символы A</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1241"/>
+        <location filename="../mainviewwidget.cpp" line="1190"/>
         <source>075Supplemental Arrows-A</source>
         <translation>075Дополнительные стрелки A</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1242"/>
+        <location filename="../mainviewwidget.cpp" line="1191"/>
         <source>076Braille Patterns</source>
         <translation>076Азбука Брайля</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1243"/>
+        <location filename="../mainviewwidget.cpp" line="1192"/>
         <source>077Supplemental Arrows-B</source>
         <translation>077Дополнительные стрелки B</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1244"/>
+        <location filename="../mainviewwidget.cpp" line="1193"/>
         <source>078Miscellaneous Mathematical Symbols-B</source>
         <translation>078Различные математические символы B</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1245"/>
+        <location filename="../mainviewwidget.cpp" line="1194"/>
         <source>079Supplemental Mathematical Operators</source>
         <translation>079Дополнительные математические операторы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1246"/>
+        <location filename="../mainviewwidget.cpp" line="1195"/>
         <source>080Miscellaneous Symbols and Arrows</source>
         <translation>080Различные символы и стрелки</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1247"/>
+        <location filename="../mainviewwidget.cpp" line="1196"/>
         <source>081Glagolitic</source>
         <translation>081Глаголитические</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1248"/>
+        <location filename="../mainviewwidget.cpp" line="1197"/>
         <source>082Latin Extended-C</source>
         <translation>082Латиница, расширение C</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1249"/>
+        <location filename="../mainviewwidget.cpp" line="1198"/>
         <source>083Coptic</source>
         <translation>083Коптский</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1250"/>
+        <location filename="../mainviewwidget.cpp" line="1199"/>
         <source>084Georgian Supplement</source>
         <translation>084Грузинский, дополнения</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1251"/>
+        <location filename="../mainviewwidget.cpp" line="1200"/>
         <source>085Tifinagh</source>
         <translation>085Тифинаг</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1252"/>
+        <location filename="../mainviewwidget.cpp" line="1201"/>
         <source>086Ethiopic Extended</source>
         <translation>086Эфиопский, расширенный</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1253"/>
+        <location filename="../mainviewwidget.cpp" line="1202"/>
         <source>087Supplemental Punctuation</source>
         <translation>087Дополнительная пунктуация</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1254"/>
+        <location filename="../mainviewwidget.cpp" line="1203"/>
         <source>088CJK Radicals Supplement</source>
         <translation>088Дополнения корней CJK</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1255"/>
+        <location filename="../mainviewwidget.cpp" line="1204"/>
         <source>089Kangxi Radicals</source>
         <translation>089Кангхи, корни</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1256"/>
+        <location filename="../mainviewwidget.cpp" line="1205"/>
         <source>090Ideographic Description Characters</source>
         <translation>090Символы идеографического описания</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1257"/>
+        <location filename="../mainviewwidget.cpp" line="1206"/>
         <source>091CJK Symbols and Punctuation</source>
         <translation>091Символы и знаки препинания CJK</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1258"/>
+        <location filename="../mainviewwidget.cpp" line="1207"/>
         <source>092Hiragana</source>
         <translation>092Хирагана</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1259"/>
+        <location filename="../mainviewwidget.cpp" line="1208"/>
         <source>093Katakana</source>
         <translation>093Катакана</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1260"/>
+        <location filename="../mainviewwidget.cpp" line="1209"/>
         <source>094Bopomofo</source>
         <translation>094Бопомото</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1261"/>
+        <location filename="../mainviewwidget.cpp" line="1210"/>
         <source>095Hangul Compatibility Jamo</source>
         <translation>095Хангул, совместимый с Ямо</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1262"/>
+        <location filename="../mainviewwidget.cpp" line="1211"/>
         <source>096Kanbun</source>
         <translation>096Канбун</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1263"/>
+        <location filename="../mainviewwidget.cpp" line="1212"/>
         <source>097Bopomofo Extended</source>
         <translation>097Бопомото, расширенный</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1264"/>
+        <location filename="../mainviewwidget.cpp" line="1213"/>
         <source>098CJK Strokes</source>
         <translation>098Росчерки CJK</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1265"/>
+        <location filename="../mainviewwidget.cpp" line="1214"/>
         <source>099Katakana Phonetic Extensions</source>
         <translation>099Катакана, фонетические расширения</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1266"/>
+        <location filename="../mainviewwidget.cpp" line="1215"/>
         <source>100Enclosed CJK Letters and Months</source>
         <translation>100Знаки и месяца CJK в рамке</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1267"/>
+        <location filename="../mainviewwidget.cpp" line="1216"/>
         <source>101CJK Compatibility</source>
         <translation>101CJK, совместимость</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1268"/>
+        <location filename="../mainviewwidget.cpp" line="1217"/>
         <source>102CJK Unified Ideographs Extension A</source>
         <translation>102CJK, объединенные идеограммы, расширение A</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1269"/>
+        <location filename="../mainviewwidget.cpp" line="1218"/>
         <source>103Yijing Hexagram Symbols</source>
         <translation>103Гексаграммы Юиджинг</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1270"/>
+        <location filename="../mainviewwidget.cpp" line="1219"/>
         <source>104CJK Unified Ideographs</source>
         <translation>104CJK, объединенные идеограммы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1271"/>
+        <location filename="../mainviewwidget.cpp" line="1220"/>
         <source>105Yi Syllables</source>
         <translation>105Слоги Юи</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1272"/>
+        <location filename="../mainviewwidget.cpp" line="1221"/>
         <source>106Yi Radicals</source>
         <translation>106Корни Юи</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1273"/>
+        <location filename="../mainviewwidget.cpp" line="1222"/>
         <source>107Modifier Tone Letters</source>
         <translation>107Модификаторы тона</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1274"/>
+        <location filename="../mainviewwidget.cpp" line="1223"/>
         <source>108Latin Extended-D</source>
         <translation>108Латиница, расширение D</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1275"/>
+        <location filename="../mainviewwidget.cpp" line="1224"/>
         <source>109Syloti Nagri</source>
         <translation>109Силоти Нагри</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1276"/>
+        <location filename="../mainviewwidget.cpp" line="1225"/>
         <source>110Phags-pa</source>
         <translation>110Фагс-па</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1277"/>
+        <location filename="../mainviewwidget.cpp" line="1226"/>
         <source>111Hangul Syllables</source>
         <translation>111Слоги Хангул</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1278"/>
+        <location filename="../mainviewwidget.cpp" line="1227"/>
         <source>112High Surrogates</source>
         <translation>112Заменители в верхнем регистре</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1279"/>
+        <location filename="../mainviewwidget.cpp" line="1228"/>
         <source>113High Private Use Surrogates</source>
         <translation>113Заменители в верхнем регистре, пользовательские</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1280"/>
+        <location filename="../mainviewwidget.cpp" line="1229"/>
         <source>114Low Surrogates</source>
         <translation>112Заменители в нижнем регистре</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1281"/>
+        <location filename="../mainviewwidget.cpp" line="1230"/>
         <source>115Private Use Area</source>
         <translation>115Область пользователя</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1282"/>
+        <location filename="../mainviewwidget.cpp" line="1231"/>
         <source>116CJK Compatibility Ideographs</source>
         <translation>116CJK, идеограммы для совместимости</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1283"/>
+        <location filename="../mainviewwidget.cpp" line="1232"/>
         <source>117Alphabetic Presentation Forms</source>
         <translation>117Формы алфавитного представления (лигатуры)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1284"/>
+        <location filename="../mainviewwidget.cpp" line="1233"/>
         <source>118Arabic Presentation Forms-A</source>
         <translation>118Формы арабского представления A</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1285"/>
+        <location filename="../mainviewwidget.cpp" line="1234"/>
         <source>119Variation Selectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1286"/>
+        <location filename="../mainviewwidget.cpp" line="1235"/>
         <source>120Vertical Forms</source>
         <translation>120Вертикальные формы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1287"/>
+        <location filename="../mainviewwidget.cpp" line="1236"/>
         <source>121Combining Half Marks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1288"/>
+        <location filename="../mainviewwidget.cpp" line="1237"/>
         <source>122CJK Compatibility Forms</source>
         <translation>122CJK, формы для совместимости</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1289"/>
+        <location filename="../mainviewwidget.cpp" line="1238"/>
         <source>123Small Form Variants</source>
         <translation>123Малые варианты форм</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1290"/>
+        <location filename="../mainviewwidget.cpp" line="1239"/>
         <source>124Arabic Presentation Forms-B</source>
         <translation>124Формы арабского представления B</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1291"/>
+        <location filename="../mainviewwidget.cpp" line="1240"/>
         <source>125Halfwidth and Fullwidth Forms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1292"/>
+        <location filename="../mainviewwidget.cpp" line="1241"/>
         <source>126Specials</source>
         <translation>126Специальные</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1294"/>
+        <location filename="../mainviewwidget.cpp" line="1243"/>
         <source>127Supplementary Multilingual Plane (SMP)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1295"/>
+        <location filename="../mainviewwidget.cpp" line="1244"/>
         <source>128Supplementary Ideographic Plane (SIP)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1296"/>
+        <location filename="../mainviewwidget.cpp" line="1245"/>
         <source>129unassigned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1297"/>
+        <location filename="../mainviewwidget.cpp" line="1246"/>
         <source>130Supplementary Special-purpose Plane (SSP)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1298"/>
+        <location filename="../mainviewwidget.cpp" line="1247"/>
         <source>131Private Use Area 1 (PUA)</source>
         <translation>131Область пользователя 1 (PUA)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1299"/>
+        <location filename="../mainviewwidget.cpp" line="1248"/>
         <source>132Private Use Area 2 (PUA)</source>
         <translation>132Область пользователя 2 (PUA)</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1300"/>
+        <location filename="../mainviewwidget.cpp" line="1249"/>
         <source>133Un-Mapped Glyphs</source>
         <translation>133Несвязанные глифы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1301"/>
+        <location filename="../mainviewwidget.cpp" line="1250"/>
         <source>134View all mapped glyphs</source>
         <translation>134Все связанные глифы</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1863"/>
+        <location filename="../mainviewwidget.cpp" line="1811"/>
         <source>Fontmatrix takes care of you</source>
         <translation>Fontmatrix позаботится о вас</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1863"/>
+        <location filename="../mainviewwidget.cpp" line="1811"/>
         <source> is activated.
 If you want to remove it from Fontmatrix database, please deactivate it first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1866"/>
+        <location filename="../mainviewwidget.cpp" line="1814"/>
         <source>Fontmatrix safe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1866"/>
+        <location filename="../mainviewwidget.cpp" line="1814"/>
         <source>You are about to remove a font from Fontmatrix database</source>
         <translation>Вы собираетесь удалить шрифт из базы данных Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1866"/>
+        <location filename="../mainviewwidget.cpp" line="1814"/>
         <source>Do you want to continue?</source>
         <translation>Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1951"/>
+        <location filename="../mainviewwidget.cpp" line="1899"/>
         <source>Welcome to Fontmatrix</source>
         <translation>Добро пожаловать в Fontmatrix</translation>
+    </message>
+    <message>
+        <location filename="../mainviewwidget.cpp" line="1688"/>
+        <source>Add new tag</source>
+        <translation>Создать новую метку</translation>
+    </message>
+    <message>
+        <location filename="../mainviewwidget.cpp" line="2079"/>
+        <source>Load</source>
+        <translation>Загрузить</translation>
     </message>
 </context>
 <context>
@@ -2239,7 +2294,7 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
         <location filename="../prefs_panel.ui" line="701"/>
         <source>Shotcuts</source>
-        <translation>Клавиатурные комбинации</translation>
+        <translation>Комбинации клавиш</translation>
     </message>
 </context>
 <context>
@@ -2270,12 +2325,12 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
         <translation>Укажите расположение разделяемых шрифтов</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="580"/>
+        <location filename="../prefspaneldialog.cpp" line="581"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="581"/>
+        <location filename="../prefspaneldialog.cpp" line="582"/>
         <source>Shortcut</source>
         <translation>Комбинация</translation>
     </message>
@@ -2346,12 +2401,12 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
         <translation>Вы все еще хотите назначить ее?</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="582"/>
+        <location filename="../prefspaneldialog.cpp" line="583"/>
         <source>Tip</source>
         <translation>Совет</translation>
     </message>
     <message>
-        <location filename="../prefspaneldialog.cpp" line="616"/>
+        <location filename="../prefspaneldialog.cpp" line="617"/>
         <source>Select hyphenation dictionary</source>
         <translation>Выберите словарь переносов</translation>
     </message>
@@ -2364,7 +2419,7 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
         <translation>Копируются файлы</translation>
     </message>
     <message>
-        <location filename="../fontbook.cpp" line="205"/>
+        <location filename="../fontbook.cpp" line="206"/>
         <source>cancel</source>
         <translation>Отменить</translation>
     </message>
@@ -2399,164 +2454,164 @@ rstuvxyz
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontbook.cpp" line="205"/>
+        <location filename="../fontbook.cpp" line="206"/>
         <source>Creating font book... </source>
         <translation>Создается каталог шрифтов... </translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="2632"/>
+        <location filename="../fontitem.cpp" line="2635"/>
         <source>codepoint is U+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3223"/>
+        <location filename="../fontitem.cpp" line="3226"/>
         <source>Mark, NonSpacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3224"/>
+        <location filename="../fontitem.cpp" line="3227"/>
         <source>Mark, SpacingCombining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3225"/>
+        <location filename="../fontitem.cpp" line="3228"/>
         <source>Mark, Enclosing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3226"/>
+        <location filename="../fontitem.cpp" line="3229"/>
         <source>Number, DecimalDigit</source>
-        <translation type="unfinished"></translation>
+        <translation>Числа, десятичные</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3227"/>
+        <location filename="../fontitem.cpp" line="3230"/>
         <source>Number, Letter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3228"/>
-        <source>Number, Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../fontitem.cpp" line="3229"/>
-        <source>Separator, Space</source>
-        <translation>Разделитель, пробел</translation>
-    </message>
-    <message>
-        <location filename="../fontitem.cpp" line="3230"/>
-        <source>Separator, Line</source>
-        <translation>Разделитель, строка</translation>
-    </message>
-    <message>
         <location filename="../fontitem.cpp" line="3231"/>
-        <source>Separator, Paragraph</source>
-        <translation>Разделитель, абзац</translation>
+        <source>Number, Other</source>
+        <translation>Числа, прочие</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3232"/>
+        <source>Separator, Space</source>
+        <translation>Разделители, пробелы</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="3233"/>
+        <source>Separator, Line</source>
+        <translation>Разделители, строки</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="3234"/>
+        <source>Separator, Paragraph</source>
+        <translation>Разделители, абзацы</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="3235"/>
         <source>Other, Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3233"/>
+        <location filename="../fontitem.cpp" line="3236"/>
         <source>Other, Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3234"/>
+        <location filename="../fontitem.cpp" line="3237"/>
         <source>Other, Surrogate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3235"/>
+        <location filename="../fontitem.cpp" line="3238"/>
         <source>Other, PrivateUse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3236"/>
+        <location filename="../fontitem.cpp" line="3239"/>
         <source>Other, NotAssigned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3237"/>
-        <source>Letter, Uppercase</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../fontitem.cpp" line="3238"/>
-        <source>Letter, Lowercase</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../fontitem.cpp" line="3239"/>
-        <source>Letter, Titlecase</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../fontitem.cpp" line="3240"/>
-        <source>Letter, Modifier</source>
-        <translation type="unfinished"></translation>
+        <source>Letter, Uppercase</source>
+        <translation>Буквы, прописные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3241"/>
-        <source>Letter, Other</source>
-        <translation type="unfinished"></translation>
+        <source>Letter, Lowercase</source>
+        <translation>Буквы, строчные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3242"/>
-        <source>Punctuation, Connector</source>
-        <translation type="unfinished"></translation>
+        <source>Letter, Titlecase</source>
+        <translation>Буквы, Заглавные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3243"/>
-        <source>Punctuation, Dash</source>
-        <translation type="unfinished"></translation>
+        <source>Letter, Modifier</source>
+        <translation>Буквы, модификаторы</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3244"/>
-        <source>Punctuation, Open</source>
-        <translation type="unfinished"></translation>
+        <source>Letter, Other</source>
+        <translation>Буквы, прочие</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3245"/>
-        <source>Punctuation, Close</source>
-        <translation type="unfinished"></translation>
+        <source>Punctuation, Connector</source>
+        <translation>Пунктуация, соединители</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3246"/>
-        <source>Punctuation, InitialQuote</source>
-        <translation type="unfinished"></translation>
+        <source>Punctuation, Dash</source>
+        <translation>Пунктуация, тире</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3247"/>
-        <source>Punctuation, FinalQuote</source>
-        <translation type="unfinished"></translation>
+        <source>Punctuation, Open</source>
+        <translation>Пунктуация, открывающие</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3248"/>
-        <source>Punctuation, Other</source>
-        <translation type="unfinished"></translation>
+        <source>Punctuation, Close</source>
+        <translation>Пунктуация, закрывающие</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3249"/>
-        <source>Symbol, Math</source>
-        <translation type="unfinished"></translation>
+        <source>Punctuation, InitialQuote</source>
+        <translation>Пунктуация, открывающие кавычки</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3250"/>
-        <source>Symbol, Currency</source>
-        <translation type="unfinished"></translation>
+        <source>Punctuation, FinalQuote</source>
+        <translation>Пунктуация, закрывающие кавычки</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3251"/>
-        <source>Symbol, Modifier</source>
-        <translation type="unfinished"></translation>
+        <source>Punctuation, Other</source>
+        <translation>Пунктуация, прочее</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3252"/>
+        <source>Symbol, Math</source>
+        <translation>Символы, математика</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="3253"/>
+        <source>Symbol, Currency</source>
+        <translation>Символы, валюта</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="3254"/>
+        <source>Symbol, Modifier</source>
+        <translation>Символы, модификаторы</translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="3255"/>
         <source>Symbol, Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Символы, прочее</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="32"/>
@@ -3455,198 +3510,198 @@ rstuvxyz
 <context>
     <name>typotek</name>
     <message>
-        <location filename="../typotek.cpp" line="136"/>
+        <location filename="../typotek.cpp" line="138"/>
         <source>default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="153"/>
+        <location filename="../typotek.cpp" line="746"/>
         <source>Nothing Selected</source>
         <translation>Ничего не выбрано</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="158"/>
+        <location filename="../typotek.cpp" line="153"/>
         <source>Browse Fonts</source>
         <translation>Поиск шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="219"/>
+        <location filename="../typotek.cpp" line="217"/>
         <source>Fontmatrix</source>
         <translation>Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="223"/>
+        <location filename="../typotek.cpp" line="221"/>
         <source>The program will keep running in the system tray. To terminate the program, choose &lt;b&gt;Exit&lt;/b&gt; in the context menu of the system tray entry.</source>
         <translation>Программа останется в области уведомления. Для завершения работы с ней выберите команду «Выйти» в контекстном меню программы из области уведомления.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="268"/>
+        <location filename="../typotek.cpp" line="266"/>
         <source>Add Directory</source>
         <translation>Добавить каталог</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="425"/>
+        <location filename="../typotek.cpp" line="423"/>
         <source>Importing font files... </source>
-        <translation type="unfinished"></translation>
+        <translation>Импортируются шрифтовые файлы...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="425"/>
+        <location filename="../typotek.cpp" line="423"/>
         <source>cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="429"/>
+        <location filename="../typotek.cpp" line="427"/>
         <source>Import</source>
         <translation>Импортировать</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="450"/>
+        <location filename="../typotek.cpp" line="448"/>
         <source>Can&#xe2;&#x80;&#x99;t import this font because it&#xe2;&#x80;&#x99;s broken :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="512"/>
+        <location filename="../typotek.cpp" line="510"/>
         <source>Choose the tag for filter exported fonts</source>
         <translation>Выберите метку для фильтрации
 экспортируемых шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="518"/>
+        <location filename="../typotek.cpp" line="516"/>
         <source>Choose Directory</source>
         <translation>Укажите каталог</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="548"/>
+        <location filename="../typotek.cpp" line="546"/>
         <source>&amp;Import...</source>
         <translation>&amp;Импортировать...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="549"/>
+        <location filename="../typotek.cpp" line="547"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="550"/>
+        <location filename="../typotek.cpp" line="548"/>
         <source>Import a directory</source>
         <translation>Импортировать шрифты из каталога</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="554"/>
         <source>&amp;Save</source>
-        <translation>&amp;Сохранить</translation>
+        <translation type="obsolete">&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="555"/>
+        <location filename="../typotek.cpp" line="553"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="556"/>
         <source>Save the document to disk</source>
-        <translation>Сохранить этот документ на диск</translation>
+        <translation type="obsolete">Сохранить этот документ на диск</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="560"/>
+        <location filename="../typotek.cpp" line="558"/>
         <source>Export &amp;Fonts</source>
         <translation>&amp;Экспортировать шрифты</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="561"/>
+        <location filename="../typotek.cpp" line="559"/>
         <source>Export a fontset</source>
         <translation>Экспортировать набор шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="565"/>
+        <location filename="../typotek.cpp" line="563"/>
         <source>Print Info...</source>
         <translation>Напечатать сводку по шрифту...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="566"/>
+        <location filename="../typotek.cpp" line="564"/>
         <source>Print informations about the current font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="570"/>
+        <location filename="../typotek.cpp" line="568"/>
         <source>Print Sample...</source>
         <translation>Напечатать образец текста...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="571"/>
+        <location filename="../typotek.cpp" line="569"/>
         <source>Print the sample as a specimen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="575"/>
+        <location filename="../typotek.cpp" line="573"/>
         <source>Print Chart...</source>
         <translation>Напечатать таблицу символов...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="576"/>
+        <location filename="../typotek.cpp" line="574"/>
         <source>Print a chart of the current font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="580"/>
+        <location filename="../typotek.cpp" line="578"/>
         <source>Print Playground...</source>
         <translation>Напечатать содержимое песочницы...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="581"/>
+        <location filename="../typotek.cpp" line="579"/>
         <source>Print the playground</source>
         <translation type="unfinished">Напечатать содержимое песочницы...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="585"/>
+        <location filename="../typotek.cpp" line="583"/>
         <source>Print Family...</source>
         <translation>Напечатать всю гарнитуру...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="586"/>
+        <location filename="../typotek.cpp" line="584"/>
         <source>Print a specimen of the whole family the current face belongs to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="590"/>
+        <location filename="../typotek.cpp" line="588"/>
         <source>Export font book...</source>
         <translation>Создать каталог шрифтов...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="591"/>
+        <location filename="../typotek.cpp" line="589"/>
         <source>Export a pdf that show selected fonts</source>
         <translation>Создать файл PDF, содержащий образцы выбранных шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="595"/>
+        <location filename="../typotek.cpp" line="593"/>
         <source>E&amp;xit</source>
         <translation>В&amp;ыйти</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="596"/>
+        <location filename="../typotek.cpp" line="594"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="597"/>
+        <location filename="../typotek.cpp" line="595"/>
         <source>Exit the application</source>
         <translation>Завершить работу с программой</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="602"/>
+        <location filename="../typotek.cpp" line="600"/>
         <source>&amp;About</source>
         <translation>&amp;О программе</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="603"/>
+        <location filename="../typotek.cpp" line="601"/>
         <source>Show the Typotek&apos;s About box</source>
         <translation>Показать окно с информацией о программе</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="607"/>
+        <location filename="../typotek.cpp" line="605"/>
         <source>About &amp;Qt</source>
         <translation>О &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="611"/>
+        <location filename="../typotek.cpp" line="609"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
@@ -3671,12 +3726,12 @@ rstuvxyz
         <translation>Изменить выбранный шрифт</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1501"/>
+        <location filename="../typotek.cpp" line="1530"/>
         <source>Try to run font editor with the selected font as argument</source>
         <translation>Попытаться открыть текущий шрифт в редакторе шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1506"/>
+        <location filename="../typotek.cpp" line="1535"/>
         <source>You don&apos;t seem to have font editor installed. Path to font editor can be set in preferences.</source>
         <translation>Похоже, редактор шрифтов не установлен. Его расположение можно указать в диалоге настройки.</translation>
     </message>
@@ -3720,125 +3775,125 @@ rstuvxyz
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="743"/>
+        <location filename="../typotek.cpp" line="754"/>
         <source>Load settings</source>
         <translation>Загрузка параметров</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="792"/>
+        <location filename="../typotek.cpp" line="803"/>
         <source>Check for Fontmatrix own dir</source>
         <translation>Проверка каталога Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="917"/>
+        <location filename="../typotek.cpp" line="928"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="917"/>
+        <location filename="../typotek.cpp" line="928"/>
         <source>fonts present in database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="944"/>
+        <location filename="../typotek.cpp" line="955"/>
         <source>Collected System Font</source>
         <translation>Найденные системные шрифты</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="977"/>
+        <location filename="../typotek.cpp" line="988"/>
         <source>Adding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="977"/>
+        <location filename="../typotek.cpp" line="988"/>
         <source>fonts from system directories</source>
         <translation>Шрифты из системных каталогов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1000"/>
+        <location filename="../typotek.cpp" line="1011"/>
         <source>fonts available from system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1010"/>
+        <location filename="../typotek.cpp" line="1021"/>
         <source>Catching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1010"/>
+        <location filename="../typotek.cpp" line="1021"/>
         <source>font descriptions from network</source>
         <translation>описания шрифтов из сети</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1051"/>
+        <location filename="../typotek.cpp" line="1062"/>
         <source>font descriptions imported from network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1209"/>
+        <location filename="../typotek.cpp" line="1218"/>
         <source>Fontmatrix care</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1203"/>
+        <location filename="../typotek.cpp" line="1212"/>
         <source>You are about to activate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
         <translation>Сейчас будет активирована куча шрифтов, самое время 
 отменить активацию, если вы это нечаянно затеяли.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1209"/>
+        <location filename="../typotek.cpp" line="1218"/>
         <source>You are about to deactivate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
         <translation>Сейчас будет деактивирована куча шрифтов, самое время отменить деактивацию, если вы это нечаянно затеяли.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1245"/>
+        <location filename="../typotek.cpp" line="1274"/>
         <source>There is no font selected</source>
         <translation>Ни один шрифт не выбран</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1335"/>
+        <location filename="../typotek.cpp" line="1364"/>
         <source>Support of DragNDrop over http is sheduled but not yet effective</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1360"/>
+        <location filename="../typotek.cpp" line="1389"/>
         <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1400"/>
+        <location filename="../typotek.cpp" line="1429"/>
         <source>You provided an empty string, it&#xe2;&#x80;&#x99;s not fair</source>
         <translation>Вы мне передали пустую строку, это нечестно.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1406"/>
+        <location filename="../typotek.cpp" line="1435"/>
         <source>&quot;default&quot; is a reserved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1630"/>
+        <location filename="../typotek.cpp" line="1659"/>
         <source>Welcome maessage</source>
         <translation>Приветственное сообщение</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1664"/>
+        <location filename="../typotek.cpp" line="1665"/>
         <source>Print Infos</source>
         <translation>Печати сводки</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1683"/>
+        <location filename="../typotek.cpp" line="1712"/>
         <source>Print Chart</source>
         <translation>Печать таблицы символов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1748"/>
+        <location filename="../typotek.cpp" line="1777"/>
         <source>Print Playground</source>
         <translation>Печать содержимого песочницы</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1771"/>
+        <location filename="../typotek.cpp" line="1800"/>
         <source>Print Family</source>
         <translation>Печать гарнитуры</translation>
     </message>
@@ -3848,12 +3903,12 @@ it is time to cancel if it was not your intent</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1139"/>
+        <location filename="../typotek.cpp" line="1150"/>
         <source>All fields</source>
         <translation>Все поля</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="464"/>
+        <location filename="../typotek.cpp" line="462"/>
         <source>Fonts imported: %1</source>
         <translation>Импортировано шрифтов: %1</translation>
     </message>
@@ -3888,12 +3943,12 @@ it is time to cancel if it was not your intent</source>
         <translation>Пере&amp;ход</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="907"/>
+        <location filename="../typotek.cpp" line="918"/>
         <source>Fontmatrix - data warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="908"/>
+        <location filename="../typotek.cpp" line="919"/>
         <source>Your database has not been loaded because of a version mismatch.
 It is not a problem, you just lost fonts references, tags &amp; sample texts. If you badly need to keep these datas, do not quit Fontmatrix before you have copied the database*. At this point and with a minimum of XML skill, you should be able to get old database into new format.
 
@@ -3906,14 +3961,29 @@ It is not a problem, you just lost fonts references, tags &amp; sample texts. If
         <translation type="obsolete">Юникод</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1115"/>
+        <location filename="../typotek.cpp" line="1126"/>
         <source>Unicode character</source>
         <translation>Юникодный символ</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1793"/>
+        <location filename="../typotek.cpp" line="1822"/>
         <source>Not enough text to make a sample</source>
         <translation>Недостаточно текста для создания образца</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="552"/>
+        <source>&amp;Sync</source>
+        <translation>&amp;Синхронизироваться</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="554"/>
+        <source>Sync with the DB file</source>
+        <translation>Синхронизироваться с базой данных</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1693"/>
+        <source>Print Sample</source>
+        <translation>Печать образца текста</translation>
     </message>
 </context>
 </TS>

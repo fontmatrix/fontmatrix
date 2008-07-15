@@ -382,7 +382,7 @@
     <message>
         <location filename="../fontitem.cpp" line="582"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Средний</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="551"/>
@@ -542,57 +542,57 @@
     <message>
         <location filename="../fontitem.cpp" line="607"/>
         <source>Straight Arms/Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой штрих, горизонтальные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="608"/>
         <source>Straight Arms/Wedge</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой штрих, клинообразные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="609"/>
         <source>Straight Arms/Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой штрих, вертикальные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="610"/>
         <source>Straight Arms/Single Serif</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой штрих, одиночная засечка</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="611"/>
         <source>Straight Arms/Double Serif</source>
-        <translation type="unfinished"></translation>
+        <translation>Прямой штрих, двойная засечка</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="612"/>
         <source>Non-Straight Arms/Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрямой штрих, горизонтальные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="613"/>
         <source>Non-Straight Arms/Wedge</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрямой штрих, клинообразные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="614"/>
         <source>Non-Straight Arms/Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрямой штрих, вертикальные</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="615"/>
         <source>Non-Straight Arms/Single Serif</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрямой штрих, одиночная засечка</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="616"/>
         <source>Non-Straight Arms/Double Serif</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрямой штрих, двойная засечка</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="619"/>
         <source>Arm Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальный штрих и концевые элементы</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="624"/>
@@ -737,32 +737,32 @@
     <message>
         <location filename="../fontitem.cpp" line="664"/>
         <source>Constant/Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянный, небольшой</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="665"/>
         <source>Constant/Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянный, обычный</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="666"/>
         <source>Constant/Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянный, большой</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="667"/>
         <source>Ducking/Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Ныряющий, небольшой</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="668"/>
         <source>Ducking/Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>Ныряющий, обычный</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="669"/>
         <source>Ducking/Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Ныряющий, большой</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="672"/>
@@ -843,7 +843,7 @@ in preferences.&lt;/qt&gt;</source>
     <message>
         <location filename="../importedfonts.ui" line="84"/>
         <source>Do not show this dialog again</source>
-        <translation>Больше не показывать это</translation>
+        <translation>Больше не показывать этот диалог</translation>
     </message>
 </context>
 <context>
@@ -856,7 +856,7 @@ in preferences.&lt;/qt&gt;</source>
     <message>
         <location filename="../importedfontsdialog.cpp" line="44"/>
         <source>Number of Imported Fonts </source>
-        <translation>Число импортируемых шрифтов </translation>
+        <translation>Количество импортируемых шрифтов:</translation>
     </message>
 </context>
 <context>

@@ -123,7 +123,7 @@ void PrefsPanelDialog::doConnect()
 	connect ( newSampleTextNameText,SIGNAL ( editingFinished() ),this,SLOT ( addSampleName() ) );
 	connect ( sampleTextNamesList,SIGNAL ( currentTextChanged ( const QString& ) ),this,SLOT ( displayNamedText() ) );
 	connect ( dictButton, SIGNAL ( clicked() ), this, SLOT ( slotDictDialog() ) );
-	connect ( applySampleTextButton,SIGNAL ( released() ),this,SLOT ( applySampleText() ) );
+// 	connect ( applySampleTextButton,SIGNAL ( released() ),this,SLOT ( applySampleText() ) );
 
 	connect ( systrayFrame, SIGNAL ( clicked ( bool ) ), this, SLOT ( setSystrayVisible ( bool ) ) );
 	connect ( activateAllFrame, SIGNAL ( clicked ( bool ) ), this, SLOT ( setSystrayActivateAll ( bool ) ) );
@@ -157,7 +157,7 @@ void PrefsPanelDialog::doConnect()
 	connect ( shortcutList, SIGNAL ( clicked ( const QModelIndex& ) ), this, SLOT ( slotActionSelected ( const QModelIndex& ) ) );
 	connect ( shortcutList, SIGNAL ( activated ( const QModelIndex& ) ), changeButton, SLOT ( toggle() ) );
 
-	connect ( closeButton,SIGNAL ( clicked() ),this,SLOT ( close() ) );
+	connect ( closeButton,SIGNAL ( clicked() ),this,SLOT ( slotClose() ) );
 }
 
 void PrefsPanelDialog::applySampleText()
@@ -171,7 +171,7 @@ void PrefsPanelDialog::applySampleText()
 		s.setValue ( "HyphenationDict", dictEdit->text() );
 		s.setValue ( "HyphLeft", leftBox->value() );
 		s.setValue ( "HyphRight", rightBox->value() );
-		qDebug ( "ONNISTUI" );
+		
 	}
 	else   // use the previous values
 	{
@@ -617,6 +617,12 @@ void PrefsPanelDialog::slotDictDialog()
 	QString s = QFileDialog::getOpenFileName ( this, tr ( "Select hyphenation dictionary" ), QDir::homePath() );
 	if ( !s.isEmpty() )
 		dictEdit->setText ( s );
+}
+
+void PrefsPanelDialog::slotClose()
+{
+	applySampleText();
+	close();
 }
 
 

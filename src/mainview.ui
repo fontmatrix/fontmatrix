@@ -517,7 +517,7 @@
                   <widget class="QComboBox" name="sampleTextCombo" >
                    <property name="sizePolicy" >
                     <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-                     <horstretch>0</horstretch>
+                     <horstretch>4</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
@@ -527,13 +527,13 @@
                   <widget class="QPushButton" name="sampleTextButton" >
                    <property name="sizePolicy" >
                     <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-                     <horstretch>0</horstretch>
+                     <horstretch>1</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="maximumSize" >
                     <size>
-                     <width>51</width>
+                     <width>1000</width>
                      <height>24</height>
                     </size>
                    </property>
@@ -549,7 +549,7 @@
                  <item>
                   <widget class="QLabel" name="label" >
                    <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+                    <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
                      <horstretch>2</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>

@@ -30,6 +30,7 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QUrl>
+#include <QFlags>
 // #include <QThread>
 
 #include <ft2build.h>
@@ -61,6 +62,7 @@ class QFile;
 #define GLYPH_DATA_VADVANCE 5
 #define GLYPH_DATA_FONTNAME 100
 
+
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
 
@@ -86,8 +88,19 @@ class FontItem : public QObject
 		FontItem ( QString path , bool remote = false, bool faststart = false);
 		/** Needed when the item has been instantiate with "faststart=true" */
 		void updateItem();
-
 		~FontItem();
+		
+		enum FsTypeFlag
+		{
+		    NOT_RESTRICTED	= 0x0000,
+		    RESTRICTED		= 0x0002,
+		    PREVIEW_PRINT	= 0x0004,
+		    EDIT_EMBED		= 0x0008,
+		    NOSUBSET		= 0x0100,
+		    BITMAP_ONLY		= 0x0200
+		};
+		Q_DECLARE_FLAGS(FsType, FsTypeFlag)
+
 	private:
 		bool m_valid;
 		
@@ -100,6 +113,7 @@ class FontItem : public QObject
 		int remoteId;
 		QProgressDialog *rProgressDialog;
 		
+		FsType m_OSFsType;
 		QString m_path;
 		QUrl m_url;
 		QString m_afm;
@@ -306,6 +320,7 @@ class FontItem : public QObject
 		// sfnt names
 		static void fillNamesMeaning();
 		static void fillPanoseMap();
+		static void fillFSftypeMap();
 		
 		bool isValid(){return m_valid;}
 		
@@ -331,4 +346,6 @@ class FontItem : public QObject
 	
 };
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(FontItem::FsType)
+		 
 #endif

@@ -93,6 +93,8 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void slotActionSelected(const QModelIndex &mi);
 
 		void slotDictDialog();
+		
+		void slotClose();
 
 };
 

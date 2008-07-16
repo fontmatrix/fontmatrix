@@ -65,6 +65,7 @@ QStringList name_meaning;
 QMap< QString, QMap<int, QString> > panoseMap;
 QMap< int, QString > panoseKeys;
 QList<int> legitimateNonPathChars;
+QMap< int, QString > fstypeMap;
 
 QVector<QRgb> gray256Palette;
 QVector<QRgb> invertedGray256Palette;
@@ -671,6 +672,20 @@ void FontItem::fillPanoseMap()
 	panoseMap[tr ( "X-Height" ) ] = mapModel;
 	panoseKeys[9] = tr ( "X-Height" );
 }
+
+void FontItem::fillFSftypeMap()
+{
+	// From http://www.microsoft.com/typography/otspec/os2.htm#fst
+	if(!fstypeMap.isEmpty())
+		return;
+	fstypeMap[FontItem::NOT_RESTRICTED] = QObject::tr("Fonts with this setting indicate that they may be embedded and permanently installed on the remote system by an application. The user of the remote system acquires the identical rights, obligations and licenses for that font as the original purchaser of the font, and is subject to the same end-user license agreement, copyright, design patent, and/or trademark as was the original purchaser.");
+	fstypeMap[FontItem::RESTRICTED] = QObject::tr("Fonts that have  only  this bit set must not be modified, embedded or exchanged in any manner without first obtaining permission of the legal owner.");
+	fstypeMap[FontItem::PREVIEW_PRINT] = QObject::tr("When this bit is set, the font may be embedded, and temporarily loaded on the remote system. Documents containing Preview & Print fonts must be opened \"read-only;\" no edits can be applied to the document.");
+	fstypeMap[FontItem::EDIT_EMBED] = QObject::tr("When this bit is set, the font may be embedded but must only be installed  temporarily  on other systems. In contrast to Preview & Print fonts, documents containing Editable fonts may be opened for reading, editing is permitted, and changes may be saved.");
+	fstypeMap[FontItem::NOSUBSET] = QObject::tr("When this bit is set, the font may not be subsetted prior to embedding. Other embedding restrictions specified in bits 0-3 and 9 also apply.");
+	fstypeMap[FontItem::BITMAP_ONLY] = QObject::tr("When this bit is set, only bitmaps contained in the font may be embedded. No outline data may be embedded. If there are no bitmaps available in the font, then the font is considered unembeddable and the embedding services will fail. Other embedding restrictions specified in bits 0-3 and 8 also apply.");
+}
+
 
 FontItem::FontItem ( QString path , bool remote, bool faststart )
 {
@@ -2372,7 +2387,7 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 
 
 	QPen selPen ( Qt::gray );
-	QFont infoFont ( "Helvetica",8 );
+	QFont infoFont ( "Helvetica", 10 );
 	QBrush selBrush ( QColor ( 255,255,255,0 ) );
 
 	while ( charcode <= end_code && gindex )
@@ -2501,10 +2516,22 @@ QString FontItem::infoText ( bool fromcache )
 			panBlockOut += "<div class=\"panose_desc\">" + pat.value() + "</div>";
 		}
 	}
-	else
-	{
-		qDebug() <<"ARGH"<< m_family << m_variant;
-	}
+	
+	fillFSftypeMap();
+	QString embedFlags = "<div id=\"fstype\">";
+	if( m_OSFsType.testFlag(NOT_RESTRICTED))
+		embedFlags+="<div>" + fstypeMap[NOT_RESTRICTED] + "</div>";
+	if( m_OSFsType.testFlag( RESTRICTED))
+		embedFlags+="<div>" + fstypeMap[ RESTRICTED] + "</div>";
+	if( m_OSFsType.testFlag(PREVIEW_PRINT))
+		embedFlags+="<div>" + fstypeMap[PREVIEW_PRINT] + "</div>";
+	if( m_OSFsType.testFlag(EDIT_EMBED))
+		embedFlags+="<div>" + fstypeMap[EDIT_EMBED] + "</div>";
+	if( m_OSFsType.testFlag(NOSUBSET))
+		embedFlags+="<div>" + fstypeMap[NOSUBSET] + "</div>";
+	if( m_OSFsType.testFlag(BITMAP_ONLY))
+		embedFlags+="<div>" + fstypeMap[BITMAP_ONLY] + "</div>";
+	embedFlags +="</div>";
 
 	QMap<QString, QStringList> orderedInfo;
 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
@@ -2592,6 +2619,8 @@ QString FontItem::infoText ( bool fromcache )
 
 	ret += "</div>"; // general
 	ret += "<div id=\"panose_block\">" + panBlockOut + "</div>";
+	
+	ret += embedFlags;
 // 	m_cacheInfo = ret;
 	if ( rFace )
 		releaseFace();
@@ -2942,27 +2971,30 @@ void FontItem::moreInfo_sfnt()
 	TT_OS2 *os2 = static_cast<TT_OS2*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_os2 ) );
 	if ( os2 /* and  wantAutoTag*/ )
 	{
-		// Just want the panose data
+		// PANOSE
 		m_panose.clear();
 		for ( int bI ( 0 ); bI < 10; ++bI )
 		{
 			m_panose += QString::number ( os2->panose[bI] ) ;
 			panoseInfo[ panoseKeys[bI] ] = panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ] ;
-// 			if(os2->panose[bI] > 1 ) // "any" nor "not fit" does not seem rather interesting tags :)
-// 			{
-// 				QString pTag( panoseKeys[bI] +" - "+ panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ]);
-// 				if(!m_tags.contains(pTag) )
-// 				{
-// 					m_tags << pTag;
-// 					if(!typotek::tagsList.contains(pTag))
-// 					{
-// 						typotek::tagsList << pTag;
-// 					}
-// 				}
-// 			}
 		}
-// 		moreInfo[0]["Panose"] = pan;
 
+		// FSTYPE (embedding status)
+		if(!os2->fsType)
+			m_OSFsType = NOT_RESTRICTED;
+		else
+		{
+			if(os2->fsType & RESTRICTED)
+				m_OSFsType |= RESTRICTED;
+			if(os2->fsType & PREVIEW_PRINT)
+				m_OSFsType |= PREVIEW_PRINT;
+			if(os2->fsType &  EDIT_EMBED)
+				m_OSFsType |= EDIT_EMBED;
+			if(os2->fsType & NOSUBSET)
+				m_OSFsType |= NOSUBSET;
+			if(os2->fsType & BITMAP_ONLY)
+				m_OSFsType |=  BITMAP_ONLY;
+		}
 
 	}
 
@@ -3878,7 +3910,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 	delete shaperfactory;
 	
 	double scalefactor = fsize / m_face->units_per_EM  ;
-	QString dbgS;
+// 	QString dbgS;
 	for(int i(0); i < ret.count(); ++i)
 	{
 		ret[i].xadvance *= scalefactor;
@@ -3886,9 +3918,9 @@ GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 		ret[i].xoffset *= scalefactor;
 		ret[i].yoffset *= scalefactor;
 		
-		dbgS += QChar(ret[i].lChar);
+// 		dbgS += QChar(ret[i].lChar);
 	}
-	qDebug()<<"S"<<dbgS;
+// 	qDebug()<<"S"<<dbgS;
 	delete otf;
 	otf = 0;
 	releaseFace();
@@ -3919,5 +3951,6 @@ void FontItem::setFTHintMode ( unsigned int theValue )
 {
 	m_FTHintMode = theValue;
 }
+
 
 

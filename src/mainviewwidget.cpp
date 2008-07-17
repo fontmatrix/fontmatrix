@@ -1901,10 +1901,12 @@ void MainViewWidget::displayWelcomeMessage()
 			typo->setPreviewSize( bkPr );
 		}
 	}
-	QFile wFile(FMPaths::ResourcesDir() + "welcome_"+ FMPaths::sysLoc() + ".html");
+	QString ResPat(FMPaths::ResourcesDir());
+	QFile wFile( ResPat + "welcome_"+ FMPaths::sysLoc() + ".html");
 	wFile.open(QIODevice::ReadOnly | QIODevice::Text);
 	QByteArray wArray(wFile.readAll());
 	QString wString(QString::fromUtf8(wArray.data(),wArray.length()));
+	wString.replace("##RECOURCES_DIR##", QUrl::fromLocalFile(ResPat).toString() );
 	wString.replace("##WELCOME_PNG##", QUrl::fromLocalFile(wpng).toString() );
 	wString.replace("##WELCOME_FONT##", welcomeFontName);
 	fontInfoText->setHtml(wString);

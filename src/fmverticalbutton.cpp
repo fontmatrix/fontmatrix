@@ -44,7 +44,8 @@ bool FMVerticalButton::event(QEvent * event)
 		m_font.setPixelSize(width() / 2);
 		p.setFont(m_font);
 		p.rotate(90);
-		p.drawText(width() / 10 , p.fontMetrics().descent() * -1 ,m_text);
+		int vypos(qRound ( static_cast<double>(width() -  p.fontMetrics().ascent()) / 2.0) );
+		p.drawText(width() / 8 , vypos * -1 ,m_text);
 		return true;
 	} 
 	return QToolButton::event(event);

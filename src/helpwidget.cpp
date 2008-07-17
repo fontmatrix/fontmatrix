@@ -18,14 +18,18 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "helpwidget.h"
+#include "fmpaths.h"
+#include <QDebug>
 
 HelpWidget::HelpWidget(QWidget *parent)
  : QDialog(parent)
 {
 	setupUi(this);
-	theText->setOpenExternalLinks ( true );
-	theText->setSource(QUrl("qrc:/texts/help"));
-	connect(this,SIGNAL(finished( int )),this,SLOT(slotIsClosing()));
+	
+	theText->load(QUrl::fromLocalFile(FMPaths::ResourcesDir() + "help_" + FMPaths::sysLoc() + ".html"));
+	
+	connect(closeButton,SIGNAL( clicked() ),this,SLOT( slotIsClosing() ));
+	connect(this,SIGNAL( finished(int) ),this,SLOT( slotIsClosing() ));
 }
 
 
@@ -35,7 +39,7 @@ HelpWidget::~HelpWidget()
 
 void HelpWidget::slotIsClosing()
 {
-	emit close();
+	emit end();
 }
 
 

@@ -74,8 +74,8 @@ class typotek:public QMainWindow
 		void slotDeactivateCurrents();
 		void slotEditFont();
 		void about();
-		void help();
-		void updateHelpWindowsStatus();
+		void helpBegin();
+		void helpEnd();
 // 		void slotWord();
 		void slotExportFontSet();
 		void slotRemoteIsReady();

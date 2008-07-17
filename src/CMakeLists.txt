@@ -162,11 +162,6 @@ ${HYPHENATE_INCLUDE_DIR}
 )
 
 
-# IF(SHOW_LIBS)
-# 	MESSAGE(STATUS "Qt4 libs:" ${QT_LIBRARIES})
-# 	MESSAGE(STATUS "FreeType libs: " ${FREETYPE_LIBRARIES})
-# 	MESSAGE(STATUS "ICU libs: " ${ICU_LIBRARIES})
-# ENDIF(SHOW_LIBS)
 
 IF(UNIX AND NOT APPLE)
 	add_executable(fontmatrix
@@ -228,36 +223,19 @@ IF(APPLE)
 	
 	SET(BUNDLE_RESOURCES_DIR	"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/")
 	SET(BUNDLE_LOCALES_DIR		"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Locales/")
-# 	SET(BUNDLE_FRAMEWORKS_DIR	"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Frameworks/")
-# 	SET(BUNDLE_LIBRARIES_DIR	"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/")
 	
 # bundles general resources
 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
 	COMMAND mkdir ARGS -p ${BUNDLE_RESOURCES_DIR}
 	COMMAND cp ARGS  "${CMAKE_SOURCE_DIR}/src/graphic-resources/fontmatrix.icns" ${BUNDLE_RESOURCES_DIR}
-	COMMAND cp ARGS ${FM_TEMPLATES_FILES} ${FM_STYLE_FILES} ${FM_WELCOME_FILES}  ${BUNDLE_RESOURCES_DIR}
+	COMMAND cp ARGS ${FM_TEMPLATES_FILES} ${FM_STYLE_FILES} ${FM_WELCOME_FILES} ${FM_HELP_FILES} ${BUNDLE_RESOURCES_DIR}
 	)
 # bundles QM files
 	ADD_CUSTOM_COMMAND( TARGET translation POST_BUILD
         COMMAND mkdir ARGS -p ${BUNDLE_LOCALES_DIR}
         COMMAND cp ARGS ${fontmatrix_QMS} ${BUNDLE_LOCALES_DIR}
 	)
-# bundles libraries
-# 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
-# 	COMMAND mkdir ARGS -p ${BUNDLE_LIBRARIES_DIR}
-# 	COMMAND cp ARGS ${FREETYPE_LIBRARIES} ${BUNDLE_LIBRARIES_DIR}
-# 	)
-# bundles frameworks
-# 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
-#         COMMAND mkdir ARGS -p ${BUNDLE_FRAMEWORKS_DIR}
-#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtCore.framework ${BUNDLE_FRAMEWORKS_DIR}
-#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtGui.framework ${BUNDLE_FRAMEWORKS_DIR}
-#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtXml.framework ${BUNDLE_FRAMEWORKS_DIR}
-#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtSvg.framework ${BUNDLE_FRAMEWORKS_DIR}
-#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtNetwork.framework ${BUNDLE_FRAMEWORKS_DIR}
-#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtWebKit.framework ${BUNDLE_FRAMEWORKS_DIR}
-#         COMMAND rsync ARGS -av --exclude 'Headers/*' /Library/Frameworks/QtOpenGL.framework ${BUNDLE_FRAMEWORKS_DIR}
-#        )
+# bundles libs
 	ADD_CUSTOM_COMMAND(TARGET ${PROGNAME} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} ARGS -Dinput_file=${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/${PROGNAME} -P ${CMAKE_MODULE_PATH}/OwnIngestOSXBundleLibraries.cmake
 	)

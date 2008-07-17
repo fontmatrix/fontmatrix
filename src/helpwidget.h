@@ -36,7 +36,7 @@ class HelpWidget : public QDialog, private Ui::Help
 	private slots:
 		void slotIsClosing();
 	signals:
-		void close();
+		void end();
 
 };
 

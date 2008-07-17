@@ -154,8 +154,7 @@ void typotek::initMatrix()
 	mainDock->setWidget ( ListDockWidget::getInstance() );
 	addDockWidget ( fontmatrix::DockPosition[mainDockArea], mainDock );
 
-	theHelp = new HelpWidget( this );
-	
+
 	createActions();
 	createMenus();
 	createStatusBar();
@@ -197,7 +196,6 @@ void typotek::doConnect()
 		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( QString ) ), getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 
 	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
-	connect(theHelp,SIGNAL(close()),this,SLOT(updateHelpWindowsStatus()));
 	connect(FMLayout::getLayout()->optionDialog,SIGNAL(finished( int )),this,SLOT(slotUpdateLayOptStatus()));
 	
 
@@ -610,7 +608,7 @@ void typotek::createActions()
 	helpAct->setCheckable(true);
 	helpAct->setChecked(false);
 	scuts->add(helpAct);
-	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( help() ) );
+	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpBegin() ) );
 
 	tagsetAct = new QAction ( tr ( "&Tag Sets" ),this );
 	tagsetAct->setIcon ( QIcon ( ":/fontmatrix_tagseteditor_icon.png" ) );
@@ -1219,29 +1217,27 @@ void typotek::slotDeactivateCurrents()
 		theMainView->slotDesactivateAll();
 }
 
-void typotek::help()
+void typotek::helpBegin()
 {
-	if(theHelp->isVisible())
-	{
-		theHelp->hide();
-	}
-	else
-	{
-		theHelp->show();
-	}
-	updateHelpWindowsStatus();
+	theHelp = new HelpWidget(this);
+	helpAct->setChecked(true);
+	
+	connect( theHelp, SIGNAL( end() ), this, SLOT(helpEnd()) );
+	
+	disconnect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpBegin() ) );
+	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpEnd() ) );
+		
+	theHelp->show();
 }
 
-void typotek::updateHelpWindowsStatus()
+void typotek::helpEnd()
 {
-	if(theHelp->isVisible())
-	{
-		helpAct->setChecked(true);
-	}
-	else
-	{
-		helpAct->setChecked(false);
-	}		
+	helpAct->setChecked(false);
+	
+	disconnect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpEnd() ) );
+	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpBegin() ) );
+	
+	theHelp->deleteLater();
 }
 
 

@@ -4,29 +4,64 @@
 	<head>
 		<title>Bienvenue dans Fontmatrix</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style type="text/css">
+			body{
+				margin-left:10px;
+				margin-right:180px;
+				padding:10px;
+				background: #FFFAF0;
+			}
+			.par{
+				text-align: justify;
+				font-family: helvetica, sans-serif;
+				font-size: 1em;
+				font-weight: bold;
+			}
+			#welcome-font{
+				text-align: center;
+				font-family: serif;
+    			color: #fefefe;
+    			font-size : 1.5em;
+    			text-decoration: blink ;
+  			}
+			.list{
+				text-align: justify;
+				font-family: helvetica, sans-serif;
+				font-size: 0.85em;
+				margin-left: 1%;
+			}
+		</style>
 	</head>
-<body class="welcome-wrapper">
+<body>
 	<img src="##WELCOME_PNG##"/>
-	<div id="welcome-font" align="right">
-		##WELCOME_FONT##
+	<br clear="all" />
+	<div class="welcome-font" align="center">
+		<strong>##WELCOME_FONT##</strong>
 	</div>
-	<div class="welcome-par">
-		Fontmatrix se veut avant tout un gestionnaire de polices de caractères, ou fontes, numériques. Ensuite, il nous a paru intéressant d’en faire aussi un lieu d’expérimentations pour ce qui concerne le rendu de texte, etc.
+	<br clear="all" />
+	<div class="par">
+		Fontmatrix se veut avant tout un gestionnaire de polices de caractères, ou fontes, numériques.
+		Ensuite, il nous a paru intéressant d’en faire aussi un lieu d’expérimentations pour ce qui concerne
+		le rendu de texte, etc.
 	</div>
-	<div class="welcome-par">
-		Ce logiciel permet entre autres de :
-		
-		<div class="welcome-listitem">activer ou deactiver vos fontes;</div>
-		<div class="welcome-listitem">Étiqueter les fontes;</div>
-		<div class="welcome-listitem">Avoir un aperçu d’une fonte non installée, à l’écran ou imprimé;</div>
-		<div class="welcome-listitem">Produire un catalogue selon un gabarit;</div>
-		<div class="welcome-listitem">Avoir un aperçu des fonctionnalité OpenType;</div>
-		<div class="welcome-listitem">Plus ou moins gérer des fontes se trouvant sur un serveur distant;</div>
-		<div class="welcome-listitem">etc.</div>
-		
+	<br clear="all" />
+	<div class="list">
+		<b>Ce logiciel permet entre autres de :</b><br />
+
+		<ul>
+			<li>Activer ou désactiver vos fontes</li>
+			<li>Étiqueter les fontes</li>
+			<li>Avoir un aperçu d’une fonte non installée, à l’écran ou imprimé</li>
+			<li>Produire un catalogue selon un gabarit</li>
+			<li>Avoir un aperçu des fonctionnalités OpenType</li>
+			<li>Plus ou moins gérer des fontes se trouvant sur un serveur distant</li>
+			<li>etc.</li>
+		</ul>
 	</div>
-	<div class="welcome-par">
+	<div class="par">
 		En espérant que vous en aurez l’usage.
+		<!-- Pour ajouter une image
+			<img src="##RECOURCES_DIR##/preferences.png"> -->
 	</div>
 </body>
 </html>

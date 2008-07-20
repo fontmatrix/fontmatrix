@@ -2166,7 +2166,8 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	double sizz = 50;
 	charcode = begin_code;
 	QPen selPen ( Qt::gray );
-	QFont infoFont ( "Helvetica",8 );
+	
+	QFont infoFont ( typotek::getInstance()->getChartInfoFontName() , typotek::getInstance()->getChartInfoFontSize() );
 	QBrush selBrush ( QColor ( 255,255,255,0 ) );
 	if ( begin_code >= 0 )
 	{
@@ -2387,7 +2388,7 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 
 
 	QPen selPen ( Qt::gray );
-	QFont infoFont ( "Helvetica", 10 );
+	QFont infoFont (  typotek::getInstance()->getChartInfoFontName() , typotek::getInstance()->getChartInfoFontSize()  );
 	QBrush selBrush ( QColor ( 255,255,255,0 ) );
 
 	while ( charcode <= end_code && gindex )

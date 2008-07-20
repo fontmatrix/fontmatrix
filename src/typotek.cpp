@@ -768,6 +768,8 @@ void typotek::readSettings()
 	defaultOTFLang = settings.value("OTFLang").toString();
 	defaultOTFGPOS = settings.value("OTFGPOS").toString().split(";",QString::SkipEmptyParts);
 	defaultOTFGSUB = settings.value("OTFGSUB").toString().split(";",QString::SkipEmptyParts);
+	chartInfoFontSize = settings.value("ChartInfoFontSize", 8).toInt();
+	chartInfoFontName = settings.value("ChartInfoFontFamily", QFont().family() ).toString();
 }
 
 void typotek::writeSettings()
@@ -886,7 +888,7 @@ void typotek::addFcDirItem(const QString & dirPath)
 QStringList typotek::getSystemFontDirs()
 {
 	QStringList retList;
-#ifdef HAVE_FONTCONFIG // For Unices (OSX included)
+#ifdef HAVE_FONTCONFIG // For Unices (OSX excluded)
 	FcConfig* FcInitLoadConfig();
 	FcStrList *sysDirList = FcConfigGetFontDirs(0);
 	QString sysDir( (char*)FcStrListNext(sysDirList) );
@@ -900,6 +902,11 @@ QStringList typotek::getSystemFontDirs()
 		sysDir = ( (char*)FcStrListNext(sysDirList) );
 	}
 #endif //HAVE_FONTCONFIG
+#ifdef PLATFORM_APPLE
+	retList << "/Library/Fonts";
+	retList << "/Network/Library/Fonts";
+	retList << "/System/Library/Fonts";
+#endif // PLATFORM_APPLE
 #if _WIN32
 	retList << getWin32SystemFontDir();
 #endif // _WIN32

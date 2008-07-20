@@ -72,6 +72,10 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void updateWord(QString);
 		void updateWordSize(double);
 		void updateWordRTL(int);
+		
+		void updateChartFontFamily(const QFont & font);
+		void updateChartFontSize(int);
+		
 		void setupFontEditor(QString);
 		void slotFontEditorBrowse();
 

@@ -215,6 +215,9 @@ class typotek:public QMainWindow
 		QString defaultOTFLang;
 		QStringList defaultOTFGPOS;
 		QStringList defaultOTFGSUB;
+		
+		int chartInfoFontSize;
+		QString chartInfoFontName;
 
 	public:
 		int getFontCount(){return fontMap.count(); }
@@ -291,20 +294,10 @@ class typotek:public QMainWindow
 
 		bool insertTemporaryFont(const QString& path);
 
-	bool familySchemeFreetype() const
-	{
-		return m_familySchemeFreetype;
-	}
-
-	void setFamilySchemeFreetype ( bool theValue )
-	{
-		m_familySchemeFreetype = theValue;
-	}
+	bool familySchemeFreetype() const{return m_familySchemeFreetype;}
+	void setFamilySchemeFreetype ( bool theValue ){m_familySchemeFreetype = theValue;}
 	
-	QString welcomeURL() const
-	{
-		return m_welcomeURL;
-	}
+	QString welcomeURL() const{return m_welcomeURL;}
 
 	FMHyphenator* getHyphenator() const;
 
@@ -320,6 +313,12 @@ class typotek:public QMainWindow
 	void startProgressJob(int max);
 	void runProgressJob(int i = 0);
 	void endProgressJob();
+
+	int getChartInfoFontSize() const{return chartInfoFontSize;}
+	QString getChartInfoFontName() const{return chartInfoFontName;}
+
+	void setChartInfoFontSize ( int theValue ){chartInfoFontSize = theValue;}
+	void setChartInfoFontName ( const QString& theValue ){chartInfoFontName = theValue;}	
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

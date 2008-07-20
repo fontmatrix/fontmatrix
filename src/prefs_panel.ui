@@ -82,8 +82,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>669</width>
-         <height>553</height>
+         <width>679</width>
+         <height>567</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_5" >
@@ -117,8 +117,11 @@
              <property name="title" >
               <string>Show "All" actions</string>
              </property>
+             <property name="alignment" >
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
              <property name="flat" >
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="checkable" >
               <bool>true</bool>
@@ -230,7 +233,7 @@
           </layout>
          </widget>
         </item>
-        <item row="2" column="0" >
+        <item row="3" column="0" >
          <widget class="QGroupBox" name="groupBox_4" >
           <property name="title" >
            <string>Font Editor</string>
@@ -275,35 +278,35 @@
           </layout>
          </widget>
         </item>
-        <item row="3" column="0" >
+        <item row="4" column="0" >
          <widget class="QCheckBox" name="initTagBox" >
           <property name="text" >
            <string>Ask for tag names when importing fonts</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0" >
+        <item row="5" column="0" >
          <widget class="QCheckBox" name="showNamesBox" >
           <property name="text" >
            <string>Show names of imported fonts after import process</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0" >
+        <item row="6" column="0" >
          <widget class="QCheckBox" name="splashCheck" >
           <property name="text" >
            <string>Show splash at startup</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="0" >
+        <item row="7" column="0" >
          <widget class="QCheckBox" name="familyNameScheme" >
           <property name="text" >
            <string>Don’t use preferred name scheme (will affect only newly imported fonts)</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="0" >
+        <item row="8" column="0" >
          <spacer name="verticalSpacer" >
           <property name="orientation" >
            <enum>Qt::Vertical</enum>
@@ -315,6 +318,41 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QGroupBox" name="groupBox_7" >
+          <property name="title" >
+           <string>Chart Subtitle Font</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6" >
+           <item row="0" column="0" >
+            <widget class="QFontComboBox" name="chartFontCombo" />
+           </item>
+           <item row="0" column="1" >
+            <widget class="QLabel" name="label_8" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+               <horstretch>1</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text" >
+              <string>size</string>
+             </property>
+             <property name="alignment" >
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2" >
+            <widget class="QSpinBox" name="chartFontSpin" >
+             <property name="suffix" >
+              <string> pt</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>

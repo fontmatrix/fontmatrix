@@ -35,6 +35,9 @@ PrefsPanelDialog::PrefsPanelDialog ( QWidget *parent )
 	initTagBox->setChecked ( typotek::getInstance()->initialTags() );
 	showNamesBox->setChecked ( typotek::getInstance()->showImportedFonts() );
 	familyNameScheme->setChecked ( !typotek::getInstance()->familySchemeFreetype() );
+	
+	chartFontCombo->setCurrentFont ( QFont(typotek::getInstance()->getChartInfoFontName()) );
+	chartFontSpin->setValue( typotek::getInstance()->getChartInfoFontSize() );
 
 	QSettings settings;
 // 	qDebug()<< "ss" << settings.value("SplashScreen",false).toBool();
@@ -134,6 +137,9 @@ void PrefsPanelDialog::doConnect()
 	connect ( previewWord, SIGNAL ( textChanged ( const QString ) ), this, SLOT ( updateWord ( QString ) ) );
 	connect ( previewSizeSpin, SIGNAL ( valueChanged ( double ) ), this, SLOT ( updateWordSize ( double ) ) );
 	connect ( previewIsRTL, SIGNAL ( stateChanged ( int ) ), this, SLOT ( updateWordRTL ( int ) ) );
+	
+	connect ( chartFontCombo, SIGNAL( currentFontChanged ( const QFont& ) ), this, SLOT(updateChartFontFamily( const QFont& ) ) );
+	connect ( chartFontSpin, SIGNAL( valueChanged( int ) ), this, SLOT(updateChartFontSize(int)) );
 
 	connect ( fontEditorPath, SIGNAL ( textChanged ( const QString ) ), this, SLOT ( setupFontEditor ( QString ) ) );
 	connect ( fontEditorBrowse, SIGNAL ( clicked() ), this, SLOT ( slotFontEditorBrowse() ) );
@@ -623,6 +629,23 @@ void PrefsPanelDialog::slotClose()
 {
 	applySampleText();
 	close();
+}
+
+void PrefsPanelDialog::updateChartFontFamily(const QFont & font)
+{
+	QSettings settings;
+	settings.setValue("ChartInfoFontFamily" , font.family());
+	
+	typotek::getInstance()->setChartInfoFontName(font.family());
+	
+}
+
+void PrefsPanelDialog::updateChartFontSize(int s)
+{
+	QSettings settings;
+	settings.setValue("ChartInfoFontSize" , s);
+	
+	typotek::getInstance()->setChartInfoFontSize(s);
 }
 
 

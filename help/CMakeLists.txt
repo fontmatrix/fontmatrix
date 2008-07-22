@@ -33,6 +33,8 @@ ${FM_HELP_DIR}js/jquery.jtabs.pack.js
 )
 
 SET( FM_HELP_GRAPHICS
+${FM_HELP_DIR}img/tab-left.png
+${FM_HELP_DIR}img/tab-right.png
 # DA
 # DE
 # EN
@@ -43,6 +45,11 @@ ${FM_HELP_DIR}img/en/import_en.png
 ${FM_HELP_DIR}img/en/preferences_en.png
 # FI
 # FR
+${FM_HELP_DIR}img/fr/catalogue-fontes_fr.png
+${FM_HELP_DIR}img/fr/editeur-collections_fr.png
+${FM_HELP_DIR}img/fr/fontmatrix_fr.png
+${FM_HELP_DIR}img/fr/import-fonts_fr.png
+${FM_HELP_DIR}img/fr/preferences_fr.png
 # HI
 # NB
 # NL

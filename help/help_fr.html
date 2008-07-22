@@ -4,72 +4,10 @@
 <head>
 <title>Bienvenue dans Fontmatrix</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<style type="text/css">
-body{
-	font-family: Helvetica, Arial, sans-serif;
-	margin:0px;
-	padding:5px;
-	background: #FFFAF0;
-}
-.par{
-	text-align: justify;
-	font-family: Helvetica, sans-serif;
-	font-size: 1em;
-}
-.list{
-	text-align: justify;
-	font-family: Helvetica, sans-serif;
-	font-size: 1em;
-	margin-left: 0;
-}
-#welcome{
-	text-align: center;
-	font-family: serif;
-    color: #fefefe;
-    font-size: 1.5em;
-}
-h1{color: #A52A2A;}
-h2{color: #A52A2A;}
-h3{color: #1C86EE;}
-h4{color: #AA5500;}
-
-/** tabs **/
-
-div.tabContent {
-	display:none;
-}
-ul.tabs {
-	margin:20px 0 0 0 ;
-	padding:0px;
-	border-bottom:1px solid #D2D2D2;
-	height:1.8em;
-}
-ul.tabs li {
-	background:url(help/img/tab-left.gif) left top no-repeat;
-	padding-left:4px;
-	float:left;
-	margin:0;
-	list-style-type:none;
-}
-ul.tabs a {
-	background:url(help/img/tab-right.gif) right top no-repeat;
-	padding:2px 12px;
-	border-bottom:1px solid #D2D2D2;
-	text-decoration:none;
-	display:block;
-	color:#333;
-	font-size:13px;
-}
-ul.tabs li.current a, ul.tabs a:hover {
-	background-position:100% -150px;
-	border-bottom:1px solid #BF0000;
-}
-ul.tabs li.current {
-	background-position:0 -150px;
-}
+<link href="helpbase.css" rel="stylesheet" type="text/css" />
 </style>
-<script src="help/js/jquery.js"></script>
-<script src="help/js/jquery.jtabs.pack.js"></script>
+<script src="jquery.js"></script>
+<script src="jquery.jtabs.pack.js"></script>
 <script>
 var ctx = '';
 $(function() {
@@ -99,7 +37,7 @@ $(function() {
 	    <tr>
 	    	<td width="*">
 	    		<div align="left" valign="top">
-	    			<img src="help/img/fr/fontmatrix.png" style="width:99%;"/>
+	    			<img src="fontmatrix_fr.png" style="width:99%;"/>
 	    		</div>
 	    	</td>
 	        <td width="35%" align="left" valign="top">
@@ -134,7 +72,7 @@ de fontes que vous souhaitez gérer à l’aide de Fontmatrix.</div>
 <div id="rbq2" class="tabContent">
 	<h3><strong>Gérer les fontes</strong></h3>
 		<h4><strong>Importer des fontes</strong></h4>
-		<div class="par"><img src="help/img/fr/import-fonts.png" border="0"
+		<div class="par"><img src="import-fonts_fr.png" border="0"
 		style="float:left;margin-right:10px; margin-top: 2px; margin-bottom: 2px;"/>
 		Pour ce faire, deux moyens sont à votre disposition. Le premier consiste à sélectionner l’entrée
 		<strong>Importer...</strong> du menu <strong>Fichier</strong>. Il vous sera alors demandé de choisir un répertoire,
@@ -147,7 +85,7 @@ de fontes que vous souhaitez gérer à l’aide de Fontmatrix.</div>
 
 		<h4><strong>L’interface</strong></h4>
 		<div class="par">La fenêtre principale de Fontmatrix est séparée en deux. À gauche, par défaut, se trouvent les listes
-		des fontes dont Fontmatrix a connaissance. L’une contenant les noms et l’autre des aperçus. <img src="help/img/fr/catalogue-fontes.png"
+		des fontes dont Fontmatrix a connaissance. L’une contenant les noms et l’autre des aperçus. <img src="catalogue-fontes_fr.png"
 		border="0" style="width:35%;float:right;margin-left:10px; margin-top: 2px; margin-bottom: 2px;" /> L’autre partie présente un
 		ensemble d’onglets contenant chacun un type d’information relatif à la fonte présentement sélectionnée. <strong>
 		Informations</strong> regroupe les informations collectées dans les champs prévus à cet effet par le format de fichier

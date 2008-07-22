@@ -40,14 +40,14 @@ ul.tabs {
 	height:1.8em;
 }
 ul.tabs li {
-	background:url(help/img/tab-left.gif) left top no-repeat;
+	background:url("tab-left.png") left top no-repeat;
 	padding-left:4px;
 	float:left;
 	margin:0;
 	list-style-type:none;
 }
 ul.tabs a {
-	background:url(help/img/tab-right.gif) right top no-repeat;
+	background:url("tab-right.png") right top no-repeat;
 	padding:2px 12px;
 	border-bottom:1px solid #D2D2D2;
 	text-decoration:none;

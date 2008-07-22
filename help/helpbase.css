@@ -1,0 +1,64 @@
+/* helpbase.css */
+
+body{
+	font-family: Helvetica, Arial, sans-serif;
+	margin:0px;
+	padding:5px;
+	background: #FFFAF0;
+}
+.par{
+	text-align: justify;
+	font-family: Helvetica, sans-serif;
+	font-size: 1em;
+}
+.list{
+	text-align: justify;
+	font-family: Helvetica, sans-serif;
+	font-size: 1em;
+	margin-left: 0;
+}
+#welcome{
+	text-align: center;
+	font-family: serif;
+    color: #fefefe;
+    font-size: 1.5em;
+}
+h1{color: #A52A2A;}
+h2{color: #A52A2A;}
+h3{color: #1C86EE;}
+h4{color: #AA5500;}
+
+/** tabs **/
+
+div.tabContent {
+	display:none;
+}
+ul.tabs {
+	margin:20px 0 0 0 ;
+	padding:0px;
+	border-bottom:1px solid #D2D2D2;
+	height:1.8em;
+}
+ul.tabs li {
+	background:url(help/img/tab-left.gif) left top no-repeat;
+	padding-left:4px;
+	float:left;
+	margin:0;
+	list-style-type:none;
+}
+ul.tabs a {
+	background:url(help/img/tab-right.gif) right top no-repeat;
+	padding:2px 12px;
+	border-bottom:1px solid #D2D2D2;
+	text-decoration:none;
+	display:block;
+	color:#333;
+	font-size:13px;
+}
+ul.tabs li.current a, ul.tabs a:hover {
+	background-position:100% -150px;
+	border-bottom:1px solid #BF0000;
+}
+ul.tabs li.current {
+	background-position:0 -150px;
+}

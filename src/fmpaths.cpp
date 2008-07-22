@@ -85,6 +85,22 @@ QString FMPaths::TranslationFile()
 	return QMFilePathComplete;
 }
 
+QString FMPaths::HelpFilePath()
+{
+	if(getThis()->FMPathsDB.contains("HelpFile"))
+		return getThis()->FMPathsDB["HelpFile"];
+	QString hf;
+#ifdef PLATFORM_APPLE
+	hf = ResourcesDir() + "help_" + sysLoc() + ".html";
+#elif _WIN32
+	hf = ResourcesDir() + "help_" + sysLoc() + ".html";
+#else
+	hf = ResourcesDir() + "help/help_" + sysLoc() + ".html";
+#endif
+	getThis()->FMPathsDB["HelpFile"] = hf;
+	return getThis()->FMPathsDB["HelpFile"];
+}
+
 QString FMPaths::ResourcesDir()
 {
 	if(getThis()->FMPathsDB.contains("ResourcesDir"))

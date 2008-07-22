@@ -178,23 +178,8 @@ ${CMAKE_SOURCE_DIR}/src/messages/welcome_uk.html
 ${CMAKE_SOURCE_DIR}/src/messages/welcome_zh_CN.html
 ${CMAKE_SOURCE_DIR}/src/messages/welcome_zh_TW.html
 )
-SET(FM_HELP_FILES
-${CMAKE_SOURCE_DIR}/src/messages/help_da.html
-${CMAKE_SOURCE_DIR}/src/messages/help_de.html
-${CMAKE_SOURCE_DIR}/src/messages/help_en.html
-${CMAKE_SOURCE_DIR}/src/messages/help_fi.html
-${CMAKE_SOURCE_DIR}/src/messages/help_fr.html
-${CMAKE_SOURCE_DIR}/src/messages/help_hi.html
-${CMAKE_SOURCE_DIR}/src/messages/help_nb.html
-${CMAKE_SOURCE_DIR}/src/messages/help_nl.html
-${CMAKE_SOURCE_DIR}/src/messages/help_no.html
-${CMAKE_SOURCE_DIR}/src/messages/help_ru.html
-${CMAKE_SOURCE_DIR}/src/messages/help_sr.html
-${CMAKE_SOURCE_DIR}/src/messages/help_sv.html
-${CMAKE_SOURCE_DIR}/src/messages/help_uk.html
-${CMAKE_SOURCE_DIR}/src/messages/help_zh_CN.html
-${CMAKE_SOURCE_DIR}/src/messages/help_zh_TW.html
-)
+
+INCLUDE(help/CMakeLists.txt)
 
 # tell cmake to process CMakeLists.txt in that subdirectory
 SET(HYPHENATE_DIR src/hyphenate)
@@ -214,6 +199,7 @@ IF(UNIX AND NOT APPLE)
 	SET(MANDIR "share/man/")
 	SET(ICONDIR "share/icons/hicolor/48x48/apps/")
 	SET(RESOURCESDIR "share/fontmatrix/resources/")
+	SET(HELPDIR "share/fontmatrix/resources/help/")
 	
 	INSTALL(FILES
 	fontmatrix.desktop
@@ -234,8 +220,12 @@ IF(UNIX AND NOT APPLE)
 	${FM_TEMPLATES_FILES}
 	${FM_STYLE_FILES}
 	${FM_WELCOME_FILES}
-	${FM_HELP_FILES}
 	DESTINATION "${RESOURCESDIR}"
+	)
+	
+	INSTALL(FILES
+	${FM_HELP_FILES}
+	DESTINATION "${HELPDIR}"
 	)
 ENDIF(UNIX AND NOT APPLE)
 

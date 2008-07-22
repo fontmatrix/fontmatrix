@@ -25,5 +25,7 @@ class FMPaths
 		static QString TranslationFile();
 
 		static QString ResourcesDir();
+		
+		static QString HelpFilePath();
 };
 #endif

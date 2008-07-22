@@ -26,7 +26,7 @@ HelpWidget::HelpWidget(QWidget *parent)
 {
 	setupUi(this);
 	
-	theText->load(QUrl::fromLocalFile(FMPaths::ResourcesDir() + "help_" + FMPaths::sysLoc() + ".html"));
+	theText->load(QUrl::fromLocalFile(FMPaths::HelpFilePath()));
 	
 	connect(closeButton,SIGNAL( clicked() ),this,SLOT( slotIsClosing() ));
 	connect(this,SIGNAL( finished(int) ),this,SLOT( slotIsClosing() ));

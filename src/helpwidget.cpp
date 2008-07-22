@@ -26,10 +26,17 @@ HelpWidget::HelpWidget(QWidget *parent)
 {
 	setupUi(this);
 	
+	theText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 	theText->load(QUrl::fromLocalFile(FMPaths::HelpFilePath()));
+	progressBar->hide();
 	
 	connect(closeButton,SIGNAL( clicked() ),this,SLOT( slotIsClosing() ));
 	connect(this,SIGNAL( finished(int) ),this,SLOT( slotIsClosing() ));
+	
+	connect( theText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
+	connect( theText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
+	connect( theText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
+	connect( theText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
 }
 
 
@@ -40,6 +47,30 @@ HelpWidget::~HelpWidget()
 void HelpWidget::slotIsClosing()
 {
 	emit end();
+}
+
+void HelpWidget::slotWebLink(const QUrl & url)
+{
+	qDebug()<<"slotWebLink("<<url<<")";
+	urlLabel->setText(url.toString());
+	theText->load(url);
+}
+
+void HelpWidget::slotWebStart()
+{
+	progressBar->setRange(0,100);
+	progressBar->show();
+	
+}
+
+void HelpWidget::slotWebLoad(int i)
+{
+	progressBar->setValue(i);
+}
+
+void HelpWidget::slotWebFinished(bool )
+{
+	progressBar->hide();
 }
 
 

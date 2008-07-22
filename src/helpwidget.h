@@ -35,6 +35,12 @@ class HelpWidget : public QDialog, private Ui::Help
 
 	private slots:
 		void slotIsClosing();
+		
+		void slotWebLink(const QUrl & url );
+		void slotWebStart();
+		void slotWebLoad(int i);
+		void slotWebFinished(bool);
+		
 	signals:
 		void end();
 

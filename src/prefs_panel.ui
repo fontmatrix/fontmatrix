@@ -105,10 +105,17 @@
            <item>
             <widget class="QCheckBox" name="closeToSystray" >
              <property name="text" >
-              <string>Close to System Tray</string>
+              <string>Close to system tray</string>
              </property>
              <property name="checked" >
               <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="startToSystemTray" >
+             <property name="text" >
+              <string>Start minimized to system tray</string>
              </property>
             </widget>
            </item>

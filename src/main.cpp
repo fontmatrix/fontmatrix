@@ -34,6 +34,7 @@
 #include "typotek.h"
 #include "listdockwidget.h"
 #include "fmpaths.h"
+#include "systray.h"
 
 
 bool __FM_SHOW_FONTLOADED;
@@ -48,7 +49,7 @@ int main ( int argc, char *argv[] )
 {
 	QCoreApplication::setOrganizationName("Undertype");
 	QCoreApplication::setApplicationName("fontmatrix");
-	
+
 	Q_INIT_RESOURCE ( application );
 	QApplication app ( argc, argv );
 	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );
@@ -72,12 +73,12 @@ int main ( int argc, char *argv[] )
 	{
 		__FM_SHOW_FONTLOADED = false;
 	}
-	
+
 	typotek * mw = new typotek;
-	
-	
+
+
 	QSettings settings;
-	
+
 	QSplashScreen theSplash;
 	QPixmap theSplashPix ( ":/fontmatrix_splash.png" );
 	bool splash = settings.value("SplashScreen", false).toBool();
@@ -89,7 +90,7 @@ int main ( int argc, char *argv[] )
 				    theSplashPix.rect().width(),
 						    theSplashPix.rect().height() ).toImage();
 		QImage splashImg = theSplashPix.toImage();
-		
+
 		for(int posx = 0; posx < rootW.width() ;++posx)
 		{
 			for(int posy =0;posy < rootW.height();++posy)
@@ -117,22 +118,33 @@ int main ( int argc, char *argv[] )
 			QObject::connect ( mw,SIGNAL ( relayStartingStepOut ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
 		}
 	}
-	
+
 	if(splash)
 		theSplash.show();
-	
+
 	mw->initMatrix();
-	mw->show();
-	
+
+	if ( typotek::getInstance()->getSystray()->isVisible() && settings.value ( "SystrayCloseToTray", true ).toBool() ) {
+		qDebug() << "SystrayCloseToTray TRUE";
+		if ( ! settings.value ( "SystrayStartToTray", false ).toBool() ) {
+			mw->show();
+			qDebug() << "SystrayMinToTray FALSE";
+		} else
+			qDebug() << "SystrayMinToTray TRUE";
+	} else {
+		qDebug() << "SystrayCloseToTray FALSE";
+		mw->show();
+	}
+
 	if(splash)
 		theSplash.finish ( mw );
 
 	LazyInit lazyInit;
 	// Now we should have A running ListDockWidget in main thread
 	QObject::connect(&lazyInit, SIGNAL(endOfRun()), ListDockWidget::getInstance(), SLOT(unlockFilter()) );
-	
+
 	lazyInit.start(QThread::LowestPriority);
-	
+
 	return app.exec();
 }
 

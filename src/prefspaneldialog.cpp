@@ -35,7 +35,7 @@ PrefsPanelDialog::PrefsPanelDialog ( QWidget *parent )
 	initTagBox->setChecked ( typotek::getInstance()->initialTags() );
 	showNamesBox->setChecked ( typotek::getInstance()->showImportedFonts() );
 	familyNameScheme->setChecked ( !typotek::getInstance()->familySchemeFreetype() );
-	
+
 	chartFontCombo->setCurrentFont ( QFont(typotek::getInstance()->getChartInfoFontName()) );
 	chartFontSpin->setValue( typotek::getInstance()->getChartInfoFontSize() );
 
@@ -60,14 +60,15 @@ void PrefsPanelDialog::initSystrayPrefs ( bool hasSystray, bool isVisible, bool 
 	{
 		systrayFrame->setEnabled ( false );
 		systrayFrame->setToolTip ( tr ( "Looks like your setup does not have a system tray available." ) );
-	}
-	systrayFrame->setToolTip ( "" );
+	} else
+		systrayFrame->setToolTip ( "" );
 	systrayFrame->setChecked ( isVisible );
 	activateAllFrame->setChecked ( hasActivateAll );
 	activateAllConfirmation->setChecked ( allConfirmation );
 	tagsConfirmation->setChecked ( tagConfirmation );
 	QSettings settings ;
 	closeToSystray->setChecked ( settings.value ( "SystrayCloseToTray", true ).toBool() );
+	startToSystemTray->setChecked ( settings.value ( "SystrayStartToTray", false ).toBool() );
 	previewSizeSpin->setValue ( typotek::getInstance()->getPreviewSize() );
 
 }
@@ -133,11 +134,12 @@ void PrefsPanelDialog::doConnect()
 	connect ( activateAllConfirmation, SIGNAL ( clicked ( bool ) ), this, SLOT ( setSystrayAllConfirmation ( bool ) ) );
 	connect ( tagsConfirmation, SIGNAL ( clicked ( bool ) ), this, SLOT ( setSystrayTagsConfirmation ( bool ) ) );
 	connect ( closeToSystray, SIGNAL ( clicked ( bool ) ), typotek::getInstance(), SLOT ( slotCloseToSystray ( bool ) ) );
+	connect ( startToSystemTray , SIGNAL ( clicked ( bool ) ), typotek::getInstance(), SLOT ( slotSystrayStart(bool) ) );
 
 	connect ( previewWord, SIGNAL ( textChanged ( const QString ) ), this, SLOT ( updateWord ( QString ) ) );
 	connect ( previewSizeSpin, SIGNAL ( valueChanged ( double ) ), this, SLOT ( updateWordSize ( double ) ) );
 	connect ( previewIsRTL, SIGNAL ( stateChanged ( int ) ), this, SLOT ( updateWordRTL ( int ) ) );
-	
+
 	connect ( chartFontCombo, SIGNAL( currentFontChanged ( const QFont& ) ), this, SLOT(updateChartFontFamily( const QFont& ) ) );
 	connect ( chartFontSpin, SIGNAL( valueChanged( int ) ), this, SLOT(updateChartFontSize(int)) );
 
@@ -177,7 +179,7 @@ void PrefsPanelDialog::applySampleText()
 		s.setValue ( "HyphenationDict", dictEdit->text() );
 		s.setValue ( "HyphLeft", leftBox->value() );
 		s.setValue ( "HyphRight", rightBox->value() );
-		
+
 	}
 	else   // use the previous values
 	{
@@ -635,16 +637,16 @@ void PrefsPanelDialog::updateChartFontFamily(const QFont & font)
 {
 	QSettings settings;
 	settings.setValue("ChartInfoFontFamily" , font.family());
-	
+
 	typotek::getInstance()->setChartInfoFontName(font.family());
-	
+
 }
 
 void PrefsPanelDialog::updateChartFontSize(int s)
 {
 	QSettings settings;
 	settings.setValue("ChartInfoFontSize" , s);
-	
+
 	typotek::getInstance()->setChartInfoFontSize(s);
 }
 

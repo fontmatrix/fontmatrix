@@ -184,7 +184,6 @@ void typotek::initMatrix()
 			qDebug()<<"Err H"<<dP;
 		}
 	}
-
 }
 
 
@@ -197,7 +196,7 @@ void typotek::doConnect()
 
 	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
 	connect(FMLayout::getLayout()->optionDialog,SIGNAL(finished( int )),this,SLOT(slotUpdateLayOptStatus()));
-	
+
 
 
 }
@@ -382,7 +381,7 @@ void typotek::open(QString path, bool announce, bool collect)
 		shouldAskTali = true;
 	}
 	theMainView->slotReloadFontList();
-	
+
 	save();
 }
 
@@ -734,12 +733,12 @@ void typotek::createMenus()
 void typotek::createStatusBar()
 {
 	statusBar()->showMessage ( tr ( "Ready" ) );
-	
+
 	statusProgressBar = new QProgressBar(this);
 	statusProgressBar->setMaximumSize(200,20);
 	statusBar()->addPermanentWidget(statusProgressBar);
 	statusProgressBar->hide();
-	
+
 	QFont statusFontFont ( "sans-serif",10 );
 	curFontPresentation = new QLabel ( tr ( "Nothing Selected" ) );
 	curFontPresentation->setAlignment ( Qt::AlignRight );
@@ -804,7 +803,7 @@ void typotek::checkOwnDir()
 	QString sep(QDir::separator());
 // #define PLATFORM_APPLE
 #ifdef PLATFORM_APPLE
-	
+
 	managedDir.setPath(QDir::homePath() + sep + "Library" + sep + "Fonts");
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + sep + "Library" + sep + "Fonts" );
@@ -814,11 +813,11 @@ void typotek::checkOwnDir()
 		dbDir.mkpath (QDir::homePath() + sep + "Library" + sep + "Fontmatrix");
 	}
 	fontsdata.setFileName ( QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep +"fontmatrix.data" );
-	
+
 #elif _WIN32
-	// For win we do not hide things because it does 
+	// For win we do not hide things because it does
 	// not work yet. So if you need to debug it will be simpler.
-	QString fontmanaged ( sep + "fontmatrix" ); 
+	QString fontmanaged ( sep + "fontmatrix" );
 	managedDir.setPath ( QDir::homePath() + fontmanaged );
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + fontmanaged );
@@ -1228,22 +1227,22 @@ void typotek::helpBegin()
 {
 	theHelp = new HelpWidget(this);
 	helpAct->setChecked(true);
-	
+
 	connect( theHelp, SIGNAL( end() ), this, SLOT(helpEnd()) );
-	
+
 	disconnect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpBegin() ) );
 	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpEnd() ) );
-		
+
 	theHelp->show();
 }
 
 void typotek::helpEnd()
 {
 	helpAct->setChecked(false);
-	
+
 	disconnect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpEnd() ) );
 	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpBegin() ) );
-	
+
 	theHelp->deleteLater();
 }
 
@@ -1466,6 +1465,12 @@ void typotek::slotCloseToSystray ( bool isEnabled )
 	QSettings settings ;
 	settings.setValue ( "SystrayCloseToTray", isEnabled );
 	settings.setValue ( "SystrayCloseNoteShown", false );
+}
+
+void typotek::slotSystrayStart( bool isEnabled )
+{
+	QSettings settings ;
+	settings.setValue ( "SystrayStartToTray", isEnabled );
 }
 
 void typotek::addNamedSampleFragment ( QString name, QString sampleFragment )
@@ -1834,7 +1839,7 @@ void typotek::printFamily()
 		qDebug()<<"s e T"<<idxS<<idxE<<t;
 		if(!t.isEmpty())
 			stl << t;
-		
+
 		idxS += idxE;
 		idxE = qrand() % 9;
 	}

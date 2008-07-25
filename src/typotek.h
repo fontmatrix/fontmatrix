@@ -90,6 +90,7 @@ class typotek:public QMainWindow
 		void open(QStringList files);
 		bool save();
 		void slotCloseToSystray(bool isEnabled);
+		void slotSystrayStart(bool isEnabled);
 		void slotUseInitialTags(bool isEnabled);
 		void showImportedFonts(int show);
 		bool showImportedFonts();
@@ -159,11 +160,11 @@ class typotek:public QMainWindow
 		QAction *printChartAct;
 		QAction *printPlaygroundAct;
 		QAction *printFamilyAct;
-		
+
 		HelpWidget *theHelp;
-		
+
 		QAction *layOptAct;
-		
+
 		QProgressBar *statusProgressBar;
 
 		MainViewWidget *theMainView;
@@ -209,13 +210,13 @@ class typotek:public QMainWindow
 		QMap<QString, FontItem*> temporaryFonts;
 
 		FMHyphenator *hyphenator;
-		
+
 // 		bool waitLayoutForPrint;
 		QString defaultOTFScript;
 		QString defaultOTFLang;
 		QStringList defaultOTFGPOS;
 		QStringList defaultOTFGSUB;
-		
+
 		int chartInfoFontSize;
 		QString chartInfoFontName;
 
@@ -296,7 +297,7 @@ class typotek:public QMainWindow
 
 	bool familySchemeFreetype() const{return m_familySchemeFreetype;}
 	void setFamilySchemeFreetype ( bool theValue ){m_familySchemeFreetype = theValue;}
-	
+
 	QString welcomeURL() const{return m_welcomeURL;}
 
 	FMHyphenator* getHyphenator() const;
@@ -309,7 +310,7 @@ class typotek:public QMainWindow
 	QStringList getDefaultOTFGPOS() const;
 	void setDefaultOTFGSUB ( const QStringList& theValue );
 	QStringList getDefaultOTFGSUB() const;
-	
+
 	void startProgressJob(int max);
 	void runProgressJob(int i = 0);
 	void endProgressJob();
@@ -318,7 +319,7 @@ class typotek:public QMainWindow
 	QString getChartInfoFontName() const{return chartInfoFontName;}
 
 	void setChartInfoFontSize ( int theValue ){chartInfoFontSize = theValue;}
-	void setChartInfoFontName ( const QString& theValue ){chartInfoFontName = theValue;}	
+	void setChartInfoFontName ( const QString& theValue ){chartInfoFontName = theValue;}
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

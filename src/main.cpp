@@ -125,16 +125,10 @@ int main ( int argc, char *argv[] )
 	mw->initMatrix();
 
 	if ( typotek::getInstance()->getSystray()->isVisible() && settings.value ( "SystrayCloseToTray", true ).toBool() ) {
-		qDebug() << "SystrayCloseToTray TRUE";
-		if ( ! settings.value ( "SystrayStartToTray", false ).toBool() ) {
+		if ( ! settings.value ( "SystrayStartToTray", false ).toBool() )
 			mw->show();
-			qDebug() << "SystrayMinToTray FALSE";
-		} else
-			qDebug() << "SystrayMinToTray TRUE";
-	} else {
-		qDebug() << "SystrayCloseToTray FALSE";
+	} else
 		mw->show();
-	}
 
 	if(splash)
 		theSplash.finish ( mw );

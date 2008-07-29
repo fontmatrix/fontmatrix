@@ -64,6 +64,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	setupUi ( this );
 
 	uRangeIsNotEmpty = false;
+	currentFonts.clear();
 
 	QSettings settings;
 	sampleFontSize = settings.value("SampleFontSize",12.0).toDouble();
@@ -140,7 +141,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	sampleText= typo->namedSample (typo->defaultSampleName());
 	
-	m_lists->previewList->setRefWidget ( this );
+// 	m_lists->previewList->setRefWidget ( this );
 	
 	QMap<QString, int> sTypes(FMShaperFactory::types());
 	for(QMap<QString, int>::iterator sIt = sTypes.begin(); sIt != sTypes.end() ; ++sIt)
@@ -384,7 +385,7 @@ void MainViewWidget::fillTree()
 	qDebug("TREE Time elapsed: %d ms", fillTime.elapsed());
 	fillTime.restart();
 
-	m_lists->previewList->slotRefill ( currentFonts, fontsetHasChanged );
+// 	m_lists->previewList->slotRefill ( currentFonts, fontsetHasChanged );
 	if ( curItem )
 	{
 // 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
@@ -454,7 +455,7 @@ void MainViewWidget::updateTree()
 		}
 	}
 
-	m_lists->previewList->slotRefill ( currentFonts, false );
+// 	m_lists->previewList->slotRefill ( currentFonts, false );
 	if ( curItem )
 	{
 // 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
@@ -578,7 +579,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			else
 				select =  * ( variantMap.begin() );
 
-			m_lists->previewList->slotSelect(select);
+// 			m_lists->previewList->slotSelect(select);
 			slotFontSelectedByName(select);
 
 		}
@@ -589,7 +590,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	{
 		QString fontname(item->toolTip(0));
 		bool wantActivate = (item->checkState(0) == Qt::Checked) ? true : false;
-		m_lists->previewList->slotSelect(fontname);
+// 		m_lists->previewList->slotSelect(fontname);
 		slotFontSelectedByName(fontname);
 		if ( !theVeryFont->isLocked() )
 		{
@@ -813,7 +814,7 @@ void MainViewWidget::slotSearch()
 {
 	qDebug()<<"slotSearch";
 	m_lists->fontTree->clear();
-	m_lists->previewList->slotRefill(QList<FontItem*>(), true);
+// 	m_lists->previewList->slotRefill(QList<FontItem*>(), true);
 	fontsetHasChanged = true;
 
 // 	QApplication::setOverrideCursor ( Qt::WaitCursor );
@@ -2080,6 +2081,12 @@ void MainViewWidget::slotWebLink(const QUrl & url)
 	qDebug()<<"slotWebLink("<<url<<")";
 	typo->showStatusMessage(tr("Load") + " " + url.toString());
 	fontInfoText->load(url);
+}
+
+QList<FontItem*> MainViewWidget::curFonts()
+{
+// 	qDebug()<<"curFonts"<<currentFonts.count();
+	return currentFonts;
 }
 
 

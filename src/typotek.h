@@ -101,7 +101,7 @@ class typotek:public QMainWindow
 	signals:
 		void tagAdded(QString);
 		void relayStartingStepOut(QString, int, QColor);
-		void previewDirectionHasChanged();
+		void previewHasChanged();
 // 		void wordHasChanged(QString);
 
 	private:
@@ -194,6 +194,7 @@ class typotek:public QMainWindow
 		QString templatesDir;
 		double previewSize;
 		bool previewRTL;
+		bool previewSubtitled;
 		bool m_familySchemeFreetype;
 		QString m_welcomeURL;
 
@@ -280,6 +281,8 @@ class typotek:public QMainWindow
 		double getPreviewSize(){ return previewSize; }
 		void setPreviewRTL(bool d);
 		bool getPreviewRTL(){ return previewRTL; }
+		void setPreviewSubtitled(bool d);
+		bool getPreviewSubtitled(){ return previewSubtitled; }
 
 		void removeFontItem(QString key);
 		void removeFontItem(QStringList keyList);
@@ -320,6 +323,9 @@ class typotek:public QMainWindow
 
 	void setChartInfoFontSize ( int theValue ){chartInfoFontSize = theValue;}
 	void setChartInfoFontName ( const QString& theValue ){chartInfoFontName = theValue;}
+
+	MainViewWidget* getTheMainView() const{return theMainView;}
+	
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

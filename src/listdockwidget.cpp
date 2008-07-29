@@ -20,8 +20,11 @@
 #include "listdockwidget.h"
 #include "typotek.h"
 #include "fontitem.h"
+#include "fmpreviewlist.h"
+#include "mainviewwidget.h"
 
 #include <QDebug>
+#include <QDesktopWidget>
 #include <QScrollBar>
 #include <QDirModel>
 #include <QStringListModel>
@@ -48,6 +51,16 @@ ListDockWidget::ListDockWidget()
 {
 	setupUi(this);
 	fontTree->setIconSize(QSize(32,32));
+	
+	
+	listPreview->setModelColumn(1);
+	listPreview->setViewMode(QListView::IconMode);
+	listPreview->setIconSize(QSize(listPreview->width(), 1.3 * typotek::getInstance()->getPreviewSize() * QApplication::desktop()->physicalDpiY() / 72.0));
+	listPreview->setUniformItemSizes(true);
+	listPreview->setMovement(QListView::Static);
+	
+	previewModel = new FMPreviewModel( this, listPreview );
+	listPreview->setModel(previewModel);
 
 	// Folders tree
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
@@ -126,6 +139,10 @@ ListDockWidget::ListDockWidget()
 	connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(slotFolderViewContextMenu(const QPoint &)));
 
 	connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(slotTabChanged(int)));
+	
+	connect(typotek::getInstance(),SIGNAL(previewHasChanged()),this,SLOT(slotPreviewUpdate()));
+	connect(listPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
+	connect(listPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 }
 
 
@@ -159,7 +176,7 @@ bool ListDockWidget::nameItemIsVisible(QTreeWidgetItem * item)
 
 void ListDockWidget::forcePreviewRefill()
 {
-	previewList->slotRefill(QList<FontItem*>(),false);
+// 	previewList->slotRefill(QList<FontItem*>(),false);
 }
 
 void ListDockWidget::unlockFilter()
@@ -411,6 +428,32 @@ QString ListDockWidget::fieldString(const QString & f)
 		return f.mid(0,maxFieldStringWidth - 1);
 	}
 	return f.mid(0,maxFieldStringWidth - 1) + ".";
+}
+
+void ListDockWidget::slotPreviewUpdate()
+{
+	previewModel->dataChanged();
+}
+
+void ListDockWidget::slotPreviewUpdateSize(int w)
+{
+	listPreview->setIconSize(QSize(w, 1.3 * typotek::getInstance()->getPreviewSize() * QApplication::desktop()->physicalDpiY() / 72.0));
+// 	previewModel->dataChanged();
+}
+
+void ListDockWidget::slotPreviewSelected(const QModelIndex & index)
+{
+	qDebug()<<"slotPreviewSelected("<<index<<")";
+	FontItem * fItem(typotek::getInstance()->getCurrentFonts().at(index.row()));
+	if(!fItem)
+	{
+		qDebug()<<"\t-FontItme invalid";
+		return;
+	}
+	QString fName(fItem->path());
+	qDebug()<<"\t+"<< fName;
+	if(!fName.isEmpty())
+		typotek::getInstance()->getTheMainView()->slotFontSelectedByName(fName);
 }
 
 

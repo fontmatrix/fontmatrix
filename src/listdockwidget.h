@@ -27,6 +27,7 @@
 #include <ui_listsdock.h>
 
 class QListWidgetItem;
+class FMPreviewModel;
 class QFontItem;
 class QDirModel;
 class QMenu;
@@ -84,6 +85,9 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		
 		QString fieldString(const QString& f);
 		int maxFieldStringWidth;
+		
+		FMPreviewModel *previewModel;
+				
 	public slots:
 		void unlockFilter();
 		void reloadTagsCombo();
@@ -96,6 +100,10 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void slotFolderViewContextMenu(const QPoint&);
 		void slotTabChanged(int i);
 		void slotPanoseChecked(bool checked);
+		
+		void slotPreviewUpdate();
+		void slotPreviewUpdateSize(int);
+		void slotPreviewSelected(const QModelIndex & index);
 
 	signals:
 		void folderSelectFont(const QString&);

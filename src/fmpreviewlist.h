@@ -23,12 +23,16 @@
 #include <QGraphicsView>
 #include <QMap>
 
+#include <QListView>
+#include <QAbstractListModel>
+
 class QGraphicsPixmapItem;
 class QGraphicsScene;
 class FontItem;
 class MainViewWidget;
 class QGraphicsRectItem;
 class QGraphicsItem;
+class QListView;
 
 struct FontPreviewItem
 {
@@ -82,6 +86,40 @@ class FMPreviewList : public QGraphicsView
 		void mousePressEvent ( QMouseEvent * e );
 		void resizeEvent ( QResizeEvent * event );
 		void keyPressEvent ( QKeyEvent * e );
+};
+
+/**
+	It’s time to setup a proper Model/view for this list.
+*/
+
+class FMPreviewModel : public QAbstractListModel
+{
+	public:
+		FMPreviewModel ( QObject * pa , QListView * wPa);
+		//returns a preview
+		QVariant data ( const QModelIndex &index, int role = Qt::DisplayRole ) const;
+		//returns flags for items
+		Qt::ItemFlags flags ( const QModelIndex &index ) const;
+		//returns the number of items
+		int rowCount ( const QModelIndex &parent ) const;
+		
+		void dataChanged();
+		
+	private:
+		QListView *m_view;
+};
+
+class FMPreviewView : public QListView
+{
+	Q_OBJECT
+	public:
+		FMPreviewView(QWidget * parent = 0);
+		~FMPreviewView(){};
+		
+	protected:
+		void resizeEvent ( QResizeEvent * event );
+	signals:
+		void widthChanged(int);
 };
 
 #endif

@@ -208,7 +208,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString defaultOrd() {return ord[0];};
 		QGraphicsScene* glyphsScene()const{return abcScene;};
 		QGraphicsScene* textScene()const{return loremScene;};
-		QList<FontItem*> curFonts(){return currentFonts;};
+		QList<FontItem*> curFonts();
 		FontItem* selectedFont(){return theVeryFont;};
 		
 		void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}

@@ -760,6 +760,7 @@ void typotek::readSettings()
 	templatesDir = settings.value ( "TemplatesDir", "./").toString();
 	previewSize = settings.value("PreviewSize", 15.0).toDouble();
 	previewRTL = settings.value("PreviewRTL", false).toBool();
+	previewSubtitled = settings.value("PreviewSubtitled", false).toBool();
 	mainDockArea = settings.value("ToolPos", "Left").toString();
 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
 	m_welcomeURL = settings.value("WelcomeURL").toString();
@@ -1525,8 +1526,17 @@ void typotek::setPreviewRTL(bool d)
 	previewRTL = d;
 	for(int i(0); i < fontMap.count(); ++i)
 		fontMap[i]->clearPreview() ;
-	emit previewDirectionHasChanged();
-	ListDockWidget::getInstance()->forcePreviewRefill();
+	emit previewHasChanged();
+}
+
+void typotek::setPreviewSubtitled(bool d)
+{
+	if(previewSubtitled == d)
+		return;
+	previewSubtitled = d;
+	for(int i(0); i < fontMap.count(); ++i)
+		fontMap[i]->clearPreview() ;
+	emit previewHasChanged();
 }
 
 void typotek::setFontEditorPath ( const QString &path )
@@ -2069,5 +2079,6 @@ void typotek::endProgressJob()
 	statusProgressBar->hide();
 	statusProgressBar->reset();
 }
+
 
 

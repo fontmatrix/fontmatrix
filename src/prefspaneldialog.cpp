@@ -32,6 +32,7 @@ PrefsPanelDialog::PrefsPanelDialog ( QWidget *parent )
 	previewWord->setText ( typotek::getInstance()->word() );
 	previewSizeSpin->setValue ( pSize );
 	previewIsRTL->setChecked ( typotek::getInstance()->getPreviewRTL() );
+	previewSubtitled->setChecked ( typotek::getInstance()->getPreviewSubtitled() );
 	initTagBox->setChecked ( typotek::getInstance()->initialTags() );
 	showNamesBox->setChecked ( typotek::getInstance()->showImportedFonts() );
 	familyNameScheme->setChecked ( !typotek::getInstance()->familySchemeFreetype() );
@@ -78,8 +79,8 @@ void PrefsPanelDialog::initSampleTextPrefs()
 	//At least fill the sampletext list :)
 	sampleTextNamesList->addItems ( typotek::getInstance()->namedSamplesNames() );
 	QSettings settings;
-	fontSizeSpin->setValue ( settings.value ( "SampleFontSize",12.0 ).toDouble() );
-	interLineSpin->setValue ( settings.value ( "SampleInterline",16.0 ).toDouble() );
+	fontSizeSpin->setValue ( settings.value ( "SampleFontSize",14.0 ).toDouble() );
+	interLineSpin->setValue ( settings.value ( "SampleInterline",18.0 ).toDouble() );
 	dictEdit->setText ( settings.value ( "HyphenationDict", "" ).toString() );
 	leftBox->setValue ( settings.value ( "HyphLeft", 2 ).toInt() );
 	rightBox->setValue ( settings.value ( "HyphRight", 3 ).toInt() );
@@ -139,6 +140,7 @@ void PrefsPanelDialog::doConnect()
 	connect ( previewWord, SIGNAL ( textChanged ( const QString ) ), this, SLOT ( updateWord ( QString ) ) );
 	connect ( previewSizeSpin, SIGNAL ( valueChanged ( double ) ), this, SLOT ( updateWordSize ( double ) ) );
 	connect ( previewIsRTL, SIGNAL ( stateChanged ( int ) ), this, SLOT ( updateWordRTL ( int ) ) );
+	connect ( previewSubtitled, SIGNAL ( stateChanged ( int ) ), this, SLOT ( updateWordSubtitled ( int ) ) );
 
 	connect ( chartFontCombo, SIGNAL( currentFontChanged ( const QFont& ) ), this, SLOT(updateChartFontFamily( const QFont& ) ) );
 	connect ( chartFontSpin, SIGNAL( valueChanged( int ) ), this, SLOT(updateChartFontSize(int)) );
@@ -267,6 +269,14 @@ void PrefsPanelDialog::updateWordRTL ( int rtl )
 	QSettings settings;
 	settings.setValue ( "PreviewRTL", booleanState );
 	typotek::getInstance()->setPreviewRTL ( booleanState );
+}
+
+void PrefsPanelDialog::updateWordSubtitled(int sub )
+{
+	bool booleanState = ( sub == Qt::Checked ) ? true : false;
+	QSettings settings;
+	settings.setValue ( "PreviewSubtitled", booleanState );
+	typotek::getInstance()->setPreviewSubtitled ( booleanState );
 }
 
 void PrefsPanelDialog::setupFontEditor ( QString s )
@@ -649,6 +659,7 @@ void PrefsPanelDialog::updateChartFontSize(int s)
 
 	typotek::getInstance()->setChartInfoFontSize(s);
 }
+
 
 
 

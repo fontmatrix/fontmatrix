@@ -359,3 +359,68 @@ void FMPreviewList::slotPleaseMakeItGoddLooking()
 }
 
 
+
+
+FMPreviewModel::FMPreviewModel( QObject * pa , QListView * wPa )
+	: QAbstractListModel(pa) , m_view(wPa)
+{
+}
+
+QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
+{	
+	if(!index.isValid())
+		return QVariant();
+
+	int row = index.row();
+// 	qDebug()<<"D"<<row;
+	FontItem *fit(typotek::getInstance()->getCurrentFonts().at(row));
+	if(!fit)
+		return QVariant();
+	
+	QColor bgColor(255,255,255);
+	int width( m_view->width() );
+	
+	if(role == Qt::DisplayRole)
+	{
+		if( typotek::getInstance()->getPreviewSubtitled() )
+			return fit->fancyName() ;
+		else
+			return QVariant();
+	}
+	else if(role == Qt::DecorationRole)
+	{
+			return QIcon( fit->oneLinePreviewPixmap(typotek::getInstance()->word(), bgColor, width ) );
+	}
+	
+	// fall back
+	return QVariant();
+	
+}
+
+Qt::ItemFlags FMPreviewModel::flags(const QModelIndex & index) const
+{
+	return (Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+}
+
+int FMPreviewModel::rowCount(const QModelIndex & parent) const
+{
+	if(parent.isValid())
+		return 0;
+	QList< FontItem * > cl(typotek::getInstance()->getCurrentFonts());
+	return cl.count();
+}
+
+void FMPreviewModel::dataChanged()
+{
+	emit layoutChanged();
+}
+
+FMPreviewView::FMPreviewView(QWidget * parent)
+	:QListView(parent)
+{
+}
+
+void FMPreviewView::resizeEvent(QResizeEvent * event)
+{
+	emit widthChanged(this->width());
+}

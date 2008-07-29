@@ -202,8 +202,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>437</width>
-        <height>595</height>
+        <width>429</width>
+        <height>578</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -279,8 +279,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>437</width>
-        <height>595</height>
+        <width>429</width>
+        <height>578</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -291,17 +291,7 @@
         <number>2</number>
        </property>
        <item row="0" column="0" >
-        <widget class="FMPreviewList" name="previewList" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-           <horstretch>0</horstretch>
-           <verstretch>1</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="acceptDrops" >
-          <bool>true</bool>
-         </property>
-        </widget>
+        <widget class="FMPreviewView" name="listPreview" />
        </item>
       </layout>
      </widget>
@@ -310,8 +300,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>437</width>
-        <height>595</height>
+        <width>429</width>
+        <height>578</height>
        </rect>
       </property>
       <attribute name="title" >
@@ -322,7 +312,7 @@
         <number>2</number>
        </property>
        <property name="horizontalSpacing" >
-        <number>-1</number>
+        <number>4</number>
        </property>
        <item row="0" column="0" >
         <widget class="QTreeView" name="folderView" />
@@ -335,14 +325,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FMPreviewList</class>
-   <extends>QGraphicsView</extends>
-   <header>fmpreviewlist.h</header>
-  </customwidget>
-  <customwidget>
    <class>FMNameList</class>
    <extends>QTreeWidget</extends>
    <header>fmnamelist.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FMPreviewView</class>
+   <extends>QListView</extends>
+   <header>fmpreviewlist.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -1962,6 +1962,7 @@ void MainViewWidget::resetCrumb()
 // It will be used for track down problems at least
 void MainViewWidget::slotSelectFromFolders(const QString &f)
 {
+	qDebug()<<"or even this other";
 	slotFontSelectedByName(f);
 }
 

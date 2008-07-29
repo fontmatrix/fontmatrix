@@ -27,7 +27,7 @@ FMNameList::~ FMNameList()
 
 void FMNameList::keyPressEvent(QKeyEvent * e)
 {
-// 	qDebug()<<"FMNameList::keyPressEvent("<<e<<")";
+	qDebug()<<"FMNameList::keyPressEvent("<<e<<")";
 	if(e->text().isEmpty())
 		return;
 

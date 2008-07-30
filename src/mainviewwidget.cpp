@@ -199,7 +199,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
-	connect ( liveFontSizeSpin, SIGNAL(valueChanged(double)),this,SLOT(slotLiveFontSize(double)));
+	connect ( liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
 
 	connect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	connect ( saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
@@ -1825,8 +1825,9 @@ void MainViewWidget::slotRemoveCurrentItem()
 	}
 }
 
-void MainViewWidget::slotLiveFontSize(double fs)
+void MainViewWidget::slotLiveFontSize()
 {
+	double fs( liveFontSizeSpin->value() );
 	reSize(fs, fs * sampleRatio);
 	slotView(true);
 }

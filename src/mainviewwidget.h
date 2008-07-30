@@ -181,7 +181,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		
 	private slots:
-		void slotLiveFontSize(double);
+		void slotLiveFontSize();
 		void slotRemoteFinished();
 
 		void slotDefaultOTF();

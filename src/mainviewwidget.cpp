@@ -1255,7 +1255,7 @@ void MainViewWidget::fillUniPlanes()
 void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 {
 	QString stickyRange(uniPlaneCombo->currentText());
-	qDebug()<<"STiCKyRaNGe :: "<<stickyRange;
+// 	qDebug()<<"STiCKyRaNGe :: "<<stickyRange;
 	int stickyIndex(0);
 
 	uniPlaneCombo->clear();
@@ -1283,9 +1283,9 @@ void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 			if(p.mid ( 3 ) == stickyRange)
 			{
 				// Here we are, there is not
-				uniPlaneCombo->addItem ( p.mid ( 3 ), p.mid ( 0,3 ) );
+// 				uniPlaneCombo->addItem ( p.mid ( 3 ), p.mid ( 0,3 ) );
 				stickyIndex = uniPlaneCombo->count() - 1;
-				uRangeIsNotEmpty = false;
+				uRangeIsNotEmpty = true;
 			}
 		}
 	}

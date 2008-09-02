@@ -91,6 +91,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 	public slots:
 		void unlockFilter();
 		void reloadTagsCombo();
+		void slotPreviewUpdate();
 
 	private slots:
 		void slotFolderItemclicked(QModelIndex mIdx);
@@ -101,7 +102,6 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void slotTabChanged(int i);
 		void slotPanoseChecked(bool checked);
 		
-		void slotPreviewUpdate();
 		void slotPreviewUpdateSize(int);
 		void slotPreviewSelected(const QModelIndex & index);
 

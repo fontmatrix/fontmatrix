@@ -418,6 +418,7 @@ void MainViewWidget::fillTree()
 // 	m_lists->fontTree->setColumnWidth(0,200);
 
 	fontsetHasChanged = false;
+	m_lists->slotPreviewUpdate();
 	qDebug("END Time elapsed: %d ms", fillTime.elapsed());
 }
 

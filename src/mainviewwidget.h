@@ -179,6 +179,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		//lists
 		void slotSelectFromFolders(const QString&);
 		
+		//glyphs view
+		void slotShowULine(bool);
 		
 	private slots:
 		void slotLiveFontSize();

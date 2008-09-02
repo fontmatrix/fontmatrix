@@ -6,6 +6,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmglyphhighlight.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphsview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayoptwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayout.cpp
@@ -70,6 +71,7 @@ ${M17N_LIBRARIES}
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
 fmactivate.h
+fmglyphhighlight.h
 fmglyphsview.h
 fmlayoptwidget.h
 fmlayout.h

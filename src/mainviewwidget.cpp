@@ -20,6 +20,7 @@
 #include "mainviewwidget.h"
 #include "fmactivate.h"
 #include "fmbaseshaper.h"
+#include "fmglyphhighlight.h"
 #include "fmglyphsview.h"
 #include "fmlayout.h"
 #include "fmotf.h"
@@ -34,6 +35,7 @@
 
 #include <QString>
 #include <QDebug>
+#include <QGraphicsItemAnimation>
 #include <QGraphicsItem>
 #include <QTransform>
 #include <QDialog>
@@ -48,6 +50,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QTime>
+#include <QTimeLine>
 #include <QClipboard>
 #include <QMutex>
 #include <QDesktopWidget>
@@ -106,6 +109,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	fillUniPlanes();
 	refillSampleList();
+	uniLine->setVisible(false);
 
 	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 
@@ -182,6 +186,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
 	connect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
 	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
+	connect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
 
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -1538,7 +1543,7 @@ void MainViewWidget::slotPlaneSelected ( int i )
 
 void MainViewWidget::slotShowOneGlyph()
 {
-	qDebug() <<"slotShowOneGlyph()";
+// 	qDebug() <<"slotShowOneGlyph()";
 	if ( abcScene->selectedItems().isEmpty() )
 		return;
 	if ( abcView->lock() )
@@ -1552,11 +1557,14 @@ void MainViewWidget::slotShowOneGlyph()
 				fancyGlyphData = curGlyph->data ( 3 ).toInt();
 				if(clipboardCheck->isChecked())
 				{
+					new FMGlyphHighlight(curGlyph);
 					QString simpleC;
 					simpleC += QChar(fancyGlyphData);
 					QApplication::clipboard()->setText(simpleC, QClipboard::Clipboard);
+					uniLine->setText(uniLine->text() + simpleC);
 				}
-				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData );
+				else
+					fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData );
 			}
 			else // Is a glyph index
 			{
@@ -1564,7 +1572,10 @@ void MainViewWidget::slotShowOneGlyph()
 				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData , true );
 			}
 			if ( fancyGlyphInUse < 0 )
+			{
+				abcView->unlock();
 				return;
+			}
 			abcView->setState ( FMGlyphsView::SingleView );
 		}
 		abcView->unlock();
@@ -2090,6 +2101,19 @@ QList<FontItem*> MainViewWidget::curFonts()
 {
 // 	qDebug()<<"curFonts"<<currentFonts.count();
 	return currentFonts;
+}
+
+void MainViewWidget::slotShowULine(bool checked)
+{
+	if(checked)
+	{
+		uniLine->setText("");
+		uniLine->setVisible(true);
+	}
+	else
+	{
+		uniLine->setVisible(false);
+	}
 }
 
 

@@ -12,7 +12,7 @@
 
 #include "fmrepair.h"
 #include "typotek.h"
-#include "fontitem.h"
+#include "fmfontdb.h"
 
 #include <QDebug>
 #include <QDir>
@@ -81,7 +81,7 @@ void FmRepair::fillActNotLinked()
 {
 	typotek *t = typotek::getInstance();
 	actNotLinkList->clear();
-	QList<FontItem*> flist(t->getAllFonts());
+	QList<FontItem*> flist(FMFontDb::DB()->AllFonts());
 	QStringList activated;
 	for(int i(0); i < flist.count();++i)
 	{
@@ -129,7 +129,7 @@ void FmRepair::fillDeactLinked()
 {
 	typotek *t = typotek::getInstance();
 	deactLinkList->clear();
-	QList<FontItem*> flist(t->getAllFonts());
+	QList<FontItem*> flist(FMFontDb::DB()->AllFonts());
 	QStringList deactivated;
 	for(int i(0); i < flist.count();++i)
 	{
@@ -206,7 +206,7 @@ void FmRepair::slotRelinkActNotLinked()
 		if(actNotLinkList->item(i)->checkState() == Qt::Checked)
 		{
 			FontItem *font = 0;
-			if(font = t->getFont(actNotLinkList->item(i)->text()))
+			if(font = FMFontDb::DB()->Font(actNotLinkList->item(i)->text()))
 			{
 				QFile f(font->path());
 				f.link( t->getManagedDir() + QDir::separator() + font->activationName() );
@@ -230,7 +230,7 @@ void FmRepair::slotDeactivateActNotLinked()
 		if(actNotLinkList->item(i)->checkState() == Qt::Checked)
 		{
 			FontItem *font = 0;
-			if(font = t->getFont(actNotLinkList->item(i)->text()))
+			if(font = FMFontDb::DB()->Font(actNotLinkList->item(i)->text()))
 			{
 				font->setActivated(false);
 			}
@@ -256,7 +256,7 @@ void FmRepair::slotDelinkDeactLinked()
 		if(deactLinkList->item(i)->checkState() == Qt::Checked)
 		{
 			FontItem *font = 0;
-			if(font = t->getFont(deactLinkList->item(i)->text()))
+			if(font = FMFontDb::DB()->Font(deactLinkList->item(i)->text()))
 			{
 				QFile f(t->getManagedDir() + QDir::separator() + font->activationName());
 				f.remove();
@@ -275,7 +275,7 @@ void FmRepair::slotActivateDeactLinked()
 		if(deactLinkList->item(i)->checkState() == Qt::Checked)
 		{
 			FontItem *font = 0;
-			if(font = t->getFont(deactLinkList->item(i)->text()))
+			if(font = FMFontDb::DB()->Font(deactLinkList->item(i)->text()))
 			{
 				font->setActivated(true);
 			}

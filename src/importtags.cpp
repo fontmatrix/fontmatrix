@@ -19,8 +19,8 @@ ImportTags::ImportTags(QWidget * parent, QStringList tags)
 	qDebug()<< "ImportTags(" << tags << ")";
 	setupUi(this);
 	m_tags = tags;
-	m_tags.removeAll("Activated_On");
-	m_tags.removeAll("Activated_Off");
+// 	m_tags.removeAll("Activated_On");
+// 	m_tags.removeAll("Activated_Off");
 	for(int i = 0 ; i < m_tags.count() ; ++i)
 	{
 		QListWidgetItem *it = new QListWidgetItem( m_tags[i] , tagsList );

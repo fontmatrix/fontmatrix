@@ -199,7 +199,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 	QMap<QString, QList<FontItem*> > keyList;
 	for ( int i=0; i < localFontMap.count();++i )
 	{
-		keyList[localFontMap[i]->value ( "family" ) ].append ( localFontMap[i] );
+		keyList[localFontMap[i]->family() ].append ( localFontMap[i] );
 	}
 
 	QMap<QString, QList<FontItem*> >::const_iterator kit;

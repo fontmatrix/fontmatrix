@@ -20,6 +20,7 @@
 #include "savedata.h"
 #include "typotek.h"
 #include "fontitem.h"
+#include "fmfontdb.h"
 
 #include <QDebug>
 
@@ -50,61 +51,61 @@ void SaveData::doSave()
 	writeStartElement("fontmatrix");
 	writeAttribute("version", "1.1");
 	
-	//save fonts
-	QList<FontItem*> flist = m_typo->getAllFonts();
-	foreach ( FontItem* fitem,flist )
-	{
-		if(!fitem->isLocked() && !fitem->isRemote())
-		{
-			QMap<int, QMap<QString,QString> > Info(fitem->rawInfo());
-			QMap<int, QMap<QString,QString> >::const_iterator infoMap = Info.begin();
-			QMap<int, QMap<QString,QString> >::const_iterator endMap = Info.end();
-			
-			writeStartElement("fontfile");
-			writeAttribute("family", fitem->family());
-			writeAttribute("variant",fitem->variant());
-			writeAttribute("type",fitem->type());
-			writeAttribute("name", fitem->fancyName());
-			if(!fitem->panose().isEmpty())
-				writeAttribute("panose", fitem->panose());
-			writeStartElement("file");
-			writeCharacters(fitem->path());
-			writeEndElement();
-			
-			writeStartElement("info");
-			while( infoMap != endMap )
-			{
-// 				qDebug() << "LANG" << infoMap.key() ;
-				writeStartElement("lang");
-				writeAttribute("code", QString::number( infoMap.key() ) );
-				QMap<QString,QString>::const_iterator langMap = infoMap.value().begin();
-				QMap<QString,QString>::const_iterator endLang = infoMap.value().end();
-				
-				for(;langMap != endLang; ++langMap)
-				{
-					writeStartElement("name");
-					writeAttribute( "name" ,langMap.key()); // ;-)
-					writeCharacters(langMap.value());
-					writeEndElement(); // key
-				}
-				writeEndElement();//lang
-				
-				++infoMap;
-			}
-			writeEndElement();//info
-			
-			QStringList tl = fitem->tags();
-			foreach(QString tag, tl)
-			{
-				writeStartElement("tag");
-				writeCharacters( tag );
-				writeEndElement();
-			}
-			writeEndElement();//fontfile
-		}
-	}
-
-	
+// 	//save fonts
+// 	QList<FontItem*> flist = FMFontDb::DB()->AllFonts();
+// 	foreach ( FontItem* fitem,flist )
+// 	{
+// 		if(!fitem->isLocked() && !fitem->isRemote())
+// 		{
+// 			FontInfoMap Info(fitem->rawInfo());
+// 			FontInfoMap::const_iterator infoMap = Info.begin();
+// 			FontInfoMap::const_iterator endMap = Info.end();
+// 			
+// 			writeStartElement("fontfile");
+// 			writeAttribute("family", fitem->family());
+// 			writeAttribute("variant",fitem->variant());
+// 			writeAttribute("type",fitem->type());
+// 			writeAttribute("name", fitem->fancyName());
+// 			if(!fitem->panose().isEmpty())
+// 				writeAttribute("panose", fitem->panose());
+// 			writeStartElement("file");
+// 			writeCharacters(fitem->path());
+// 			writeEndElement();
+// 			
+// 			writeStartElement("info");
+// 			while( infoMap != endMap )
+// 			{
+// // 				qDebug() << "LANG" << infoMap.key() ;
+// 				writeStartElement("lang");
+// 				writeAttribute("code", QString::number( infoMap.key() ) );
+// 				QMap<int,QString>::const_iterator langMap = infoMap.value().begin();
+// 				QMap<int,QString>::const_iterator endLang = infoMap.value().end();
+// 				
+// 				for(;langMap != endLang; ++langMap)
+// 				{
+// 					writeStartElement("name");
+// 					writeAttribute( "name" ,QString::number(langMap.key())); // ;-)
+// 					writeCharacters(langMap.value());
+// 					writeEndElement(); // key
+// 				}
+// 				writeEndElement();//lang
+// 				
+// 				++infoMap;
+// 			}
+// 			writeEndElement();//info
+// 			
+// 			QStringList tl = fitem->tags();
+// 			foreach(QString tag, tl)
+// 			{
+// 				writeStartElement("tag");
+// 				writeCharacters( tag );
+// 				writeEndElement();
+// 			}
+// 			writeEndElement();//fontfile
+// 		}
+// 	}
+// 
+// 	
 	//save tagsets
 	QStringList tlist = m_typo->tagsets();
 	foreach(QString tagset, tlist)

@@ -50,6 +50,10 @@ class QProgressDialog;
 class QHttp;
 class QFile;
 
+
+typedef QMap<int,QMap<int, QString> > FontInfoMap;
+
+
 #define PROGRESSION_LTR 0
 #define PROGRESSION_RTL 2
 #define PROGRESSION_TTB 4
@@ -75,7 +79,7 @@ struct FontLocalInfo
 	QString variant;
 	QString type;
 	QString panose;
-	QMap<int,QMap<QString, QString> > info;
+// 	QMap<int,QMap<QString, QString> > info;
 	QStringList tags;
 	QPixmap pix;
 };
@@ -86,6 +90,7 @@ class FontItem : public QObject
 		Q_OBJECT
 	public:
 		FontItem ( QString path , bool remote = false, bool faststart = false);
+		FontItem (QString path,  QString family, QString variant , bool active);
 		/** Needed when the item has been instantiate with "faststart=true" */
 		void updateItem();
 		~FontItem();
@@ -103,6 +108,7 @@ class FontItem : public QObject
 
 	private:
 		bool m_valid;
+		bool m_active;
 		
 		bool m_remote;
 		bool remoteCached;
@@ -203,11 +209,11 @@ class FontItem : public QObject
 
 		static QGraphicsScene *theOneLineScene;
 
-		void moreInfo_sfnt();
-		void moreInfo_type1();
+		FontInfoMap moreInfo_sfnt();
+		FontInfoMap moreInfo_type1();
 
-		QMap<int,QMap<QString, QString> > moreInfo;
-		QMap<QString, QString> panoseInfo;
+// 		FontInfoMap moreInfo;
+// 		QMap<QString, QString> panoseInfo;
 		
 		int m_shaperType;
 		
@@ -247,11 +253,11 @@ class FontItem : public QObject
 		QString infoText ( bool fromcache = true );
 		QString infoGlyph ( int index, int code = 0 );
 		QString glyphName(int codepoint);
-		QMap<int,QMap<QString, QString> >& rawInfo();
+		FontInfoMap rawInfo();
 		QString panose(){return m_panose;}
 
-		QString value ( QString k );
-		QString panose( QString k );
+// 		QString value ( QString k );
+// 		QString panose( QString k );
 
 		double renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth, double fsize, double zindex = 100.0 ,bool record = true );
 		double renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
@@ -318,8 +324,8 @@ class FontItem : public QObject
 		int progression()const{return m_progression;}
 		
 		// sfnt names
-		static void fillNamesMeaning();
-		static void fillPanoseMap();
+// 		static void fillNamesMeaning();
+// // 		static void fillPanoseMap();
 		static void fillFSftypeMap();
 		
 		bool isValid(){return m_valid;}
@@ -327,7 +333,7 @@ class FontItem : public QObject
 		bool isRemote(){return m_remote;}
 		bool isCached(){return remoteCached;}		
 		void  fileRemote(QString family, QString variant, QString type, QString info, QPixmap pixmap);
-		void  fileLocal(QString family, QString variant, QString type, QString p, QMap<int, QMap< QString, QString > > info);
+		void  fileLocal(QString family, QString variant, QString type, QString p);
 		void  fileLocal(FontLocalInfo);
 		// retval : 1 => Ready; 2 => Wait ; ...
 		int getFromNetwork();
@@ -343,6 +349,8 @@ class FontItem : public QObject
 	double getUnitPerEm();
 	void setFTHintMode ( unsigned int theValue );
 	unsigned int getFTHintMode() const;
+	
+	void dumpIntoDB();
 	
 };
 

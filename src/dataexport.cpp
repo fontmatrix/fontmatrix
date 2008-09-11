@@ -12,7 +12,7 @@
 #include "dataexport.h"
 
 #include "typotek.h"
-#include "fontitem.h"
+#include "fmfontdb.h"
 
 #include <QFile>
 #include <QXmlStreamWriter>
@@ -24,7 +24,8 @@ DataExport::DataExport(const QString &dirPath, const QString &filterTag)
 	exDir.setPath(dirPath);
 	filter = filterTag;
 	typotek *typ = typotek::getInstance();
-	fonts = typ->getFonts(filter,"tag");
+// 	fonts = typ->getFonts(filter,"tag");
+	fonts = FMFontDb::DB()->Fonts(filter,FMFontDb::Tags);
 	typ->resetFilter();
 }
 
@@ -105,8 +106,8 @@ int DataExport::buildIndex()
 			xmlStream.writeCharacters( fitem->infoText() );
 			xmlStream.writeEndElement();
 			QStringList tl = fitem->tags();
-			tl.removeAll("Activated_On");
-			tl.removeAll("Activated_Off");
+// 			tl.removeAll("Activated_On");
+// 			tl.removeAll("Activated_Off");
 			foreach(QString tag, tl)
 			{
 				xmlStream.writeStartElement("tag");
@@ -189,8 +190,8 @@ int DataExport::buildHtml()
 			xmlStream.writeAttribute("class", "infobox");
 			
 			QStringList tl = fitem->tags();
-			tl.removeAll("Activated_On");
-			tl.removeAll("Activated_Off");
+// 			tl.removeAll("Activated_On");
+// 			tl.removeAll("Activated_Off");
 			foreach(QString tag, tl)
 			{
 				xmlStream.writeStartElement("div");

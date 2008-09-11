@@ -20,6 +20,8 @@
 #include "listdockwidget.h"
 #include "typotek.h"
 #include "fontitem.h"
+#include "fmfontdb.h"
+#include "fmfontstrings.h"
 #include "fmpreviewlist.h"
 #include "mainviewwidget.h"
 
@@ -83,13 +85,11 @@ ListDockWidget::ListDockWidget()
 	theFilterMenu = new QMenu;
 	filterActGroup = new QActionGroup(theFilterMenu);
 
-	if(name_meaning.isEmpty())
-		FontItem::fillNamesMeaning();
-
 	allFieldName = tr("All fields");
 	maxFieldStringWidth = allFieldName.count();
 	currentField = allFieldName;
 	QAction *actn = new QAction(currentField, filterActGroup);
+	currentFieldAction = actn;
 	actn->setCheckable(true);
 	actn->setChecked(true);
 	theFilterMenu->addAction(actn);
@@ -106,15 +106,18 @@ ListDockWidget::ListDockWidget()
 	completers[currentField] = new QCompleter(this);
 	completers[currentField]->setModel(lModel);
 
-	for(int gIdx(0); gIdx < name_meaning.count() ; ++gIdx)
+	for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
 	{
-// 		qDebug()<<"ADD Name action"<< name_meaning[gIdx];
-		actn = new QAction(name_meaning[gIdx], filterActGroup);
+		FMFontDb::InfoItem k(FontStrings::Names().keys()[gIdx]);
+		
+		actn = new QAction(FontStrings::Names()[k], filterActGroup);
+		actn->setData( k );
 		actn->setCheckable(true);
+		
 		theFilterMenu->addAction(actn);
 		lModel = new QStringListModel;
-		completers[name_meaning[gIdx]] = new QCompleter(this);
-		completers[name_meaning[gIdx]]->setModel(lModel);
+		completers[FontStrings::Names()[k]] = new QCompleter(this);
+		completers[FontStrings::Names()[k]]->setModel(lModel);
 	}
 	
 
@@ -204,6 +207,7 @@ void ListDockWidget::slotFolderPressed(QModelIndex mIdx)
 void ListDockWidget::slotFieldChanged(QAction * action)
 {
 	currentField = action->text();
+	currentFieldAction = action;
 	fieldButton->setToolTip(currentField);
 	fieldButton->setText( fieldString( currentField ) );
 	searchString->setCompleter(completers.value(currentField));
@@ -350,8 +354,8 @@ void ListDockWidget::initTagCombo()
 	}
 	
 	QStringList tl_tmp = typotek::tagsList;
-	tl_tmp.removeAll ( "Activated_On" );
-	tl_tmp.removeAll ( "Activated_Off" );
+// 	tl_tmp.removeAll ( "Activated_On" );
+// 	tl_tmp.removeAll ( "Activated_Off" );
 	tl_tmp.sort();
 	foreach(QString tag, tl_tmp )
 	{
@@ -400,16 +404,13 @@ void ListDockWidget::slotPanoseChecked(bool checked)
 	if(checked)
 	{
 		tagsCombo->clear();
-		if(panoseMap.isEmpty())
-			FontItem::fillPanoseMap();
-		
-		QMap<QString, QMap<int, QString> >::const_iterator cip;
+		QMap< FontStrings::PanoseKey , QMap<int, QString> >::const_iterator cip;
 		QMap<int, QString>::const_iterator cip2;
-		for(cip = panoseMap.constBegin();cip != panoseMap.constEnd(); ++cip)
+		for(cip = FontStrings::Panose().constBegin(); cip != FontStrings::Panose().constEnd(); ++cip)
 		{
 			for(cip2 = cip->constBegin() + 2 ;cip2 != cip->constEnd(); ++cip2)
 			{
-				tagsCombo->addItem(cip.key() + "-" + cip2.value(), "TAG_IS_PANOSE");
+				tagsCombo->addItem(FontStrings::PanoseKeyName( cip.key() ) + "-" + cip2.value(), "TAG_IS_PANOSE");
 			}
 		}
 		

@@ -64,6 +64,12 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 			return currentField;
 		}
 
+		QAction* getCurrentFieldAction() const
+		{
+			return currentFieldAction;
+		}
+	
+
 	private:
 		int m_position;
 		QDirModel *theDirModel;
@@ -72,6 +78,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		QMenu *theFilterMenu;
 		QActionGroup *filterActGroup;
 		QString currentField;
+		QAction *currentFieldAction;
 		QString allFieldName;
 		
 		QMap<QString, QCompleter*> completers;

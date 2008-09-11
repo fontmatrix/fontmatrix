@@ -19,6 +19,8 @@
  ***************************************************************************/
 #include "fontitem.h"
 #include "fmotf.h"
+#include "fmfontdb.h"
+#include "fmfontstrings.h"
 #include "fmglyphsview.h"
 #include "typotek.h"
 #include "fmbaseshaper.h"
@@ -61,9 +63,8 @@ QGraphicsScene *FontItem::theOneLineScene = 0;
 QMap<FT_Encoding, QString> charsetMap;
 QMap<int, QString> langIdMap;
 int theLocalLangCode;
-QStringList name_meaning;
-QMap< QString, QMap<int, QString> > panoseMap;
-QMap< int, QString > panoseKeys;
+
+
 QList<int> legitimateNonPathChars;
 QMap< int, QString > fstypeMap;
 
@@ -174,30 +175,6 @@ void FontItem::fillLegitimateSpaces()
 	legitimateNonPathChars << 0xFEFF ;
 }
 
-void FontItem::fillNamesMeaning()
-{
-	name_meaning << tr ( "Copyright" )
-	<< tr ( "Font Family" )
-	<< tr ( "Font Subfamily" )
-	<< tr ( "Unique font identifier" )
-	<< tr ( "Full font name" )
-	<< tr ( "Version string" )
-	<< tr ( "Postscript name" )
-	<< tr ( "Trademark" )
-	<< tr ( "Manufacturer" )
-	<< tr ( "Designer" )
-	<< tr ( "Description" )
-	<< tr ( "URL Vendor" )
-	<< tr ( "URL Designer" )
-	<< tr ( "License Description" )
-	<< tr ( "License Info URL" )
-	<< tr ( "Reserved" )
-	<< tr ( "Preferred Family" )
-	<< tr ( "Preferred Subfamily" )
-	<< tr ( "Compatible Full (Macintosh only)" )
-	<< tr ( "Sample text" )
-	<< tr ( "PostScript CID findfont name" );
-}
 
 void FontItem::fillLangIdMap()
 {
@@ -505,173 +482,6 @@ void FontItem::fillInvertedPalette()
 	}
 }
 
-void FontItem::fillPanoseMap()
-{
-	// http://www.microsoft.com/OpenType/OTSpec/os2ver0.htm#pan
-
-	QMap<int, QString> mapModel;
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Text and Display" ) ;
-	mapModel[ 3 ] = tr ( "Script" ) ;
-	mapModel[ 4 ] = tr ( "Decorative" ) ;
-	mapModel[ 5 ] = tr ( "Pictorial" ) ;
-
-	panoseMap[tr ( "Family Type" ) ] = mapModel;
-	panoseKeys[0] = tr ( "Family Type" );
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Cove" ) ;
-	mapModel[ 3 ] = tr ( "Obtuse Cove" ) ;
-	mapModel[ 4 ] = tr ( "Square Cove" ) ;
-	mapModel[ 5 ] = tr ( "Obtuse Square Cove" ) ;
-	mapModel[ 6 ] = tr ( "Square" ) ;
-	mapModel[ 7 ] = tr ( "Thin" ) ;
-	mapModel[ 8 ] = tr ( "Bone" ) ;
-	mapModel[ 9 ] = tr ( "Exaggerated" ) ;
-	mapModel[ 10 ] = tr ( "Triangle" ) ;
-	mapModel[ 11 ] = tr ( "Normal Sans" ) ;
-	mapModel[ 12 ] = tr ( "Obtuse Sans" ) ;
-	mapModel[ 13 ] = tr ( "Perp Sans" ) ;
-	mapModel[ 14 ] = tr ( "Flared" ) ;
-	mapModel[ 15 ] = tr ( "Rounded" ) ;
-
-	panoseMap[tr ( "Serif style" ) ] = mapModel;
-	panoseKeys[1] = tr ( "Serif style" ) ;
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Very Light" ) ;
-	mapModel[ 3 ] = tr ( "Light" ) ;
-	mapModel[ 4 ] = tr ( "Thin" ) ;
-	mapModel[ 5 ] = tr ( "Book" ) ;
-	mapModel[ 6 ] = tr ( "Medium" ) ;
-	mapModel[ 7 ] = tr ( "Demi" ) ;
-	mapModel[ 8 ] = tr ( "Bold" ) ;
-	mapModel[ 9 ] = tr ( "Heavy" ) ;
-	mapModel[ 10 ] = tr ( "Black" ) ;
-	mapModel[ 11 ] = tr ( "Nord" ) ;
-
-	panoseMap[tr ( "Weight" ) ] = mapModel;
-	panoseKeys[2] = tr ( "Weight" );
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Old Style" ) ;
-	mapModel[ 3 ] = tr ( "Modern" ) ;
-	mapModel[ 4 ] = tr ( "Even Width" ) ;
-	mapModel[ 5 ] = tr ( "Expanded" ) ;
-	mapModel[ 6 ] = tr ( "Condensed" ) ;
-	mapModel[ 7 ] = tr ( "Very Expanded" ) ;
-	mapModel[ 8 ] = tr ( "Very Condensed" ) ;
-	mapModel[ 9 ] = tr ( "Monospaced" ) ;
-
-	panoseMap[tr ( "Proportion" ) ] = mapModel;
-	panoseKeys[3] = tr ( "Proportion" );
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "None" ) ;
-	mapModel[ 3 ] = tr ( "Very Low" ) ;
-	mapModel[ 4 ] = tr ( "Low" ) ;
-	mapModel[ 5 ] = tr ( "Medium Low" ) ;
-	mapModel[ 6 ] = tr ( "Medium" ) ;
-	mapModel[ 7 ] = tr ( "Medium High" ) ;
-	mapModel[ 8 ] = tr ( "High" ) ;
-	mapModel[ 9 ] = tr ( "Very High" ) ;
-
-	panoseMap[tr ( "Contrast" ) ] = mapModel;
-	panoseKeys[4] = tr ( "Contrast" );
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Gradual/Diagonal" ) ;
-	mapModel[ 3 ] = tr ( "Gradual/Transitional" ) ;
-	mapModel[ 4 ] = tr ( "Gradual/Vertical" ) ;
-	mapModel[ 5 ] = tr ( "Gradual/Horizontal" ) ;
-	mapModel[ 6 ] = tr ( "Rapid/Vertical" ) ;
-	mapModel[ 7 ] = tr ( "Rapid/Horizontal" ) ;
-	mapModel[ 8 ] = tr ( "Instant/Vertical" ) ;
-
-	panoseMap[tr ( "Stroke Variation" ) ] = mapModel;
-	panoseKeys[5] = tr ( "Stroke Variation" );
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Straight Arms/Horizontal" ) ;
-	mapModel[ 3 ] = tr ( "Straight Arms/Wedge" ) ;
-	mapModel[ 4 ] = tr ( "Straight Arms/Vertical" ) ;
-	mapModel[ 5 ] = tr ( "Straight Arms/Single Serif" ) ;
-	mapModel[ 6 ] = tr ( "Straight Arms/Double Serif" ) ;
-	mapModel[ 7 ] = tr ( "Non-Straight Arms/Horizontal" ) ;
-	mapModel[ 8 ] = tr ( "Non-Straight Arms/Wedge" ) ;
-	mapModel[ 9 ] = tr ( "Non-Straight Arms/Vertical" ) ;
-	mapModel[ 10 ] = tr ( "Non-Straight Arms/Single Serif" ) ;
-	mapModel[ 11 ] = tr ( "Non-Straight Arms/Double Serif" ) ;
-
-	panoseMap[tr ( "Arm Style" ) ] = mapModel;
-	panoseKeys[6] = tr ( "Arm Style" );
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Normal/Contact" ) ;
-	mapModel[ 3 ] = tr ( "Normal/Weighted" ) ;
-	mapModel[ 4 ] = tr ( "Normal/Boxed" ) ;
-	mapModel[ 5 ] = tr ( "Normal/Flattened" ) ;
-	mapModel[ 6 ] = tr ( "Normal/Rounded" ) ;
-	mapModel[ 7 ] = tr ( "Normal/Off Center" ) ;
-	mapModel[ 8 ] = tr ( "Normal/Square" ) ;
-	mapModel[ 9 ] = tr ( "Oblique/Contact" ) ;
-	mapModel[ 10 ] = tr ( "Oblique/Weighted" ) ;
-	mapModel[ 11 ] = tr ( "Oblique/Boxed" ) ;
-	mapModel[ 12 ] = tr ( "Oblique/Flattened" ) ;
-	mapModel[ 13 ] = tr ( "Oblique/Rounded" ) ;
-	mapModel[ 14 ] = tr ( "Oblique/Off Center" ) ;
-	mapModel[ 15 ] = tr ( "Oblique/Square" ) ;
-
-	panoseMap[tr ( "Letterform" ) ] = mapModel;
-	panoseKeys[7] = tr ( "Letterform" );
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Standard/Trimmed" ) ;
-	mapModel[ 3 ] = tr ( "Standard/Pointed" ) ;
-	mapModel[ 4 ] = tr ( "Standard/Serifed" ) ;
-	mapModel[ 5 ] = tr ( "High/Trimmed" ) ;
-	mapModel[ 6 ] = tr ( "High/Pointed" ) ;
-	mapModel[ 7 ] = tr ( "High/Serifed" ) ;
-	mapModel[ 8 ] = tr ( "Constant/Trimmed" ) ;
-	mapModel[ 9 ] = tr ( "Constant/Pointed" ) ;
-	mapModel[ 10 ] = tr ( "Constant/Serifed" ) ;
-	mapModel[ 11 ] = tr ( "Low/Trimmed" ) ;
-	mapModel[ 12 ] = tr ( "Low/Pointed" ) ;
-	mapModel[ 13 ] = tr ( "Low/Serifed" ) ;
-
-	panoseMap[tr ( "Midline" ) ] = mapModel;
-	panoseKeys[8] = tr ( "Midline" );
-	mapModel.clear();
-
-	mapModel[ 0 ] = tr ( "Any" ) ;
-	mapModel[ 1 ] = tr ( "No Fit" ) ;
-	mapModel[ 2 ] = tr ( "Constant/Small" ) ;
-	mapModel[ 3 ] = tr ( "Constant/Standard" ) ;
-	mapModel[ 4 ] = tr ( "Constant/Large" ) ;
-	mapModel[ 5 ] = tr ( "Ducking/Small" ) ;
-	mapModel[ 6 ] = tr ( "Ducking/Standard" ) ;
-	mapModel[ 7 ] = tr ( "Ducking/Large" ) ;
-
-	panoseMap[tr ( "X-Height" ) ] = mapModel;
-	panoseKeys[9] = tr ( "X-Height" );
-}
 
 void FontItem::fillFSftypeMap()
 {
@@ -690,6 +500,7 @@ void FontItem::fillFSftypeMap()
 FontItem::FontItem ( QString path , bool remote, bool faststart )
 {
 	m_valid = false;
+	m_active = false;
 	m_remote = remote;
 	remoteCached = false;
 	stopperDownload = false;
@@ -706,7 +517,10 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	renderReturnWidth = false;
 	unitPerEm = 0;
 	m_FTHintMode = 0;
+	allIsRendered = false;
+	m_path = path;
 
+	/// STATIC INITIALISATIONS
 	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
 	if ( charsetMap.isEmpty() )
@@ -717,28 +531,22 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 		fill256Palette();
 	if ( invertedGray256Palette.isEmpty() )
 		fillInvertedPalette();
-	if ( panoseMap.isEmpty() )
-		fillPanoseMap();
-
 	if ( !theOneLineScene )
 	{
 		theOneLineScene = new QGraphicsScene;
 	}
-
-	allIsRendered = false;
-	m_path = path;
+	/// EndOF S I
 
 	if ( m_remote || faststart )
 	{
 		m_valid = true;
 		return;
 	}
+	
 
 	QFileInfo infopath ( m_path );
 	m_name = infopath.fileName();
 	m_fileSize = QString::number( infopath.size() , 10 ) ;
-
-
 
 	if ( ! ensureFace() )
 	{
@@ -780,6 +588,11 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	{
 		m_isOpenType = true;
 	}
+	
+	if(m_isOpenType)
+		moreInfo_sfnt();
+	else
+		moreInfo_type1();
 
 	m_type = FT_Get_X11_Font_Format ( m_face ); 
 	if ( typotek::getInstance()->familySchemeFreetype() || !m_isOpenType )
@@ -813,7 +626,32 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 
 	m_valid = true;
 	releaseFace();
+}
 
+FontItem::FontItem(QString path, QString family, QString variant, bool active)
+{
+	m_valid = true;
+	m_remote = false;
+	remoteCached = false;
+	stopperDownload = false;
+	m_face = 0;
+	facesRef = 0;
+	m_glyphsPerRow = 5;
+	hasUnicode = false;
+	currentChar = -1;
+	m_isOpenType = false;
+	otf = 0;
+	m_rasterFreetype = false;
+	m_progression = PROGRESSION_LTR;
+	m_shaperType = 1;
+	renderReturnWidth = false;
+	unitPerEm = 0;
+	m_FTHintMode = 0;
+	allIsRendered = false;
+	m_path = path;	
+	m_family = family;
+	m_variant = variant;
+	m_active = active;
 }
 
 void FontItem::updateItem()
@@ -971,31 +809,32 @@ QString FontItem::testFlag ( long flag, long against, QString yes, QString no )
 		return no;
 }
 
-QString FontItem::value ( QString k )
-{
-	// I don’t know if something relies o it so I keep it, for the moment.
-	if ( k == "family" )
-		return m_family;
-	else if ( k == "variant" )
-		return m_variant;
+// QString FontItem::value ( QString k )
+// {
+// 	// I don’t know if something relies o it so I keep it, for the moment.
+// 	if ( k == "family" )
+// 		return m_family;
+// 	else if ( k == "variant" )
+// 		return m_variant;
+// 
+// 	// 0 is default language
+// 	// TODO inspect all available languages
+// // 	if(moreInfo.isEmpty())
+// // 	{
+// // 		if(isOpenType())
+// // 			moreInfo_sfnt();
+// // 		else
+// // 			moreInfo_type1();
+// // 	}
+// 	FontInfoMap moreInfo( FMFontDb::DB()->getInfoMap(m_path) );
+// 	QMap<int, QString> namap ( moreInfo.value ( 0 ) );
+// 	return namap.value ( name_meaning.indexOf( k ) );
+// }
 
-	// 0 is default language
-	// TODO inspect all available languages
-	if(moreInfo.isEmpty())
-	{
-		if(isOpenType())
-			moreInfo_sfnt();
-		else
-			moreInfo_type1();
-	}
-	QMap<QString, QString> namap ( moreInfo.value ( 0 ) );
-	return namap.value ( k );
-}
-
-QString FontItem::panose ( QString k )
-{
-	return panoseInfo.value ( k );
-}
+// QString FontItem::panose ( QString k )
+// {
+// 	return panoseInfo.value ( k );
+// }
 
 
 QString FontItem::name()
@@ -2478,7 +2317,7 @@ QString FontItem::infoText ( bool fromcache )
 // 		return m_cacheInfo;
 
 	bool rFace ( false );
-	if ( moreInfo.isEmpty() /*|| !fromcache*/ )
+	if ( 0/*moreInfo.isEmpty() || !fromcache*/ )
 	{
 		ensureFace();
 		rFace = true;
@@ -2506,35 +2345,40 @@ QString FontItem::infoText ( bool fromcache )
 
 	QString panStringOut;
 	QString panBlockOut;
-	if ( !m_panose.isEmpty() )
+	QString pN(FMFontDb::DB()->getValue(m_path, FMFontDb::Panose).toString());
+	if ( !pN.isEmpty() )
 	{
 // 		qDebug() <<"WE HAVE PANOSE \\o/";
 // 		panStringOut = " | Panose: " + m_panose;
-		QMap<QString, QString>::const_iterator pat ( panoseInfo.constBegin() );
-		for ( ;pat != panoseInfo.constEnd(); ++pat )
+// 		QMap<QString, QString>::const_iterator pat ( panoseInfo.constBegin() );
+// 		for ( ;pat != panoseInfo.constEnd(); ++pat )
+		for(int i(0);  i < FontStrings::Panose().keys().count(); ++i)
 		{
-			panBlockOut += "<div class=\"panose_name\">" + pat.key() + "</div>";
-			panBlockOut += "<div class=\"panose_desc\">" + pat.value() + "</div>";
+			FontStrings::PanoseKey k(FontStrings::Panose().keys()[i]);
+			int pValue(pN.mid(i,1).toInt());
+			panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName( k ) + "</div>";
+			panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value( k ).value( pValue ) + "</div>";
 		}
 	}
 	
-	fillFSftypeMap();
+
+	FsType OSFsType( FMFontDb::DB()->getValue(m_path,FMFontDb::FsType).toInt() );
 	QString embedFlags = "<div id=\"fstype\">";
-	if( m_OSFsType.testFlag(NOT_RESTRICTED))
+	if( OSFsType.testFlag(NOT_RESTRICTED))
 		embedFlags+="<div>" + fstypeMap[NOT_RESTRICTED] + "</div>";
-	if( m_OSFsType.testFlag( RESTRICTED))
+	if( OSFsType.testFlag( RESTRICTED))
 		embedFlags+="<div>" + fstypeMap[ RESTRICTED] + "</div>";
-	if( m_OSFsType.testFlag(PREVIEW_PRINT))
+	if( OSFsType.testFlag(PREVIEW_PRINT))
 		embedFlags+="<div>" + fstypeMap[PREVIEW_PRINT] + "</div>";
-	if( m_OSFsType.testFlag(EDIT_EMBED))
+	if( OSFsType.testFlag(EDIT_EMBED))
 		embedFlags+="<div>" + fstypeMap[EDIT_EMBED] + "</div>";
-	if( m_OSFsType.testFlag(NOSUBSET))
+	if( OSFsType.testFlag(NOSUBSET))
 		embedFlags+="<div>" + fstypeMap[NOSUBSET] + "</div>";
-	if( m_OSFsType.testFlag(BITMAP_ONLY))
+	if( OSFsType.testFlag(BITMAP_ONLY))
 		embedFlags+="<div>" + fstypeMap[BITMAP_ONLY] + "</div>";
 	embedFlags +="</div>";
 
-	QMap<QString, QStringList> orderedInfo;
+	QMap<int, QStringList> orderedInfo;
 	ret += "<div id=\"headline\">" + fancyName() + "</div>\n" ;
 	ret += "<div id=\"file\">" + m_path + "</div>\n" ;
 // 	ret += "<div id=\"search\"><a href=\"http://www.myfonts.com/search?search[text]="+ m_family +"\">On myfonts</a>";
@@ -2551,10 +2395,11 @@ QString FontItem::infoText ( bool fromcache )
 		QString sysLoc = sysLang + "_"+ sysCountry;
 
 		//We must iter once to find localized strings and ensure default ones are _not_ shown in these cases
-		QStringList localizedKeys;
-		for ( QMap<int, QMap<QString, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
+		QList<int> localizedKeys;
+		FontInfoMap moreInfo( FMFontDb::DB()->getInfoMap(m_path) );
+		for ( QMap<int, QMap<int, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
 		{
-			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
+			for ( QMap<int, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
 				if ( langIdMap[ lit.key() ].contains ( sysLang ) )
 				{
@@ -2564,7 +2409,7 @@ QString FontItem::infoText ( bool fromcache )
 		}
 
 		QString styleLangMatch;
-		for ( QMap<int, QMap<QString, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
+		for ( QMap<int, QMap<int, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
 		{
 			if ( langIdMap[ lit.key() ].contains ( sysLang ) ) // lang match
 			{
@@ -2578,24 +2423,28 @@ QString FontItem::infoText ( bool fromcache )
 			{
 				styleLangMatch = "\"langnomatch\"";
 			}
-			for ( QMap<QString, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
+			for ( QMap<int, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
 				if ( langIdMap[ lit.key() ].contains ( sysLang ) )
 				{
 					QString name_value = mit.value();
-          name_value = url2href(name_value);
+          				name_value = url2href(name_value);
 					name_value.replace ( "\n","<br/>" );
-					orderedInfo[ mit.key() ] << "<div class="+ styleLangMatch +">" + name_value +"</div>";
-					if ( mit.key() == tr ( "Font Subfamily" ) )
+					QString dcname("<div class="+ styleLangMatch +">" + name_value +"</div>");
+					if(!orderedInfo[ mit.key() ].contains(dcname) )
+						orderedInfo[ mit.key() ] << dcname;
+					if ( mit.key() ==  2 ) //Font Subfamily
 						m_variant = mit.value();
 				}
 				else if ( langIdMap[ lit.key() ] == "DEFAULT" && !localizedKeys.contains ( mit.key() ) )
 				{
 					QString name_value = mit.value();
-          name_value = url2href(name_value);
+          				name_value = url2href(name_value);
 					name_value.replace ( "\n","<br/>" );
-					orderedInfo[ mit.key() ] << "<div class="+ styleLangMatch +">" + name_value +"</div>";
-					if ( mit.key() == tr ( "Font Subfamily" ) )
+					QString dcname("<div class="+ styleLangMatch +">" + name_value +"</div>");
+					if(!orderedInfo[ mit.key() ].contains(dcname) )
+						orderedInfo[ mit.key() ] << dcname;
+					if ( mit.key() == 2 )
 						m_variant = mit.value();
 				}
 			}
@@ -2603,21 +2452,85 @@ QString FontItem::infoText ( bool fromcache )
 	}
 
 
+// 	for ( int i = 1; i < name_meaning.count(); ++i )
+// 	{
+// 		if ( orderedInfo.contains ( i ) )
+// 		{
+// // 			qDebug() << orderedInfo[name_meaning[i]].join("|");
+// 			QStringList entries ( orderedInfo[i].toSet().toList() );
+// 			ret += "<div class=\"infoblock\"><div class=\"infoname\">" + name_meaning[i]+ "</div>" + entries.join ( " " ) +"</div>";
+// 		}
+// 		if ( i == 7 ) //trademark
+// 			i = -1;
+// 		if ( i == 0 ) //Copyright
+// 			i = 7;
+// 	}
 
-	for ( int i = 1; i < name_meaning.count(); ++i )
-	{
-		if ( orderedInfo.contains ( name_meaning[i] ) )
-		{
-// 			qDebug() << orderedInfo[name_meaning[i]].join("|");
-			QStringList entries ( orderedInfo[name_meaning[i]].toSet().toList() );
-			ret += "<div class=\"infoblock\"><div class=\"infoname\">" + name_meaning[i]+ "</div>" + entries.join ( " " ) +"</div>";
-		}
-		if ( i == 7 ) //trademark
-			i = -1;
-		if ( i == 0 ) //Copyright
-			i = 7;
-	}
-
+	/// Times to manually order presentation!
+	
+	QString modelItem("<div class=\"infoblock\"><div class=\"infoname\"> %1 </div> %2 </div>");
+	if ( orderedInfo.contains ( FMFontDb::FontFamily) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::FontFamily ])
+				.arg( orderedInfo[ FMFontDb::FontFamily ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::FontSubfamily) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::FontSubfamily ])
+				.arg( orderedInfo[ FMFontDb::FontSubfamily ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::FullFontName) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::FullFontName ])
+				.arg( orderedInfo[ FMFontDb::FullFontName ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::PostscriptName) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::PostscriptName ])
+				.arg( orderedInfo[ FMFontDb::PostscriptName ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::Designer) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::Designer ])
+				.arg( orderedInfo[ FMFontDb::Designer ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::Description) )
+		ret += modelItem.arg(FontStrings::Names()[  FMFontDb::Description ])
+				.arg( orderedInfo[  FMFontDb::Description ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::LicenseDescription) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::LicenseDescription ])
+				.arg( orderedInfo[ FMFontDb::LicenseDescription ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::Copyright) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::Copyright ])
+				.arg( orderedInfo[ FMFontDb::Copyright ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::PostScriptCIDName) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::PostScriptCIDName ])
+				.arg( orderedInfo[ FMFontDb::PostScriptCIDName ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::SampleText) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::SampleText ])
+				.arg( orderedInfo[ FMFontDb::SampleText ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::VersionString) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::VersionString ])
+				.arg( orderedInfo[ FMFontDb::VersionString ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::Trademark) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::Trademark ])
+				.arg( orderedInfo[ FMFontDb::Trademark ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::ManufacturerName) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::ManufacturerName ])
+				.arg( orderedInfo[ FMFontDb::ManufacturerName ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::URLVendor) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::URLVendor ])
+				.arg( orderedInfo[ FMFontDb::URLVendor ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::URLDesigner) )
+		ret += modelItem.arg(FontStrings::Names()[  FMFontDb::URLDesigner ])
+				.arg( orderedInfo[  FMFontDb::URLDesigner ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::LicenseInfoURL) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::LicenseInfoURL ])
+				.arg( orderedInfo[ FMFontDb::LicenseInfoURL ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::PreferredFamily) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::PreferredFamily ])
+				.arg( orderedInfo[ FMFontDb::PreferredFamily ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::PreferredSubfamily) )
+		ret += modelItem.arg(FontStrings::Names()[  FMFontDb::PreferredSubfamily])
+				.arg( orderedInfo[FMFontDb::PreferredSubfamily  ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::CompatibleMacintosh) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::CompatibleMacintosh ])
+				.arg( orderedInfo[ FMFontDb::CompatibleMacintosh ].join ( " " ) );
+	if ( orderedInfo.contains ( FMFontDb::UniqueFontIdentifier) )
+		ret += modelItem.arg(FontStrings::Names()[ FMFontDb::UniqueFontIdentifier ])
+				.arg( orderedInfo[ FMFontDb::UniqueFontIdentifier ].join ( " " ) );
+	
+	
 	ret += "</div>"; // general
 	ret += "<div id=\"panose_block\">" + panBlockOut + "</div>";
 	
@@ -2861,17 +2774,15 @@ Code  	Meaning
 19 	Sample text
 20 	PostScript CID findfont name
 */
-void FontItem::moreInfo_sfnt()
+FontInfoMap FontItem::moreInfo_sfnt()
 {
 	if ( !ensureFace() )
-		return;
+		return FontInfoMap();
 
+	FontInfoMap moreInfo;
 	FT_SfntName tname;
 
-	if ( name_meaning.isEmpty() )
-	{
-		fillNamesMeaning();
-	}
+
 	int tname_count = FT_Get_Sfnt_Name_Count ( m_face );
 
 
@@ -2879,17 +2790,18 @@ void FontItem::moreInfo_sfnt()
 	for ( int i=0; i < tname_count; ++i )
 	{
 		FT_Get_Sfnt_Name ( m_face,i,&tname );
-		if ( tname.language_id != 0 && tname.language_id != theLocalLangCode )
-		{
-			continue;
-		}
-		QString akey;
+// 		if ( tname.language_id != 0 && tname.language_id != theLocalLangCode )
+// 		{
+// 			continue;
+// 		}
+		int akey;
 		if ( tname.name_id >  255 )
 		{
 // 			qDebug() << name() <<" has vendor’s specific name id ->" << tname.name_id;
 			if ( tname.string_len > 0 )
 			{
-				akey = "VendorKey_" + QString::number ( tname.name_id );
+// 				akey = "VendorKey_" + QString::number ( tname.name_id );
+				akey = tname.name_id ;
 			}
 			else
 			{
@@ -2897,9 +2809,9 @@ void FontItem::moreInfo_sfnt()
 			}
 
 		}
-		else if ( tname.name_id <= name_meaning.count() )
+		else if ( tname.name_id <= FontStrings::Names().count())
 		{
-			akey = name_meaning.at ( tname.name_id );
+			akey =  tname.name_id ;
 		}
 		else
 		{
@@ -2977,7 +2889,7 @@ void FontItem::moreInfo_sfnt()
 		for ( int bI ( 0 ); bI < 10; ++bI )
 		{
 			m_panose += QString::number ( os2->panose[bI] ) ;
-			panoseInfo[ panoseKeys[bI] ] = panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ] ;
+// 			panoseInfo[ panoseKeys[bI] ] = panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ] ;
 		}
 
 		// FSTYPE (embedding status)
@@ -3000,6 +2912,7 @@ void FontItem::moreInfo_sfnt()
 	}
 
 	releaseFace();
+	return moreInfo;
 }
 
 QString FontItem::getAlternateFamilyName()
@@ -3045,32 +2958,37 @@ QString FontItem::getAlternateVariantName()
 }
 
 
-void FontItem::moreInfo_type1()
+FontInfoMap FontItem::moreInfo_type1()
 {
 	if ( !ensureFace() )
-		return;
+		return FontInfoMap();
 
+	FontInfoMap moreInfo;
 	PS_FontInfoRec sinfo ;
 	int err = FT_Get_PS_Font_Info ( m_face,&sinfo );
 	if ( err )
 	{
 		qDebug() <<"FT_Get_PS_Font_Info("<< m_name <<")"<<" failed :" << err;
-		return;
+		return FontInfoMap();
 	}
 	// full_name version notice
-	moreInfo[0][tr ( "Full font name" ) ] = sinfo.full_name;
-	moreInfo[0][tr ( "Version string" ) ] = sinfo.version;
-	moreInfo[0][tr ( "Description" ) ] = sinfo.notice;
+	moreInfo[0][/*tr ( "Full font name" )*/ 4 ] = sinfo.full_name;
+	moreInfo[0][/*tr ( "Version string" )*/ 5 ] = sinfo.version;
+	moreInfo[0][/*tr ( "Description" )*/    10] = sinfo.notice;
 
 	releaseFace();
+	return moreInfo;
 }
 
 
 void FontItem::setTags ( QStringList l )
 {
-	bool act = isActivated();
-	m_tags = l;
-	setActivated ( act );
+// 	FMFontDb::DB()->TransactionBegin();
+	foreach(QString s,l)
+	{
+		FMFontDb::DB()->setValue(m_path, FMFontDb::Tags, s);
+	}
+// 	FMFontDb::DB()->TransactionEnd();
 }
 
 /// When glyphsView is resized we wantto adjust the number of columns
@@ -3089,40 +3007,22 @@ void FontItem::adjustGlyphsPerRow ( int width )
 
 bool FontItem::isActivated()
 {
-	if ( m_tags.contains ( "Activated_Off" ) )
-		return false;
-	else if ( m_tags.contains ( "Activated_On" ) )
-		return true;
-	else
-		m_tags << "Activated_Off";
-	return false;
+// 	if ( FMFontDb::DB()->getValue(m_path,FMFontDb::Activation ).toInt() > 0 )
+// 		return true;
+// 	
+	return m_active;
 }
 
 void FontItem::setActivated ( bool act )
 {
+	m_active = act;
 	if ( act )
 	{
-		if ( isActivated() )
-		{
-			return;
-		}
-		else
-		{
-			m_tags.removeAll ( "Activated_Off" );
-			m_tags << "Activated_On";
-		}
+		FMFontDb::DB()->setValue(m_path, FMFontDb::Activation , 1);
 	}
 	else
 	{
-		if ( !isActivated() )
-		{
-			return;
-		}
-		else
-		{
-			m_tags.removeAll ( "Activated_On" );
-			m_tags << "Activated_Off";
-		}
+		FMFontDb::DB()->setValue(m_path, FMFontDb::Activation , 0);
 	}
 }
 
@@ -3396,13 +3296,11 @@ void FontItem::fileRemote ( QString f , QString v, QString t, QString i, QPixmap
 }
 
 /// the same, but just for speedup startup with a lot of font files
-void FontItem::fileLocal ( QString f, QString v, QString t, QString p, QMap<int, QMap< QString, QString > > i )
+void FontItem::fileLocal ( QString f, QString v, QString t, QString p )
 {
 	m_family = f;
 	m_variant = v;
 	m_type = t;
-
-	moreInfo = i;
 }
 
 void FontItem::fileLocal ( FontLocalInfo fli )
@@ -3410,17 +3308,17 @@ void FontItem::fileLocal ( FontLocalInfo fli )
 	m_family = fli.family;
 	m_variant = fli.variant;
 	m_type = fli.type;
-	moreInfo = fli.info;
-	if ( !fli.panose.isEmpty() )
-	{
-		m_panose = fli.panose;
-		for ( int bI ( 0 ); bI < 10; ++bI )
-		{
-			panoseInfo[ panoseKeys[bI] ] = panoseMap.value ( panoseKeys[bI] ).value ( m_panose.mid ( bI,1 ).toInt() ) ;
-
-		}
-
-	}
+	m_panose = fli.panose;
+// 	moreInfo = fli.info;
+// 	if ( !fli.panose.isEmpty() )
+// 	{
+// 		for ( int bI ( 0 ); bI < 10; ++bI )
+// 		{
+// 			panoseInfo[ panoseKeys[bI] ] = panoseMap.value ( panoseKeys[bI] ).value ( m_panose.mid ( bI,1 ).toInt() ) ;
+// 
+// 		}
+// 
+// 	}
 
 }
 
@@ -3664,21 +3562,9 @@ QImage FontItem::glyphImage()
 }
 
 
-QMap< int, QMap < QString , QString > > & FontItem::rawInfo()
+FontInfoMap  FontItem::rawInfo()
 {
-	if ( moreInfo.isEmpty() )
-	{
-// 		qDebug()<< m_name <<"WARNING MoreInfo is empty";
-		if ( m_isOpenType = true /*testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" */ )
-		{
-			moreInfo_sfnt();
-		}
-		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )
-		{
-			moreInfo_type1();
-		}
-	}
-	return moreInfo;
+	return FMFontDb::DB()->getInfoMap(m_path);
 }
 
 
@@ -3952,6 +3838,36 @@ void FontItem::setFTHintMode ( unsigned int theValue )
 {
 	m_FTHintMode = theValue;
 }
+
+// here for migration purpose
+void FontItem::dumpIntoDB()
+{
+	if(!m_valid)
+		return;
+	QTime t;
+	int e1,e2,e3;
+	FMFontDb *db (FMFontDb::DB());
+	t.start();
+	db->initRecord(m_path);
+	e1 = t.elapsed();
+	t.start();
+	db->setValue(m_path,FMFontDb::Tags,m_tags);
+	QList<FMFontDb::Field> fl;
+	QVariantList vl;
+	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name << FMFontDb::Panose << FMFontDb::Type << FMFontDb::FsType;
+	vl <<  m_family<<m_variant<<m_name<<m_panose<<m_type<<(int)m_OSFsType;
+	db->setValues(m_path,fl,vl);
+	e2 = t.elapsed();
+	t.start();
+	if(m_isOpenType)
+		db->setInfoMap(m_path,moreInfo_sfnt());
+	else
+		db->setInfoMap(m_path,moreInfo_type1());
+	e3 = t.elapsed();
+	
+// 	qDebug()<<"DUMP"<<m_name<<e1<<e2<<e3;
+}
+
 
 
 

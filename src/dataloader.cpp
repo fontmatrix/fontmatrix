@@ -99,49 +99,49 @@ int DataLoader::load()
 	QStringList collectedTags;
 
 
-	//loading fonts
-	QDomNodeList colList = doc.elementsByTagName ( "fontfile" );
-	qDebug() << "colList contains "<< colList.count() << "fontfile elements";
-	if ( colList.length() == 0 )
-	{
-		m_typo->statusBar()->showMessage ( QString ( "WARNING: no fontfile in %1" ).arg ( m_file->fileName() ),3000 );
-	}
-
-	for ( uint i = 0; i < colList.length(); ++i )
-	{
-		QDomNode col = colList.item ( i );
-		FontLocalInfo fi;
-// 			QString fontName = col.toElement().attributeNode("name").value();
-		fi.file  = col.namedItem ( "file" ).toElement().text();
-		fi.family = col.toElement().attributeNode ( "family" ).value();
-		fi.variant = col.toElement().attributeNode ( "variant" ).value();
-		fi.type = col.toElement().attributeNode ( "type" ).value();
-		fi.panose = col.toElement().attributeNode ( "panose" ).value();
-// 			fi.info = col.namedItem ( "info" ).toElement().text();
-		QDomNodeList langlist = col.namedItem ( "info" ).toElement().elementsByTagName ( "lang" );
-		for ( int lIdx ( 0 ); lIdx < langlist.count(); ++lIdx )
-		{
-			int lCode ( langlist.at ( lIdx ).toElement().attributeNode ( "code" ).value().toInt() );
-			QDomNodeList infolist = langlist.at( lIdx ).toElement().elementsByTagName("name");
-			for ( int iIdx ( 0 ); iIdx < infolist.count(); ++iIdx )
-			{
-				QString iKey ( infolist.at( iIdx ).toElement().attributeNode("name").value() );
-				QString iValue ( infolist.at ( iIdx ).toElement().text() );
-				fi.info[lCode][iKey] = iValue;
-			}
-		}
-		QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
-		QStringList tl;
-		for ( int ti = 0; ti < taglist.count(); ++ti )
-		{
-			fi.tags << taglist.at ( ti ).toElement().text();
-		}
-		m_typo->addTagMapEntry ( fi.file,fi.tags );
-		collectedTags << fi.tags;
-		m_fastList[fi.file] = fi;
-// 		qDebug() << fi.file << fi.family << fi.variant;
-
-	}
+// 	//loading fonts
+// 	QDomNodeList colList = doc.elementsByTagName ( "fontfile" );
+// 	qDebug() << "colList contains "<< colList.count() << "fontfile elements";
+// 	if ( colList.length() == 0 )
+// 	{
+// 		m_typo->statusBar()->showMessage ( QString ( "WARNING: no fontfile in %1" ).arg ( m_file->fileName() ),3000 );
+// 	}
+// 
+// 	for ( uint i = 0; i < colList.length(); ++i )
+// 	{
+// 		QDomNode col = colList.item ( i );
+// 		FontLocalInfo fi;
+// // 			QString fontName = col.toElement().attributeNode("name").value();
+// 		fi.file  = col.namedItem ( "file" ).toElement().text();
+// 		fi.family = col.toElement().attributeNode ( "family" ).value();
+// 		fi.variant = col.toElement().attributeNode ( "variant" ).value();
+// 		fi.type = col.toElement().attributeNode ( "type" ).value();
+// 		fi.panose = col.toElement().attributeNode ( "panose" ).value();
+// // 			fi.info = col.namedItem ( "info" ).toElement().text();
+// 		QDomNodeList langlist = col.namedItem ( "info" ).toElement().elementsByTagName ( "lang" );
+// 		for ( int lIdx ( 0 ); lIdx < langlist.count(); ++lIdx )
+// 		{
+// 			int lCode ( langlist.at ( lIdx ).toElement().attributeNode ( "code" ).value().toInt() );
+// 			QDomNodeList infolist = langlist.at( lIdx ).toElement().elementsByTagName("name");
+// 			for ( int iIdx ( 0 ); iIdx < infolist.count(); ++iIdx )
+// 			{
+// 				QString iKey ( infolist.at( iIdx ).toElement().attributeNode("name").value() );
+// 				QString iValue ( infolist.at ( iIdx ).toElement().text() );
+// // 				fi.info[lCode][iKey] = iValue;
+// 			}
+// 		}
+// 		QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
+// 		QStringList tl;
+// 		for ( int ti = 0; ti < taglist.count(); ++ti )
+// 		{
+// 			fi.tags << taglist.at ( ti ).toElement().text();
+// 		}
+// 		m_typo->addTagMapEntry ( fi.file,fi.tags );
+// 		collectedTags << fi.tags;
+// 		m_fastList[fi.file] = fi;
+// // 		qDebug() << fi.file << fi.family << fi.variant;
+// 
+// 	}
 
 
 	//loading tagsets

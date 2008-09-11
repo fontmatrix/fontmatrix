@@ -50,8 +50,8 @@ void TagSetEditor::doConnect()
 void TagSetEditor::doInitLists()
 {
 	QStringList tl = typotek::tagsList;
-	tl.removeAll("Activated_Off");
-	tl.removeAll("Activated_On");
+// 	tl.removeAll("Activated_Off");
+// 	tl.removeAll("Activated_On");
 	tagList->addItems(tl);
 	QStringList sets = m_typo->tagsets();
 	setList->addItems(sets);

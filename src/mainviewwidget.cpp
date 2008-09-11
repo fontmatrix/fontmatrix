@@ -31,6 +31,7 @@
 #include "opentypetags.h"
 #include "systray.h"
 #include "typotek.h"
+#include "fmfontdb.h"
 
 
 #include <QString>
@@ -101,7 +102,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	theVeryFont = 0;
 	typo = typotek::getInstance();
 	m_lists = ListDockWidget::getInstance();
-	currentFonts = typo->getAllFonts();
+// 	currentFonts = typo->getAllFonts();
+	currentFonts = FMFontDb::DB()->AllFonts();
 	fontsetHasChanged = true;
 	curGlyph = 0;
 	fancyGlyphInUse = -1;
@@ -295,7 +297,21 @@ void MainViewWidget::fillTree()
 	tt.start();
 	int tttotal(0);
 	int tcount(0);
-
+	
+	QMap<FontItem*,bool> act ;
+	FMFontDb::DB()->TransactionBegin();
+	for( kit = keyList.constBegin() ; kit != keyList.constEnd() ; ++kit )
+	{
+		for (oit = kit.value().constBegin(); oit !=  kit.value().constEnd(); ++ oit )
+		{
+			for(fit = oit.value().constBegin(); fit != oit.value().constEnd(); ++fit)
+			{
+				act[fit.value()] = fit.value()->isActivated();
+			}
+		}
+	}
+	FMFontDb::DB()->TransactionEnd();
+	
 	for( kit = keyList.constBegin() ; kit != keyList.constEnd() ; ++kit )
 	{
 		QChar firstChar ( kit.key() );
@@ -306,7 +322,6 @@ void MainViewWidget::fillTree()
 		alpha->setBackgroundColor ( 0,Qt::lightGray );
 		alpha->setBackgroundColor ( 1,Qt::lightGray );
 		bool alphaIsUsed = false;
-
 		for (oit = kit.value().constBegin(); oit !=  kit.value().constEnd(); ++ oit )
 		{
 
@@ -348,8 +363,8 @@ void MainViewWidget::fillTree()
 				else if(fPointer->type() == "Type 1")
 						entry->setIcon(0, iconPS1);
 
-				bool act = fPointer->isActivated();
-				if ( act )
+				
+				if ( act[fPointer] )
 				{
 					checkyes = true;
 				}
@@ -357,7 +372,7 @@ void MainViewWidget::fillTree()
 				{
 					chekno = true;
 				}
-				entry->setCheckState ( 0 , act ?  Qt::Checked : Qt::Unchecked );
+				entry->setCheckState ( 0 , act[fPointer] ?  Qt::Checked : Qt::Unchecked );
 				entry->setData ( 0,200, entry->checkState ( 0 ) );
 
 				if ( entry->toolTip( 0 ) == curItemName )
@@ -553,7 +568,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			QList<FontItem*> todo;
 			for ( int i=0; i<item->childCount(); ++i )
 			{
-				todo << typo->getFont ( item->child ( i )->toolTip(0) );
+				todo << FMFontDb::DB()->Font( item->child ( i )->toolTip(0) );
 			}
 			for (int fIndex(0);fIndex < todo.count(); ++fIndex)
 			{
@@ -634,7 +649,7 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 		if(abcView->state() == FMGlyphsView::SingleView)
 			slotShowAllGlyph();
-		theVeryFont = typo->getFont ( faceIndex );
+		theVeryFont = FMFontDb::DB()->Font( faceIndex );
 		theVeryFont->updateItem();
 		slotFontActionByName ( fname );
 		if(theVeryFont->isRemote())
@@ -692,8 +707,8 @@ void MainViewWidget::slotView ( bool needDeRendering )
 {
 	QTime t;
 	t.start();
-	FontItem *l = typo->getFont ( lastIndex );
-	FontItem *f = typo->getFont ( faceIndex );
+	FontItem *l = FMFontDb::DB()->Font( lastIndex );
+	FontItem *f = FMFontDb::DB()->Font( faceIndex );
 	if ( !f )
 		return;
 	if ( needDeRendering )
@@ -828,7 +843,9 @@ void MainViewWidget::slotSearch()
 
 	QList<FontItem*> tmpList;
 	tmpList.clear();
-	tmpList = typo->getFonts ( fs, m_lists->getCurrentField() );
+// 	tmpList = typo->getFonts ( fs, m_lists->getCurrentField() );
+	tmpList = FMFontDb::DB()->Fonts(fs, FMFontDb::InfoItem( m_lists->getCurrentFieldAction()->data().toInt() ) );
+	
 	currentFonts.clear();
 	currentFonts = tmpList ;
 
@@ -841,26 +858,26 @@ void MainViewWidget::slotSearch()
 // Not used anymore
 void MainViewWidget::slotLiveSearch(const QString & text)
 {
-	qDebug()<<"slotLiveSearch";
-// 	if(!m_lists->liveSearchCheck->isChecked())
-// 		return;
-	m_lists->fontTree->clear();
-	fontsetHasChanged = true;
-	QString ff ( "search_%1" );
-	QString sensitivity ( "INSENS" );
-// 	if ( m_lists->sensitivityCheck->isChecked() )
-// 	{
-// 		sensitivity = "SENS";
-// 	}
-
-	QList<FontItem*> tmpList;
-	tmpList.clear();
-	tmpList = typo->getFonts ( text ,ff.arg ( sensitivity ) );
-	currentFonts.clear();
-	currentFonts = tmpList ;
-
-	currentOrdering = "family";
-	fillTree();
+// 	qDebug()<<"slotLiveSearch";
+// // 	if(!m_lists->liveSearchCheck->isChecked())
+// // 		return;
+// 	m_lists->fontTree->clear();
+// 	fontsetHasChanged = true;
+// 	QString ff ( "search_%1" );
+// 	QString sensitivity ( "INSENS" );
+// // 	if ( m_lists->sensitivityCheck->isChecked() )
+// // 	{
+// // 		sensitivity = "SENS";
+// // 	}
+// 
+// 	QList<FontItem*> tmpList;
+// 	tmpList.clear();
+// 	tmpList = typo->getFonts ( text ,ff.arg ( sensitivity ) );
+// 	currentFonts.clear();
+// 	currentFonts = tmpList ;
+// 
+// 	currentOrdering = "family";
+// 	fillTree();
 }
 
 
@@ -876,8 +893,9 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		m_lists->fontTree->clear();
 		fontsetHasChanged = true;
 		QString fs ( tag );
-		QString ff ( "tag" );
-		currentFonts = typo->getFonts ( fs,ff ) ;
+// 		QString ff ( "tag" );
+// 		currentFonts = typo->getFonts ( fs,ff ) ;
+		currentFonts = FMFontDb::DB()->Fonts(fs, FMFontDb::Tags );
 		currentOrdering = "family";
 		fillTree();
 	}
@@ -885,9 +903,10 @@ void MainViewWidget::slotFilterTag ( QString tag )
 	{
 		m_lists->fontTree->clear();
 		fontsetHasChanged = true;
-		QString fs ( "Activated_On" );
-		QString ff ( "tag" );
-		currentFonts = typo->getFonts ( fs,ff ) ;
+// 		QString fs ( "Activated_On" );
+// 		QString ff ( "tag" );
+// 		currentFonts = typo->getFonts ( fs,ff ) ;
+		currentFonts = FMFontDb::DB()->Fonts(1, FMFontDb::Activation );
 		currentOrdering = "family";
 		fillTree();
 	}
@@ -902,7 +921,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		QStringList pl( tag.split("-") );
 		QString fs ( pl[1] );
 		QString ff ( pl[0] );
-		currentFonts = typo->getFonts ( fs,"Panose/"+ff ) ;
+// 		currentFonts = typo->getFonts ( fs,"Panose/"+ff ) ;
 		currentOrdering = "family";
 		fillTree();
 	}
@@ -919,7 +938,7 @@ void MainViewWidget::slotFilterTagset ( QString set )
 
 	for ( int i = 0;i < tags.count(); ++i )
 	{
-		currentFonts += typo->getFonts ( tags[i],"tag" );
+		currentFonts += FMFontDb::DB()->Fonts ( tags[i], FMFontDb::Tags );
 	}
 	int count_req = tags.count();
 	QSet<FontItem*> setOfTags ( currentFonts.toSet() );
@@ -945,7 +964,7 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 	qDebug()<<"MainViewWidget::slotFontAction";
 	if ( column >2 ) return;
 
-	FontItem * FoIt = typo->getFont ( item->text ( 1 ) );
+	FontItem * FoIt = FMFontDb::DB()->Font( item->text ( 1 ) );
 	if ( FoIt/* && (!FoIt->isLocked())*/ )
 	{
 		QList<FontItem*> fl;
@@ -959,7 +978,7 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 void MainViewWidget::slotFontActionByName (const QString &fname )
 {
 	qDebug()<<"MainViewWidget::slotFontActionByName ("<< fname <<")";
-	FontItem * FoIt = typo->getFont ( fname );
+	FontItem * FoIt = FMFontDb::DB()->Font( fname );
 	if ( FoIt/* && (!FoIt->isLocked())*/ )
 	{
 		QList<FontItem*> fl;
@@ -976,7 +995,7 @@ void MainViewWidget::slotFontActionByNames ( QStringList fnames )
 	QList<FontItem*> FoIt;
 	for ( int i= 0; i < fnames.count() ; ++i )
 	{
-		FoIt.append ( typo->getFont ( fnames[i] ) );
+		FoIt.append ( FMFontDb::DB()->Font( fnames[i] ) );
 	}
 	if ( FoIt.count() )
 		prepare ( FoIt );
@@ -1080,7 +1099,7 @@ void MainViewWidget::slotSetSampleText ( QString s )
 void MainViewWidget::slotActivate ( bool act, QTreeWidgetItem * item, int column )
 {
 	if ( column >2 ) return;
-	FontItem * FoIt = typo->getFont ( item->text ( 1 ) );
+	FontItem * FoIt = FMFontDb::DB()->Font( item->text ( 1 ) );
 	if ( FoIt )
 	{
 		activation ( FoIt, act );
@@ -1090,7 +1109,7 @@ void MainViewWidget::slotActivate ( bool act, QTreeWidgetItem * item, int column
 void MainViewWidget::slotReloadFontList()
 {
 	currentFonts.clear();
-	currentFonts = typo->getAllFonts();
+	currentFonts = FMFontDb::DB()->AllFonts();
 	fontsetHasChanged = true;
 	fillTree();
 }
@@ -1104,14 +1123,14 @@ void MainViewWidget::slotSwitchAntiAlias ( bool aa )
 void MainViewWidget::slotViewAll()
 {
 	fontsetHasChanged = true;
-	currentFonts = typo->getAllFonts();
+	currentFonts = FMFontDb::DB()->AllFonts();
 	fillTree();
 	resetCrumb();
 }
 
 void MainViewWidget::slotViewActivated()
 {
-	slotFilterTag ( "Activated_On" );
+// 	slotFilterTag ( "Activated_On" );
 }
 
 
@@ -1783,7 +1802,7 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 	{
 		QString cur_tag = typotek::tagsList[i];
 
-		if ( cur_tag.isEmpty() || cur_tag.contains ( "Activated_" )  )
+		if ( cur_tag.isEmpty() /*|| cur_tag.contains ( "Activated_" ) */ )
 			continue;
 
 		QListWidgetItem *lit;
@@ -1894,7 +1913,7 @@ void MainViewWidget::displayWelcomeMessage()
 
 	QString welcomeFontName;
 	QString wpng(QDir::tempPath() + QDir::separator() + "FontmatrixWelcome.png");
-	if(typo->getFontCount() > 0)
+	if(FMFontDb::DB()->FontCount() > 0)
 	{
 		QFile wpngFile( wpng );
 		int pngWidth(fontInfoText->width() * 0.98);
@@ -1905,14 +1924,18 @@ void MainViewWidget::displayWelcomeMessage()
 		else
 		{
 			// We’ll trick the fontitem a bit to have large text
-			double bkPr(typo->getPreviewSize());
-			typo->setPreviewSize(30.0);
-			int rIdx(QTime::currentTime().msec() % typo->getFontCount());
-			FontItem *fitem( typo->getFont( rIdx ));
-			welcomeFontName = fitem->fancyName();
-			QPixmap welcomePix(fitem->oneLinePreviewPixmap ( tr("Welcome to Fontmatrix") , QColor(220,0,0), pngWidth) );
-			welcomePix.save(&wpngFile);
-			typo->setPreviewSize( bkPr );
+			QList<FontItem*> fl(FMFontDb::DB()->AllFonts());
+			if(fl.count() > 0)
+			{
+				double bkPr(typo->getPreviewSize());
+				typo->setPreviewSize(30.0);
+				int rIdx(QTime::currentTime().msec() % fl.count() );
+				FontItem *fitem( fl.at( rIdx ));
+				welcomeFontName = fitem->fancyName();
+				QPixmap welcomePix(fitem->oneLinePreviewPixmap ( tr("Welcome to Fontmatrix") , QColor(220,0,0), pngWidth) );
+				welcomePix.save(&wpngFile);
+				typo->setPreviewSize( bkPr );
+			}
 		}
 	}
 	QString ResPat(FMPaths::ResourcesDir());

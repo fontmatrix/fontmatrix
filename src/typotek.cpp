@@ -44,6 +44,7 @@
 // #include "fmprintdialog.h"
 #include "fmactivate.h"
 #include "fmlayout.h"
+#include "fmfontdb.h"
 
 #include "winutils.h"
 
@@ -138,8 +139,8 @@ void typotek::initMatrix()
 	m_defaultSampleName = tr("default") ;
 	fontmatrix::fillDockPos();
 
-	readSettings();
 	checkOwnDir();
+	readSettings();
 	initDir();
 
 	theMainView = new MainViewWidget ( this );
@@ -223,16 +224,11 @@ void typotek::closeEvent ( QCloseEvent *event )
 			return;
 		}
 	}
-	if ( maybeSave() )
-	{
-		save();
-		writeSettings();
-		event->accept();
-	}
-	else
-	{
-		event->ignore();
-	}
+	
+// 	save();
+	writeSettings();
+	event->accept();
+	
 }
 
 
@@ -275,9 +271,10 @@ void typotek::open(QString path, bool announce, bool collect)
 	// 	qDebug() << dirList.join ( "\n" );
 
 		QStringList yetHereFonts;
-		for(int i=0;i < fontMap.count() ; ++i)
-			yetHereFonts << fontMap[i]->path();
-
+// 		for(int i=0;i < fontMap.count() ; ++i)
+// 			yetHereFonts << fontMap[i]->path();
+		yetHereFonts = FMFontDb::DB()->AllFontNames();
+		
 		QStringList filters;
 		filters << "*.otf" << "*.pfb" << "*.ttf" ;
 		foreach ( QString dr, dirList )
@@ -313,6 +310,7 @@ void typotek::open(QString path, bool announce, bool collect)
 		}
 	}
 
+	FMFontDb::DB()->TransactionBegin();
 	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
 	bool showProgress = pathList.count() > 1;
 	if (showProgress) { // show progress bar only if there's more than one font
@@ -322,6 +320,7 @@ void typotek::open(QString path, bool announce, bool collect)
 		progress.show();
 	}
 	QString importstring ( tr ( "Import" ) +  " %1" );
+	FMFontDb *DB(FMFontDb::DB());
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
 		QString pathCur(pathList.at ( i ));
@@ -338,36 +337,42 @@ void typotek::open(QString path, bool announce, bool collect)
 			fitem->unLock();
 			fitem->setTags(tali);
 			temporaryFonts.remove(pathCur);
+			fitem->dumpIntoDB();
 			if (announce || collect)
 				nameList << fitem->fancyName();
 			continue;
 		}
-
-		QFile ff ( pathCur);
-		QFileInfo fi ( pathCur );
+		else
 		{
-			FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
-			if ( fitem->isValid() )
+			QFile ff ( pathCur);
+			QFileInfo fi ( pathCur );
 			{
-				fitem->setTags ( tali );
-				fitem->setActivated(false);
-				fontMap.append ( fitem );
-				realFontMap[fitem->path() ] = fitem;
-				if (announce || collect)
-					nameList << fitem->fancyName();
-			}
-			else
-			{
-				QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
-				statusBar()->showMessage ( errorFont );
-				if (announce || collect)
-					nameList << "__FAILEDTOLOAD__" + fi.fileName();
+// 				FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
+				FontItem *fitem (DB->Font(fi.absoluteFilePath()));
+				if ( fitem->isValid() )
+				{
+					fitem->setTags ( tali );
+					fitem->setActivated(false);
+// 					fontMap.append ( fitem );
+// 					realFontMap[fitem->path() ] = fitem;
+// 					fitem->dumpIntoDB();
+					if (announce || collect)
+						nameList << fitem->fancyName();
+				}
+				else
+				{
+					QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
+					statusBar()->showMessage ( errorFont );
+					if (announce || collect)
+						nameList << "__FAILEDTOLOAD__" + fi.fileName();
+				}
 			}
 		}
 	}
 
 	progress.close();
 
+	FMFontDb::DB()->TransactionEnd();
 	if (announce) {
 		if (showFontListDialog) {
 			// The User needs and deserves to know what fonts hve been imported
@@ -382,7 +387,7 @@ void typotek::open(QString path, bool announce, bool collect)
 	}
 	theMainView->slotReloadFontList();
 
-	save();
+// 	save();
 }
 
 void typotek::open ( QStringList files )
@@ -395,10 +400,10 @@ void typotek::open ( QStringList files )
 		ImportTags imp(this,tagsList);
 		imp.exec();
 		tali = imp.tags();
-		tali << "Activated_Off" ;
+// 		tali << "Activated_Off" ;
 	}
-	else
-		tali << "Activated_Off" ;
+// // // // // // 	else
+// // // // // // 		tali << "Activated_Off" ;
 
 	foreach ( QString tas, tali )
 	{
@@ -409,7 +414,7 @@ void typotek::open ( QStringList files )
 		}
 	}
 
-
+	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i=0;i < fontMap.count() ; ++i)
 	{
 		if(pathList.contains( fontMap[i]->path()))
@@ -417,6 +422,7 @@ void typotek::open ( QStringList files )
 
 	}
 
+	FMFontDb::DB()->TransactionBegin();
 	QProgressDialog progress ( tr ( "Importing font files... " ),tr ( "cancel" ), 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 	progress.setAutoReset ( false );
@@ -437,7 +443,8 @@ void typotek::open ( QStringList files )
 		{
 			fitem->setTags ( tali );
 			fontMap.append ( fitem );
-			realFontMap[fitem->path() ] = fitem;
+// 			realFontMap[fitem->path() ] = fitem;
+			fitem->dumpIntoDB();
 			nameList << fitem->fancyName();
 		}
 		else
@@ -450,6 +457,7 @@ void typotek::open ( QStringList files )
 
 	progress.close();
 
+	FMFontDb::DB()->TransactionEnd();
 	// The User needs and deserves to know what fonts hve been imported
 	if (showFontListDialog) {
 		// The User needs and deserves to know what fonts hve been imported
@@ -460,7 +468,7 @@ void typotek::open ( QStringList files )
 	}
 
 	theMainView->slotReloadFontList();
-	save();
+// 	save();
 }
 
 /// Neede at least for the "Browse Font Dirs" feature
@@ -474,6 +482,7 @@ bool typotek::insertTemporaryFont(const QString & path)
 	QFileInfo fi ( path );
 	QString absPath ( fi.absoluteFilePath() );
 	// check if we have it yet
+	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i=0;i < fontMap.count() ; ++i)
 	{
 		if(fontMap[i]->path() == absPath)
@@ -488,7 +497,7 @@ bool typotek::insertTemporaryFont(const QString & path)
 		return false;
 	}
 	fontMap.append ( item );
-	realFontMap[ item->path() ] = item;
+// 	realFontMap[ item->path() ] = item;
 	temporaryFonts[ item->path() ] = item;
 	item->lock();
 
@@ -500,8 +509,8 @@ bool typotek::insertTemporaryFont(const QString & path)
 void typotek::slotExportFontSet()
 {
 	QStringList items ( tagsList );
-	items.removeAll ( "Activated_On" );
-	items.removeAll ( "Activated_Off" );
+// 	items.removeAll ( "Activated_On" );
+// 	items.removeAll ( "Activated_Off" );
 	bool ok;
 	QString item = QInputDialog::getItem ( this, "Fontmatrix Tags",
 	                                       tr ( "Choose the tag for filter exported fonts" ), items, 0, false, &ok );
@@ -522,7 +531,7 @@ void typotek::slotExportFontSet()
 
 bool typotek::save()
 {
-	SaveData saver ( &fontsdata, this );
+	SaveData saver ( &ResourceFile, this );
 	return true;
 
 }
@@ -550,7 +559,7 @@ void typotek::createActions()
 	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
 	saveAct->setStatusTip ( tr ( "Sync with the DB file" ) );
 	scuts->add(saveAct);
-	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save() ) );
+	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save()) );
 
 	exportFontSetAct = new QAction(tr("Export &Fonts"),this);
 	exportFontSetAct->setStatusTip(tr("Export a fontset"));
@@ -754,22 +763,36 @@ void typotek::readSettings()
 	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
 	move ( pos );
+	
 	fonteditorPath = settings.value ( "FontEditor", "/usr/bin/fontforge" ).toString();
 	useInitialTags = settings.value ( "UseInitialTags", false ).toBool();
 	showFontListDialog = settings.value("ShowImportedFonts", true).toBool();
-	templatesDir = settings.value ( "TemplatesDir", "./").toString();
 	previewSize = settings.value("PreviewSize", 15.0).toDouble();
 	previewRTL = settings.value("PreviewRTL", false).toBool();
 	previewSubtitled = settings.value("PreviewSubtitled", false).toBool();
 	mainDockArea = settings.value("ToolPos", "Left").toString();
 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
+	
+	templatesDir = settings.value ( "TemplatesDir", "./").toString();
 	m_welcomeURL = settings.value("WelcomeURL").toString();
+	m_remoteTmpDir = settings.value("RemoteTmpDir", QDir::tempPath()).toString();
+	
 	defaultOTFScript = settings.value("OTFScript").toString();
 	defaultOTFLang = settings.value("OTFLang").toString();
 	defaultOTFGPOS = settings.value("OTFGPOS").toString().split(";",QString::SkipEmptyParts);
 	defaultOTFGSUB = settings.value("OTFGSUB").toString().split(";",QString::SkipEmptyParts);
 	chartInfoFontSize = settings.value("ChartInfoFontSize", 8).toInt();
 	chartInfoFontName = settings.value("ChartInfoFontFamily", QFont().family() ).toString();
+	
+	
+	databaseDriver = settings.value("DatabaseDriver","QSQLITE").toString();
+	databaseHostname = settings.value("DatabaseHostname","").toString();
+	databaseDbName = settings.value("DatabaseDbName", ownDir.absolutePath()+ QDir::separator() + "Data.sql").toString();
+	databaseUser = settings.value("DatabaseUser","").toString();
+	databasePassword = settings.value("DatabasePassword","").toString();
+	if( !QSqlDatabase::drivers().contains(databaseDriver) )
+		qDebug()<<"The SQL driver you request is not available("<< databaseDriver <<")";
+	
 }
 
 void typotek::writeSettings()
@@ -779,6 +802,12 @@ void typotek::writeSettings()
 	settings.setValue ( "size", size() );
 	settings.setValue( "ToolPos", mainDockArea );
 	settings.setValue( "SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
+	settings.setValue("DatabaseDriver",databaseDriver);
+	settings.setValue("DatabaseHostname",databaseHostname);
+	settings.setValue("DatabaseDbName",databaseDbName);
+	settings.setValue("DatabaseUser",databaseUser);
+	settings.setValue("DatabasePassword",databasePassword);
+	save();
 
 }
 
@@ -813,7 +842,7 @@ void typotek::checkOwnDir()
 	{
 		dbDir.mkpath (QDir::homePath() + sep + "Library" + sep + "Fontmatrix");
 	}
-	fontsdata.setFileName ( QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep +"fontmatrix.data" );
+	ResourceFile.setFileName ( QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep +"fontmatrix.data" );
 
 #elif _WIN32
 	// For win we do not hide things because it does
@@ -822,18 +851,19 @@ void typotek::checkOwnDir()
 	managedDir.setPath ( QDir::homePath() + fontmanaged );
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + fontmanaged );
-	fontsdata.setFileName ( QDir::homePath() + sep +"fontmatrix.data" );
+	ResourceFile.setFileName ( QDir::homePath() + sep +"fontmatrix.data" );
 #else
-	QString fontmanaged ( sep + ".fontmatrix" ); // Where activated fonts are sym-linked
-	managedDir.setPath ( QDir::homePath() + fontmanaged );
+	QString rootDir(QDir::homePath() + sep + ".Fontmatrix" + sep);  
+	ownDir.setPath(rootDir);
+	// Where activated fonts are sym-linked
+	managedDir.setPath ( rootDir + "Activated" );
 	if ( !managedDir.exists() )
-		managedDir.mkpath ( QDir::homePath() + fontmanaged );
+		managedDir.mkpath ( rootDir + "Activated"  );
 
 	addFcDirItem( managedDir.absolutePath() );
-	fontsdata.setFileName ( QDir::homePath() + sep + ".fontmatrix.data" );
+	
+	ResourceFile.setFileName ( rootDir + "Resource.xml" );
 #endif
-	QSettings settings;
-	m_remoteTmpDir = settings.value("RemoteTmpDir", QDir::tempPath()).toString();
 }
 
 void typotek::addFcDirItem(const QString & dirPath)
@@ -916,7 +946,8 @@ QStringList typotek::getSystemFontDirs()
 void typotek::initDir()
 {
 	qDebug() <<"initDir()";
-	DataLoader loader ( &fontsdata );
+	
+	DataLoader loader ( &ResourceFile );
 	int lRes(loader.load());
 	if( lRes == FONTDATA_VERSION_MISMATCH )
 	{
@@ -945,8 +976,8 @@ void typotek::initDir()
 		fi->unLock();
 		if ( tagsMap.value ( fi->path() ).contains ( "Activated_On" ) )
 			fi->setActivated ( true );
-		fontMap.append ( fi );
-		realFontMap[fi->path() ] = fi;
+// 		fontMap.append ( fi );
+// 		realFontMap[fi->path() ] = fi;
 		fi->setTags ( tagsMap.value ( fi->path() ) );
 // 			relayStartingStepIn(zigouigoui.at( i % 8 ) );
 // 			relayStartingStepIn( QString::number( fontnr - i ) );
@@ -973,6 +1004,7 @@ void typotek::initDir()
 		QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );
 
 		QStringList yetHereFonts;
+		QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 		for ( int i=0;i < fontMap.count() ; ++i )
 			yetHereFonts << fontMap[i]->path();
 
@@ -1002,8 +1034,8 @@ void typotek::initDir()
 					fitem->lock();
 					fitem->setActivated ( true );
 					fitem->addTag ( SysColFon );
-					fontMap.append ( fitem );
-					realFontMap[fitem->path() ] = fitem;
+// 					fontMap.append ( fitem );
+// 					realFontMap[fitem->path() ] = fitem;
 					++sysCounter;
 				}
 				else
@@ -1051,8 +1083,8 @@ void typotek::slotRemoteIsReady()
 			continue;
 		}
 		fi->fileRemote(listInfo[rf].family,listInfo[rf].variant,listInfo[rf].type, listInfo[rf].info, listInfo[rf].pix);
-		fontMap.append ( fi );
-		realFontMap[fi->path() ] = fi;
+// 		fontMap.append ( fi );
+// 		realFontMap[fi->path() ] = fi;
 		fi->setTags ( listInfo[rf].tags );
 		foreach(QString tag, listInfo[rf].tags)
 		{
@@ -1070,116 +1102,116 @@ void typotek::slotRemoteIsReady()
 
 
 
-QList< FontItem * > typotek::getFonts ( QString pattern, QString field , bool mark)
-{
-
-	if ( pattern.isEmpty() )
-	{
-		if(mark)
-			theMainView->resetCrumb();
-		return fontMap;
-	}
-
-	bool negate ( false );
-	QString rPattern ( pattern );
-	if ( pattern.startsWith ( "!" ) )
-	{
-		negate = true;
-		rPattern = pattern.mid ( 1 );
-	}
-
-	QList< FontItem * > ret;
-	ret.clear();
-	QList< FontItem * > superSet ( theMainView->curFonts() ) ;
-
-	if ( superSet.isEmpty() )
-	{
-		if(mark)
-			theMainView->resetCrumb();
-		superSet = fontMap;
-	}
-
-	if(mark)
-		theMainView->addFilterToCrumb ( pattern );
-	int superSetCount ( superSet.count() );
-
-	qDebug() <<"PATERN ="<< rPattern<<": FIELD ="<< field<<":"<< superSetCount;
-
-	if ( field == "tag" )
-	{
-		for ( int i =0; i < superSetCount; ++i )
-		{
-			if ( superSet[i]->tags().contains ( rPattern ) )
-			{
-// 				qDebug()<< "TAG MATCH"<<superSet[i]->family();
-				ret.append ( superSet[i] );
-			}
-		}
-	}
-	else if( field.startsWith("Panose/") )
-	{
-		QString sf(field.mid(7));
-		qDebug()<<"PANOSE"<< sf<< rPattern;
-		for ( int i =0; i < superSetCount; ++i )
-		{
-			if ( superSet[i]->panose(sf) == rPattern )
-			{
-				ret.append ( superSet[i] );
-			}
-		}
-	}
-	else if(field == tr ( "Unicode character" ))
-	{
-		/// WARNING - Unicode fields does not support negation.
-		int startC(0xFFFFFFFF);
-		int endC(0);
-		int patCount(rPattern.count());
-		for(int a(0); a < patCount; ++a)
-		{
-			unsigned int ca(rPattern[a].unicode());
-			if( ca < startC)
-				startC = ca;
-			if(ca > endC)
-				endC = ca;
-		}
-		for ( int i =0; i < superSetCount; ++i )
-		{
-			int cc(superSet[i]->countCoverage ( startC, endC ) );
-			if ( cc >= patCount )
-			{
-				qDebug()<<"U U+ fam r"<< startC<< endC<<superSet[i]->family()<<cc;
-				ret.append ( superSet[i] );
-			}
-		}
-	}
-	else if ( field == tr ( "All fields" ) )
-	{
-		for ( int i =0; i < superSetCount; ++i )
-		{
-			if ( negate ?
-			        ( !superSet[i]->infoText().contains ( rPattern,Qt::CaseInsensitive ) ) :
-						  ( superSet[i]->infoText().contains (rPattern,Qt::CaseInsensitive ) ) )
-			{
-				ret.append ( superSet[i] );
-			}
-		}
-	}
-	else
-	{
-		for ( int i =0; i < superSetCount; ++i )
-		{
-			if ( negate ?
-			        ( !superSet[i]->value ( field ).contains ( rPattern , Qt::CaseInsensitive ) ) :
-						  ( superSet[i]->value ( field ).contains ( rPattern , Qt::CaseInsensitive ) ) )
-			{
-				ret.append ( superSet[i] );
-			}
-		}
-	}
-
-	qDebug() <<"RET"<< ret.count();
-	return ret;
-}
+// QList< FontItem * > typotek::getFonts ( QString pattern, QString field , bool mark)
+// {
+// 
+// 	if ( pattern.isEmpty() )
+// 	{
+// 		if(mark)
+// 			theMainView->resetCrumb();
+// 		return fontMap;
+// 	}
+// 
+// 	bool negate ( false );
+// 	QString rPattern ( pattern );
+// 	if ( pattern.startsWith ( "!" ) )
+// 	{
+// 		negate = true;
+// 		rPattern = pattern.mid ( 1 );
+// 	}
+// 
+// 	QList< FontItem * > ret;
+// 	ret.clear();
+// 	QList< FontItem * > superSet ( theMainView->curFonts() ) ;
+// 
+// 	if ( superSet.isEmpty() )
+// 	{
+// 		if(mark)
+// 			theMainView->resetCrumb();
+// 		superSet = fontMap;
+// 	}
+// 
+// 	if(mark)
+// 		theMainView->addFilterToCrumb ( pattern );
+// 	int superSetCount ( superSet.count() );
+// 
+// 	qDebug() <<"PATERN ="<< rPattern<<": FIELD ="<< field<<":"<< superSetCount;
+// 
+// 	if ( field == "tag" )
+// 	{
+// 		for ( int i =0; i < superSetCount; ++i )
+// 		{
+// 			if ( superSet[i]->tags().contains ( rPattern ) )
+// 			{
+// // 				qDebug()<< "TAG MATCH"<<superSet[i]->family();
+// 				ret.append ( superSet[i] );
+// 			}
+// 		}
+// 	}
+// 	else if( field.startsWith("Panose/") )
+// 	{
+// 		QString sf(field.mid(7));
+// 		qDebug()<<"PANOSE"<< sf<< rPattern;
+// 		for ( int i =0; i < superSetCount; ++i )
+// 		{
+// 			if ( superSet[i]->panose(sf) == rPattern )
+// 			{
+// 				ret.append ( superSet[i] );
+// 			}
+// 		}
+// 	}
+// 	else if(field == tr ( "Unicode character" ))
+// 	{
+// 		/// WARNING - Unicode fields does not support negation.
+// 		int startC(0xFFFFFFFF);
+// 		int endC(0);
+// 		int patCount(rPattern.count());
+// 		for(int a(0); a < patCount; ++a)
+// 		{
+// 			unsigned int ca(rPattern[a].unicode());
+// 			if( ca < startC)
+// 				startC = ca;
+// 			if(ca > endC)
+// 				endC = ca;
+// 		}
+// 		for ( int i =0; i < superSetCount; ++i )
+// 		{
+// 			int cc(superSet[i]->countCoverage ( startC, endC ) );
+// 			if ( cc >= patCount )
+// 			{
+// 				qDebug()<<"U U+ fam r"<< startC<< endC<<superSet[i]->family()<<cc;
+// 				ret.append ( superSet[i] );
+// 			}
+// 		}
+// 	}
+// 	else if ( field == tr ( "All fields" ) )
+// 	{
+// 		for ( int i =0; i < superSetCount; ++i )
+// 		{
+// 			if ( negate ?
+// 			        ( !superSet[i]->infoText().contains ( rPattern,Qt::CaseInsensitive ) ) :
+// 						  ( superSet[i]->infoText().contains (rPattern,Qt::CaseInsensitive ) ) )
+// 			{
+// 				ret.append ( superSet[i] );
+// 			}
+// 		}
+// 	}
+// 	else
+// 	{
+// 		for ( int i =0; i < superSetCount; ++i )
+// 		{
+// 			if ( negate ?
+// 			        ( !superSet[i]->value ( field ).contains ( rPattern , Qt::CaseInsensitive ) ) :
+// 						  ( superSet[i]->value ( field ).contains ( rPattern , Qt::CaseInsensitive ) ) )
+// 			{
+// 				ret.append ( superSet[i] );
+// 			}
+// 		}
+// 	}
+// 
+// 	qDebug() <<"RET"<< ret.count();
+// 	return ret;
+// }
 
 void typotek::resetFilter()
 {
@@ -1248,26 +1280,26 @@ void typotek::helpEnd()
 }
 
 
-FontItem* typotek::getFont ( QString s )
-{
-	if ( realFontMap.contains ( s ) )
-	{
-		return realFontMap.value ( s );
-	}
-	return 0;
-}
+// FontItem* typotek::getFont ( QString s )
+// {
+// 	if ( realFontMap.contains ( s ) )
+// 	{
+// 		return realFontMap.value ( s );
+// 	}
+// 	return 0;
+// }
 
-FontItem* typotek::getFont ( int i )
-{
-	if ( i < fontMap.count() && i >= 0 )
-	{
-		return fontMap.at ( i );
-	}
-	else
-	{
-		return 0;
-	}
-}
+// FontItem* typotek::getFont ( int i )
+// {
+// 	if ( i < fontMap.count() && i >= 0 )
+// 	{
+// 		return fontMap.at ( i );
+// 	}
+// 	else
+// 	{
+// 		return 0;
+// 	}
+// }
 
 void typotek::slotEditFont()
 {
@@ -1510,6 +1542,7 @@ void typotek::setWord ( QString s, bool updateView )
 	if(s == m_theWord)
 		return;
 	m_theWord = s;
+	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i(0); i < fontMap.count(); ++i)
 		fontMap[i]->clearPreview() ;
 	if ( updateView )
@@ -1524,6 +1557,7 @@ void typotek::setPreviewRTL(bool d)
 	if(previewRTL == d)
 		return;
 	previewRTL = d;
+	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i(0); i < fontMap.count(); ++i)
 		fontMap[i]->clearPreview() ;
 	emit previewHasChanged();
@@ -1534,6 +1568,7 @@ void typotek::setPreviewSubtitled(bool d)
 	if(previewSubtitled == d)
 		return;
 	previewSubtitled = d;
+	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i(0); i < fontMap.count(); ++i)
 		fontMap[i]->clearPreview() ;
 	emit previewHasChanged();
@@ -1603,13 +1638,14 @@ void typotek::relayStartingStepIn(QString s)
 
 void typotek::removeFontItem(QString key)
 {
-	FontItem *fit = realFontMap.value(key);
-	if(!fit)
-		return;
-	fontMap.removeAll(fit);
-	delete fit;
-	realFontMap.remove(key);
-	qDebug()<< key << "has been removed";
+// 	FontItem *fit = realFontMap.value(key);
+// 	if(!fit)
+// 		return;
+// 	fontMap.removeAll(fit);
+// 	delete fit;
+// 	realFontMap.remove(key);
+// 	qDebug()<< key << "has been removed";
+	FMFontDb::DB()->Remove(key);
 }
 
 void typotek::removeFontItem(QStringList keyList)
@@ -1853,7 +1889,7 @@ void typotek::printFamily()
 		idxS += idxE;
 		idxE = qrand() % 9;
 	}
-	QList<FontItem*> familyFonts( getFonts(theMainView->selectedFont()->family(), "family", false));
+	QList<FontItem*> familyFonts(FMFontDb::DB()->Fonts(theMainView->selectedFont()->family(), FMFontDb::Family ));
 
 // 	if(familyFonts.count() > stl.count())
 	{

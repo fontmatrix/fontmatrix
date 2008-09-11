@@ -22,6 +22,7 @@
 #include "mainviewwidget.h"
 #include "typotek.h"
 #include "fontitem.h"
+#include "fmfontdb.h"
 #include <QtGui>
 #include <QDebug>
 
@@ -208,7 +209,7 @@ void Systray::newTag(QString name)
 	tmp->setCheckable(true);
 	if(!ttek)
 		ttek = typotek::getInstance();
-	QList<FontItem*> taggedFonts = ttek->getFonts ( name , "tag" );
+	QList<FontItem*> taggedFonts = FMFontDb::DB()->Fonts( name , FMFontDb::Tags );
 	ttek->resetFilter();
 	bool notAtAll = true;
 	bool all = true;
@@ -283,7 +284,7 @@ void Systray::createTagMenu()
 	QStringList tmp(ttek->tagsList);
 	tmp.sort();
 	foreach (QString tagName, tmp) {
-		if (tagName != "Activated_On" && tagName != "Activated_Off")
+// 		if (tagName != "Activated_On" && tagName != "Activated_Off")
 			newTag(tagName);
 	}
 
@@ -328,7 +329,7 @@ void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
 	bool lazy = true;
 	foreach(QString tag, tags)
 	{
-		QList<FontItem*> taggedFonts = ttek->getFonts ( tag , "tag" );
+		QList<FontItem*> taggedFonts = FMFontDb::DB()->Fonts( tag , FMFontDb::Tags );
 		ttek->resetFilter();
 		foreach(FontItem* fit, taggedFonts)
 		{
@@ -349,7 +350,7 @@ void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
 	QStringList tmp(ttek->tagsList);
 	tmp.sort();
 	foreach (QString tagName, tmp) {
-		if (tagName != "Activated_On" && tagName != "Activated_Off")
+// 		if (tagName != "Activated_On" && tagName != "Activated_Off")
 			newTag(tagName);
 	}
 	

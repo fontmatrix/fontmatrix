@@ -169,15 +169,15 @@ class typotek:public QMainWindow
 
 		MainViewWidget *theMainView;
 
-		QFile fontsdata;
+		QFile ResourceFile;
 		QDir ownDir;
 		QDir managedDir;
 
 		QMap<QString, QStringList> tagsMap;
 		QMap<QString, QStringList> tagSetMap;
 
-		QList<FontItem*> fontMap;
-		QMap<QString, FontItem*> realFontMap;
+// 		QList<FontItem*> fontMap;
+// 		QMap<QString, FontItem*> realFontMap;
 
 // 		TypotekAdaptator *actAdaptator;
 
@@ -220,13 +220,19 @@ class typotek:public QMainWindow
 
 		int chartInfoFontSize;
 		QString chartInfoFontName;
+		
+		QString databaseDriver;
+		QString databaseHostname;
+		QString databaseDbName;
+		QString databaseUser;
+		QString databasePassword;
 
 	public:
-		int getFontCount(){return fontMap.count(); }
-		FontItem* getFont ( int i ) ;
-		FontItem* getFont ( QString s );
-		QList<FontItem*> getAllFonts() {return fontMap;};
-		QList<FontItem*> getFonts ( QString pattern, QString field , bool mark = true);
+// 		int getFontCount(){return fontMap.count(); }
+// 		FontItem* getFont ( int i ) ;
+// 		FontItem* getFont ( QString s );
+// 		QList<FontItem*> getAllFonts() {return fontMap;};
+// 		QList<FontItem*> getFonts ( QString pattern, QString field , bool mark = true);
 		QList<FontItem*> getCurrentFonts();
 		void resetFilter();
 
@@ -246,7 +252,7 @@ class typotek:public QMainWindow
 
 		QString getManagedDir(){return managedDir.absolutePath();};
 
-		QFile* getFontsData(){ return &fontsdata; }
+		QFile* getResourceFile(){ return &ResourceFile; }
 
 		void setSampleText(QString s);
 
@@ -325,7 +331,21 @@ class typotek:public QMainWindow
 	void setChartInfoFontName ( const QString& theValue ){chartInfoFontName = theValue;}
 
 	MainViewWidget* getTheMainView() const{return theMainView;}
-	
+
+	void setDatabaseDriver ( const QString& theValue ){databaseDriver = theValue;}
+	QString getDatabaseDriver() const{return databaseDriver;}
+
+	void setDatabaseHostname ( const QString& theValue ){databaseHostname = theValue;}
+	QString getDatabaseHostname() const{return databaseHostname;}
+
+	void setDatabaseDbName ( const QString& theValue ){databaseDbName = theValue;}
+	QString getDatabaseDbName() const{return databaseDbName;}
+
+	void setDatabaseUser ( const QString& theValue ){databaseUser = theValue;}
+	QString getDatabaseUser() const{return databaseUser;}
+
+	void setDatabasePassword ( const QString& theValue ){databasePassword = theValue;}
+	QString getDatabasePassword() const{return databasePassword;}
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

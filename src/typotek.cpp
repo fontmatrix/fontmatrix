@@ -347,15 +347,11 @@ void typotek::open(QString path, bool announce, bool collect)
 			QFile ff ( pathCur);
 			QFileInfo fi ( pathCur );
 			{
-// 				FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
 				FontItem *fitem (DB->Font(fi.absoluteFilePath()));
-				if ( fitem->isValid() )
+				if ( fitem )
 				{
 					fitem->setTags ( tali );
 					fitem->setActivated(false);
-// 					fontMap.append ( fitem );
-// 					realFontMap[fitem->path() ] = fitem;
-// 					fitem->dumpIntoDB();
 					if (announce || collect)
 						nameList << fitem->fancyName();
 				}
@@ -439,13 +435,9 @@ void typotek::open ( QStringList files )
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
 
-		FontItem *fitem = new FontItem ( fi.absoluteFilePath() );
-		if ( fitem->isValid() )
+		FontItem *fitem = FMFontDb::DB()->Font( fi.absoluteFilePath() );
+		if ( fitem )
 		{
-			fitem->setTags ( tali );
-			fontMap.append ( fitem );
-// 			realFontMap[fitem->path() ] = fitem;
-			fitem->dumpIntoDB();
 			nameList << fitem->fancyName();
 		}
 		else

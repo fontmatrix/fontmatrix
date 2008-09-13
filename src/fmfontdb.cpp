@@ -47,6 +47,8 @@ FMFontDb::FMFontDb()
 	tableName[Info] 	= "fontmatrix_info";
 
 	getIdStringFast = "SELECT %1 FROM %2 WHERE %3='%4'";
+	
+	transactionDeep = 0;
 }
 
 FMFontDb * FMFontDb::DB()
@@ -283,12 +285,12 @@ void FMFontDb::setTags(const QString & id, const QStringList & tl)
 			.arg ( nId ) );
 	QSqlQuery query ( qs,*this );
 	query.exec();
-	TransactionBegin();
+// 	TransactionBegin();
 	foreach(QString t, tl)
 	{
 		addTag(id, t);
 	}
-	TransactionEnd();
+// 	TransactionEnd();
 }
 
 QStringList FMFontDb::getTags()
@@ -509,14 +511,27 @@ FontItem * FMFontDb::Font ( const QString & id )
 	else
 	{
 		fitem = new FontItem ( id );
-		fitem->dumpIntoDB();
-		fid = getId ( id );
-		if ( fid > 0 )
+		if( fitem->isValid() )
 		{
-			fontMap[fid] = fitem;
+			fitem->dumpIntoDB();
+			fid = getId ( id );
+			if ( fid > 0 )
+			{
+				fontMap[fid] = fitem;
+			}
+			else
+			{
+				delete fitem;
+				fitem = 0;
+				qDebug() <<"ERROR creating font item"<<id;
+			}
 		}
 		else
+		{
+			delete fitem;
+			fitem = 0;
 			qDebug() <<"ERROR creating font item"<<id;
+		}
 	}
 	return fitem;
 }
@@ -536,14 +551,24 @@ QStringList FMFontDb::AllFontNames()
 
 void FMFontDb::TransactionBegin()
 {
-	transaction();
-	transactionError.clear();
-	qDebug()<<"TransactionBegin";
+	if(transactionDeep > 0)
+		++transactionDeep;
+	else
+	{
+		transaction();
+		transactionError.clear();
+		++transactionDeep;
+		qDebug()<<"TransactionBegin";
+	}
 }
 
 bool FMFontDb::TransactionEnd()
 {
 	qDebug()<<"TransactionEnd";
+	
+	--transactionDeep;
+	if(transactionDeep > 0)
+		return true;
 	if ( transactionError.isEmpty() )
 	{
 		commit();

@@ -140,6 +140,8 @@ class FMFontDb : public QSqlDatabase
 		void clearFontMap();
 
 		QList<QSqlError> transactionError;
+		
+		int transactionDeep;
 };
 
 

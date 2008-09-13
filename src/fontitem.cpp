@@ -3867,17 +3867,19 @@ void FontItem::dumpIntoDB()
 	QTime t;
 	int e1,e2,e3;
 	FMFontDb *db (FMFontDb::DB());
+	
 	t.start();
 	db->initRecord(m_path);
 	e1 = t.elapsed();
+	
 	t.start();
-// 	db->setValue(m_path,FMFontDb::Tags,m_tags);
 	QList<FMFontDb::Field> fl;
 	QVariantList vl;
 	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name << FMFontDb::Panose << FMFontDb::Type << FMFontDb::FsType;
 	vl <<  m_family<<m_variant<<m_name<<m_panose<<m_type<<(int)m_OSFsType;
 	db->setValues(m_path,fl,vl);
 	e2 = t.elapsed();
+	
 	t.start();
 	if(m_isOpenType)
 		db->setInfoMap(m_path,moreInfo_sfnt());

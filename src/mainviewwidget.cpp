@@ -893,8 +893,6 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		m_lists->fontTree->clear();
 		fontsetHasChanged = true;
 		QString fs ( tag );
-// 		QString ff ( "tag" );
-// 		currentFonts = typo->getFonts ( fs,ff ) ;
 		currentFonts = FMFontDb::DB()->Fonts(fs, FMFontDb::Tags );
 		currentOrdering = "family";
 		fillTree();
@@ -903,9 +901,6 @@ void MainViewWidget::slotFilterTag ( QString tag )
 	{
 		m_lists->fontTree->clear();
 		fontsetHasChanged = true;
-// 		QString fs ( "Activated_On" );
-// 		QString ff ( "tag" );
-// 		currentFonts = typo->getFonts ( fs,ff ) ;
 		currentFonts = FMFontDb::DB()->Fonts(1, FMFontDb::Activation );
 		currentOrdering = "family";
 		fillTree();

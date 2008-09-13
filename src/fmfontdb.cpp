@@ -88,29 +88,13 @@ void FMFontDb::initRecord ( const QString & id )
 
 void FMFontDb::setValue ( const QString & id, Field field, QVariant value )
 {
-// 	qDebug()<<"setValue"<<id;
+	qDebug()<<"setValue"<<id<<fieldName[field]<<value;
 	int nId ( getId ( id ) );
 	bool res ( false );
 // 	transaction();
 	if ( field == Tags )
 	{
-		QString qs ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
-		             .arg ( tableName[Tag] )
-		             .arg ( fieldName[Id] )
-		             .arg ( nId ) );
-		QSqlQuery query ( qs,*this );
-		res = query.exec();
-		foreach ( QString v,value.toStringList() )
-		{
-			QString vs ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4','%5')" )
-			             .arg ( tableName[Tag] )
-			             .arg ( fieldName[Id] )
-			             .arg ( fieldName[Tags] )
-			             .arg ( nId )
-			             .arg ( v ) );
-			QSqlQuery query ( vs,*this );
-			res = query.exec();
-		}
+		setTags( id, value.toStringList() );
 	}
 	else
 	{
@@ -152,7 +136,7 @@ void FMFontDb::setValues ( const QString & id, QList< Field > fields, QVariantLi
 
 void FMFontDb::setInfoMap ( const QString & id, const QMap< int, QMap < int , QString > > & info )
 {
-// 	qDebug()<<"setInfoMap"<<id;
+	qDebug()<<"setInfoMap"<<id;
 	// Here is the interesting part :-s)
 
 	// id | lang | key | value
@@ -201,6 +185,7 @@ QVariant FMFontDb::getValue ( const QString & id, Field field )
 	qDebug() <<"getValue"<< fieldName[field] <<id;
 	if ( field == Tags )
 	{
+		QStringList tl;
 		QString qs ( QString ( "SELECT %1 FROM %2 WHERE %3='%4'" )
 		             .arg ( fieldName[field] )
 		             .arg ( tableName[Tag] )
@@ -209,14 +194,14 @@ QVariant FMFontDb::getValue ( const QString & id, Field field )
 		QSqlQuery query ( qs,*this );
 		if ( query.exec() )
 		{
-			QStringList tl;
 			while ( query.next() )
 			{
-				tl << query.value ( 0 ).toString();
+				QString t(query.value ( 0 ).toString());
+				if(!tl.contains(t))
+					tl << t;
 			}
-			return tl;
 		}
-		return QVariant();
+		return tl;
 	}
 	else
 	{
@@ -239,7 +224,7 @@ QVariant FMFontDb::getValue ( const QString & id, Field field )
 
 QMap< int, QMap < int , QString > > FMFontDb::getInfoMap ( const QString & id )
 {
-// 	qDebug() <<"getInfoMap"<<id;
+	qDebug() <<"getInfoMap"<<id;
 	QMap< int, QMap < int , QString > > ret;
 	QString qs ( QString ( "SELECT * FROM %1 WHERE %2='%3'" )
 	             .arg ( tableName[Info] )
@@ -262,9 +247,53 @@ QMap< int, QMap < int , QString > > FMFontDb::getInfoMap ( const QString & id )
 
 }
 
+void FMFontDb::addTag ( const QString & id, const QString & t )
+{
+	int nId ( getId ( id ) );
+
+	QString ts ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4','%5')" )
+	             .arg ( tableName[Tag] )
+	             .arg ( fieldName[Id] )
+	             .arg ( fieldName[Tags] )
+	             .arg ( nId )
+	             .arg ( t ) );
+	QSqlQuery query ( ts,*this );
+	bool res ( query.exec() );
+}
+
+void FMFontDb::removeTag(const QString & id, const QString & t)
+{
+	int nId(getId(id));
+	QString qs ( QString ( "DELETE FROM %1 WHERE (%2='%3') AND (%4='%5')" )
+			.arg ( tableName[Tag] )
+			.arg ( fieldName[Id] )
+			.arg ( nId ) 
+			.arg ( fieldName[Tags] )
+		   	.arg ( t ));
+	QSqlQuery query ( qs,*this );
+	query.exec();
+}
+
+void FMFontDb::setTags(const QString & id, const QStringList & tl)
+{
+	int nId(getId(id));
+	QString qs ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
+			.arg ( tableName[Tag] )
+			.arg ( fieldName[Id] )
+			.arg ( nId ) );
+	QSqlQuery query ( qs,*this );
+	query.exec();
+	TransactionBegin();
+	foreach(QString t, tl)
+	{
+		addTag(id, t);
+	}
+	TransactionEnd();
+}
 
 QStringList FMFontDb::getTags()
 {
+	qDebug()<<"getTags";
 	QString qs ( QString ( "SELECT %1 FROM %2" )
 			.arg ( fieldName[Tags] )
 			.arg ( tableName[Tag] ));
@@ -283,8 +312,9 @@ QStringList FMFontDb::getTags()
 	return QStringList();
 }
 
-void FMFontDb::addTag(const QString & t)
+void FMFontDb::addTagToDB(const QString & t)
 {
+	qDebug()<< "addtag"<< t;
 		QString vs ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4','%5')" )
 				.arg ( tableName[Tag] )
 				.arg ( fieldName[Id] )
@@ -623,6 +653,8 @@ FontItem * FMFontDb::FirstFont()
 FontItem * FMFontDb::NextFont()
 {
 }
+
+
 
 
 

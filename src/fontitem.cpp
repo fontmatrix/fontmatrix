@@ -652,6 +652,20 @@ FontItem::FontItem(QString path, QString family, QString variant, bool active)
 	m_family = family;
 	m_variant = variant;
 	m_active = active;
+	if ( langIdMap.isEmpty() )
+		fillLangIdMap();
+	if ( charsetMap.isEmpty() )
+		fillCharsetMap();
+	if ( legitimateNonPathChars.isEmpty() )
+		fillLegitimateSpaces();
+	if ( gray256Palette.isEmpty() )
+		fill256Palette();
+	if ( invertedGray256Palette.isEmpty() )
+		fillInvertedPalette();
+	if ( !theOneLineScene )
+	{
+		theOneLineScene = new QGraphicsScene;
+	}
 }
 
 void FontItem::updateItem()
@@ -2980,16 +2994,22 @@ FontInfoMap FontItem::moreInfo_type1()
 	return moreInfo;
 }
 
+QStringList FontItem::tags()
+{
+	return FMFontDb::DB()->getValue(m_path, FMFontDb::Tags).toStringList();
+}
+
+void FontItem::addTag(const QString & t)
+{
+	FMFontDb::DB()->addTag(m_path, t);
+}
 
 void FontItem::setTags ( QStringList l )
 {
-// 	FMFontDb::DB()->TransactionBegin();
-	foreach(QString s,l)
-	{
-		FMFontDb::DB()->setValue(m_path, FMFontDb::Tags, s);
-	}
-// 	FMFontDb::DB()->TransactionEnd();
+
+	FMFontDb::DB()->setTags(m_path, l);
 }
+
 
 /// When glyphsView is resized we wantto adjust the number of columns
 void FontItem::adjustGlyphsPerRow ( int width )
@@ -3291,7 +3311,7 @@ void FontItem::fileRemote ( QString f , QString v, QString t, QString i, QPixmap
 	m_family = f;
 	m_variant = v;
 	m_type = t;
-	m_cacheInfo = i;
+// 	m_cacheInfo = i;
 	fixedPixmap = p;
 }
 
@@ -3851,7 +3871,7 @@ void FontItem::dumpIntoDB()
 	db->initRecord(m_path);
 	e1 = t.elapsed();
 	t.start();
-	db->setValue(m_path,FMFontDb::Tags,m_tags);
+// 	db->setValue(m_path,FMFontDb::Tags,m_tags);
 	QList<FMFontDb::Field> fl;
 	QVariantList vl;
 	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name << FMFontDb::Panose << FMFontDb::Type << FMFontDb::FsType;

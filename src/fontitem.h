@@ -154,8 +154,8 @@ class FontItem : public QObject
 // 		QString m_author;
 // 		QString m_foundry;
 
-		QStringList m_tags;
-		QString m_cacheInfo;
+// 		QStringList m_tags;
+// 		QString m_cacheInfo;
 		static FT_Library theLibrary;
 		FT_Error      ft_error;
 		FT_Face m_face;
@@ -242,12 +242,12 @@ class FontItem : public QObject
 		QString faceFlags() {return m_faceFlags;}
 		QString family() {return m_family;}
 		QString variant() {return m_variant;}
-		QStringList tags() {return m_tags;}
+		QStringList tags() ;
 		int glyphsCount() {return m_numGlyphs;}
 		QString type(){return m_type;}
 		QStringList charmaps(){return m_charsets;}
 		void setTags ( QStringList l );
-		void addTag(const QString &t){if(!m_tags.contains(t) && !t.isEmpty())m_tags.append(t);}
+		void addTag(const QString &t);
 		QString name();
 		QString fancyName() {return m_family + " " + m_variant;}
 		QString infoText ( bool fromcache = true );

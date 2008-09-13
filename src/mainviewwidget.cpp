@@ -1721,7 +1721,7 @@ void MainViewWidget::slotNewTag()
 	if ( !ok || nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ))
 		return;
 
-	FMFontDb::DB()->addTag( nTag );
+	FMFontDb::DB()->addTagToDB( nTag );
 	QListWidgetItem *lit = new QListWidgetItem ( nTag );
 	lit->setCheckState ( Qt::Checked );
 	tagsListWidget->addItem ( lit );
@@ -1749,17 +1749,34 @@ void MainViewWidget::slotFinalize()
 	}
 
 	QStringList sourceTags;
+	QStringList refTags;
 	for ( int i=0;i<theTaggedFonts.count();++i )
 	{
-		sourceTags = theTaggedFonts[i]->tags();
-			// sourceTags -= noTags;
+		refTags = sourceTags = theTaggedFonts[i]->tags();
+		qDebug()<<refTags.join(" ");
 		for(int t = 0; t < noTags.count(); ++t)
 		{
 			sourceTags.removeAll(noTags[t]);
 		}
 		sourceTags += plusTags;
 		sourceTags = sourceTags.toSet().toList();
-		theTaggedFonts[i]->setTags ( sourceTags );
+		bool changed(false);
+		qDebug()<<sourceTags.join(" ");
+		if(refTags.count() != sourceTags.count())
+			changed = true;
+		else
+		{
+			foreach(QString t, sourceTags)
+			{
+				if(!refTags.contains(t))
+				{
+					changed = true;
+					break;
+				}
+			}
+		}
+		if(changed)
+			theTaggedFonts[i]->setTags ( sourceTags );
 	}
 	qDebug()<<"END OF slotFinalize";
 }
@@ -1767,7 +1784,7 @@ void MainViewWidget::slotFinalize()
 void MainViewWidget::prepare(QList< FontItem * > fonts)
 {
 	qDebug()<<"MainViewWidget::prepare("<<fonts.count()<<")";
-	slotFinalize();
+// 	slotFinalize();
 	theTaggedFonts.clear();
 	theTaggedFonts = fonts;
 
@@ -1784,11 +1801,8 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 	QString tot;
 	for ( int i=0;i<theTaggedFonts.count();++i )
 	{
-// 		bool last = i == theTaggedFonts.count() - 1;
 		tot.append (  theTaggedFonts[i]->fancyName() +  "\n" );
 	}
-// 	QString itsagroup = theFonts.count() > 1 ? " - " + theFonts.last()->name() :"";
-// 	titleLabel->setText ( tit.arg ( theFonts[0]->fancyName() ) + itsagroup );
 	if(theTaggedFonts.count() > 1)
 	{
 		titleLabel->setText ( theTaggedFonts[0]->family() + " (family)");
@@ -1803,7 +1817,7 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 	{
 		QString cur_tag = tagsList[i];
 
-		if ( cur_tag.isEmpty() /*|| cur_tag.contains ( "Activated_" ) */ )
+		if ( cur_tag.isEmpty() )
 			continue;
 
 		QListWidgetItem *lit;
@@ -1814,7 +1828,8 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 			int YesState = 0;
 			for ( int i=0;i<theTaggedFonts.count();++i )
 			{
-				if ( theTaggedFonts[i]->tags().contains ( cur_tag ) )
+				QStringList fTags(theTaggedFonts[i]->tags());
+				if ( fTags.contains ( cur_tag ) )
 					++YesState;
 			}
 			if(YesState == theTaggedFonts.count())

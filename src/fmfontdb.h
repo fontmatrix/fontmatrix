@@ -114,7 +114,10 @@ class FMFontDb : public QSqlDatabase
 		int FontCount();
 		
 		QStringList getTags();
-		void addTag(const QString& t);
+		void addTagToDB(const QString& t);
+		void addTag(const QString& id, const QString& t);
+		void removeTag(const QString& id, const QString& t);
+		void setTags(const QString& id, const QStringList& tl);
 		
 		bool Remove(const QString& id);
 

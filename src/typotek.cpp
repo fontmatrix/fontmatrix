@@ -989,67 +989,69 @@ void typotek::initDir()
 
 
 	/// let’s load system fonts
-
-	QString SysColFon = tr ( "Collected System Font" );
-	QStringList tagsList(FMFontDb::DB()->getTags());
-	if ( !tagsList.contains ( SysColFon ) )
-		tagsList << SysColFon;
-
-	int sysCounter ( 0 );
-
-	QStringList sysDir ( getSystemFontDirs() );
-	for ( int sIdx ( 0 ); sIdx < sysDir.count(); ++sIdx )
+#define SYSTEM_FONTS 0
+	if(SYSTEM_FONTS)
 	{
-		QDir theDir ( sysDir[sIdx] );
-		QStringList syspathList;
-		QStringList nameList;
-
-		QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );
-
-		QStringList yetHereFonts;
-		QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
-		for ( int i=0;i < fontMap.count() ; ++i )
-			yetHereFonts << fontMap[i]->path();
-
-		QStringList filters;
-		filters << "*.otf" << "*.pfb" << "*.ttf" ;
-		foreach ( QString dr, dirList )
+		QString SysColFon = tr ( "Collected System Font" );
+		QStringList tagsList(FMFontDb::DB()->getTags());
+		if ( !tagsList.contains ( SysColFon ) )
+			tagsList << SysColFon;
+	
+		int sysCounter ( 0 );
+	
+		QStringList sysDir ( getSystemFontDirs() );
+		for ( int sIdx ( 0 ); sIdx < sysDir.count(); ++sIdx )
 		{
-			QDir d ( dr );
-			QFileInfoList fil= d.entryInfoList ( filters );
-			foreach ( QFileInfo fp, fil )
+			QDir theDir ( sysDir[sIdx] );
+			QStringList syspathList;
+			QStringList nameList;
+	
+			QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );
+	
+			QStringList yetHereFonts;
+			QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
+			for ( int i=0;i < fontMap.count() ; ++i )
+				yetHereFonts << fontMap[i]->path();
+	
+			QStringList filters;
+			filters << "*.otf" << "*.pfb" << "*.ttf" ;
+			foreach ( QString dr, dirList )
 			{
-				if ( !yetHereFonts.contains ( fp.absoluteFilePath() ) )
-					syspathList <<  fp.absoluteFilePath();
-			}
-		}
-
-		int sysFontCount ( syspathList.count() );
-		relayStartingStepIn ( tr ( "Adding" ) +" "+ QString::number ( sysFontCount ) +" "+tr ( "fonts from system directories" ) );
-		for ( int i = 0 ; i < sysFontCount; ++i )
-		{
-			QFile ff ( syspathList.at ( i ) );
-			QFileInfo fi ( syspathList.at ( i ) );
-			{
-				FontItem *fitem = new FontItem ( fi.absoluteFilePath(), false, false );
-				if ( fitem->isValid() )
+				QDir d ( dr );
+				QFileInfoList fil= d.entryInfoList ( filters );
+				foreach ( QFileInfo fp, fil )
 				{
-					fitem->lock();
-					fitem->setActivated ( true );
-					fitem->addTag ( SysColFon );
-// 					fontMap.append ( fitem );
-// 					realFontMap[fitem->path() ] = fitem;
-					++sysCounter;
-				}
-				else
-				{
-					qDebug() << "Can’t open this font because it’s broken : " << fi.fileName() ;
+					if ( !yetHereFonts.contains ( fp.absoluteFilePath() ) )
+						syspathList <<  fp.absoluteFilePath();
 				}
 			}
+	
+			int sysFontCount ( syspathList.count() );
+			relayStartingStepIn ( tr ( "Adding" ) +" "+ QString::number ( sysFontCount ) +" "+tr ( "fonts from system directories" ) );
+			for ( int i = 0 ; i < sysFontCount; ++i )
+			{
+				QFile ff ( syspathList.at ( i ) );
+				QFileInfo fi ( syspathList.at ( i ) );
+				{
+					FontItem *fitem = new FontItem ( fi.absoluteFilePath(), false, false );
+					if ( fitem->isValid() )
+					{
+						fitem->lock();
+						fitem->setActivated ( true );
+						fitem->addTag ( SysColFon );
+	// 					fontMap.append ( fitem );
+	// 					realFontMap[fitem->path() ] = fitem;
+						++sysCounter;
+					}
+					else
+					{
+						qDebug() << "Can’t open this font because it’s broken : " << fi.fileName() ;
+					}
+				}
+			}
 		}
+		relayStartingStepIn ( QString::number ( sysCounter ) + " " + tr ( "fonts available from system" ) );
 	}
-	relayStartingStepIn ( QString::number ( sysCounter ) + " " + tr ( "fonts available from system" ) );
-
 
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 	/// Remote dirs

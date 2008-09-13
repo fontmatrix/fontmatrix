@@ -281,7 +281,7 @@ void Systray::createTagMenu()
 	if (!ttek)
 		ttek = typotek::getInstance();
 
-	QStringList tmp(ttek->tagsList);
+	QStringList tmp(FMFontDb::DB()->getTags());
 	tmp.sort();
 	foreach (QString tagName, tmp) {
 // 		if (tagName != "Activated_On" && tagName != "Activated_Off")
@@ -347,7 +347,7 @@ void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
 	if (!ttek)
 		ttek = typotek::getInstance();
 
-	QStringList tmp(ttek->tagsList);
+	QStringList tmp(FMFontDb::DB()->getTags());
 	tmp.sort();
 	foreach (QString tagName, tmp) {
 // 		if (tagName != "Activated_On" && tagName != "Activated_Off")

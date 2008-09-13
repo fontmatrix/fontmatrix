@@ -38,7 +38,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/remotedir.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/shortcuts.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/systray.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/tagseteditor.cpp
+# ${CMAKE_CURRENT_SOURCE_DIR}/tagseteditor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/typotek.cpp
 )
@@ -92,7 +92,7 @@ prefspaneldialog.h
 remotedir.h
 shortcuts.h
 systray.h
-tagseteditor.h
+# tagseteditor.h
 textprogression.h
 typotek.h
 )

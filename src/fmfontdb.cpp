@@ -239,7 +239,7 @@ QVariant FMFontDb::getValue ( const QString & id, Field field )
 
 QMap< int, QMap < int , QString > > FMFontDb::getInfoMap ( const QString & id )
 {
-	qDebug() <<"getInfoMap"<<id;
+// 	qDebug() <<"getInfoMap"<<id;
 	QMap< int, QMap < int , QString > > ret;
 	QString qs ( QString ( "SELECT * FROM %1 WHERE %2='%3'" )
 	             .arg ( tableName[Info] )
@@ -261,6 +261,40 @@ QMap< int, QMap < int , QString > > FMFontDb::getInfoMap ( const QString & id )
 	return ret;
 
 }
+
+
+QStringList FMFontDb::getTags()
+{
+	QString qs ( QString ( "SELECT %1 FROM %2" )
+			.arg ( fieldName[Tags] )
+			.arg ( tableName[Tag] ));
+	QSqlQuery query ( qs,*this );
+	if ( query.exec() )
+	{
+		QStringList tl;
+		while ( query.next() )
+		{
+			QString t(query.value ( 0 ).toString());
+			if(!tl.contains(t))
+				tl << t;
+		}
+		return tl;
+	}
+	return QStringList();
+}
+
+void FMFontDb::addTag(const QString & t)
+{
+		QString vs ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4','%5')" )
+				.arg ( tableName[Tag] )
+				.arg ( fieldName[Id] )
+				.arg ( fieldName[Tags] )
+				.arg ( 0 )
+				.arg ( t ) );
+		QSqlQuery query ( vs,*this );
+		query.exec();
+}
+
 
 void FMFontDb::initFMDb()
 {
@@ -569,7 +603,8 @@ QList< FontItem * > FMFontDb::Fonts ( const QString & whereString, Table table )
 		while ( query.next() )
 		{
 			int id ( query.value ( 0 ).toInt() );
-			reg[id] = fontMap.value ( id );
+			if(id > 0)
+				reg[id] = fontMap.value ( id );
 		}
 		return reg.values();
 	}
@@ -588,6 +623,7 @@ FontItem * FMFontDb::FirstFont()
 FontItem * FMFontDb::NextFont()
 {
 }
+
 
 
 

@@ -101,8 +101,6 @@ class FMFontDb : public QSqlDatabase
 		QVariant getValue ( const QString& id, Field field );
 		FontInfoMap getInfoMap ( const QString& id );
 
-
-
 		FontItem* Font ( const QString& id );
 
 		QList<FontItem*> AllFonts();
@@ -114,6 +112,9 @@ class FMFontDb : public QSqlDatabase
 		QList<FontItem*> Fonts ( const QVariant& pattern, InfoItem info, int codeLang = 0 );
 		QList<FontItem*> Fonts ( const QString& whereString, Table table );
 		int FontCount();
+		
+		QStringList getTags();
+		void addTag(const QString& t);
 		
 		bool Remove(const QString& id);
 

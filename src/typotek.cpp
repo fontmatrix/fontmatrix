@@ -27,7 +27,7 @@
 // #include "typotekadaptator.h"
 #include "fmlayout.h"
 #include "dataloader.h"
-#include "tagseteditor.h"
+// #include "tagseteditor.h"
 #include "savedata.h"
 #include "aboutwidget.h"
 #include "helpwidget.h"
@@ -69,7 +69,6 @@
 #endif
 
 
-QStringList typotek::tagsList;
 typotek* typotek::instance = 0;
 QString typotek::fonteditorPath = "/usr/bin/fontforge";
 extern bool __FM_SHOW_FONTLOADED;
@@ -292,6 +291,7 @@ void typotek::open(QString path, bool announce, bool collect)
 
 	/* Everybody say it’s useless...
 		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
+	QStringList tagsList(FMFontDb::DB()->getTags());
 	if ( useInitialTags && shouldAskTali )
 	{
 		ImportTags imp(this,tagsList);
@@ -395,6 +395,7 @@ void typotek::open ( QStringList files )
 	QStringList pathList = files;
 	QStringList nameList;
 	QStringList tali;
+	QStringList tagsList(FMFontDb::DB()->getTags());
 	if ( useInitialTags )
 	{
 		ImportTags imp(this,tagsList);
@@ -508,6 +509,7 @@ bool typotek::insertTemporaryFont(const QString & path)
 /// EXPORT
 void typotek::slotExportFontSet()
 {
+	QStringList tagsList(FMFontDb::DB()->getTags());
 	QStringList items ( tagsList );
 // 	items.removeAll ( "Activated_On" );
 // 	items.removeAll ( "Activated_Off" );
@@ -618,10 +620,10 @@ void typotek::createActions()
 	scuts->add(helpAct);
 	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpBegin() ) );
 
-	tagsetAct = new QAction ( tr ( "&Tag Sets" ),this );
-	tagsetAct->setIcon ( QIcon ( ":/fontmatrix_tagseteditor_icon.png" ) );
-	scuts->add(tagsetAct);
-	connect ( tagsetAct,SIGNAL ( triggered( ) ),this,SLOT ( popupTagsetEditor() ) );
+// 	tagsetAct = new QAction ( tr ( "&Tag Sets" ),this );
+// 	tagsetAct->setIcon ( QIcon ( ":/fontmatrix_tagseteditor_icon.png" ) );
+// 	scuts->add(tagsetAct);
+// 	connect ( tagsetAct,SIGNAL ( triggered( ) ),this,SLOT ( popupTagsetEditor() ) );
 
 	activCurAct = new QAction ( tr ( "Activate all current" ),this );
 	scuts->add(activCurAct);
@@ -707,7 +709,7 @@ void typotek::createMenus()
 	fileMenu->addAction ( exitAct );
 
 	editMenu = menuBar()->addMenu ( tr ( "&Edit" ) );
-	editMenu->addAction ( tagsetAct );
+// 	editMenu->addAction ( tagsetAct );
 	editMenu->addSeparator();
 	editMenu->addAction( tagAll );
 	editMenu->addAction ( activCurAct );
@@ -949,46 +951,47 @@ void typotek::initDir()
 	
 	DataLoader loader ( &ResourceFile );
 	int lRes(loader.load());
-	if( lRes == FONTDATA_VERSION_MISMATCH )
-	{
-		QMessageBox::warning ( this, tr("Fontmatrix - data warning"),
-				       tr("Your database has not been loaded because of a version mismatch.\nIt is not a problem, you just lost fonts references, tags & sample texts. If you badly need to keep these datas, do not quit Fontmatrix before you have copied the database*. At this point and with a minimum of XML skill, you should be able to get old database into new format.\n\n*database is") + QString(" " +QDir::homePath()+ QString(QDir::separator()) + ".fontmatrix.data"),
-	     QMessageBox::Ok, QMessageBox::NoButton );
-	}
-	/// load font files
-	qDebug() <<"load font files";
-// 	QStringList pathList = loader.fontList();
-	QMap<QString,FontLocalInfo> pathList = loader.fastList();
-	int fontnr = pathList.count();
-
-	relayStartingStepIn ( tr ( "Loading" ) +" "+ QString::number ( fontnr ) +" "+tr ( "fonts present in database" ) );
-
-	QMap<QString,FontLocalInfo>::const_iterator pit;
-	for ( pit = pathList.begin(); pit != pathList.end(); ++ pit )
-	{
-		FontItem *fi = new FontItem ( pit.value().file, false, true );
-		if ( !fi->isValid() )
-		{
-			qDebug() << "ERROR loading : " << pit.value().file ;
-			continue;
-		}
-		fi->fileLocal ( pit.value() );
-		fi->unLock();
-		if ( tagsMap.value ( fi->path() ).contains ( "Activated_On" ) )
-			fi->setActivated ( true );
-// 		fontMap.append ( fi );
-// 		realFontMap[fi->path() ] = fi;
-		fi->setTags ( tagsMap.value ( fi->path() ) );
-// 			relayStartingStepIn(zigouigoui.at( i % 8 ) );
-// 			relayStartingStepIn( QString::number( fontnr - i ) );
-	}
+// 	if( lRes == FONTDATA_VERSION_MISMATCH )
+// 	{
+// 		QMessageBox::warning ( this, tr("Fontmatrix - data warning"),
+// 				       tr("Your database has not been loaded because of a version mismatch.\nIt is not a problem, you just lost fonts references, tags & sample texts. If you badly need to keep these datas, do not quit Fontmatrix before you have copied the database*. At this point and with a minimum of XML skill, you should be able to get old database into new format.\n\n*database is") + QString(" " +QDir::homePath()+ QString(QDir::separator()) + ".fontmatrix.data"),
+// 	     QMessageBox::Ok, QMessageBox::NoButton );
 // 	}
-// 	qDebug() <<  fontMap.count() << " font files loaded.";
+// 	/// load font files
+// 	qDebug() <<"load font files";
+// // 	QStringList pathList = loader.fontList();
+// 	QMap<QString,FontLocalInfo> pathList = loader.fastList();
+// 	int fontnr = pathList.count();
+// 
+// 	relayStartingStepIn ( tr ( "Loading" ) +" "+ QString::number ( fontnr ) +" "+tr ( "fonts present in database" ) );
+// 
+// 	QMap<QString,FontLocalInfo>::const_iterator pit;
+// 	for ( pit = pathList.begin(); pit != pathList.end(); ++ pit )
+// 	{
+// 		FontItem *fi = new FontItem ( pit.value().file, false, true );
+// 		if ( !fi->isValid() )
+// 		{
+// 			qDebug() << "ERROR loading : " << pit.value().file ;
+// 			continue;
+// 		}
+// 		fi->fileLocal ( pit.value() );
+// 		fi->unLock();
+// 		if ( tagsMap.value ( fi->path() ).contains ( "Activated_On" ) )
+// 			fi->setActivated ( true );
+// // 		fontMap.append ( fi );
+// // 		realFontMap[fi->path() ] = fi;
+// 		fi->setTags ( tagsMap.value ( fi->path() ) );
+// // 			relayStartingStepIn(zigouigoui.at( i % 8 ) );
+// // 			relayStartingStepIn( QString::number( fontnr - i ) );
+// 	}
+// // 	}
+// // 	qDebug() <<  fontMap.count() << " font files loaded.";
 
 
 	/// let’s load system fonts
 
 	QString SysColFon = tr ( "Collected System Font" );
+	QStringList tagsList(FMFontDb::DB()->getTags());
 	if ( !tagsList.contains ( SysColFon ) )
 		tagsList << SysColFon;
 
@@ -1069,6 +1072,7 @@ void typotek::slotRemoteIsReady()
 		slotRemoteIsReadyRunOnce = true;
 	else
 		return;
+	QStringList tagsList(FMFontDb::DB()->getTags());
 
 // 	qDebug()<<"typotek::slotRemoteIsReady()";
 	QList<FontInfo> listInfo(remoteDir->rFonts());
@@ -1230,12 +1234,12 @@ QList<FontItem*> typotek::getCurrentFonts()
 	return theMainView->curFonts();
 }
 
-void typotek::popupTagsetEditor()
-{
-	TagSetEditor ed(this);
-	ed.exec();
-	ListDockWidget::getInstance()->reloadTagsCombo();
-}
+// void typotek::popupTagsetEditor()
+// {
+// 	TagSetEditor ed(this);
+// 	ed.exec();
+// 	ListDockWidget::getInstance()->reloadTagsCombo();
+// }
 
 void typotek::keyPressEvent ( QKeyEvent * event )
 {
@@ -1680,6 +1684,7 @@ void typotek::slotRepair()
 
 void typotek::slotTagAll()
 {
+	QStringList tagsList(FMFontDb::DB()->getTags());
 	ImportTags imp(this,tagsList);
 	imp.exec();
 	QStringList tali = imp.tags();

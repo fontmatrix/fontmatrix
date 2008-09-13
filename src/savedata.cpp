@@ -107,22 +107,22 @@ void SaveData::doSave()
 // 
 // 	
 	//save tagsets
-	QStringList tlist = m_typo->tagsets();
-	foreach(QString tagset, tlist)
-	{
-		
-		writeStartElement("tagset");
-		writeAttribute("name", tagset);
-		QStringList tl = m_typo->tagsOfSet(tagset);
-// 		qDebug()<<tagset <<" : "<< tl.join("+");
-		foreach(QString tag, tl)
-		{
-			writeStartElement("tag");
-			writeCharacters( tag );
-			writeEndElement();
-		}
-		writeEndElement();
-	}
+// 	QStringList tlist = m_typo->tagsets();
+// 	foreach(QString tagset, tlist)
+// 	{
+// 		
+// 		writeStartElement("tagset");
+// 		writeAttribute("name", tagset);
+// 		QStringList tl = m_typo->tagsOfSet(tagset);
+// // 		qDebug()<<tagset <<" : "<< tl.join("+");
+// 		foreach(QString tag, tl)
+// 		{
+// 			writeStartElement("tag");
+// 			writeCharacters( tag );
+// 			writeEndElement();
+// 		}
+// 		writeEndElement();
+// 	}
 	
 	//save sample text
 	foreach(QString samplename, m_typo->namedSamplesNames())

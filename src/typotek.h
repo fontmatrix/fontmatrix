@@ -69,7 +69,7 @@ class typotek:public QMainWindow
 		void printFamily();
 
 		void fontBook();
-		void popupTagsetEditor();
+// 		void popupTagsetEditor();
 		void slotActivateCurrents();
 		void slotDeactivateCurrents();
 		void slotEditFont();
@@ -140,7 +140,7 @@ class typotek:public QMainWindow
 		QAction *aboutAct;
 		QAction *aboutQtAct;
 		QAction *fontBookAct;
-		QAction *tagsetAct;
+// 		QAction *tagsetAct;
 		QAction *activCurAct;
 		QAction *deactivCurAct;
 		QAction *helpAct;
@@ -172,14 +172,6 @@ class typotek:public QMainWindow
 		QFile ResourceFile;
 		QDir ownDir;
 		QDir managedDir;
-
-		QMap<QString, QStringList> tagsMap;
-		QMap<QString, QStringList> tagSetMap;
-
-// 		QList<FontItem*> fontMap;
-// 		QMap<QString, FontItem*> realFontMap;
-
-// 		TypotekAdaptator *actAdaptator;
 
 		QMap<QString,QString> m_namedSamples;
 		QString m_theWord;
@@ -236,16 +228,13 @@ class typotek:public QMainWindow
 		QList<FontItem*> getCurrentFonts();
 		void resetFilter();
 
-		void addTagMapEntry(QString key, QStringList value){tagsMap[key] = value;};
-		void addTagSetMapEntry(QString key, QStringList value){tagSetMap[key] = value;};
-		void removeTagFromSet(QString set, QString tag){tagSetMap[set].removeAll(tag);};
-		void addTagToSet(QString set, QString tag){tagSetMap[set].append(tag);};
-		void removeTagset(QString key){tagSetMap.remove(key);};
-		QStringList tagsets(){return tagSetMap.keys();};
-		QStringList tagsOfSet(QString set){return tagSetMap[set];};
-
-		static QStringList tagsList;
-// 		TypotekAdaptator *adaptator(){return actAdaptator;};
+// 		void addTagMapEntry(QString key, QStringList value){tagsMap[key] = value;};
+// 		void addTagSetMapEntry(QString key, QStringList value){tagSetMap[key] = value;};
+// 		void removeTagFromSet(QString set, QString tag){tagSetMap[set].removeAll(tag);};
+// 		void addTagToSet(QString set, QString tag){tagSetMap[set].append(tag);};
+// 		void removeTagset(QString key){tagSetMap.remove(key);};
+// 		QStringList tagsets(){return tagSetMap.keys();};
+// 		QStringList tagsOfSet(QString set){return tagSetMap[set];};
 
 		static typotek* instance;
 		static typotek* getInstance(){return instance;};

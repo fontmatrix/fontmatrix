@@ -160,13 +160,13 @@ int DataLoader::load()
 		{
 			tl << taglist.at ( ti ).toElement().text();
 		}
-		m_typo->addTagSetMapEntry ( set,tl );
+// 		m_typo->addTagSetMapEntry ( set,tl );
 		collectedTags << tl;
 
 // 		qDebug() << set << tl.join(":");
 	}
 	collectedTags.removeAll ( "" );
-	typotek::tagsList = collectedTags.toSet().toList();
+// 	typotek::tagsList = collectedTags.toSet().toList();
 
 	//loading sample text
 	QString sampleText;

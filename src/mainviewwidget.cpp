@@ -910,10 +910,10 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		currentOrdering = "family";
 		fillTree();
 	}
-	else if(key == "TAGSET")
-	{
-		slotFilterTagset ( tag );
-	}
+// 	else if(key == "TAGSET")
+// 	{
+// 		slotFilterTagset ( tag );
+// 	}
 	else if(key == "TAG_IS_PANOSE")
 	{
 		m_lists->fontTree->clear();
@@ -927,37 +927,37 @@ void MainViewWidget::slotFilterTag ( QString tag )
 	}
 }
 
-void MainViewWidget::slotFilterTagset ( QString set )
-{
-	m_lists->fontTree->clear();
-	fontsetHasChanged = true;
-	currentFonts.clear();
-	QStringList tags = typo->tagsOfSet ( set );
-	if ( !tags.count() )
-		return;
-
-	for ( int i = 0;i < tags.count(); ++i )
-	{
-		currentFonts += FMFontDb::DB()->Fonts ( tags[i], FMFontDb::Tags );
-	}
-	int count_req = tags.count();
-	QSet<FontItem*> setOfTags ( currentFonts.toSet() );
-	foreach ( FontItem * it, setOfTags )
-	{
-// 		qDebug() << it->name();
-		if ( currentFonts.count ( it ) != count_req )
-			currentFonts.removeAll ( it );
-		else
-			qDebug() << count_req<<currentFonts.count ( it );
-	}
-
-
-
-	currentOrdering = "family";
-	currentFonts = currentFonts.toSet().toList();
-	fillTree();
-}
-
+// void MainViewWidget::slotFilterTagset ( QString set )
+// {
+// 	m_lists->fontTree->clear();
+// 	fontsetHasChanged = true;
+// 	currentFonts.clear();
+// 	QStringList tags = typo->tagsOfSet ( set );
+// 	if ( !tags.count() )
+// 		return;
+// 
+// 	for ( int i = 0;i < tags.count(); ++i )
+// 	{
+// 		currentFonts += FMFontDb::DB()->Fonts ( tags[i], FMFontDb::Tags );
+// 	}
+// 	int count_req = tags.count();
+// 	QSet<FontItem*> setOfTags ( currentFonts.toSet() );
+// 	foreach ( FontItem * it, setOfTags )
+// 	{
+// // 		qDebug() << it->name();
+// 		if ( currentFonts.count ( it ) != count_req )
+// 			currentFonts.removeAll ( it );
+// 		else
+// 			qDebug() << count_req<<currentFonts.count ( it );
+// 	}
+// 
+// 
+// 
+// 	currentOrdering = "family";
+// 	currentFonts = currentFonts.toSet().toList();
+// 	fillTree();
+// }
+// 
 
 void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 {
@@ -1674,41 +1674,41 @@ void MainViewWidget::slotUpdateRView()
 
 void MainViewWidget::slotSwitchCheckState(QListWidgetItem * item)
 {
-	if(contextMenuReq)
-	{
-		qDebug() << "\tWant contextual popup menu";
-		typotek *typo = typotek::getInstance();
-		QStringList sets = typo->tagsets();
-		QMenu menu(tagsListWidget);
-		for(int i=0; i< sets.count(); ++i)
-		{
-
-			if(typo->tagsOfSet(sets[i]).contains(item->text()))
-			{
-				QAction *entry = menu.addAction(QString("Remove from %1").arg(sets[i]));
-				entry->setData(sets[i]);
-			}
-			else
-			{
-				QAction *entry = menu.addAction(QString("Add to %1").arg(sets[i]));
-				entry->setData(sets[i]);
-			}
-		}
-		QAction *sel = menu.exec(contextMenuPos);
-		if(sel /*&& sel != mTitle*/)
-		{
-			if(sel->text().startsWith("Add"))
-			{
-				typo->addTagToSet(sel->data().toString(), item->text());
-			}
-			else
-			{
-				typo->removeTagFromSet(sel->data().toString(), item->text());
-			}
-		}
-		contextMenuReq = false;
-		return;
-	}
+// 	if(contextMenuReq)
+// 	{
+// // 		qDebug() << "\tWant contextual popup menu";
+// 		typotek *typo = typotek::getInstance();
+// 		QStringList sets = typo->tagsets();
+// 		QMenu menu(tagsListWidget);
+// 		for(int i=0; i< sets.count(); ++i)
+// 		{
+// 
+// 			if(typo->tagsOfSet(sets[i]).contains(item->text()))
+// 			{
+// 				QAction *entry = menu.addAction(QString("Remove from %1").arg(sets[i]));
+// 				entry->setData(sets[i]);
+// 			}
+// 			else
+// 			{
+// 				QAction *entry = menu.addAction(QString("Add to %1").arg(sets[i]));
+// 				entry->setData(sets[i]);
+// 			}
+// 		}
+// 		QAction *sel = menu.exec(contextMenuPos);
+// 		if(sel /*&& sel != mTitle*/)
+// 		{
+// 			if(sel->text().startsWith("Add"))
+// 			{
+// 				typo->addTagToSet(sel->data().toString(), item->text());
+// 			}
+// 			else
+// 			{
+// 				typo->removeTagFromSet(sel->data().toString(), item->text());
+// 			}
+// 		}
+// 		contextMenuReq = false;
+// 		return;
+// 	}
 
 	slotFinalize();
 }
@@ -1718,10 +1718,10 @@ void MainViewWidget::slotNewTag()
 	QString nTag;
 	bool ok;
 	nTag = QInputDialog::getText(this,"Fontmatrix",tr("Add new tag"),QLineEdit::Normal, QString() , &ok );
-	if ( !ok || nTag.isEmpty() || typotek::tagsList.contains ( nTag ))
+	if ( !ok || nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ))
 		return;
 
-	typotek::tagsList.append ( nTag );
+	FMFontDb::DB()->addTag( nTag );
 	QListWidgetItem *lit = new QListWidgetItem ( nTag );
 	lit->setCheckState ( Qt::Checked );
 	tagsListWidget->addItem ( lit );
@@ -1798,9 +1798,10 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 		titleLabel->setText ( theTaggedFonts[0]->fancyName() );
 	}
 	titleLabel->setToolTip ( tot );
-	for ( int i=0; i < typotek::tagsList.count(); ++i )
+	QStringList tagsList(FMFontDb::DB()->getTags());
+	for ( int i=0; i < tagsList.count(); ++i )
 	{
-		QString cur_tag = typotek::tagsList[i];
+		QString cur_tag = tagsList[i];
 
 		if ( cur_tag.isEmpty() /*|| cur_tag.contains ( "Activated_" ) */ )
 			continue;

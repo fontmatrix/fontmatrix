@@ -347,13 +347,13 @@ void ListDockWidget::initTagCombo()
 
 	tagsCombo->addItem(tr("All activated"),"ALL_ACTIVATED");
 
-	QStringList ts_tmp = typotek::getInstance()->tagsets();
-	foreach(QString tagset, ts_tmp)
-	{
-		tagsCombo->addItem(tagsetIcon,tagset,"TAGSET");
-	}
+// 	QStringList ts_tmp = typotek::getInstance()->tagsets();
+// 	foreach(QString tagset, ts_tmp)
+// 	{
+// 		tagsCombo->addItem(tagsetIcon,tagset,"TAGSET");
+// 	}
 	
-	QStringList tl_tmp = typotek::tagsList;
+	QStringList tl_tmp = FMFontDb::DB()->getTags();
 // 	tl_tmp.removeAll ( "Activated_On" );
 // 	tl_tmp.removeAll ( "Activated_Off" );
 	tl_tmp.sort();

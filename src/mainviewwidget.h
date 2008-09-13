@@ -140,7 +140,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotZoom(int z);
 		void slotAppendTag(QString tag);
 		void slotFilterTag(QString tag);
-		void slotFilterTagset(QString set);
+// 		void slotFilterTagset(QString set);
 		void slotDesactivateAll();
 		void slotActivateAll();
 		void slotSetSampleText(QString);

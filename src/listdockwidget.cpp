@@ -130,7 +130,7 @@ ListDockWidget::ListDockWidget()
 	folderView->setDragDropMode(QAbstractItemView::DragDrop);
 
 	initTagCombo();
-
+	
 	connect( panoseButton, SIGNAL(clicked( bool )), this, SLOT(slotPanoseChecked(bool)));
 	
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
@@ -354,8 +354,7 @@ void ListDockWidget::initTagCombo()
 // 	}
 	
 	QStringList tl_tmp = FMFontDb::DB()->getTags();
-// 	tl_tmp.removeAll ( "Activated_On" );
-// 	tl_tmp.removeAll ( "Activated_Off" );
+	qDebug()<<"RELOAD"<<tl_tmp.join("|");
 	tl_tmp.sort();
 	foreach(QString tag, tl_tmp )
 	{

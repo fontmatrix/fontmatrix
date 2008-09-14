@@ -44,10 +44,10 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 {
 		Q_OBJECT
 		ListDockWidget();
-	public:
 		~ListDockWidget();
-		static ListDockWidget* getInstance();
 		static ListDockWidget* instance;
+	public:
+		static ListDockWidget* getInstance();
 
 		void refreshTree();
 		void savePosition();

@@ -60,7 +60,7 @@ int fm_num_face_opened = 0;
 FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
 
-QMap<FT_Encoding, QString> charsetMap;
+
 QMap<int, QString> langIdMap;
 int theLocalLangCode;
 
@@ -127,28 +127,6 @@ FT_Outline_Funcs outline_funcs=
 /** **************************************************/
 
 
-void FontItem::fillCharsetMap()
-{
-	charsetMap[FT_ENCODING_NONE] = "NONE";
-	charsetMap[FT_ENCODING_UNICODE] = "UNICODE";
-	charsetMap[FT_ENCODING_MS_SYMBOL] = "MS_SYMBOL";
-	charsetMap[FT_ENCODING_SJIS] = "SJIS .";
-	charsetMap[FT_ENCODING_GB2312	] = "GB2312 ";
-	charsetMap[FT_ENCODING_BIG5] = "BIG5 ";
-	charsetMap[FT_ENCODING_WANSUNG] = "WANSUNG ";
-	charsetMap[FT_ENCODING_JOHAB] = "JOHAB ";
-	charsetMap[FT_ENCODING_ADOBE_LATIN_1] = "ADOBE_LATIN_1 ";
-	charsetMap[FT_ENCODING_ADOBE_STANDARD] = "ADOBE_STANDARD ";
-	charsetMap[FT_ENCODING_ADOBE_EXPERT] = "ADOBE_EXPERT ";
-	charsetMap[FT_ENCODING_ADOBE_CUSTOM] = "ADOBE_CUSTOM ";
-	charsetMap[FT_ENCODING_APPLE_ROMAN] = "APPLE_ROMAN ";
-	charsetMap[FT_ENCODING_OLD_LATIN_2] = tr ( "This value is deprecated and was never used nor reported by FreeType. Don't use or test for it." );
-	charsetMap[FT_ENCODING_MS_SJIS] = "MS_SJIS ";
-	charsetMap[FT_ENCODING_MS_GB2312] = "MS_GB2312 ";
-	charsetMap[FT_ENCODING_MS_BIG5] = "MS_BIG5 ";
-	charsetMap[FT_ENCODING_MS_WANSUNG] = "MS_WANSUNG ";
-	charsetMap[FT_ENCODING_MS_JOHAB] = "MS_JOHAB ";
-}
 
 void FontItem::fillLegitimateSpaces()
 {
@@ -499,6 +477,7 @@ void FontItem::fillFSftypeMap()
 
 FontItem::FontItem ( QString path , bool remote, bool faststart )
 {
+// 	qDebug()<<"FONT ITEM"<<path;
 	m_valid = false;
 	m_active = false;
 	m_remote = remote;
@@ -523,8 +502,6 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	/// STATIC INITIALISATIONS
 	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
-	if ( charsetMap.isEmpty() )
-		fillCharsetMap();
 	if ( legitimateNonPathChars.isEmpty() )
 		fillLegitimateSpaces();
 	if ( gray256Palette.isEmpty() )
@@ -608,12 +585,11 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	m_numGlyphs = m_face->num_glyphs;
 	m_numFaces = m_face->num_faces;
 
-	for ( int i = 0 ;i < m_face->num_charmaps; ++i )
-	{
-		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
-	}
+// 	for ( int i = 0 ;i < m_face->num_charmaps; ++i )
+// 	{
+// 		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
+// 	}
 
-// 	m_charsets = m_charsets.toSet().toList();
 
 	m_lock = false;
 	pixList.clear();
@@ -628,7 +604,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	releaseFace();
 }
 
-FontItem::FontItem(QString path, QString family, QString variant, bool active)
+FontItem::FontItem(QString path, QString family, QString variant, QString type,bool active)
 {
 	m_valid = true;
 	m_remote = false;
@@ -648,14 +624,9 @@ FontItem::FontItem(QString path, QString family, QString variant, bool active)
 	unitPerEm = 0;
 	m_FTHintMode = 0;
 	allIsRendered = false;
-	m_path = path;	
-	m_family = family;
-	m_variant = variant;
-	m_active = active;
+	
 	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
-	if ( charsetMap.isEmpty() )
-		fillCharsetMap();
 	if ( legitimateNonPathChars.isEmpty() )
 		fillLegitimateSpaces();
 	if ( gray256Palette.isEmpty() )
@@ -666,21 +637,22 @@ FontItem::FontItem(QString path, QString family, QString variant, bool active)
 	{
 		theOneLineScene = new QGraphicsScene;
 	}
+	
+	m_path = path;	
+	m_family = family;
+	m_variant = variant;
+	m_active = active;
+	m_type = type;
 }
 
 void FontItem::updateItem()
 {
 	QFileInfo infopath ( m_path );
 	m_name = infopath.fileName();
-
-
-
 	if ( ! ensureFace() )
 	{
 		return;
 	}
-
-
 	if ( infopath.suffix() == "pfb" || infopath.suffix() == "PFB" )
 	{
 		m_afm = m_path;
@@ -721,14 +693,7 @@ void FontItem::updateItem()
 	m_variant = m_face->style_name;
 	m_numGlyphs = m_face->num_glyphs;
 	m_numFaces = m_face->num_faces;
-
-	for ( int i = 0 ;i < m_face->num_charmaps; ++i )
-	{
-		m_charsets << charsetMap[m_face->charmaps[i]->encoding];
-	}
-
-	m_charsets = m_charsets.toSet().toList();
-
+	
 	releaseFace();
 }
 
@@ -753,9 +718,53 @@ bool FontItem::ensureLibrary()
 	return true;
 }
 
+void FontItem::encodeFace()
+{
+	if(!m_face)
+		return;
+	
+	m_charsets.clear();
+	bool UnicodeBuiltIn = (m_face->charmap == NULL) ? false : true ;
+	bool isType1 = (QString(FT_Get_X11_Font_Format(m_face)) == QString("Type 1")) ? true : false ;
+	
+	QMap<FT_Encoding, FT_CharMap> cmaps;
+	for(int u = 0; u < m_face->num_charmaps; u++)
+	{
+		cmaps [ m_face->charmaps[u]->encoding ] = m_face->charmaps[u];
+	}
+	
+	bool mapped(false);
+	if ( (!isType1) && UnicodeBuiltIn && cmaps.contains( FT_ENCODING_UNICODE ) )
+	{
+		FT_Set_Charmap(m_face, cmaps[FT_ENCODING_UNICODE]);
+		m_charsets << FontStrings::Encoding(FT_ENCODING_UNICODE);
+		mapped = true;
+		hasUnicode = true;
+	}
+	// uncomment below to get Unicode cmap synthetized by FT
+// 	else if(cmaps.contains( FT_ENCODING_UNICODE ))
+// 	{
+// 		FT_Set_Charmap(m_face, cmaps[FT_ENCODING_UNICODE]);
+// 		m_charsets << FontStrings::Encoding(FT_ENCODING_UNICODE) +"*";
+// 		mapped = true;
+// 		cmaps.remove(FT_ENCODING_UNICODE);
+// 		hasUnicode = true;
+// 	}
+	foreach(FT_Encoding e, cmaps.keys())
+	{
+		QString cs(FontStrings::Encoding(e));
+		if(!m_charsets.contains(cs))
+			m_charsets << cs;
+		if(!mapped)
+		{
+			FT_Set_Charmap(m_face, cmaps[e]);
+			mapped = true;
+		}
+	}
+}
+
 bool FontItem::ensureFace()
 {
-// 	qDebug("ENSUREFACE") ;
 	if ( ensureLibrary() )
 	{
 		if ( m_face )
@@ -770,15 +779,7 @@ bool FontItem::ensureFace()
 			qDebug() << "Error loading face [" << trueFile <<"]";
 			return false;
 		}
-		ft_error = FT_Select_Charmap ( m_face, FT_ENCODING_UNICODE );
-		if ( ft_error )
-		{
-			hasUnicode = false;
-		}
-		else
-		{
-			hasUnicode = true;
-		}
+		encodeFace();
 		if ( spaceIndex.isEmpty() )
 		{
 			int gIndex ( 0 );
@@ -2331,19 +2332,6 @@ QString FontItem::infoText ( bool fromcache )
 // 		return m_cacheInfo;
 
 	bool rFace ( false );
-	if ( 0/*moreInfo.isEmpty() || !fromcache*/ )
-	{
-		ensureFace();
-		rFace = true;
-		if ( m_isOpenType == true /*testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" */ )
-		{
-			moreInfo_sfnt();
-		}
-		if ( m_path.endsWith ( ".pfb",Qt::CaseInsensitive ) )
-		{
-			moreInfo_type1();
-		}
-	}
 
 	/**
 	Selectors are :
@@ -2362,10 +2350,6 @@ QString FontItem::infoText ( bool fromcache )
 	QString pN(FMFontDb::DB()->getValue(m_path, FMFontDb::Panose).toString());
 	if ( !pN.isEmpty() )
 	{
-// 		qDebug() <<"WE HAVE PANOSE \\o/";
-// 		panStringOut = " | Panose: " + m_panose;
-// 		QMap<QString, QString>::const_iterator pat ( panoseInfo.constBegin() );
-// 		for ( ;pat != panoseInfo.constEnd(); ++pat )
 		for(int i(0);  i < FontStrings::Panose().keys().count(); ++i)
 		{
 			FontStrings::PanoseKey k(FontStrings::Panose().keys()[i]);
@@ -3889,6 +3873,7 @@ void FontItem::dumpIntoDB()
 	
 // 	qDebug()<<"DUMP"<<m_name<<e1<<e2<<e3;
 }
+
 
 
 

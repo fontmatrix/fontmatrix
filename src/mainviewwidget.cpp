@@ -203,7 +203,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 
-	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
+// 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 	connect ( liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
@@ -222,7 +222,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
-	connect ( this ,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
+// 	connect ( this ,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
 
 	// END CONNECT
 
@@ -401,8 +401,8 @@ void MainViewWidget::fillTree()
 			delete alpha;
 		}
 	}
-	qDebug()<<"SUB TREE Time Total: "<<tttotal<<" ms; Iterations : "  << tcount<< "; Average" << (double)tttotal / (double)tcount <<" ms/It";
-	qDebug("TREE Time elapsed: %d ms", fillTime.elapsed());
+// 	qDebug()<<"SUB TREE Time Total: "<<tttotal<<" ms; Iterations : "  << tcount<< "; Average" << (double)tttotal / (double)tcount <<" ms/It";
+// 	qDebug("TREE Time elapsed: %d ms", fillTime.elapsed());
 	fillTime.restart();
 
 // 	m_lists->previewList->slotRefill ( currentFonts, fontsetHasChanged );
@@ -439,7 +439,7 @@ void MainViewWidget::fillTree()
 
 	fontsetHasChanged = false;
 	m_lists->slotPreviewUpdate();
-	qDebug("END Time elapsed: %d ms", fillTime.elapsed());
+// 	qDebug("END Time elapsed: %d ms", fillTime.elapsed());
 }
 
 void MainViewWidget::updateTree()
@@ -539,7 +539,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 	if ( item->data ( 0,100 ).toString() == "family" )
 	{
-		qDebug() << "Item is a family";
+// 		qDebug() << "Item is a family";
 		bool wantView = true;
 		bool hasChild = false;
 		QStringList names;
@@ -637,7 +637,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 void MainViewWidget::slotFontSelectedByName ( QString fname )
 {
-	qDebug() << "MainViewWidget::slotFontSelectedByName("<<fname<<")";
+// 	qDebug() << "MainViewWidget::slotFontSelectedByName("<<fname<<")";
 	if ( fname.isEmpty() || fname ==  faceIndex )
 		return;
 	lastIndex = faceIndex;
@@ -646,11 +646,11 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 
 	if ( faceIndex.count() && faceIndex != lastIndex )
 	{
-		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
+// 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 		if(abcView->state() == FMGlyphsView::SingleView)
 			slotShowAllGlyph();
 		theVeryFont = FMFontDb::DB()->Font( faceIndex );
-		theVeryFont->updateItem();
+// 		theVeryFont->updateItem();
 		slotFontActionByName ( fname );
 		if(theVeryFont->isRemote())
 		{
@@ -888,6 +888,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		return;
 
 	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
+	qDebug()<<"K T"<<key<<tag;
 	if(key == "TAG") // regular tag
 	{
 		m_lists->fontTree->clear();
@@ -956,7 +957,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 
 void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 {
-	qDebug()<<"MainViewWidget::slotFontAction";
+// 	qDebug()<<"MainViewWidget::slotFontAction";
 	if ( column >2 ) return;
 
 	FontItem * FoIt = FMFontDb::DB()->Font( item->text ( 1 ) );
@@ -972,7 +973,7 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 
 void MainViewWidget::slotFontActionByName (const QString &fname )
 {
-	qDebug()<<"MainViewWidget::slotFontActionByName ("<< fname <<")";
+// 	qDebug()<<"MainViewWidget::slotFontActionByName ("<< fname <<")";
 	FontItem * FoIt = FMFontDb::DB()->Font( fname );
 	if ( FoIt/* && (!FoIt->isLocked())*/ )
 	{
@@ -986,7 +987,7 @@ void MainViewWidget::slotFontActionByName (const QString &fname )
 
 void MainViewWidget::slotFontActionByNames ( QStringList fnames )
 {
-	qDebug()<<"MainViewWidget::slotFontActionByNames ("<< fnames.join(";") <<")";
+// 	qDebug()<<"MainViewWidget::slotFontActionByNames ("<< fnames.join(";") <<")";
 	QList<FontItem*> FoIt;
 	for ( int i= 0; i < fnames.count() ; ++i )
 	{
@@ -1041,9 +1042,8 @@ void MainViewWidget::slotZoom ( int z )
 
 void MainViewWidget::slotAppendTag ( QString tag )
 {
-// 	qDebug() << "add tag to combo " << tag;
-	m_lists->tagsCombo->addItem ( tag );
 	emit newTag ( tag );
+	m_lists->reloadTagsCombo();
 }
 
 void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
@@ -1599,24 +1599,24 @@ void MainViewWidget::slotShowOneGlyph()
 
 void MainViewWidget::slotShowAllGlyph()
 {
-	qDebug() <<"slotShowAllGlyph()";
+// 	qDebug() <<"slotShowAllGlyph()";
 	if ( fancyGlyphInUse < 0 )
 		return;
 	if ( abcView->lock() )
 	{
-		qDebug()<<"View Locked";
+// 		qDebug()<<"View Locked";
 		theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
 		fancyGlyphInUse = -1;
 		abcView->setState ( FMGlyphsView::AllView );
 
 		abcView->unlock();
 	}
-	qDebug() <<"ENDOF slotShowAllGlyph()";
+// 	qDebug() <<"ENDOF slotShowAllGlyph()";
 }
 
 void MainViewWidget::slotUpdateGView()
 {
-	qDebug()<<"slotUpdateGView()";
+// 	qDebug()<<"slotUpdateGView()";
 	// If all is how I think it must be, we don’t need to check anything here :)
 	if(theVeryFont && abcView->lock())
 	{
@@ -1631,20 +1631,20 @@ void MainViewWidget::slotUpdateGView()
 
 void MainViewWidget::slotUpdateGViewSingle()
 {
-	qDebug()<<"slotUpdateGViewSingle";
+// 	qDebug()<<"slotUpdateGViewSingle";
 	if ( theVeryFont && abcView->lock())
 	{
-			qDebug() <<"1.FGI"<<fancyGlyphInUse;
+// 			qDebug() <<"1.FGI"<<fancyGlyphInUse;
 			theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
 			if ( fancyGlyphData > 0 ) // Is a codepoint
 			{
 				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData );
-				qDebug() <<"2.FGI"<<fancyGlyphInUse;
+// 				qDebug() <<"2.FGI"<<fancyGlyphInUse;
 			}
 			else // Is a glyph index
 			{
 				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData , true );
-				qDebug() <<"3.FGI"<<fancyGlyphInUse;
+// 				qDebug() <<"3.FGI"<<fancyGlyphInUse;
 			}
 			abcView->unlock();
 
@@ -1721,7 +1721,8 @@ void MainViewWidget::slotNewTag()
 	lit->setCheckState ( Qt::Checked );
 	tagsListWidget->addItem ( lit );
 	slotFinalize();
-	emit tagAdded(nTag);
+	
+	ListDockWidget::getInstance()->reloadTagsCombo();
 }
 
 void MainViewWidget::slotContextMenu(QPoint pos)
@@ -1732,7 +1733,7 @@ void MainViewWidget::slotContextMenu(QPoint pos)
 
 void MainViewWidget::slotFinalize()
 {
-	qDebug()<<"MainViewWidget::slotFinalize()";
+// 	qDebug()<<"MainViewWidget::slotFinalize()";
 	QStringList plusTags;
 	QStringList noTags;
 	for ( int i=0;i< tagsListWidget->count();++i )
@@ -1773,12 +1774,12 @@ void MainViewWidget::slotFinalize()
 		if(changed)
 			theTaggedFonts[i]->setTags ( sourceTags );
 	}
-	qDebug()<<"END OF slotFinalize";
+// 	qDebug()<<"END OF slotFinalize";
 }
 
 void MainViewWidget::prepare(QList< FontItem * > fonts)
 {
-	qDebug()<<"MainViewWidget::prepare("<<fonts.count()<<")";
+// 	qDebug()<<"MainViewWidget::prepare("<<fonts.count()<<")";
 // 	slotFinalize();
 	theTaggedFonts.clear();
 	theTaggedFonts = fonts;
@@ -1837,7 +1838,7 @@ void MainViewWidget::prepare(QList< FontItem * > fonts)
 				lit->setFlags(0);// No NoItemFlags in Qt < 4.4
 		}
 	}
-	qDebug()<<"END OF prepare";
+// 	qDebug()<<"END OF prepare";
 }
 
 void MainViewWidget::slotEditSampleText()
@@ -2009,7 +2010,7 @@ void MainViewWidget::resetCrumb()
 // It will be used for track down problems at least
 void MainViewWidget::slotSelectFromFolders(const QString &f)
 {
-	qDebug()<<"or even this other";
+// 	qDebug()<<"or even this other";
 	slotFontSelectedByName(f);
 }
 

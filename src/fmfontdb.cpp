@@ -90,7 +90,7 @@ void FMFontDb::initRecord ( const QString & id )
 
 void FMFontDb::setValue ( const QString & id, Field field, QVariant value )
 {
-	qDebug()<<"setValue"<<id<<fieldName[field]<<value;
+// 	qDebug()<<"setValue"<<id<<fieldName[field]<<value;
 	int nId ( getId ( id ) );
 	bool res ( false );
 // 	transaction();
@@ -138,7 +138,7 @@ void FMFontDb::setValues ( const QString & id, QList< Field > fields, QVariantLi
 
 void FMFontDb::setInfoMap ( const QString & id, const QMap< int, QMap < int , QString > > & info )
 {
-	qDebug()<<"setInfoMap"<<id;
+// 	qDebug()<<"setInfoMap"<<id;
 	// Here is the interesting part :-s)
 
 	// id | lang | key | value
@@ -456,10 +456,11 @@ void FMFontDb::initFMDb()
 		}
 
 		/// build memory font database
-		QString qs2 ( "SELECT %1,%2,%3,%4 FROM %5" );
+		QString qs2 ( "SELECT %1,%2,%3,%4,%5 FROM %6" );
 		rq = query.exec ( qs2.arg ( fieldName[Id] )
 		                  .arg ( fieldName[Family] )
 		                  .arg ( fieldName[Variant] )
+				  .arg ( fieldName[Type] )
 				  .arg ( fieldName[Activation] )
 		                  .arg ( tableName[Data] ) );
 		if ( !rq )
@@ -478,14 +479,14 @@ void FMFontDb::initFMDb()
 			{
 				anId =  query.value ( 0 ).toInt();
 				path = reverseCacheId[anId];
-				act = (query.value ( 3 ).toInt() == 0) ? false : true;
+				act = (query.value ( 4 ).toInt() == 0) ? false : true;
 				if ( ( path.isEmpty() ) || ( anId == 0 ) )
 					continue;
 // 				qDebug()<<anId<<++counter<<path;
 				if ( fontMap.contains ( anId ) )
 					continue;
 				else
-					fontMap[anId] = new FontItem ( path ,query.value ( 1 ).toString(),query.value ( 2 ).toString() ,act);
+					fontMap[anId] = new FontItem ( path ,query.value ( 1 ).toString(),query.value ( 2 ).toString() ,query.value ( 3 ).toString(),act);
 			}
 		}
 
@@ -504,7 +505,10 @@ FontItem * FMFontDb::Font ( const QString & id )
 	if ( fid > 0 )
 	{
 		if ( fontMap.contains ( fid ) )
-			return fontMap.value ( fid );
+		{
+			fitem = fontMap.value ( fid );
+			fitem->updateItem() ;
+		}
 		else
 			qDebug() <<"ERROR fetching font item"<<id;
 	}

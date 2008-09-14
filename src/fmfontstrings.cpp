@@ -17,6 +17,7 @@ FontStrings::FontStrings()
 {
 	fillNamesMeaning();
 	fillPanoseMap();
+	fillCharsetMap();
 }
 
 FontStrings * FontStrings::getInstance()
@@ -50,7 +51,7 @@ void FontStrings::fillNamesMeaning()
 	m_name[FMFontDb::PostScriptCIDName]= tr ( "PostScript CID findfont name" );
 }
 
-QMap< FMFontDb::InfoItem, QString > FontStrings::Names()
+QMap< FMFontDb::InfoItem, QString >& FontStrings::Names()
 {
 	FontStrings *that(getInstance());
 	return that->m_name;
@@ -226,7 +227,30 @@ void FontStrings::fillPanoseMap()
 
 }
 
-QMap< FontStrings::PanoseKey, QMap < int , QString > > FontStrings::Panose()
+void FontStrings::fillCharsetMap()
+{
+	charsetMap[FT_ENCODING_NONE] = "None";
+	charsetMap[FT_ENCODING_UNICODE] = "Unicode";
+	charsetMap[FT_ENCODING_MS_SYMBOL] = "MS Symbol";
+	charsetMap[FT_ENCODING_SJIS] = "SJIS";
+	charsetMap[FT_ENCODING_GB2312	] = "GB2312";
+	charsetMap[FT_ENCODING_BIG5] = "BIG5";
+	charsetMap[FT_ENCODING_WANSUNG] = "Wansung";
+	charsetMap[FT_ENCODING_JOHAB] = "Johab";
+	charsetMap[FT_ENCODING_ADOBE_LATIN_1] = "Adobe Latin 1";
+	charsetMap[FT_ENCODING_ADOBE_STANDARD] = "Adobe Standard";
+	charsetMap[FT_ENCODING_ADOBE_EXPERT] = "Adobe Expert";
+	charsetMap[FT_ENCODING_ADOBE_CUSTOM] = "Adobe Custom";
+	charsetMap[FT_ENCODING_APPLE_ROMAN] = "Apple Roman";
+	charsetMap[FT_ENCODING_OLD_LATIN_2] = tr ( "This value is deprecated and was never used nor reported by FreeType. Don't use or test for it." );
+	charsetMap[FT_ENCODING_MS_SJIS] = "MS SJIS";
+	charsetMap[FT_ENCODING_MS_GB2312] = "MS GB2312";
+	charsetMap[FT_ENCODING_MS_BIG5] = "MS BIG5";
+	charsetMap[FT_ENCODING_MS_WANSUNG] = "MS Wansung";
+	charsetMap[FT_ENCODING_MS_JOHAB] = "MS Johab";
+}
+
+QMap< FontStrings::PanoseKey, QMap < int , QString > >& FontStrings::Panose()
 {
 	FontStrings *that(getInstance());
 	return that->m_panoseMap;
@@ -236,4 +260,10 @@ QString FontStrings::PanoseKeyName(PanoseKey pk)
 {
 	FontStrings *that(getInstance());
 	return that->m_panoseKeyName.value(pk);
+}
+
+QString FontStrings::Encoding(FT_Encoding enc)
+{
+	FontStrings *that(getInstance());
+	return that->charsetMap.value(enc);
 }

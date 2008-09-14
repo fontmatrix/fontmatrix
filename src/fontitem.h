@@ -90,7 +90,7 @@ class FontItem : public QObject
 		Q_OBJECT
 	public:
 		FontItem ( QString path , bool remote = false, bool faststart = false);
-		FontItem (QString path,  QString family, QString variant , bool active);
+		FontItem (QString path,  QString family, QString variant, QString type , bool active);
 		/** Needed when the item has been instantiate with "faststart=true" */
 		void updateItem();
 		~FontItem();
@@ -137,7 +137,6 @@ class FontItem : public QObject
 		QString m_panose;
 		double unitPerEm;
 		
-		void fillCharsetMap();
 		void fillLegitimateSpaces();
 		void fillLangIdMap();
 		void fill256Palette();
@@ -172,6 +171,7 @@ class FontItem : public QObject
 		bool ensureLibrary();
 		bool ensureFace();
 		void releaseFace();
+		void encodeFace();
 		
 		QList<int> getAlternates(int ccode);
 

@@ -39,18 +39,21 @@ class FontStrings : public QObject
 
 		};
 		
-		static QMap<FMFontDb::InfoItem,QString> Names();
-		static QMap< PanoseKey, QMap<int, QString> > Panose();
+		static QMap<FMFontDb::InfoItem,QString>& Names();
+		static QMap< PanoseKey, QMap<int, QString> >& Panose();
 		static QString PanoseKeyName(PanoseKey pk);
+		static QString Encoding(FT_Encoding enc);
 
 	private:
 
 		QMap<FMFontDb::InfoItem,QString> m_name;
-		void	fillNamesMeaning();
+		void fillNamesMeaning();
+		void fillCharsetMap();
+		void fillPanoseMap();
 
 		QMap< PanoseKey, QMap<int, QString> > m_panoseMap;
 		QMap< PanoseKey, QString > m_panoseKeyName;
-		void fillPanoseMap();
+		QMap<FT_Encoding, QString> charsetMap;
 
 };
 

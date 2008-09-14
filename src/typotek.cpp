@@ -301,14 +301,6 @@ void typotek::open(QString path, bool announce, bool collect)
 	}
 
 
-	for(int i = 0; i < tali.count();++i )
-	{
-		if ( !tagsList.contains ( tali[i] ) )
-		{
-			tagsList.append ( tali[i] );
-			emit tagAdded ( tali[i] );
-		}
-	}
 
 	FMFontDb::DB()->TransactionBegin();
 	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
@@ -382,8 +374,8 @@ void typotek::open(QString path, bool announce, bool collect)
 		shouldAskTali = true;
 	}
 	theMainView->slotReloadFontList();
+	ListDockWidget::getInstance()->reloadTagsCombo();
 
-// 	save();
 }
 
 void typotek::open ( QStringList files )
@@ -402,14 +394,6 @@ void typotek::open ( QStringList files )
 // // // // // // 	else
 // // // // // // 		tali << "Activated_Off" ;
 
-	foreach ( QString tas, tali )
-	{
-		if ( !tagsList.contains ( tas ) )
-		{
-			tagsList.append ( tas );
-			emit tagAdded ( tas );
-		}
-	}
 
 	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i=0;i < fontMap.count() ; ++i)
@@ -461,7 +445,8 @@ void typotek::open ( QStringList files )
 	}
 
 	theMainView->slotReloadFontList();
-// 	save();
+	ListDockWidget::getInstance()->reloadTagsCombo();
+
 }
 
 /// Neede at least for the "Browse Font Dirs" feature

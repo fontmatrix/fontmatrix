@@ -637,14 +637,15 @@ QList< FontItem * > FMFontDb::Fonts ( const QVariant & pattern, Field field )
 
 QList< FontItem * > FMFontDb::Fonts ( const QVariant & pattern, InfoItem info, int codeLang )
 {
-	return Fonts ( QString ( "(%1='%2') AND (%3='%4') AND (%5 LIKE '%6')" )
+	QString qs(QString ( "(%1='%2') AND (%3='%4') AND (%5 LIKE '\%%6\%')" )
 	               .arg ( fieldName[InfoKey] )
 	               .arg ( info )
 	               .arg ( fieldName[Lang] )
 	               .arg ( codeLang )
 	               .arg ( fieldName[InfoValue] )
-	               .arg ( pattern.toString() ),
-	               Info );
+	               .arg ( pattern.toString() ));
+// 	qDebug()<<qs;
+	return Fonts ( qs , Info );
 }
 
 QList< FontItem * > FMFontDb::Fonts ( const QString & whereString, Table table )

@@ -85,10 +85,11 @@ ListDockWidget::ListDockWidget()
 	theFilterMenu = new QMenu;
 	filterActGroup = new QActionGroup(theFilterMenu);
 
-	allFieldName = tr("All fields");
+	allFieldName = FontStrings::Names()[FMFontDb::AllInfo];
 	maxFieldStringWidth = allFieldName.count();
 	currentField = allFieldName;
 	QAction *actn = new QAction(currentField, filterActGroup);
+	actn->setData(FMFontDb::AllInfo);
 	currentFieldAction = actn;
 	actn->setCheckable(true);
 	actn->setChecked(true);
@@ -96,6 +97,7 @@ ListDockWidget::ListDockWidget()
 	
 	QString uniFName(tr("Unicode character"));
 	actn = new QAction(uniFName, filterActGroup);
+	actn->setData(2000);
 	actn->setCheckable(true);
 	theFilterMenu->addAction(actn);
 	QStringListModel *uModel = new QStringListModel;
@@ -109,15 +111,17 @@ ListDockWidget::ListDockWidget()
 	for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
 	{
 		FMFontDb::InfoItem k(FontStrings::Names().keys()[gIdx]);
-		
-		actn = new QAction(FontStrings::Names()[k], filterActGroup);
-		actn->setData( k );
-		actn->setCheckable(true);
-		
-		theFilterMenu->addAction(actn);
-		lModel = new QStringListModel;
-		completers[FontStrings::Names()[k]] = new QCompleter(this);
-		completers[FontStrings::Names()[k]]->setModel(lModel);
+		if(k !=  FMFontDb::AllInfo)
+		{
+			actn = new QAction(FontStrings::Names()[k], filterActGroup);
+			actn->setData( k );
+			actn->setCheckable(true);
+			
+			theFilterMenu->addAction(actn);
+			lModel = new QStringListModel;
+			completers[FontStrings::Names()[k]] = new QCompleter(this);
+			completers[FontStrings::Names()[k]]->setModel(lModel);
+		}
 	}
 	
 

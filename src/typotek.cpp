@@ -1222,7 +1222,7 @@ QList<FontItem*> typotek::getCurrentFonts()
 
 void typotek::keyPressEvent ( QKeyEvent * event )
 {
-	qDebug() << "typotek::keyPressEvent(QKeyEvent * "<<event<<")";
+// 	qDebug() << "typotek::keyPressEvent(QKeyEvent * "<<event<<")";
 	if(/*event->modifiers().testFlag(Qt::ControlModifier) &&*/ event->key() == Qt::Key_J)
 		qDebug()<<"NUM FACES OPENED:"<<fm_num_face_opened;
 }

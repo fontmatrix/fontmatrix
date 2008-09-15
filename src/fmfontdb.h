@@ -84,7 +84,7 @@ class FMFontDb : public QSqlDatabase
 			CompatibleMacintosh=18,
 			SampleText=19,
 			PostScriptCIDName=20,
-			UnknownInfo = 99
+			AllInfo = 99
 		};
 
 		/// Here are somehow "actual" public api

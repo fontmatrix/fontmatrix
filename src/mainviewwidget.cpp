@@ -32,6 +32,7 @@
 #include "systray.h"
 #include "typotek.h"
 #include "fmfontdb.h"
+#include "fmfontstrings.h"
 
 
 #include <QString>
@@ -841,14 +842,56 @@ void MainViewWidget::slotSearch()
 // 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	QString fs ( m_lists->searchString->text() );
 
-	QList<FontItem*> tmpList;
-	tmpList.clear();
-// 	tmpList = typo->getFonts ( fs, m_lists->getCurrentField() );
-	tmpList = FMFontDb::DB()->Fonts(fs, FMFontDb::InfoItem( m_lists->getCurrentFieldAction()->data().toInt() ) );
-	
 	currentFonts.clear();
-	currentFonts = tmpList ;
-
+	int field(  m_lists->getCurrentFieldAction()->data().toInt() );
+	
+	if(field == 2000)  //Unicode
+	{
+		QList<FontItem*> tmpList(FMFontDb::DB()->AllFonts());
+		/// WARNING - Unicode fields does not support negation.
+		int startC(0xFFFFFFFF);
+		int endC(0);
+		int patCount(fs.count());
+		for(int a(0); a < patCount; ++a)
+		{
+			unsigned int ca(fs[a].unicode());
+			if( ca < startC)
+				startC = ca;
+			if(ca > endC)
+				endC = ca;
+		}
+		int superSetCount(tmpList.count()); 
+		for ( int i =0; i < superSetCount; ++i )
+		{
+			int cc(tmpList[i]->countCoverage ( startC, endC ) );
+			if ( cc >= patCount )
+			{
+				currentFonts.append ( tmpList[i] );
+			}
+		}
+	}
+	else if(field == FMFontDb::AllInfo)
+	{
+		QList<FontItem*> tmpList;
+		FMFontDb::InfoItem k;
+		for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
+		{
+			k = FontStrings::Names().keys()[gIdx];
+			tmpList.clear();
+			if(k !=  FMFontDb::AllInfo)
+			{
+				tmpList =  FMFontDb::DB()->Fonts(fs,k);
+				foreach(FontItem* f, tmpList)
+				{
+					if(!currentFonts.contains(f))
+						currentFonts.append(f);
+				}
+			}
+		}
+	}
+	else
+		currentFonts = FMFontDb::DB()->Fonts(fs, FMFontDb::InfoItem(field ) );
+	
 	currentOrdering = "family";
 	fillTree();
 	m_lists->searchString->clear();
@@ -856,8 +899,8 @@ void MainViewWidget::slotSearch()
 
 // Basically we do the same as in regular search but not clear input field
 // Not used anymore
-void MainViewWidget::slotLiveSearch(const QString & text)
-{
+// void MainViewWidget::slotLiveSearch(const QString & text)
+// {
 // 	qDebug()<<"slotLiveSearch";
 // // 	if(!m_lists->liveSearchCheck->isChecked())
 // // 		return;
@@ -878,7 +921,7 @@ void MainViewWidget::slotLiveSearch(const QString & text)
 // 
 // 	currentOrdering = "family";
 // 	fillTree();
-}
+// }
 
 
 void MainViewWidget::slotFilterTag ( QString tag )

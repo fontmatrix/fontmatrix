@@ -330,7 +330,7 @@ void typotek::open(QString path, bool announce, bool collect)
 		}
 
 	
-		else
+		
 		{
 			QFile ff ( pathCur);
 			QFileInfo fi ( pathCur );

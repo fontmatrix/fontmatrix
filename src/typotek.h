@@ -203,7 +203,6 @@ class typotek:public QMainWindow
 		QString mainDockArea;
 		QString tagsDockArea;
 
-		QMap<QString, FontItem*> temporaryFonts;
 
 		FMHyphenator *hyphenator;
 
@@ -294,7 +293,7 @@ class typotek:public QMainWindow
 
 		QString defaultSampleName(){return m_defaultSampleName;}
 
-		bool insertTemporaryFont(const QString& path);
+		
 
 	bool familySchemeFreetype() const{return m_familySchemeFreetype;}
 	void setFamilySchemeFreetype ( bool theValue ){m_familySchemeFreetype = theValue;}

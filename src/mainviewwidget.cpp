@@ -829,11 +829,13 @@ void MainViewWidget::slotSearch()
 // 	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	QString fs ( m_lists->searchString->text() );
 
-	currentFonts.clear();
 	int field(  m_lists->getCurrentFieldAction()->data().toInt() );
 	
 	if(field == 2000)  //Unicode
 	{
+		resetCrumb();
+		addFilterToCrumb(fs);
+		currentFonts.clear();
 		QList<FontItem*> tmpList(FMFontDb::DB()->AllFonts());
 		/// WARNING - Unicode fields does not support negation.
 		int startC(0xFFFFFFFF);
@@ -859,15 +861,90 @@ void MainViewWidget::slotSearch()
 	}
 	else if(field == FMFontDb::AllInfo)
 	{
+		bool negate(false);
+		bool queue(false);
+		if(fs.startsWith('+') || fs.startsWith('!'))
+		{
+			QChar st(fs[0]);
+			if(st == '+')
+				queue = true;
+			if(st == '!')
+				negate = true;
+			fs = (fs.mid(1));
+			if(fs.startsWith('+') || fs.startsWith('!'))
+			{
+				QChar st2(fs[0]);
+				if(st2 == '+')
+					queue = true;
+				if(st2 == '!')
+					negate = true;
+				
+				fs = (fs.mid(1));
+			}
+		}
 		QList<FontItem*> tmpList;
+		QList<FontItem*> negList;
+		QList<FontItem*> queList;
 		FMFontDb::InfoItem k;
+		qDebug()<<"+ !"<<queue<<negate;
+		if(queue)
+		{
+			addFilterToCrumb((negate?"!":"") +fs);
+			queList = currentFonts;
+		}
+		else
+		{
+			resetCrumb();
+			addFilterToCrumb((negate?"!":"") +fs);
+		}
+		if(negate)
+			negList = FMFontDb::DB()->AllFonts();
+		
+		currentFonts.clear();
+		
+		tmpList.clear();
 		for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
 		{
 			k = FontStrings::Names().keys()[gIdx];
-			tmpList.clear();
 			if(k !=  FMFontDb::AllInfo)
 			{
-				tmpList =  FMFontDb::DB()->Fonts(fs,k);
+				tmpList +=  FMFontDb::DB()->Fonts(fs,k);
+			}
+		}
+			
+		if(negate)
+		{
+			if(queue)
+			{
+				foreach(FontItem* f, negList)
+				{
+					if(!currentFonts.contains(f) && !tmpList.contains(f) && queList.contains(f))
+						currentFonts.append(f);
+				}
+			}
+			else // not queue
+			{
+				foreach(FontItem* f, negList)
+				{
+					if(!currentFonts.contains(f) && !tmpList.contains(f))
+					{
+						currentFonts.append(f);
+					}
+				}
+			}
+		}
+		else // not negate
+		{
+			if(queue)
+			{
+				foreach(FontItem* f, tmpList)
+				{
+					if(!currentFonts.contains(f) && queList.contains(f))
+						currentFonts.append(f);
+				}
+			}
+			else // not queue
+			{
 				foreach(FontItem* f, tmpList)
 				{
 					if(!currentFonts.contains(f))
@@ -877,7 +954,87 @@ void MainViewWidget::slotSearch()
 		}
 	}
 	else
-		currentFonts = FMFontDb::DB()->Fonts(fs, FMFontDb::InfoItem(field ) );
+	{
+// 		currentFonts = FMFontDb::DB()->Fonts(fs, FMFontDb::InfoItem(field ) );
+		bool negate(false);
+		bool queue(false);
+		if(fs.startsWith('+') || fs.startsWith('!'))
+		{
+			QChar st(fs[0]);
+			if(st == '+')
+				queue = true;
+			if(st == '!')
+				negate = true;
+			fs = (fs.mid(1));
+			if(fs.startsWith('+') || fs.startsWith('!'))
+			{
+				QChar st2(fs[0]);
+				if(st2 == '+')
+					queue = true;
+				if(st2 == '!')
+					negate = true;
+				
+				fs = (fs.mid(1));
+			}
+		}
+		QList<FontItem*> tmpList;
+		QList<FontItem*> negList;
+		QList<FontItem*> queList;
+		if(queue)
+		{
+			addFilterToCrumb((negate?"!":"") +fs);
+			queList = currentFonts;
+		}
+		else
+		{
+			resetCrumb();
+			addFilterToCrumb((negate?"!":"") +fs);
+		}
+		if(negate)
+			negList = FMFontDb::DB()->AllFonts();
+		
+		currentFonts.clear();
+		tmpList =  FMFontDb::DB()->Fonts(fs, FMFontDb::InfoItem(field ) );
+		if(negate)
+		{
+			if(queue)
+			{
+				foreach(FontItem* f, negList)
+				{
+					if(!currentFonts.contains(f) && !tmpList.contains(f) && queList.contains(f))
+						currentFonts.append(f);
+				}
+			}
+			else // not queue
+			{
+				foreach(FontItem* f, negList)
+				{
+					if(!currentFonts.contains(f) && !tmpList.contains(f))
+						currentFonts.append(f);
+				}
+			}
+		}
+		else // not negate
+		{
+			if(queue)
+			{
+				foreach(FontItem* f, tmpList)
+				{
+					if(!currentFonts.contains(f) && queList.contains(f))
+						currentFonts.append(f);
+				}
+			}
+			else // not queue
+			{
+				foreach(FontItem* f, tmpList)
+				{
+					if(!currentFonts.contains(f))
+						currentFonts.append(f);
+				}
+			}
+		}
+	
+	}
 	
 	currentOrdering = "family";
 	fillTree();
@@ -1646,7 +1803,7 @@ void MainViewWidget::slotRemoveCurrentItem()
 	{
 		theVeryFont->deRenderAll();
 		currentFonts.removeAll(theVeryFont);
-// 		theTaggedFonts.removeAll(theVeryFont);
+		TagsWidget::getInstance()->removeFromTagged(theVeryFont);
 		theVeryFont  = 0 ;
 		typo->removeFontItem(curItemName);
 		curItemName = lastIndex = faceIndex = "";

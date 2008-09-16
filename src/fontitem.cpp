@@ -2746,6 +2746,28 @@ void FontItem::clearPreview()
 }
 
 
+FontInfoMap FontItem::moreInfo()
+{
+	FontInfoMap ret;
+	if(!ensureFace())
+		return ret;
+	
+	if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
+	{
+		m_isOpenType = true;
+	}
+	
+	if(m_isOpenType)
+	{
+		ret =  moreInfo_sfnt();
+	}
+	else
+	{
+		ret =  moreInfo_type1();
+	}
+	releaseFace();
+	return ret;
+}
 
 /** reminder
 FT_SfntName::name_id
@@ -3873,7 +3895,6 @@ void FontItem::dumpIntoDB()
 	
 // 	qDebug()<<"DUMP"<<m_name<<e1<<e2<<e3;
 }
-
 
 
 

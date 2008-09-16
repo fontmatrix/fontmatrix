@@ -208,7 +208,7 @@ class FontItem : public QObject
 		QPixmap theOneLinePreviewPixmap;
 
 		static QGraphicsScene *theOneLineScene;
-
+		
 		FontInfoMap moreInfo_sfnt();
 		FontInfoMap moreInfo_type1();
 
@@ -255,6 +255,7 @@ class FontItem : public QObject
 		QString glyphName(int codepoint);
 		FontInfoMap rawInfo();
 		QString panose(){return m_panose;}
+		FontInfoMap moreInfo();
 
 // 		QString value ( QString k );
 // 		QString panose( QString k );

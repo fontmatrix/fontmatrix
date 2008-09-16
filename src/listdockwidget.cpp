@@ -195,7 +195,7 @@ void ListDockWidget::unlockFilter()
 void ListDockWidget::slotFolderItemclicked(QModelIndex mIdx)
 {
 	QString path(theDirModel->data(mIdx,QDirModel::FilePathRole).toString());
-	if(typotek::getInstance()->insertTemporaryFont(path))
+	if(FMFontDb::DB()->insertTemporaryFont(path))
 	{
 		QFileInfo pf(path);
 		emit folderSelectFont(pf.absoluteFilePath());

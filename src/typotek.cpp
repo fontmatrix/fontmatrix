@@ -329,23 +329,13 @@ void typotek::open(QString path, bool announce, bool collect)
 				break;
 		}
 
-		if(temporaryFonts.contains(pathCur))
-		{
-			FontItem *fitem(temporaryFonts.value(pathCur));
-			fitem->unLock();
-			fitem->setTags(tali);
-			temporaryFonts.remove(pathCur);
-			fitem->dumpIntoDB();
-			if (announce || collect)
-				nameList << fitem->fancyName();
-			continue;
-		}
+	
 		else
 		{
 			QFile ff ( pathCur);
 			QFileInfo fi ( pathCur );
 			{
-				FontItem *fitem (DB->Font(fi.absoluteFilePath()));
+				FontItem *fitem (DB->Font(fi.absoluteFilePath(), true));
 				if ( fitem )
 				{
 					fitem->setTags ( tali );
@@ -425,7 +415,7 @@ void typotek::open ( QStringList files )
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
 
-		FontItem *fitem = FMFontDb::DB()->Font( fi.absoluteFilePath() );
+		FontItem *fitem = FMFontDb::DB()->Font( fi.absoluteFilePath() ,true);
 		if ( fitem )
 		{
 			nameList << fitem->fancyName();
@@ -453,39 +443,6 @@ void typotek::open ( QStringList files )
 	theMainView->slotReloadFontList();
 	ListDockWidget::getInstance()->reloadTagsCombo();
 
-}
-
-/// Neede at least for the "Browse Font Dirs" feature
-// It will be a regular import, as for system fonts the item will be locked.
-bool typotek::insertTemporaryFont(const QString & path)
-{
-	// basic check
-	if(path.isEmpty())
-		return false;
-
-	QFileInfo fi ( path );
-	QString absPath ( fi.absoluteFilePath() );
-	// check if we have it yet
-	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
-	for(int i=0;i < fontMap.count() ; ++i)
-	{
-		if(fontMap[i]->path() == absPath)
-			return true;
-	}
-
-	// Build an item
-	FontItem *item(new FontItem(absPath));
-	if(!item->isValid())
-	{
-		delete item;
-		return false;
-	}
-	fontMap.append ( item );
-// 	realFontMap[ item->path() ] = item;
-	temporaryFonts[ item->path() ] = item;
-	item->lock();
-
-	return true;
 }
 
 
@@ -1331,27 +1288,11 @@ void typotek::dropEvent ( QDropEvent * event )
 
 		if(QFileInfo(fP).isDir())
 		{
-// 			// We remove all temporary fonts
-// 			// a bit rough, but it should work well
-// 			QMap<QString,FontItem*>::const_iterator fIt;
-// 			for(fIt = temporaryFonts.constBegin(); fIt != temporaryFonts.constEnd() ; ++fIt)
-// 			{
-// 				realFontMap.remove(fIt.key());
-// 				fontMap.removeAll(fIt.value());
-// 				delete fIt.value();
-// 			}
-// 			temporaryFonts.clear();
 			open(fP);
 			return;
 		}
 		else
 		{
-			if(temporaryFonts.contains(fP))
-			{
-				open(fP);
-				temporaryFonts.remove(fP);
-			}
-			else
 			{
 				uris << "file://" + fP;
 			}

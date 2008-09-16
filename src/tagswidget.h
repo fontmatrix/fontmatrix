@@ -30,6 +30,7 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 		static TagsWidget *getInstance();
 		void prepare(QList<FontItem*> fonts);
 		void newTag();
+		void removeFromTagged(FontItem* f){theTaggedFonts.removeAll(f);}
 		
 	private slots:
 		void slotSwitchCheckState( QListWidgetItem * item );

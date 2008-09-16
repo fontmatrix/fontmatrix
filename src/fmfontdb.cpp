@@ -47,7 +47,7 @@ FMFontDb::FMFontDb()
 	tableName[Info] 	= "fontmatrix_info";
 
 	getIdStringFast = "SELECT %1 FROM %2 WHERE %3='%4'";
-	
+
 	transactionDeep = 0;
 }
 
@@ -96,7 +96,7 @@ void FMFontDb::setValue ( const QString & id, Field field, QVariant value )
 // 	transaction();
 	if ( field == Tags )
 	{
-		setTags( id, value.toStringList() );
+		setTags ( id, value.toStringList() );
 	}
 	else
 	{
@@ -198,8 +198,8 @@ QVariant FMFontDb::getValue ( const QString & id, Field field )
 		{
 			while ( query.next() )
 			{
-				QString t(query.value ( 0 ).toString());
-				if(!tl.contains(t))
+				QString t ( query.value ( 0 ).toString() );
+				if ( !tl.contains ( t ) )
 					tl << t;
 			}
 		}
@@ -224,10 +224,16 @@ QVariant FMFontDb::getValue ( const QString & id, Field field )
 	}
 }
 
-QMap< int, QMap < int , QString > > FMFontDb::getInfoMap ( const QString & id )
+FontInfoMap FMFontDb::getInfoMap ( const QString & id )
 {
 	qDebug() <<"getInfoMap"<<id;
-	QMap< int, QMap < int , QString > > ret;
+	FontInfoMap ret;
+	if ( id.isEmpty() )
+		return ret;
+	if ( temporaryFont.contains(id) )
+	{
+		return temporaryFont[id]->moreInfo();
+	}
 	QString qs ( QString ( "SELECT * FROM %1 WHERE %2='%3'" )
 	             .arg ( tableName[Info] )
 	             .arg ( fieldName[Id] )
@@ -263,50 +269,50 @@ void FMFontDb::addTag ( const QString & id, const QString & t )
 	bool res ( query.exec() );
 }
 
-void FMFontDb::removeTag(const QString & id, const QString & t)
+void FMFontDb::removeTag ( const QString & id, const QString & t )
 {
-	int nId(getId(id));
+	int nId ( getId ( id ) );
 	QString qs ( QString ( "DELETE FROM %1 WHERE (%2='%3') AND (%4='%5')" )
-			.arg ( tableName[Tag] )
-			.arg ( fieldName[Id] )
-			.arg ( nId ) 
-			.arg ( fieldName[Tags] )
-		   	.arg ( t ));
+	             .arg ( tableName[Tag] )
+	             .arg ( fieldName[Id] )
+	             .arg ( nId )
+	             .arg ( fieldName[Tags] )
+	             .arg ( t ) );
 	QSqlQuery query ( qs,*this );
 	query.exec();
 }
 
-void FMFontDb::setTags(const QString & id, const QStringList & tl)
+void FMFontDb::setTags ( const QString & id, const QStringList & tl )
 {
-	int nId(getId(id));
+	int nId ( getId ( id ) );
 	QString qs ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
-			.arg ( tableName[Tag] )
-			.arg ( fieldName[Id] )
-			.arg ( nId ) );
+	             .arg ( tableName[Tag] )
+	             .arg ( fieldName[Id] )
+	             .arg ( nId ) );
 	QSqlQuery query ( qs,*this );
 	query.exec();
 // 	TransactionBegin();
-	foreach(QString t, tl)
+	foreach ( QString t, tl )
 	{
-		addTag(id, t);
+		addTag ( id, t );
 	}
 // 	TransactionEnd();
 }
 
 QStringList FMFontDb::getTags()
 {
-	qDebug()<<"getTags";
+	qDebug() <<"getTags";
 	QString qs ( QString ( "SELECT %1 FROM %2" )
-			.arg ( fieldName[Tags] )
-			.arg ( tableName[Tag] ));
+	             .arg ( fieldName[Tags] )
+	             .arg ( tableName[Tag] ) );
 	QSqlQuery query ( qs,*this );
 	if ( query.exec() )
 	{
 		QStringList tl;
 		while ( query.next() )
 		{
-			QString t(query.value ( 0 ).toString());
-			if(!tl.contains(t))
+			QString t ( query.value ( 0 ).toString() );
+			if ( !tl.contains ( t ) )
 				tl << t;
 		}
 		return tl;
@@ -314,17 +320,17 @@ QStringList FMFontDb::getTags()
 	return QStringList();
 }
 
-void FMFontDb::addTagToDB(const QString & t)
+void FMFontDb::addTagToDB ( const QString & t )
 {
-	qDebug()<< "addtag"<< t;
-		QString vs ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4','%5')" )
-				.arg ( tableName[Tag] )
-				.arg ( fieldName[Id] )
-				.arg ( fieldName[Tags] )
-				.arg ( 0 )
-				.arg ( t ) );
-		QSqlQuery query ( vs,*this );
-		query.exec();
+	qDebug() << "addtag"<< t;
+	QString vs ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4','%5')" )
+	             .arg ( tableName[Tag] )
+	             .arg ( fieldName[Id] )
+	             .arg ( fieldName[Tags] )
+	             .arg ( 0 )
+	             .arg ( t ) );
+	QSqlQuery query ( vs,*this );
+	query.exec();
 }
 
 
@@ -460,8 +466,8 @@ void FMFontDb::initFMDb()
 		rq = query.exec ( qs2.arg ( fieldName[Id] )
 		                  .arg ( fieldName[Family] )
 		                  .arg ( fieldName[Variant] )
-				  .arg ( fieldName[Type] )
-				  .arg ( fieldName[Activation] )
+		                  .arg ( fieldName[Type] )
+		                  .arg ( fieldName[Activation] )
 		                  .arg ( tableName[Data] ) );
 		if ( !rq )
 		{
@@ -474,19 +480,19 @@ void FMFontDb::initFMDb()
 			int anId ( 0 );
 			QString path;
 			int counter ( 0 );
-			bool act(false);
+			bool act ( false );
 			while ( query.next() )
 			{
 				anId =  query.value ( 0 ).toInt();
 				path = reverseCacheId[anId];
-				act = (query.value ( 4 ).toInt() == 0) ? false : true;
+				act = ( query.value ( 4 ).toInt() == 0 ) ? false : true;
 				if ( ( path.isEmpty() ) || ( anId == 0 ) )
 					continue;
 // 				qDebug()<<anId<<++counter<<path;
 				if ( fontMap.contains ( anId ) )
 					continue;
 				else
-					fontMap[anId] = new FontItem ( path ,query.value ( 1 ).toString(),query.value ( 2 ).toString() ,query.value ( 3 ).toString(),act);
+					fontMap[anId] = new FontItem ( path ,query.value ( 1 ).toString(),query.value ( 2 ).toString() ,query.value ( 3 ).toString(),act );
 			}
 		}
 
@@ -498,9 +504,22 @@ int FMFontDb::getId ( const QString & fontid )
 	return cacheId.value ( fontid );
 }
 
-FontItem * FMFontDb::Font ( const QString & id )
+FontItem * FMFontDb::Font ( const QString & id , bool noTemporary )
 {
+	qDebug() <<"Font"<<id;
 	FontItem * fitem ( 0 );
+	if ( id.isEmpty() )
+		return fitem;
+	if ( temporaryFont.contains(id) )
+	{
+		if(noTemporary)
+		{
+			delete temporaryFont[id];
+			temporaryFont.remove(id);
+		}
+		else
+			return temporaryFont[id];
+	}
 	int fid ( getId ( id ) );
 	if ( fid > 0 )
 	{
@@ -515,7 +534,7 @@ FontItem * FMFontDb::Font ( const QString & id )
 	else
 	{
 		fitem = new FontItem ( id );
-		if( fitem->isValid() )
+		if ( fitem->isValid() )
 		{
 			fitem->dumpIntoDB();
 			fid = getId ( id );
@@ -555,23 +574,23 @@ QStringList FMFontDb::AllFontNames()
 
 void FMFontDb::TransactionBegin()
 {
-	if(transactionDeep > 0)
+	if ( transactionDeep > 0 )
 		++transactionDeep;
 	else
 	{
 		transaction();
 		transactionError.clear();
 		++transactionDeep;
-		qDebug()<<"TransactionBegin";
+		qDebug() <<"TransactionBegin";
 	}
 }
 
 bool FMFontDb::TransactionEnd()
 {
-	qDebug()<<"TransactionEnd";
-	
+	qDebug() <<"TransactionEnd";
+
 	--transactionDeep;
-	if(transactionDeep > 0)
+	if ( transactionDeep > 0 )
 		return true;
 	if ( transactionError.isEmpty() )
 	{
@@ -637,13 +656,13 @@ QList< FontItem * > FMFontDb::Fonts ( const QVariant & pattern, Field field )
 
 QList< FontItem * > FMFontDb::Fonts ( const QVariant & pattern, InfoItem info, int codeLang )
 {
-	QString qs(QString ( "(%1='%2') AND (%3='%4') AND (%5 LIKE '\%%6\%')" )
-	               .arg ( fieldName[InfoKey] )
-	               .arg ( info )
-	               .arg ( fieldName[Lang] )
-	               .arg ( codeLang )
-	               .arg ( fieldName[InfoValue] )
-	               .arg ( pattern.toString() ));
+	QString qs ( QString ( "(%1='%2') AND (%3='%4') AND (%5 LIKE '\%%6\%')" )
+	             .arg ( fieldName[InfoKey] )
+	             .arg ( info )
+	             .arg ( fieldName[Lang] )
+	             .arg ( codeLang )
+	             .arg ( fieldName[InfoValue] )
+	             .arg ( pattern.toString() ) );
 // 	qDebug()<<qs;
 	return Fonts ( qs , Info );
 }
@@ -663,7 +682,7 @@ QList< FontItem * > FMFontDb::Fonts ( const QString & whereString, Table table )
 		while ( query.next() )
 		{
 			int id ( query.value ( 0 ).toInt() );
-			if(id > 0)
+			if ( id > 0 )
 				reg[id] = fontMap.value ( id );
 		}
 		return reg.values();
@@ -682,6 +701,44 @@ FontItem * FMFontDb::FirstFont()
 
 FontItem * FMFontDb::NextFont()
 {
+}
+
+bool FMFontDb::insertTemporaryFont ( const QString & path )
+{
+	// basic check
+	qDebug() <<"TFont"<<path;
+	if ( path.isEmpty() )
+		return false;
+
+	QFileInfo fi ( path );
+	QString absPath ( fi.absoluteFilePath() );
+
+	if ( temporaryFont.contains ( path ) )
+	{
+		return true;
+	}
+
+	// check if we have it yet
+	int fid ( getId ( absPath ) );
+	if ( fid > 0 )
+	{
+		if ( fontMap.contains ( fid ) )
+		{
+			return true;
+		}
+	}
+
+	// Build an item
+	FontItem *item ( new FontItem ( absPath ) );
+	if ( !item->isValid() )
+	{
+		delete item;
+		return false;
+	}
+	temporaryFont[absPath] = item;
+	item->lock();
+	return true;
+
 }
 
 

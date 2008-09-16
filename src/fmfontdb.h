@@ -101,7 +101,7 @@ class FMFontDb : public QSqlDatabase
 		QVariant getValue ( const QString& id, Field field );
 		FontInfoMap getInfoMap ( const QString& id );
 
-		FontItem* Font ( const QString& id );
+		FontItem* Font ( const QString& id , bool noTemporary = false);
 
 		QList<FontItem*> AllFonts();
 		QStringList AllFontNames();
@@ -120,6 +120,7 @@ class FMFontDb : public QSqlDatabase
 		void setTags(const QString& id, const QStringList& tl);
 		
 		bool Remove(const QString& id);
+		bool insertTemporaryFont(const QString& path);
 
 	private:
 		// ensure tables are created
@@ -138,10 +139,12 @@ class FMFontDb : public QSqlDatabase
 		QMap<int,FontItem*> fontMap;
 		QMap<int,FontItem*>::iterator fontCursor;
 		void clearFontMap();
+		QMap<QString , FontItem*> temporaryFont;
 
 		QList<QSqlError> transactionError;
 		
 		int transactionDeep;
+		
 };
 
 

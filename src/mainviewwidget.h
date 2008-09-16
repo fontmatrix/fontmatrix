@@ -103,10 +103,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		bool uRangeIsNotEmpty;
 		
 		
-		void prepare(QList<FontItem*> fonts);
-		QList<FontItem*> theTaggedFonts;		
-		bool contextMenuReq;
-		QPoint contextMenuPos;
+// 		void prepare(QList<FontItem*> fonts);
+// 		QList<FontItem*> theTaggedFonts;		
+// 		bool contextMenuReq;
+// 		QPoint contextMenuPos;
 		
 		QIcon iconPS1;
 		QIcon iconTTF;
@@ -132,7 +132,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotShowOneGlyph();
 		void slotShowAllGlyph();
 		void slotSearch();
-// 		void slotLiveSearch(const QString & text);
+		
 		void slotFontAction(QTreeWidgetItem * item, int column );
 		void slotFontActionByName(const QString &fname);
 		void slotFontActionByNames(QStringList fnames);
@@ -140,7 +140,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotZoom(int z);
 		void slotAppendTag(QString tag);
 		void slotFilterTag(QString tag);
-// 		void slotFilterTagset(QString set);
+		
 		void slotDesactivateAll();
 		void slotActivateAll();
 		void slotSetSampleText(QString);
@@ -159,8 +159,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotFTRasterChanged();
 		void slotWantShape();
 		void slotChangeScript();
-// 		void slotSwitchRTL();
-// 		void slotSwitchVertUD();
+		
+		
 		void slotProgressionChanged();
 		void slotUpdateGView();
 		void slotUpdateGViewSingle();
@@ -168,11 +168,11 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotUpdateRView();
 		void slotEditSampleText();
 		void slotRemoveCurrentItem();
-		//tags
-		void slotSwitchCheckState( QListWidgetItem * item );
-		void slotNewTag();
-		void slotContextMenu(QPoint  pos);
-		void slotFinalize();
+		
+		
+		
+		
+		
 		//playground
 		void slotPushOnPlayground();
 		
@@ -192,7 +192,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotChangeViewPageSetting(bool);
 		void slotChangeViewPage(QAbstractButton* );
 		void slotHintChanged(int);
-// 		void slotMonitorViewToolsSize(int hdl,int sz);
+		
 		
 		void slotWebLink(const QUrl & url );
 		void slotWebStart();

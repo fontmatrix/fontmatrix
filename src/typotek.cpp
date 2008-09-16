@@ -45,6 +45,7 @@
 #include "fmactivate.h"
 #include "fmlayout.h"
 #include "fmfontdb.h"
+#include "tagswidget.h"
 
 #include "winutils.h"
 
@@ -126,7 +127,7 @@ typotek::typotek()
 	instance = this;
 	setWindowTitle ( "Fontmatrix" );
 	setupDrop();
-	qDebug()<<"Policy"<<sizePolicy().horizontalPolicy();
+// 	qDebug()<<"Policy"<<sizePolicy().horizontalPolicy();
 
 	hyphenator = 0;
 	theHelp = 0;
@@ -153,6 +154,10 @@ void typotek::initMatrix()
 	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
 	mainDock->setWidget ( ListDockWidget::getInstance() );
 	addDockWidget ( fontmatrix::DockPosition[mainDockArea], mainDock );
+	
+	tagsDock = new QDockWidget ( tr("Tags") );
+	tagsDock->setWidget( TagsWidget::getInstance() );
+	addDockWidget(fontmatrix::DockPosition[tagsDockArea], tagsDock);
 
 
 	createActions();
@@ -195,6 +200,7 @@ void typotek::doConnect()
 		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( QString ) ), getSystray(),SLOT ( updateTagMenu ( QString ) ) );
 
 	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
+	connect(tagsDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotTagsDockAreaChanged(Qt::DockWidgetArea )));
 	connect(FMLayout::getLayout()->optionDialog,SIGNAL(finished( int )),this,SLOT(slotUpdateLayOptStatus()));
 
 
@@ -750,6 +756,7 @@ void typotek::readSettings()
 	previewRTL = settings.value("PreviewRTL", false).toBool();
 	previewSubtitled = settings.value("PreviewSubtitled", false).toBool();
 	mainDockArea = settings.value("ToolPos", "Left").toString();
+	tagsDockArea = settings.value("TagsPos", "Right").toString();
 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
 	
 	templatesDir = settings.value ( "TemplatesDir", "./").toString();
@@ -780,6 +787,7 @@ void typotek::writeSettings()
 	settings.setValue ( "pos", pos() );
 	settings.setValue ( "size", size() );
 	settings.setValue( "ToolPos", mainDockArea );
+	settings.setValue( "TagsPos", tagsDockArea );
 	settings.setValue( "SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
 	settings.setValue("DatabaseDriver",databaseDriver);
 	settings.setValue("DatabaseHostname",databaseHostname);
@@ -1688,7 +1696,7 @@ void typotek::slotTagAll()
 		}
 
 	}
-	theMainView->slotNewTag();
+	TagsWidget::getInstance()->newTag();
 }
 
 void typotek::printInfo()
@@ -1975,6 +1983,19 @@ void typotek::slotMainDockAreaChanged(Qt::DockWidgetArea area)
 		mainDockArea = "Bottom";
 }
 
+void typotek::slotTagsDockAreaChanged(Qt::DockWidgetArea area)
+{
+	if(area == Qt::LeftDockWidgetArea)
+		tagsDockArea = "Left";
+	else if(area ==Qt::RightDockWidgetArea)
+		tagsDockArea ="Right";
+	else if(area == Qt::TopDockWidgetArea)
+		tagsDockArea ="Top";
+	else if(area == Qt::BottomDockWidgetArea)
+		tagsDockArea = "Bottom";
+}
+
+
 FMHyphenator* typotek::getHyphenator() const
 {
 	return hyphenator;
@@ -2099,6 +2120,7 @@ void typotek::endProgressJob()
 	statusProgressBar->hide();
 	statusProgressBar->reset();
 }
+
 
 
 

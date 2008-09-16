@@ -82,6 +82,7 @@ class typotek:public QMainWindow
 		void slotRepair();
 		void slotTagAll();
 		void slotMainDockAreaChanged(Qt::DockWidgetArea area);
+		void slotTagsDockAreaChanged(Qt::DockWidgetArea area);
 		void slotSwitchLayOptVisible();
 		void slotUpdateLayOptStatus();
 
@@ -123,6 +124,7 @@ class typotek:public QMainWindow
 		QString curFile;
 
 		QDockWidget *mainDock;
+		QDockWidget *tagsDock;
 		QMenu *fileMenu;
 		QMenu *editMenu;
 		QMenu *browseMenu;
@@ -199,6 +201,7 @@ class typotek:public QMainWindow
 		QString m_defaultSampleName;
 
 		QString mainDockArea;
+		QString tagsDockArea;
 
 		QMap<QString, FontItem*> temporaryFonts;
 

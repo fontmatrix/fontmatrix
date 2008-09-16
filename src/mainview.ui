@@ -72,105 +72,18 @@
        <iconset resource="application.qrc" >
         <normaloff>:/fontmatrix_info.png</normaloff>:/fontmatrix_info.png</iconset>
       </attribute>
-      <layout class="QGridLayout" name="gLt_7" >
+      <layout class="QGridLayout" name="gridLayout_12" >
        <property name="margin" >
         <number>0</number>
        </property>
        <item row="0" column="0" >
-        <widget class="QSplitter" name="splitter" >
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
+        <widget class="QWebView" native="1" name="fontInfoText" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>5</verstretch>
+          </sizepolicy>
          </property>
-         <widget class="QWebView" native="1" name="fontInfoText" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-            <horstretch>0</horstretch>
-            <verstretch>5</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-         <widget class="QWidget" native="1" name="widget" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-            <horstretch>1</horstretch>
-            <verstretch>1</verstretch>
-           </sizepolicy>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_12" >
-           <property name="margin" >
-            <number>3</number>
-           </property>
-           <property name="spacing" >
-            <number>2</number>
-           </property>
-           <item row="0" column="0" colspan="2" >
-            <widget class="QListWidget" name="tagsListWidget" >
-             <property name="acceptDrops" >
-              <bool>true</bool>
-             </property>
-             <property name="statusTip" >
-              <string>Right mouse click on a tag to add it or remove it from TagSet</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" >
-            <widget class="QLabel" name="titleLabel" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="MinimumExpanding" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font" >
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="frameShape" >
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="text" >
-              <string>Nothing selected</string>
-             </property>
-             <property name="textFormat" >
-              <enum>Qt::PlainText</enum>
-             </property>
-             <property name="scaledContents" >
-              <bool>true</bool>
-             </property>
-             <property name="alignment" >
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="buddy" >
-              <cstring>tagsListWidget</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1" >
-            <widget class="QPushButton" name="newTagButton" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip" >
-              <string>Add a tag</string>
-             </property>
-             <property name="text" >
-              <string>Add</string>
-             </property>
-             <property name="icon" >
-              <iconset resource="application.qrc" >
-               <normaloff>:/fontmatrix_tags.png</normaloff>:/fontmatrix_tags.png</iconset>
-             </property>
-             <property name="flat" >
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
         </widget>
        </item>
       </layout>
@@ -990,9 +903,7 @@
   <tabstop>pushToPlayButton</tabstop>
   <tabstop>playView</tabstop>
   <tabstop>settingsButton</tabstop>
-  <tabstop>newTagButton</tabstop>
   <tabstop>playFontSize</tabstop>
-  <tabstop>tagsListWidget</tabstop>
   <tabstop>playString</tabstop>
   <tabstop>uniPlaneCombo</tabstop>
   <tabstop>saveDefOTFBut</tabstop>

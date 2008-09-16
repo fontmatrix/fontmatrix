@@ -39,6 +39,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/shortcuts.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/systray.cpp
 # ${CMAKE_CURRENT_SOURCE_DIR}/tagseteditor.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/typotek.cpp
 )
@@ -93,6 +94,7 @@ remotedir.h
 shortcuts.h
 systray.h
 # tagseteditor.h
+tagswidget.h
 textprogression.h
 typotek.h
 )
@@ -110,7 +112,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/listsdock.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/mainview.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/prefs_panel.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/repair.ui
-${CMAKE_CURRENT_SOURCE_DIR}/tagset.ui
+# ${CMAKE_CURRENT_SOURCE_DIR}/tagset.ui
+${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})

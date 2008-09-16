@@ -33,6 +33,7 @@
 #include "typotek.h"
 #include "fmfontdb.h"
 #include "fmfontstrings.h"
+#include "tagswidget.h"
 
 
 #include <QString>
@@ -148,20 +149,12 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	sampleText= typo->namedSample (typo->defaultSampleName());
 	
-// 	m_lists->previewList->setRefWidget ( this );
 	
 	QMap<QString, int> sTypes(FMShaperFactory::types());
 	for(QMap<QString, int>::iterator sIt = sTypes.begin(); sIt != sTypes.end() ; ++sIt)
 	{
 		shaperTypeCombo->addItem(sIt.key(), sIt.value());
 	}
-
-	contextMenuReq = false;
-	tagsListWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-	
-	/// I keep the widgets if someone finally thinks they are useful but I think they aren’t - pm
-// 	antiAliasButton->setVisible(false);
-// 	fitViewCheck->setVisible(false);
 	
 	//CONNECT
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
@@ -179,7 +172,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
 	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
-// 	connect (splitter_2, SIGNAL(splitterMoved( int, int )),this,SLOT(slotMonitorViewToolsSize(int, int)));
+	
 	connect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	connect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	
@@ -193,8 +186,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-// 	connect ( antiAliasButton,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSwitchAntiAlias ( bool ) ) );
-// 	connect ( fitViewCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotFitChanged ( int ) ) );
+	
 
 	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
@@ -204,7 +196,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 
-// 	connect ( typo,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
+	
 	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 	connect ( liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
@@ -219,12 +211,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
 	connect ( pushToPlayButton, SIGNAL(clicked ( bool ) ), this, SLOT(slotPushOnPlayground()) );
-
-	connect ( tagsListWidget,SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
-	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
-	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
-// 	connect ( this ,SIGNAL ( tagAdded ( QString ) ),this,SLOT ( slotAppendTag ( QString ) ) );
-
+	
 	// END CONNECT
 
 	currentOrdering = "family" ;
@@ -897,32 +884,6 @@ void MainViewWidget::slotSearch()
 	m_lists->searchString->clear();
 }
 
-// Basically we do the same as in regular search but not clear input field
-// Not used anymore
-// void MainViewWidget::slotLiveSearch(const QString & text)
-// {
-// 	qDebug()<<"slotLiveSearch";
-// // 	if(!m_lists->liveSearchCheck->isChecked())
-// // 		return;
-// 	m_lists->fontTree->clear();
-// 	fontsetHasChanged = true;
-// 	QString ff ( "search_%1" );
-// 	QString sensitivity ( "INSENS" );
-// // 	if ( m_lists->sensitivityCheck->isChecked() )
-// // 	{
-// // 		sensitivity = "SENS";
-// // 	}
-// 
-// 	QList<FontItem*> tmpList;
-// 	tmpList.clear();
-// 	tmpList = typo->getFonts ( text ,ff.arg ( sensitivity ) );
-// 	currentFonts.clear();
-// 	currentFonts = tmpList ;
-// 
-// 	currentOrdering = "family";
-// 	fillTree();
-// }
-
 
 void MainViewWidget::slotFilterTag ( QString tag )
 {
@@ -966,37 +927,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 	}
 }
 
-// void MainViewWidget::slotFilterTagset ( QString set )
-// {
-// 	m_lists->fontTree->clear();
-// 	fontsetHasChanged = true;
-// 	currentFonts.clear();
-// 	QStringList tags = typo->tagsOfSet ( set );
-// 	if ( !tags.count() )
-// 		return;
-// 
-// 	for ( int i = 0;i < tags.count(); ++i )
-// 	{
-// 		currentFonts += FMFontDb::DB()->Fonts ( tags[i], FMFontDb::Tags );
-// 	}
-// 	int count_req = tags.count();
-// 	QSet<FontItem*> setOfTags ( currentFonts.toSet() );
-// 	foreach ( FontItem * it, setOfTags )
-// 	{
-// // 		qDebug() << it->name();
-// 		if ( currentFonts.count ( it ) != count_req )
-// 			currentFonts.removeAll ( it );
-// 		else
-// 			qDebug() << count_req<<currentFonts.count ( it );
-// 	}
-// 
-// 
-// 
-// 	currentOrdering = "family";
-// 	currentFonts = currentFonts.toSet().toList();
-// 	fillTree();
-// }
-// 
+
 
 void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 {
@@ -1008,9 +939,7 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 	{
 		QList<FontItem*> fl;
 		fl.append ( FoIt );
-		prepare ( fl );
-
-
+		TagsWidget::getInstance()->prepare ( fl );
 	}
 }
 
@@ -1022,9 +951,7 @@ void MainViewWidget::slotFontActionByName (const QString &fname )
 	{
 		QList<FontItem*> fl;
 		fl.append ( FoIt );
-		prepare ( fl );
-
-
+		TagsWidget::getInstance()->prepare ( fl );
 	}
 }
 
@@ -1037,7 +964,7 @@ void MainViewWidget::slotFontActionByNames ( QStringList fnames )
 		FoIt.append ( FMFontDb::DB()->Font( fnames[i] ) );
 	}
 	if ( FoIt.count() )
-		prepare ( FoIt );
+		TagsWidget::getInstance()->prepare ( FoIt );
 }
 
 
@@ -1051,7 +978,7 @@ void MainViewWidget::slotEditAll()
 	if ( fl.isEmpty() )
 		return;
 
-	prepare ( fl );
+	TagsWidget::getInstance()->prepare ( fl );
 }
 
 
@@ -1573,16 +1500,6 @@ void MainViewWidget::slotChangeScript()
 	}
 }
 
-// void MainViewWidget::slotSwitchRTL()
-// {
-// 	slotView ( true );
-// }
-//
-// void MainViewWidget::slotSwitchVertUD()
-// {
-// 	slotView ( true );
-// }
-
 
 void MainViewWidget::slotPlaneSelected ( int i )
 {
@@ -1710,179 +1627,6 @@ void MainViewWidget::slotUpdateRView()
 }
 
 
-void MainViewWidget::slotSwitchCheckState(QListWidgetItem * item)
-{
-// 	if(contextMenuReq)
-// 	{
-// // 		qDebug() << "\tWant contextual popup menu";
-// 		typotek *typo = typotek::getInstance();
-// 		QStringList sets = typo->tagsets();
-// 		QMenu menu(tagsListWidget);
-// 		for(int i=0; i< sets.count(); ++i)
-// 		{
-// 
-// 			if(typo->tagsOfSet(sets[i]).contains(item->text()))
-// 			{
-// 				QAction *entry = menu.addAction(QString("Remove from %1").arg(sets[i]));
-// 				entry->setData(sets[i]);
-// 			}
-// 			else
-// 			{
-// 				QAction *entry = menu.addAction(QString("Add to %1").arg(sets[i]));
-// 				entry->setData(sets[i]);
-// 			}
-// 		}
-// 		QAction *sel = menu.exec(contextMenuPos);
-// 		if(sel /*&& sel != mTitle*/)
-// 		{
-// 			if(sel->text().startsWith("Add"))
-// 			{
-// 				typo->addTagToSet(sel->data().toString(), item->text());
-// 			}
-// 			else
-// 			{
-// 				typo->removeTagFromSet(sel->data().toString(), item->text());
-// 			}
-// 		}
-// 		contextMenuReq = false;
-// 		return;
-// 	}
-
-	slotFinalize();
-}
-
-void MainViewWidget::slotNewTag()
-{
-	QString nTag;
-	bool ok;
-	nTag = QInputDialog::getText(this,"Fontmatrix",tr("Add new tag"),QLineEdit::Normal, QString() , &ok );
-	if ( !ok || nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ))
-		return;
-
-	FMFontDb::DB()->addTagToDB( nTag );
-	QListWidgetItem *lit = new QListWidgetItem ( nTag );
-	lit->setCheckState ( Qt::Checked );
-	tagsListWidget->addItem ( lit );
-	slotFinalize();
-	
-	ListDockWidget::getInstance()->reloadTagsCombo();
-}
-
-void MainViewWidget::slotContextMenu(QPoint pos)
-{
-	contextMenuReq = true;
-	contextMenuPos = tagsListWidget->mapToGlobal( pos );
-}
-
-void MainViewWidget::slotFinalize()
-{
-// 	qDebug()<<"MainViewWidget::slotFinalize()";
-	QStringList plusTags;
-	QStringList noTags;
-	for ( int i=0;i< tagsListWidget->count();++i )
-	{
-		if ( tagsListWidget->item ( i )->checkState() == Qt::Checked )
-			plusTags.append ( tagsListWidget->item ( i )->text() );
-		if( tagsListWidget->item ( i )->checkState() == Qt::Unchecked )
-			noTags.append ( tagsListWidget->item ( i )->text() );
-	}
-
-	QStringList sourceTags;
-	QStringList refTags;
-	for ( int i=0;i<theTaggedFonts.count();++i )
-	{
-		refTags = sourceTags = theTaggedFonts[i]->tags();
-		qDebug()<<refTags.join(" ");
-		for(int t = 0; t < noTags.count(); ++t)
-		{
-			sourceTags.removeAll(noTags[t]);
-		}
-		sourceTags += plusTags;
-		sourceTags = sourceTags.toSet().toList();
-		bool changed(false);
-		qDebug()<<sourceTags.join(" ");
-		if(refTags.count() != sourceTags.count())
-			changed = true;
-		else
-		{
-			foreach(QString t, sourceTags)
-			{
-				if(!refTags.contains(t))
-				{
-					changed = true;
-					break;
-				}
-			}
-		}
-		if(changed)
-			theTaggedFonts[i]->setTags ( sourceTags );
-	}
-// 	qDebug()<<"END OF slotFinalize";
-}
-
-void MainViewWidget::prepare(QList< FontItem * > fonts)
-{
-// 	qDebug()<<"MainViewWidget::prepare("<<fonts.count()<<")";
-// 	slotFinalize();
-	theTaggedFonts.clear();
-	theTaggedFonts = fonts;
-
-	bool readOnly(false);
-	for ( int i(0); i < theTaggedFonts.count() ; ++i )
-	{
-		if ( theTaggedFonts[i]->isLocked() )
-		{
-			readOnly = true;
-			break;
-		}
-	}
-	tagsListWidget->clear();
-	QString tot;
-	for ( int i=0;i<theTaggedFonts.count();++i )
-	{
-		tot.append (  theTaggedFonts[i]->fancyName() +  "\n" );
-	}
-	if(theTaggedFonts.count() > 1)
-	{
-		titleLabel->setText ( theTaggedFonts[0]->family() + " (family)");
-	}
-	else
-	{
-		titleLabel->setText ( theTaggedFonts[0]->fancyName() );
-	}
-	titleLabel->setToolTip ( tot );
-	QStringList tagsList(FMFontDb::DB()->getTags());
-	for ( int i=0; i < tagsList.count(); ++i )
-	{
-		QString cur_tag = tagsList[i];
-
-		if ( cur_tag.isEmpty() )
-			continue;
-
-		QListWidgetItem *lit;
-
-		{
-			lit = new QListWidgetItem ( cur_tag );
-			lit->setCheckState ( Qt::Unchecked );
-			int YesState = 0;
-			for ( int i=0;i<theTaggedFonts.count();++i )
-			{
-				QStringList fTags(theTaggedFonts[i]->tags());
-				if ( fTags.contains ( cur_tag ) )
-					++YesState;
-			}
-			if(YesState == theTaggedFonts.count())
-				lit->setCheckState ( Qt::Checked );
-			else if(YesState > 0 && YesState < theTaggedFonts.count())
-				lit->setCheckState ( Qt::PartiallyChecked);
-
-			tagsListWidget->addItem ( lit );
-			if(readOnly)
-				lit->setFlags(0);// No NoItemFlags in Qt < 4.4
-		}
-	}
-// 	qDebug()<<"END OF prepare";
-}
 
 void MainViewWidget::slotEditSampleText()
 {
@@ -1902,7 +1646,7 @@ void MainViewWidget::slotRemoveCurrentItem()
 	{
 		theVeryFont->deRenderAll();
 		currentFonts.removeAll(theVeryFont);
-		theTaggedFonts.removeAll(theVeryFont);
+// 		theTaggedFonts.removeAll(theVeryFont);
 		theVeryFont  = 0 ;
 		typo->removeFontItem(curItemName);
 		curItemName = lastIndex = faceIndex = "";
@@ -2037,18 +1781,6 @@ void MainViewWidget::resetCrumb()
 	m_lists->filtersCrumb->clear();
 }
 
-// void MainViewWidget::slotSwitchBasic()
-// {
-// 	qDebug()<<"slotSwitchBasic";
-// 	stackedSample->setCurrentIndex(0);
-// }
-// 
-// void MainViewWidget::slotSwitchAdvanced()
-// {
-// 	qDebug()<<"slotSwitchAdvanced";
-// 	stackedSample->setCurrentIndex(1);
-// }
-
 // Don’t know if it’s really useful
 // It will be used for track down problems at least
 void MainViewWidget::slotSelectFromFolders(const QString &f)
@@ -2121,19 +1853,6 @@ QByteArray MainViewWidget::splitterState(int spl)
 	return QByteArray();
 }
 
-// void MainViewWidget::slotMonitorViewToolsSize(int hdl, int sz)
-// {
-// 	if(splitter_2->sizes().at(1) == 0 )
-// 	{
-// 		if(settingsButton->isChecked())
-// 			settingsButton->setChecked(false);
-// 		if(openTypeButton->isChecked())
-// 			openTypeButton->setChecked(false);
-// 		
-// 		toolPanelWidth = splitter_2->width() / 3 ;
-// 		stackedTools->hide();
-// 	}
-// }
 
 unsigned int MainViewWidget::hinting()
 {

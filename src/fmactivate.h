@@ -29,6 +29,7 @@ class FMActivate : public QObject
 		static FMActivate* getInstance();
 		
 		void activate(FontItem* fit , bool act );
+		void activate(QList<FontItem*> fitList , bool act );
 		
 	signals:
 		void activationEvent(QString);

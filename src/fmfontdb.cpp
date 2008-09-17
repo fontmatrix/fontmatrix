@@ -506,7 +506,7 @@ int FMFontDb::getId ( const QString & fontid )
 
 FontItem * FMFontDb::Font ( const QString & id , bool noTemporary )
 {
-// 	qDebug() <<"Font"<<id;
+	qDebug() <<"Font"<<id;
 	FontItem * fitem ( 0 );
 	if ( id.isEmpty() )
 		return fitem;

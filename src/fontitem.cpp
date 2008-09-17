@@ -497,6 +497,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	unitPerEm = 0;
 	m_FTHintMode = 0;
 	allIsRendered = false;
+	isUpToDate = false;
 	m_path = path;
 
 	/// STATIC INITIALISATIONS
@@ -623,7 +624,9 @@ FontItem::FontItem(QString path, QString family, QString variant, QString type,b
 	renderReturnWidth = false;
 	unitPerEm = 0;
 	m_FTHintMode = 0;
+	m_lock = false;
 	allIsRendered = false;
+	isUpToDate = false;
 	
 	if ( langIdMap.isEmpty() )
 		fillLangIdMap();
@@ -647,6 +650,8 @@ FontItem::FontItem(QString path, QString family, QString variant, QString type,b
 
 void FontItem::updateItem()
 {
+	if(isUpToDate)
+		return;
 	QFileInfo infopath ( m_path );
 	m_name = infopath.fileName();
 	if ( ! ensureFace() )
@@ -695,6 +700,7 @@ void FontItem::updateItem()
 	m_numFaces = m_face->num_faces;
 	
 	releaseFace();
+	isUpToDate = true;
 }
 
 FontItem::~FontItem()

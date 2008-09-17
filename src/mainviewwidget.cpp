@@ -430,63 +430,96 @@ void MainViewWidget::fillTree()
 // 	qDebug("END Time elapsed: %d ms", fillTime.elapsed());
 }
 
-void MainViewWidget::updateTree()
+void MainViewWidget::updateTree ( bool checkFontActive )
 {
 	QTreeWidgetItem *curItem = 0;
 	QFont deselect;
-	int topCount (m_lists->fontTree->topLevelItemCount());
-	for (int topIdx(0) ; topIdx < topCount; ++topIdx)
+	int topCount ( m_lists->fontTree->topLevelItemCount() );
+	for ( int topIdx ( 0 ) ; topIdx < topCount; ++topIdx )
 	{
-		QTreeWidgetItem *topItem ( m_lists->fontTree->topLevelItem(topIdx) );
-		int famCount( topItem->childCount() );
-		for(int famIdx(0); famIdx < famCount; ++ famIdx)
+		QTreeWidgetItem *topItem ( m_lists->fontTree->topLevelItem ( topIdx ) );
+		int famCount ( topItem->childCount() );
+		for ( int famIdx ( 0 ); famIdx < famCount; ++ famIdx )
 		{
-			QTreeWidgetItem *famItem( topItem->child(famIdx) );
-			int varCount(famItem->childCount());
-			for (int varIdx(0); varIdx < varCount; ++ varIdx)
+			QTreeWidgetItem *famItem ( topItem->child ( famIdx ) );
+			int varCount ( famItem->childCount() );
+			for ( int varIdx ( 0 ); varIdx < varCount; ++ varIdx )
 			{
-				QTreeWidgetItem *varItem( famItem->child(varIdx) );
-				if( varItem->toolTip( 0 ) == lastIndex )
+				QTreeWidgetItem *varItem ( famItem->child ( varIdx ) );
+				if ( varItem->toolTip ( 0 ) == lastIndex )
 				{
-					varItem->setFont(0, deselect);
-					varItem->setBackgroundColor(0, Qt::transparent);
-					varItem->setBackgroundColor(1, Qt::transparent);
-					varItem->parent()->setFont(0, deselect);
-					varItem->parent()->setBackgroundColor(0, Qt::transparent);
-					varItem->parent()->setBackgroundColor(1, Qt::transparent);
+					varItem->setFont ( 0, deselect );
+					varItem->setBackgroundColor ( 0, Qt::transparent );
+					varItem->setBackgroundColor ( 1, Qt::transparent );
+					varItem->parent()->setFont ( 0, deselect );
+					varItem->parent()->setBackgroundColor ( 0, Qt::transparent );
+					varItem->parent()->setBackgroundColor ( 1, Qt::transparent );
 				}
-				else if(varItem->toolTip(0) == curItemName)
+				else if ( varItem->toolTip ( 0 ) == curItemName )
 				{
 					curItem = varItem;
 				}
-
 			}
 		}
 	}
+	
+	// Check if active
+	if ( checkFontActive )
+	{
+		for ( int topIdx ( 0 ) ; topIdx < topCount; ++topIdx )
+		{
+			QTreeWidgetItem *topItem ( m_lists->fontTree->topLevelItem ( topIdx ) );
+			int famCount ( topItem->childCount() );
+			for ( int famIdx ( 0 ); famIdx < famCount; ++ famIdx )
+			{
+				QTreeWidgetItem *famItem ( topItem->child ( famIdx ) );
+				int varCount ( famItem->childCount() );
+				if ( famItem->isExpanded() )
+				{
+					for ( int varIdx ( 0 ); varIdx < varCount; ++ varIdx )
+					{
+						QTreeWidgetItem *varItem ( famItem->child ( varIdx ) );
+						// Check if active
 
+						QString s ( varItem->toolTip ( 0 ) );
+						FontItem* f ( FMFontDb::DB()->Font ( s ) );
+						bool isActive ( f->isActivated() );
+						if ( isActive )
+						{
+							varItem->setCheckState ( 0,Qt::Checked );
+						}
+						else
+						{
+							varItem->setCheckState ( 0,Qt::Unchecked );
+						}
+					}
+				}
+			}
+		}
+	}
 // 	m_lists->previewList->slotRefill ( currentFonts, false );
 	if ( curItem )
 	{
 // 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
 
-		QColor scol (255,240,221,255);
-		QColor pcol (255,211,155,255);
+		QColor scol ( 255,240,221,255 );
+		QColor pcol ( 255,211,155,255 );
 		QFont selFont;
-		selFont.setBold(true);
+		selFont.setBold ( true );
 		curItem->parent()->setBackgroundColor ( 0,pcol );
 // 		curItem->parent()->setBackgroundColor ( 1,pcol );
-		curItem->parent()->setFont(0, selFont);
+		curItem->parent()->setFont ( 0, selFont );
 		curItem->setBackgroundColor ( 0,scol );
 // 		curItem->setBackgroundColor ( 1,scol );
-		curItem->setFont(0,selFont);
-		if(!curItem->parent()->isExpanded())
-			curItem->parent()->setExpanded(true);
+		curItem->setFont ( 0,selFont );
+		if ( !curItem->parent()->isExpanded() )
+			curItem->parent()->setExpanded ( true );
 	}
 	else
 	{
 		qDebug() << "NO CURITEM";
 	}
-	if( !m_lists->nameItemIsVisible(curItem) )
+	if ( !m_lists->nameItemIsVisible ( curItem ) )
 	{
 		m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 	}
@@ -528,6 +561,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 	if ( item->data ( 0,100 ).toString() == "family" )
 	{
 // 		qDebug() << "Item is a family";
+		item->setExpanded(true);
 		bool wantView = true;
 		bool hasChild = false;
 		QStringList names;
@@ -558,14 +592,15 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			{
 				todo << FMFontDb::DB()->Font( item->child ( i )->toolTip(0) );
 			}
-			for (int fIndex(0);fIndex < todo.count(); ++fIndex)
-			{
-				FontItem* afont = todo[fIndex];
-				if(fIndex == todo.count() - 1)
-					activation ( afont, cs , true);
-				else
-					activation ( afont, cs , false);
-			}
+// 			for (int fIndex(0);fIndex < todo.count(); ++fIndex)
+// 			{
+// 				FontItem* afont = todo[fIndex];
+// 				if(fIndex == todo.count() - 1)
+// 					activation ( afont, cs , true);
+// 				else
+// 					activation ( afont, cs , false);
+// 			}
+			activation ( todo, cs );
 
 		}
 		else
@@ -1173,12 +1208,18 @@ void MainViewWidget::slotAppendTag ( QString tag )
 	m_lists->reloadTagsCombo();
 }
 
-void MainViewWidget::activation ( FontItem* fit , bool act , bool updateTree )
+void MainViewWidget::activation ( FontItem* fit , bool act , bool andUpdate )
 {
 	FMActivate::getInstance()->activate(fit, act);
 
-	if ( updateTree )
+	if ( andUpdate )
 		fillTree();
+}
+
+void MainViewWidget::activation(QList< FontItem * > fit, bool act)
+{
+	FMActivate::getInstance()->activate(fit, act);
+	updateTree(true);
 }
 
 

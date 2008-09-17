@@ -107,6 +107,7 @@ class FontItem : public QObject
 		Q_DECLARE_FLAGS(FsType, FsTypeFlag)
 
 	private:
+		bool isUpToDate;
 		bool m_valid;
 		bool m_active;
 		

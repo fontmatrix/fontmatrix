@@ -78,9 +78,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsRectItem *curGlyph;
 		
 		void allActivation(bool act);
-		void activation(FontItem* fit, bool act, bool updateTree = true);
+		void activation(FontItem* fit, bool act, bool andUpdate = true);
+		void activation(QList<FontItem*> fit, bool act);
 		void fillTree();
-		void updateTree();
+		void updateTree(bool checkFontActive = false);
 		
 		QStringList openKeys;
 		QString curItemName;

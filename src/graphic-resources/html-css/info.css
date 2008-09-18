@@ -37,6 +37,10 @@ float:left;
 width:75%;
 }
 
+.encodingcurrent{
+font-weight:bold;
+}
+
 .infoblock {
 clear:both;
 }

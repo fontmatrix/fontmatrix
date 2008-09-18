@@ -486,7 +486,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	m_face = 0;
 	facesRef = 0;
 	m_glyphsPerRow = 5;
-	hasUnicode = false;
+	m_isEncoded = false;
 	currentChar = -1;
 	m_isOpenType = false;
 	otf = 0;
@@ -614,7 +614,7 @@ FontItem::FontItem(QString path, QString family, QString variant, QString type,b
 	m_face = 0;
 	facesRef = 0;
 	m_glyphsPerRow = 5;
-	hasUnicode = false;
+	m_isEncoded = false;
 	currentChar = -1;
 	m_isOpenType = false;
 	otf = 0;
@@ -743,9 +743,10 @@ void FontItem::encodeFace()
 	if ( (!isType1) && UnicodeBuiltIn && cmaps.contains( FT_ENCODING_UNICODE ) )
 	{
 		FT_Set_Charmap(m_face, cmaps[FT_ENCODING_UNICODE]);
-		m_charsets << FontStrings::Encoding(FT_ENCODING_UNICODE);
+		m_charsets << FT_ENCODING_UNICODE;
 		mapped = true;
-		hasUnicode = true;
+		m_isEncoded = true;
+		m_currentEncoding = FT_ENCODING_UNICODE;
 	}
 	// uncomment below to get Unicode cmap synthetized by FT
 // 	else if(cmaps.contains( FT_ENCODING_UNICODE ))
@@ -754,17 +755,21 @@ void FontItem::encodeFace()
 // 		m_charsets << FontStrings::Encoding(FT_ENCODING_UNICODE) +"*";
 // 		mapped = true;
 // 		cmaps.remove(FT_ENCODING_UNICODE);
-// 		hasUnicode = true;
+// 		m_isEncoded = true;
 // 	}
 	foreach(FT_Encoding e, cmaps.keys())
 	{
-		QString cs(FontStrings::Encoding(e));
-		if(!m_charsets.contains(cs))
-			m_charsets << cs;
+// 		QString cs(FontStrings::Encoding(e));
+		if(isType1 && (e == FT_ENCODING_UNICODE))
+			continue;
+		if(!m_charsets.contains(e))
+			m_charsets << e;
 		if(!mapped)
 		{
 			FT_Set_Charmap(m_face, cmaps[e]);
 			mapped = true;
+			m_isEncoded = true;
+			m_currentEncoding = e;
 		}
 	}
 }
@@ -2031,7 +2036,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	QBrush selBrush ( QColor ( 255,255,255,0 ) );
 	if ( begin_code >= 0 )
 	{
-		if ( hasUnicode )
+		if ( m_isEncoded )
 		{
 			while ( charcode <= end_code && gindex )
 			{
@@ -2348,6 +2353,8 @@ QString FontItem::infoText ( bool fromcache )
 	.langmatch
 	.langundefined
 	.langnomatch
+	.encodingcurrent
+	.encoding
 	*/
 	QString ret;
 
@@ -2390,7 +2397,16 @@ QString FontItem::infoText ( bool fromcache )
 	ret += "<div id=\"general\">";
 	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ tr("Glyphs count")+"</div><div class=\"langundefined\">"+ QString::number ( m_numGlyphs ) +"</div></div>";
 	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ tr("Font Type")+"</div><div class=\"langundefined\">"+ m_type +"</div></div>";
-	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ tr("Charmaps List")+"</div><div class=\"langundefined\">"+ m_charsets.join ( ", " ) +"</div></div>";
+	
+	QStringList cmapStrings;
+	foreach(FT_Encoding c, m_charsets)
+	{
+		if(c == m_currentEncoding)
+			cmapStrings << "<span class=\"encodingcurrent\">" + FontStrings::Encoding(c) + "</span>";
+		else
+			cmapStrings << "<span class=\"encoding\">" + FontStrings::Encoding(c) + "</span>";
+	}
+	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ tr("Charmaps List")+"</div><div class=\"langundefined\">"+ cmapStrings.join ( ", " ) +"</div></div>";
 
 // 	if ( !moreInfo.isEmpty() ) // moreInfo.isNotEmpty
 	{
@@ -3900,6 +3916,16 @@ void FontItem::dumpIntoDB()
 	e3 = t.elapsed();
 	
 // 	qDebug()<<"DUMP"<<m_name<<e1<<e2<<e3;
+}
+
+QStringList FontItem::charmaps()
+{
+	QStringList ret;
+	foreach(FT_Encoding e, m_charsets)
+	{
+		ret << FontStrings::Encoding(e);
+	}
+	return ret;
 }
 
 

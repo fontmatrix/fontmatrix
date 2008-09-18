@@ -145,7 +145,7 @@ class FontItem : public QObject
 		
 		QString getAlternateFamilyName();
 		QString getAlternateVariantName();
-		QStringList m_charsets;
+		QList<FT_Encoding> m_charsets;
 		QList<int> spaceIndex;
 		
 		bool m_isOpenType;
@@ -194,7 +194,8 @@ class FontItem : public QObject
 		bool allIsRendered;
 		bool isDerendered;
 		int m_glyphsPerRow;
-		bool hasUnicode;
+		bool m_isEncoded;
+		FT_Encoding m_currentEncoding;
 		int currentChar;
 		
 // 		bool m_RTL;// Right to Left
@@ -246,7 +247,7 @@ class FontItem : public QObject
 		QStringList tags() ;
 		int glyphsCount() {return m_numGlyphs;}
 		QString type(){return m_type;}
-		QStringList charmaps(){return m_charsets;}
+		QStringList charmaps();
 		void setTags ( QStringList l );
 		void addTag(const QString &t);
 		QString name();

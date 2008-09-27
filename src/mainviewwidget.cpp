@@ -251,7 +251,7 @@ void MainViewWidget::fillTree()
 	// build the in-memory tree that hold the ordered current fonts set
 	QMap< QChar,QMap< QString,QMap< QString,FontItem*> > > keyList;
 	QMap< QString,QString > realFamilyName;
-
+	orderedCurrentFonts.clear();
 	for ( int i=0; i < currentFonts.count();++i )
 	{
 		QString family = currentFonts[i]->family();
@@ -332,6 +332,7 @@ void MainViewWidget::fillTree()
 				++tcount;
 				tt.restart();
 				FontItem *fPointer = fit.value();
+				orderedCurrentFonts << fPointer;
 				QString var( fit.key() );
 
 				QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
@@ -2095,7 +2096,9 @@ void MainViewWidget::slotWebLink(const QUrl & url)
 QList<FontItem*> MainViewWidget::curFonts()
 {
 // 	qDebug()<<"curFonts"<<currentFonts.count();
-	return currentFonts;
+// 	return currentFonts;
+	// #12231 
+	return orderedCurrentFonts;
 }
 
 void MainViewWidget::slotShowULine(bool checked)

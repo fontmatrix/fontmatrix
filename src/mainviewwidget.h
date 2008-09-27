@@ -70,6 +70,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString faceIndex;
 		QString lastIndex;
 		QList<FontItem*> currentFonts;
+		QList<FontItem*> orderedCurrentFonts;
 		QString sampleText;
 		QGridLayout *tagLayout;
 		QString currentOrdering;

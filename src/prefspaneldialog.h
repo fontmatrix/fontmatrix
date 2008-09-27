@@ -61,6 +61,7 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 		void applySampleText();
 
 		void addSampleName();
+		void deleteSampleName();
 		void validateSampleName();
 		void displayNamedText();
 

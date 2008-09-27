@@ -1405,6 +1405,13 @@ void typotek::addNamedSample ( QString name, QString sample )
 	m_namedSamples[name] = sample;
 	theMainView->refillSampleList();
 }
+
+void typotek::removeNamedSample(const QString& key)
+{
+	m_namedSamples.remove(key);
+	theMainView->refillSampleList();
+}
+
 void typotek::setSystrayVisible ( bool isVisible )
 {
 	systray->slotSetVisible ( isVisible );
@@ -2061,6 +2068,8 @@ void typotek::endProgressJob()
 	statusProgressBar->hide();
 	statusProgressBar->reset();
 }
+
+
 
 
 

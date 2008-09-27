@@ -126,6 +126,7 @@ void PrefsPanelDialog::doConnect()
 	connect ( namedSampleTextText,SIGNAL ( textChanged() ),this,SLOT ( validateSampleName() ) );
 	connect ( addSampleTextNameButton,SIGNAL ( released() ),this,SLOT ( addSampleName() ) );
 	connect ( newSampleTextNameText,SIGNAL ( editingFinished() ),this,SLOT ( addSampleName() ) );
+	connect ( deleteSampleTextNameButton,SIGNAL ( released() ),this,SLOT ( deleteSampleName() ) );
 	connect ( sampleTextNamesList,SIGNAL ( currentTextChanged ( const QString& ) ),this,SLOT ( displayNamedText() ) );
 	connect ( dictButton, SIGNAL ( clicked() ), this, SLOT ( slotDictDialog() ) );
 // 	connect ( applySampleTextButton,SIGNAL ( released() ),this,SLOT ( applySampleText() ) );
@@ -202,21 +203,45 @@ void PrefsPanelDialog::addSampleName()
 	if ( typotek::getInstance()->namedSamplesNames().contains ( n ) )
 		return;
 
-	typotek::getInstance()->addNamedSample ( n, tr ( "A text" ) );
+	typotek::getInstance()->addNamedSample ( n, tr ( "Sample Text","A default sample text inserted when creating a new sample" ) );
 	sampleTextNamesList->addItem ( n );
 	newSampleTextNameText->clear();
 // 	displayNamedText();
 
 }
 
+void PrefsPanelDialog::deleteSampleName()
+{
+	QList<QListWidgetItem *> sel ( sampleTextNamesList->selectedItems() );
+	if ( sel.isEmpty() )
+		return;
+
+	QString sampleKey ( sel[0]->text() );
+	QString  message ( tr ( "Do you confirm that you want to remove:","the name of a sample text will be append to the string" ) + " \"%1\"" );
+
+	if ( QMessageBox::warning ( this ,
+	                            "Fontmatrix",
+	                            message.arg(sampleKey),
+	                            QMessageBox::Yes | QMessageBox::No,
+	                            QMessageBox::No ) ==  QMessageBox::Yes )
+	{
+		QListWidgetItem * it(sampleTextNamesList->takeItem( sampleTextNamesList->row(sel[0]) ));
+		if(it)
+			delete it;
+		typotek::getInstance()->removeNamedSample( sampleKey );
+		qDebug()<<"Removed"<<sampleKey;
+	}
+	else
+		qDebug()<<"Did not removed"<<sampleKey;
+}
 
 void PrefsPanelDialog::displayNamedText()
 {
 	namedSampleTextText->setEnabled ( true );
 	QString name ( sampleTextNamesList->currentItem()->text() );
-	qDebug() << "name is "<< name;
+// 	qDebug() << "name is "<< name;
 	QString text ( typotek::getInstance()->namedSample ( name ) );
-	qDebug() << "text is " << text;
+// 	qDebug() << "text is " << text;
 	namedSampleTextText->setPlainText ( text );
 }
 
@@ -659,6 +684,7 @@ void PrefsPanelDialog::updateChartFontSize(int s)
 
 	typotek::getInstance()->setChartInfoFontSize(s);
 }
+
 
 
 

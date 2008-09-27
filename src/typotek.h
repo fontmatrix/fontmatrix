@@ -261,6 +261,7 @@ class typotek:public QMainWindow
 		QStringList namedSamplesNames(){return m_namedSamples.uniqueKeys();};
 		void addNamedSample(QString name, QString sample);
 		void addNamedSampleFragment(QString name, QString sampleFragment);
+		void removeNamedSample(const QString& key);
 
 		void changeSample(QString name, QString text);
 

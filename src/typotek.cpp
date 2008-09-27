@@ -288,7 +288,7 @@ void typotek::open(QString path, bool announce, bool collect)
 			QFileInfoList fil= d.entryInfoList ( filters );
 			foreach ( QFileInfo fp, fil )
 			{
-				if(!yetHereFonts.contains(fp.absoluteFilePath()))
+				if((!yetHereFonts.contains(fp.absoluteFilePath())) && (!fp.isSymLink())) // #12232 
 					pathList <<  fp.absoluteFilePath();
 			}
 		}

@@ -1,0 +1,4232 @@
+2008-09-27 10:36  oeildepierre
+
+	* src/typotek.cpp: bug #12232 : RFE: Check symbolic links
+
+2008-09-27 10:27  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h: bug #12231 :
+	  different fonts order in Names and Previews
+
+2008-09-27 09:55  oeildepierre
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp, src/typotek.h: bug
+	  #11447 : preferences / example : unable to delete
+
+2008-09-18 20:38  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h,
+	  src/graphic-resources/html-css/info.css,
+	  src/graphic-resources/info.css: FIXED: Characters were not
+	  interpreted when the face was not mapped with a Unicode charmap
+
+2008-09-17 18:44  oeildepierre
+
+	* src/fmactivate.cpp, src/fmactivate.h, src/fmfontdb.cpp,
+	  src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: Clean-up activation code
+
+2008-09-16 22:34  oeildepierre
+
+	* src/fmfontdb.cpp, src/typotek.cpp: Fixed a typo which prevented
+	  to import fonts
+
+2008-09-16 13:53  oeildepierre
+
+	* src/fmfontdb.cpp, src/fmfontdb.h, src/fontitem.cpp,
+	  src/fontitem.h, src/listdockwidget.cpp, src/listsdock.ui,
+	  src/mainviewwidget.cpp, src/tagswidget.h, src/typotek.cpp,
+	  src/typotek.h: Stacked filtereing is back
+	  Fixed temporary fonts (folder view)
+
+2008-09-16 09:43  oeildepierre
+
+	* src/CMakeLists.txt, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/tagswidget.cpp, src/tagswidget.h,
+	  src/tagswidget.ui, src/typotek.cpp, src/typotek.h: Tags now has
+	  its own docked widget
+
+2008-09-15 18:56  oeildepierre
+
+	* src/fmfontdb.cpp, src/fmfontdb.h, src/fmfontstrings.cpp,
+	  src/listdockwidget.cpp, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/typotek.cpp: Search is back !
+
+2008-09-14 22:26  oeildepierre
+
+	* src/fmfontdb.cpp, src/fmfontstrings.cpp, src/fmfontstrings.h,
+	  src/fontitem.cpp, src/fontitem.h, src/listdockwidget.cpp,
+	  src/listdockwidget.h, src/mainviewwidget.cpp, src/typotek.cpp:
+	  Numerous fixes related to the new DB backend
+
+2008-09-13 14:51  oeildepierre
+
+	* src/fmfontdb.cpp, src/fmfontdb.h, src/fontitem.cpp,
+	  src/mainviewwidget.cpp, src/typotek.cpp: Fixed slowdown at import
+
+2008-09-13 13:12  oeildepierre
+
+	* src/fmfontdb.cpp, src/fmfontdb.h, src/fontitem.cpp,
+	  src/fontitem.h, src/mainviewwidget.cpp, src/typotek.cpp: Tags
+	  continue to come back
+
+2008-09-13 09:48  oeildepierre
+
+	* src/CMakeLists.txt, src/dataloader.cpp, src/fmfontdb.cpp,
+	  src/fmfontdb.h, src/listdockwidget.cpp, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/savedata.cpp, src/systray.cpp,
+	  src/typotek.cpp, src/typotek.h: Tags are back !
+
+2008-09-11 15:07  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/aboutwidget.cpp,
+	  src/dataexport.cpp, src/dataloader.cpp, src/fmfontdb.cpp,
+	  src/fmfontdb.h, src/fmfontstrings.cpp, src/fmfontstrings.h,
+	  src/fmrepair.cpp, src/fontbook.cpp, src/fontitem.cpp,
+	  src/fontitem.h, src/importtags.cpp, src/listdockwidget.cpp,
+	  src/listdockwidget.h, src/mainviewwidget.cpp, src/savedata.cpp,
+	  src/systray.cpp, src/tagseteditor.cpp, src/typotek.cpp,
+	  src/typotek.h: ADDED: first steps to an independant storage
+	  backend. Now it’s achieved
+	  through SQL drivers (default to sqlite).
+	  WARNING: a lot has been changed and it does not work pretty well.
+
+2008-09-03 15:07  prokoudine
+
+	* src/messages/fontmatrix-ru.ts: updated Russian translation
+
+2008-09-02 22:03  oeildepierre
+
+	* src/CMakeLists.txt, src/fmglyphhighlight.cpp,
+	  src/fmglyphhighlight.h, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: Impoved - copy to clipboard has been turned
+	  into something like a virtual keyboard
+
+2008-09-02 10:18  oeildepierre
+
+	* src/listdockwidget.h, src/mainviewwidget.cpp: Fixed - previews
+	  list was not updated in time
+
+2008-08-11 15:58  oeildepierre
+
+	* src/mainviewwidget.cpp: FIXED - fall back to sensitive Unicode
+	  block when the last selected one is not covered by the actual
+	  font
+
+2008-08-11 15:27  prokoudine
+
+	* src/messages/fontmatrix-ru.ts: updated translation
+
+2008-07-30 09:39  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h: Fixed - changing
+	  font size in preview did not wait editing was finished
+
+2008-07-29 14:18  oeildepierre
+
+	* src/fmnamelist.cpp, src/fmpreviewlist.cpp, src/fmpreviewlist.h,
+	  src/listdockwidget.cpp, src/listsdock.ui, src/mainviewwidget.cpp:
+	  Added - possibility to hide tools of browse dock widget
+
+2008-07-29 11:22  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fmpreviewlist.h,
+	  src/listdockwidget.cpp, src/listdockwidget.h, src/listsdock.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/prefs_panel.ui,
+	  src/prefspaneldialog.cpp, src/prefspaneldialog.h,
+	  src/typotek.cpp, src/typotek.h: Changed - Preview list is now
+	  displayed in a QListView
+
+2008-07-25 23:03  tsoots
+
+	* src/main.cpp: No need to be this verbose. Removed extra qDebugs
+
+2008-07-25 21:54  tsoots
+
+	* src/main.cpp, src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp, src/typotek.h: FM can
+	  now be started minimized to system tray
+
+2008-07-22 14:06  oeildepierre
+
+	* src/help.ui, src/helpwidget.cpp, src/helpwidget.h: Added - url
+	  display and progress bar for help widget
+
+2008-07-22 13:25  oeildepierre
+
+	* help/help_en.html, help/help_fr.html: Cleaned - help files
+
+2008-07-22 13:22  oeildepierre
+
+	* help/CMakeLists.txt, help/help_fr.html, help/helpbase.css,
+	  help/img/fr/catalogue-fontes_fr.png,
+	  help/img/fr/editeur-collections_fr.png,
+	  help/img/fr/fontmatrix_fr.png, help/img/fr/import-fonts_fr.png,
+	  help/img/fr/preferences_fr.png, help/img/tab-left.png,
+	  help/img/tab-right.png: Cleaned - help files
+
+2008-07-22 13:01  oeildepierre
+
+	* help, help/CMakeLists.txt, help/help.html, help/help_da.html,
+	  help/help_de.html, help/help_en.html, help/help_fi.html,
+	  help/help_fr.html, help/help_hi.html, help/help_nb.html,
+	  help/help_nl.html, help/help_no.html, help/help_ru.html,
+	  help/help_sr.html, help/help_sv.html, help/help_uk.html,
+	  help/help_zh_CN.html, help/help_zh_TW.html, help/helpbase.css,
+	  help/img, help/img/da, help/img/de, help/img/en,
+	  help/img/en/fontbook_en.png, help/img/en/fontmatrix_en.png,
+	  help/img/en/import_en.png, help/img/en/preferences_en.png,
+	  help/img/en/tagset_en.png, help/img/fi, help/img/fr,
+	  help/img/fr/catalogue-fontes.png,
+	  help/img/fr/editeur-collections.png, help/img/fr/fontmatrix.png,
+	  help/img/fr/import-fonts.png, help/img/fr/preferences.png,
+	  help/img/hi, help/img/nb, help/img/nl, help/img/no, help/img/ru,
+	  help/img/sr, help/img/sv, help/img/tab-left.gif,
+	  help/img/tab-right.gif, help/img/uk, help/img/zh_CN,
+	  help/img/zh_TW, help/js, help/js/jquery.js,
+	  help/js/jquery.jtabs.pack.js: Cleaned - help files
+
+2008-07-22 12:50  oeildepierre
+
+	* CMakeLists.txt, src/fmpaths.cpp, src/fmpaths.h,
+	  src/helpwidget.cpp, src/messages/fmlocales.h, src/messages/help,
+	  src/messages/help.html, src/messages/help_da.html,
+	  src/messages/help_de.html, src/messages/help_en.html,
+	  src/messages/help_fi.html, src/messages/help_fr.html,
+	  src/messages/help_hi.html, src/messages/help_nb.html,
+	  src/messages/help_nl.html, src/messages/help_no.html,
+	  src/messages/help_ru.html, src/messages/help_sr.html,
+	  src/messages/help_sv.html, src/messages/help_uk.html,
+	  src/messages/help_zh_CN.html, src/messages/help_zh_TW.html,
+	  src/messages/lupdate.files, src/messages/update.sh: Shuffled -
+	  help files
+
+2008-07-21 11:35  eclypse
+
+	* src/graphic-resources/fontmatrix-synchro-icon.png: synchro icon
+	  16x16 png
+
+2008-07-21 11:34  eclypse
+
+	* src/icons/application-synchro-small.svg: synchro icon svg
+
+2008-07-21 11:15  eclypse
+
+	* src/messages/help, src/messages/help/img,
+	  src/messages/help/img/da, src/messages/help/img/de,
+	  src/messages/help/img/en,
+	  src/messages/help/img/en/catalogue-fontes.png,
+	  src/messages/help/img/en/editeur-collections.png,
+	  src/messages/help/img/en/fontmatrix.png,
+	  src/messages/help/img/en/import-fonts.png,
+	  src/messages/help/img/en/preferences.png,
+	  src/messages/help/img/fi, src/messages/help/img/fr,
+	  src/messages/help/img/fr/catalogue-fontes.png,
+	  src/messages/help/img/fr/editeur-collections.png,
+	  src/messages/help/img/fr/fontmatrix.png,
+	  src/messages/help/img/fr/import-fonts.png,
+	  src/messages/help/img/fr/preferences.png,
+	  src/messages/help/img/hi, src/messages/help/img/nb,
+	  src/messages/help/img/nl, src/messages/help/img/no,
+	  src/messages/help/img/ru, src/messages/help/img/sr,
+	  src/messages/help/img/sv, src/messages/help/img/tab-left.gif,
+	  src/messages/help/img/tab-right.gif, src/messages/help/img/uk,
+	  src/messages/help/img/zh_CN, src/messages/help/img/zh_TW,
+	  src/messages/help/js, src/messages/help/js/jquery.js,
+	  src/messages/help/js/jquery.jtabs.pack.js: others ressources for
+	  help (js files + images)
+
+2008-07-21 11:05  eclypse
+
+	* src/messages/help_en.html, src/messages/help_fr.html,
+	  src/messages/welcome_en.html: english and french files for
+	  skeleton render + welcome_en.html
+
+2008-07-20 18:56  oeildepierre
+
+	* src/fontitem.cpp, src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp, src/typotek.h: Added -
+	  font selection for chart subtitles
+
+2008-07-18 22:16  eclypse
+
+	* src/messages/welcome_fr.html: nomsg
+
+2008-07-17 16:56  oeildepierre
+
+	* src/fmverticalbutton.cpp: Centered labels in vertical buttons
+
+2008-07-17 12:33  prokoudine
+
+	* src/messages/welcome_ru.html: Did a hackaround to XHTML code to
+	  make bullet list appear :)
+
+2008-07-17 11:27  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/application.qrc,
+	  src/help.ui, src/helpwidget.cpp, src/helpwidget.h,
+	  src/messages/help_da.html, src/messages/help_de.html,
+	  src/messages/help_en.html, src/messages/help_hi.html,
+	  src/messages/help_nb.html, src/messages/help_nl.html,
+	  src/messages/help_no.html, src/messages/help_ru.html,
+	  src/messages/help_sr.html, src/messages/help_sv.html,
+	  src/messages/help_zh_CN.html, src/messages/help_zh_TW.html,
+	  src/typotek.cpp, src/typotek.h:
+
+2008-07-17 09:01  oeildepierre
+
+	* src/mainviewwidget.cpp: Added - ##RESOURCES_DIR## is now an
+	  available pattern of the welcome file
+
+2008-07-16 14:53  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h: <prokoudine> 1) in display setting tab
+	  "Edit" button's translated caption doesn't fit the label
+	  <prokoudine> 2) in sample text tab of preferences dialog the
+	  Apply button is right above Close button and not separated by a
+	  horizontal line or anything
+
+2008-07-15 18:13  prokoudine
+
+	* src/messages/fontmatrix-ru.ts: another Panose related update
+
+2008-07-14 14:59  prokoudine
+
+	* src/messages/fontmatrix-ru.ts: small update, mostly Panose
+	  related
+
+2008-07-14 14:58  prokoudine
+
+	* src/messages/welcome_ru.html: added RU translation
+
+2008-07-13 09:54  oeildepierre
+
+	* src/listdockwidget.cpp, src/listdockwidget.h,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/tagseteditor.cpp, src/tagseteditor.h, src/typotek.cpp: Fixed
+	  - bug #12010 : Répétition des collections dans le menu déroulant
+
+2008-07-13 09:21  oeildepierre
+
+	* src/helpwidget.cpp, src/helpwidget.h, src/typotek.cpp,
+	  src/typotek.h: Fixed - bug #11969 : going back to main window
+	  from help window
+
+2008-07-11 20:35  oeildepierre
+
+	* src/CMakeLists.txt: Fixed - missing keyword prevented to run
+	  ingest script
+
+2008-07-11 20:28  oeildepierre
+
+	* cmake/modules/OwnIngestOSXBundleLibraries.cmake: Tried - tweak
+	  framework paths
+
+2008-07-11 19:32  oeildepierre
+
+	* CMakeLists.txt: Tried - seems macos cmake wants absolute paths
+
+2008-07-11 19:26  oeildepierre
+
+	* src/CMakeLists.txt, src/graphic-resources/fontmatrix.icns: Added
+	  - application icon in macos format (icns)
+
+2008-07-11 19:15  oeildepierre
+
+	* src/fmpaths.cpp: Fixed - missing #include, was hidden by #ifdef
+	  statement
+
+2008-07-11 17:56  tsoots
+
+	* src/messages/fontmatrix-fi.ts: Updated Finnish translation
+
+2008-07-11 17:22  tsoots
+
+	* src/messages/about_fi.html: Minor tweak
+
+2008-07-10 22:19  oeildepierre
+
+	* cmake/modules/OwnIngestOSXBundleLibraries.cmake,
+	  src/CMakeLists.txt, src/fontbook.cpp: Added - cmake script from
+	  cmake project to get the libs in OSX bundle right
+
+2008-07-10 12:48  oeildepierre
+
+	* CMakeLists.txt, src/application.qrc, src/fontbookdialog.cpp,
+	  src/fontitem.cpp, src/graphic-resources/default_template.png,
+	  src/graphic-resources/fontbook_default.xml,
+	  src/graphic-resources/one_line_template.xml,
+	  src/graphic-resources/oneline_template.png,
+	  src/graphic-resources/template_default.png,
+	  src/graphic-resources/template_default.xml,
+	  src/graphic-resources/template_oneline.png,
+	  src/graphic-resources/template_oneline.xml: Fixed - template
+	  files were in a mess, hope it’s fixed
+
+2008-07-09 23:50  oeildepierre
+
+	* src/fontitem.cpp, src/graphic-resources/html-css/info.css:
+	  Changed - style of the information tab to fit more with what I
+	  had in mind: clear & compact. Need to be polished and made sexier
+	  though.
+
+2008-07-09 22:08  oeildepierre
+
+	* src/CMakeLists.txt, src/fontitem.cpp,
+	  src/messages/fontmatrix-fr.ts: Fixed - TS file was not updated if
+	  not a fresh check out
+
+2008-07-09 21:43  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt: Updated - cmakelists to
+	  install resource files for mac and win32
+
+2008-07-09 21:13  oeildepierre
+
+	* src/fmpaths.cpp, src/fmpaths.h, src/fontbookdialog.cpp,
+	  src/main.cpp, src/mainviewwidget.cpp,
+	  src/messages/welcome_fr.html: Fixed - various issues with
+	  resources paths and encoding of Welcome message
+
+2008-07-09 17:28  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/fmpaths.cpp,
+	  src/fmpaths.h, src/fontbookdialog.cpp, src/main.cpp,
+	  src/mainviewwidget.cpp, src/messages/welcome_da.html,
+	  src/messages/welcome_de.html, src/messages/welcome_en.html,
+	  src/messages/welcome_fr.html, src/messages/welcome_hi.html,
+	  src/messages/welcome_nb.html, src/messages/welcome_nl.html,
+	  src/messages/welcome_no.html, src/messages/welcome_ru.html,
+	  src/messages/welcome_sr.html, src/messages/welcome_sv.html,
+	  src/messages/welcome_uk.html, src/messages/welcome_zh_CN.html,
+	  src/messages/welcome_zh_TW.html: Added - new files needed for new
+	  Resource file-based stuff, more to follow
+
+2008-07-09 10:24  oeildepierre
+
+	* src/fontitem.cpp: Fixed - Technical part of font description is
+	  no longer presented in a separate div
+
+2008-07-08 17:08  vlada
+
+	* src/graphic-resources/css-info-property.png,
+	  src/graphic-resources/css-info-propertyname.png,
+	  src/graphic-resources/css-shadow.png,
+	  src/graphic-resources/css-tech-info.png,
+	  src/graphic-resources/html-css/img/css-info-property.png,
+	  src/graphic-resources/html-css/img/css-info-propertyname.png,
+	  src/graphic-resources/html-css/img/css-shadow.png,
+	  src/graphic-resources/html-css/img/css-tech-info.png: Of course
+	  this will break css formating rules. I know Pierre will correct
+	  all of mine mistakes ;)
+
+2008-07-08 17:06  vlada
+
+	* src/graphic-resources/html-css,
+	  src/graphic-resources/html-css/img,
+	  src/graphic-resources/html-css/info.css: Reorganization of
+	  graphics. Default dir already got a bit too cluttered for my
+	  taste.
+
+2008-07-08 12:52  vlada
+
+	* src/graphic-resources/css-info-property.png,
+	  src/graphic-resources/css-info-propertyname.png,
+	  src/graphic-resources/css-shadow.png,
+	  src/graphic-resources/css-tech-info.png,
+	  src/graphic-resources/desniinfobar.png,
+	  src/graphic-resources/info.css,
+	  src/graphic-resources/leviinfobar.png,
+	  src/graphic-resources/senka.png,
+	  src/graphic-resources/techinfobar.png: RENAMED:png art
+	  (serbian->english)
+	  TWEAKED: css
+
+2008-07-07 22:33  oeildepierre
+
+	* src/fmlayout.cpp: Fixed - under certain circumtances, the text
+	  layout engine was just crashing.
+
+2008-07-07 22:17  vlada
+
+	* src/graphic-resources/desniinfobar.png,
+	  src/graphic-resources/info.css, src/graphic-resources/info.html,
+	  src/graphic-resources/leviinfobar.png,
+	  src/graphic-resources/senka.png,
+	  src/graphic-resources/techinfobar.png: First phrase of css
+	  redesign
+
+2008-07-07 16:44  tsoots
+
+	* src/messages/about_people.html: Added my homepage
+	  http://www.tsoots.fi/ and blog http://blogi.tsoots.fi/
+
+2008-07-07 09:04  oeildepierre
+
+	* src/main.cpp, src/prefspaneldialog.cpp, src/typotek.cpp: Applied
+	  - patch from jghali correcting minor problems
+
+2008-07-06 20:45  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt: Tried - getting a universal
+	  binary for OSX
+
+2008-07-06 17:06  tsoots
+
+	* src/messages/fontmatrix-fi.ts: Updated Finnish translation
+
+2008-07-05 16:45  oeildepierre
+
+	* src/CMakeLists.txt: Fixed - progname was defined after having
+	  been used
+
+2008-07-05 13:18  oeildepierre
+
+	* src/CMakeLists.txt, src/messages/fontmatrix-fr.ts: Tried -
+	  preparing an independant bundle for OSX by copying Qt frameworks
+	  and libfreetype
+
+2008-07-05 12:41  oeildepierre
+
+	* src/CMakeLists.txt: Tried - preparing an independant bundle for
+	  OSX by copying Qt frameworks and libfreetype
+
+2008-07-05 08:34  oeildepierre
+
+	* CMakeLists.txt: Fixed - check fontconfig only for Unices
+	  excluding apple
+
+2008-07-04 23:49  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/messages/CMakeLists.txt, src/typotek.cpp: Added - better
+	  handling of url loading
+
+2008-07-04 21:53  oeildepierre
+
+	* src/listdockwidget.cpp: Fixed - removed "any" and "not fit" of
+	  Panose combo
+
+2008-07-04 21:23  oeildepierre
+
+	* CMakeLists.txt, src/messages/fontmatrix-fr.ts: Updated - FR
+	  translation
+	  Tried - order of incantations in cmakelists
+
+2008-07-04 14:45  prokoudine
+
+	* src/messages/fontmatrix-ru.ts: first update of RU translation.
+	  more to follow
+
+2008-07-04 13:23  oeildepierre
+
+	* CMakeLists.txt, INSTALL, src/CMakeLists.txt, src/application.qrc,
+	  src/messages/CMakeLists.txt, src/typotek.cpp: Cleaned - In order
+	  to prepare .5 release, cleaned up cmakelists
+
+2008-07-04 08:37  oeildepierre
+
+	* src/mainviewwidget.cpp: Reverted - accidentatlly commented out
+	  the slotInfoFont() call
+
+2008-07-03 11:41  oeildepierre
+
+	* src/fmlayoptwidget.cpp, src/fmlayoptwidget.h, src/fmlayout.cpp,
+	  src/fmlayout.h, src/layoutoptions.ui: Added - max space
+	  compression is now available in layout options
+	  Fixed - layout options emit an update signal even when not set by
+	  mouse dragging
+
+2008-07-03 10:20  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fontitem.cpp,
+	  src/mainviewwidget.cpp: Fixed - when switching rendering, was
+	  hanging
+
+2008-06-30 21:16  tsoots
+
+	* src/prefspaneldialog.cpp, src/shortcuts.cpp, src/shortcuts.h:
+	  Remove & chars from the action names in the shortcut preferences
+
+2008-06-30 15:25  oeildepierre
+
+	* INSTALL: Updated - requirements for building
+
+2008-06-30 14:14  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/hyphenate/fmhyphenator.cpp,
+	  src/hyphenate/fmhyphenator.h: Fixed - bug #11936 : Hyphenation is
+	  incorrect when there are accented characters
+
+2008-06-30 09:26  oeildepierre
+
+	* INSTALL: Updated - removed packagers hint since qDebug is off if
+	  not built with -DCMAKE_BUILD_TYPE=Debug
+
+2008-06-30 07:42  oeildepierre
+
+	* INSTALL: Updated - requirements for building
+
+2008-06-29 22:03  oeildepierre
+
+	* src/fmsampletextview.cpp: Added - a closedhand cursor when
+	  holding mid button and over a sample view : panning
+
+2008-06-29 21:39  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/typotek.cpp, src/typotek.h:
+	  Moved - the layout progress bar is now in the status bar
+
+2008-06-29 20:23  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h: Fixed - layout was left
+	  unchanged when options were altered
+
+2008-06-27 08:45  oeildepierre
+
+	* src/fontitem.cpp: Fixed - crash when attempting to show a single
+	  glyph of a PS font (was trying to load TT tables)
+
+2008-06-25 12:43  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fmsampletextview.cpp,
+	  src/fmsampletextview.h, src/fmsharestruct.h, src/listsdock.ui,
+	  src/mainviewwidget.cpp: Changed - layout is cached
+
+2008-06-20 11:01  oeildepierre
+
+	* src/mainview.ui: Get the tab info back as default
+
+2008-06-19 22:44  mrdocs
+
+	* src/mainview.ui: tweak to the vertical button
+
+2008-06-19 20:54  oeildepierre
+
+	* src/hyphenate/COPYING, src/hyphenate/COPYING.LGPL: Added -
+	  copying files for libhnj
+
+2008-06-19 20:36  oeildepierre
+
+	* src/fmverticalbutton.cpp, src/fmverticalbutton.h: Added -
+	  vertical button
+
+2008-06-19 20:21  oeildepierre
+
+	* src/CMakeLists.txt, src/mainview.ui, src/mainviewwidget.cpp:
+	  Changed - almost finished to make button texts full words
+
+2008-06-19 12:09  oeildepierre
+
+	* src/listdockwidget.cpp, src/listdockwidget.h, src/listsdock.ui:
+	  Changed - textualize buttons of listswidget
+
+2008-06-18 15:26  oeildepierre
+
+	* src/fontitem.cpp: Corrected - wrong glyph "preparation" before
+	  rasterizing
+
+2008-06-18 13:09  oeildepierre
+
+	* src/mainviewwidget.cpp: Avoid jumpin’ UI
+
+2008-06-18 12:48  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/prefs_panel.ui:
+	  Added - hinting mode selection
+
+2008-06-17 12:55  oeildepierre
+
+	* src/fmlayout.cpp, src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h: Changed - preferences according to
+	  alexandr’s mockup
+
+2008-06-15 00:12  oeildepierre
+
+	* src/fmlayout.cpp: Fixed - computing of length of glyphstring that
+	  begin by the second part of a break was wrong in distance method
+
+2008-06-14 09:14  oeildepierre
+
+	* src/listsdock.ui: Fixed - weird button size on OSX
+
+2008-06-13 23:09  oeildepierre
+
+	* src/typotek.cpp: Changed - location of the DB on MacOSX
+
+2008-06-13 23:03  oeildepierre
+
+	* src/typotek.cpp: Changed - location of the DB on MacOSX
+
+2008-06-13 23:00  oeildepierre
+
+	* src/typotek.cpp: Changed - location of the DB on MacOSX
+
+2008-06-13 22:36  oeildepierre
+
+	* src/typotek.cpp: Fixed - a path in MacOSX block
+
+2008-06-13 22:31  oeildepierre
+
+	* src/typotek.cpp: Fixed - a typo in MacOSX detection
+
+2008-06-13 22:28  oeildepierre
+
+	* src/typotek.cpp: Fixed - a typo in MacOSX detection
+
+2008-06-13 22:12  oeildepierre
+
+	* src/fmactivate.cpp, src/fmlayout.cpp: Fixed - a typo in MacOSX
+	  detection
+
+2008-06-13 20:37  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h: Added - a minimum space width
+	  in TLE, so it prevents over optimisation
+
+2008-06-13 12:11  oeildepierre
+
+	* src/typotek.cpp, src/typotek.h: Fixed - print family was looking
+	  for new line character to make chunks, that does not work fine
+	  with the new text engine which is happy with long paragraphs
+
+2008-06-13 09:54  oeildepierre
+
+	* src/mainviewwidget.cpp: Fixed - wrong default transformation
+	  matrix of the absolute view
+
+2008-06-13 09:19  oeildepierre
+
+	* src/fontitem.cpp: Improved - visual of the single glyph view
+
+2008-06-13 07:51  oeildepierre
+
+	* src/fmsampletextview.cpp, src/fmsampletextview.h,
+	  src/mainviewwidget.cpp: Fixed - view was not updated
+
+2008-06-12 22:35  oeildepierre
+
+	* fontmatrix.png, src/icons/application-fontmatrix_128.png,
+	  src/icons/application-fontmatrix_16.png,
+	  src/icons/application-fontmatrix_22.png,
+	  src/icons/application-fontmatrix_32.png,
+	  src/icons/application-fontmatrix_48.png,
+	  src/icons/application-fontmatrix_64.png: Generated & installed
+	  new application icon
+
+2008-06-12 21:22  oeildepierre
+
+	* src/typotek.cpp: Changed - target the right place to put
+	  activated fonts on MacOSX
+
+2008-06-12 20:24  oeildepierre
+
+	* src/fontitem.cpp, src/listsdock.ui, src/mainview.ui,
+	  src/mainviewwidget.cpp: Moved - file path in info tab
+
+2008-06-12 18:42  vlada
+
+	* src/application.qrc, src/graphic-resources/font-playground.png,
+	  src/icons/action-copy-char-24.png,
+	  src/icons/action-copy-char.svg,
+	  src/icons/application-fontmatrix-systray-vectors.svg,
+	  src/icons/font-playground.svg, src/icons/fontmatrix-systray.png,
+	  src/mainview.ui: Icons redone, icons updated, icons added a.k.a.
+	  How-to-introduce-bugs-by-just-adding-graphic
+
+2008-06-12 16:24  oeildepierre
+
+	* src/fmactivate.cpp: Added - MacOSX management support (1/n)
+
+2008-06-12 11:54  oeildepierre
+
+	* src/fmsampletextview.cpp: Stop redrawing text sample at each show
+	  event
+
+2008-06-12 11:22  oeildepierre
+
+	* src/mainviewwidget.cpp: Fixed - view was not updated when the
+	  shaper type was changed
+
+2008-06-12 11:11  oeildepierre
+
+	* INSTALL, src/messages/CMakeLists.txt: Introduced IS_TRANSLATOR
+	  cmake option
+
+2008-06-11 22:14  mrdocs
+
+	* CMakeLists.txt, fontmatrix.1: add a basic man page for
+	  https://gna.org/bugs/?11692
+
+2008-06-11 20:47  oeildepierre
+
+	* src/mainview.ui, src/prefs_panel.ui, src/textprogression.ui,
+	  src/typotek.cpp: Tried hard to improve toolbox
+
+2008-06-11 19:34  vlada
+
+	* src/listdockwidget.cpp: Renaming "Unicode" to "Unicode character"
+
+2008-06-11 11:57  oeildepierre
+
+	* src/application.qrc, src/icons/action-copy-char-24.png,
+	  src/icons/action-copy-char.svg, src/mainview.ui: Added Icon for
+	  CTC button
+
+2008-06-11 11:56  oeildepierre
+
+	* src/messages/CMakeLists.txt, src/messages/fontmatrix-da.ts,
+	  src/messages/fontmatrix-de.ts, src/messages/fontmatrix-en.ts,
+	  src/messages/fontmatrix-fi.ts, src/messages/fontmatrix-fr.ts,
+	  src/messages/fontmatrix-hi.ts, src/messages/fontmatrix-nb.ts,
+	  src/messages/fontmatrix-nl.ts, src/messages/fontmatrix-no.ts,
+	  src/messages/fontmatrix-ru.ts, src/messages/fontmatrix-sr.ts,
+	  src/messages/fontmatrix-sv.ts, src/messages/fontmatrix-uk.ts,
+	  src/messages/fontmatrix-zh_CN.ts,
+	  src/messages/fontmatrix-zh_TW.ts: Changed CREATE into ADD for
+	  cmake TS macro
+
+2008-06-11 00:10  oeildepierre
+
+	* src/CMakeLists.txt, src/application.qrc: Cleaned up cmake and
+	  resource file
+
+2008-06-10 23:54  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/application.qrc,
+	  src/main.cpp, src/messages/CMakeLists.txt,
+	  src/messages/fmlocales.h, src/messages/fontmatrix-da.ts,
+	  src/messages/fontmatrix-de.ts, src/messages/fontmatrix-en.ts,
+	  src/messages/fontmatrix-fi.ts, src/messages/fontmatrix-fr.ts,
+	  src/messages/fontmatrix-hi.ts, src/messages/fontmatrix-nb.ts,
+	  src/messages/fontmatrix-nl.ts, src/messages/fontmatrix-no.ts,
+	  src/messages/fontmatrix-ru.ts, src/messages/fontmatrix-sr.ts,
+	  src/messages/fontmatrix-sv.ts, src/messages/fontmatrix-uk.ts,
+	  src/messages/fontmatrix-zh_CN.ts,
+	  src/messages/fontmatrix-zh_TW.ts: Switched TS files to cmake
+	  management
+
+2008-06-10 23:52  oeildepierre
+
+	* src/messages/fontmatrix_da.qm, src/messages/fontmatrix_da.ts,
+	  src/messages/fontmatrix_de.qm, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_en.qm, src/messages/fontmatrix_en.ts,
+	  src/messages/fontmatrix_fi.qm, src/messages/fontmatrix_fi.ts,
+	  src/messages/fontmatrix_fr.qm, src/messages/fontmatrix_fr.ts,
+	  src/messages/fontmatrix_hi.qm, src/messages/fontmatrix_hi.ts,
+	  src/messages/fontmatrix_nb.qm, src/messages/fontmatrix_nb.ts,
+	  src/messages/fontmatrix_nl.qm, src/messages/fontmatrix_nl.ts,
+	  src/messages/fontmatrix_no.qm, src/messages/fontmatrix_no.ts,
+	  src/messages/fontmatrix_ru.qm, src/messages/fontmatrix_ru.ts,
+	  src/messages/fontmatrix_sr.qm, src/messages/fontmatrix_sr.ts,
+	  src/messages/fontmatrix_sv.qm, src/messages/fontmatrix_sv.ts,
+	  src/messages/fontmatrix_uk.qm, src/messages/fontmatrix_uk.ts,
+	  src/messages/fontmatrix_zh_CN.qm,
+	  src/messages/fontmatrix_zh_CN.ts,
+	  src/messages/fontmatrix_zh_TW.qm,
+	  src/messages/fontmatrix_zh_TW.ts: Removed QM files
+
+2008-06-10 19:10  tsoots
+
+	* src/CMakeLists.txt: qm files are now generated from the ts files
+	  during the build
+
+2008-06-10 13:29  oeildepierre
+
+	* src/fmsampletextview.cpp, src/listsdock.ui, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h: Reduced or removed
+	  margins, made the toolbox behaves the same as in digikam
+
+2008-06-09 21:09  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h:
+	  Improved settings panel
+
+2008-06-09 16:23  oeildepierre
+
+	* src/fmsampletextview.cpp, src/fontitem.cpp,
+	  src/graphic-resources/info.css, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp:
+	  Improved UI
+
+2008-06-08 18:16  tsoots
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp: Added hyphenator to
+	  preferences
+
+2008-06-08 12:12  oeildepierre
+
+	* src/dataloader.cpp, src/mainview.ui: re-Fixed bug #11468 : Empty
+	  sample created
+
+2008-06-07 08:37  oeildepierre
+
+	* src/dataexport.cpp, src/dataloader.cpp, src/dataloader.h,
+	  src/savedata.cpp, src/typotek.cpp: Increment database format
+	  version and filter loading accordingly
+
+2008-06-07 08:15  ale
+
+	* src/fontitem.cpp: fixed url detection for IM Fell English
+	  (https://gna.org/bugs/?11667)
+
+2008-06-06 14:15  oeildepierre
+
+	* CMakeLists.txt, src/mainview.ui, src/mainviewwidget.cpp: Cleaned
+	  CmakeLists to have opengl optional and missing qtwebkit detected
+	  at configuration time
+
+2008-06-06 13:44  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h:
+	  Changed tab widget into a button based system for samples page
+
+2008-06-05 22:26  oeildepierre
+
+	* src/fmlayout.cpp: Better default values for text engine options
+
+2008-06-05 16:22  oeildepierre
+
+	* src/fmlayout.cpp: Removed debug frame from sample views
+
+2008-06-05 16:13  oeildepierre
+
+	* CMakeLists.txt, src/mainviewwidget.cpp: Switched to new text
+	  engine
+
+2008-06-05 16:05  oeildepierre
+
+	* src/fmlayout.cpp: Fixed text progressions in new text layout
+	  engine
+
+2008-06-05 10:20  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp: Fixed wrong displayed
+	  font size in absolute view
+
+2008-06-05 09:48  oeildepierre
+
+	* src/fontitem.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/typotek.cpp, src/typotek.h: Fixed bug
+	  #11091 : set default OPENTYPE GSUB/GPOS tables
+
+2008-06-04 19:38  oeildepierre
+
+	* CMakeLists.txt, src/mainviewwidget.cpp: Added: give a try to
+	  openGL (tm) if samples are available
+
+2008-06-04 18:58  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/typotek.cpp, src/typotek.h:
+	  Fixed sample was not printed if active view was absolute
+
+2008-06-04 14:06  oeildepierre
+
+	* src/prefspaneldialog.cpp: Fixed bug #11781 : Crash: Adding Sample
+	  text without naming it first leads to crash
+
+2008-06-04 13:43  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/listdockwidget.cpp,
+	  src/mainviewwidget.cpp, src/typotek.cpp: Fixed bug #11791 :
+	  Browse fonts by presence of unicode character range
+
+2008-06-04 11:58  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fontbook.cpp,
+	  src/hyphenate/fmhyphenator.h, src/mainviewwidget.cpp,
+	  src/typotek.cpp: Fixed wrong device dependant display
+
+2008-06-03 19:45  ale
+
+	* src/listdockwidget.cpp, src/listdockwidget.h: reload file and
+	  folder list in the folder tab
+
+2008-06-03 17:49  ale
+
+	* src/fontitem.cpp: url && regex: bug with punctuation at the end
+	  of the line
+
+2008-06-03 09:58  oeildepierre
+
+	* src/fmlayout.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/textprogression.cpp, src/textprogression.h, src/typotek.cpp:
+	  Added support for various text progressions in new engine
+
+2008-06-03 08:11  oeildepierre
+
+	* src/fmlayoptwidget.cpp, src/hyphenate/fmhyphenator.cpp,
+	  src/hyphenate/fmhyphenator.h, src/typotek.cpp: Added a loadDict
+	  method to Hyphenator
+
+2008-06-03 07:56  oeildepierre
+
+	* src/fmlayoptwidget.cpp, src/fmlayoptwidget.h,
+	  src/layoutoptions.ui: Improved layout options widget
+
+2008-06-02 20:19  oeildepierre
+
+	* src/fmlayoptwidget.cpp, src/fmlayoptwidget.h,
+	  src/layoutoptions.ui: Added layout options widegt files
+
+2008-06-02 16:50  oeildepierre
+
+	* src/CMakeLists.txt, src/fmlayout.cpp, src/fmlayout.h,
+	  src/typotek.cpp, src/typotek.h: Added a specialized widget to
+	  tune the text layout engine
+
+2008-06-01 22:49  oeildepierre
+
+	* src/fmlayout.cpp: Reset the text scene at very last moment
+
+2008-06-01 22:43  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fontitem.cpp,
+	  src/mainviewwidget.cpp: Improved layout thread management
+
+2008-06-01 20:47  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: Moved layout process in a separated thread
+	  (2/n) - thread interruption
+
+2008-06-01 16:44  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fontitem.h: Moved layout
+	  process in a separated thread (1/n)
+
+2008-06-01 14:08  ale
+
+	* src/fontitem.cpp, src/fontitem.h: fixed the regexp for url
+	  detection
+
+2008-06-01 10:14  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h: Improved cut-tree
+
+2008-05-31 18:54  oeildepierre
+
+	* src/fmlayout.cpp: Fixed second part of hyphenation not loaded in
+	  "= =" line
+
+2008-05-31 10:32  oeildepierre
+
+	* src/fmlayout.cpp, src/hyphenate/fmhyphenator.cpp: Worked on
+	  non-standard hyphenation
+
+2008-05-31 09:38  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fontitem.cpp,
+	  src/hyphenate/fmhyphenator.cpp: Fixed hyphenator returned lower
+	  cased strings
+	  Improved performance in Layout by caching distances
+
+2008-05-30 21:12  oeildepierre
+
+	* src/fmlayout.cpp, src/fmotf.cpp, src/fmotf.h, src/fontitem.cpp,
+	  src/hyphenate/fmhyphenator.cpp: Fixed second part of hyphenation
+	  pair was not applied
+
+2008-05-30 19:17  oeildepierre
+
+	* src/icushaper.cpp: Fixed ICUshaper did not put the chararcter
+	  into the good field
+
+2008-05-30 18:27  oeildepierre
+
+	* src/fmlayout.cpp, src/fmotf.cpp, src/fontitem.cpp,
+	  src/icushaper.cpp, src/m17nshaper.cpp: Fixed ICUshaper did not
+	  put the chararcter into the good field
+
+2008-05-30 15:44  oeildepierre
+
+	* src/fmlayout.cpp: Cut tree if OUT_OF_RECT
+
+2008-05-30 15:14  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fontitem.cpp: Fixed crash
+	  when no hyphenator has been instanciated
+
+2008-05-30 13:48  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fmotf.cpp,
+	  src/fontitem.cpp, src/hyphenate/fmhyphenator.cpp,
+	  src/langs/dodict.cpp: Added hyphenate (3/n)
+
+2008-05-30 07:48  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fontitem.cpp,
+	  src/hyphenate/AUTHORS, src/hyphenate/CMakeLists.txt,
+	  src/hyphenate/fmhyphenator.cpp, src/hyphenate/fmhyphenator.h,
+	  src/hyphenate/hnjalloc.c, src/hyphenate/hnjalloc.h,
+	  src/hyphenate/hyphen.c, src/hyphenate/hyphen.h: Added hyphenate
+	  (2/n)
+
+2008-05-30 06:34  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/fmlayout.cpp,
+	  src/fmlayout.h, src/fmsharestruct.h, src/fontitem.cpp,
+	  src/hyphenate, src/typotek.cpp, src/typotek.h: Added hyphenate
+	  (1/n)
+
+2008-05-28 22:21  oeildepierre
+
+	* src/fmlayout.cpp: Minor adjustments in TLE
+
+2008-05-28 22:16  oeildepierre
+
+	* src/fmlayout.cpp: Minor adjustments in TLE
+
+2008-05-28 18:52  oeildepierre
+
+	* src/fmlayout.cpp: Minor adjustments in TLE
+
+2008-05-28 15:10  oeildepierre
+
+	* src/CMakeLists.txt, src/fmlayout.cpp, src/fmlayout.h,
+	  src/mainviewwidget.cpp, src/typotek.cpp: Added qactions to change
+	  TLE parameters
+
+2008-05-28 11:58  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/fontitem.cpp: Fixed a
+	  memory leak in Fontitem::glyphs()
+
+2008-05-28 08:42  oeildepierre
+
+	* src/fmlayout.cpp, src/mainviewwidget.cpp: Improved performance of
+	  TLE
+
+2008-05-27 22:51  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h: Rewrote a part of the new text
+	  engine, could not get rid of performance issue yet!
+
+2008-05-27 21:55  oeildepierre
+
+	* src/fmlayout.cpp: Played with the new text layout engine
+
+2008-05-27 16:41  oeildepierre
+
+	* src/fmlayout.cpp, src/fmlayout.h, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: Played with the new text layout engine
+
+2008-05-27 12:48  oeildepierre
+
+	* CMakeLists.txt, src/fmlayout.cpp, src/fmlayout.h,
+	  src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp: First
+	  quasi functional new layout system (need -DNEWTEXT)
+
+2008-05-27 07:06  oeildepierre
+
+	* src/CMakeLists.txt, src/fmlayout.cpp, src/fmlayout.h,
+	  src/fmotf.cpp, src/fmotf.h, src/fmsharestruct.h,
+	  src/fontitem.cpp, src/fontitem.h, src/m17nshaper.cpp: Added new
+	  files for new and separated text engine
+
+2008-05-23 20:21  oeildepierre
+
+	* src/fontitem.cpp, src/icushaper.cpp: Improved sample output
+	  (shaped)
+
+2008-05-23 19:37  oeildepierre
+
+	* src/fontitem.cpp: Improved sample output (featured)
+
+2008-05-23 19:00  oeildepierre
+
+	* src/fontitem.cpp: Improved sample output
+
+2008-05-23 15:33  oeildepierre
+
+	* src/fmshaper.cpp, src/fontitem.cpp, src/icushaper.cpp,
+	  src/icushaper.h: Made ICU shaper working
+
+2008-05-23 08:29  oeildepierre
+
+	* src/fontitem.cpp, src/mainview.ui, src/mainviewwidget.cpp: Added
+	  "copy character to clipboard"
+
+2008-05-23 07:17  oeildepierre
+
+	* src/dataexport.cpp, src/dataexport.h, src/fmotf.cpp,
+	  src/fontitem.cpp, src/importedfonts.ui, src/importtags.ui,
+	  src/listsdock.ui, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/prefs_panel.ui, src/textprogression.ui: Prevent playground
+	  sample combo to be oversized by long sample lines
+	  Quiet warnings about severals "gridLayout"
+
+2008-05-22 14:45  oeildepierre
+
+	* src/fmotf.cpp, src/fmshaper.cpp, src/fontitem.cpp,
+	  src/fontitem.h, src/mainviewwidget.cpp, src/typotek.cpp: A bit of
+	  justification :)
+
+2008-05-21 21:53  oeildepierre
+
+	* CMakeLists.txt, cmake/modules/FindM17N.cmake: Really fixed bug
+	  #11708 : New compilation problem
+
+2008-05-21 21:28  oeildepierre
+
+	* CMakeLists.txt, INSTALL, harfbuzz/src/CMakeLists.txt,
+	  src/CMakeLists.txt, src/fmbaseshaper.cpp, src/fmbaseshaper.h,
+	  src/fmotf.h, src/fontitem.cpp, src/harfbuzzqtshaper.cpp,
+	  src/harfbuzzqtshaper.h, src/icushaper.cpp, src/m17nshaper.cpp,
+	  src/mainviewwidget.cpp, src/pangoshaper.cpp, src/pangoshaper.h:
+	  Fixed bug #11708 : New compilation problem
+	  See INSTALL file for shapers support
+
+2008-05-20 10:35  oeildepierre
+
+	* src/fmotf.cpp, src/fmotf.h, src/icushaper.cpp,
+	  src/m17nshaper.cpp, src/m17nshaper.h: m17n shaping
+	  implementation, it crashes here.
+
+2008-05-19 22:52  oeildepierre
+
+	* CMakeLists.txt, cmake/modules/FindM17N.cmake, src/CMakeLists.txt,
+	  src/fmbaseshaper.cpp, src/icushaper.cpp, src/m17nshaper.cpp,
+	  src/m17nshaper.h: Prepared field for m17n shaper
+
+2008-05-19 16:53  oeildepierre
+
+	* cmake/modules/FindICU.cmake, src/fmbaseshaper.cpp: Activated ICU
+
+2008-05-19 16:49  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/fmbaseshaper.cpp,
+	  src/fmbaseshaper.h, src/fmotf.cpp, src/fmotf.h, src/fontitem.cpp,
+	  src/icushaper.cpp, src/icushaper.h: ICU shaper
+
+2008-05-19 15:04  oeildepierre
+
+	* cmake/modules/FREETYPEConfig.cmake: Use built-in cmake Freetype
+	  detection
+
+2008-05-19 10:12  oeildepierre
+
+	* harfbuzz/src/CMakeLists.txt, src/CMakeLists.txt,
+	  src/fmbaseshaper.cpp, src/fmbaseshaper.h, src/fmotf.cpp,
+	  src/fmotf.h, src/fmshaper.cpp, src/fmshaper.h,
+	  src/fmshaper_own.cpp, src/fmshaper_own.h, src/fontitem.cpp,
+	  src/fontitem.h, src/fontmatrixshaper.cpp, src/fontmatrixshaper.h,
+	  src/harfbuzzqtshaper.cpp, src/harfbuzzqtshaper.h,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h:
+	  New strategy pattern based shaping infrastructure
+
+2008-05-19 08:03  mrdocs
+
+	* TODO: test commit
+
+2008-05-19 07:39  tsoots
+
+	* src/fmnamelist.cpp: Testing
+
+2008-05-17 12:07  oeildepierre
+
+	* CMakeLists.txt: Increased required cmake minor version to 6
+	  (cmake 2.6.0)
+
+2008-05-17 12:01  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt: Now use the cmake built-in
+	  FindFreetype.cmake
+	  introduced -DSHOW_LIBS=1 cmake option
+
+2008-05-17 07:35  tsoots
+
+	* src/fmnamelist.cpp: Make next family/face work even if there's no
+	  existing selection
+
+2008-05-16 21:05  tsoots
+
+	* src/typotek.cpp: Oops! Face sounds more professional.
+
+2008-05-16 21:03  tsoots
+
+	* src/fmnamelist.cpp, src/fmnamelist.h, src/typotek.cpp: Added
+	  browse menu. Browse actions will need some more tweaking but the
+	  basic implementation is in now.
+
+2008-05-16 12:17  oeildepierre
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.h: a bit of cleaning and the
+	  splachscreen checkbox in preferences
+
+2008-05-16 11:18  oeildepierre
+
+	* src/mainview.ui, src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h: Added an entry for preferred name scheme
+	  Re-designed sample text preference tab
+
+2008-05-15 20:42  oeildepierre
+
+	* CMakeLists.txt, src/graphic-resources/info.css,
+	  src/mainviewwidget.cpp: Improved WebKit support
+
+2008-05-15 15:45  tsoots
+
+	* src/CMakeLists.txt: added QT_QT_INCLUDE_DIR
+
+2008-05-15 14:47  prokoudine
+
+	* src/messages/fontmatrix_ru.qm, src/messages/fontmatrix_ru.ts:
+	  updated translation into Russian
+
+2008-05-15 13:47  oeildepierre
+
+	* src/fontitem.cpp, src/graphic-resources/info.css,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/typotek.cpp, src/typotek.h: Improved WebKit support
+
+2008-05-15 12:38  oeildepierre
+
+	* CMakeLists.txt, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/prefs_panel.ui, src/typotek.cpp: Added
+	  WebKit support for the Information panel.
+
+2008-05-15 01:50  tsoots
+
+	* src/fmnamelist.cpp, src/fmnamelist.h, src/mainviewwidget.cpp,
+	  src/typotek.cpp, src/typotek.h: Beginnings of the Browse menu
+	  (next/previous family/font)
+
+2008-05-14 14:40  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/typotek.cpp, src/typotek.h: Added SFNT family name scheme
+
+2008-05-14 04:52  tsoots
+
+	* src/prefspaneldialog.cpp: Use ascending sorting by default
+
+2008-05-13 20:25  tsoots
+
+	* src/prefspaneldialog.cpp: Some more shortcuts tweaking
+
+2008-05-13 20:10  tsoots
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/shortcuts.cpp, src/shortcuts.h,
+	  src/typotek.cpp: Some more work with shortcuts (it works now but
+	  still needs some tweaking)
+
+2008-05-13 18:30  tsoots
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/shortcuts.cpp, src/shortcuts.h,
+	  src/typotek.cpp: Some more work on shortcuts (will work soon)
+
+2008-05-12 19:03  tsoots
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/shortcuts.cpp, src/shortcuts.h,
+	  src/typotek.cpp: Some more work on the keyboard shortucts (still
+	  doesn't work)
+
+2008-05-11 22:07  tsoots
+
+	* src/CMakeLists.txt, src/prefs_panel.ui, src/shortcuts.cpp,
+	  src/shortcuts.h: Beginnings of shortcut handling (does not work
+	  yet).
+
+2008-05-08 10:13  oeildepierre
+
+	* src/fontitem.cpp: Severe performance improvement
+
+2008-05-07 22:08  oeildepierre
+
+	* src/savedata.cpp: Panose was not correctly saved in most cases
+
+2008-05-07 21:43  oeildepierre
+
+	* src/dataloader.cpp, src/fontitem.cpp, src/fontitem.h,
+	  src/listdockwidget.cpp, src/listdockwidget.h, src/listsdock.ui,
+	  src/mainviewwidget.cpp, src/savedata.cpp, src/typotek.cpp: Added
+	  Panose support - Database file format is changed -
+
+2008-05-06 10:50  oeildepierre
+
+	* src/listdockwidget.cpp, src/listdockwidget.h: contextual menu in
+	  Folders view was mispositionned
+	  "all fields" completer now gathers all completed strings
+
+2008-05-06 01:21  tsoots
+
+	* src/listdockwidget.cpp, src/listdockwidget.h, src/typotek.cpp:
+	  Fixed the File>import which i had broked with the open() stuff.
+
+2008-05-06 00:49  tsoots
+
+	* src/messages/fontmatrix_fi.qm, src/messages/fontmatrix_fi.ts: Yet
+	  another update to the Finnish translation
+
+2008-05-06 00:13  tsoots
+
+	* src/listdockwidget.cpp, src/listdockwidget.h: Folder view now
+	  defaults to user home dir or the last used directory.
+
+2008-05-05 23:03  tsoots
+
+	* src/application.qrc, src/messages/about_fi.html,
+	  src/messages/about_people.html: Added Finnish about text and
+	  extended the self description.
+
+2008-05-05 22:44  tsoots
+
+	* src/application.qrc, src/messages/help_fi.html,
+	  src/messages/welcome_fi.html: Added Finnish welcome text and
+	  beginnings of the finnish help doc.
+
+2008-05-05 22:00  tsoots
+
+	* src/messages/fontmatrix_fi.qm, src/messages/fontmatrix_fi.ts:
+	  Updated Finnish translation
+
+2008-05-05 21:54  tsoots
+
+	* src/typotek.cpp: Only show progress bar if there are more than
+	  one font to be imported.
+
+2008-05-05 10:41  oeildepierre
+
+	* src/typotek.cpp: Added negation operator in filtering ("!"
+	  prefix)
+
+2008-05-05 09:16  oeildepierre
+
+	* src/dataexport.cpp, src/fontbookdialog.cpp, src/fontbookdialog.h,
+	  src/listdockwidget.cpp, src/listdockwidget.h,
+	  src/mainviewwidget.cpp, src/systray.cpp, src/typotek.cpp,
+	  src/typotek.h: Avoid all tags to be displayed when deactivate a
+	  font.
+	  Added "all activated" to tags combo
+
+2008-05-04 20:30  tsoots
+
+	* src/importedfonts.ui, src/importedfontsdialog.cpp,
+	  src/importedfontsdialog.h, src/listdockwidget.cpp,
+	  src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp, src/typotek.h: Made
+	  "Imported fonts" dialog optional
+
+2008-05-04 17:09  tsoots
+
+	* src/listdockwidget.cpp, src/typotek.cpp, src/typotek.h: Finished
+	  up the work with folder view's context menu. Imported fonts are
+	  now shown to the user at the end of each import option.
+
+2008-05-04 15:58  tsoots
+
+	* src/listdockwidget.cpp: Avoid crash if there's a right click
+	  selection done and import is chosen from the context menu.
+
+2008-05-04 09:55  prokoudine
+
+	* src/messages/fontmatrix_ru.qm, src/messages/fontmatrix_ru.ts:
+	  Updated translation into Russian
+
+2008-05-03 17:59  tsoots
+
+	* src/listdockwidget.cpp, src/listdockwidget.h, src/typotek.cpp:
+	  Added context menu to the folder view and made typotek::open()
+	  import single font files.
+
+2008-05-03 15:57  oeildepierre
+
+	* src/listdockwidget.cpp, src/listdockwidget.h: Initiated completer
+	  thing for the filter string
+
+2008-05-03 14:45  oeildepierre
+
+	* CMakeLists.txt, src/fontitem.cpp, src/fontitem.h,
+	  src/listdockwidget.cpp, src/listdockwidget.h, src/listsdock.ui,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/typotek.cpp: Added
+	  field selection for the plain text search
+
+2008-05-03 06:38  tsoots
+
+	* src/fontitem.cpp: Added tr() for "Category"
+
+2008-05-02 11:02  oeildepierre
+
+	* src/application.qrc, src/icons/action-empty-128.png,
+	  src/icons/action-empty.svg, src/listdockwidget.cpp,
+	  src/listsdock.ui, src/mainviewwidget.cpp: A bit of UI
+	  simplification
+
+2008-05-01 20:44  oeildepierre
+
+	* src/typotek.cpp: Avoid a segfault when a temporary font is
+	  imported then manipulated
+
+2008-05-01 20:29  oeildepierre
+
+	* src/application.qrc,
+	  src/graphic-resources/fontmatrix-tag-graphic.png,
+	  src/importtags.ui, src/typotek.cpp: Cosmetics
+
+2008-05-01 19:31  tsoots
+
+	* src/opentypetags.h: Sylistic -> Stylistic
+
+2008-05-01 18:38  oeildepierre
+
+	* src/mainviewwidget.cpp: Get rid of Qt::NoItemFlags because it’s
+	  not available for Qt version < 4.4
+
+2008-05-01 17:10  oeildepierre
+
+	* src/listdockwidget.cpp, src/listdockwidget.h, src/typotek.cpp,
+	  src/typotek.h: Added possibility to import directly from the
+	  Browse folders widget by means of Drag and Drop, certainly buggy
+	  yet
+
+2008-05-01 13:48  oeildepierre
+
+	* src/dataloader.cpp, src/dataloader.h, src/fmpreviewlist.cpp,
+	  src/fontitem.cpp, src/fontitem.h, src/savedata.cpp,
+	  src/typotek.cpp: Cleaned the database file format, expect some
+	  violent crash.
+
+2008-05-01 13:36  tsoots
+
+	* src/mainview.ui: Changed Anything selected to Nothing selected
+
+2008-05-01 12:00  oeildepierre
+
+	* src/typotek.cpp, src/typotek.h: Save/Restore docked widget area
+
+2008-05-01 11:17  oeildepierre
+
+	* src/mainviewwidget.cpp, src/typotek.cpp: Made it clear that
+	  locked fonts can’t be tagged
+
+2008-05-01 09:52  oeildepierre
+
+	* src/listdockwidget.cpp, src/listdockwidget.h, src/listsdock.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp,
+	  src/typotek.h: Added a "browse filesystem for fonts" feature
+
+2008-04-30 22:23  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h:
+	  Redesigned sample views
+
+2008-04-30 21:00  oeildepierre
+
+	* src/fontitem.cpp: Finally fixed the display of the sample text
+	  rendered by Freetype
+
+2008-04-30 20:29  oeildepierre
+
+	* src/fontitem.cpp: Yet another experience to fix OSX issue
+
+2008-04-30 19:45  oeildepierre
+
+	* src/dataexport.cpp, src/dataexport.h, src/fontitem.cpp: Improved
+	  raw font export (used for remote dirs)
+	  Fixed a slight segfault :)
+
+2008-04-30 12:28  oeildepierre
+
+	* src/fontitem.cpp: Make an alpha-less palette to test under OSX
+
+2008-04-29 15:29  oeildepierre
+
+	* src/fontitem.cpp, src/mainviewwidget.cpp: Added font file path
+	  tooltip in the names list
+
+2008-04-29 13:11  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/listsdock.ui: Improved
+	  Freetype rendering (at least for Linux)(NO_HINTING)
+
+2008-04-28 08:33  tsoots
+
+	* fontmatrix.desktop: Added Finnish entries
+
+2008-04-27 21:48  oeildepierre
+
+	* src/typotek.cpp: Crumb was not rested when the current font list
+	  was empty
+
+2008-04-27 21:41  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/listsdock.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/typotek.cpp: Rewrote large parts of the
+	  search engine
+
+2008-04-26 07:42  oeildepierre
+
+	* src/fmotf.cpp, src/mainview.ui: Fixed a segfault when the font
+	  has no GPOS table and you ask for it to shape your string
+
+2008-04-26 07:41  oeildepierre
+
+	* src/typotek.cpp: Prevent the welcome message to be displayed at
+	  each Show event.
+
+2008-04-25 18:58  oeildepierre
+
+	* src/fmglyphsview.cpp, src/fmglyphsview.h, src/fontitem.cpp,
+	  src/fontitem.h, src/langs/dodict.cpp, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h: Update single glyph
+	  view when the window is resized
+
+2008-04-25 11:34  oeildepierre
+
+	* src/langs/deva.dict, src/langs/deva.match: Updated deva files. It
+	  does not mean they work, they’re just a bit better.
+
+2008-04-24 21:31  oeildepierre
+
+	* src/mainview.ui: treated a tooltip obsession :)
+
+2008-04-24 16:33  oeildepierre
+
+	* src/fmplayground.cpp, src/fmplayground.h, src/mainview.ui,
+	  src/mainviewwidget.cpp: Changed the input of the playground into
+	  a combobox filled by the sample texts
+
+2008-04-24 15:05  oeildepierre
+
+	* src/fontitem.cpp: Alternates presentation slight check
+
+2008-04-24 14:48  prokoudine
+
+	* fontmatrix.desktop, src/application.qrc,
+	  src/messages/fontmatrix_ru.qm, src/messages/fontmatrix_ru.ts:
+	  first (well, second,TBH) shot at Russian localization ;-)
+
+2008-04-24 13:31  oeildepierre
+
+	* src/fmotf.cpp, src/fontitem.cpp: When there was just one
+	  alternate glyph, it was not displayed.
+
+2008-04-24 10:42  oeildepierre
+
+	* src/typotek.cpp: Fulfill requirement for Russian translation
+
+2008-04-23 17:20  oeildepierre
+
+	* src/fontitem.cpp: Improved alternates presentation
+
+2008-04-23 14:26  oeildepierre
+
+	* src/fmotf.cpp, src/fmotf.h, src/fontitem.cpp, src/fontitem.h:
+	  Present all alternates glyphs in single view mode. Need to be
+	  made sexy :)
+
+2008-04-23 07:51  oeildepierre
+
+	* CMakeLists.txt, src/fontitem.cpp: Added OSX code specific to find
+	  what goes wrong there.
+
+2008-04-22 22:00  oeildepierre
+
+	* src/fontbook.cpp, src/fontitem.cpp,
+	  src/graphic-resources/fontbook_default.xml: At some point, I
+	  broke PDF fontbook export default template. Here is the fix
+
+2008-04-20 20:22  oeildepierre
+
+	* src/mainviewwidget.cpp: Fixed a crash due to theVeryFont was
+	  changed before we call "stop show this font so big!".
+
+2008-04-20 09:40  oeildepierre
+
+	* src/fontitem.cpp, src/typotek.cpp: Fixed chart printing
+
+2008-04-20 08:57  oeildepierre
+
+	* src/typotek.cpp, src/typotek.h: Cleaned system fonts directory
+	  listing
+
+2008-04-19 23:07  oeildepierre
+
+	* src/fmotf.cpp, src/fontitem.cpp, src/mainviewwidget.cpp,
+	  src/typotek.cpp, src/winutils.h: First attempt to have it
+	  functionnal under Windows(tm) platforms
+
+2008-04-19 18:24  oeildepierre
+
+	* src/fontitem.cpp: Chart printing adjustments
+
+2008-04-19 18:13  oeildepierre
+
+	* src/typotek.cpp: Chart was not printed when fit on the first page
+
+2008-04-19 18:07  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/typotek.cpp: Added print
+	  chart implementation
+
+2008-04-19 15:09  oeildepierre
+
+	* src/fmplayground.cpp, src/fmplayground.h, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/typotek.cpp: Added print playground
+	  implementation
+
+2008-04-19 10:24  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h: Defined some constants
+	  (GLYPH_DATA_XXX)
+
+2008-04-18 13:14  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp:
+	  Added print sample text implementation
+
+2008-04-18 12:42  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp:
+	  Added print informations implementation
+
+2008-04-18 12:16  oeildepierre
+
+	* src/typotek.cpp: Added aboutQt help entry
+
+2008-04-18 11:59  oeildepierre
+
+	* CMakeLists.txt, INSTALL, src/fontitem.cpp: Added hint for
+	  packagers
+
+2008-04-18 10:51  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/graphic-resources/info.css,
+	  src/mainviewwidget.cpp, src/messages/welcome.html: There were
+	  problems with Font handling caused by new all-in-database system,
+	  introduced FontItem::updateItem() method.
+	  Played with Welcome message.
+
+2008-04-18 08:56  mrdocs
+
+	* src/messages/welcome.html: some minor revisions and some HTML
+	  tweaks
+
+2008-04-18 08:17  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp,
+	  src/typotek.h: Cleaned UCOTN (ugly code of the night!) about
+	  random font in welcome message
+
+2008-04-18 00:01  oeildepierre
+
+	* src/typotek.cpp: Forgot to TR() the "welcome to fontmatrix"
+	  string
+
+2008-04-17 23:53  oeildepierre
+
+	* src/application.qrc, src/graphic-resources/welcome.png,
+	  src/icons/fontmatrix-systray.png, src/mainviewwidget.cpp,
+	  src/messages/welcome.html, src/typotek.cpp, src/typotek.h:
+	  Improved welcome message, especially offer to display "Welcome to
+	  Fontmatrix" with a random font. Text by pygmee, wait for its
+	  style
+
+2008-04-13 23:02  oeildepierre
+
+	* src/fontitem.cpp, src/typotek.cpp: Improved family printing,,
+	  should work perfectly now!
+
+2008-04-13 22:04  oeildepierre
+
+	* src/typotek.cpp: Improved family printing, though it remains not
+	  fully functionnal
+
+2008-04-12 22:01  oeildepierre
+
+	* src/CMakeLists.txt, src/fmprintdialog.cpp, src/fontitem.cpp,
+	  src/fontitem.h, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/typotek.cpp, src/typotek.h: New architecture for printing,
+	  step one. Test print family
+
+2008-04-10 13:44  oeildepierre
+
+	* src/about.ui: Added a close button to the "about" window
+
+2008-04-10 13:04  oeildepierre
+
+	* src/dataloader.cpp, src/mainviewwidget.cpp, src/typotek.cpp,
+	  src/typotek.h: Fixed bug #11468 : Empty sample created
+
+2008-04-10 12:21  oeildepierre
+
+	* src/mainviewwidget.cpp: Fixed some details in updateTree
+
+2008-04-10 09:50  oeildepierre
+
+	* src/fontitem.cpp, src/mainviewwidget.cpp, src/mainviewwidget.h:
+	  New updateTree method. No more latency when select a font item,
+	  even with a large collection
+
+2008-04-09 09:09  oeildepierre
+
+	* src/CMakeLists.txt, src/fmactivate.cpp, src/fmactivate.h,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp:
+	  Isolated activation code in FMActivate class.
+
+2008-04-08 12:43  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/dataloader.cpp,
+	  src/dataloader.h, src/fmplayground.cpp, src/fmprintdialog.cpp,
+	  src/fmprintdialog.h, src/fontitem.cpp, src/fontitem.h,
+	  src/multiprintdialog.ui, src/savedata.cpp, src/typotek.cpp: 0.5.0
+	  breakage, including new database format & mechanism
+
+2008-04-07 19:35  oeildepierre
+
+	* src/fontitem.cpp: Check for valid font names
+
+2008-04-07 14:36  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/fmplayground.cpp,
+	  src/fmplayground.h, src/mainviewwidget.cpp: Added the regular
+	  zoom in/out & panning to the playground
+	  Made the OWN_SHAPER the default
+
+2008-04-07 13:52  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fontitem.cpp: Fixed bug #11437 :
+	  background actualization in hamburgerfonstiv window
+
+2008-04-05 09:31  oeildepierre
+
+	* src/messages/fontmatrix_da.ts, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_en.ts, src/messages/fontmatrix_fi.qm,
+	  src/messages/fontmatrix_fi.ts, src/messages/fontmatrix_fr.qm,
+	  src/messages/fontmatrix_fr.ts, src/messages/fontmatrix_hi.ts,
+	  src/messages/fontmatrix_nb.ts, src/messages/fontmatrix_nl.ts,
+	  src/messages/fontmatrix_no.ts, src/messages/fontmatrix_sr.ts,
+	  src/messages/fontmatrix_sv.ts, src/messages/fontmatrix_uk.ts,
+	  src/messages/fontmatrix_zh_CN.ts,
+	  src/messages/fontmatrix_zh_TW.ts: Completed french translation
+	  and updated Finnish QM file
+
+2008-04-05 08:59  tsoots
+
+	* src/messages/fontmatrix_fi.ts: Updated Finnish translation
+
+2008-04-05 08:10  oeildepierre
+
+	* src/application.qrc, src/dataloader.cpp, src/mainviewwidget.cpp,
+	  src/typotek.cpp: Fixed the mixup of references to "default" and
+	  tr("default")
+	  Updated the resource file to activate the German translation
+
+2008-04-05 08:08  oeildepierre
+
+	* src/messages/fontmatrix_da.qm, src/messages/fontmatrix_da.ts,
+	  src/messages/fontmatrix_de.qm, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_en.qm, src/messages/fontmatrix_en.ts,
+	  src/messages/fontmatrix_fi.qm, src/messages/fontmatrix_fi.ts,
+	  src/messages/fontmatrix_fr.qm, src/messages/fontmatrix_fr.ts,
+	  src/messages/fontmatrix_hi.ts, src/messages/fontmatrix_nb.qm,
+	  src/messages/fontmatrix_nb.ts, src/messages/fontmatrix_nl.qm,
+	  src/messages/fontmatrix_nl.ts, src/messages/fontmatrix_no.ts,
+	  src/messages/fontmatrix_sr.ts, src/messages/fontmatrix_sv.qm,
+	  src/messages/fontmatrix_sv.ts, src/messages/fontmatrix_uk.qm,
+	  src/messages/fontmatrix_uk.ts, src/messages/fontmatrix_zh_CN.qm,
+	  src/messages/fontmatrix_zh_CN.ts,
+	  src/messages/fontmatrix_zh_TW.ts, src/messages/lupdate.files:
+	  Updated TS files, and full German translation by Christoph
+
+2008-04-04 21:56  mrdocs
+
+	* fontmatrix.desktop: fix the desktop file for suse
+
+2008-04-04 20:53  oeildepierre
+
+	* src/listdockwidget.h, src/main.cpp, src/typotek.cpp,
+	  src/typotek.h: Fixed a problem between QThread and Ubuntu :)
+
+2008-04-04 12:02  mrdocs
+
+	* src/messages/help.html, src/messages/help_fr.html: some minor
+	  revisions and some HTML tweaks
+
+2008-04-03 15:39  mrdocs
+
+	* src/messages/help.html: some minor revisions, more to come
+
+2008-04-03 15:11  oeildepierre
+
+	* src/CMakeLists.txt, src/fmplayground.cpp, src/fmplayground.h,
+	  src/listdockwidget.cpp, src/listdockwidget.h, src/listsdock.ui,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/typotek.cpp: The playground (1/n)
+
+2008-04-03 05:20  oeildepierre
+
+	* src/mainviewwidget.cpp: Linespacing was computed wrong
+
+2008-04-02 11:59  oeildepierre
+
+	* src/fontitem.cpp: Family name in info tab was not displayed
+	  anymore (commented)
+
+2008-04-02 11:54  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/listsdock.ui,
+	  src/mainviewwidget.cpp, src/typotek.cpp: Search is now rather a
+	  filter, live & case not sensitive
+	  Very slight startup speed improvement
+
+2008-03-31 12:35  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h: Added category label to the
+	  single glyph view
+
+2008-03-25 08:21  oeildepierre
+
+	* src/fmotf.cpp, src/mainviewwidget.cpp, src/typotek.cpp:
+	  Activation status was not loaded at startup
+	  x_advance was not adding in featured string
+
+2008-03-22 22:36  mrdocs
+
+	* src/about.ui, src/messages/about.html,
+	  src/messages/about_people.html, src/messages/help.html: start
+	  adding some more docs, tidy up Help About dialog, list Pierre
+	  first
+
+2008-03-22 20:51  mrdocs
+
+	* fontmatrix.desktop: some minor tweaks to add some missing
+	  features
+
+2008-03-22 19:26  oeildepierre
+
+	* src/fmpreviewlist.cpp: Fixed bug #11221 : different criteria for
+	  sorting name and preview list
+
+2008-03-19 09:23  oeildepierre
+
+	* src/typotek.cpp: Fixed bug #11213 : Tag filtering is not
+	  selective enough
+
+2008-03-18 08:55  oeildepierre
+
+	* src/dataexport.cpp, src/fmpreviewlist.cpp, src/fontitem.cpp,
+	  src/fontitem.h: In preview list, alternate background color based
+	  on family
+
+2008-03-18 08:20  oeildepierre
+
+	* harfbuzz/src/CMakeLists.txt, src/CMakeLists.txt: Now if
+	  FM_OWNSHAPER is passed to CMake, Harfbuzz shaper is not even
+	  compiled in the HB lib
+
+2008-03-16 17:43  oeildepierre
+
+	* src/fmotf.cpp: Fixed application of backward positionning in OTFs
+
+2008-03-16 14:54  oeildepierre
+
+	* src/fmshaper_own.cpp, src/fmshaper_own.h: Fixed ordering of
+	  features (understand get rid of QSet!)
+
+2008-03-15 23:27  oeildepierre
+
+	* src/fmotf.cpp, src/langs/deva.dict, src/langs/deva.match: Respect
+	  order of OpenType features requested in match files
+	  Updated deva files
+
+2008-03-15 07:25  oeildepierre
+
+	* src/fmotf.cpp, src/typotek.cpp: Fixed messy code in OTF own
+	  shaper support that should help a lot.
+
+2008-03-15 05:24  oeildepierre
+
+	* src/fmotf.cpp, src/fmshaper_own.cpp, src/langs/latn.dict,
+	  src/langs/latn.match: Housekeeping
+
+2008-03-14 17:22  oeildepierre
+
+	* src/fmshaper_own.cpp, src/fmshaper_own.h: Cosmetic, spaces are
+	  allowed in match files.
+
+2008-03-14 16:26  oeildepierre
+
+	* src/fmshaper_own.cpp, src/mainviewwidget.cpp: Unicode ranges
+	  combo is now regenerated if it sticks to an empty range
+
+2008-03-12 14:16  oeildepierre
+
+	* src/application.qrc, src/fmotf.cpp, src/fmotf.h,
+	  src/fmshaper_own.cpp, src/fontitem.cpp, src/langs/deva.dict,
+	  src/langs/deva.match: Ease developpement of match files
+	  You can set a ShaperDataDir in
+	  ~/.config/Undertype/fontmatrix.conf which will override the
+	  resource dir so you don’t need to rebuild to see changes in your
+	  own match file nor re-run Fontmatrix
+
+2008-03-12 09:42  oeildepierre
+
+	* src/application.qrc, src/fontitem.cpp, src/langs/dodict.cpp:
+	  dodict can import a category list from an FLT file from m17n
+	  project
+
+2008-03-11 14:04  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h: Really stick to
+	  unicode range
+
+2008-03-11 13:41  oeildepierre
+
+	* src/fmshaper_own.cpp, src/fmshaper_own.h: Shaper fixes
+
+2008-03-10 14:46  oeildepierre
+
+	* CMakeLists.txt, INSTALL, src/fmotf.cpp, src/fmotf.h,
+	  src/fmshaper_own.cpp, src/fmshaper_own.h, src/fontitem.cpp,
+	  src/langs/test.match: Working test file for own shaper engine.
+	  Conditional compilation of own shaper related code
+
+2008-03-08 09:53  oeildepierre
+
+	* CMakeLists.txt, src/langs/CMakeLists.txt, src/langs/deva.dict,
+	  src/langs/dodict.cpp: dodict, to generate dictionnary skeletons
+	  suitable for FM own shaper
+
+2008-03-08 01:28  oeildepierre
+
+	* src/fmshaper_own.cpp, src/fmshaper_own.h, src/langs/test.dict,
+	  src/langs/test.match: Shaper engine improvement and first "rules"
+	  files
+
+2008-03-07 21:03  oeildepierre
+
+	* src/application.qrc, src/fmshaper_own.cpp, src/fmshaper_own.h,
+	  src/fontitem.cpp, src/langs, src/opentypetags.h: Added OpenType
+	  feature strings in translation pool
+
+2008-03-07 14:07  oeildepierre
+
+	* src/CMakeLists.txt, src/fmshaper_own.cpp, src/fmshaper_own.h:
+	  First lines of what could become Fontmatrix’s own shaper
+
+2008-03-06 12:29  oeildepierre
+
+	* CMakeLists.txt, src/fmrepair.cpp, src/fontitem.cpp: Fixed wrong
+	  listing for Deact & Linked items in Check database
+
+2008-03-04 23:26  oeildepierre
+
+	* src/main.cpp, src/messages/fontmatrix_zh_CN.qm,
+	  src/messages/fontmatrix_zh_CN.ts: Chinese TS file update
+
+2008-03-04 19:52  oeildepierre
+
+	* src/application.qrc, src/dataloader.cpp,
+	  src/messages/fontmatrix_da.ts, src/messages/fontmatrix_de.qm,
+	  src/messages/fontmatrix_de.ts, src/messages/fontmatrix_en.ts,
+	  src/messages/fontmatrix_fi.ts, src/messages/fontmatrix_fr.qm,
+	  src/messages/fontmatrix_fr.ts, src/messages/fontmatrix_hi.ts,
+	  src/messages/fontmatrix_nb.ts, src/messages/fontmatrix_nl.qm,
+	  src/messages/fontmatrix_nl.ts, src/messages/fontmatrix_no.ts,
+	  src/messages/fontmatrix_sr.ts, src/messages/fontmatrix_sv.ts,
+	  src/messages/fontmatrix_uk.qm, src/messages/fontmatrix_uk.ts,
+	  src/messages/fontmatrix_zh_CN.qm,
+	  src/messages/fontmatrix_zh_CN.ts,
+	  src/messages/fontmatrix_zh_TW.qm,
+	  src/messages/fontmatrix_zh_TW.ts, src/messages/lupdate.files:
+	  Chinese TS files
+
+2008-03-04 16:48  mrdocs
+
+	* src/messages/about.html: Tweaks for wording and layout.
+
+2008-03-04 16:30  mrdocs
+
+	* src/prefs_panel.ui: test commit with a tooltip
+
+2008-03-04 13:18  oeildepierre
+
+	* src/fmotf.cpp: Fixed vertical advance in featured line
+
+2008-03-04 13:08  oeildepierre
+
+	* src/fontitem.cpp: Added complete text progression support even
+	  for featured texts
+
+2008-03-04 12:37  oeildepierre
+
+	* src/fontbook.cpp, src/mainviewwidget.cpp: Fixed missing
+	  "linewidth" arg in renderLine call from fontbook
+	  Fixed empty items
+
+2008-03-04 11:21  oeildepierre
+
+	* CMakeLists.txt, cmake/modules/FREETYPEConfig.cmake,
+	  src/CMakeLists.txt, src/fontbook.cpp, src/fontitem.cpp,
+	  src/fontitem.h, src/listdockwidget.cpp, src/listsdock.ui,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/messages/fontmatrix_fr.qm, src/messages/fontmatrix_fr.ts,
+	  src/prefs_panel.ui, src/textprogression.cpp,
+	  src/textprogression.h, src/textprogression.ui, src/typotek.cpp:
+	  This commit brings some important changes in the layout subsystem
+	  (text progression).
+	  Be aware that it must break things here and there
+
+2008-02-28 15:36  oeildepierre
+
+	* src/typotek.cpp: Tag all did not updated the tags list widget.
+
+2008-02-28 12:48  oeildepierre
+
+	* src/mainview.ui: Enlarged the unicode range dropdown menu
+
+2008-02-28 10:55  oeildepierre
+
+	* src/messages/fontmatrix_da.qm, src/messages/fontmatrix_da.ts,
+	  src/messages/fontmatrix_de.qm, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_en.qm, src/messages/fontmatrix_en.ts,
+	  src/messages/fontmatrix_fi.qm, src/messages/fontmatrix_fi.ts,
+	  src/messages/fontmatrix_fr.qm, src/messages/fontmatrix_fr.ts,
+	  src/messages/fontmatrix_hi.ts, src/messages/fontmatrix_nb.qm,
+	  src/messages/fontmatrix_nb.ts, src/messages/fontmatrix_nl.qm,
+	  src/messages/fontmatrix_nl.ts, src/messages/fontmatrix_no.qm,
+	  src/messages/fontmatrix_no.ts, src/messages/fontmatrix_sr.ts,
+	  src/messages/fontmatrix_sv.qm, src/messages/fontmatrix_sv.ts,
+	  src/messages/fontmatrix_uk.qm, src/messages/fontmatrix_uk.ts,
+	  src/messages/lupdate.files: Update strings for TS files, French
+	  translation completed.
+
+2008-02-27 16:00  oeildepierre
+
+	* src/mainviewwidget.cpp: Added name of the current family in the
+	  header of the names list
+
+2008-02-27 15:35  oeildepierre
+
+	* src/CMakeLists.txt, src/fmnamelist.cpp, src/fmnamelist.h,
+	  src/listsdock.ui: Typing when the names list got focus now scroll
+	  to the letter you typed
+
+2008-02-27 13:18  oeildepierre
+
+	* src/mainviewwidget.cpp: Fixed bug #11161 : FM stumbles across
+	  uppercasse letters
+
+2008-02-27 11:02  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp: Stick to Unicode range
+	  is now the default & unique behaviour.
+
+2008-02-27 10:57  oeildepierre
+
+	* src/fontitem.cpp, src/typotek.cpp, src/typotek.h: Fixed bug
+	  #10543 : Feature request: multiple select/multiple tag
+	  assignment.
+	  See bug report for details
+
+2008-02-24 18:49  oeildepierre
+
+	* src/fmrepair.cpp: Check-Database feature is implemented, it has
+	  to be tested now.
+
+2008-02-24 17:43  oeildepierre
+
+	* src/fmrepair.cpp, src/mainview.ui, src/repair.ui: UI improvement
+	  in mainview
+
+2008-02-23 21:21  oeildepierre
+
+	* src/CMakeLists.txt, src/fmrepair.cpp, src/fmrepair.h,
+	  src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp,
+	  src/repair.ui, src/typotek.cpp, src/typotek.h: Fixed
+	  impossibility to activate different fonts with the same file name
+	  but in different directories - links are now prefixed with the
+	  target file size.
+	  It means that you won’t be able to deactivate your fonts with
+	  fontmatrix, sorry.
+	  It also fixed problem with no detection of the AFM files.
+	  Added the mockup of the "check database" dialog
+
+2008-02-23 14:22  oeildepierre
+
+	* CMakeLists.txt, src/about.ui, src/aboutwidget.cpp: Show how many
+	  fonts are loaded in About widget
+	  HIGH_PERF is now the default
+
+2008-02-23 13:55  oeildepierre
+
+	* src/mainviewwidget.cpp: Fixed bug #10791 : Using right to left
+	  modifies view size
+
+2008-02-23 13:46  oeildepierre
+
+	* src/mainviewwidget.cpp: Improved performance when activating a
+	  family
+
+2008-02-23 10:43  oeildepierre
+
+	* src/listsdock.ui, src/mainviewwidget.cpp, src/mainviewwidget.h:
+	  Added bug #11100 : RFE : insert search input string for finding
+	  font name
+
+2008-02-23 09:53  oeildepierre
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp: Fixed bug #11070 :
+	  preferances panel missing "Close" button
+
+2008-02-23 09:28  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/typotek.cpp: Spaces were
+	  replaced by red squares becaus they’re empty shapes. Now it
+	  manages to distinguish between normal empty shapes and missing
+	  glyphs.
+
+2008-02-22 21:37  oeildepierre
+
+	* src/fontitem.cpp: Finally, I tried to fix bug #10568 : How to see
+	  missing char
+
+2008-02-22 09:30  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp: Fixed bug #10578 : no
+	  memory of option choosed in "dessins"
+
+2008-02-19 12:00  oeildepierre
+
+	* src/fmpreviewlist.cpp: Fixed horizontal size and X position of
+	  the selection rectangle in preview list
+
+2008-02-19 11:37  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fontitem.cpp, src/fontitem.h,
+	  src/listdockwidget.cpp, src/listdockwidget.h, src/typotek.cpp:
+	  Fixed bug #11071 : Preview Word does not change after closing
+	  Preferences Panel
+
+2008-02-19 11:11  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fmpreviewlist.h, src/fontitem.cpp,
+	  src/typotek.cpp, src/typotek.h: Improved display of RTL previews
+
+2008-02-18 20:38  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/mainviewwidget.cpp: Sync between names
+	  & previews lists was in a mess, it should work now.
+
+2008-02-18 12:10  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/prefs_panel.ui,
+	  src/prefspaneldialog.cpp, src/prefspaneldialog.h,
+	  src/typotek.cpp, src/typotek.h: bug #11072 : add RTL support to
+	  "Preview Word"
+
+2008-02-17 21:20  oeildepierre
+
+	* src/listdockwidget.cpp, src/listdockwidget.h,
+	  src/mainviewwidget.cpp: Pointed in "bug #11082 : ergonomic
+	  request", names wasn’t anymore synced when a font was selected in
+	  previews list
+
+2008-02-16 09:05  oeildepierre
+
+	* src/listdockwidget.cpp, src/listdockwidget.h, src/listsdock.ui,
+	  src/mainviewwidget.cpp: The font-names list does not jump any
+	  more when selecting an item
+
+2008-02-15 19:23  oeildepierre
+
+	* src/mainviewwidget.cpp: Fixed segmentation fault when select
+	  family item.
+
+2008-02-15 05:59  oeildepierre
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp, src/typotek.h:
+	  Possibility to setup local storage place of remote fonts in
+	  preferences
+
+2008-02-15 04:55  oeildepierre
+
+	* src/mainviewwidget.cpp, src/typotek.cpp: Remote dirs cleanup - it
+	  works now
+
+2008-02-14 17:10  oeildepierre
+
+	* src/fontitem.cpp, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/prefspaneldialog.cpp, src/remotedir.cpp, src/typotek.cpp: I
+	  commit changes to let you explore the many ways FM now has to
+	  misbehave - especially with remote dirs which bring a significant
+	  amount of entropy.
+
+2008-02-14 15:06  oeildepierre
+
+	* src/fontitem.cpp: Catch starting http requests
+
+2008-02-14 14:42  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/typotek.cpp, src/typotek.h: Can
+	  retrieve a fontfile from network, and crash :)
+
+2008-02-14 08:48  oeildepierre
+
+	* src/remotedir.cpp, src/remotedir.h, src/typotek.cpp: Fixed
+	  multiple imports of remote fonts
+
+2008-02-13 22:33  oeildepierre
+
+	* CMakeLists.txt, src/CMakeLists.txt, src/dataexport.cpp,
+	  src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp,
+	  src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/remotedir.cpp, src/remotedir.h,
+	  src/savedata.cpp, src/typotek.cpp, src/typotek.h: Step commit to
+	  remote dirs, it doesn’t pretty works now, but it kindly comes.
+
+2008-02-11 16:45  oeildepierre
+
+	* src/CMakeLists.txt, src/dataexport.cpp, src/dataexport.h,
+	  src/fontbook.cpp, src/typotek.cpp, src/typotek.h: Introduced an
+	  export-font-set feature, which will be the base for remote
+	  directories.
+
+2008-02-11 13:52  oeildepierre
+
+	* src/fmsampletextview.cpp, src/fmsampletextview.h: Fixed bug
+	  #10948 : Improving in-frame navigation (freetype frame
+	  especially)
+
+2008-02-11 12:49  oeildepierre
+
+	* src/fontitem.cpp: Fixed bug #10569 : No preview word for
+	  dingbats-like fonts
+
+2008-02-11 12:06  oeildepierre
+
+	* src/dataloader.cpp, src/main.cpp, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/prefs_panel.ui,
+	  src/typotek.cpp, src/typotek.h: Font size can be set on-view.
+	  Spalshsreen activation becomes part of fontmatrix.conf file
+
+2008-02-09 22:20  oeildepierre
+
+	* src/mainviewwidget.cpp: Styles in names tree list are now ordered
+	  alphabetically. It no longer bounces when browse in preview list
+	  and it’s definitly cleaner this way. As a side effect, it handles
+	  multiple fonts with same name better.
+
+2008-02-09 19:18  vlada
+
+	* src/fmpreviewlist.cpp, src/mainviewwidget.cpp: Initial commit of
+	  overall color sync
+
+2008-02-09 16:37  oeildepierre
+
+	* src/application.qrc, src/icons/font_otf16.png,
+	  src/icons/font_truetype16.png, src/icons/font_type116.png,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h: Icons representing
+	  type of font file are now displayed in Font tree view.
+
+2008-02-09 09:58  oeildepierre
+
+	* src/fmshaper.cpp, src/typotek.cpp: At least a bit of arabic (with
+	  arialuni) and indic (Devanagari with Gargi) shaping works this
+	  morning -
+
+2008-02-09 08:39  oeildepierre
+
+	* src/application.qrc: Re-insert templates related entries in
+	  resources file as they have been accidentaly removed.
+
+2008-02-06 09:22  oeildepierre
+
+	* src/fontitem.h, src/mainviewwidget.cpp, src/typotek.cpp:
+	  Improvements for system fonts
+
+2008-02-06 08:57  oeildepierre
+
+	* CMakeLists.txt, cmake/modules/FONTCONFIGConfig.cmake,
+	  src/CMakeLists.txt, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/savedata.cpp, src/typotek.cpp, src/typotek.h: Added system
+	  wide fonts initial support - need to be tested & discussed
+
+2008-02-05 20:51  vlada
+
+	* src/about.ui, src/graphic-resources/info.css, src/mainview.ui:
+	  typo fixed, tweaking of main window and css for Font Informations
+	  rework
+
+2008-02-05 20:44  oeildepierre
+
+	* src/fontitem.cpp: Fixed display of shaped sample text in right to
+	  left mode rendered by freetype - when shaper itself works of
+	  course :)
+
+2008-02-05 16:47  oeildepierre
+
+	* src/main.cpp: Changed run into start for LazyInit
+
+2008-02-05 16:33  oeildepierre
+
+	* src/main.cpp, src/typotek.cpp, src/typotek.h: Introduced an
+	  LazyInit class which is a descendant of QThread. For now it fills
+	  cache of Information text.
+
+2008-02-05 14:12  oeildepierre
+
+	* src/fmpreviewlist.h: removed FontPreviewItem::dump() as it
+	  prevents to compile on some platforms and was just a debug method
+
+2008-02-05 14:08  oeildepierre
+
+	* src/fmotf.cpp, src/fontitem.cpp: fixed some segfaults in featured
+	  line rendering
+
+2008-02-05 13:45  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fmpreviewlist.h, src/fontitem.cpp,
+	  src/mainviewwidget.cpp: Improved Lists
+
+2008-02-04 17:32  vlada
+
+	* src/icons/fontmatrix-systray.png: Enhaced version of systray icon
+
+2008-02-04 13:26  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fontitem.cpp, src/mainviewwidget.cpp,
+	  src/prefspaneldialog.cpp: Font sizes as set in preferences was
+	  not took into account
+
+2008-02-04 00:10  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fontitem.cpp,
+	  src/graphic-resources/info.css, src/mainviewwidget.cpp: Due to
+	  too many "s, font info text was not displayed
+
+2008-02-03 21:06  vlada
+
+	* src/application.qrc, src/graphic-resources/info.css,
+	  src/icons/fontmatrix-systray.png, src/systray.cpp: Changed
+	  systray icon and tried to eat the bone Pierre gave me. That
+	  hurts!
+
+2008-02-03 19:57  oeildepierre
+
+	* src/application.qrc, src/fmpreviewlist.cpp, src/fontitem.cpp,
+	  src/graphic-resources/info.css, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/prefs_panel.ui,
+	  src/prefspaneldialog.cpp, src/prefspaneldialog.h,
+	  src/typotek.cpp, src/typotek.h: - Fontsizes can be set in
+	  preferences
+	  - Info has its CSS file (src/graphic-resources/info.css)
+
+2008-02-03 12:49  oeildepierre
+
+	* src/mainviewwidget.cpp, src/typotek.cpp: bug #10961 : Remove font
+	  -> crash
+
+2008-02-02 13:14  vlada
+
+	* src/messages/fontmatrix_no.qm, src/messages/fontmatrix_no.ts:
+
+2008-02-02 11:34  vlada
+
+	* src/application.qrc, src/messages/about_uk.html,
+	  src/messages/fontmatrix_uk.qm, src/messages/fontmatrix_uk.ts,
+	  src/messages/help_uk.html: Ukrainian translation of interface and
+	  help files by yurchor@ukr.net. Thank you!
+
+2008-02-02 09:46  oeildepierre
+
+	* CMakeLists.txt, INSTALL, src/fmpreviewlist.cpp: added
+	  -DHIGH_PERF=1 option to cmake, for now it just allows to not wait
+	  the slider to be released for redrawing items in preview list. It
+	  could be usefull for testing purpose in the future
+
+2008-01-31 13:06  oeildepierre
+
+	* src/mainviewwidget.cpp: Show what font will be removed in "do you
+	  want to remove" dialog
+
+2008-01-31 13:01  oeildepierre
+
+	* src/CMakeLists.txt, src/importtags.cpp, src/importtags.h,
+	  src/importtags.ui, src/typotek.cpp: Improved tagging at import
+	  time
+
+2008-01-29 10:46  oeildepierre
+
+	* src/mainview.ui: UI fix - OpenType features list did not expand
+	  properly
+
+2008-01-28 23:03  oeildepierre
+
+	* src/fmotf.cpp, src/fontitem.cpp, src/listsdock.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp,
+	  src/typotek.h: bug #10881 : Cannot remove a font from the list
+
+2008-01-28 21:36  oeildepierre
+
+	* src/dataloader.cpp, src/fmpreviewlist.cpp, src/fontitem.cpp,
+	  src/mainviewwidget.cpp, src/savedata.cpp, src/systray.cpp,
+	  src/typotek.cpp: bug #10854 : Fonts imported twice
+	  IDs for font files are now their file path, so unicity is
+	  provided by file system.
+
+2008-01-26 21:51  oeildepierre
+
+	* src/fmsampletextview.cpp, src/fontitem.cpp,
+	  src/mainviewwidget.cpp: Improved Freetype rendering - I know it’s
+	  not perfect yet :(
+
+2008-01-26 21:50  oeildepierre
+
+	* src/graphic-resources/default_template.png,
+	  src/graphic-resources/fontbook_default.xml: New default template
+
+2008-01-26 01:02  oeildepierre
+
+	* src/fontbook.cpp, src/graphic-resources/fontbook_default.xml,
+	  src/graphic-resources/one_line_template.xml: Improvements in font
+	  book template engine
+
+2008-01-25 18:48  oeildepierre
+
+	* src/fontbook.cpp, src/fontbook.h, src/fontitem.cpp,
+	  src/fontitem.h, src/graphic-resources/fontbook_default.xml,
+	  src/graphic-resources/one_line_template.xml: Improvements in font
+	  book template engine
+
+2008-01-25 13:19  oeildepierre
+
+	* src/dataloader.cpp, src/main.cpp, src/typotek.cpp, src/typotek.h:
+	  Some improvement for splash screen, which has proved itself
+	  usefull at least in belgium :)
+
+2008-01-25 11:46  oeildepierre
+
+	* src/fontitem.cpp: OpenType features was not visible if no search
+	  has been made - should be ported in F003
+
+2008-01-24 10:43  oeildepierre
+
+	* src/dataloader.cpp, src/typotek.cpp: Fixed - bug #10854 : Fonts
+	  imported twice
+
+2008-01-24 00:10  oeildepierre
+
+	* src/fontbook.cpp: SVG elements in fontbook templates on ALL pages
+	  ;-)
+
+2008-01-24 00:03  oeildepierre
+
+	* CMakeLists.txt, src/fontbook.cpp, src/fontbook.h: SVG elements in
+	  fontbook templates
+
+2008-01-23 15:51  oeildepierre
+
+	* src/fontbook.cpp, src/fontbook.h, src/fontitem.h,
+	  src/graphic-resources/fontbook_default.xml,
+	  src/graphic-resources/one_line_template.xml: Fontbook template
+	  engine - changes.
+
+2008-01-22 23:25  oeildepierre
+
+	* src/messages/fontmatrix_no.qm, src/messages/fontmatrix_no.ts:
+	  housekeeping
+
+2008-01-22 23:21  oeildepierre
+
+	* src/importedfontsdialog.cpp, src/importedfontsdialog.h,
+	  src/typotek.cpp: Fixed misplacement for the import confirmation
+	  dialog.
+
+2008-01-22 22:54  oeildepierre
+
+	* src/application.qrc, src/messages/about_people.html,
+	  src/messages/fontmatrix_da.qm, src/messages/fontmatrix_da.ts,
+	  src/messages/fontmatrix_de.qm, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_en.qm, src/messages/fontmatrix_en.ts,
+	  src/messages/fontmatrix_fi.qm, src/messages/fontmatrix_fi.ts,
+	  src/messages/fontmatrix_fr.qm, src/messages/fontmatrix_fr.ts,
+	  src/messages/fontmatrix_hi.qm, src/messages/fontmatrix_hi.ts,
+	  src/messages/fontmatrix_nb.qm, src/messages/fontmatrix_nb.ts,
+	  src/messages/fontmatrix_nl.qm, src/messages/fontmatrix_nl.ts,
+	  src/messages/fontmatrix_sr.qm, src/messages/fontmatrix_sr.ts,
+	  src/messages/fontmatrix_sv.qm, src/messages/fontmatrix_sv.ts,
+	  src/messages/lupdate.files, src/messages/update.sh: Ran update.sh
+	  on translations
+
+2008-01-20 21:56  oeildepierre
+
+	* src/typotek.cpp: More debug messages in dropEvent handler in
+	  order to find why it does not work with Nautilus
+
+2008-01-20 17:09  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/prefs_panel.ui: Very first
+	  elements (mainly placeholders) for remote directories
+
+2008-01-20 15:51  oeildepierre
+
+	* src/fmsampletextview.cpp, src/fmsampletextview.h,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h: -
+	  Each rendering mode has its own page in sample preview
+	  - Zoom is now achief by Ctrl-Wheel means
+
+2008-01-20 12:53  oeildepierre
+
+	* src/mainviewwidget.cpp: Tried to fix bug #10829 : Font list
+	  starts at letter C
+
+2008-01-20 12:29  oeildepierre
+
+	* src/aboutwidget.cpp, src/aboutwidget.h, src/fontitem.cpp,
+	  src/mainviewwidget.cpp, src/tagseteditor.cpp, src/tagseteditor.h,
+	  src/typotek.cpp: - Fixed slowdown at starting time (report it to
+	  first search, maybe good to
+	  put it in subprocess when full UI is available).
+	  - Fixed bug #10830 : Wrong dialog position
+
+2008-01-20 02:02  oeildepierre
+
+	* src/typotek.cpp: Import single files with drag & drop without
+	  copy them
+
+2008-01-20 01:43  oeildepierre
+
+	* src/fontitem.cpp: Fixed a spacing shift between vector and raster
+	  rendering
+
+2008-01-19 17:48  oeildepierre
+
+	* src/dataloader.cpp, src/dataloader.h, src/fontitem.cpp,
+	  src/savedata.cpp, src/typotek.cpp, src/typotek.h: Files and
+	  directories schema changed:
+	  $home/.fonts-reserved/fonts.data becomes $home/.fontmatrix.data
+	  $home/.fonts-reserved disappears as font files are no more
+	  copied, .fontmatrix.data
+	  now tracks down _absolute_ file paths.
+
+2008-01-19 17:43  oeildepierre
+
+	* CMakeLists.txt: version increment (0.4.0)
+
+2008-01-16 13:50  oeildepierre
+
+	* src/graphic-resources/oneline_template.png: Free & free of charge
+	  fonts in oneliner template preview
+
+2008-01-16 13:30  oeildepierre
+
+	* src/application.qrc, src/fontbookdialog.cpp, src/main.cpp,
+	  src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/systray.cpp, src/typotek.cpp,
+	  src/typotek.h: Added preference item for templates (for fontbook)
+	  folder. At least two default templates are now in Fontmatrix,
+	  hope there will be someone to improve them.
+	  Side note : organisation "Undertype" and project "fontmatrix" are
+	  now declared for whole application. You can now call default
+	  constructor for QSettings.
+
+2008-01-16 00:48  oeildepierre
+
+	* src/bookexport.ui, src/fontbook.cpp, src/fontbookdialog.cpp,
+	  src/fontbookdialog.h, src/graphic-resources/default_template.png,
+	  src/graphic-resources/one_line_template.xml,
+	  src/graphic-resources/oneline_template.png: Switched fontbook
+	  generation to a template-based system
+
+2008-01-15 22:47  oeildepierre
+
+	* src/CMakeLists.txt: Fixed order of libs to link into fontmatrix
+	  (harfbuzz _before_ Qt)
+
+2008-01-15 13:35  oeildepierre
+
+	* src/fontbook.cpp, src/fontitem.cpp,
+	  src/graphic-resources/one_line_template.xml: Minor improvements
+	  in fontbook template "engine" and a one-line template
+
+2008-01-15 12:34  oeildepierre
+
+	* src/fontbook.cpp, src/fontbook.h, src/fontbookdialog.cpp,
+	  src/graphic-resources/fontbook_default.xml: Important, the first
+	  step of a templated font book generation
+
+2008-01-15 08:48  oeildepierre
+
+	* src/mainview.ui: Fixed zoom slider in sample text preview
+
+2008-01-14 13:14  oeildepierre
+
+	* src/fontitem.cpp, src/mainviewwidget.cpp, src/typotek.cpp: Added
+	  (TT_PLATFORM_MACINTOSH , *) pair
+
+2008-01-14 11:25  oeildepierre
+
+	* src/fontitem.cpp: Added (TT_PLATFORM_APPLE_UNICODE ,
+	  TT_APPLE_ID_UNICODE_2_0) pair
+
+2008-01-14 00:29  oeildepierre
+
+	* src/fmotf.cpp: Namespaced Harfbuzz (3)
+
+2008-01-13 23:02  oeildepierre
+
+	* src/fmotf.cpp: Namespaced Harfbuzz (2)
+
+2008-01-13 22:11  oeildepierre
+
+	* src/fmotf.cpp, src/fmotf.h, src/fmshaper.cpp, src/fmshaper.h:
+	  Namespaced Harfbuzz
+
+2008-01-11 12:48  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fontitem.cpp, src/mainviewwidget.cpp:
+	  Partly fixed wrong display of preview in left panel
+	  Fixed the non-Freetype rendering of preview when accessed by
+	  selecting font in names list
+
+2008-01-11 10:20  oeildepierre
+
+	* CMakeLists.txt, INSTALL, src/messages/about_people.html,
+	  src/messages/fontmatrix_fr.qm, src/messages/fontmatrix_fr.ts:
+	  Validated changes in French translation
+	  Began to fix install mess, and updated INSTALL accordingly
+
+2008-01-11 08:58  oeildepierre
+
+	* src/messages/fontmatrix_de.qm, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_fr.ts: German (initial) and French
+	  (corrections) translations by Christoph and Olivier
+
+2008-01-11 07:08  pnemade
+
+	* src/messages/about_people.html: Added myself to project
+
+2008-01-10 15:43  tsoots
+
+	* src/messages/about_people.html: Added web sites
+
+2008-01-10 15:14  oeildepierre
+
+	* src/messages/about_people.html: Insert Mr Docs in about_people
+
+2008-01-10 15:00  tsoots
+
+	* src/messages/about_people.html: Forgot fi translation with my
+	  last commit
+
+2008-01-10 14:59  tsoots
+
+	* src/messages/about_people.html: Added myself
+
+2008-01-10 13:47  oeildepierre
+
+	* CMakeLists.txt, src/about.ui, src/aboutwidget.cpp: bug #10721 :
+	  Show version number in Help > About
+
+2008-01-10 13:10  oeildepierre
+
+	* src/dataloader.cpp: Removed warning message about fonts.data file
+	  not present
+
+2008-01-10 11:33  oeildepierre
+
+	* src/fontitem.cpp, src/messages/fontmatrix_nl.ts: bug #10429 :
+	  FEATURE REQUEST: display different font names
+
+2008-01-10 10:56  oeildepierre
+
+	* src/fontitem.cpp, src/mainview.ui: #10596
+	  Added regex in infoText to have links real HTTP links
+
+2008-01-10 09:53  oeildepierre
+
+	* src/about.ui, src/aboutwidget.cpp, src/application.qrc,
+	  src/messages/about_de.html, src/messages/about_fr.html,
+	  src/messages/about_people.html: Added people tab in About widget.
+	  Contributors are invited to add their own entry in
+	  src/messages/about_people.html
+
+2008-01-09 23:07  oeildepierre
+
+	* src/importedfontsdialog.cpp, src/typotek.cpp: Indicate files that
+	  Fontmatrix failed to import (write in red and append "(failed to
+	  load)")
+
+2008-01-09 22:16  oeildepierre
+
+	* src/messages/update.sh: Fixed a typo in update script for TS
+	  files
+
+2008-01-09 19:46  oeildepierre
+
+	* src/application.qrc, src/messages/fontmatrix_nl.qm,
+	  src/messages/fontmatrix_nl.ts: Dutch translation by Nico van den
+	  Burg
+
+2008-01-09 13:50  oeildepierre
+
+	* src/typotek.cpp, src/typotek.h: Prefs dialog normal call was
+	  broken with last commit
+
+2008-01-09 13:36  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/prefspaneldialog.cpp, src/prefspaneldialog.h,
+	  src/typotek.cpp, src/typotek.h: bug #10533 : Creating sample text
+	  sets from Preferences dialog isn't that obvous
+
+2007-12-27 07:11  pnemade
+
+	* src/importedfonts.ui, src/importedfontsdialog.cpp: Enhance Fonts
+	  Import Dialog Window by adding Ok button and displaying count of
+	  number of imported fonts
+
+2007-12-22 15:25  oeildepierre
+
+	* src/typotek.cpp: Check if systray exists before calling its
+	  isVisible method in typotek::closeEvent
+
+2007-12-22 15:18  oeildepierre
+
+	* src/typotek.cpp: Check if systray exist before init systray frame
+	  in prefs panel
+
+2007-12-22 14:35  oeildepierre
+
+	* src/mainviewwidget.cpp: Check for systray before connecting
+	  updateTags
+
+2007-12-22 09:13  oeildepierre
+
+	* src/bookexport.ui, src/fontbook.cpp, src/fontbookdialog.cpp:
+	  Fixed fontbook
+
+2007-12-21 21:40  oeildepierre
+
+	* src/fontitem.cpp: Prevent the sample text to be out page -
+	  https://gna.org/bugs/index.php?10576
+
+2007-12-21 12:49  oeildepierre
+
+	* harfbuzz/src/harfbuzz-shaper.cpp, src/fmotf.cpp,
+	  src/fmshaper.cpp, src/fontitem.cpp, src/mainview.ui: Slight
+	  improvement in handling shaped string - still crash, but less,
+	  and render well one word!
+
+2007-12-20 17:27  oeildepierre
+
+	* src/fontactionwidget.cpp, src/fontactionwidget.h,
+	  src/listsdock.ui, src/mainview.ui, src/mainviewwidget.cpp:
+	  Housekeeping
+
+2007-12-20 17:13  oeildepierre
+
+	* src/CMakeLists.txt, src/fmglyphsview.cpp,
+	  src/fontactionwidget.cpp, src/fontactionwidget.h,
+	  src/fontitem.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: Moved Tags to the "Info tab"
+
+2007-12-20 09:30  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/typotek.cpp: Fixed crash
+	  when loading broken face that Freetype fails to build
+
+2007-12-20 08:47  oeildepierre
+
+	* src/fontitem.cpp: Fixed un-tr() strings which prevented to
+	  display infos for type1 fonts
+
+2007-12-19 21:52  oeildepierre
+
+	* src/fontitem.cpp, src/main.cpp, src/mainviewwidget.cpp,
+	  src/typotek.cpp: Return of "listfonts" argument
+
+2007-12-19 16:52  oeildepierre
+
+	* harfbuzz/src/harfbuzz-shaper.cpp, src/fmotf.cpp, src/fmotf.h,
+	  src/fmshaper.cpp, src/fmshaper.h, src/fontitem.cpp,
+	  src/mainviewwidget.cpp: Tried to fix some segfaults (without
+	  success) with Harfbuzz and corrected a little annoyance in
+	  mainviewwidget ( https://gna.org/bugs/?10558 )
+
+2007-12-19 01:02  oeildepierre
+
+	* src/fmglyphsview.cpp, src/fmglyphsview.h, src/fontitem.cpp,
+	  src/listsdock.ui, src/mainviewwidget.cpp: Fixed crash when
+	  GlyphView show, and wide glyphs wrong display
+
+2007-12-18 19:39  oeildepierre
+
+	* TODO, src/fmglyphsview.cpp, src/fmpreviewlist.cpp,
+	  src/fmsampletextview.cpp, src/fmsampletextview.h,
+	  src/fontitem.cpp, src/listsdock.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: I removed tabs from docked navigation
+	  widget. Some crash from time to time, I’ll have to investigate
+	  signals & slots
+
+2007-12-18 10:33  oeildepierre
+
+	* src/fmglyphsview.cpp, src/fmglyphsview.h, src/fontitem.cpp,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/messages/fontmatrix_da.ts, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_en.ts, src/messages/fontmatrix_fi.ts,
+	  src/messages/fontmatrix_fr.ts, src/messages/fontmatrix_no.ts,
+	  src/messages/fontmatrix_sr.ts, src/messages/fontmatrix_sv.ts,
+	  src/messages/lupdate.files: Improved handling of large sets of
+	  glyph to didplay in GlyphsView, fixed cosmetics in same place.
+
+2007-12-17 23:31  oeildepierre
+
+	* src/mainviewwidget.cpp, src/systray.cpp, src/systray.h,
+	  src/typotek.cpp: Fixed the slow down at massive activation
+
+2007-12-17 14:58  pnemade
+
+	* CMakeLists.txt: Fix CMAKE_INSTALL_PREFIX and ICONDIR in
+	  CMakeLists.txt
+
+2007-12-17 13:46  oeildepierre
+
+	* src/fontbook.cpp, src/fontbook.h, src/fontbookdialog.cpp,
+	  src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp,
+	  src/messages/fontmatrix_da.ts, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_en.ts, src/messages/fontmatrix_fi.ts,
+	  src/messages/fontmatrix_fr.qm, src/messages/fontmatrix_fr.ts,
+	  src/messages/fontmatrix_no.ts, src/messages/fontmatrix_sr.ts,
+	  src/messages/fontmatrix_sv.ts, src/messages/lupdate.files,
+	  src/messages/update.sh, src/typotek.cpp: Fixed strings, some work
+	  for translators :)
+
+2007-12-17 09:56  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp: Fixed
+	  https://gna.org/bugs/?10540 - the new single glyph view doesn't
+	  work with un-mapped glyphs
+
+2007-12-16 21:52  oeildepierre
+
+	* src/fmglyphsview.cpp, src/fmglyphsview.h, src/fontitem.cpp,
+	  src/fontitem.h, src/mainviewwidget.cpp, src/mainviewwidget.h:
+	  New, and hopefully better, single glyph view.
+
+2007-12-16 13:16  oeildepierre
+
+	* src/fontitem.cpp: Fixed severe performance issue with wide
+	  unicode ranges such as "CJK unified ideographs" or "Un-Mapped
+	  glyphs" from arialuni - It is now a performance issue, which I’ll
+	  fix soon the same way as peview list
+
+2007-12-15 17:07  oeildepierre
+
+	* src/fmglyphsview.cpp, src/fmglyphsview.h, src/mainviewwidget.cpp:
+	  Fixed Right-Button-click-in-Glyphs-View crash which came with
+	  answer to https://gna.org/bugs/?10489
+	  Note that I misunderstood what was expected by this RFE
+
+2007-12-15 15:20  oeildepierre
+
+	* src/fmglyphsview.cpp, src/fmglyphsview.h, src/fontitem.cpp,
+	  src/fontitem.h, src/mainviewwidget.cpp: Tried to very fix
+	  https://gna.org/bugs/?10495 - glyphs grid
+	  And https://gna.org/bugs/?10489 - display alternate glyphs
+
+2007-12-14 23:42  oeildepierre
+
+	* src/fmglyphsview.cpp, src/fmglyphsview.h: fixed
+	  https://gna.org/bugs/index.php?10495 - glyph grid size
+
+2007-12-14 23:26  oeildepierre
+
+	* src/fmshaper.cpp, src/fontitem.cpp: Some debugging code in
+	  FmShaper and https://gna.org/bugs/?10451 fixed (non breaking
+	  lines in font info)
+
+2007-12-14 16:53  oeildepierre
+
+	* src/bookexport.ui, src/fontbook.cpp, src/fontbook.h,
+	  src/fontbookdialog.cpp, src/fontbookdialog.h, src/fontitem.cpp,
+	  src/systray.cpp, src/systray.h: Prepared FontBook switch
+
+2007-12-13 23:37  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h, src/systray.cpp,
+	  src/systray.h, src/typotek.cpp, src/typotek.h: Activation state
+	  of tags in systray are synced with activation state of the tagged
+	  font files - there’s now an activationEvent()
+
+2007-12-13 22:52  oeildepierre
+
+	* src/CMakeLists.txt, src/bookexport.ui, src/fontbook.cpp,
+	  src/fontbook.h, src/typotek.cpp: Prepared an independant class
+	  for FontBook, just to do the template importer now :)
+
+2007-12-13 22:10  oeildepierre
+
+	* src/application.qrc, src/fmotf.cpp, src/fmotf.h,
+	  src/fmshaper.cpp, src/fmshaper.h, src/fontitem.cpp,
+	  src/icons/icon_warning-32.png, src/systray.cpp: Continue to break
+	  shaper code grrr
+	  Played a bit with systray - Need to propagate activation changes
+	  in tags menu
+
+2007-12-13 03:19  tsoots
+
+	* src/typotek.cpp: When importing fonts remember the last directory
+	  used.
+
+2007-12-12 21:01  oeildepierre
+
+	* harfbuzz/src/harfbuzz-shaper.cpp, src/fmotf.cpp, src/fmotf.h,
+	  src/fmshaper.cpp, src/fmshaper.h, src/fontitem.cpp,
+	  src/fontitem.h, src/listsdock.ui, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/messages/fontmatrix_en.qm, src/messages/fontmatrix_en.ts,
+	  src/prefs_panel.ui: fontmatrix:
+	  ADDED Harfbuzz shaping - IT DOES NOT WORK YET
+	  UPDATED "en" TS file by Craig Ringer
+
+2007-12-12 19:28  oeildepierre
+
+	* src/bookexport.ui, src/fontaction.ui, src/importedfonts.ui,
+	  src/listsdock.ui, src/mainview.ui, src/prefs_panel.ui,
+	  src/tagset.ui, src/typotek.cpp: updated strings from Craig MrB
+	  Ringer
+
+2007-12-12 16:36  tsoots
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp, src/typotek.cpp,
+	  src/typotek.h: Re-enable initial tagging. It's now set as an
+	  option which is disabled by default but which can be enabled in
+	  the preferences.
+
+2007-12-12 16:07  tsoots
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp, src/typotek.h: Allow
+	  user to select the font editor
+
+2007-12-12 07:14  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp: fontmatrix:
+	  CHANGED Features are applied when checkboxes are checked or
+	  unchecked
+
+2007-12-12 05:32  tsoots
+
+	* src/typotek.cpp, src/typotek.h: If Fontforge cannot be found the
+	  menu entry for editing font will be disabled.
+
+2007-12-12 05:16  tsoots
+
+	* src/messages/fontmatrix_fi.qm, src/messages/fontmatrix_fi.ts:
+	  Updated the Finnish translation
+
+2007-12-11 19:52  tsoots
+
+	* src/messages/fontmatrix_fi.ts: Finnish translation update
+
+2007-12-11 17:45  oeildepierre
+
+	* src/fontitem.cpp, src/mainview.ui: fontmatrix:
+	  IMPROVED Freetype rendering - especially with kern feature
+
+2007-12-11 14:43  tsoots
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp:
+	  New tags are now added to the systray's tag menu after creation.
+
+2007-12-11 13:36  oeildepierre
+
+	* .:
+
+2007-12-11 13:35  oeildepierre
+
+	* harfbuzz/src/CMakeLists.txt, src/CMakeLists.txt,
+	  src/application.qrc, src/fmotf.h, src/fmpreviewlist.cpp,
+	  src/fmsampletextview.cpp, src/fmshaper.cpp, src/fmshaper.h,
+	  src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/messages/fontmatrix_da.qm,
+	  src/messages/fontmatrix_de.qm, src/messages/fontmatrix_en.qm,
+	  src/messages/fontmatrix_en.ts, src/messages/fontmatrix_fi.qm,
+	  src/messages/fontmatrix_fi.ts, src/messages/fontmatrix_fr.qm,
+	  src/messages/fontmatrix_no.qm, src/messages/fontmatrix_sr.qm,
+	  src/messages/fontmatrix_sv.qm, src/typotek.cpp: fontmatrix:
+	  ADDED Rendering in previewlist is now done by Freetype - it’s
+	  really better
+	  ADDED TS files
+	  ADDED a bit of the future FmShaper
+
+2007-12-11 04:34  tsoots
+
+	* src/prefs_panel.ui, src/systray.cpp: Fixed a few typos and made
+	  activate all and deactivate all to check and uncheck tag menu
+	  entries in the systray's context menu
+
+2007-12-11 04:07  tsoots
+
+	* src/messages/fontmatrix_fi.ts: Added Finnish translation file and
+	  the first few translated messages.
+
+2007-12-11 00:12  oeildepierre
+
+	* src/messages/fontmatrix_da.ts, src/messages/fontmatrix_de.ts,
+	  src/messages/fontmatrix_en.ts, src/messages/fontmatrix_fr.ts,
+	  src/messages/fontmatrix_no.ts, src/messages/fontmatrix_sr.ts,
+	  src/messages/fontmatrix_sv.ts, src/messages/lupdate.files:
+	  fontmatrix:
+	  UPDATED TS files + a new english one
+
+2007-12-10 21:36  oeildepierre
+
+	* src/fontitem.cpp, src/mainviewwidget.cpp: fontmatrix:
+	  FIXED resolution for FreeType rasterisation
+
+2007-12-10 18:58  tsoots
+
+	* src/prefs_panel.ui, src/prefspaneldialog.cpp, src/systray.cpp,
+	  src/typotek.cpp, src/typotek.h: It's now possible to close the
+	  application to the system tray.
+
+2007-12-10 18:42  oeildepierre
+
+	* src/dataloader.cpp, src/fontitem.cpp, src/fontitem.h,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp, src/typotek.h:
+	  fontmatrix:
+	  ADDED First step of FreeType rendering
+
+2007-12-10 15:19  tsoots
+
+	* TODO: Updated TODO for myself (added two new items).
+
+2007-12-10 15:02  tsoots
+
+	* src/systray.cpp, src/systray.h: First bits of systray controls
+
+2007-12-10 15:00  tsoots
+
+	* src/CMakeLists.txt, src/prefs_panel.ui, src/prefspaneldialog.cpp,
+	  src/prefspaneldialog.h, src/typotek.cpp, src/typotek.h: First
+	  bits of the systray controls
+
+2007-12-10 14:04  oeildepierre
+
+	* src/dataloader.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/prefspaneldialog.cpp, src/savedata.cpp, src/typotek.cpp,
+	  src/typotek.h: fontmatrix:
+	  ADDED Beginning of multiple sample texts infrastructure
+	  FIXED https://gna.org/bugs/?10428
+
+2007-12-10 12:33  oeildepierre
+
+	* src/CMakeLists.txt, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/prefs_panel.ui,
+	  src/prefspaneldialog.cpp, src/prefspaneldialog.h,
+	  src/typotek.cpp, src/typotek.h: fontmatrix:
+	  ADDED First attempt to provide a preferences panel
+
+2007-12-10 11:48  tsoots
+
+	* TODO: Added systray work to TODO (testing svn commit access at
+	  the same time)
+
+2007-12-10 10:18  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp: fontmatrix:
+	  IMPROVED the glyphs view
+
+2007-12-09 23:33  oeildepierre
+
+	* INSTALL: fontmatrix:
+	  ADDED note about version of Freetype in INSTALL file as it not
+	  works out-of-the-box for at least GoboLinux users
+
+2007-12-09 21:49  oeildepierre
+
+	* src/fontitem.cpp: fontmatrix:
+	  FIXED https://gna.org/bugs/index.php?10474
+
+2007-12-09 20:57  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp: fontmatrix:
+	  ADDED show an approximated percentage of unicode coverage for the
+	  current interval
+
+2007-12-08 16:26  oeildepierre
+
+	* src/mainview.ui: fontmatrix:
+	  FIXED https://gna.org/bugs/?10475
+
+2007-12-08 10:07  oeildepierre
+
+	* src/fmsampletextview.cpp, src/fmsampletextview.h: fontmatrix:
+	  FIXED wheelevent was ignored in sample text view - when unfitted
+	  of course
+
+2007-12-08 09:03  oeildepierre
+
+	* src/fmotf.cpp: fontmatrix:
+	  FIXED OpenType stuff was unusable due to a lot of debbugging
+	  messages
+
+2007-12-08 08:45  oeildepierre
+
+	* INSTALL: fontmatrix:
+	  CHANGED Install instructions
+
+2007-12-07 22:28  oeildepierre
+
+	* src/application.qrc, src/messages/fontmatrix_da.ts,
+	  src/messages/fontmatrix_de.ts, src/messages/fontmatrix_fr.qm,
+	  src/messages/fontmatrix_fr.ts, src/messages/fontmatrix_no.ts,
+	  src/messages/fontmatrix_sr.ts, src/messages/fontmatrix_sv.ts,
+	  src/messages/help_fr.html, src/messages/lupdate.files:
+	  fontmatrix:
+	  ADDED translations - fr
+
+2007-12-07 20:53  oeildepierre
+
+	* src/mainviewwidget.cpp: fontmatrix:
+	  FIXED https://gna.org/bugs/index.php?10459
+
+2007-12-07 20:47  oeildepierre
+
+	* src/messages/help.html: fontmatrix:
+	  FORWARDED PLinnell’s corrections
+
+2007-12-07 18:32  oeildepierre
+
+	* src/src.pro, typotek.pro: fontmatrix:
+	  DELETED PRO files, they’ve became useless - Build with cmake
+	  instead
+
+2007-12-07 17:32  oeildepierre
+
+	* harfbuzz/src/harfbuzz-shaper.h, src/fmotf.cpp, src/fmotf.h,
+	  src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h: fontmatrix:
+	  IMPROVED First attempt to apply selected features
+
+2007-12-06 15:06  oeildepierre
+
+	* src/fmotf.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/opentypetags.h: fontmatrix:
+	  IMPROVED OTF features presentation
+
+2007-12-06 14:40  oeildepierre
+
+	* harfbuzz, harfbuzz/AUTHORS, harfbuzz/COPYING,
+	  harfbuzz/COPYING.FTL, harfbuzz/COPYING.GPL, harfbuzz/ChangeLog,
+	  harfbuzz/Makefile.am, harfbuzz/NEWS, harfbuzz/README,
+	  harfbuzz/autogen.sh, harfbuzz/configure.ac: fontmatrix:
+	  ADDED Harbuzz files (2)
+
+2007-12-06 14:39  oeildepierre
+
+	* harfbuzz/src, harfbuzz/src/.gitignore,
+	  harfbuzz/src/CMakeLists.txt, harfbuzz/src/Makefile.am,
+	  harfbuzz/src/harfbuzz-arabic.c,
+	  harfbuzz/src/harfbuzz-buffer-private.h,
+	  harfbuzz/src/harfbuzz-buffer.c, harfbuzz/src/harfbuzz-buffer.h,
+	  harfbuzz/src/harfbuzz-dump-main.c, harfbuzz/src/harfbuzz-dump.c,
+	  harfbuzz/src/harfbuzz-dump.h, harfbuzz/src/harfbuzz-external.h,
+	  harfbuzz/src/harfbuzz-gdef-private.h,
+	  harfbuzz/src/harfbuzz-gdef.c, harfbuzz/src/harfbuzz-gdef.h,
+	  harfbuzz/src/harfbuzz-global.h,
+	  harfbuzz/src/harfbuzz-gpos-private.h,
+	  harfbuzz/src/harfbuzz-gpos.c, harfbuzz/src/harfbuzz-gpos.h,
+	  harfbuzz/src/harfbuzz-gsub-private.h,
+	  harfbuzz/src/harfbuzz-gsub.c, harfbuzz/src/harfbuzz-gsub.h,
+	  harfbuzz/src/harfbuzz-hangul.c, harfbuzz/src/harfbuzz-hebrew.c,
+	  harfbuzz/src/harfbuzz-impl.c, harfbuzz/src/harfbuzz-impl.h,
+	  harfbuzz/src/harfbuzz-indic.cpp, harfbuzz/src/harfbuzz-khmer.c,
+	  harfbuzz/src/harfbuzz-myanmar.c,
+	  harfbuzz/src/harfbuzz-open-private.h,
+	  harfbuzz/src/harfbuzz-open.c, harfbuzz/src/harfbuzz-open.h,
+	  harfbuzz/src/harfbuzz-shape.h,
+	  harfbuzz/src/harfbuzz-shaper-all.cpp,
+	  harfbuzz/src/harfbuzz-shaper-private.h,
+	  harfbuzz/src/harfbuzz-shaper.cpp, harfbuzz/src/harfbuzz-shaper.h,
+	  harfbuzz/src/harfbuzz-stream-private.h,
+	  harfbuzz/src/harfbuzz-stream.c, harfbuzz/src/harfbuzz-stream.h,
+	  harfbuzz/src/harfbuzz-thai.cpp, harfbuzz/src/harfbuzz-tibetan.c,
+	  harfbuzz/src/harfbuzz.c, harfbuzz/src/harfbuzz.h: fontmatrix:
+	  ADDED Harbuzz files
+
+2007-12-06 14:38  oeildepierre
+
+	* CMakeLists.txt, cmake/modules/FREETYPEConfig.cmake, harfbuzz,
+	  src/CMakeLists.txt, src/fmotf.cpp, src/fmotf.h, src/fontitem.cpp,
+	  src/fontitem.h, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: fontmatrix:
+	  ADDED First step of Harbuzz integration
+
+2007-12-06 10:30  oeildepierre
+
+	* CMakeLists.txt: fontmatrix:
+	  PLAYED with CMake & CPack
+
+2007-12-06 09:13  oeildepierre
+
+	* src/savedata.cpp: fontmatrix:
+	  FIXED user preview word was not saved
+
+2007-12-05 23:30  oeildepierre
+
+	* src/application.qrc, src/dataloader.cpp, src/fmpreviewlist.cpp,
+	  src/fmpreviewlist.h, src/listdockwidget.h,
+	  src/messages/fontmatrix_da.qm, src/messages/fontmatrix_da.ts,
+	  src/messages/fontmatrix_de.ts, src/messages/fontmatrix_no.qm,
+	  src/messages/fontmatrix_no.ts, src/messages/fontmatrix_sr.ts,
+	  src/messages/fontmatrix_sv.qm, src/messages/fontmatrix_sv.ts,
+	  src/tagseteditor.cpp, src/typotek.cpp, src/typotek.h: fontmatrix:
+	  ADDED Preview word can be set - has broke something I think!
+	  ADDED TS & QM(empty) files for no, da, sv, de
+
+2007-12-05 15:52  oeildepierre
+
+	* CMakeLists.txt, INSTALL, cmake, cmake/modules,
+	  cmake/modules/FREETYPEConfig.cmake, src/CMakeLists.txt:
+	  fontmatrix:
+	  ADDED CMake build
+
+2007-12-05 15:09  oeildepierre
+
+	* src/messages/fontmatrix_fr.qm, src/messages/fontmatrix_sr.qm,
+	  src/messages/fontmatrix_sr.ts: fontmatrix:
+	  ADDED QM files because there is no obvious way to build them with
+	  cmake and fontmatrix won’t compile witout them
+
+2007-12-05 14:30  oeildepierre
+
+	* src/typotek.cpp: fontmatrix:
+	  REMOVED all dbus stuff, work in progress (4)
+
+2007-12-05 14:28  oeildepierre
+
+	* src/mainviewwidget.cpp, src/typotek.cpp, src/typotek.h:
+	  fontmatrix:
+	  REMOVED all dbus stuff, work in progress (3)
+
+2007-12-05 14:25  oeildepierre
+
+	* src/fontactionwidget.cpp: fontmatrix:
+	  REMOVED all dbus stuff, work in progress (2)
+
+2007-12-05 14:13  oeildepierre
+
+	* src/application.qrc, src/fontactionwidget.cpp,
+	  src/fontactionwidget.h, src/main.cpp, src/src.pro: fontmatrix:
+	  REMOVED all dbus stuff, work in progress
+
+2007-12-04 17:44  oeildepierre
+
+	* src/fontitem.h, src/main.cpp, src/messages/fontmatrix_fr.ts,
+	  src/messages/fontmatrix_sr.ts, src/src.pro: fontmatrix:
+	  ADDED TS files : french(completed) and serbian(empty)
+
+2007-12-04 13:30  oeildepierre
+
+	* src/fontitem.cpp: fontmatrix:
+	  CONTINUED i18n - output unknown encodings rather than display
+	  something wrong
+
+2007-12-04 02:44  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h: fontmatrix:
+	  ADDED first try to provide some i18n
+
+2007-12-03 21:47  oeildepierre
+
+	* src/messages/welcome.html: fontmatrix:
+	  FIXED forgot to add this welcome
+
+2007-12-03 18:14  oeildepierre
+
+	* src/listsdock.ui: fontmatrix:
+	  CHANGED Names list is default view anew
+
+2007-12-03 18:05  oeildepierre
+
+	* src/aboutwidget.cpp, src/application.qrc, src/fontitem.cpp,
+	  src/helpwidget.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/src.pro: fontmatrix:
+	  ADDED Welcome message in messages/welcome.html (to be continued)
+	  CHANGED glyph info string
+
+2007-12-03 17:32  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h: fontmatrix:
+	  FIXED pay more attention of what is displayed in glyphs tab :-) -
+	  https://gna.org/bugs/?10437
+
+2007-12-03 13:32  oeildepierre
+
+	* src/fontactionwidget.cpp, src/mainview.ui, src/typotek.cpp:
+	  fontmatrix:
+	  FIXED Increase visibility of font name in status bar -
+	  https://gna.org/bugs/?10427
+
+2007-12-02 19:23  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fmpreviewlist.h: fontmatrix:
+	  CHANGED Key_Up & Key_Down in previews list browse items -
+	  https://gna.org/bugs/index.php?10426
+
+2007-12-02 16:35  oeildepierre
+
+	* src/mainviewwidget.cpp, src/typotek.cpp, src/typotek.h:
+	  fontmatrix:
+	  FIXED write the current font name in status bar -
+	  https://gna.org/bugs/?10427
+
+2007-12-01 22:03  oeildepierre
+
+	* src/dataloader.cpp: fontmatrix:
+	  FIXED ensure that sample text is not empty, even if there is no
+	  fonts.data at all
+
+2007-12-01 22:00  oeildepierre
+
+	* src/fontitem.cpp: fontmatrix:
+	  FIXED ensure that activation state is not undefined
+
+2007-12-01 20:25  oeildepierre
+
+	* src/fontactionwidget.cpp, src/fontactionwidget.h,
+	  src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: fontmatrix:
+	  FIXED deactivation of variant is now possible
+	  FIXED tags edition for an whole family is now possible
+
+2007-12-01 20:19  vlada
+
+	* TODO: ADDED:
+	  ui improvement suggestions
+
+2007-12-01 09:59  oeildepierre
+
+	* src/typotek.cpp: fontmatrix:
+	  CLEAN UP deactivated the DBUS adaptator stuff, nobody listens on
+	  font bus for now and it’s buggy
+
+2007-12-01 09:43  oeildepierre
+
+	* TODO, src/listdockwidget.cpp, src/listdockwidget.h,
+	  src/listsdock.ui, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/src.pro, src/typotek.cpp,
+	  src/typotek.h: fontmatrix:
+	  CHANGED Left panel is now a QDockWidget, which gives much more
+	  control to the user
+
+2007-11-30 23:30  oeildepierre
+
+	* TODO, src/messages/help.html: fontmatrix:
+	  UPDATED todo & help
+
+2007-11-30 14:43  oeildepierre
+
+	* src/fmpreviewlist.cpp: fontmatrix:
+	  FIXED previews list displacement when select item
+
+2007-11-30 14:40  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp: fontmatrix:
+	  IMPROVED UI gray out Initial letter background in names list
+
+2007-11-30 10:43  oeildepierre
+
+	* src/mainview.ui: fontmatrix:
+	  CLEAN UP
+
+2007-11-30 09:23  oeildepierre
+
+	* src/mainview.ui, src/typotek.cpp, src/typotek.h: fontmatrix:
+	  ADDED DragAndDrop to import files into Fontmatrix -
+	  http://www.fontmatrix.net/multimedia/fm_dnd.ogg
+
+2007-11-29 21:40  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fontitem.cpp, src/mainviewwidget.cpp:
+	  fontmatrix:
+	  FIXED At least I hope it is fixed ;-) https://gna.org/bugs/?10407
+
+2007-11-29 14:53  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h: fontmatrix:
+	  FIXED hmm, we can call it a workaround!
+	  https://gna.org/bugs/?10409
+
+2007-11-28 22:08  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h:
+	  fontmatrix:
+	  FIXED some ugliness
+
+2007-11-28 20:14  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp:
+	  fontmatrix:
+	  ADDED beginning of a "fit to view" for glyphs View tab
+
+2007-11-28 15:26  oeildepierre
+
+	* src/dataloader.cpp, src/fmglyphsview.cpp, src/fmglyphsview.h,
+	  src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/src.pro,
+	  src/typotek.cpp, src/typotek.h: fontmatrix:
+	  CLEAN UP
+
+2007-11-28 09:12  oeildepierre
+
+	* src/importedfonts.ui, src/importedfontsdialog.cpp,
+	  src/importedfontsdialog.h, src/mainviewwidget.cpp, src/src.pro,
+	  src/typotek.cpp: fontmatrix:
+	  ADDED A dialog that list what fonts have been imported
+
+2007-11-28 08:35  oeildepierre
+
+	* src/mainviewwidget.h, src/typotek.cpp, src/typotek.h: fontmatrix:
+	  ADDED Finally, here is the "open in Fontforge" button!
+
+2007-11-28 07:19  oeildepierre
+
+	* src/fontitem.cpp, src/mainviewwidget.cpp: fontmatrix:
+	  FIXED https://gna.org/bugs/?10408
+
+2007-11-27 12:20  oeildepierre
+
+	* src/mainview.ui: fontmatrix
+	  WORKAROUND https://gna.org/bugs/?10396 It has to be port to
+	  Fontmatrix002
+
+2007-11-27 12:18  oeildepierre
+
+	* src/fontitem.cpp: fontmatrix
+	  WORKAROUND/FIXED A symbol encoded font (code39.ttf) gave me the
+	  first crash of FontItem::renderLine()
+
+2007-11-26 09:51  oeildepierre
+
+	* INSTALL: fontmatrix:
+	  port new INSTALL file from fontmatrix002 branch
+
+2007-11-26 09:41  oeildepierre
+
+	* src/typotek.cpp: fontmatrix:
+	  FIXED failed when there was no ~/.fonts.conf file.
+
+2007-11-26 00:20  oeildepierre
+
+	* src/fmpreviewlist.cpp: fontmatrix:
+	  FIXED give initial size to the preview list scene was a bad idea,
+	  revert to an unitialized scene.
+
+2007-11-25 22:21  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/messages/help.html, src/tagset.ui:
+	  fontmatrix:
+	  FIXED cosmetics before branching as 0.2
+
+2007-11-25 21:54  vlada
+
+	* src/messages/about.html, src/messages/help.html: UPDATEED:
+	  about text and Fontmatrix help
+
+2007-11-25 21:50  oeildepierre
+
+	* src/tagset.ui, src/tagseteditor.cpp, src/tagseteditor.h,
+	  src/typotek.cpp, src/typotek.h: fontmatrix:
+	  ADDED can delete tagsets
+
+2007-11-25 20:33  oeildepierre
+
+	* src/dataloader.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/savedata.cpp, src/src.pro, src/typotek.h: fontmatrix:
+	  ADDED save sample text
+
+2007-11-25 18:36  vlada
+
+	* src/fileopen.xpm, src/filesave.xpm, src/zoom.png: REMOVED:
+	  unnecessary (obsolete) icons
+
+2007-11-25 17:23  vlada
+
+	* src/about.ui, src/application.qrc,
+	  src/graphic-resources/about-graphic.png,
+	  src/graphic-resources/about-vectors.svg,
+	  src/graphic-resources/font-sampletext.png,
+	  src/graphic-resources/fontmatrix-AA.xcf,
+	  src/graphic-resources/fontmatrix-fontbookexport-icon.png,
+	  src/graphic-resources/fontmatrix-import-icon.png,
+	  src/graphic-resources/fontmatrix-tagseteditor-icon.png,
+	  src/graphic-resources/fontmatrix-zoom.xcf,
+	  src/icons/application-fontbookexport-small.svg,
+	  src/icons/application-import-small.svg,
+	  src/icons/application-tagseteditor-small.svg,
+	  src/icons/application-tagseteditor.svg, src/icons/font-glyph.svg,
+	  src/icons/font-info.svg, src/icons/font-search.svg,
+	  src/icons/font-smpletext.svg, src/icons/font-tag.svg,
+	  src/mainview.ui, src/typotek.cpp: ADDED:
+	  Huge amount of graphic (final and sources in .svg and .xcf
+	  format)
+	  
+	  CHANGED:
+	  A few statusbar messages
+	  About screen graphic etc.
+
+2007-11-25 16:15  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fmpreviewlist.h,
+	  src/mainviewwidget.cpp: fontmatrix:
+	  IMPROVED stability and visual
+
+2007-11-25 14:13  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/typotek.cpp,
+	  src/typotek.h: fontmatrix:
+	  FIXED usability
+
+2007-11-25 13:11  oeildepierre
+
+	* src/messages/about.html: more text
+
+2007-11-25 13:01  oeildepierre
+
+	* src/about.ui, src/application.qrc, src/help.ui,
+	  src/helpwidget.cpp, src/helpwidget.h, src/mainview.ui,
+	  src/messages/help.html, src/src.pro, src/typotek.cpp,
+	  src/typotek.h: fontmatrix:
+	  ADDED A help dialog
+
+2007-11-25 10:49  oeildepierre
+
+	* src/messages, src/messages/about.html,
+	  src/messages/about_fr.html: fontmatrix:
+	  ADDED first step to a custom about dialog...
+
+2007-11-25 10:48  oeildepierre
+
+	* src/about.ui, src/aboutwidget.cpp, src/aboutwidget.h,
+	  src/application.qrc, src/fontitem.cpp, src/messages,
+	  src/qrc_application.cpp, src/src.pro, src/typotek.cpp:
+	  fontmatrix:
+	  ADDED first step to a custom about dialog
+
+2007-11-24 20:26  vlada
+
+	* src/typotek.cpp: CHANGED:
+	  Actually make use of new menu icon
+
+2007-11-24 20:16  vlada
+
+	* fontmatrix.desktop, src/application.qrc,
+	  src/graphic-resources/fontmatrix-tagseteditor-icon.png,
+	  src/mainview.ui, src/qrc_application.cpp, src/tagset.ui:
+	  COSMETICS:
+	  various
+
+2007-11-24 18:12  oeildepierre
+
+	* src/tagset.ui, src/typotek.cpp: fontmatrix:
+	  OUPS didn’t saw the tagset editor icon, it’s in now
+
+2007-11-24 18:04  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/qrc_application.cpp: fontmatrix:
+	  FIXED ui issue in glyphs view (raised by Vlada, thanks to him)
+
+2007-11-24 17:44  vlada
+
+	* src/application.qrc, src/graphic-resources/font-glyph.png,
+	  src/graphic-resources/fontmatrix-AA.png,
+	  src/graphic-resources/fontmatrix-tagseteditor.png,
+	  src/graphic-resources/fontmatrix-zoom.png, src/mainview.ui:
+	  ADDED:
+	  more icons
+	  and eye-candy stuff
+
+2007-11-24 16:51  oeildepierre
+
+	* src/mainviewwidget.cpp, src/typotek.cpp: fontmatrix:
+	  ADDED Fontmatrix word in window title
+
+2007-11-24 15:41  oeildepierre
+
+	* src/mainviewwidget.cpp, src/qrc_application.cpp, src/typotek.cpp,
+	  src/typotek.h: fontmatrix:
+	  COME BACK activate all & deactivate all are now under "Edit" menu
+	  entry.
+
+2007-11-24 14:34  oeildepierre
+
+	* src/fontactionwidget.cpp, src/mainview.ui,
+	  src/qrc_application.cpp: fontmatrix:
+	  Vlada’s icon set integrated.
+
+2007-11-24 14:23  vlada
+
+	* src/application.qrc, src/graphic-resources/font-glyph.png,
+	  src/graphic-resources/font-info.png,
+	  src/graphic-resources/font-tag.png: ADDED:
+	  font-info,
+	  font-glyph,
+	  and font-tag icons
+	  
+	  CHANGED:
+	  application.qrc to respect these new icons
+
+2007-11-24 14:19  oeildepierre
+
+	* src/fontactionwidget.cpp, src/fontactionwidget.h,
+	  src/fontitem.cpp: fontmatrix:
+	  ADDED Contextual menu in tags list so you can add or remove it
+	  from a tagset here
+
+2007-11-23 16:34  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp:
+	  fontmatrix:
+	  ADDED In glyphs view, codepoints.
+
+2007-11-22 19:59  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fmpreviewlist.h,
+	  src/mainviewwidget.cpp: fontmatrix:
+	  FIXED in preview list, scrolling slow down when you moved slider
+	  "allegro"
+
+2007-11-22 13:32  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fmpreviewlist.h, src/fontitem.cpp,
+	  src/fontitem.h, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/typotek.cpp, src/typotek.h: fontmatrix:
+	  ADDED fontnames list and font previews list selected items are
+	  now synced
+	  ADDED Switch between names and previews with CTRL+SPACE
+
+2007-11-21 16:16  oeildepierre
+
+	* src/fontitem.cpp, src/mainview.ui, src/mainviewwidget.cpp:
+	  fontmatrix:
+	  FIXED some ugliness
+
+2007-11-21 16:09  oeildepierre
+
+	* src/fmpreviewlist.cpp, src/fmpreviewlist.h, src/fontitem.cpp,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/src.pro: fontmatrix:
+	  ADDED A dedicated list widget for preview (still experimental)
+
+2007-11-21 01:20  oeildepierre
+
+	* src/mainviewwidget.cpp: fontmatrix:
+	  FIXED I forgot Roman in prefered variant list
+
+2007-11-21 01:10  oeildepierre
+
+	* TODO, src, src/dataloader.cpp, src/fontitem.cpp, src/fontitem.h,
+	  src/main.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/typotek.cpp: fontmatrix:
+	  ADDED View codepoint in codepoint field
+
+2007-11-20 02:31  vlada
+
+	* TODO, fontmatrix.desktop, fontmatrix.png, src/src.pro: ADDING &
+	  CHANGING:
+	  still struggling with .desktop to appear in menu
+
+2007-11-19 14:42  oeildepierre
+
+	* src/fontitem.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/qrc_application.cpp: fontmatrix:
+	  EXPERIENCES ui
+
+2007-11-19 13:11  vlada
+
+	* fontmatrix.desktop, src/src.pro, typotek.desktop: ADDED:
+	  fontmatrix.desktop and changed src.pro accordingly
+	  
+	  REMOVED:
+	  typotek.desktop
+
+2007-11-19 11:56  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h: fontmatrix:
+	  ADDED View glyphs by lang block
+
+2007-11-16 14:15  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/savedata.cpp: fontmatrix:
+	  CHANGED FT_Faces are now loaded "on-demand"
+
+2007-11-16 00:14  oeildepierre
+
+	* TODO, src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/savedata.cpp,
+	  src/typotek.cpp: fontmatrix:
+	  CHANGED mainview widget
+	  IMPROVED performance
+
+2007-11-15 19:06  oeildepierre
+
+	* src/main.cpp: fontmatrix:
+	  FIXED non-compile last commit
+
+2007-11-15 13:58  oeildepierre
+
+	* src/main.cpp: fontmatrix:
+	  CHANGED splashscreen becomes optional ("splash" command line
+	  option)
+
+2007-11-14 20:35  oeildepierre
+
+	* src/fmsampletextview.cpp, src/fmsampletextview.h,
+	  src/mainviewwidget.cpp: fontmatrix:
+	  ADDED rubberband in fontsample view
+
+2007-11-14 14:35  oeildepierre
+
+	* src/fmsampletextview.cpp, src/main.cpp, src/mainviewwidget.cpp,
+	  src/typotek.cpp: fontmatrix:
+	  FIXED performance issue with splashscreen -
+
+2007-11-14 13:26  oeildepierre
+
+	* src/main.cpp, src/mainview.ui: fontmatrix:
+	  TRYING Alpha blended splashscreen
+
+2007-11-14 12:09  oeildepierre
+
+	* src/main.cpp, src/mainview.ui, src/mainviewwidget.cpp:
+	  fontmatrix:
+	  CHANGED disable zoom when "fit in view" is checked
+
+2007-11-14 11:48  oeildepierre
+
+	* src/fmsampletextview.cpp, src/fmsampletextview.h,
+	  src/fontitem.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/qrc_application.cpp, src/src.pro,
+	  src/typotek.cpp: fontmatrix:
+	  FIXED In fit view mode, view was not scaled when widget was
+	  resized
+
+2007-11-14 10:34  oeildepierre
+
+	* src/mainview.ui: fontmatrix:
+	  CHANGED toolbox into tabwidget. QtDesigner is really terrific!
+
+2007-11-14 10:22  oeildepierre
+
+	* src/fontitem.cpp: fontmatrix:
+	  FIXED Font info presentation
+
+2007-11-14 09:43  oeildepierre
+
+	* src/dataloader.cpp, src/main.cpp, src/typotek.cpp, src/typotek.h:
+	  fontmatrix:
+	  ADDED one or two things about splashscreen
+
+2007-11-14 00:01  oeildepierre
+
+	* src/application.qrc, src/fontitem.cpp, src/main.cpp,
+	  src/qrc_application.cpp: fontmatrix:
+	  FIXED out of range name_id
+	  FIXED graphic ressource path issue
+
+2007-11-13 23:12  vlada
+
+	* src/editcopy.xpm, src/editcut.xpm, src/editpaste.xpm,
+	  src/filenew.xpm, src/fontmatrix.png, src/typotek.png: CLEANUP:
+	  Removed some unused icons and old application icons as well.
+
+2007-11-13 22:31  vlada
+
+	* src/graphic-resources/fontmatrix_splashscreen.png,
+	  src/graphic-resources/splashscreen-670x470.png,
+	  src/graphic-resources/splashscreen-vectors.svg: urgh
+
+2007-11-13 22:23  vlada
+
+	* src/fontmatrix_splashscreen.png, src/graphic-resources,
+	  src/icons/application-fontmatrix-vectors.svg,
+	  src/icons/application-fontmatrix_128.png,
+	  src/icons/application-fontmatrix_16.png,
+	  src/icons/application-fontmatrix_22.png,
+	  src/icons/application-fontmatrix_32.png,
+	  src/icons/application-fontmatrix_48.png,
+	  src/icons/application-fontmatrix_64.png,
+	  src/icons/fontmatrix128.png, src/icons/fontmatrix16.png,
+	  src/icons/fontmatrix22.png, src/icons/fontmatrix32.png,
+	  src/icons/fontmatrix48.png, src/icons/fontmatrix64.png: RENAMING
+	  & ADDING:
+	  Renaming icons closer to the standards and commiting new splash.
+
+2007-11-12 17:39  oeildepierre
+
+	* src/application.qrc, src/fontmatrix_splashscreen.png,
+	  src/main.cpp, src/qrc_application.cpp, src/typotek.cpp,
+	  src/typotek.h: fontmatrix:
+	  ADDED splashscreen
+
+2007-11-12 09:14  oeildepierre
+
+	* src/fontitem.cpp: fontmatrix:
+	  IMPROVED aesthetic
+
+2007-11-11 15:48  vlada
+
+	* src/icons, src/icons/fontmatrix128.png,
+	  src/icons/fontmatrix16.png, src/icons/fontmatrix22.png,
+	  src/icons/fontmatrix32.png, src/icons/fontmatrix48.png,
+	  src/icons/fontmatrix64.png: Somehow I've managed not to commit
+	  actual icons. Second try!
+
+2007-11-10 22:13  vlada
+
+	* src/qrc_application.cpp: Icons - manualy tweaked and brand new.
+	  My very first svn commit ever (hopefuly it'll work) :)
+
+2007-11-09 22:32  oeildepierre
+
+	* typotek.spec:
+
+2007-11-07 23:08  oeildepierre
+
+	* src/dataloader.cpp, src/typotek.cpp: fontmatrix:
+	  FIXED handling of empty tags
+	  REPLACED about message
+
+2007-11-07 14:49  oeildepierre
+
+	* src/bookexport.ui, src/fontactionwidget.cpp,
+	  src/fontbookdialog.cpp, src/fontbookdialog.h, src/fontitem.cpp,
+	  src/main.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/qrc_application.cpp, src/savedata.cpp, src/typotek.cpp,
+	  src/typotek.h: fontmatrix:
+	  some ui improvements
+
+2007-11-07 08:41  oeildepierre
+
+	* src/mainviewwidget.cpp, src/savedata.cpp, src/tagset.ui,
+	  src/tagseteditor.cpp, src/typotek.h: fontmatrix:
+	  FIXED tagsets
+
+2007-11-07 00:36  oeildepierre
+
+	* src/mainviewwidget.cpp, src/savedata.cpp, src/tagset.ui,
+	  src/tagseteditor.cpp, src/tagseteditor.h, src/typotek.h:
+	  fontmatrix :
+	  ADDED remove tags in tagsets & various fixes
+
+2007-11-06 23:34  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui: fontmatrix :
+	  ADDED more info from fonts
+
+2007-11-06 16:14  oeildepierre
+
+	* src/application.qrc, src/fontmatrix.png, src/main.cpp,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/qrc_application.cpp,
+	  src/src.pro, src/typotek.cpp, src/typotekadaptator.h: typotek
+	  renamed in fontmatrix
+
+2007-11-06 00:48  oeildepierre
+
+	* src/typotek.cpp: typotek :
+	  FIXED paths issue
+
+2007-11-06 00:10  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/main.cpp,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp,
+	  src/typotek.h: typotek :
+	  FIXED preview.
+	  family is represented by an icon of the letter "a",
+	  font by a backround
+
+2007-11-05 19:51  oeildepierre
+
+	* src/typotek.cpp: typotek :
+	  ADDED qdebug fontload
+
+2007-11-05 17:14  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/src.pro:
+	  typotek :
+	  IMPROVED preview
+
+2007-11-03 21:37  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/qrc_application.cpp:
+	  typotek :
+	  IMPROVED ui
+
+2007-11-02 22:48  oeildepierre
+
+	* src/fontitem.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/typotek.cpp: typotek :
+	  ADDED Antialias switch button
+	  FIXED Afm are now properly handled
+
+2007-11-01 22:34  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h, src/typotek.cpp:
+	  typotek :
+	  ADDED codepoint access in all view
+
+2007-11-01 14:19  oeildepierre
+
+	* src/mainviewwidget.cpp, src/typotek.cpp, src/typotek.h: typotek :
+	  WARNING
+	  IMPROVED Fontconfig integration ;-)
+	  Fonts are activated in ~/.fonts-managed directory and this
+	  directory is
+	  added as a dir element in ~/.fonts.conf
+
+2007-10-31 08:39  oeildepierre
+
+	* src/savedata.cpp, src/savedata.h, src/src.pro, src/typotek.cpp:
+	  typotek :
+	  ADDED dedicated savedata class
+
+2007-10-30 15:41  oeildepierre
+
+	* src/fontactionwidget.cpp, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/tagseteditor.cpp, src/tagseteditor.h, src/typotek.cpp,
+	  src/typotek.h: typotek :
+	  IMPROVED Tagsets, the end? ;-)
+
+2007-10-29 18:00  oeildepierre
+
+	* src/dataloader.cpp, src/dataloader.h, src/fontaction.ui,
+	  src/fontactionwidget.cpp, src/fontactionwidget.h,
+	  src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/qrc_application.cpp, src/src.pro, src/tagset.ui,
+	  src/tagseteditor.cpp, src/tagseteditor.h, src/typotek.cpp,
+	  src/typotek.h: typotek : WARNING (1)
+	  ADDED TagSets, the begining & changed file format.
+	  (1) File format has changed, so your previous install won't work
+	  with this new version
+
+2007-10-26 09:40  oeildepierre
+
+	* src/fontbookdialog.cpp, src/fontitem.cpp, src/fontitem.h,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/typotek.cpp: typotek
+	  :
+	  IMPROVED including various improvements inpired by Vlada (thanks
+	  to him)
+
+2007-10-25 20:49  oeildepierre
+
+	* src/fontbookdialog.cpp, src/fontitem.h, src/typotek.cpp: typotek
+	  :
+	  IMPROVED fontbook
+
+2007-10-24 22:06  oeildepierre
+
+	* src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/qrc_application.cpp, src/typotek.cpp, src/typotek.h: *typotek
+	  ADDED tag at import
+
+2007-10-24 21:36  oeildepierre
+
+	* src/fontactionwidget.cpp, src/fontitem.cpp, src/typotek.cpp:
+	  *typotek
+	  FIXED crash
+
+2007-10-24 21:00  oeildepierre
+
+	* src/fontaction.ui, src/fontactionwidget.cpp: *typotek
+	  divers
+
+2007-10-24 20:50  oeildepierre
+
+	* src/fontactionwidget.cpp, src/qrc_application.cpp, src/src.pro,
+	  typotek.desktop, typotek.spec: *typotek
+	  divers
+
+2007-10-24 14:33  oeildepierre
+
+	* src/bookexport.ui, src/fontbookdialog.cpp, src/fontbookdialog.h,
+	  src/fontitem.cpp, src/qrc_application.cpp, src/typotek.cpp,
+	  src/typotek.h: typotek :
+	  ADDED fontbook preview
+
+2007-10-24 10:50  oeildepierre
+
+	* src, src/qrc_application.cpp, src/src.pro: cleaning
+
+2007-10-23 23:51  oeildepierre
+
+	* INSTALL: typotek :
+	  ADDED details in INSTALL
+
+2007-10-23 23:14  oeildepierre
+
+	* src/typotek.cpp: typotek :
+	  IMPROVED fontbook
+
+2007-10-23 23:05  oeildepierre
+
+	* src/fontbookdialog.cpp, src/fontbookdialog.h, src/typotek.cpp:
+	  typotek :
+	  IMPROVED fontbook
+
+2007-10-23 21:49  oeildepierre
+
+	* src, src/ui_fontaction.h, src/ui_mainview.h: cleaning
+
+2007-10-23 21:45  oeildepierre
+
+	* src/bookexport.ui, src/fontbookdialog.cpp, src/fontbookdialog.h,
+	  src/qrc_application.cpp, src/src.pro, src/typotek.cpp,
+	  src/ui_fontaction.h, src/ui_mainview.h: typotek :
+	  IMPROVED fontbook
+
+2007-10-23 12:54  oeildepierre
+
+	* src/typotek.cpp: typotek :
+	  IMPROVED fontbook
+
+2007-10-23 12:26  oeildepierre
+
+	* src/typotek.cpp: typotek :
+	  IMPROVED fontbook
+
+2007-10-22 22:38  oeildepierre
+
+	* src/typotek.cpp: typotek :
+	  IMPROVED fontbook
+
+2007-10-22 22:17  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainview.ui,
+	  src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/qrc_application.cpp, src/src.pro, src/typotek.cpp,
+	  src/typotek.h, src/ui_fontaction.h, src/ui_mainview.h: typotek :
+	  ADDED fontbook
+
+2007-10-19 20:21  oeildepierre
+
+	* src/mainviewwidget.cpp: typotek :
+	  FIXED sample text
+
+2007-10-19 13:10  oeildepierre
+
+	* src/fontitem.cpp, src/fontitem.h, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h: typotek :
+	  ADDED fontsize choice in sample text box
+
+2007-10-19 10:52  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/typotek.cpp,
+	  src/ui_mainview.h: typotek :
+	  FIXED ui
+
+2007-10-18 16:00  oeildepierre
+
+	* src/fontaction.ui, src/fontactionwidget.cpp, src/fontitem.cpp,
+	  src/fontitem.h, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/typotek.cpp, src/typotekadaptator.cpp,
+	  src/typotekadaptator.h, src/ui_fontaction.h: typotek :
+	  FIXED too much to say
+
+2007-10-18 11:27  oeildepierre
+
+	* src/application.qrc, src/fontactionwidget.cpp, src/fontitem.cpp,
+	  src/fontitem.h, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/qrc_application.cpp, src/typotek.cpp,
+	  src/typotek.h, src/ui_fontaction.h, src/ui_mainview.h,
+	  src/zoom.png: typotek :
+	  ADDED render is done in vector mode, print, icons ...
+
+2007-10-17 18:56  oeildepierre
+
+	* src: cleaning
+
+2007-10-17 18:54  oeildepierre
+
+	* src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/ui_mainview.h: typotek :
+	  ADDED Vladimir Savic UI improvements
+
+2007-10-17 09:52  oeildepierre
+
+	* src/application.qrc, src/fontactionwidget.cpp,
+	  src/fontactionwidget.h, src/fontitem.cpp, src/main.cpp,
+	  src/mainview.ui, src/mainviewwidget.cpp, src/mainviewwidget.h,
+	  src/qrc_application.cpp, src/typotek.cpp, src/typotek.png,
+	  src/ui_fontaction.h, src/ui_mainview.h: typotek :
+	  FIXED cosmetic
+
+2007-10-17 00:10  oeildepierre
+
+	* src/fontaction.ui, src/fontactionwidget.cpp,
+	  src/fontactionwidget.h, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/qrc_application.cpp, src/src.pro,
+	  src/typotek.cpp, src/typotekadaptator.cpp,
+	  src/typotekadaptator.h, src/ui_fontaction.h, src/ui_mainview.h:
+	  typotek :
+	  UI improvements from Vlada's ideas
+
+2007-10-16 12:17  oeildepierre
+
+	* src/fontitem.cpp, src/typotek.cpp, src/typotek.h,
+	  src/typotekadaptator.cpp, src/typotekadaptator.h: typotek :
+	  ADDED lock & unlock over dbus
+
+2007-10-16 12:02  oeildepierre
+
+	* ., src, src/fontactionwidget.cpp, src/fontactionwidget.h,
+	  src/mainviewwidget.cpp, src/qrc_application.cpp, src/src.pro,
+	  src/typotek.cpp, src/typotek.h, src/typotekadaptator.cpp,
+	  src/typotekadaptator.h, src/ui_fontaction.h, src/ui_mainview.h:
+	  typotek :
+	  ADDED dbus
+
+2007-10-16 07:41  oeildepierre
+
+	* src/moc_mainviewwidget.cpp: cleaning
+
+2007-10-16 07:40  oeildepierre
+
+	* src, src/moc_mainviewwidget.cpp:
+
+2007-10-16 07:40  oeildepierre
+
+	* INSTALL: typotek :
+	  ADDED install file
+
+2007-10-15 21:36  oeildepierre
+
+	* Makefile: cleaning
+
+2007-10-15 21:34  oeildepierre
+
+	* ., COPYING, Makefile, src, src/ReadMe, src/application.qrc,
+	  src/editcopy.xpm, src/editcut.xpm, src/editpaste.xpm,
+	  src/filenew.xpm, src/fileopen.xpm, src/filesave.xpm,
+	  src/fontaction.ui, src/fontactionwidget.cpp,
+	  src/fontactionwidget.h, src/fontitem.cpp, src/fontitem.h,
+	  src/main.cpp, src/mainview.ui, src/mainviewwidget.cpp,
+	  src/mainviewwidget.h, src/qrc_application.cpp, src/src.pro,
+	  src/typotek.cpp, src/typotek.h, src/ui_fontaction.h,
+	  src/ui_mainview.h, typotek.pro: Initial commit of tools/typotek
+

@@ -184,7 +184,18 @@ void FMFontDb::setInfoMap ( const QString & id, const QMap< int, QMap < int , QS
 
 QVariant FMFontDb::getValue ( const QString & id, Field field )
 {
-	qDebug() <<"getValue"<< fieldName[field] <<id;
+// 	qDebug() <<"getValue"<< fieldName[field] <<id;
+	if(rValueCache.contains(id))
+	{
+		if(rValueCache[id].contains(field))
+		{
+// 			qDebug() <<"getCachedValue"<< fieldName[field] <<id <<rValueCache[id][field];
+			return rValueCache[id][field];
+		}
+	}
+	else
+		rValueCache.clear();
+	
 	if ( field == Tags )
 	{
 		QStringList tl;
@@ -203,6 +214,7 @@ QVariant FMFontDb::getValue ( const QString & id, Field field )
 					tl << t;
 			}
 		}
+		rValueCache[id][field]  = tl;
 		return tl;
 	}
 	else
@@ -217,6 +229,7 @@ QVariant FMFontDb::getValue ( const QString & id, Field field )
 		{
 			if ( query.first() )
 			{
+				rValueCache[id][field]  = query.value ( 0 );
 				return query.value ( 0 );
 			}
 		}

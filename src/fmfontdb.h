@@ -142,6 +142,7 @@ class FMFontDb : public QSqlDatabase
 		QMap<QString , FontItem*> temporaryFont;
 
 		QList<QSqlError> transactionError;
+		QMap<QString, QMap<Field, QVariant> > rValueCache;
 		
 		int transactionDeep;
 		

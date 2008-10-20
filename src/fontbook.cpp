@@ -13,6 +13,7 @@
 #include "fontbookdialog.h"
 #include "typotek.h"
 #include "fontitem.h"
+#include "fmlayout.h"
 
 #include <QDebug>
 #include <QObject>
@@ -81,8 +82,6 @@ void FontBook::doBook()
 
 void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 {
-
-
 	/**
 	We build lists of contexts
 	*/
@@ -480,21 +479,29 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 
 				if ( conSubfamily[elemIndex].textStyle.font == "_FONTMATRIX_" ) // We’ll use the current font
 				{
+					if(renderedFont.count() > 0)
+						FMLayout::getLayout()->setPersistentScene(true);
+					else
+						FMLayout::getLayout()->setPersistentScene(false);
+					
+					QList<GlyphList> gl;
 					for ( int sl = 0; sl < sublines.count(); ++sl )
 					{
-						QPointF pen ( conSubfamily[elemIndex].textStyle.margin_left + prectx,
-						              thePos.y() + conSubfamily[elemIndex].textStyle.margin_top + ( ( sl + 1 ) * conSubfamily[elemIndex].textStyle.lineheight ) );
-						theFont->setProgression ( PROGRESSION_LTR );
-// 						qDebug() << "RENDER"<<theFont->fancyName() <<sublines[sl].trimmed()<<
-						theFont->renderLine ( &theScene,/*scene*/
-						                      sublines[sl].trimmed(),/*string*/
-						                      pen ,/*origin*/
-						                      conSubfamily[elemIndex].textStyle.margin_right /*Linewidth*/,
-						                      conSubfamily[elemIndex].textStyle.fontsize,/*fontsize*/
-						                      10000 ,/*z-index*/
-						                      false );
-						//TODO adding color support for text sample
+						gl << theFont->glyphs ( sublines[sl].trimmed(), conSubfamily[elemIndex].textStyle.fontsize );
 					}
+					QRectF parRect ( conSubfamily[elemIndex].textStyle.margin_left + prectx,
+					                 thePos.y() + conSubfamily[elemIndex].textStyle.margin_top,
+					                 conSubfamily[elemIndex].textStyle.margin_right,
+					                 precth - thePos.y() );
+					qDebug()<<"PAR("+theFont->fancyName()+")("<< gl.count() <<")"<<parRect ;
+					FMLayout::getLayout()->setTheScene ( &theScene , parRect );
+					FMLayout::getLayout()->setTheFont ( theFont );
+					FMLayout::getLayout()->setAdjustedSampleInter ( conSubfamily[elemIndex].textStyle.lineheight );
+					FMLayout::getLayout()->setDeviceIndy ( true );
+					
+					FMLayout::getLayout()->doLayout ( gl , conSubfamily[elemIndex].textStyle.fontsize );
+					FMLayout::getLayout()->run();
+					
 					renderedFont.append ( theFont );
 				}
 				else
@@ -543,5 +550,11 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 		renderedText.clear();
 
 	}
+	for ( QMap<QString,QSvgRenderer*>::iterator sit ( svgRendered.begin() ); sit != svgRendered.end(); ++sit )
+		delete sit.value();
+	
+	FMLayout::getLayout()->setPersistentScene(false);
+	FMLayout::getLayout()->resetScene();
+
 }
 

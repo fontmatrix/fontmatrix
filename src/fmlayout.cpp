@@ -307,7 +307,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	{
 		double mDist ( dist / deep );
 		double mScore ( theScore / theList.count() );
-		qDebug() <<"D S N"<< mDist << mScore << curList;
+// 		qDebug() <<"D S N"<< mDist << mScore << curList;
 		if ( mDist < mScore )
 		{
 			theScore = dist;
@@ -325,6 +325,7 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	node = 0;
 	layoutMutex = new QMutex;
 	optionHasChanged = true;
+	persistentScene = false;
 
 // 	progressBar = new QProgressBar ;
 // 	onSceneProgressBar = new QGraphicsProxyWidget ;
@@ -371,6 +372,16 @@ FMLayout::~ FMLayout()
 {
 }
 
+FMLayout * FMLayout::getLayout()
+{
+	if(!instance)
+	{
+		instance = new FMLayout;
+		Q_ASSERT(instance);
+	}
+	return instance;
+}
+
 void FMLayout::run()
 {
 	if(justRedraw)
@@ -397,7 +408,7 @@ void FMLayout::run()
 	
 			doLines();
 	
-			qDebug() <<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
+// 			qDebug() <<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
 			if ( node )
 			{
 				delete node;
@@ -436,16 +447,16 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 		origine.rx() = theRect.left();
 
-	qDebug()<<"LO"<<lastOrigine<<"O"<<origine<<"options"<<optionHasChanged;
+// 	qDebug()<<"LO"<<lastOrigine<<"O"<<origine<<"options"<<optionHasChanged;
 	if( !optionHasChanged && origine == lastOrigine && fontSize == fs && paragraphs == spec )
 	{
 		justRedraw = true;
 		typotek::getInstance()->startProgressJob( lines.count() );
-		qDebug()<<"LAYOUT O : lines "<<lines.count();
+// 		qDebug()<<"LAYOUT O : lines "<<lines.count();
 	}
 	else
 	{
-		qDebug()<<"LAYOUT 1";
+// 		qDebug()<<"LAYOUT 1";
 		justRedraw = false;
 		lines.clear();
 		typotek::getInstance()->startProgressJob( paragraphs.count() + ( theRect.height() / fs*1.20 ) );// layout AND draw
@@ -464,7 +475,7 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 
 void FMLayout::endOfRun()
 {
-	qDebug() <<"FMLayout::endOfRun()";
+// 	qDebug() <<"FMLayout::endOfRun()";
 // 	theScene->removeItem ( onSceneProgressBar );
 // 	disconnect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
 	if ( node )
@@ -472,7 +483,7 @@ void FMLayout::endOfRun()
 		delete node;
 		node = 0;
 	}
-	qDebug()<<"EOR A"<<lines.count();
+// 	qDebug()<<"EOR A"<<lines.count();
 	layoutMutex->unlock();
 	if ( stopIt ) // We’re here after a interruption
 	{
@@ -483,7 +494,7 @@ void FMLayout::endOfRun()
 	else
 		typotek::getInstance()->endProgressJob();
 	
-	qDebug()<<"EOR B"<<lines.count();
+// 	qDebug()<<"EOR B"<<lines.count();
 }
 
 void FMLayout::stopLayout()
@@ -493,7 +504,7 @@ void FMLayout::stopLayout()
 
 void FMLayout::doGraph() // Has became doBreaks
 {
-	qDebug() <<"FMLayout::doGraph()";
+// 	qDebug() <<"FMLayout::doGraph()";
 	QTime t;
 	t.start();
 	/**
@@ -518,14 +529,14 @@ void FMLayout::doGraph() // Has became doBreaks
 		}
 	}
 	breakList << theString.count();
-	qDebug() <<"BREAKS"<<breakList.count();
-	qDebug() <<"HYPHENS"<<hyphenList.count();
-	qDebug() <<"doGraph T(ms)"<<t.elapsed();
+// 	qDebug() <<"BREAKS"<<breakList.count();
+// 	qDebug() <<"HYPHENS"<<hyphenList.count();
+// 	qDebug() <<"doGraph T(ms)"<<t.elapsed();
 }
 
 void FMLayout::doLines()
 {
-	qDebug() <<"FMLayout::doLines()";
+// 	qDebug() <<"FMLayout::doLines()";
 	QTime t;
 	t.start();
 	// Run through the graph and find the shortest path
@@ -573,8 +584,8 @@ void FMLayout::doLines()
 			dStr += QChar ( rg.lChar );
 			dBk += rg.isBreak ? "#" : "_";
 		}
-		qDebug() << "S"<<dStr;
-		qDebug() << "H"<<dBk;
+// 		qDebug() << "S"<<dStr;
+// 		qDebug() << "H"<<dBk;
 
 // 		qDebug()<<"S E Sib Eib"<<start<<end<<theString.at(start).isBreak<<theString.at(end).isBreak;
 
@@ -582,13 +593,13 @@ void FMLayout::doLines()
 		/// * *
 		if ( !hasHyph && !inList.last().isBreak )
 		{
-			qDebug() <<"/// * *";
+// 			qDebug() <<"/// * *";
 			lg = inList;
 		}
 		/// = *
 		else if ( hasHyph && !inList.last().isBreak )
 		{
-			qDebug() <<"/// = *";
+// 			qDebug() <<"/// = *";
 
 			GlyphList hr ( curHyph );
 			hasHyph = false;
@@ -614,7 +625,7 @@ void FMLayout::doLines()
 		/// * =
 		else if ( !hasHyph && inList.last().isBreak )
 		{
-			qDebug() <<"/// * =";
+// 			qDebug() <<"/// * =";
 			GlyphList hr ( inList.last().hyphen.first );
 			hasHyph = true;
 			curHyph = inList.last().hyphen.second;
@@ -639,14 +650,14 @@ void FMLayout::doLines()
 				dgS +="("+ QString ( QChar ( lg.last().lChar ) ) +")";
 			}
 			QString dbh;for ( int h ( 0 );h<curHyph.count();++h ) {dbh+="["+ QString ( QChar ( curHyph[h].lChar ) ) +"]";}
-			qDebug() <<dgS<<"="<<dbh;
+// 			qDebug() <<dgS<<"="<<dbh;
 
 		}
 		/// = =
 		else if ( hasHyph && inList.last().isBreak )
 		{
 
-			qDebug() <<"/// = =";
+// 			qDebug() <<"/// = =";
 			GlyphList hr ( curHyph );
 			GlyphList hr2 ( inList.last().hyphen.first );
 
@@ -686,7 +697,7 @@ void FMLayout::doLines()
 			}
 			
 			QString dbh;for ( int h ( 0 );h<curHyph.count();++h ) {dbh+="["+ QString ( QChar ( curHyph[h].lChar ) ) +"]";}
-			qDebug() <<dgS<<"="<<dbh;
+// 			qDebug() <<dgS<<"="<<dbh;
 
 		}
 
@@ -696,7 +707,7 @@ void FMLayout::doLines()
 	TextProgression *tp = TextProgression::getInstance();
 	bool verticalLayout ( tp->inBlock() == TextProgression::INLINE_BTT || tp->inBlock() == TextProgression::INLINE_TTB );
 	
-	qDebug()<<"lines finished";
+// 	qDebug()<<"lines finished";
 	for ( int lI ( startLine ); lI<lines.count(); ++lI )
 	{
 		if ( stopIt )
@@ -761,14 +772,14 @@ void FMLayout::doLines()
 			}
 		}
 	}
-	qDebug() <<"doneLines:"<< lines.count() ;
+// 	qDebug() <<"doneLines:"<< lines.count() ;
 
 }
 
 void FMLayout::doDraw()
 {
 	// Ask paths or pixmaps to theFont for each glyph and draw it on theScene
-	qDebug() <<"FMLayout::doDraw()";
+// 	qDebug() <<"FMLayout::doDraw()";
 	resetScene();
 	QTime t;
 	t.start();
@@ -895,8 +906,8 @@ void FMLayout::doDraw()
 		typotek::getInstance()->runProgressJob();
 // 		qDebug() <<"P"<<pen;
 	}
-
-	qDebug() <<"doDraw T(ms)"<<t.elapsed();
+// 
+// 	qDebug() <<"doDraw T(ms)"<<t.elapsed();
 	emit paintFinished();
 	theScene->update(theRect);
 }
@@ -1239,6 +1250,9 @@ void FMLayout::resetScene()
 // 	qDebug() <<"FMLayout::resetScene(P"<<pixList.count() <<",G"<<glyphList.count() <<")";
 // 	QTime t;
 // 	t.start();
+	if(persistentScene)
+		return;
+	
 	int pCount ( pixList.count() );
 	for ( int i = 0; i < pCount ; ++i )
 	{
@@ -1262,17 +1276,24 @@ void FMLayout::resetScene()
 // 	qDebug() <<"resetScene T(ms)"<<t.elapsed();
 }
 
-void FMLayout::setTheScene ( QGraphicsScene* theValue )
+void FMLayout::setTheScene ( QGraphicsScene* theValue , QRectF rect)
 {
 	theScene = theValue;
-	QRectF tmpRect = theScene->sceneRect();
-	double sUnitW ( tmpRect.width() * .1 );
-	double sUnitH ( tmpRect.height() * .1 );
-
-	theRect.setX ( 2.0 * sUnitW );
-	theRect.setY ( 1.0 * sUnitH );
-	theRect.setWidth ( 6.0 * sUnitW );
-	theRect.setHeight ( 8.0 * sUnitH );
+	if(rect.isNull())
+	{
+		QRectF tmpRect = theScene->sceneRect();
+		double sUnitW ( tmpRect.width() * .1 );
+		double sUnitH ( tmpRect.height() * .1 );
+	
+		theRect.setX ( 2.0 * sUnitW );
+		theRect.setY ( 1.0 * sUnitH );
+		theRect.setWidth ( 6.0 * sUnitW );
+		theRect.setHeight ( 8.0 * sUnitH );
+	}
+	else
+	{
+		theRect = rect;
+	}
 // 	rules->setRect(theRect);
 // 	rules->setZValue(9.9);
 // 	if(rules->scene() != theScene)
@@ -1368,6 +1389,7 @@ void FMLayout::endOfParagraph()
 {
 	typotek::getInstance()->runProgressJob();
 }
+
 
 
 

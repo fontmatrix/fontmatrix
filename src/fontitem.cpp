@@ -3633,7 +3633,7 @@ void FontItem::setShaperType ( int theValue )
 
 GlyphList FontItem::glyphs ( QString spec, double fsize )
 {
-	qDebug()<<"glyphs ("<< spec.left(24) <<", "<<fsize<<" )";
+// 	qDebug()<<"glyphs ("<< spec.left(24) <<", "<<fsize<<" )";
 	FMHyphenator *hyph = typotek::getInstance()->getHyphenator();
 	GlyphList ret;
 	if ( spec.isEmpty() || fsize <= 0.0 )

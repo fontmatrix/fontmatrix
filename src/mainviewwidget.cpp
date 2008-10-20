@@ -82,7 +82,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	iconTTF =  QIcon(":/icon-TTF");
 	iconOTF =  QIcon(":/icon-OTF");
 
-	textLayout = new FMLayout;
+	textLayout = FMLayout::getLayout();
 	
 	radioRenderGroup = new QButtonGroup();
 	radioRenderGroup->addButton(freetypeRadio);
@@ -577,7 +577,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 		}
 		slotFontActionByNames ( names );
 		int oldc = item->data ( 0,200 ).toInt();
-		if ( oldc == item->checkState ( 0 ) )
+		if ( oldc == item->checkState ( 0 ) ) // filters when checkbox has not been hit
 		{
 			// TODO keep an eye on it
 // 			fillTree();
@@ -587,7 +587,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 		{
 
 			bool cs = item->checkState ( 0 ) == Qt::Checked ? true : false;
-
+			item->setData( 0,200, item->checkState ( 0 ) );
 			QList<FontItem*> todo;
 			for ( int i=0; i<item->childCount(); ++i )
 			{
@@ -1211,6 +1211,8 @@ void MainViewWidget::slotAppendTag ( QString tag )
 
 void MainViewWidget::activation ( FontItem* fit , bool act , bool andUpdate )
 {
+	if(fit->isActivated() == act)
+		return;
 	FMActivate::getInstance()->activate(fit, act);
 
 	if ( andUpdate )
@@ -1219,7 +1221,16 @@ void MainViewWidget::activation ( FontItem* fit , bool act , bool andUpdate )
 
 void MainViewWidget::activation(QList< FontItem * > fit, bool act)
 {
-	FMActivate::getInstance()->activate(fit, act);
+	// First check if one of the font is in a different state than required
+	QList< FontItem * > actualF;
+	for(int i(0); i < fit.count(); ++i)
+	{
+		if(fit[i]->isActivated() != act)
+			actualF.append(fit[i]);
+	}
+	if(actualF.count() == 0)
+		return;
+	FMActivate::getInstance()->activate(actualF, act);
 	updateTree(true);
 }
 

@@ -85,22 +85,19 @@ struct Node
 class FMLayout : public QThread
 {
 	Q_OBJECT
-	public:
 		// Just think that the font must be set
 		FMLayout ( /*QGraphicsScene* scene, FontItem* font*/ );
 		~FMLayout();
-
+	public:
 		void doLayout(const QList<GlyphList>& spec , double fs);
-
-
-		static FMLayout *getLayout() {return instance;}
+		static FMLayout *getLayout();
+		void run();
+		
 	private://methods
 		/// Build a graph on node
 		virtual void doGraph();
 		/// Build the good list of lines
 		virtual void doLines();
-		
-		void run();
 		
 		void clearCaches();
 
@@ -130,6 +127,7 @@ class FMLayout : public QThread
 		QGraphicsRectItem *rules;
 		FMLayOptWidget *optionsWidget;
 		QGridLayout *optionLayout;
+		bool persistentScene;
 
 		// built
 		Node *node;
@@ -164,9 +162,10 @@ class FMLayout : public QThread
 		void setTextProgressionLine ( int theValue ){textProgressionLine = theValue;}
 		void setOrigine ( const QPoint& theValue ){origine = theValue;}
 		void setFontSize ( bool theValue ){fontSize = theValue;}
-		void setDeviceIndy( double theValue ){deviceIndy = theValue;}
-		void setTheScene ( QGraphicsScene* theValue );
+		void setDeviceIndy( bool theValue ){deviceIndy = theValue;}
+		void setTheScene ( QGraphicsScene* theValue , QRectF rect = QRectF());
 		void setTheFont ( FontItem* theValue );
+		void setPersistentScene(bool p){persistentScene = p;}
 
 
 	private slots:

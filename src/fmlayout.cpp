@@ -39,52 +39,89 @@ int fm_layout_total_nod_dbg;
 int fm_layout_total_skip_nod_dbg;
 int fm_layout_total_leaves_dbg;
 
-Node::Vector::Vector() :n ( 0 ), distance ( 0.0 )
+Node::ListItem::ListItem() :n ( 0 ), distance ( 0.0 )
 {
 // 	qDebug()<<"CV empty";
 }
 
-Node::Vector::Vector ( Node * N, double D ) :n ( N ),distance ( D )
+Node::ListItem::ListItem ( Node * N, double D ) :n ( N ),distance ( D )
 {
 // 	qDebug()<<"CV n d"<<n->index<<distance;
 }
 
-Node::Vector::~ Vector()
+Node::ListItem::~ListItem()
 {
-// 	qDebug()<<"RV"<<n<<distance;
-// 	if(n)delete n;
+// 	qDebug()<<"~ListItem"<< n<<n->index;
+	if(n)
+	{
+		delete n;
+		n = 0;
+	}
 }
 
 Node::Node ( int i ) :index ( i )
 {
-	++fm_layout_total_nod_dbg;
+// 	if(index == 0)
+// 		qDebug()<<"+N"<< this<<index << ++fm_layout_total_nod_dbg;
 }
 
 bool Node::hasNode ( int idx )
 {
 	for ( int i ( 0 ); i < nodes.count(); ++i )
 	{
-		if ( nodes[i].n->index == idx )
+		if ( nodes[i]->n->index == idx )
 			return true;
 	}
 	return false;
 }
 
-Node::~Node()
+void Node::nodes_clear()
 {
-// 	qDebug()<<"R"<< index;
-	for ( int i ( 0 ); i < nodes.count(); ++i )
-	{
-		if ( nodes[i].n ) delete nodes[i].n;
-	}
+// 	if(index == 0)
+// 		qDebug()<<"-C"<<this<< nodes.count();
+	while (!nodes.isEmpty())
+		delete nodes.takeFirst();
 }
 
-int Node::count()
+void Node::nodes_insert(ListItem * v)
+{
+	
+
+	if ( nodes.isEmpty() )
+	{
+		nodes.insert ( 0, v );
+	}
+	else
+	{
+		bool ist(false);
+		for ( int nI ( 0 );nI<nodes.count();++nI )
+		{
+			if ( v->distance <= nodes[nI]->distance )
+			{
+				nodes.insert ( nI,v );
+				ist = true;
+				break;
+			}
+		}
+		if(!ist)
+			nodes.append(v);
+	}
+// 	qDebug()<<"+I"<<this <<v->n->index<<nodes.count();
+}
+
+Node::~Node()
+{
+	
+// 	qDebug()<<"~N"<<this<< deepCount() << --fm_layout_total_nod_dbg;
+	nodes_clear();
+}
+
+int Node::deepCount()
 {
 	int c ( nodes.count() );
 	for ( int i ( 0 ); i < c ; ++i )
 	{
-		c += nodes[i].n->count();
+		c += nodes[i]->n->deepCount();
 	}
 	return c;
 }
@@ -92,7 +129,7 @@ int Node::count()
 void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, double & theScore )
 {
 // 	QList<int> debugL;
-// 	foreach(Vector v, nodes)
+// 	foreach(ListItem v, nodes)
 // 	{debugL << v.n->index;}
 // 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
 	int deep ( curList.count() + 1 );
@@ -101,7 +138,6 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	{
 		theScore = 0;
 	}
-	nodes.clear();
 	// cIdx is first glyph of the line
 	int cIdx ( index );
 	// bIndex is the break which sits on cIdx
@@ -141,22 +177,8 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					if ( lyt->hyphenList.contains ( soon ) )
 						disN *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
 
-					Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
-					if ( nodes.isEmpty() )
-					{
-						nodes.insert ( 0, vN );
-					}
-					else
-					{
-						for ( int nI ( 0 );nI<nodes.count();++nI )
-						{
-							if ( vN.distance <= nodes[nI].distance )
-							{
-								nodes.insert ( nI,vN );
-								break;
-							}
-						}
-					}
+					Node::ListItem* vN = new Node::ListItem( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_SOON_F ) );
+					nodes_insert(vN);
 					if ( QChar ( lyt->theString[soon].lChar ).category() == QChar::Separator_Space )
 						break;
 				}
@@ -180,23 +202,10 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 						if ( lyt->hyphenList.contains ( fit ) )
 							disF *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
 		
-						Node::Vector vF ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
+						Node::ListItem* vF = new Node::ListItem ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
 		// 				curNode->nodes << vF;
-						if ( nodes.isEmpty() )
-						{
-							nodes.insert ( 0,vF );
-						}
-						else
-						{
-							for ( int nI ( 0 );nI<nodes.count();++nI )
-							{
-								if ( vF.distance <= nodes[nI].distance )
-								{
-									nodes.insert ( nI,vF );
-									break;
-								}
-							}
-						}
+						nodes_insert ( vF );
+						
 					}
 				}
 				/// AFTER
@@ -223,22 +232,9 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					if ( lyt->hyphenList.contains ( late ) )
 						disL *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
 
-					Node::Vector vL ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
-					if ( nodes.isEmpty() )
-					{
-						nodes.insert ( 0, vL );
-					}
-					else
-					{
-						for ( int nI ( 0 );nI<nodes.count();++nI )
-						{
-							if ( vL.distance <= nodes[nI].distance )
-							{
-								nodes.insert ( nI,vL );
-								break;
-							}
-						}
-					}
+					Node::ListItem* vL = new Node::ListItem ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
+					nodes_insert ( vL );
+				
 					if ( late < lyt->theString.count() && QChar ( lyt->theString[late].lChar ).category() == QChar::Separator_Space )
 						break;
 				}
@@ -262,20 +258,9 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 				sN = new Node ( soon );
 				double disN = lyt->lineWidth ( deep ) - lyt->distance ( cIdx, soon,lyt->theString );
 
-				Node::Vector vN ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
+				Node::ListItem* vN = new Node::ListItem ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
 // 				curNode->nodes << vN;
-				if ( nodes.isEmpty() )
-				{
-					nodes.insert ( 0, vN );
-				}
-				else
-				{
-					for ( int nI ( 0 );nI<nodes.count();++nI )
-					{
-						if ( vN.distance <= nodes[nI].distance )
-							nodes.insert ( nI,vN );
-					}
-				}
+				nodes_insert ( vN );
 			}
 
 			wantPlus = false;
@@ -291,16 +276,17 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 // 	qDebug()<<"COR tl.c cl.c"<<dCorrection<<theList.count()<<curList.count();
 	while ( !nodes.isEmpty() )
 	{
-// 		Vector v = nodes.first() ;
-		double d1 ( dist + nodes[0].distance / curList.count() /** dCorrection*/ );
+// 		ListItem v = nodes.first() ;
+		double d1 ( dist + nodes[0]->distance / curList.count() /** dCorrection*/ );
 		double d2 ( theScore / qMax ( 1.0, ( double ) theList.count() ) );
 		if ( d1  <  d2 )
 		{
-			nodes[0].n->sPath ( dist + nodes[0].distance, curList, theList, theScore );
+			nodes[0]->n->sPath ( dist + nodes[0]->distance, curList, theList, theScore );
 		}
 		else
 			++fm_layout_total_skip_nod_dbg;
-		nodes.removeFirst();
+		delete nodes.takeFirst();
+// 		nodes.removeFirst();
 	}
 
 	if ( isLeaf )
@@ -396,7 +382,7 @@ void FMLayout::run()
 			theString = paragraphs[i];
 			if ( theString.isEmpty() )
 				continue;
-			node = new Node ( 0 );
+// 			node = new Node ( 0 );
 			doGraph();
 			clearCaches();
 			{
@@ -409,11 +395,11 @@ void FMLayout::run()
 			doLines();
 	
 // 			qDebug() <<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
-			if ( node )
-			{
-				delete node;
-				node = 0;
-			}
+// 			if ( node )
+// 			{
+// 				delete node;
+// 				node = 0;
+// 			}
 			clearCaches();
 			breakList.clear();
 			hyphenList.clear();
@@ -466,11 +452,11 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	paragraphs = spec;
 	optionHasChanged = false;
 
-	if ( node )
-	{
-		delete node;
-		node = 0;
-	}
+// 	if ( node )
+// 	{
+// 		delete node;
+// 		node = 0;
+// 	}
 }
 
 void FMLayout::endOfRun()
@@ -478,11 +464,11 @@ void FMLayout::endOfRun()
 // 	qDebug() <<"FMLayout::endOfRun()";
 // 	theScene->removeItem ( onSceneProgressBar );
 // 	disconnect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
-	if ( node )
-	{
-		delete node;
-		node = 0;
-	}
+// 	if ( node )
+// 	{
+// 		delete node;
+// 		node = 0;
+// 	}
 // 	qDebug()<<"EOR A"<<lines.count();
 	layoutMutex->unlock();
 	if ( stopIt ) // We’re here after a interruption
@@ -542,8 +528,12 @@ void FMLayout::doLines()
 	// Run through the graph and find the shortest path
 	indices.clear();
 	double score ( INFINITE );
+	Node locNode(0);
+	locNode.sPath ( 0,QList<int>(),indices,score );
+// 	qDebug()<<"================================";
+// 	qDebug()<< &locNode << locNode.nodes.count() << locNode.deepCount();
+// 	qDebug()<<"================================";
 	
-	node->sPath ( 0,QList<int>(),indices,score );
 	
 	clearCaches();
 	// la messe est dite ! :-)
@@ -783,6 +773,7 @@ void FMLayout::doDraw()
 	resetScene();
 	QTime t;
 	t.start();
+	drawnLines = 0;
 	TextProgression *tp = TextProgression::getInstance();
 	QPointF pen ( origine );
 	if( tp->inLine() != TextProgression::INLINE_BTT )
@@ -813,6 +804,7 @@ void FMLayout::doDraw()
 			else if(tp->inBlock() == TextProgression::BLOCK_LTR && pen.x() > pageRight)
 				break;
 		}
+		++drawnLines;
 		clearCaches();
 		GlyphList refGlyph ( lines[lIdx] );
 
@@ -855,7 +847,6 @@ void FMLayout::doDraw()
 				if ( !refGlyph[i].glyph )
 					continue;
 				QGraphicsPathItem *glyph = theFont->itemFromGindex ( refGlyph[i].glyph , fontSize );
-				glyphList << glyph;
 
 				if ( tp->inLine() == TextProgression::INLINE_RTL )
 				{
@@ -866,7 +857,7 @@ void FMLayout::doDraw()
 					pen.ry() -= refGlyph[i].yadvance ;
 				}
 				/**********************************************/
-
+				glyphList << glyph;
 				theScene->addItem ( glyph );
 				glyph->setPos ( pen.x() + ( refGlyph[i].xoffset ),
 				                pen.y() + ( refGlyph[i].yoffset ) );
@@ -1247,33 +1238,40 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 
 void FMLayout::resetScene()
 {
-// 	qDebug() <<"FMLayout::resetScene(P"<<pixList.count() <<",G"<<glyphList.count() <<")";
-// 	QTime t;
-// 	t.start();
 	if(persistentScene)
 		return;
 	
 	int pCount ( pixList.count() );
 	for ( int i = 0; i < pCount ; ++i )
 	{
-		if ( pixList[i]->scene() )
+		if ( pixList[i]->scene() && ( pixList[i]->scene() == theScene ) )
 		{
 			pixList[i]->scene()->removeItem ( pixList[i] );
+			delete pixList[i];
+			pixList[i] = 0;
 		}
-		delete pixList[i];
 	}
-	pixList.clear();
+	pixList.removeAll(0);
+	
 	int gCount ( glyphList.count() );
+// 	QMap<QGraphicsScene*,int> ss;
 	for ( int i = 0; i < gCount; ++i )
 	{
-		if ( glyphList[i]->scene() )
+// 		ss[glyphList[i]->scene()]++;
+		if ( glyphList[i]->scene() && (glyphList[i]->scene() == theScene) )
 		{
 			glyphList[i]->scene()->removeItem ( glyphList[i] );
+			delete glyphList[i];
+			glyphList[i] = 0;
 		}
-		delete glyphList[i];
 	}
-	glyphList.clear();
-// 	qDebug() <<"resetScene T(ms)"<<t.elapsed();
+	glyphList.removeAll(0);
+// 	QString dbs;
+// 	foreach(QGraphicsScene* qgs, ss)
+// 	{
+// 		dbs += "["+ QString::number(reinterpret_cast<unsigned int>(qgs)) +"]";
+// 	}
+// 	qDebug()<<"GC"<< ss <<gCount<< r <<glyphList.count() ;
 }
 
 void FMLayout::setTheScene ( QGraphicsScene* theValue , QRectF rect)
@@ -1303,6 +1301,7 @@ void FMLayout::setTheScene ( QGraphicsScene* theValue , QRectF rect)
 void FMLayout::setTheFont ( FontItem* theValue )
 {
 	theFont = theValue;
+	optionHasChanged = true;
 }
 
 double FMLayout::lineWidth ( int l )
@@ -1389,6 +1388,8 @@ void FMLayout::endOfParagraph()
 {
 	typotek::getInstance()->runProgressJob();
 }
+
+
 
 
 

@@ -185,6 +185,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 	double paperHeight =  thePrinter.pageRect().height() / thePrinter.resolution() * 72.0;
 // 	qDebug()<< paperSize << paperWidth << paperHeight;
 	QGraphicsScene theScene;
+	QGraphicsScene measurementScene;
+	measurementScene.setSceneRect( 0,0,paperWidth,paperHeight );
 	theScene.setSceneRect ( 0,0,paperWidth,paperHeight );
 	QPainter thePainter ( &thePrinter );
 	QPointF thePos ( prectx,precty );
@@ -307,8 +309,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				theScene.render ( &thePainter );
 
 				thePos.ry() = precty;
-				for ( int  d = 0; d <  renderedFont.count() ; ++d )
-					renderedFont[d]->deRenderAll();
+// 				for ( int  d = 0; d <  renderedFont.count() ; ++d )
+// 					renderedFont[d]->deRenderAll();
 				for ( int  d = 0; d < renderedGraphic.count(); ++d )
 					delete renderedGraphic[d];
 				for ( int  d = 0; d < renderedText.count(); ++d )
@@ -316,7 +318,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				renderedFont.clear();
 				renderedGraphic.clear();
 				renderedText.clear();
-				theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
+// 				theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
 
 				thePrinter.newPage();
 				pageNumStr.setNum ( ++pageNumber );
@@ -358,7 +360,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				}
 			}
 
-// 				QFont aFont ( conFamily[elemIndex].textStyle.font,conFamily[elemIndex].textStyle.fontsize );
+			
 			for ( int fl = 0; fl < familylines.count(); ++fl )
 			{
 				QGraphicsTextItem * ti = theScene.addText ( familylines[fl], qfontCache[conFamily[elemIndex].textStyle.name] );
@@ -379,14 +381,12 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 
 			thePos.ry() += needed;
 		} // end of FAMILY level elements
-
+		
+		/// Looping through all faces for the current family
 		for ( int fontIndex = 0;fontIndex < kit.value().count(); ++fontIndex )
 		{
-// 			qDebug() << fontIndex << "/" << kit.value().count();
 			FontItem * theFont = kit.value() [fontIndex];
-			bool oldRast = theFont->rasterFreetype();
-			theFont->setFTRaster ( false );
-// 			theFont->setRTL ( false );
+			
 			/// We are in a SUBFAMILY context
 			currentSubfamily = theFont->variant();
 			for ( int elemIndex = 0; elemIndex < conSubfamily.count() ; ++elemIndex )
@@ -394,7 +394,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				// First, is there enough room for this element
 				QStringList sublines;
 				QStringList tmplines = conSubfamily[elemIndex].textElement.e.split ( "\n" );
-// 				qDebug() <<"A";
+
 				subfamilyReplace["##FAMILY##"] = theFont->family();
 				subfamilyReplace["##SUBFAMILY##"] = theFont->variant();
 				subfamilyReplace["##FILE##"]= theFont->path();
@@ -402,7 +402,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				subfamilyReplace["##COUNT##"]= QString::number ( theFont->glyphsCount() );
 				subfamilyReplace["##TYPE##"]= theFont->type();
 				subfamilyReplace["##CHARSETS##"]=theFont->charmaps().join ( ";" );
-// 				qDebug() <<"B";
+
 				for ( int t = 0; t < tmplines.count(); ++t )
 				{
 
@@ -412,12 +412,56 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					if ( !subplace.isEmpty() )
 						sublines << subplace;
 				}
-// 				qDebug() <<"C";
+
 				double available = ( precty + precth ) - thePos.y();
-				double needed = ( sublines.count() * conSubfamily[elemIndex].textStyle.lineheight )
+				double needed (0);/*= ( sublines.count() * conSubfamily[elemIndex].textStyle.lineheight )
 				                + conSubfamily[elemIndex].textStyle.margin_top
-				                + conSubfamily[elemIndex].textStyle.margin_bottom;
-// 				qDebug() <<"D";
+				                + conSubfamily[elemIndex].textStyle.margin_bottom;*/
+				double mwidth( conSubfamily[elemIndex].textStyle.margin_right  - (conSubfamily[elemIndex].textStyle.margin_left + prectx) );
+					
+				/// Let’s see how much room we need
+				// For that we’ll render all elements on a dedicated scene if needed.
+				if(conSubfamily[elemIndex].graphic.valid)
+				{
+					needed = svgRendered[conSubfamily[elemIndex].graphic.name]->defaultSize().height();
+				}
+				else
+				{
+					if ( conSubfamily[elemIndex].textStyle.font == "_FONTMATRIX_" ) // We’ll use the current font
+					{
+						QList<GlyphList> gl;
+						for ( int sl = 0; sl < sublines.count(); ++sl )
+						{
+							gl << theFont->glyphs ( sublines[sl].trimmed(), conSubfamily[elemIndex].textStyle.fontsize );
+						}
+						QRectF rf( measurementScene.sceneRect() );
+						rf.setWidth(mwidth);
+						FMLayout::getLayout()->setTheScene ( &measurementScene , rf );
+						FMLayout::getLayout()->setPersistentScene(false);
+						FMLayout::getLayout()->setTheFont ( theFont );
+						FMLayout::getLayout()->setAdjustedSampleInter ( conSubfamily[elemIndex].textStyle.lineheight );
+						FMLayout::getLayout()->setDeviceIndy ( true );
+						
+						FMLayout::getLayout()->doLayout ( gl , conSubfamily[elemIndex].textStyle.fontsize );
+						FMLayout::getLayout()->run();
+						
+						needed = FMLayout::getLayout()->drawnLines * conSubfamily[elemIndex].textStyle.lineheight;
+						
+						FMLayout::getLayout()->resetScene();
+						
+					}
+					else
+					{
+						for ( int sl = 0; sl < sublines.count(); ++sl )
+						{
+							
+							QGraphicsTextItem gti( sublines[sl]);
+							gti.setFont( qfontCache[ conSubfamily[elemIndex].textStyle.name] );
+							gti.setTextWidth( mwidth );
+							needed = gti.document()->size().height();
+						}
+					}
+				}
 				if ( needed > available )
 				{
 					/// We are in a PAGE context
@@ -426,8 +470,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					theScene.render ( &thePainter );
 
 					thePos.ry() = precty;
-					for ( int  d = 0; d <  renderedFont.count() ; ++d )
-						renderedFont[d]->deRenderAll();
+// 					for ( int  d = 0; d <  renderedFont.count() ; ++d )
+// 						renderedFont[d]->deRenderAll();
 					for ( int  d = 0; d < renderedGraphic.count(); ++d )
 						delete renderedGraphic[d];
 					for ( int  d = 0; d < renderedText.count(); ++d )
@@ -435,7 +479,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					renderedFont.clear();
 					renderedGraphic.clear();
 					renderedText.clear();
-					theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
+// 					theScene.removeItem ( theScene.createItemGroup ( theScene.items() ) );
 
 					thePrinter.newPage();
 					pageNumStr.setNum ( ++pageNumber );
@@ -477,46 +521,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					}
 				}
 
-				if ( conSubfamily[elemIndex].textStyle.font == "_FONTMATRIX_" ) // We’ll use the current font
-				{
-					if(renderedFont.count() > 0)
-						FMLayout::getLayout()->setPersistentScene(true);
-					else
-						FMLayout::getLayout()->setPersistentScene(false);
-					
-					QList<GlyphList> gl;
-					for ( int sl = 0; sl < sublines.count(); ++sl )
-					{
-						gl << theFont->glyphs ( sublines[sl].trimmed(), conSubfamily[elemIndex].textStyle.fontsize );
-					}
-					QRectF parRect ( conSubfamily[elemIndex].textStyle.margin_left + prectx,
-					                 thePos.y() + conSubfamily[elemIndex].textStyle.margin_top,
-					                 conSubfamily[elemIndex].textStyle.margin_right,
-					                 precth - thePos.y() );
-					qDebug()<<"PAR("+theFont->fancyName()+")("<< gl.count() <<")"<<parRect ;
-					FMLayout::getLayout()->setTheScene ( &theScene , parRect );
-					FMLayout::getLayout()->setTheFont ( theFont );
-					FMLayout::getLayout()->setAdjustedSampleInter ( conSubfamily[elemIndex].textStyle.lineheight );
-					FMLayout::getLayout()->setDeviceIndy ( true );
-					
-					FMLayout::getLayout()->doLayout ( gl , conSubfamily[elemIndex].textStyle.fontsize );
-					FMLayout::getLayout()->run();
-					
-					renderedFont.append ( theFont );
-				}
-				else
-				{
-// 						QFont aFont ( conSubfamily[elemIndex].textStyle.font,conSubfamily[elemIndex].textStyle.fontsize );
-					for ( int sl = 0; sl < sublines.count(); ++sl )
-					{
-						QGraphicsTextItem * ti = theScene.addText ( sublines[sl], qfontCache[ conSubfamily[elemIndex].textStyle.name] );
-						renderedText << ti;
-						ti->setPos ( conSubfamily[elemIndex].textStyle.margin_left + prectx, thePos.y() + ( conSubfamily[elemIndex].textStyle.margin_top + ( sl * conSubfamily[elemIndex].textStyle.lineheight ) ) );
-						ti->setZValue ( 10000 );
-						ti->setDefaultTextColor ( conSubfamily[elemIndex].textStyle.color );
-					}
-				}
-
+				
 				if ( conSubfamily[elemIndex].graphic.valid )
 				{
 					QGraphicsSvgItem *svgIt = new QGraphicsSvgItem();
@@ -525,10 +530,59 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 					theScene.addItem ( svgIt );
 					svgIt->setPos ( conSubfamily[elemIndex].graphic.x + prectx, conSubfamily[elemIndex].graphic.y + thePos.y() );
 					svgIt->setZValue ( 100000 );
+					thePos.ry() += svgRendered[conSubfamily[elemIndex].graphic.name]->defaultSize().height();
 				}
-				theFont->setFTRaster ( oldRast );
-				thePos.ry() += needed;
-
+				else
+				{
+					if ( conSubfamily[elemIndex].textStyle.font == "_FONTMATRIX_" ) // We’ll use the current font
+					{
+						if(renderedFont.count() > 0)
+						{
+							FMLayout::getLayout()->setPersistentScene(true);
+// 							FMLayout::getLayout()->resetScene();
+						}
+						else
+							FMLayout::getLayout()->setPersistentScene(false);
+						
+						QList<GlyphList> gl;
+						for ( int sl = 0; sl < sublines.count(); ++sl )
+						{
+							gl << theFont->glyphs ( sublines[sl].trimmed(), conSubfamily[elemIndex].textStyle.fontsize );
+						}
+						
+						QRectF parRect ( conSubfamily[elemIndex].textStyle.margin_left + prectx,
+								thePos.y() + conSubfamily[elemIndex].textStyle.margin_top,
+								conSubfamily[elemIndex].textStyle.margin_right,
+								precth - thePos.y() );
+						
+						qDebug()<<"PAR("+theFont->fancyName()+")("<< gl.count() <<")"<<parRect ;
+						FMLayout::getLayout()->setTheScene ( &theScene , parRect );
+						FMLayout::getLayout()->setTheFont ( theFont );
+						FMLayout::getLayout()->setAdjustedSampleInter ( conSubfamily[elemIndex].textStyle.lineheight );
+						FMLayout::getLayout()->setDeviceIndy ( true );
+						
+						FMLayout::getLayout()->doLayout ( gl , conSubfamily[elemIndex].textStyle.fontsize );
+						FMLayout::getLayout()->run();
+						
+						thePos.ry() += FMLayout::getLayout()->drawnLines * conSubfamily[elemIndex].textStyle.lineheight;
+						renderedFont.append ( theFont );
+					}
+					else
+					{
+	// 						QFont aFont ( conSubfamily[elemIndex].textStyle.font,conSubfamily[elemIndex].textStyle.fontsize );
+						for ( int sl = 0; sl < sublines.count(); ++sl )
+						{
+							QGraphicsTextItem * ti = theScene.addText ( sublines[sl], qfontCache[ conSubfamily[elemIndex].textStyle.name] );
+							renderedText << ti;
+							ti->setTextWidth( mwidth );
+							ti->setPos ( conSubfamily[elemIndex].textStyle.margin_left + prectx, thePos.y() + ( conSubfamily[elemIndex].textStyle.margin_top + ( sl * conSubfamily[elemIndex].textStyle.lineheight ) ) );
+							ti->setZValue ( 10000 );
+							ti->setDefaultTextColor ( conSubfamily[elemIndex].textStyle.color );
+							
+							thePos.ry() += ti->document()->size().height();
+						}
+					}
+				}
 			} // end of SUBFAMILY level elements
 // 			qDebug() << "ENDOF_SUBFAMILY";
 		}
@@ -554,7 +608,9 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 		delete sit.value();
 	
 	FMLayout::getLayout()->setPersistentScene(false);
+	FMLayout::getLayout()->setTheScene(&theScene);
 	FMLayout::getLayout()->resetScene();
-
+	FMLayout::getLayout()->setTheScene(&measurementScene);
+	FMLayout::getLayout()->resetScene();
 }
 

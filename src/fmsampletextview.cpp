@@ -47,6 +47,7 @@ FMSampleTextView::FMSampleTextView ( QWidget* parent )
 	else
 	{
 		qDebug() <<"opengl disabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+		delete glwgt;
 	}
 #endif
 

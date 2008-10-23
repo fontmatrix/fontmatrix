@@ -97,11 +97,7 @@
 	</context>
 	<context level="subfamily">
 		<text>
-			Si Grasset créa le romain calamique,
-			il était réservé à Georges Auriol
-			de nous donner le romain au pinceau,
-			ou très exactement
-			« l’écriture typographiée ».
+			Si Grasset créa le romain calamique, il était réservé à Georges Auriol de nous donner le romain au pinceau, ou très exactement «l’écriture typographiée».
 		</text>
 		<textstyle name="samplename">
 			<font>_FONTMATRIX_</font><!-- here is the trick (just available at subfamily level) -->
@@ -109,7 +105,7 @@
 			<lineheight>16.0</lineheight>
 			<margintop>0.0</margintop>
 			<marginleft>120.0</marginleft>
-			<marginright>420.0</marginright>
+			<marginright>300.0</marginright>
 			<marginbottom>0.0</marginbottom>
 		</textstyle>
 	</context>

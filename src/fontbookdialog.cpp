@@ -232,7 +232,7 @@ void FontBookDialog::slotPreviewTemplate(const QString &key)
 			if(curTemplatePreview)
 				templateScene->removeItem(curTemplatePreview);
 			delete curTemplatePreview;
-			
+			// ### memleak
 			curTemplatePreview = templateScene->addPixmap( templatesPreviewMap[key] );
 // 			templatePreview->ensureVisible(curTemplatePreview,10,10);
 		}

@@ -3730,7 +3730,7 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 		}
 	}
 	releaseFace();
-	qDebug()<<"EndOfGlyphs";
+// 	qDebug()<<"EndOfGlyphs";
 	return ret;
 }
 

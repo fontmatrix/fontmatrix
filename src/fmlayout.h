@@ -50,21 +50,20 @@ class QGridLayout;
 
 struct Node
 {
-	struct Vector
+	struct ListItem
 	{
+		ListItem();
+		ListItem ( Node* N, double D );
+		~ListItem() ;
 		Node* n;
 		double distance;
 		
 		
-		Vector();
-		Vector ( Node* N, double D );
-		~Vector() ;
 // 		private:
-// 		Vector (const Vector& v);
+// 		ListItem (const ListItem& v);
 	};
 
-	
-	QList<Vector> nodes;
+	QList<ListItem*> nodes;
 	int index;
 
 	
@@ -73,10 +72,11 @@ struct Node
 	~Node();
 
 	bool hasNode ( int idx ) ;
-// 	void nodes_insert(int idx, Vector& v);
+	void nodes_clear();
+	void nodes_insert(ListItem * v);
 
 	void sPath ( double dist, QList< int > curList, QList<int>& theList, double& theScore );
-	int count();
+	int deepCount();
 	
 };
 
@@ -112,6 +112,7 @@ class FMLayout : public QThread
 		double lineWidth ( int l );
 		QMutex *layoutMutex;
 		bool stopIt;
+		int drawnLines;
 		
 	public slots:
 		void stopLayout();		

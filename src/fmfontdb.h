@@ -41,21 +41,22 @@ class FMFontDb : public QSqlDatabase
 			InternalId = 0,
 			Data = 10,
 			Tag,
-			Info
+			Info,
+   			TOs2
 		};
 	public:
 		enum Field
 		{
 			FontId = 0,
 			Id = 1,
-   			Activation = 2,
+			Activation = 2,
 			Type = 10,
 			Family,
 			Variant,
 			Name,
-			Panose,
+// 			Panose,
 			FileSize,
-   			FsType,
+			FsType,
 			Tags,
 			Lang,
 			InfoKey,
@@ -84,9 +85,50 @@ class FMFontDb : public QSqlDatabase
 			CompatibleMacintosh=18,
 			SampleText=19,
 			PostScriptCIDName=20,
+   // Its not an actual InfoItem but ...
+   			Panose=21,
 			AllInfo = 99
 		};
-
+		// http://www.microsoft.com/typography/OTSpec/os2.htm
+// 		enum OS2
+// 		{
+// 			Os2_Version = 0,
+// 			Os2_xAvgCharWidth,
+// 			Os2_usWeightClass,
+// 			Os2_usWidthClass,
+// 			Os2_fsType,
+// 			Os2_ySubscriptXSize,
+// 			Os2_ySubscriptYSize,
+// 			Os2_ySubscriptXOffset,
+// 			Os2_ySubscriptYOffset,
+// 			Os2_ySuperscriptXSize,
+// 			Os2_ySuperscriptXOffset,
+// 			Os2_ySuperscriptYOffset,
+// 			Os2_yStrikeoutSize,
+// 			Os2_yStrikeoutPosition,
+// 			Os2_sFamilyClass,
+// 			Os2_panose,
+// 			Os2_ulUnicodeRange1,
+// 			Os2_ulUnicodeRange2,
+// 			Os2_ulUnicodeRange3,
+// 			Os2_ulUnicodeRange4,
+// 			Os2_achVendID,
+// 			Os2_fsSelection,
+// 			Os2_usFirstCharIndex,
+// 			Os2_usLastCharIndex,
+// 			Os2_sTypoAscender,
+// 			Os2_sTypoDescender,
+// 			Os2_sTypoLineGap,
+// 			Os2_usWinAscent,
+// 			Os2_usWinDescent,
+// 			Os2_ulCodePageRange1,
+// 			Os2_ulCodePageRange2,
+// 			Os2_sxHeight,
+// 			Os2_sCapHeight,
+// 			Os2_usDefaultChar,
+// 			Os2_usBreakChar,
+// 			Os2_usMaxContext
+// 		};
 		/// Here are somehow "actual" public api
 		static FMFontDb * DB();
 		void TransactionBegin();
@@ -101,7 +143,7 @@ class FMFontDb : public QSqlDatabase
 		QVariant getValue ( const QString& id, Field field );
 		FontInfoMap getInfoMap ( const QString& id );
 
-		FontItem* Font ( const QString& id , bool noTemporary = false);
+		FontItem* Font ( const QString& id , bool noTemporary = false );
 
 		QList<FontItem*> AllFonts();
 		QStringList AllFontNames();
@@ -112,15 +154,15 @@ class FMFontDb : public QSqlDatabase
 		QList<FontItem*> Fonts ( const QVariant& pattern, InfoItem info, int codeLang = 0 );
 		QList<FontItem*> Fonts ( const QString& whereString, Table table );
 		int FontCount();
-		
+
 		QStringList getTags();
-		void addTagToDB(const QString& t);
-		void addTag(const QString& id, const QString& t);
-		void removeTag(const QString& id, const QString& t);
-		void setTags(const QString& id, const QStringList& tl);
-		
-		bool Remove(const QString& id);
-		bool insertTemporaryFont(const QString& path);
+		void addTagToDB ( const QString& t );
+		void addTag ( const QString& id, const QString& t );
+		void removeTag ( const QString& id, const QString& t );
+		void setTags ( const QString& id, const QStringList& tl );
+
+		bool Remove ( const QString& id );
+		bool insertTemporaryFont ( const QString& path );
 
 	private:
 		// ensure tables are created
@@ -143,9 +185,9 @@ class FMFontDb : public QSqlDatabase
 
 		QList<QSqlError> transactionError;
 		QMap<QString, QMap<Field, QVariant> > rValueCache;
-		
+
 		int transactionDeep;
-		
+
 };
 
 

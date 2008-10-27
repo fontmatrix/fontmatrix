@@ -37,7 +37,7 @@ FMFontDb::FMFontDb()
 	fieldName[Family] 	= "family";
 	fieldName[Variant] 	= "variant";
 	fieldName[Name] 	= "name";
-	fieldName[Panose] 	= "panose";
+// 	fieldName[Panose] 	= "panose";
 	fieldName[FileSize] 	= "filesize";
 	fieldName[Activation] 	= "activation";
 
@@ -387,7 +387,7 @@ void FMFontDb::initFMDb()
 		QString fVariant ( QString ( "%1 CHAR(255) " ).arg ( fieldName[Variant] ) );
 		QString fName	( QString ( "%1 CHAR(255) " ).arg ( fieldName[Name] ) );
 		QString fType	( QString ( "%1 CHAR(32) " ).arg ( fieldName[Type] ) );
-		QString fPanose	( QString ( "%1 CHAR(10) " ).arg ( fieldName[Panose] ) );
+// 		QString fPanose	( QString ( "%1 CHAR(10) " ).arg ( fieldName[Panose] ) );
 		QString fFsType	( QString ( "%1 INTEGER " ).arg ( fieldName[FsType] ) );
 		QString fActivation ( QString ( "%1 INTEGER " ).arg ( fieldName[Activation] ) );
 
@@ -398,14 +398,14 @@ void FMFontDb::initFMDb()
 		QString fTags	( QString ( "%1 CHAR(255) " ).arg ( fieldName[Tags] ) );
 
 
-		QString cData ( QString ( "CREATE TABLE %1 (%2,%3,%4,%5,%6,%7,%8,%9)" )
+		QString cData ( QString ( "CREATE TABLE %1 (%2,%3,%4,%5,%6,%7,%8)" )
 		                .arg ( tableName[Data] )
 		                .arg ( fNumId )
 		                .arg ( fFamily )
 		                .arg ( fVariant )
 		                .arg ( fName )
 		                .arg ( fType )
-		                .arg ( fPanose )
+// 		                .arg ( fPanose )
 		                .arg ( fFsType )
 		                .arg ( fActivation ) );
 
@@ -656,7 +656,7 @@ QList< FontItem * > FMFontDb::Fonts ( const QVariant & pattern, Field field )
 	        || ( field == Type )
 	        || ( field == Variant )
 	        || ( field == Name )
-	        || ( field == Panose ) )
+	        /*|| ( field == Panose ) */)
 		return Fonts ( QString ( "%1='%2'" ).arg ( fieldName[field] ).arg ( pattern.toString() ), Data );
 	else if ( field == Tags )
 		return Fonts ( QString ( "%1='%2'" ).arg ( fieldName[field] ).arg ( pattern.toString() ), Tag );

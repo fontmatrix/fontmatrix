@@ -2358,21 +2358,6 @@ QString FontItem::infoText ( bool fromcache )
 	*/
 	QString ret;
 
-	QString panStringOut;
-	QString panBlockOut;
-	QString pN(FMFontDb::DB()->getValue(m_path, FMFontDb::Panose).toString());
-	if ( !pN.isEmpty() )
-	{
-		for(int i(0);  i < FontStrings::Panose().keys().count(); ++i)
-		{
-			FontStrings::PanoseKey k(FontStrings::Panose().keys()[i]);
-			int pValue(pN.mid(i,1).toInt());
-			panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName( k ) + "</div>";
-			panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value( k ).value( pValue ) + "</div>";
-		}
-	}
-	
-
 	FsType OSFsType( FMFontDb::DB()->getValue(m_path,FMFontDb::FsType).toInt() );
 	QString embedFlags = "<div id=\"fstype\">";
 	if( OSFsType.testFlag(NOT_RESTRICTED))
@@ -2408,6 +2393,7 @@ QString FontItem::infoText ( bool fromcache )
 	}
 	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ tr("Charmaps List")+"</div><div class=\"langundefined\">"+ cmapStrings.join ( ", " ) +"</div></div>";
 
+	QString panBlockOut;
 // 	if ( !moreInfo.isEmpty() ) // moreInfo.isNotEmpty
 	{
 		QString sysLang = QLocale::languageToString ( QLocale::system ().language() ).toUpper();
@@ -2469,6 +2455,19 @@ QString FontItem::infoText ( bool fromcache )
 				}
 			}
 		}
+		
+		QString pN(moreInfo.value(0).value(FMFontDb::Panose));
+		if ( !pN.isEmpty() )
+		{
+			for(int i(0);  i < FontStrings::Panose().keys().count(); ++i)
+			{
+				FontStrings::PanoseKey k(FontStrings::Panose().keys()[i]);
+				int pValue(pN.mid(i,1).toInt());
+				panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName( k ) + "</div>";
+				panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value( k ).value( pValue ) + "</div>";
+			}
+		}
+	
 	}
 
 
@@ -2934,6 +2933,7 @@ FontInfoMap FontItem::moreInfo_sfnt()
 // 			panoseInfo[ panoseKeys[bI] ] = panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ] ;
 		}
 
+		moreInfo[0][FMFontDb::Panose] = m_panose;
 		// FSTYPE (embedding status)
 		if(!os2->fsType)
 			m_OSFsType = NOT_RESTRICTED;
@@ -3903,8 +3903,8 @@ void FontItem::dumpIntoDB()
 	t.start();
 	QList<FMFontDb::Field> fl;
 	QVariantList vl;
-	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name << FMFontDb::Panose << FMFontDb::Type << FMFontDb::FsType;
-	vl <<  m_family<<m_variant<<m_name<<m_panose<<m_type<<(int)m_OSFsType;
+	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name  << FMFontDb::Type << FMFontDb::FsType;
+	vl <<  m_family<<m_variant<<m_name<<m_type<<(int)m_OSFsType;
 	db->setValues(m_path,fl,vl);
 	e2 = t.elapsed();
 	

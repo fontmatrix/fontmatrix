@@ -39,10 +39,11 @@ class FontStrings : public QObject
 
 		};
 		
-		static QMap<FMFontDb::InfoItem,QString>& Names();
-		static QMap< PanoseKey, QMap<int, QString> >& Panose();
-		static QString PanoseKeyName(PanoseKey pk);
-		static QString Encoding(FT_Encoding enc);
+		static const QMap<FMFontDb::InfoItem,QString>& Names();
+		static const QMap< PanoseKey, QMap<int, QString> >& Panose();
+		static const QString PanoseKeyName(PanoseKey pk);
+		static const QString Encoding(FT_Encoding enc);
+		static const QMap<QString,QString>& Tables(); 
 
 	private:
 
@@ -50,11 +51,12 @@ class FontStrings : public QObject
 		void fillNamesMeaning();
 		void fillCharsetMap();
 		void fillPanoseMap();
+		void fillTTTableList();
 
 		QMap< PanoseKey, QMap<int, QString> > m_panoseMap;
 		QMap< PanoseKey, QString > m_panoseKeyName;
 		QMap<FT_Encoding, QString> charsetMap;
-
+		QMap<QString,QString> tttableList;// <TT name, description>
 };
 
 #endif

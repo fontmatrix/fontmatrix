@@ -74,6 +74,8 @@ QVector<QRgb> invertedGray256Palette;
 // QWaitCondition theCondition;
 // QMutex theMutex;
 
+unsigned int OTF_name_tag ( QString s );
+
 /** functions set for decomposition
  */
 
@@ -2790,6 +2792,23 @@ FontInfoMap FontItem::moreInfo()
 	return ret;
 }
 
+int FontItem::table(const QString & tableName)
+{
+	if(!ensureFace())
+		return 0;
+	
+	if ( !FT_IS_SFNT ( m_face ) )
+		return 0;
+	
+	uint tag(OTF_name_tag(tableName));
+	FT_ULong length( 0 );
+	FT_Load_Sfnt_Table ( m_face, tag , 0, NULL, &length );
+	
+	releaseFace();
+	
+	return int(length);
+}
+
 /** reminder
 FT_SfntName::name_id
 Code  	Meaning
@@ -3927,6 +3946,8 @@ QStringList FontItem::charmaps()
 	}
 	return ret;
 }
+
+
 
 
 

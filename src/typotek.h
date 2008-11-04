@@ -85,6 +85,7 @@ class typotek:public QMainWindow
 		void slotTagsDockAreaChanged(Qt::DockWidgetArea area);
 		void slotSwitchLayOptVisible();
 		void slotUpdateLayOptStatus();
+		void slotShowTTTables();
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );
@@ -151,6 +152,8 @@ class typotek:public QMainWindow
 		QAction *exportFontSetAct;
 		QAction *repairAct;
 		QAction *tagAll;
+		QAction *showTTTAct;	
+		
 		QAction *nextFamily;
 		QAction *previousFamily;
 		QAction *nextFont;

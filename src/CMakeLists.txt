@@ -41,6 +41,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/systray.cpp
 # ${CMAKE_CURRENT_SOURCE_DIR}/tagseteditor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/tttableview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/typotek.cpp
 )
 
@@ -115,6 +116,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/repair.ui
 # ${CMAKE_CURRENT_SOURCE_DIR}/tagset.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.ui
+${CMAKE_CURRENT_SOURCE_DIR}/tttablewidget.ui
 )
 QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
 

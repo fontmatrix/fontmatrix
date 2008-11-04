@@ -40,6 +40,7 @@
 #include "importtags.h"
 #include "dataexport.h"
 #include "remotedir.h"
+#include "tttableview.h"
 #include "fmrepair.h"
 // #include "fmprintdialog.h"
 #include "fmactivate.h"
@@ -600,6 +601,10 @@ void typotek::createActions()
 	tagAll = new QAction(tr("Tag All..."), this);
 	scuts->add(tagAll);
 	connect(tagAll,SIGNAL(triggered()),this,SLOT(slotTagAll()));
+	
+	showTTTAct = new QAction(tr("Show TrueType tables"),this);
+	scuts->add(showTTTAct);
+	connect(showTTTAct,SIGNAL(triggered( )),this,SLOT(slotShowTTTables()));
 
 	nextFamily = new QAction(tr("Next Family"), this);
 	nextFamily->setShortcut(Qt::Key_PageDown);
@@ -666,6 +671,7 @@ void typotek::createMenus()
 
 	editMenu->addSeparator();
 	editMenu->addAction(layOptAct);
+	editMenu->addAction(showTTTAct);
 
 	browseMenu = menuBar()->addMenu(tr("&Browse"));
 	browseMenu->addAction(nextFamily);
@@ -2069,6 +2075,28 @@ void typotek::endProgressJob()
 	statusProgressBar->reset();
 }
 
+void typotek::slotShowTTTables()
+{
+	if(theMainView->selectedFont())
+	{
+		QDialog dia(this);
+		QGridLayout glayout(&dia);
+		TTTableView tv(theMainView->selectedFont(),&dia);
+		QPushButton pbutton(tr("Close"),&dia);
+		glayout.addWidget(&tv,0,0,3,3);
+		glayout.addWidget(&pbutton,3,2);
+		pbutton.setDefault(true);
+		
+		QRect drect(dia.rect());
+		drect.setX(this->geometry().x() + 32);
+		drect.setY(this->geometry().y() + 32);
+		drect.setWidth(tv.rect().width() * 1.2);
+		drect.setHeight(tv.rect().height() * 1.2);
+		dia.setGeometry(drect);
+		connect(&pbutton,SIGNAL(released()),&dia,SLOT(close()));
+		dia.exec();
+	}
+}
 
 
 

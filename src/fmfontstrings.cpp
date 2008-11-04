@@ -18,6 +18,7 @@ FontStrings::FontStrings()
 	fillNamesMeaning();
 	fillPanoseMap();
 	fillCharsetMap();
+	fillTTTableList();
 }
 
 FontStrings * FontStrings::getInstance()
@@ -51,12 +52,6 @@ void FontStrings::fillNamesMeaning()
 	m_name[FMFontDb::PostScriptCIDName]= tr ( "PostScript CID findfont name" );
 	m_name[FMFontDb::Panose]= tr("Panose");
 	m_name[FMFontDb::AllInfo]= tr("All fields");
-}
-
-QMap< FMFontDb::InfoItem, QString >& FontStrings::Names()
-{
-	FontStrings *that(getInstance());
-	return that->m_name;
 }
 
 void FontStrings::fillPanoseMap()
@@ -252,20 +247,84 @@ void FontStrings::fillCharsetMap()
 	charsetMap[FT_ENCODING_MS_JOHAB] = "MS Johab";
 }
 
-QMap< FontStrings::PanoseKey, QMap < int , QString > >& FontStrings::Panose()
+void FontStrings::fillTTTableList()
+{
+	tttableList.clear();
+	
+	// Required Tables
+	tttableList["cmap"] = tr("Character to glyph mapping");
+	tttableList["head"] = tr("Font header");
+	tttableList["hhea"] = tr("Horizontal header");
+	tttableList["hmtx"] = tr("Horizontal metrics");
+	tttableList["maxp"] = tr("Maximum profile");
+	tttableList["name"] = tr("Naming table");
+	tttableList["OS/2"] = tr("OS/2 and Windows specific metrics");
+	tttableList["post"] = tr("PostScript information");
+	
+	// Tables Related to TrueType Outlines
+	tttableList["cvt"] = tr("Control Value Table");
+	tttableList["fpgm"] = tr("Font program");
+	tttableList["glyf"] = tr("Glyph data");
+	tttableList["loca"] = tr("Index to location");
+	tttableList["prep"] = tr("CVT Program");
+	
+	// Tables Related to PostScript Outlines
+	tttableList["CFF"] = tr("PostScript font program");
+	tttableList["VORG"] = tr("Vertical Origin");
+	
+	// Tables Related to Bitmap Glyphs
+	tttableList["EBDT"] = tr("Embedded bitmap data");
+	tttableList["EBLC"] = tr("Embedded bitmap location data");
+	tttableList["EBSC"] = tr("Embedded bitmap scaling data");
+	
+	// Advanced Typographic Tables
+	tttableList["BASE"] = tr("Baseline data");
+	tttableList["GDEF"] = tr("Glyph definition data");
+	tttableList["GPOS"] = tr("Glyph positioning data");
+	tttableList["GSUB"] = tr("Glyph substitution data");
+	tttableList["JSTF"] = tr("Justification data");
+	
+	// Other OpenType Tables
+	tttableList["DSIG"] = tr("Digital signature");
+	tttableList["gasp"] = tr("Grid-fitting/Scan-conversion");
+	tttableList["hdmx"] = tr("Horizontal device metrics");
+	tttableList["kern"] = tr("Kerning");
+	tttableList["LTSH"] = tr("Linear threshold data");
+	tttableList["PCLT"] = tr("PCL 5 data");
+	tttableList["VDMX"] = tr("Vertical device metrics");
+	tttableList["vhea"] = tr("Vertical Metrics header");
+	tttableList["vmtx"] = tr("Vertical Metrics");
+}
+
+
+const QMap< FMFontDb::InfoItem, QString >& FontStrings::Names()
+{
+	FontStrings *that(getInstance());
+	return that->m_name;
+}
+
+const QMap< FontStrings::PanoseKey, QMap < int , QString > >& FontStrings::Panose()
 {
 	FontStrings *that(getInstance());
 	return that->m_panoseMap;
 }
 
-QString FontStrings::PanoseKeyName(PanoseKey pk)
+const QString FontStrings::PanoseKeyName(PanoseKey pk)
 {
 	FontStrings *that(getInstance());
 	return that->m_panoseKeyName.value(pk);
 }
 
-QString FontStrings::Encoding(FT_Encoding enc)
+const QString FontStrings::Encoding(FT_Encoding enc)
 {
 	FontStrings *that(getInstance());
 	return that->charsetMap.value(enc);
 }
+
+const QMap< QString, QString > & FontStrings::Tables()
+{
+	FontStrings *that(getInstance());
+	return that->tttableList;
+}
+
+

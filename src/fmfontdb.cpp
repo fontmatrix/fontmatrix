@@ -242,9 +242,13 @@ FontInfoMap FMFontDb::getInfoMap ( const QString & id )
 	qDebug() <<"getInfoMap"<<id;
 	FontInfoMap ret;
 	if ( id.isEmpty() )
+	{
+		qDebug() <<"No such font is referenced";
 		return ret;
+	}
 	if ( temporaryFont.contains(id) )
 	{
+		qDebug() <<"It is a temp Id";
 		return temporaryFont[id]->moreInfo();
 	}
 	QString qs ( QString ( "SELECT * FROM %1 WHERE %2='%3'" )
@@ -263,6 +267,10 @@ FontInfoMap FMFontDb::getInfoMap ( const QString & id )
 		{
 			ret[query.value ( lIdx ).toInt() ][query.value ( kIdx ).toInt() ] = query.value ( vIdx ).toString();
 		}
+	}
+	else
+	{
+		qDebug() <<"Error executing query";	
 	}
 	return ret;
 

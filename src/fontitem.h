@@ -211,6 +211,7 @@ class FontItem : public QObject
 
 		static QGraphicsScene *theOneLineScene;
 		
+		
 		FontInfoMap moreInfo_sfnt();
 		FontInfoMap moreInfo_type1();
 
@@ -258,6 +259,9 @@ class FontItem : public QObject
 		FontInfoMap rawInfo();
 		QString panose(){return m_panose;}
 		FontInfoMap moreInfo();
+		
+		// Return the length of a TT table
+		int table(const QString& tableName);
 
 // 		QString value ( QString k );
 // 		QString panose( QString k );

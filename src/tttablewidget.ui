@@ -21,35 +21,38 @@
     </widget>
    </item>
    <item row="1" column="0" >
-    <widget class="QTreeWidget" name="tView" >
-     <property name="columnCount" >
-      <number>3</number>
+    <widget class="QSplitter" name="splitter" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
      </property>
-     <column>
-      <property name="text" >
-       <string>Tag</string>
+     <widget class="QTreeWidget" name="tView" >
+      <property name="columnCount" >
+       <number>3</number>
       </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Description</string>
+      <column>
+       <property name="text" >
+        <string>Tag</string>
+       </property>
+      </column>
+      <column>
+       <property name="text" >
+        <string>Description</string>
+       </property>
+      </column>
+      <column>
+       <property name="text" >
+        <string>Size</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QHexView" name="hexView" >
+      <property name="frameShape" >
+       <enum>QFrame::StyledPanel</enum>
       </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Size</string>
+      <property name="frameShadow" >
+       <enum>QFrame::Raised</enum>
       </property>
-     </column>
-    </widget>
-   </item>
-   <item row="2" column="0" >
-    <widget class="QHexView" name="hexView" >
-     <property name="frameShape" >
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow" >
-      <enum>QFrame::Raised</enum>
-     </property>
+     </widget>
     </widget>
    </item>
   </layout>

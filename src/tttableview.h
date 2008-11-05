@@ -20,18 +20,24 @@ class QTreeWidgetItem;
 
 class TTTableView : public QWidget, private Ui::TTTableWidget
 {
+	Q_OBJECT
 	enum Tfield_p{
 		NAME = 0,
 		DESCRIPTION = 1,
 		SIZE = 2	
 	};
 	
+	FontItem * m_font;
 	QList<QTreeWidgetItem*> twiList;
+	QVector<uint8_t> m_data;
 	
 	public:
 		
 		TTTableView(FontItem * font, QWidget * parent = 0);
 		~TTTableView();
+		
+	private slots:
+		void updateHexView();
 		
 };
 

@@ -29,6 +29,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fontmatrixshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/helpwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfontsdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/QHexView.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
@@ -88,6 +89,7 @@ fontbookdialog.h
 fontitem.h
 helpwidget.h
 importtags.h
+QHexView.h
 listdockwidget.h
 mainviewwidget.h
 prefspaneldialog.h
@@ -97,6 +99,7 @@ systray.h
 # tagseteditor.h
 tagswidget.h
 textprogression.h
+tttableview.h
 typotek.h
 )
 QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})

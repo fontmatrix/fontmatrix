@@ -262,6 +262,7 @@ class FontItem : public QObject
 		
 		// Return the length of a TT table
 		int table(const QString& tableName);
+		QByteArray tableData(const QString& tableName);
 
 // 		QString value ( QString k );
 // 		QString panose( QString k );

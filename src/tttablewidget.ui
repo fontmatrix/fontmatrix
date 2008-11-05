@@ -42,8 +42,26 @@
      </column>
     </widget>
    </item>
+   <item row="2" column="0" >
+    <widget class="QHexView" name="hexView" >
+     <property name="frameShape" >
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QHexView</class>
+   <extends>QFrame</extends>
+   <header>QHexView.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

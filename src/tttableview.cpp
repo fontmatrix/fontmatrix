@@ -18,10 +18,12 @@
 #include "fmfontstrings.h"
 
 TTTableView::TTTableView(FontItem * font, QWidget * parent)
-	:QWidget(parent)
+	:QWidget(parent), m_font(font)
 {
 	setupUi(this);
 // 	tView->setColumnCount (3);
+	bool hasTable(false);
+	QTreeWidgetItem *first;
 	foreach( QString tname, FontStrings::Tables().keys() )
 	{
 		int len(font->table(tname));
@@ -33,11 +35,25 @@ TTTableView::TTTableView(FontItem * font, QWidget * parent)
 			twi->setText(SIZE, QString::number(len));
 			twiList << twi;
 			tView->addTopLevelItem(twi);
+			if(!hasTable)
+			{
+				hasTable = true;
+				first = twi;
+			}
 		}
 // 		else
 // 			qDebug()<<tname<<len;
 	}
 	tView->resizeColumnToContents(DESCRIPTION);
+	
+	connect(tView,SIGNAL(itemSelectionChanged()),this,SLOT(updateHexView()));
+	
+	if(hasTable)
+	{
+		tView->setItemSelected(first,true);
+		updateHexView();
+	}
+	
 }
 
 TTTableView::~ TTTableView()
@@ -46,4 +62,20 @@ TTTableView::~ TTTableView()
 	{
 		delete twi;
 	}
+}
+
+void TTTableView::updateHexView()
+{
+	if(!tView->selectedItems().count())
+		return;
+	
+	QString table(tView->selectedItems()[0]->text(NAME));
+	QByteArray ar(m_font->tableData(table));
+	
+	m_data.clear();
+	for(int i(0);i<ar.count();++i)
+	{
+		m_data << ar.at(i);
+	}
+	hexView->setData(&m_data);
 }

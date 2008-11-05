@@ -2798,7 +2798,10 @@ int FontItem::table(const QString & tableName)
 		return 0;
 	
 	if ( !FT_IS_SFNT ( m_face ) )
+	{
+		releaseFace();
 		return 0;
+	}
 	
 	uint tag(OTF_name_tag(tableName));
 	FT_ULong length( 0 );
@@ -2808,6 +2811,33 @@ int FontItem::table(const QString & tableName)
 	
 	return int(length);
 }
+
+QByteArray FontItem::tableData(const QString & tableName)
+{
+	QByteArray ret;
+	if(!ensureFace())
+		return ret;
+	
+	if ( !FT_IS_SFNT ( m_face ) )
+	{
+		releaseFace();
+		return ret;
+	}
+	
+	uint tag(OTF_name_tag(tableName));
+	FT_ULong length( 0 );
+	if ( !FT_Load_Sfnt_Table ( m_face, tag, 0, NULL, &length ) )
+	{
+		if ( length > 0 )
+		{
+			ret.resize ( length );
+			FT_Load_Sfnt_Table ( m_face, tag, 0, ( FT_Byte * ) ret.data (), &length );
+		}
+	}
+	releaseFace();
+	return ret;
+}
+
 
 /** reminder
 FT_SfntName::name_id
@@ -3946,6 +3976,7 @@ QStringList FontItem::charmaps()
 	}
 	return ret;
 }
+
 
 
 

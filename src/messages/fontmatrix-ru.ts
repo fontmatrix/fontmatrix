@@ -1518,127 +1518,127 @@
     <message>
         <location filename="../fmfontstrings.cpp" line="255"/>
         <source>Character to glyph mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Привязка символов к глифам</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="256"/>
         <source>Font header</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок шрифта</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="257"/>
         <source>Horizontal header</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок горизонтального размещения</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="258"/>
         <source>Horizontal metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальные метрики</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="259"/>
         <source>Maximum profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Профиль максимума</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="260"/>
         <source>Naming table</source>
-        <translation type="unfinished"></translation>
+        <translation>Таблица имен</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="261"/>
         <source>OS/2 and Windows specific metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Специфичные для OS/2 и Windows метрики</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="262"/>
         <source>PostScript information</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные для PostScript-принтеров</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="265"/>
         <source>Control Value Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Таблица контрольных значений (CVT)</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="266"/>
         <source>Font program</source>
-        <translation type="unfinished"></translation>
+        <translation>Программа шрифта</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="267"/>
         <source>Glyph data</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные глифов</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="268"/>
         <source>Index to location</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещения относительно расположения глифов в шрифте</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="269"/>
         <source>CVT Program</source>
-        <translation type="unfinished"></translation>
+        <translation>Программа таблицы контрольных значений (CVT)</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="272"/>
         <source>PostScript font program</source>
-        <translation type="unfinished"></translation>
+        <translation>Компактное представление шрифта PostScript Type1 (CFF)</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="273"/>
         <source>Vertical Origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Начальная координата Y каждого глифа в шрифте</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="276"/>
         <source>Embedded bitmap data</source>
-        <translation type="unfinished"></translation>
+        <translation>Встроенные растровые данные</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="277"/>
         <source>Embedded bitmap location data</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес встроенных растровых данных</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="278"/>
         <source>Embedded bitmap scaling data</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштабирование встроенных растровых данных</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="281"/>
         <source>Baseline data</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные линии шрифта</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="282"/>
         <source>Glyph definition data</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные определения глифов</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="283"/>
         <source>Glyph positioning data</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные позиционирования глифов</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="284"/>
         <source>Glyph substitution data</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные подстановки глифов</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="285"/>
         <source>Justification data</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные выключки</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="288"/>
         <source>Digital signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Цифровая подпись</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="289"/>
         <source>Grid-fitting/Scan-conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Вписывание в пиксельную сетку</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="290"/>
@@ -1653,7 +1653,7 @@
     <message>
         <location filename="../fmfontstrings.cpp" line="292"/>
         <source>Linear threshold data</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные линейного порога</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="293"/>
@@ -1668,12 +1668,12 @@
     <message>
         <location filename="../fmfontstrings.cpp" line="295"/>
         <source>Vertical Metrics header</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок вертикального размещения</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="296"/>
         <source>Vertical Metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальные метрики</translation>
     </message>
 </context>
 <context>
@@ -3243,17 +3243,17 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
         <location filename="../prefs_panel.ui" line="387"/>
         <source>Sample Texts</source>
-        <translation type="unfinished"></translation>
+        <translation>Образцы текста</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="430"/>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../prefs_panel.ui" line="449"/>
         <source>−</source>
-        <translation type="unfinished"></translation>
+        <translation>−</translation>
     </message>
 </context>
 <context>
@@ -3373,13 +3373,17 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
         <location filename="../prefspaneldialog.cpp" line="206"/>
         <source>Sample Text</source>
         <comment>A default sample text inserted when creating a new sample</comment>
-        <translation type="unfinished">Образец текста</translation>
+        <translation>Образец текста
+
+Sample text
+
+Ein Textbeispiel</translation>
     </message>
     <message>
         <location filename="../prefspaneldialog.cpp" line="220"/>
         <source>Do you confirm that you want to remove:</source>
         <comment>the name of a sample text will be append to the string</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите удалить:</translation>
     </message>
 </context>
 <context>
@@ -3422,7 +3426,7 @@ rstuvxyz
     <message>
         <location filename="../dataloader.cpp" line="202"/>
         <source>hamburgefonstiv</source>
-        <translation type="unfinished"></translation>
+        <translation>hamburgefonstiv</translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="207"/>
@@ -4260,7 +4264,7 @@ rstuvxyz
     <message>
         <location filename="../remotedir.cpp" line="239"/>
         <source>Downloading</source>
-        <translation type="unfinished"></translation>
+        <translation>Скачивается</translation>
     </message>
 </context>
 <context>
@@ -4311,7 +4315,7 @@ rstuvxyz
     <message>
         <location filename="../tttablewidget.ui" line="30"/>
         <source>Tag</source>
-        <translation>Метка</translation>
+        <translation>Обозначение</translation>
     </message>
     <message>
         <location filename="../tttablewidget.ui" line="35"/>

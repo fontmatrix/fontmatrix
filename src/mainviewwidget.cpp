@@ -784,15 +784,15 @@ void MainViewWidget::slotView ( bool needDeRendering )
 
 	if ( loremView->isVisible() || loremView_FT->isVisible() )
 	{
-		qDebug()<<"lv(ft) is visible";
+//		qDebug()<<"lv(ft) is visible";
 		if(textLayout->isRunning())
 		{
-			qDebug()<<"tl is running";
+//			qDebug()<<"tl is running";
 			textLayout->stopLayout();
 		}
 		else
 		{
-			qDebug()<<"tl is NOT running";
+//			qDebug()<<"tl is NOT running";
 			QGraphicsScene *targetScene;
 			loremView_FT->unSheduleUpdate();
 			loremView->unSheduleUpdate();
@@ -807,7 +807,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			
 			bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
 			QString script = langCombo->currentText();
-			bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
+                        bool processScript =  f->isOpenType() && ( useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
 
 			textLayout->setTheFont(theVeryFont);
 			textLayout->setDeviceIndy(!wantDeviceDependant);

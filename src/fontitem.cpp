@@ -732,8 +732,9 @@ void FontItem::encodeFace()
 		return;
 	
 	m_charsets.clear();
-	bool UnicodeBuiltIn = (m_face->charmap == NULL) ? false : true ;
-	bool isType1 = (QString(FT_Get_X11_Font_Format(m_face)) == QString("Type 1")) ? true : false ;
+	m_unicodeBuiltIn = (m_face->charmap == NULL) ? false : true ;
+	if(QString(FT_Get_X11_Font_Format(m_face)) == QString("Type 1"))
+		m_unicodeBuiltIn = false;
 	
 	QMap<FT_Encoding, FT_CharMap> cmaps;
 	for(int u = 0; u < m_face->num_charmaps; u++)
@@ -742,7 +743,8 @@ void FontItem::encodeFace()
 	}
 	
 	bool mapped(false);
-	if ( (!isType1) && UnicodeBuiltIn && cmaps.contains( FT_ENCODING_UNICODE ) )
+	// Stop kidding
+	if (/* (!isType1) && UnicodeBuiltIn && */cmaps.contains( FT_ENCODING_UNICODE ) )
 	{
 		FT_Set_Charmap(m_face, cmaps[FT_ENCODING_UNICODE]);
 		m_charsets << FT_ENCODING_UNICODE;
@@ -762,8 +764,8 @@ void FontItem::encodeFace()
 	foreach(FT_Encoding e, cmaps.keys())
 	{
 // 		QString cs(FontStrings::Encoding(e));
-		if(isType1 && (e == FT_ENCODING_UNICODE))
-			continue;
+// 		if(isType1 && (e == FT_ENCODING_UNICODE))
+// 			continue;
 		if(!m_charsets.contains(e))
 			m_charsets << e;
 		if(!mapped)
@@ -2388,10 +2390,13 @@ QString FontItem::infoText ( bool fromcache )
 	QStringList cmapStrings;
 	foreach(FT_Encoding c, m_charsets)
 	{
+		QString encString(FontStrings::Encoding(c));
+		if((c == FT_ENCODING_UNICODE)&&(!m_unicodeBuiltIn))
+				encString +="*";
 		if(c == m_currentEncoding)
-			cmapStrings << "<span class=\"encodingcurrent\">" + FontStrings::Encoding(c) + "</span>";
+			cmapStrings << "<span class=\"encodingcurrent\">" + encString + "</span>";
 		else
-			cmapStrings << "<span class=\"encoding\">" + FontStrings::Encoding(c) + "</span>";
+			cmapStrings << "<span class=\"encoding\">" + encString + "</span>";
 	}
 	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ tr("Charmaps List")+"</div><div class=\"langundefined\">"+ cmapStrings.join ( ", " ) +"</div></div>";
 

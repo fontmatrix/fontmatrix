@@ -195,6 +195,7 @@ class FontItem : public QObject
 		bool isDerendered;
 		int m_glyphsPerRow;
 		bool m_isEncoded;
+		bool m_unicodeBuiltIn;
 		FT_Encoding m_currentEncoding;
 		int currentChar;
 		

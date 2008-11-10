@@ -104,94 +104,6 @@
   <context>
     <name>FontItem</name>
     <message>
-      <source>This value is deprecated and was never used nor reported by FreeType. Don't use or test for it.</source>
-      <translation>Tämä arvo on poistettu käytöstä eikä sitä koskaan käytetty eikä FreeType koskaan huomauttanut siitä. Älä käytä tai testaa sitä.</translation>
-    </message>
-    <message>
-      <source>Copyright</source>
-      <translation>Tekijänoikeudet</translation>
-    </message>
-    <message>
-      <source>Font Family</source>
-      <translation>Fonttiperhe</translation>
-    </message>
-    <message>
-      <source>Font Subfamily</source>
-      <translation>Fonttiperheen alijoukko</translation>
-    </message>
-    <message>
-      <source>Unique font identifier</source>
-      <translation>Yksilöllinen tunniste</translation>
-    </message>
-    <message>
-      <source>Full font name</source>
-      <translation>Fontin täydellinen nimi</translation>
-    </message>
-    <message>
-      <source>Version string</source>
-      <translation>Versiomerkintä</translation>
-    </message>
-    <message>
-      <source>Postscript name</source>
-      <translation>Postscript-nimi</translation>
-    </message>
-    <message>
-      <source>Trademark</source>
-      <translation>Tavaramerkki</translation>
-    </message>
-    <message>
-      <source>Manufacturer</source>
-      <translation>Valmistaja</translation>
-    </message>
-    <message>
-      <source>Designer</source>
-      <translation>Suunnittelija</translation>
-    </message>
-    <message>
-      <source>Description</source>
-      <translation>Kuvaus</translation>
-    </message>
-    <message>
-      <source>URL Vendor</source>
-      <translation>Valmistajan URL</translation>
-    </message>
-    <message>
-      <source>URL Designer</source>
-      <translation>Suunnittelijan URL</translation>
-    </message>
-    <message>
-      <source>License Description</source>
-      <translation>Lisenssin kuvaus</translation>
-    </message>
-    <message>
-      <source>License Info URL</source>
-      <translation>Lisenssin URL </translation>
-    </message>
-    <message>
-      <source>Reserved</source>
-      <translation>Varattu</translation>
-    </message>
-    <message>
-      <source>Preferred Family</source>
-      <translation>Suositeltu perhe</translation>
-    </message>
-    <message>
-      <source>Preferred Subfamily</source>
-      <translation>Suositeltu perheen alijoukko</translation>
-    </message>
-    <message>
-      <source>Compatible Full (Macintosh only)</source>
-      <translation>Täysi yhteensopivuus (ainoastaan Macintosh)</translation>
-    </message>
-    <message>
-      <source>Sample text</source>
-      <translation>Esimerkkiteksti</translation>
-    </message>
-    <message>
-      <source>PostScript CID findfont name</source>
-      <translation>PostScript CID findfont -nimi</translation>
-    </message>
-    <message>
       <source>Fontmatrix - Download</source>
       <translation>Fontmatrix - Lataa</translation>
     </message>
@@ -202,418 +114,6 @@
     <message>
       <source>Category</source>
       <translation>Osa</translation>
-    </message>
-    <message>
-      <source>Any</source>
-      <translation>Mikä tahansa</translation>
-    </message>
-    <message>
-      <source>No Fit</source>
-      <translation>Ei sopivaa luokkaa</translation>
-    </message>
-    <message>
-      <source>Text and Display</source>
-      <translation>Leipäteksti</translation>
-    </message>
-    <message>
-      <source>Script</source>
-      <translation>Käsinkirjoitettu</translation>
-    </message>
-    <message>
-      <source>Decorative</source>
-      <translation>Koristeellinen</translation>
-    </message>
-    <message>
-      <source>Pictorial</source>
-      <translation>Kuvitettu</translation>
-    </message>
-    <message>
-      <source>Family Type</source>
-      <translation>Fonttiperheen tyyli</translation>
-    </message>
-    <message>
-      <source>Cove</source>
-      <translation>Kovera</translation>
-    </message>
-    <message>
-      <source>Obtuse Cove</source>
-      <translation>Loivasti kovera</translation>
-    </message>
-    <message>
-      <source>Square Cove</source>
-      <translation>Kulmikkaasti kovera</translation>
-    </message>
-    <message>
-      <source>Obtuse Square Cove</source>
-      <translation>Loivasti ja kulmikkaasti kovera</translation>
-    </message>
-    <message>
-      <source>Square</source>
-      <translation>Kulmikas</translation>
-    </message>
-    <message>
-      <source>Thin</source>
-      <translation>Ohut</translation>
-    </message>
-    <message>
-      <source>Bone</source>
-      <translation>Ovaali</translation>
-    </message>
-    <message>
-      <source>Exaggerated</source>
-      <translation>Liioiteltu</translation>
-    </message>
-    <message>
-      <source>Triangle</source>
-      <translation>Kolmio</translation>
-    </message>
-    <message>
-      <source>Normal Sans</source>
-      <translation>Suora pääteviivaton</translation>
-    </message>
-    <message>
-      <source>Obtuse Sans</source>
-      <translation>Vaakasuunnassa vino pääteviivaton</translation>
-    </message>
-    <message>
-      <source>Perp Sans</source>
-      <translation>Pystysuunnassa vino pääteviivaton</translation>
-    </message>
-    <message>
-      <source>Flared</source>
-      <translation>Levenevä</translation>
-    </message>
-    <message>
-      <source>Rounded</source>
-      <translation>Pyöristetty</translation>
-    </message>
-    <message>
-      <source>Serif style</source>
-      <translation>Pääteviivan tyyli</translation>
-    </message>
-    <message>
-      <source>Very Light</source>
-      <translation>Erittäin kevyt</translation>
-    </message>
-    <message>
-      <source>Light</source>
-      <translation>Kevyt</translation>
-    </message>
-    <message>
-      <source>Book</source>
-      <translation>Kirja</translation>
-    </message>
-    <message>
-      <source>Medium</source>
-      <translation>Keskipaksu</translation>
-    </message>
-    <message>
-      <source>Demi</source>
-      <translation>Paksu</translation>
-    </message>
-    <message>
-      <source>Bold</source>
-      <translation>Lihava</translation>
-    </message>
-    <message>
-      <source>Heavy</source>
-      <translation>Raskas</translation>
-    </message>
-    <message>
-      <source>Black</source>
-      <translation>Musta</translation>
-    </message>
-    <message>
-      <source>Nord</source>
-      <translation>Hyvin musta</translation>
-    </message>
-    <message>
-      <source>Weight</source>
-      <translation>Vahvuus</translation>
-    </message>
-    <message>
-      <source>Old Style</source>
-      <translation>Vanhoillinen</translation>
-    </message>
-    <message>
-      <source>Modern</source>
-      <translation>Moderni</translation>
-    </message>
-    <message>
-      <source>Even Width</source>
-      <translation>Tasalevyinen</translation>
-    </message>
-    <message>
-      <source>Expanded</source>
-      <translation>Levennetty</translation>
-    </message>
-    <message>
-      <source>Condensed</source>
-      <translation>Kavennettu</translation>
-    </message>
-    <message>
-      <source>Very Expanded</source>
-      <translation>Huomattavasti levennetty</translation>
-    </message>
-    <message>
-      <source>Very Condensed</source>
-      <translation>Huomattavasti kavennettu</translation>
-    </message>
-    <message>
-      <source>Monospaced</source>
-      <translation>Tasavälinen</translation>
-    </message>
-    <message>
-      <source>Proportion</source>
-      <translation>Leveys</translation>
-    </message>
-    <message>
-      <source>None</source>
-      <translation>Ei ole</translation>
-    </message>
-    <message>
-      <source>Very Low</source>
-      <translation>Hyvin pieni</translation>
-    </message>
-    <message>
-      <source>Low</source>
-      <translation>Pieni</translation>
-    </message>
-    <message>
-      <source>Medium Low</source>
-      <translation>Keskipieni</translation>
-    </message>
-    <message>
-      <source>Medium High</source>
-      <translation>Keskiverto</translation>
-    </message>
-    <message>
-      <source>High</source>
-      <translation>Suuri</translation>
-    </message>
-    <message>
-      <source>Very High</source>
-      <translation>Hyvin suuri</translation>
-    </message>
-    <message>
-      <source>Contrast</source>
-      <translation>Kontrasti</translation>
-    </message>
-    <message>
-      <source>Gradual/Diagonal</source>
-      <translation>Asteittainen ja diagonaalinen</translation>
-    </message>
-    <message>
-      <source>Gradual/Transitional</source>
-      <translation>Asteittainen ja transitionaalinen</translation>
-    </message>
-    <message>
-      <source>Gradual/Vertical</source>
-      <translation>Asteittainen ja pystysuora</translation>
-    </message>
-    <message>
-      <source>Gradual/Horizontal</source>
-      <translation>Asteittainen ja vaakasuora</translation>
-    </message>
-    <message>
-      <source>Rapid/Vertical</source>
-      <translation>Nopea ja pystysuora</translation>
-    </message>
-    <message>
-      <source>Rapid/Horizontal</source>
-      <translation>Nopea ja vaakasuora</translation>
-    </message>
-    <message>
-      <source>Instant/Vertical</source>
-      <translation>Välitön ja pystysuora</translation>
-    </message>
-    <message>
-      <source>Stroke Variation</source>
-      <translation>Viivan paksuuden muutos</translation>
-    </message>
-    <message>
-      <source>Straight Arms/Horizontal</source>
-      <translation>Suorat ja vaakasuora</translation>
-    </message>
-    <message>
-      <source>Straight Arms/Wedge</source>
-      <translation>Suorat ja kolmio</translation>
-    </message>
-    <message>
-      <source>Straight Arms/Vertical</source>
-      <translation>Suorat ja pystysuora</translation>
-    </message>
-    <message>
-      <source>Straight Arms/Single Serif</source>
-      <translation>Suorat ja yksipuoleinen pääteviiva</translation>
-    </message>
-    <message>
-      <source>Straight Arms/Double Serif</source>
-      <translation>Suorat ja molemminpuoleinen pääteviiva</translation>
-    </message>
-    <message>
-      <source>Non-Straight Arms/Horizontal</source>
-      <translation>Epäsuorat ja vaakasuora</translation>
-    </message>
-    <message>
-      <source>Non-Straight Arms/Wedge</source>
-      <translation>Epäsuorat ja kolmio</translation>
-    </message>
-    <message>
-      <source>Non-Straight Arms/Vertical</source>
-      <translation>Epäsuorat ja pystysuora</translation>
-    </message>
-    <message>
-      <source>Non-Straight Arms/Single Serif</source>
-      <translation>Epäsuorat ja yksipuoleinen pääteviiva</translation>
-    </message>
-    <message>
-      <source>Non-Straight Arms/Double Serif</source>
-      <translation>Epäsuorat ja molemminpuoleinen pääteviiva</translation>
-    </message>
-    <message>
-      <source>Arm Style</source>
-      <translation>Käsivarsien tyyli</translation>
-    </message>
-    <message>
-      <source>Normal/Contact</source>
-      <translation>Suora ja litistetty</translation>
-    </message>
-    <message>
-      <source>Normal/Weighted</source>
-      <translation>Suora ja huomattava</translation>
-    </message>
-    <message>
-      <source>Normal/Boxed</source>
-      <translation>Suora ja ahdettu</translation>
-    </message>
-    <message>
-      <source>Normal/Flattened</source>
-      <translation>Suora ja kaareva</translation>
-    </message>
-    <message>
-      <source>Normal/Rounded</source>
-      <translation>Suora ja pyöreäkulmainen</translation>
-    </message>
-    <message>
-      <source>Normal/Off Center</source>
-      <translation>Suora ja epäkesko</translation>
-    </message>
-    <message>
-      <source>Normal/Square</source>
-      <translation>Suora ja kulmikas</translation>
-    </message>
-    <message>
-      <source>Oblique/Contact</source>
-      <translation>Kallistettu ja litistetty</translation>
-    </message>
-    <message>
-      <source>Oblique/Weighted</source>
-      <translation>Kallistettu ja huomattava</translation>
-    </message>
-    <message>
-      <source>Oblique/Boxed</source>
-      <translation>Kallistettu ja ahdettu</translation>
-    </message>
-    <message>
-      <source>Oblique/Flattened</source>
-      <translation>Kallistettu ja kaareva</translation>
-    </message>
-    <message>
-      <source>Oblique/Rounded</source>
-      <translation>Kallistettu ja pyöreäkulmainen</translation>
-    </message>
-    <message>
-      <source>Oblique/Off Center</source>
-      <translation>Kallistettu ja epäkesko</translation>
-    </message>
-    <message>
-      <source>Oblique/Square</source>
-      <translation>Kallistettu ja kulmikas</translation>
-    </message>
-    <message>
-      <source>Letterform</source>
-      <translation>Muoto</translation>
-    </message>
-    <message>
-      <source>Standard/Trimmed</source>
-      <translation>Normaali ja typistetty</translation>
-    </message>
-    <message>
-      <source>Standard/Pointed</source>
-      <translation>Normaali ja terävä</translation>
-    </message>
-    <message>
-      <source>Standard/Serifed</source>
-      <translation>Normaali ja päätteellinen</translation>
-    </message>
-    <message>
-      <source>High/Trimmed</source>
-      <translation>Korkea ja typistetty</translation>
-    </message>
-    <message>
-      <source>High/Pointed</source>
-      <translation>Korkea ja terävä</translation>
-    </message>
-    <message>
-      <source>High/Serifed</source>
-      <translation>Korkea ja päätteellinen</translation>
-    </message>
-    <message>
-      <source>Constant/Trimmed</source>
-      <translation>Vakio ja typistetty</translation>
-    </message>
-    <message>
-      <source>Constant/Pointed</source>
-      <translation>Vakio ja terävä</translation>
-    </message>
-    <message>
-      <source>Constant/Serifed</source>
-      <translation>Vakio ja päätteellinen</translation>
-    </message>
-    <message>
-      <source>Low/Trimmed</source>
-      <translation>Matala ja typistetty</translation>
-    </message>
-    <message>
-      <source>Low/Pointed</source>
-      <translation>Matala ja terävä</translation>
-    </message>
-    <message>
-      <source>Low/Serifed</source>
-      <translation>Matala ja päätteellinen</translation>
-    </message>
-    <message>
-      <source>Midline</source>
-      <translation>Keskilinja</translation>
-    </message>
-    <message>
-      <source>Constant/Small</source>
-      <translation>Normaali ja pieni</translation>
-    </message>
-    <message>
-      <source>Constant/Standard</source>
-      <translation>Normaali ja keskikokoinen</translation>
-    </message>
-    <message>
-      <source>Constant/Large</source>
-      <translation>Normaali ja suuri</translation>
-    </message>
-    <message>
-      <source>Ducking/Small</source>
-      <translation>Supistettu ja pieni</translation>
-    </message>
-    <message>
-      <source>Ducking/Standard</source>
-      <translation>Supistettu ja keskikokoinen</translation>
-    </message>
-    <message>
-      <source>Ducking/Large</source>
-      <translation>Supistettu ja suuri</translation>
-    </message>
-    <message>
-      <source>X-Height</source>
-      <translation>X-korkeus</translation>
     </message>
     <message>
       <source>Glyphs count</source>
@@ -629,10 +129,842 @@
     </message>
   </context>
   <context>
+    <name>FontStrings</name>
+    <message>
+      <source>Copyright</source>
+      <translation type="unfinished" >Tekijänoikeudet</translation>
+    </message>
+    <message>
+      <source>Font Family</source>
+      <translation type="unfinished" >Fonttiperhe</translation>
+    </message>
+    <message>
+      <source>Font Subfamily</source>
+      <translation type="unfinished" >Fonttiperheen alijoukko</translation>
+    </message>
+    <message>
+      <source>Unique font identifier</source>
+      <translation type="unfinished" >Yksilöllinen tunniste</translation>
+    </message>
+    <message>
+      <source>Full font name</source>
+      <translation type="unfinished" >Fontin täydellinen nimi</translation>
+    </message>
+    <message>
+      <source>Version string</source>
+      <translation type="unfinished" >Versiomerkintä</translation>
+    </message>
+    <message>
+      <source>Postscript name</source>
+      <translation type="unfinished" >Postscript-nimi</translation>
+    </message>
+    <message>
+      <source>Trademark</source>
+      <translation type="unfinished" >Tavaramerkki</translation>
+    </message>
+    <message>
+      <source>Manufacturer</source>
+      <translation type="unfinished" >Valmistaja</translation>
+    </message>
+    <message>
+      <source>Designer</source>
+      <translation type="unfinished" >Suunnittelija</translation>
+    </message>
+    <message>
+      <source>Description</source>
+      <translation type="unfinished" >Kuvaus</translation>
+    </message>
+    <message>
+      <source>URL Vendor</source>
+      <translation type="unfinished" >Valmistajan URL</translation>
+    </message>
+    <message>
+      <source>URL Designer</source>
+      <translation type="unfinished" >Suunnittelijan URL</translation>
+    </message>
+    <message>
+      <source>License Description</source>
+      <translation type="unfinished" >Lisenssin kuvaus</translation>
+    </message>
+    <message>
+      <source>License Info URL</source>
+      <translation type="unfinished" >Lisenssin URL </translation>
+    </message>
+    <message>
+      <source>Preferred Family</source>
+      <translation type="unfinished" >Suositeltu perhe</translation>
+    </message>
+    <message>
+      <source>Preferred Subfamily</source>
+      <translation type="unfinished" >Suositeltu perheen alijoukko</translation>
+    </message>
+    <message>
+      <source>Compatible Full (Macintosh only)</source>
+      <translation type="unfinished" >Täysi yhteensopivuus (ainoastaan Macintosh)</translation>
+    </message>
+    <message>
+      <source>Sample text</source>
+      <translation type="unfinished" >Esimerkkiteksti</translation>
+    </message>
+    <message>
+      <source>PostScript CID findfont name</source>
+      <translation type="unfinished" >PostScript CID findfont -nimi</translation>
+    </message>
+    <message>
+      <source>Panose</source>
+      <translation type="unfinished" >Panose</translation>
+    </message>
+    <message>
+      <source>All fields</source>
+      <translation type="unfinished" >Kaikki kentät</translation>
+    </message>
+    <message>
+      <source>Any</source>
+      <translation type="unfinished" >Mikä tahansa</translation>
+    </message>
+    <message>
+      <source>No Fit</source>
+      <translation type="unfinished" >Ei sopivaa luokkaa</translation>
+    </message>
+    <message>
+      <source>Text and Display</source>
+      <comment>
+Family Type</comment>
+      <translation type="unfinished" >Leipäteksti</translation>
+    </message>
+    <message>
+      <source>Script</source>
+      <comment>Family Type</comment>
+      <translation>Komentojono</translation>
+    </message>
+    <message>
+      <source>Decorative</source>
+      <comment>
+Family Type</comment>
+      <translation type="unfinished" >Koristeellinen</translation>
+    </message>
+    <message>
+      <source>Pictorial</source>
+      <comment>
+Family Type</comment>
+      <translation type="unfinished" >Kuvitettu</translation>
+    </message>
+    <message>
+      <source>Family Type</source>
+      <translation type="unfinished" >Fonttiperheen tyyli</translation>
+    </message>
+    <message>
+      <source>Cove</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Kovera</translation>
+    </message>
+    <message>
+      <source>Obtuse Cove</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Loivasti kovera</translation>
+    </message>
+    <message>
+      <source>Square Cove</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Kulmikkaasti kovera</translation>
+    </message>
+    <message>
+      <source>Obtuse Square Cove</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Loivasti ja kulmikkaasti kovera</translation>
+    </message>
+    <message>
+      <source>Square</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Kulmikas</translation>
+    </message>
+    <message>
+      <source>Thin</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Ohut</translation>
+    </message>
+    <message>
+      <source>Bone</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Ovaali</translation>
+    </message>
+    <message>
+      <source>Exaggerated</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Liioiteltu</translation>
+    </message>
+    <message>
+      <source>Triangle</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Kolmio</translation>
+    </message>
+    <message>
+      <source>Normal Sans</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Suora pääteviivaton</translation>
+    </message>
+    <message>
+      <source>Obtuse Sans</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Vaakasuunnassa vino pääteviivaton</translation>
+    </message>
+    <message>
+      <source>Perp Sans</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Pystysuunnassa vino pääteviivaton</translation>
+    </message>
+    <message>
+      <source>Flared</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Levenevä</translation>
+    </message>
+    <message>
+      <source>Rounded</source>
+      <comment>
+Serif style</comment>
+      <translation type="unfinished" >Pyöristetty</translation>
+    </message>
+    <message>
+      <source>Serif style</source>
+      <translation type="unfinished" >Pääteviivan tyyli</translation>
+    </message>
+    <message>
+      <source>Very Light</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Erittäin kevyt</translation>
+    </message>
+    <message>
+      <source>Light</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Kevyt</translation>
+    </message>
+    <message>
+      <source>Thin</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Ohut</translation>
+    </message>
+    <message>
+      <source>Book</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Kirja</translation>
+    </message>
+    <message>
+      <source>Medium</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Keskipaksu</translation>
+    </message>
+    <message>
+      <source>Demi</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Paksu</translation>
+    </message>
+    <message>
+      <source>Bold</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Lihava</translation>
+    </message>
+    <message>
+      <source>Heavy</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Raskas</translation>
+    </message>
+    <message>
+      <source>Black</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Musta</translation>
+    </message>
+    <message>
+      <source>Nord</source>
+      <comment>
+Weight</comment>
+      <translation type="unfinished" >Hyvin musta</translation>
+    </message>
+    <message>
+      <source>Weight</source>
+      <translation type="unfinished" >Vahvuus</translation>
+    </message>
+    <message>
+      <source>Old Style</source>
+      <comment>
+Proportion</comment>
+      <translation type="unfinished" >Vanhoillinen</translation>
+    </message>
+    <message>
+      <source>Modern</source>
+      <comment>
+Proportion</comment>
+      <translation type="unfinished" >Moderni</translation>
+    </message>
+    <message>
+      <source>Even Width</source>
+      <comment>
+Proportion</comment>
+      <translation type="unfinished" >Tasalevyinen</translation>
+    </message>
+    <message>
+      <source>Expanded</source>
+      <comment>
+Proportion</comment>
+      <translation type="unfinished" >Levennetty</translation>
+    </message>
+    <message>
+      <source>Condensed</source>
+      <comment>
+Proportion</comment>
+      <translation type="unfinished" >Kavennettu</translation>
+    </message>
+    <message>
+      <source>Very Expanded</source>
+      <comment>
+Proportion</comment>
+      <translation type="unfinished" >Huomattavasti levennetty</translation>
+    </message>
+    <message>
+      <source>Very Condensed</source>
+      <comment>
+Proportion</comment>
+      <translation type="unfinished" >Huomattavasti kavennettu</translation>
+    </message>
+    <message>
+      <source>Monospaced</source>
+      <comment>
+Proportion</comment>
+      <translation type="unfinished" >Tasavälinen</translation>
+    </message>
+    <message>
+      <source>Proportion</source>
+      <translation type="unfinished" >Leveys</translation>
+    </message>
+    <message>
+      <source>None</source>
+      <comment>
+Contrast</comment>
+      <translation type="unfinished" >Ei ole</translation>
+    </message>
+    <message>
+      <source>Very Low</source>
+      <comment>
+Contrast</comment>
+      <translation type="unfinished" >Hyvin pieni</translation>
+    </message>
+    <message>
+      <source>Low</source>
+      <comment>
+Contrast</comment>
+      <translation type="unfinished" >Pieni</translation>
+    </message>
+    <message>
+      <source>Medium Low</source>
+      <comment>
+Contrast</comment>
+      <translation type="unfinished" >Keskipieni</translation>
+    </message>
+    <message>
+      <source>Medium</source>
+      <comment>
+Contrast</comment>
+      <translation type="unfinished" >Keskipaksu</translation>
+    </message>
+    <message>
+      <source>Medium High</source>
+      <comment>
+Contrast</comment>
+      <translation type="unfinished" >Keskiverto</translation>
+    </message>
+    <message>
+      <source>High</source>
+      <comment>
+Contrast</comment>
+      <translation type="unfinished" >Suuri</translation>
+    </message>
+    <message>
+      <source>Very High</source>
+      <comment>
+Contrast</comment>
+      <translation type="unfinished" >Hyvin suuri</translation>
+    </message>
+    <message>
+      <source>Contrast</source>
+      <translation type="unfinished" >Kontrasti</translation>
+    </message>
+    <message>
+      <source>Gradual/Diagonal</source>
+      <comment>
+Stroke Variation</comment>
+      <translation type="unfinished" >Asteittainen ja diagonaalinen</translation>
+    </message>
+    <message>
+      <source>Gradual/Transitional</source>
+      <comment>
+Stroke Variation</comment>
+      <translation type="unfinished" >Asteittainen ja transitionaalinen</translation>
+    </message>
+    <message>
+      <source>Gradual/Vertical</source>
+      <comment>
+Stroke Variation</comment>
+      <translation type="unfinished" >Asteittainen ja pystysuora</translation>
+    </message>
+    <message>
+      <source>Gradual/Horizontal</source>
+      <comment>
+Stroke Variation</comment>
+      <translation type="unfinished" >Asteittainen ja vaakasuora</translation>
+    </message>
+    <message>
+      <source>Rapid/Vertical</source>
+      <comment>
+Stroke Variation</comment>
+      <translation type="unfinished" >Nopea ja pystysuora</translation>
+    </message>
+    <message>
+      <source>Rapid/Horizontal</source>
+      <comment>
+Stroke Variation</comment>
+      <translation type="unfinished" >Nopea ja vaakasuora</translation>
+    </message>
+    <message>
+      <source>Instant/Vertical</source>
+      <comment>
+Stroke Variation</comment>
+      <translation type="unfinished" >Välitön ja pystysuora</translation>
+    </message>
+    <message>
+      <source>Stroke Variation</source>
+      <translation type="unfinished" >Viivan paksuuden muutos</translation>
+    </message>
+    <message>
+      <source>Straight Arms/Horizontal</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Suorat ja vaakasuora</translation>
+    </message>
+    <message>
+      <source>Straight Arms/Wedge</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Suorat ja kolmio</translation>
+    </message>
+    <message>
+      <source>Straight Arms/Vertical</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Suorat ja pystysuora</translation>
+    </message>
+    <message>
+      <source>Straight Arms/Single Serif</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Suorat ja yksipuoleinen pääteviiva</translation>
+    </message>
+    <message>
+      <source>Straight Arms/Double Serif</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Suorat ja molemminpuoleinen pääteviiva</translation>
+    </message>
+    <message>
+      <source>Non-Straight Arms/Horizontal</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Epäsuorat ja vaakasuora</translation>
+    </message>
+    <message>
+      <source>Non-Straight Arms/Wedge</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Epäsuorat ja kolmio</translation>
+    </message>
+    <message>
+      <source>Non-Straight Arms/Vertical</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Epäsuorat ja pystysuora</translation>
+    </message>
+    <message>
+      <source>Non-Straight Arms/Single Serif</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Epäsuorat ja yksipuoleinen pääteviiva</translation>
+    </message>
+    <message>
+      <source>Non-Straight Arms/Double Serif</source>
+      <comment>
+Arm Style</comment>
+      <translation type="unfinished" >Epäsuorat ja molemminpuoleinen pääteviiva</translation>
+    </message>
+    <message>
+      <source>Arm Style</source>
+      <translation type="unfinished" >Käsivarsien tyyli</translation>
+    </message>
+    <message>
+      <source>Normal/Contact</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Suora ja litistetty</translation>
+    </message>
+    <message>
+      <source>Normal/Weighted</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Suora ja huomattava</translation>
+    </message>
+    <message>
+      <source>Normal/Boxed</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Suora ja ahdettu</translation>
+    </message>
+    <message>
+      <source>Normal/Flattened</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Suora ja kaareva</translation>
+    </message>
+    <message>
+      <source>Normal/Rounded</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Suora ja pyöreäkulmainen</translation>
+    </message>
+    <message>
+      <source>Normal/Off Center</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Suora ja epäkesko</translation>
+    </message>
+    <message>
+      <source>Normal/Square</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Suora ja kulmikas</translation>
+    </message>
+    <message>
+      <source>Oblique/Contact</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Kallistettu ja litistetty</translation>
+    </message>
+    <message>
+      <source>Oblique/Weighted</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Kallistettu ja huomattava</translation>
+    </message>
+    <message>
+      <source>Oblique/Boxed</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Kallistettu ja ahdettu</translation>
+    </message>
+    <message>
+      <source>Oblique/Flattened</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Kallistettu ja kaareva</translation>
+    </message>
+    <message>
+      <source>Oblique/Rounded</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Kallistettu ja pyöreäkulmainen</translation>
+    </message>
+    <message>
+      <source>Oblique/Off Center</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Kallistettu ja epäkesko</translation>
+    </message>
+    <message>
+      <source>Oblique/Square</source>
+      <comment>
+Letterform</comment>
+      <translation type="unfinished" >Kallistettu ja kulmikas</translation>
+    </message>
+    <message>
+      <source>Letterform</source>
+      <translation type="unfinished" >Muoto</translation>
+    </message>
+    <message>
+      <source>Standard/Trimmed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Normaali ja typistetty</translation>
+    </message>
+    <message>
+      <source>Standard/Pointed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Normaali ja terävä</translation>
+    </message>
+    <message>
+      <source>Standard/Serifed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Normaali ja päätteellinen</translation>
+    </message>
+    <message>
+      <source>High/Trimmed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Korkea ja typistetty</translation>
+    </message>
+    <message>
+      <source>High/Pointed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Korkea ja terävä</translation>
+    </message>
+    <message>
+      <source>High/Serifed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Korkea ja päätteellinen</translation>
+    </message>
+    <message>
+      <source>Constant/Trimmed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Vakio ja typistetty</translation>
+    </message>
+    <message>
+      <source>Constant/Pointed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Vakio ja terävä</translation>
+    </message>
+    <message>
+      <source>Constant/Serifed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Vakio ja päätteellinen</translation>
+    </message>
+    <message>
+      <source>Low/Trimmed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Matala ja typistetty</translation>
+    </message>
+    <message>
+      <source>Low/Pointed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Matala ja terävä</translation>
+    </message>
+    <message>
+      <source>Low/Serifed</source>
+      <comment>
+Midline</comment>
+      <translation type="unfinished" >Matala ja päätteellinen</translation>
+    </message>
+    <message>
+      <source>Midline</source>
+      <translation type="unfinished" >Keskilinja</translation>
+    </message>
+    <message>
+      <source>Constant/Small</source>
+      <comment>
+X-Height</comment>
+      <translation type="unfinished" >Normaali ja pieni</translation>
+    </message>
+    <message>
+      <source>Constant/Standard</source>
+      <comment>
+X-Height</comment>
+      <translation type="unfinished" >Normaali ja keskikokoinen</translation>
+    </message>
+    <message>
+      <source>Constant/Large</source>
+      <comment>
+X-Height</comment>
+      <translation type="unfinished" >Normaali ja suuri</translation>
+    </message>
+    <message>
+      <source>Ducking/Small</source>
+      <comment>
+X-Height</comment>
+      <translation type="unfinished" >Supistettu ja pieni</translation>
+    </message>
+    <message>
+      <source>Ducking/Standard</source>
+      <comment>
+X-Height</comment>
+      <translation type="unfinished" >Supistettu ja keskikokoinen</translation>
+    </message>
+    <message>
+      <source>Ducking/Large</source>
+      <comment>
+X-Height</comment>
+      <translation type="unfinished" >Supistettu ja suuri</translation>
+    </message>
+    <message>
+      <source>X-Height</source>
+      <translation type="unfinished" >X-korkeus</translation>
+    </message>
+    <message>
+      <source>This value is deprecated and was never used nor reported by FreeType. Don't use or test for it.</source>
+      <translation type="unfinished" >Tämä arvo on poistettu käytöstä eikä sitä koskaan käytetty eikä FreeType koskaan huomauttanut siitä. Älä käytä tai testaa sitä.</translation>
+    </message>
+    <message>
+      <source>Character to glyph mapping</source>
+      <translation>Merkki-merkin esitys -yhteys</translation>
+    </message>
+    <message>
+      <source>Font header</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Horizontal header</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Horizontal metrics</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Maximum profile</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Naming table</source>
+      <translation>Nimitaulu</translation>
+    </message>
+    <message>
+      <source>OS/2 and Windows specific metrics</source>
+      <translation>OS/2- ja Windows -mitat</translation>
+    </message>
+    <message>
+      <source>PostScript information</source>
+      <translation>Postscript-tiedot</translation>
+    </message>
+    <message>
+      <source>Control Value Table</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Font program</source>
+      <translation>Fonttiohjelma</translation>
+    </message>
+    <message>
+      <source>Glyph data</source>
+      <translation>Merkin esityksen tiedot</translation>
+    </message>
+    <message>
+      <source>Index to location</source>
+      <translation>Osoitin sijaintiin</translation>
+    </message>
+    <message>
+      <source>CVT Program</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>PostScript font program</source>
+      <translation>Postscript-fonttiohjelma</translation>
+    </message>
+    <message>
+      <source>Vertical Origin</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Embedded bitmap data</source>
+      <translation>Upotettu bittikarttadata</translation>
+    </message>
+    <message>
+      <source>Embedded bitmap location data</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Embedded bitmap scaling data</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Baseline data</source>
+      <translation>Peruslinjan tiedot</translation>
+    </message>
+    <message>
+      <source>Glyph definition data</source>
+      <translation>Merkin ulkoasun määritykset</translation>
+    </message>
+    <message>
+      <source>Glyph positioning data</source>
+      <translation>Merkin ulkoasun sijoittelu</translation>
+    </message>
+    <message>
+      <source>Glyph substitution data</source>
+      <translation>Merkin korvaus</translation>
+    </message>
+    <message>
+      <source>Justification data</source>
+      <translation>Tasaus</translation>
+    </message>
+    <message>
+      <source>Digital signature</source>
+      <translation>Sähköinen allekirjoitus</translation>
+    </message>
+    <message>
+      <source>Grid-fitting/Scan-conversion</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Horizontal device metrics</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Kerning</source>
+      <translation type="unfinished" >Merkkiparien välistys</translation>
+    </message>
+    <message>
+      <source>Linear threshold data</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>PCL 5 data</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Vertical device metrics</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Vertical Metrics header</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Vertical Metrics</source>
+      <translation type="unfinished" />
+    </message>
+  </context>
+  <context>
     <name>Help</name>
     <message>
       <source>Fontmatrix Help</source>
       <translation>Fontmatrixin ohje</translation>
+    </message>
+    <message>
+      <source>Close</source>
+      <translation>Sulje</translation>
     </message>
   </context>
   <context>
@@ -765,10 +1097,6 @@ in preferences.&lt;/qt></source>
       <translation>Hakemistot</translation>
     </message>
     <message>
-      <source>Field selection</source>
-      <translation>Kentän valinta</translation>
-    </message>
-    <message>
       <source>F</source>
       <translation>S</translation>
     </message>
@@ -784,13 +1112,23 @@ in preferences.&lt;/qt></source>
       <source>reset</source>
       <translation>tyhjennä</translation>
     </message>
+    <message>
+      <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>
+&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>If you want to negate the filter,&lt;/p>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>prefix the word with &quot;!&quot; such as in:&lt;/p>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>&lt;span style=&quot; font-weight:600;&quot;>&quot;!pattern&quot;&lt;/span>&lt;/p>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>If you want to enqueue the filter,&lt;/p>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>prefix it with &quot;+&quot;.&lt;/p>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>Finally, you can mix negate and queue in:&lt;/p>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>&lt;span style=&quot; font-weight:600;&quot;>&quot;+!pattern&quot;&lt;/span> or &quot;!+pattern&quot;&lt;/p>&lt;/body>&lt;/html></source>
+      <translation type="unfinished" />
+    </message>
   </context>
   <context>
     <name>ListDockWidget</name>
-    <message>
-      <source>All fields</source>
-      <translation>Kaikki kentät</translation>
-    </message>
     <message>
       <source>All activated</source>
       <translation>Kaikki käytössä olevat</translation>
@@ -805,10 +1143,6 @@ in preferences.&lt;/qt></source>
     <message>
       <source>main view widget</source>
       <translation>pääikkuna</translation>
-    </message>
-    <message>
-      <source>Right mouse click on a tag to add it or remove it from TagSet</source>
-      <translation>Poista tai lisää luokka oikealla hiiren painikkeella</translation>
     </message>
     <message>
       <source>OpenType Features</source>
@@ -859,14 +1193,6 @@ in preferences.&lt;/qt></source>
       <translation>lisää</translation>
     </message>
     <message>
-      <source>Nothing selected</source>
-      <translation>Ei valintaa</translation>
-    </message>
-    <message>
-      <source>Add a tag</source>
-      <translation>Lisää luokka</translation>
-    </message>
-    <message>
       <source>Settings</source>
       <translation>Asetukset</translation>
     </message>
@@ -909,10 +1235,6 @@ in preferences.&lt;/qt></source>
     <message>
       <source>Set Mode &quot;Copy Character to Clipboard&quot;</source>
       <translation>Aseta tilaksi &quot;Kopioi merkki leikepöydälle&quot;</translation>
-    </message>
-    <message>
-      <source>Add</source>
-      <translation>Lisää</translation>
     </message>
     <message>
       <source>Display Settings</source>
@@ -1527,10 +1849,6 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
       <translation>Tervetuloa Fontmatrixiin</translation>
     </message>
     <message>
-      <source>Add new tag</source>
-      <translation>Lisää uusi luokka</translation>
-    </message>
-    <message>
       <source>Load</source>
       <translation>Lataa</translation>
     </message>
@@ -1558,20 +1876,12 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
       <translation> pt</translation>
     </message>
     <message>
-      <source>Apply</source>
-      <translation>Käytä</translation>
-    </message>
-    <message>
       <source>Ask confirmation when activating or deactivating fonts by tags</source>
       <translation>Kysy vahvistus, kun fontit otetaan käyttöön tai poistetaan käytöstä luokan perusteella</translation>
     </message>
     <message>
       <source>Show Fontmatrix in System Tray</source>
       <translation>Näytä Fontmatrix ilmoitusalueella</translation>
-    </message>
-    <message>
-      <source>Close to System Tray</source>
-      <translation>Sulje ilmoitusalueelle</translation>
     </message>
     <message>
       <source>Preview Word</source>
@@ -1592,10 +1902,6 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
       <source>Ask for tag names when importing fonts</source>
       <translation>Kysy luokkaa, kun fontteja tuodaan</translation>
-    </message>
-    <message>
-      <source>Named Sample Texts</source>
-      <translation>Nimetyt esimerkkitekstit</translation>
     </message>
     <message>
       <source>Font Size:</source>
@@ -1654,10 +1960,6 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
       <translation>Näytä latausikkuna käynnistettäessä</translation>
     </message>
     <message>
-      <source>Interline:</source>
-      <translation>Riviväli</translation>
-    </message>
-    <message>
       <source>Hyphenation</source>
       <translation>Tavutus</translation>
     </message>
@@ -1702,8 +2004,44 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
       <translation>Oikopolut</translation>
     </message>
     <message>
+      <source>Close to system tray</source>
+      <translation>Sulje ilmoitusalueelle</translation>
+    </message>
+    <message>
+      <source>Start minimized to system tray</source>
+      <translation>Käynnistä pienennettynä ilmoitusalueelle</translation>
+    </message>
+    <message>
+      <source>Chart Subtitle Font</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>linespacing:</source>
+      <translation>riviväli:</translation>
+    </message>
+    <message>
+      <source>Select an  hyphenation dict file as it comes with OpenOffice or Scribus</source>
+      <translation>Valitse sanakirja tavutusta varten. Sanakirjan tyyppi on sama kuin OpenOfficessa tai Scribuksessa.</translation>
+    </message>
+    <message>
+      <source>subtitled</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
       <source>Don’t use preferred name scheme (will affect only newly imported fonts)</source>
-      <translation>Älä käytä suositeltua nimeämistapaa (vaikuttaa ainoastaan uusiin fontteihin)</translation>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Sample Texts</source>
+      <translation>Esimerkkitekstit</translation>
+    </message>
+    <message>
+      <source>+</source>
+      <translation>+</translation>
+    </message>
+    <message>
+      <source>−</source>
+      <translation>−</translation>
     </message>
   </context>
   <context>
@@ -1711,10 +2049,6 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
       <source>Looks like your setup does not have a system tray available.</source>
       <translation>Järjestelmästäsi ei löydy ilmoitusaluetta.</translation>
-    </message>
-    <message>
-      <source>A text</source>
-      <translation>Teksti</translation>
     </message>
     <message>
       <source>Select font editor</source>
@@ -1792,6 +2126,17 @@ If you want to remove it from Fontmatrix database, please deactivate it first.</
     <message>
       <source>Select hyphenation dictionary</source>
       <translation>Valitse tavutussanasto</translation>
+    </message>
+    <message>
+      <source>Sample Text</source>
+      <comment>
+A default sample text inserted when creating a new sample</comment>
+      <translation type="unfinished" >Esimerkkiteksti</translation>
+    </message>
+    <message>
+      <source>Do you confirm that you want to remove:</source>
+      <comment>the name of a sample text will be append to the string</comment>
+      <translation>Vahvista poista:</translation>
     </message>
   </context>
   <context>
@@ -2310,11 +2655,11 @@ stuvxyzåäö
     </message>
     <message>
       <source>Italics</source>
-      <translation type="unfinished" />
+      <translation>Kursiivit</translation>
     </message>
     <message>
       <source>JIS78 Forms</source>
-      <translation type="unfinished" />
+      <translation type="unfinished" >JIS2004-muodot {78 ?}</translation>
     </message>
     <message>
       <source>JIS83 Forms</source>
@@ -2472,6 +2817,30 @@ stuvxyzåäö
       <source>Vertical Rotation</source>
       <translation type="unfinished" />
     </message>
+    <message>
+      <source>Fonts with this setting indicate that they may be embedded and permanently installed on the remote system by an application. The user of the remote system acquires the identical rights, obligations and licenses for that font as the original purchaser of the font, and is subject to the same end-user license agreement, copyright, design patent, and/or trademark as was the original purchaser.</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>Fonts that have  only  this bit set must not be modified, embedded or exchanged in any manner without first obtaining permission of the legal owner.</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>When this bit is set, the font may be embedded, and temporarily loaded on the remote system. Documents containing Preview &amp; Print fonts must be opened &quot;read-only;&quot; no edits can be applied to the document.</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>When this bit is set, the font may be embedded but must only be installed  temporarily  on other systems. In contrast to Preview &amp; Print fonts, documents containing Editable fonts may be opened for reading, editing is permitted, and changes may be saved.</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>When this bit is set, the font may not be subsetted prior to embedding. Other embedding restrictions specified in bits 0-3 and 9 also apply.</source>
+      <translation type="unfinished" />
+    </message>
+    <message>
+      <source>When this bit is set, only bitmaps contained in the font may be embedded. No outline data may be embedded. If there are no bitmaps available in the font, then the font is considered unembeddable and the embedding services will fail. Other embedding restrictions specified in bits 0-3 and 8 also apply.</source>
+      <translation type="unfinished" />
+    </message>
   </context>
   <context>
     <name>RemoteDir</name>
@@ -2505,6 +2874,29 @@ stuvxyzåäö
     <message>
       <source>E&amp;xit</source>
       <translation>&amp;Poistu</translation>
+    </message>
+  </context>
+  <context>
+    <name>TTTableWidget</name>
+    <message>
+      <source>Form</source>
+      <translation type="unfinished" >Lomake</translation>
+    </message>
+    <message>
+      <source>TrueType Tables </source>
+      <translation>Truetype-taulukot</translation>
+    </message>
+    <message>
+      <source>Tag</source>
+      <translation>Luokka</translation>
+    </message>
+    <message>
+      <source>Description</source>
+      <translation type="unfinished" >Kuvaus</translation>
+    </message>
+    <message>
+      <source>Size</source>
+      <translation>Koko</translation>
     </message>
   </context>
   <context>
@@ -2548,6 +2940,13 @@ stuvxyzåäö
     <message>
       <source>Remove</source>
       <translation>Poista</translation>
+    </message>
+  </context>
+  <context>
+    <name>TagsWidget</name>
+    <message>
+      <source>Add new tag</source>
+      <translation type="unfinished" >Lisää uusi luokka</translation>
     </message>
   </context>
   <context>
@@ -2680,6 +3079,29 @@ stuvxyzåäö
     </message>
   </context>
   <context>
+    <name>tagsWidget</name>
+    <message>
+      <source>Form</source>
+      <translation type="unfinished" >Lomake</translation>
+    </message>
+    <message>
+      <source>Right mouse click on a tag to add it or remove it from TagSet</source>
+      <translation type="unfinished" >Poista tai lisää luokka oikealla hiiren painikkeella</translation>
+    </message>
+    <message>
+      <source>Nothing selected</source>
+      <translation type="unfinished" >Ei valintaa</translation>
+    </message>
+    <message>
+      <source>Add a tag</source>
+      <translation type="unfinished" >Lisää luokka</translation>
+    </message>
+    <message>
+      <source>Add</source>
+      <translation type="unfinished" >Lisää</translation>
+    </message>
+  </context>
+  <context>
     <name>typotek</name>
     <message>
       <source>Fontmatrix</source>
@@ -2740,10 +3162,6 @@ stuvxyzåäö
     <message>
       <source>Help</source>
       <translation>Ohje</translation>
-    </message>
-    <message>
-      <source>&amp;Tag Sets</source>
-      <translation>&amp;Kokoelmia</translation>
     </message>
     <message>
       <source>Edit current font</source>
@@ -2864,14 +3282,6 @@ it is time to cancel if it was not your intent</source>
       <translation>Tarkista Fontmatrixin oma hakemisto</translation>
     </message>
     <message>
-      <source>Loading</source>
-      <translation>Ladataan</translation>
-    </message>
-    <message>
-      <source>fonts present in database</source>
-      <translation>fontit tietokannassa</translation>
-    </message>
-    <message>
       <source>Catching</source>
       <translation type="unfinished" />
     </message>
@@ -2985,10 +3395,6 @@ it is time to cancel if it was not your intent</source>
 </translation>
     </message>
     <message>
-      <source>All fields</source>
-      <translation>Kaikki kentät</translation>
-    </message>
-    <message>
       <source>Fonts imported: %1</source>
       <translation>Tuotuja fontteja: %1</translation>
     </message>
@@ -3017,19 +3423,6 @@ it is time to cancel if it was not your intent</source>
       <translation>&amp;Selaa</translation>
     </message>
     <message>
-      <source>Fontmatrix - data warning</source>
-      <translation>Fontmatrix - varoitus tiedon muodosta</translation>
-    </message>
-    <message>
-      <source>Your database has not been loaded because of a version mismatch.
-It is not a problem, you just lost fonts references, tags &amp; sample texts. If you badly need to keep these datas, do not quit Fontmatrix before you have copied the database*. At this point and with a minimum of XML skill, you should be able to get old database into new format.
-
-*database is</source>
-      <translation>Tietokantaa ei ladattu, koska havaittiin versioristiriita. Fonttiviittaukset, luokat ja esimerkkitekstit menetettiin. Jos haluat säilyttää nämä, älä sulje Fontmatrixia ennen kuin olet kopioinut vanhan tietokannan* talteen. Voit vähällä xml-taidolla muuntaa vanhan tietokantamuodon uuteen. 
-
-*tietokanta on</translation>
-    </message>
-    <message>
       <source>&amp;Sync</source>
       <translation>&amp;Synkronoi</translation>
     </message>
@@ -3038,16 +3431,24 @@ It is not a problem, you just lost fonts references, tags &amp; sample texts. If
       <translation>Synkronoi tietokannan kanssa</translation>
     </message>
     <message>
-      <source>Unicode character</source>
-      <translation>Unicode-merkki</translation>
-    </message>
-    <message>
       <source>Print Sample</source>
       <translation>Tulosta näyte</translation>
     </message>
     <message>
       <source>Not enough text to make a sample</source>
       <translation>Ei tarpeeksi tekstiä näytettä varten</translation>
+    </message>
+    <message>
+      <source>Tags</source>
+      <translation>Luokat</translation>
+    </message>
+    <message>
+      <source>Show TrueType tables</source>
+      <translation>Näytä Truetype-taulukot</translation>
+    </message>
+    <message>
+      <source>Close</source>
+      <translation type="unfinished" >Sulje</translation>
     </message>
   </context>
 </TS>

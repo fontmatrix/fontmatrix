@@ -29,6 +29,7 @@
 *
 */
 
+typedef QPair<FontItem*, QString> FontDBResult;
 
 class FMFontDb : public QSqlDatabase
 {
@@ -142,6 +143,8 @@ class FMFontDb : public QSqlDatabase
 
 		QVariant getValue ( const QString& id, Field field );
 		FontInfoMap getInfoMap ( const QString& id );
+		QList<FontDBResult> getInfo ( const QList<FontItem*>& fonts, InfoItem info, int codeLang = 0 );
+		
 
 		FontItem* Font ( const QString& id , bool noTemporary = false );
 

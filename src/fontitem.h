@@ -135,7 +135,7 @@ class FontItem : public QObject
 		double m_size;
 		int m_numGlyphs;
 		int m_numFaces;
-		QString m_panose;
+// 		QString m_panose;
 		double unitPerEm;
 		
 		void fillLegitimateSpaces();
@@ -258,7 +258,7 @@ class FontItem : public QObject
 		QString infoGlyph ( int index, int code = 0 );
 		QString glyphName(int codepoint);
 		FontInfoMap rawInfo();
-		QString panose(){return m_panose;}
+		QString panose();
 		FontInfoMap moreInfo();
 		
 		// Return the length of a TT table

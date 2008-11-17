@@ -327,4 +327,27 @@ const QMap< QString, QString > & FontStrings::Tables()
 	return that->tttableList;
 }
 
+FontStrings::PanoseKey FontStrings::firstPanoseKey()
+{
+	return FamilyType;
+}
+
+FontStrings::PanoseKey FontStrings::nextPanoseKey ( PanoseKey pk )
+{
+	switch ( pk )
+	{
+		case FamilyType:return SerifStyle;break;
+		case SerifStyle:return Weight;break;
+		case Weight:return Proportion;break;
+		case Proportion:return Contrast;break;
+		case Contrast:return StrokeVariation;break;
+		case StrokeVariation:return ArmStyle;break;
+		case ArmStyle:return Letterform;break;
+		case Letterform:return Midline;break;
+		case Midline:return XHeight;break;
+		default:return InvalidPK;
+	}
+	return InvalidPK;
+}
+
 

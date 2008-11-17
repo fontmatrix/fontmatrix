@@ -35,9 +35,12 @@ class FontStrings : public QObject
 			ArmStyle,
 			Letterform,
 			Midline,
-			XHeight
+			XHeight,
+   			InvalidPK = 9999999
 
 		};
+		static PanoseKey firstPanoseKey();
+		static PanoseKey nextPanoseKey(PanoseKey pk);
 		
 		static const QMap<FMFontDb::InfoItem,QString>& Names();
 		static const QMap< PanoseKey, QMap<int, QString> >& Panose();

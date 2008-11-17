@@ -171,7 +171,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotEditSampleText();
 		void slotRemoveCurrentItem();
 		
-		
+		void slotShowClassification();
 		
 		
 		

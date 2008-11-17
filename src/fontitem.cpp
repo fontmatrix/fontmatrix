@@ -2466,12 +2466,16 @@ QString FontItem::infoText ( bool fromcache )
 		QString pN(moreInfo.value(0).value(FMFontDb::Panose));
 		if ( !pN.isEmpty() )
 		{
-			for(int i(0);  i < FontStrings::Panose().keys().count(); ++i)
+			QStringList pl(pN.split(":"));
+			if(pl.count() == 10)
 			{
-				FontStrings::PanoseKey k(FontStrings::Panose().keys()[i]);
-				int pValue(pN.mid(i,1).toInt());
-				panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName( k ) + "</div>";
-				panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value( k ).value( pValue ) + "</div>";
+				for(int i(0);  i < FontStrings::Panose().keys().count(); ++i)
+				{
+					FontStrings::PanoseKey k(FontStrings::Panose().keys()[i]);
+					int pValue(pl[i].toInt());
+					panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName( k ) + "</div>";
+					panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value( k ).value( pValue ) + "</div>";
+				}
 			}
 		}
 	
@@ -2797,6 +2801,23 @@ FontInfoMap FontItem::moreInfo()
 	return ret;
 }
 
+QString FontItem::panose()
+{
+	if(!ensureFace())
+		return QString();
+	QStringList pl;
+	TT_OS2 *os2 = static_cast<TT_OS2*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_os2 ) );
+	if ( os2 )
+	{
+		for ( int bI ( 0 ); bI < 10; ++bI )
+		{
+			pl << QString::number ( os2->panose[bI] ) ;
+		}
+	}
+	releaseFace();
+	return pl.join("/");
+}
+
 int FontItem::table(const QString & tableName)
 {
 	if(!ensureFace())
@@ -2980,14 +3001,14 @@ FontInfoMap FontItem::moreInfo_sfnt()
 	if ( os2 /* and  wantAutoTag*/ )
 	{
 		// PANOSE
-		m_panose.clear();
+		QStringList pl;
 		for ( int bI ( 0 ); bI < 10; ++bI )
 		{
-			m_panose += QString::number ( os2->panose[bI] ) ;
-// 			panoseInfo[ panoseKeys[bI] ] = panoseMap[ panoseKeys[bI] ][ os2->panose[bI] ] ;
+			
+			pl << QString::number ( os2->panose[bI] ) ;
 		}
 
-		moreInfo[0][FMFontDb::Panose] = m_panose;
+		moreInfo[0][FMFontDb::Panose] = pl.join(":");
 		// FSTYPE (embedding status)
 		if(!os2->fsType)
 			m_OSFsType = NOT_RESTRICTED;
@@ -3410,7 +3431,7 @@ void FontItem::fileLocal ( FontLocalInfo fli )
 	m_family = fli.family;
 	m_variant = fli.variant;
 	m_type = fli.type;
-	m_panose = fli.panose;
+// 	m_panose = fli.panose;
 // 	moreInfo = fli.info;
 // 	if ( !fli.panose.isEmpty() )
 // 	{
@@ -3981,6 +4002,7 @@ QStringList FontItem::charmaps()
 	}
 	return ret;
 }
+
 
 
 

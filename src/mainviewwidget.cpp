@@ -155,7 +155,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	{
 		shaperTypeCombo->addItem(sIt.key(), sIt.value());
 	}
-	
+	slotShowClassification();
 	//CONNECT
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
@@ -2123,6 +2123,52 @@ void MainViewWidget::slotShowULine(bool checked)
 	{
 		uniLine->setVisible(false);
 	}
+}
+
+void MainViewWidget::slotShowClassification()
+{
+	qDebug()<<"MainViewWidget::slotShowClassification";
+	// Rather testing for now
+	classVariableDescription->setHtml("<html><head><title>Panose description</title></head><body><h1>Panose Key</h1>Description.</body></html>");
+	ParallelCoorDataType pcdata;
+	QList<FontDBResult> dbresult( FMFontDb::DB()->getInfo(currentFonts, FMFontDb::Panose) );
+	for(int i(0); i < dbresult.count() ; ++i)
+	{
+		QList<int> list;
+		QString p(dbresult[i].second);
+		QStringList pl(p.split(":"));
+		if(pl.count() == 10)
+		{
+			for(int a(0);a < 10 ;++a)
+			{
+				list << pl[a].toInt();
+			}
+			pcdata << list;
+		}
+	}
+	
+	ParallelCoorDataSet* pcs(new ParallelCoorDataSet);
+	QMap< FontStrings::PanoseKey, QMap<int, QString> > pan(FontStrings::Panose());
+	FontStrings::PanoseKey k(FontStrings::firstPanoseKey());
+	while(k != FontStrings::InvalidPK)
+	{
+		QString key( FontStrings::PanoseKeyName(k) );
+// 		qDebug()<<key;
+		QList<QString> list;
+		for(QMap<int, QString>::iterator i( pan[k].begin() ); i != pan[k].end(); ++i)
+		{
+// 			qDebug()<<i.value() ;
+			list << i.value() ;
+		}
+		pcs->append( qMakePair(key, list) );
+		k = FontStrings::nextPanoseKey(k);
+	}
+	
+	
+	pcs->setData(pcdata);
+	classificationView->setDataSet(pcs);
+// 	classificationView->updateGraphic();
+	
 }
 
 

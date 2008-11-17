@@ -276,6 +276,38 @@ FontInfoMap FMFontDb::getInfoMap ( const QString & id )
 
 }
 
+QList<FontDBResult> FMFontDb::getInfo ( const QList< FontItem * > & fonts, InfoItem info, int codeLang )
+{
+	QList<FontDBResult> ret;
+	QString where ( QString ( "(%1='%2') AND (%3='%4')" )
+	                .arg ( fieldName[InfoKey] )
+	                .arg ( info )
+	                .arg ( fieldName[Lang] )
+	                .arg ( codeLang ) );
+
+	QString qs ( "SELECT %1,%2 FROM %3 WHERE " + where );
+	QSqlQuery query ( qs.arg ( fieldName[Id] )
+	                  .arg ( fieldName[InfoValue] )
+	                  .arg ( tableName[Info] ),
+	                  *this );
+	if ( !query.exec() )
+		return ret;
+	else
+	{
+		while ( query.next() )
+		{
+			int id ( query.value ( 0 ).toInt() );
+			if ( id > 0 )
+			{
+				FontDBResult fr = qMakePair( fontMap.value ( id ), query.value ( 1 ).toString() );
+				if(fr.first)
+					ret << fr;
+			}
+		}
+		return ret;
+	}
+}
+
 void FMFontDb::addTag ( const QString & id, const QString & t )
 {
 	int nId ( getId ( id ) );
@@ -483,6 +515,8 @@ void FMFontDb::initFMDb()
 		}
 
 		/// build memory font database
+		//  which is ment to be a lightweight version of the 
+		// file DB and act as a proxy for most of requests.
 		QString qs2 ( "SELECT %1,%2,%3,%4,%5 FROM %6" );
 		rq = query.exec ( qs2.arg ( fieldName[Id] )
 		                  .arg ( fieldName[Family] )
@@ -761,6 +795,8 @@ bool FMFontDb::insertTemporaryFont ( const QString & path )
 	return true;
 
 }
+
+
 
 
 

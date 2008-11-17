@@ -30,6 +30,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/helpwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfontsdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/QHexView.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/parallelcoor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
@@ -92,6 +93,7 @@ importtags.h
 QHexView.h
 listdockwidget.h
 mainviewwidget.h
+parallelcoor.h
 prefspaneldialog.h
 remotedir.h
 shortcuts.h

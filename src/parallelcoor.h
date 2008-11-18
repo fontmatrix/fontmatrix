@@ -100,6 +100,23 @@ class ParallelCoorValueItem : public QGraphicsSimpleTextItem
 		QGraphicsView* pview;
 };
 
+class ParallelCoorBarItem : public QGraphicsLineItem
+{
+	public:
+		ParallelCoorBarItem(const QString& field, QGraphicsView* pcv, QGraphicsItem * parent = 0);
+		~ParallelCoorBarItem(){}	
+		
+	protected:
+		void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+		void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
+		void mousePressEvent ( QGraphicsSceneMouseEvent * event );
+		void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+	private:
+		QGraphicsView* pview;
+		QString attachedField;
+};
+
+
 class ParallelCoorView : public QGraphicsView
 {
 	Q_OBJECT
@@ -149,7 +166,7 @@ class ParallelCoorView : public QGraphicsView
 		QList<ParallelCoorValueItem*> valueLabels;
 		QList<ParallelCoorFieldItem*> fieldLabels;
 		QList<QGraphicsLineItem*> vertices;
-		QList<QGraphicsLineItem*> bars;
+		QList<ParallelCoorBarItem*> bars;
 		
 		struct Units
 		{

@@ -11,6 +11,9 @@
 //
 
 #include "fmfontstrings.h"
+#include "fmpaths.h"
+
+#include <QFile>
 
 FontStrings * FontStrings::instance = 0;
 FontStrings::FontStrings()
@@ -56,7 +59,21 @@ void FontStrings::fillNamesMeaning()
 
 void FontStrings::fillPanoseMap()
 {
-
+	QStringList clocpath;
+	QStringList cpath;
+	clocpath << FMPaths::ResourcesDir()<< ("Panose" + FMPaths::sysLoc() + ".xml");
+	cpath    << FMPaths::ResourcesDir()<< "Panose.xml";
+	if(QFile::exists(clocpath.join(QDir::separator())))
+	{
+		panoseFromFile(clocpath.join(QDir::separator()));
+		return;
+	}
+	else if(QFile::exists(cpath.join(QDir::separator())))
+	{
+		panoseFromFile(cpath.join(QDir::separator()));
+		return;
+	}
+		
 	// http://www.microsoft.com/OpenType/OTSpec/os2ver0.htm#pan
 
 		QMap<int, QString> mapModel;
@@ -224,6 +241,10 @@ void FontStrings::fillPanoseMap()
 
 }
 
+void FontStrings::panoseFromFile(const QString & path)
+{
+	return;
+}
 void FontStrings::fillCharsetMap()
 {
 	charsetMap[FT_ENCODING_NONE] = "None";
@@ -349,5 +370,7 @@ FontStrings::PanoseKey FontStrings::nextPanoseKey ( PanoseKey pk )
 	}
 	return InvalidPK;
 }
+
+
 
 

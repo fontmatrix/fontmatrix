@@ -54,6 +54,7 @@ class FontStrings : public QObject
 		void fillNamesMeaning();
 		void fillCharsetMap();
 		void fillPanoseMap();
+		void panoseFromFile(const QString& path);
 		void fillTTTableList();
 
 		QMap< PanoseKey, QMap<int, QString> > m_panoseMap;

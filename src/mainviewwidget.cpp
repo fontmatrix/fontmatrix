@@ -213,6 +213,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( pushToPlayButton, SIGNAL(clicked ( bool ) ), this, SLOT(slotPushOnPlayground()) );
 	
 	connect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
+	connect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
 	
 	// END CONNECT
 
@@ -2185,6 +2186,29 @@ void MainViewWidget::slotUpdateClassDescription(const QString & ks)
 	while(pk != FontStrings::InvalidPK);
 	
 	classVariableDescription->setHtml(FontStrings::PanoseKeyInfo(pk));
+}
+
+void MainViewWidget::slotPanoseFilter()
+{
+	QList<FontDBResult> dbresult( FMFontDb::DB()->getInfo(currentFonts, FMFontDb::Panose) );
+	QList<FontItem*> fil;
+	for(int i(0); i < dbresult.count() ; ++i)
+	{
+		QList<int> list;
+		QString p(dbresult[i].second);
+		QStringList pl(p.split(":"));
+		if(pl.count() == 10)
+		{
+			for(int a(0);a < 10 ;++a)
+			{
+				list << pl[a].toInt();
+			}
+			if(classificationView->matchFilter(list))
+				fil << dbresult[i].first;
+		}
+	}
+	currentFonts = fil;
+	fillTree();
 }
 
 

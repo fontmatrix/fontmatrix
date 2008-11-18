@@ -168,7 +168,7 @@ ParallelCoorView::Units::Units(int width, int height, int count)
 
 void ParallelCoorView::cleanLists()
 {
-	qDebug()<<"ParallelCoorView::cleanLists";
+// 	qDebug()<<"ParallelCoorView::cleanLists";
 	
 // 	scene()->removeItem(scene()->createItemGroup(scene()->items()));
 // 	qDebug()<<"D valueLabels"<<valueLabels.count();
@@ -385,12 +385,14 @@ void ParallelCoorView::setFilter ( const QMap< QString, QStringList >& theValue 
 			}
 		}
 	}
+	
+	emit filterChanged();
 	redraw();
 }
 
 
 
-bool ParallelCoorView::matchFilter(QList< int > list)
+bool ParallelCoorView::matchFilter(QList< int > list) const
 {
 	if(list.isEmpty())
 	{
@@ -419,6 +421,7 @@ bool ParallelCoorView::matchFilter(QList< int > list)
 	}
 	return ret;
 }
+
 
 /**
 	Field label

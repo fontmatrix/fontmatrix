@@ -126,15 +126,15 @@ class ParallelCoorView : public QGraphicsView
 		~ParallelCoorView();
 		
 		void selectField(const QString& field);
-		void setCurrentField ( const QString& theValue );
-		QString getCurrentField() const;
-			
-	public:
+		bool matchFilter(QList<int> list) const;
+	
 		// put here set/get methods
 		void setDataSet ( ParallelCoorDataSet* theValue );
 		ParallelCoorDataSet* getDataSet() const;
 		void setFilter ( const QMap< QString, QStringList >& theValue );
 		QMap< QString, QStringList > getFilter() const;
+		void setCurrentField ( const QString& theValue );
+		QString getCurrentField() const;
 		
 	public slots:
 		void updateGraphic();
@@ -147,6 +147,7 @@ class ParallelCoorView : public QGraphicsView
 		
 	signals:
 		void selectedField(const QString&);
+		void filterChanged();
 
 	private:
 		// At some point the dataset will send signals
@@ -188,8 +189,6 @@ class ParallelCoorView : public QGraphicsView
 		void drawVertices();
 		void drawFields();
 		void drawValues();
-		
-		bool matchFilter(QList<int> list);
 		
 
 };

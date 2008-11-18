@@ -173,6 +173,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		void slotShowClassification();
 		void slotUpdateClassDescription(const QString& ks);
+		void slotPanoseFilter();
 		
 		
 		//playground

@@ -75,6 +75,7 @@ void FontStrings::fillPanoseMap()
 	}
 		
 	// http://www.microsoft.com/OpenType/OTSpec/os2ver0.htm#pan
+	// http://www.monotypeimaging.com/ProductsServices/pan2.aspx
 
 		QMap<int, QString> mapModel;
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -86,6 +87,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[FamilyType] = mapModel;
 		m_panoseKeyName[FamilyType] = tr ( "Family Type" );
+		m_panoseKeyInfo[FamilyType] = "<h1>Family Kind</h1> Defines what type of font is being classified." ;
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -107,6 +109,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[SerifStyle ] = mapModel;
 		m_panoseKeyName[SerifStyle] = tr ( "Serif style" ) ;
+		m_panoseKeyInfo[SerifStyle] ="<h1>Serif style</h1>This digit describes the appearance of the serifs used in a font design";
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -124,6 +127,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[Weight ] = mapModel;
 		m_panoseKeyName[Weight] = tr ( "Weight" );
+		m_panoseKeyInfo[Weight] ="<h1>Weight</h1>The Weight digit classifies the appearance of a fonts’ stroke thickness in relation to its height.";
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -139,6 +143,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[Proportion ] = mapModel;
 		m_panoseKeyName[Proportion] = tr ( "Proportion" );
+		m_panoseKeyInfo[Proportion] ="<h1>Proportion</h1>The proportion of a font in the PANOSE Typeface Matching System is defined in greater detail than simply an indication of general glyph shape aspect ratio such as extended and condensed.";
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -154,6 +159,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[Contrast ] = mapModel;
 		m_panoseKeyName[Contrast] = tr ( "Contrast" );
+		m_panoseKeyInfo[Contrast] ="<h1>Contrast</h1>The Contrast digit describes the ratio between the thickest point on the stroke of the letter O and the narrowest point on the letter O.";
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -168,6 +174,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[StrokeVariation] = mapModel;
 		m_panoseKeyName[StrokeVariation] = tr ( "Stroke Variation" );
+		m_panoseKeyInfo[StrokeVariation] ="<h1>Stroke Variation</h1>The Stroke Variation category further details the contrast trait by describing the kind of transition that occurs as the stem thickness changes on rounded glyph shapes.";
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -185,6 +192,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[ArmStyle ] = mapModel;
 		m_panoseKeyName[ArmStyle] = tr ( "Arm Style" );
+		m_panoseKeyInfo[ArmStyle] ="<h1>Arm Style</h1>The Arm Style category classifies two attributes of a glyph design: special treatment of diagonal stems and termination of open rounded letterforms.";
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -206,6 +214,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[Letterform] = mapModel;
 		m_panoseKeyName[Letterform] = tr ( "Letterform" );
+		m_panoseKeyInfo[Letterform] ="<h1>Letterform</h1>Roundness and predominant skewing is classified in the Letterform category.";
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -225,6 +234,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[Midline ] = mapModel;
 		m_panoseKeyName[Midline] = tr ( "Midline" );
+		m_panoseKeyInfo[Midline] ="<h1>Midline</h1>The ninth category in the PANOSE classification system analyzes two traits, the placement of the midline across the uppercase characters and the treatment of diagonal stem apexes.";
 		mapModel.clear();
 
 		mapModel[ 0 ] = tr ( "Any" ) ;
@@ -238,6 +248,7 @@ void FontStrings::fillPanoseMap()
 
 		m_panoseMap[XHeight ] = mapModel;
 		m_panoseKeyName[XHeight] = tr ( "X-Height" );
+		m_panoseKeyInfo[XHeight] ="<h1>X-Height</h1>Two different traits are represented in the X-height digit: the treatment of uppercase glyphs with diacritical marks and the relative size of the lowercase characters.";
 
 }
 
@@ -334,6 +345,12 @@ const QString FontStrings::PanoseKeyName(PanoseKey pk)
 {
 	FontStrings *that(getInstance());
 	return that->m_panoseKeyName.value(pk);
+}
+
+const QString FontStrings::PanoseKeyInfo(PanoseKey pk)
+{
+	FontStrings *that(getInstance());
+	return that->m_panoseKeyInfo.value(pk);
 }
 
 const QString FontStrings::Encoding(FT_Encoding enc)

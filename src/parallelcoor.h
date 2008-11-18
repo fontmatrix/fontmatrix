@@ -179,17 +179,7 @@ class ParallelCoorView : public QGraphicsView
 			int C ;
 			double step ;
 			Units() {}
-			Units (int width, int height, int count )
-			{
-				hunit = static_cast<double> ( height ) /1000.0 ;
-				wunit = static_cast<double> ( width ) /1000.0  ;
-				XOffset = hunit * 100.0;
-				YOffset = hunit * 100.0 ;
-				H = hunit * 800.0 ;
-				W = wunit * 800.0 ;
-				C = count ;
-				step = W / static_cast<double> ( C-1 ) ;
-			}
+			Units (int width, int height, int count );
 		};
 		
 		Units units;

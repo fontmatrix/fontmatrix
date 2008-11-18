@@ -11,6 +11,7 @@
 //
 
 #include "parallelcoor.h"
+#include "typotek.h"
 
 
 #include <QGraphicsScene>
@@ -134,7 +135,7 @@ QString ParallelCoorView::getCurrentField() const
 
 void ParallelCoorView::setCurrentField ( const QString& theValue )
 {
-	qDebug()<<"ParallelCoorView::setCurrentField"<<theValue<<m_currentField;
+// 	qDebug()<<"ParallelCoorView::setCurrentField"<<theValue<<m_currentField;
 	if(theValue!=m_currentField)
 	{
 		m_currentField = theValue;
@@ -151,6 +152,18 @@ ParallelCoorDataSet* ParallelCoorView::getDataSet() const
 void ParallelCoorView::setDataSet ( ParallelCoorDataSet* theValue )
 {
 	m_dataSet = theValue;
+}
+
+ParallelCoorView::Units::Units(int width, int height, int count)
+{			
+	hunit = static_cast<double> ( height ) /1000.0 ;
+	wunit = static_cast<double> ( width ) /1000.0  ;
+	XOffset = hunit * 200.0;
+	YOffset = hunit * 100.0 ;
+	H = hunit * 800.0 ;
+	W = wunit * 700.0 ;
+	C = count ;
+	step = W / static_cast<double> ( C-1 ) ;
 }
 
 void ParallelCoorView::cleanLists()
@@ -228,7 +241,7 @@ void ParallelCoorView::drawBars()
 void ParallelCoorView::drawVertices()
 {
 	const int N ( m_dataSet->getData().count() );
-	qDebug() <<"ParallelCoorView::drawVertices"<<N;
+// 	qDebug() <<"ParallelCoorView::drawVertices"<<N * 9;
 	QMap<int, QMap< int, QPointF> > placeCoords;
 	for ( int k ( 0 );k < m_dataSet->count(); ++k )
 	{
@@ -243,8 +256,10 @@ void ParallelCoorView::drawVertices()
 	}
 	QPen penFilter ( Qt::black, 1.0 );
 	QPen penUnFilter ( Qt::lightGray, 0.5 );
-// 	QBrush brushFilter ( Qt::black );
-// 	QBrush brushUnFilter ( Qt::gray );
+	
+	QList<QLineF> cflines;
+	QList<QLineF> culines;
+	
 	for ( int a ( 0 );a<N;++a )
 	{
 // 		if( m_dataSet->getData().at(a).count() == m_dataSet->count() )
@@ -264,17 +279,24 @@ void ParallelCoorView::drawVertices()
 				{
 					bool f ( matchFilter ( m_dataSet->getData().at ( a ) ) );
 					QLineF lf(pol[vi-1],pol[vi]);
-					vertices << scene()->addLine ( lf, f ? penFilter : penUnFilter );
-					vertices.last()->setZValue(f ? 100.0 : 1.0);
+					if(f ? (!cflines.contains(lf)) : (!culines.contains(lf)))
+					{
+						vertices << scene()->addLine ( lf, f ? penFilter : penUnFilter );
+						vertices.last()->setZValue(f ? 100.0 : 1.0);
+						f ? (cflines << lf) : (culines << lf) ;
+					}
+// 					else
+// 						qDebug()<<"Cached Line"<<(f?cflines.indexOf(lf):culines.indexOf(lf)) ;
 				}
 			}
 		}
 	}
+// 	qDebug()<<"R"<< cflines.count() << culines.count();
 }
 
 void ParallelCoorView::drawFields()
 {
-	qDebug()<<"ParallelCoorView::drawFields";
+// 	qDebug()<<"ParallelCoorView::drawFields";
 	QFont fontF( "Helvetica" , 9, QFont::DemiBold, false );
 	for(int k(0);k < m_dataSet->count(); ++k)
 	{
@@ -292,7 +314,7 @@ void ParallelCoorView::drawFields()
 
 void ParallelCoorView::drawValues()
 {
-	qDebug()<<"ParallelCoorView::drawValues";
+// 	qDebug()<<"ParallelCoorView::drawValues";
 	int di(0);
 	if(!m_currentField.isEmpty())
 	{
@@ -320,10 +342,10 @@ void ParallelCoorView::drawValues()
 		vi->setFont(fontV);
 		scene()->addItem(vi);
 		
-		double w(vi->boundingRect().width() - units.XOffset);
+		double w((units.XOffset * .9) - vi->boundingRect().width());
 		double h(vi->boundingRect().height() / 2.0);
-		
-		vi->setPos( (din * units.step) -w, units.YOffset + (static_cast<double>(i) * vsep) - h);
+// 		qDebug()<<"V"<<w<<vi->boundingRect().width()<<units.XOffset;
+		vi->setPos( w , units.YOffset + (static_cast<double>(i) * vsep) - h);
 		vi->setZValue(1000.0);
 	}
 }
@@ -429,8 +451,6 @@ void ParallelCoorFieldItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 		ParallelCoorView *pcv = reinterpret_cast<ParallelCoorView*>(pview);
 		pcv->selectField(text());
 	}
-	else
-		qDebug()<<"Obj"<<pview->metaObject()->className();
 	
 	qApp->restoreOverrideCursor();
 }
@@ -526,10 +546,12 @@ void ParallelCoorBarItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 	if(QString(pview->metaObject()->className()) == QString("ParallelCoorView") )
 	{
 		ParallelCoorView *pcv = reinterpret_cast<ParallelCoorView*>(pview);
-		pcv->setCurrentField(attachedField);
+		pcv->selectField(attachedField);
 	}
 	qApp->restoreOverrideCursor();
 }
+
+
 
 
 

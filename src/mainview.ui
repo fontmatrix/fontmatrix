@@ -869,8 +869,21 @@
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <widget class="ParallelCoorView" name="classificationView" />
+         <widget class="ParallelCoorView" name="classificationView" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+            <horstretch>0</horstretch>
+            <verstretch>3</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
          <widget class="QWebView" native="1" name="classVariableDescription" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
+          </property>
           <layout class="QGridLayout" name="gridLayout_14" />
          </widget>
         </widget>

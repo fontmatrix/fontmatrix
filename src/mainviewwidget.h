@@ -172,7 +172,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotRemoveCurrentItem();
 		
 		void slotShowClassification();
-		
+		void slotUpdateClassDescription(const QString& ks);
 		
 		
 		//playground

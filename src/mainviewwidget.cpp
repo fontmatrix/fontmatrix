@@ -212,6 +212,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	connect ( pushToPlayButton, SIGNAL(clicked ( bool ) ), this, SLOT(slotPushOnPlayground()) );
 	
+	connect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
+	
 	// END CONNECT
 
 	currentOrdering = "family" ;
@@ -2127,9 +2129,9 @@ void MainViewWidget::slotShowULine(bool checked)
 
 void MainViewWidget::slotShowClassification()
 {
-	qDebug()<<"MainViewWidget::slotShowClassification";
+// 	qDebug()<<"MainViewWidget::slotShowClassification";
 	// Rather testing for now
-	classVariableDescription->setHtml("<html><head><title>Panose description</title></head><body><h1>Panose Key</h1>Description.</body></html>");
+	classVariableDescription->setHtml(FontStrings::PanoseKeyInfo(FontStrings::firstPanoseKey()));
 	ParallelCoorDataType pcdata;
 	QList<FontDBResult> dbresult( FMFontDb::DB()->getInfo(currentFonts, FMFontDb::Panose) );
 	for(int i(0); i < dbresult.count() ; ++i)
@@ -2169,6 +2171,20 @@ void MainViewWidget::slotShowClassification()
 	classificationView->setDataSet(pcs);
 // 	classificationView->updateGraphic();
 	
+}
+
+void MainViewWidget::slotUpdateClassDescription(const QString & ks)
+{
+	FontStrings::PanoseKey pk(FontStrings::firstPanoseKey());
+	do
+	{
+		if(FontStrings::PanoseKeyName(pk) == ks)
+			break;
+		pk = FontStrings::nextPanoseKey(pk);
+	}
+	while(pk != FontStrings::InvalidPK);
+	
+	classVariableDescription->setHtml(FontStrings::PanoseKeyInfo(pk));
 }
 
 

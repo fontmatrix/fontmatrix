@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsItemGroup>
+#include <QFontMetricsF>
 
 /**
 	DataSet
@@ -158,7 +159,7 @@ ParallelCoorView::Units::Units(int width, int height, int count)
 {			
 	hunit = static_cast<double> ( height ) /1000.0 ;
 	wunit = static_cast<double> ( width ) /1000.0  ;
-	XOffset = hunit * 200.0;
+	XOffset = wunit * 200.0;
 	YOffset = hunit * 100.0 ;
 	H = hunit * 800.0 ;
 	W = wunit * 700.0 ;
@@ -297,17 +298,56 @@ void ParallelCoorView::drawVertices()
 void ParallelCoorView::drawFields()
 {
 // 	qDebug()<<"ParallelCoorView::drawFields";
-	QFont fontF( "Helvetica" , 9, QFont::DemiBold, false );
+	QFont fontF( "Helvetica" , 100.0 , QFont::DemiBold, false );
+	double lastW(0.0);
+	bool lastPosShifted(false);
+	double maxAscent(0.0);
 	for(int k(0);k < m_dataSet->count(); ++k)
 	{
 		QString f(m_dataSet->at(k).first);
-		ParallelCoorFieldItem * ti = new ParallelCoorFieldItem(f,this);
-		ti->setFont(fontF);
-		fieldLabels << ti;
+		QFontMetricsF metrics(fontF);
+		double w(metrics.boundingRect(f).width());
+		double fsize( units.step * 100.0 / w );
+		double ascent(metrics.ascent() * fsize / 100.0 );
+		maxAscent = qMax(maxAscent, ascent);
+	}
+	for(int k(0);k < m_dataSet->count(); ++k)
+	{
+		QString f(m_dataSet->at(k).first);
 		
+		fontF.setPointSizeF(100.0);
+		QFontMetricsF metrics(fontF);
+		double w(metrics.boundingRect(f).width());
+		double fsize( (units.step * 0.9) * 100.0 / w );
+		double ascent(metrics.ascent() * fsize / 100.0);
+		double sw(w * fsize / 100.0 );
+		fontF.setPointSizeF(fsize);
+		
+		ParallelCoorFieldItem * ti = new ParallelCoorFieldItem(f,this);
+		fieldLabels << ti;
+		ti->setFont(fontF);
 		scene()->addItem(ti);
-// 		double w(ti->boundingRect().width());
-		ti->setPos(units.XOffset + (k*units.step) /*- (w/3.0)*/, units.H+units.YOffset);
+		ti->setPos(units.XOffset + (k*units.step) - (sw/2.0), units.H + units.YOffset + (maxAscent - ascent));
+// 		double h(ti->boundingRect().height());
+// 		if(lastW > units.step * 1.1)
+// 		{
+// 			if(!lastPosShifted)
+// 			{
+// 				ti->setPos(units.XOffset + (k*units.step) , units.H + units.YOffset + h);
+// 				lastPosShifted = true;
+// 			}
+// 			else
+// 			{
+// 				ti->setPos(units.XOffset + (k*units.step) , units.H + units.YOffset );
+// 				lastPosShifted = false;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			ti->setPos(units.XOffset + (k*units.step) /*- (w/3.0)*/, units.H+units.YOffset);
+// 			lastPosShifted = false;			
+// 		}
+// 		lastW = w;
 	}
 	
 }

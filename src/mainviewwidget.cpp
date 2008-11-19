@@ -68,7 +68,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 		: QWidget ( parent )
 {
 	setupUi ( this );
-
+	
 	uRangeIsNotEmpty = false;
 	currentFonts.clear();
 
@@ -155,6 +155,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	{
 		shaperTypeCombo->addItem(sIt.key(), sIt.value());
 	}
+	
+	classSplitter->restoreState(settings.value("ClassificationSplitter").toByteArray());
 	slotShowClassification();
 	//CONNECT
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
@@ -214,6 +216,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	connect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
 	connect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
+	connect ( classSplitter, SIGNAL(splitterMoved(int,int)), this, SLOT(slotSaveClassSplitter()));
 	
 	// END CONNECT
 
@@ -2209,6 +2212,12 @@ void MainViewWidget::slotPanoseFilter()
 	}
 	currentFonts = fil;
 	fillTree();
+}
+
+void MainViewWidget::slotSaveClassSplitter()
+{
+	QSettings settings;
+	settings.setValue("ClassificationSplitter", classSplitter->saveState());
 }
 
 

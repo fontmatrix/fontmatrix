@@ -202,6 +202,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotWebLoad(int i);
 		void slotWebFinished(bool);
 		
+		void slotSaveClassSplitter();
+		
 		
 	signals:
 		void faceChanged();

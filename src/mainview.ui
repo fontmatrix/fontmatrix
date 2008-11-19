@@ -865,13 +865,16 @@
         <number>0</number>
        </property>
        <item row="0" column="0" >
-        <widget class="QSplitter" name="splitter" >
+        <widget class="QSplitter" name="classSplitter" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
+         <property name="opaqueResize" >
+          <bool>false</bool>
+         </property>
          <widget class="ParallelCoorView" name="classificationView" >
           <property name="sizePolicy" >
-           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
             <horstretch>0</horstretch>
             <verstretch>3</verstretch>
            </sizepolicy>

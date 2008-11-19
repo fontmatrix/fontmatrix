@@ -718,11 +718,13 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 			{
 				QString v(FontStrings::Panose().value(pk).value(plist[pk].toInt()));
 				filter[FontStrings::PanoseKeyName(pk)] << v;
-				qDebug()<<"F"<<FontStrings::PanoseKeyName(pk)<<v;
+// 				qDebug()<<"F"<<FontStrings::PanoseKeyName(pk)<<v;
 				pk = FontStrings::nextPanoseKey(pk);
 			}
 			while(pk != FontStrings::InvalidPK);
+			disconnect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
 			classificationView->setFilter(filter);
+			connect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
 		}
 	}
 

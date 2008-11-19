@@ -26,6 +26,7 @@
 #include <QGraphicsSimpleTextItem>
 #include <QGraphicsPolygonItem>
 #include <QGraphicsLineItem>
+#include <QGraphicsPathItem>
 
 
 /**
@@ -90,6 +91,10 @@ class ParallelCoorValueItem : public QGraphicsSimpleTextItem
 		ParallelCoorValueItem(QString text, QGraphicsView* pcv, QGraphicsItem * parent = 0);
 		~ParallelCoorValueItem(){}
 		
+		void hoverEnter();
+		void hoverLeave();
+		void click(int mod = 0);
+		
 	protected:
 		void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 		void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
@@ -114,6 +119,23 @@ class ParallelCoorBarItem : public QGraphicsLineItem
 	private:
 		QGraphicsView* pview;
 		QString attachedField;
+};
+
+class ParallelCoorMarkItem : public QGraphicsPathItem
+{
+	public:
+		ParallelCoorMarkItem(ParallelCoorValueItem* relative, QGraphicsView* pcv, QGraphicsItem * parent = 0);
+		~ParallelCoorMarkItem(){}
+		
+	protected:
+		void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+		void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
+		void mousePressEvent ( QGraphicsSceneMouseEvent * event );
+		void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+		
+	private:
+		QGraphicsView * pview;
+		ParallelCoorValueItem * value;
 };
 
 
@@ -168,6 +190,7 @@ class ParallelCoorView : public QGraphicsView
 		QList<ParallelCoorFieldItem*> fieldLabels;
 		QList<QGraphicsLineItem*> vertices;
 		QList<ParallelCoorBarItem*> bars;
+		QList<ParallelCoorMarkItem*> marks;
 		
 		struct Units
 		{
@@ -184,11 +207,21 @@ class ParallelCoorView : public QGraphicsView
 		};
 		
 		Units units;
-		void cleanLists();
+		enum ItemList{AllList, BarList, VerticeList, FieldList, ValueList};
+		
+		
+		void initPensAndBrushes();
+		
+		void cleanLists(ItemList il = AllList);
 		void drawBars();
 		void drawVertices();
 		void drawFields();
 		void drawValues();
+		
+	public:
+		static QMap<QString, QPen> pens;
+		static QMap<QString, QBrush> brushes;
+		static QPainterPath markPath;
 		
 
 };

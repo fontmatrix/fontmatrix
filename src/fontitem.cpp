@@ -2815,7 +2815,7 @@ QString FontItem::panose()
 		}
 	}
 	releaseFace();
-	return pl.join("/");
+	return pl.join(":");
 }
 
 int FontItem::table(const QString & tableName)

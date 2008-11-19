@@ -707,6 +707,23 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 // 		fillTree();
 		updateTree();
 		abcView->verticalScrollBar()->setValue ( 0 );
+		
+		// Update panose widget
+		QStringList plist(theVeryFont->panose().split(":"));
+		if(plist.count() == 10)
+		{
+			QMap<QString,QStringList> filter;
+			FontStrings::PanoseKey pk(FontStrings::firstPanoseKey());
+			do
+			{
+				QString v(FontStrings::Panose().value(pk).value(plist[pk].toInt()));
+				filter[FontStrings::PanoseKeyName(pk)] << v;
+				qDebug()<<"F"<<FontStrings::PanoseKeyName(pk)<<v;
+				pk = FontStrings::nextPanoseKey(pk);
+			}
+			while(pk != FontStrings::InvalidPK);
+			classificationView->setFilter(filter);
+		}
 	}
 
 

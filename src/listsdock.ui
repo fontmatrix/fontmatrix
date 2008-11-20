@@ -122,6 +122,9 @@ p, li { white-space: pre-wrap; }
            <property name="text" >
             <string>Tags</string>
            </property>
+           <property name="alignment" >
+            <set>Qt::AlignCenter</set>
+           </property>
            <property name="buddy" >
             <cstring>tagsCombo</cstring>
            </property>

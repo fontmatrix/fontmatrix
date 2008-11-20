@@ -687,7 +687,11 @@ void typotek::createMenus()
 	browseMenu->addAction(previousFamily);
 	browseMenu->addAction(nextFont);
 	browseMenu->addAction(previousFont);
-
+	
+	viewMenu = createPopupMenu();
+	viewMenu->setTitle(tr("&View"));
+	menuBar()->addMenu(viewMenu);
+			
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( helpAct );
 	helpMenu->addAction ( aboutAct );

@@ -129,6 +129,7 @@ class typotek:public QMainWindow
 		QMenu *fileMenu;
 		QMenu *editMenu;
 		QMenu *browseMenu;
+		QMenu *viewMenu;
 		QMenu *helpMenu;
 		QToolBar *fileToolBar;
 		QToolBar *editToolBar;

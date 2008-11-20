@@ -182,16 +182,21 @@ void FMFontDb::setInfoMap ( const QString & id, const QMap< int, QMap < int , QS
 // 	qDebug() <<"SETINFO"<<c<<t.elapsed();
 }
 
-QVariant FMFontDb::getValue ( const QString & id, Field field )
+QVariant FMFontDb::getValue ( const QString & id, Field field, bool useCache )
 {
 // 	qDebug() <<"getValue"<< fieldName[field] <<id;
-	if(rValueCache.contains(id))
+	if(useCache)
 	{
-		if(rValueCache[id].contains(field))
+		if(rValueCache.contains(id))
 		{
-// 			qDebug() <<"getCachedValue"<< fieldName[field] <<id <<rValueCache[id][field];
-			return rValueCache[id][field];
+			if(rValueCache[id].contains(field))
+			{
+	// 			qDebug() <<"getCachedValue"<< fieldName[field] <<id <<rValueCache[id][field];
+				return rValueCache[id][field];
+			}
 		}
+		else
+			rValueCache.clear();
 	}
 	else
 		rValueCache.clear();
@@ -386,6 +391,27 @@ void FMFontDb::addTagToDB ( const QString & t )
 	query.exec();
 }
 
+void FMFontDb::removeTagFromDB(const QString & t)
+{
+	QString qs ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
+			.arg ( tableName[Tag] )
+			.arg ( fieldName[Tags] )
+			.arg ( t ) );
+	QSqlQuery query ( qs,*this );
+	query.exec();
+}
+
+void FMFontDb::editTag(const QString & tOld, const QString & tNew)
+{
+	QString qs ( QString ( "UPDATE %1 SET %2='%3' WHERE %4='%5'" )
+			.arg ( tableName[Tag] )
+			.arg ( fieldName[Tags] )
+			.arg ( tNew ) 
+			.arg ( fieldName[Tags] )
+			.arg ( tOld ) );
+	QSqlQuery query ( qs,*this );
+	query.exec();
+}
 
 void FMFontDb::initFMDb()
 {
@@ -795,6 +821,9 @@ bool FMFontDb::insertTemporaryFont ( const QString & path )
 	return true;
 
 }
+
+
+
 
 
 

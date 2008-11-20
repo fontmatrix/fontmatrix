@@ -26,6 +26,10 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 		
 		QList<FontItem*> theTaggedFonts;
 		
+		QList<QAction*> contAction;
+		
+		QString currentTag;
+		
 	public:
 		static TagsWidget *getInstance();
 		void prepare(QList<FontItem*> fonts);
@@ -36,6 +40,10 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 		void slotSwitchCheckState( QListWidgetItem * item );
 		void slotNewTag();
 		void slotFinalize();
+		
+		void slotContextMenu( QPoint  pos );
+		void slotActRemovetag();
+		void slotActEditTag();
 };
 
 #endif //TAGSWIDGET_H

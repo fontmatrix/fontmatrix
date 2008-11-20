@@ -141,7 +141,7 @@ class FMFontDb : public QSqlDatabase
 
 		void setInfoMap ( const QString& id, const FontInfoMap& info );
 
-		QVariant getValue ( const QString& id, Field field );
+		QVariant getValue ( const QString& id, Field field, bool useCache = true );
 		FontInfoMap getInfoMap ( const QString& id );
 		QList<FontDBResult> getInfo ( const QList<FontItem*>& fonts, InfoItem info, int codeLang = 0 );
 		
@@ -160,6 +160,8 @@ class FMFontDb : public QSqlDatabase
 
 		QStringList getTags();
 		void addTagToDB ( const QString& t );
+		void removeTagFromDB ( const QString& t );
+		void editTag (const QString& tOld, const QString& tNew);
 		void addTag ( const QString& id, const QString& t );
 		void removeTag ( const QString& id, const QString& t );
 		void setTags ( const QString& id, const QStringList& tl );

@@ -1,7 +1,7 @@
 //
 // C++ Implementation: tagswidget
 //
-// Description: 
+// Description:
 //
 //
 // Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
@@ -11,22 +11,28 @@
 //
 
 #include <QInputDialog>
+#include <QMessageBox>
 #include <QDebug>
 
+#include "typotek.h"
 #include "tagswidget.h"
 #include "fmfontdb.h"
 #include "listdockwidget.h"
 
 
 TagsWidget * TagsWidget::instance = 0;
-TagsWidget::TagsWidget(QWidget * parent)
-	:QWidget(parent)
+TagsWidget::TagsWidget ( QWidget * parent )
+		:QWidget ( parent )
 {
 	setupUi ( this );
-	
+
+	tagsListWidget->setContextMenuPolicy ( Qt::CustomContextMenu );
+
+
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
-	connect ( newTagName, SIGNAL(editingFinished() ), this, SLOT(slotNewTag()));
+	connect ( newTagName, SIGNAL ( editingFinished() ), this, SLOT ( slotNewTag() ) );
+	connect ( tagsListWidget,SIGNAL ( customContextMenuRequested ( const QPoint & ) ), this, SLOT ( slotContextMenu ( QPoint ) ) );
 }
 
 TagsWidget::~ TagsWidget()
@@ -35,34 +41,34 @@ TagsWidget::~ TagsWidget()
 
 TagsWidget * TagsWidget::getInstance()
 {
-	if(!instance)
+	if ( !instance )
 	{
-		instance = new TagsWidget(0);
-		Q_ASSERT(instance);
+		instance = new TagsWidget ( 0 );
+		Q_ASSERT ( instance );
 	}
 	return instance;
 }
 
-void TagsWidget::slotSwitchCheckState(QListWidgetItem * item)
+void TagsWidget::slotSwitchCheckState ( QListWidgetItem * item )
 {
 	slotFinalize();
 }
 
 void TagsWidget::slotNewTag()
 {
-	QString nTag( newTagName->text() );
+	QString nTag ( newTagName->text() );
 	newTagName->clear();
 	bool ok;
 // 	nTag = QInputDialog::getText(this,"Fontmatrix",tr("Add new tag"),QLineEdit::Normal, QString() , &ok );
-	if ( nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ))
+	if ( nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ) )
 		return;
 
-	FMFontDb::DB()->addTagToDB( nTag );
+	FMFontDb::DB()->addTagToDB ( nTag );
 	QListWidgetItem *lit = new QListWidgetItem ( nTag );
 	lit->setCheckState ( Qt::Checked );
 	tagsListWidget->addItem ( lit );
 	slotFinalize();
-	
+
 	ListDockWidget::getInstance()->reloadTagsCombo();
 }
 
@@ -74,7 +80,7 @@ void TagsWidget::slotFinalize()
 	{
 		if ( tagsListWidget->item ( i )->checkState() == Qt::Checked )
 			plusTags.append ( tagsListWidget->item ( i )->text() );
-		if( tagsListWidget->item ( i )->checkState() == Qt::Unchecked )
+		if ( tagsListWidget->item ( i )->checkState() == Qt::Unchecked )
 			noTags.append ( tagsListWidget->item ( i )->text() );
 	}
 
@@ -83,40 +89,40 @@ void TagsWidget::slotFinalize()
 	for ( int i=0;i<theTaggedFonts.count();++i )
 	{
 		refTags = sourceTags = theTaggedFonts[i]->tags();
-		qDebug()<<refTags.join(" ");
-		for(int t = 0; t < noTags.count(); ++t)
+		qDebug() <<refTags.join ( " " );
+		for ( int t = 0; t < noTags.count(); ++t )
 		{
-			sourceTags.removeAll(noTags[t]);
+			sourceTags.removeAll ( noTags[t] );
 		}
 		sourceTags += plusTags;
 		sourceTags = sourceTags.toSet().toList();
-		bool changed(false);
-		qDebug()<<sourceTags.join(" ");
-		if(refTags.count() != sourceTags.count())
+		bool changed ( false );
+		qDebug() <<sourceTags.join ( " " );
+		if ( refTags.count() != sourceTags.count() )
 			changed = true;
 		else
 		{
-			foreach(QString t, sourceTags)
+			foreach ( QString t, sourceTags )
 			{
-				if(!refTags.contains(t))
+				if ( !refTags.contains ( t ) )
 				{
 					changed = true;
 					break;
 				}
 			}
 		}
-		if(changed)
+		if ( changed )
 			theTaggedFonts[i]->setTags ( sourceTags );
 	}
 }
 
-void TagsWidget::prepare(QList< FontItem * > fonts)
+void TagsWidget::prepare ( QList< FontItem * > fonts )
 {
 	theTaggedFonts.clear();
 	theTaggedFonts = fonts;
 
-	bool readOnly(false);
-	for ( int i(0); i < theTaggedFonts.count() ; ++i )
+	bool readOnly ( false );
+	for ( int i ( 0 ); i < theTaggedFonts.count() ; ++i )
 	{
 		if ( theTaggedFonts[i]->isLocked() )
 		{
@@ -128,18 +134,25 @@ void TagsWidget::prepare(QList< FontItem * > fonts)
 	QString tot;
 	for ( int i=0;i<theTaggedFonts.count();++i )
 	{
-		tot.append (  theTaggedFonts[i]->fancyName() +  "\n" );
+		tot.append ( theTaggedFonts[i]->fancyName() +  "\n" );
 	}
-	if(theTaggedFonts.count() > 1)
+	if ( theTaggedFonts.count() > 1 )
 	{
-		titleLabel->setText ( theTaggedFonts[0]->family() + " (family)");
+		titleLabel->setText ( theTaggedFonts[0]->family() + " (family)" );
 	}
 	else
 	{
 		titleLabel->setText ( theTaggedFonts[0]->fancyName() );
 	}
 	titleLabel->setToolTip ( tot );
-	QStringList tagsList(FMFontDb::DB()->getTags());
+	QStringList tagsList ( FMFontDb::DB()->getTags() );
+	
+	QMap<FontItem*, QStringList> tmap;
+	foreach(FontItem* fi, theTaggedFonts)
+	{
+		if(fi)
+			tmap[fi] = FMFontDb::DB()->getValue(fi->path(), FMFontDb::Tags, false).toStringList();
+	}
 	for ( int i=0; i < tagsList.count(); ++i )
 	{
 		QString cur_tag = tagsList[i];
@@ -155,18 +168,17 @@ void TagsWidget::prepare(QList< FontItem * > fonts)
 			int YesState = 0;
 			for ( int i=0;i<theTaggedFonts.count();++i )
 			{
-				QStringList fTags(theTaggedFonts[i]->tags());
-				if ( fTags.contains ( cur_tag ) )
+				if ( tmap[theTaggedFonts[i]].contains ( cur_tag ) )
 					++YesState;
 			}
-			if(YesState == theTaggedFonts.count())
+			if ( YesState == theTaggedFonts.count() )
 				lit->setCheckState ( Qt::Checked );
-			else if(YesState > 0 && YesState < theTaggedFonts.count())
-				lit->setCheckState ( Qt::PartiallyChecked);
+			else if ( YesState > 0 && YesState < theTaggedFonts.count() )
+				lit->setCheckState ( Qt::PartiallyChecked );
 
 			tagsListWidget->addItem ( lit );
-			if(readOnly)
-				lit->setFlags(0);// No NoItemFlags in Qt < 4.4
+			if ( readOnly )
+				lit->setFlags ( 0 );// No NoItemFlags in Qt < 4.4
 		}
 	}
 }
@@ -174,6 +186,76 @@ void TagsWidget::prepare(QList< FontItem * > fonts)
 void TagsWidget::newTag()
 {
 	slotNewTag();
+}
+
+void TagsWidget::slotContextMenu ( QPoint pos )
+{
+// 	if(theTaggedFonts.isEmpty())
+// 		return;
+
+	currentTag = tagsListWidget->selectedItems().first()->text();
+	if ( currentTag.isEmpty() )
+		return;
+// 	QString fs(theTaggedFonts.first()->fancyName() + ((theTaggedFonts.count() > 1) ? "…" :""));
+
+	foreach ( QAction* a, contAction )
+	{
+		delete a;
+	}
+	contAction.clear();
+
+// 	contAction << new QAction(tr("Untag") + " " + fs, this);
+// 	connect(contAction.last(),SIGNAL(triggered()), this, SLOT(slotActUntag()));
+
+	contAction << new QAction ( tr ( "Edit", "followed by a tag name" ) + QString ( " \""+currentTag+"\"" ), this );
+	connect ( contAction.last(),SIGNAL ( triggered() ), this, SLOT ( slotActEditTag() ) );
+//
+	contAction << new QAction ( tr ( "Remove tag \"%1\" from database", "the %%1 is a tag name" ).arg ( currentTag ), this );
+	connect ( contAction.last(),SIGNAL ( triggered() ), this, SLOT ( slotActRemovetag() ) );
+
+	QMenu menu ( tagsListWidget );
+	foreach ( QAction* a, contAction )
+	{
+		menu.addAction ( a );
+	}
+	menu.exec ( QCursor::pos() );
+}
+
+void TagsWidget::slotActRemovetag()
+{
+// 	qDebug() <<"TagsWidget::slotActRemovetag";
+	QString message;
+	message = tr ( "Please confirm that you want to remove\nthe following tag from database:" ) + " " + currentTag;
+	if ( QMessageBox::question ( typotek::getInstance(),
+	                             "Fontmatrix",
+	                             message ,
+	                             QMessageBox::Ok | QMessageBox::Cancel,
+	                             QMessageBox::Cancel )
+	        == QMessageBox::Ok )
+	{
+		FMFontDb::DB()->removeTagFromDB ( currentTag );
+		prepare(theTaggedFonts);
+	}
+
+}
+
+void TagsWidget::slotActEditTag()
+{
+// 	qDebug()<<"TagsWidget::slotActEditTag";
+	QString fromT(currentTag);
+	QString message;
+	message = tr ( "Please provide a remplacement name for\nthe following tag:") + " " + currentTag ;
+	QString nt = QInputDialog::getText ( typotek::getInstance(),
+	                                     "Fontmatrix",
+	                                     message,
+	                                     QLineEdit::Normal,
+	                                     currentTag ) ;
+	if ( ( nt != currentTag ) && ( !nt.isEmpty() ) )
+	{
+		FMFontDb::DB()->editTag ( currentTag, nt );
+		prepare(theTaggedFonts);
+	}
+	
 }
 
 

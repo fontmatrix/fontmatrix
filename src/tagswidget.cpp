@@ -244,7 +244,7 @@ void TagsWidget::slotActEditTag()
 // 	qDebug()<<"TagsWidget::slotActEditTag";
 	QString fromT(currentTag);
 	QString message;
-	message = tr ( "Please provide a remplacement name for\nthe following tag:") + " " + currentTag ;
+	message = tr ( "Please provide a replacement name for\nthe following tag:") + " " + currentTag ;
 	QString nt = QInputDialog::getText ( typotek::getInstance(),
 	                                     "Fontmatrix",
 	                                     message,

@@ -205,6 +205,8 @@ class typotek:public QMainWindow
 
 		QString mainDockArea;
 		QString tagsDockArea;
+		QRect mainDockGeometry;
+		QRect tagsDockGeometry;
 
 
 		FMHyphenator *hyphenator;

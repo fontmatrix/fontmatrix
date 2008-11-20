@@ -50,7 +50,7 @@
          <property name="spacing" >
           <number>2</number>
          </property>
-         <item row="0" column="0" >
+         <item row="0" column="1" >
           <widget class="QComboBox" name="tagsCombo" >
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
@@ -69,29 +69,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1" >
-          <widget class="QToolButton" name="panoseButton" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="toolTip" >
-            <string>Switch to panose filtering</string>
-           </property>
-           <property name="text" >
-            <string>Panose</string>
-           </property>
-           <property name="checkable" >
-            <bool>true</bool>
-           </property>
-           <property name="autoRaise" >
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" >
+         <item row="1" column="1" >
           <widget class="QLineEdit" name="searchString" >
            <property name="enabled" >
             <bool>false</bool>
@@ -117,7 +95,39 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="1" column="1" >
+         <item row="2" column="1" >
+          <widget class="QLabel" name="filtersCrumb" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+             <horstretch>2</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="frameShape" >
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow" >
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="text" >
+            <string>TextLabel</string>
+           </property>
+           <property name="buddy" >
+            <cstring>viewAllButton</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" >
+          <widget class="QLabel" name="label" >
+           <property name="text" >
+            <string>Tags</string>
+           </property>
+           <property name="buddy" >
+            <cstring>tagsCombo</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
           <widget class="QToolButton" name="fieldButton" >
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
@@ -162,28 +172,6 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item row="2" column="0" >
-          <widget class="QLabel" name="filtersCrumb" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
-             <horstretch>2</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="frameShape" >
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow" >
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="text" >
-            <string>TextLabel</string>
-           </property>
-           <property name="buddy" >
-            <cstring>viewAllButton</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1" >
           <widget class="QPushButton" name="viewAllButton" >
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
@@ -327,11 +315,11 @@ p, li { white-space: pre-wrap; }
         <string>Folders</string>
        </attribute>
        <layout class="QGridLayout" name="gLt_4" >
-        <property name="horizontalSpacing" >
-         <number>4</number>
-        </property>
         <property name="margin" >
          <number>2</number>
+        </property>
+        <property name="horizontalSpacing" >
+         <number>4</number>
         </property>
         <item row="0" column="0" >
          <widget class="QTreeView" name="folderView" />

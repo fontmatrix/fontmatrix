@@ -67,6 +67,7 @@ ListDockWidget::ListDockWidget()
 	// Folders tree
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
 	theDirModel = new QDirModel(ffilter, QDir::AllDirs | QDir::Files | QDir::Drives | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
+	theDirModel->setLazyChildCount(true);
 	folderView->setModel(theDirModel);
 	folderView->hideColumn(1);
 	folderView->hideColumn(2);
@@ -111,7 +112,7 @@ ListDockWidget::ListDockWidget()
 	for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
 	{
 		FMFontDb::InfoItem k(FontStrings::Names().keys()[gIdx]);
-		if(k !=  FMFontDb::AllInfo)
+		if((k !=  FMFontDb::AllInfo) && (k !=  FMFontDb::Panose) )
 		{
 			actn = new QAction(FontStrings::Names()[k], filterActGroup);
 			actn->setData( k );
@@ -135,7 +136,7 @@ ListDockWidget::ListDockWidget()
 
 	initTagCombo();
 	
-	connect( panoseButton, SIGNAL(clicked( bool )), this, SLOT(slotPanoseChecked(bool)));
+// 	connect( panoseButton, SIGNAL(clicked( bool )), this, SLOT(slotPanoseChecked(bool)));
 	
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
 	connect( searchString,SIGNAL(returnPressed()),this,SLOT(slotFeedTheCompleter()));
@@ -402,27 +403,27 @@ void ListDockWidget::slotTabChanged(int i)
 	}
 }
 
-void ListDockWidget::slotPanoseChecked(bool checked)
-{
-	if(checked)
-	{
-		tagsCombo->clear();
-		QMap< FontStrings::PanoseKey , QMap<int, QString> >::const_iterator cip;
-		QMap<int, QString>::const_iterator cip2;
-		for(cip = FontStrings::Panose().constBegin(); cip != FontStrings::Panose().constEnd(); ++cip)
-		{
-			for(cip2 = cip->constBegin() + 2 ;cip2 != cip->constEnd(); ++cip2)
-			{
-				tagsCombo->addItem(FontStrings::PanoseKeyName( cip.key() ) + "-" + cip2.value(), "TAG_IS_PANOSE");
-			}
-		}
-		
-	}
-	else
-	{
-		initTagCombo();
-	}
-}
+// void ListDockWidget::slotPanoseChecked(bool checked)
+// {
+// 	if(checked)
+// 	{
+// 		tagsCombo->clear();
+// 		QMap< FontStrings::PanoseKey , QMap<int, QString> >::const_iterator cip;
+// 		QMap<int, QString>::const_iterator cip2;
+// 		for(cip = FontStrings::Panose().constBegin(); cip != FontStrings::Panose().constEnd(); ++cip)
+// 		{
+// 			for(cip2 = cip->constBegin() + 2 ;cip2 != cip->constEnd(); ++cip2)
+// 			{
+// 				tagsCombo->addItem(FontStrings::PanoseKeyName( cip.key() ) + "-" + cip2.value(), "TAG_IS_PANOSE");
+// 			}
+// 		}
+// 		
+// 	}
+// 	else
+// 	{
+// 		initTagCombo();
+// 	}
+// }
 
 QString ListDockWidget::fieldString(const QString & f)
 {

@@ -194,7 +194,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
 	
 	connect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
-	connect (this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
+	connect ( this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
 
 	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 

@@ -114,6 +114,7 @@ namespace fontmatrix
 
 	void fillDockPos()
 	{
+		DockPosition["Float"] = Qt::LeftDockWidgetArea;
 		DockPosition["Left"] = Qt::LeftDockWidgetArea;
 		DockPosition["Right"]= Qt::RightDockWidgetArea;
 		DockPosition["Top"]= Qt::TopDockWidgetArea;
@@ -155,10 +156,18 @@ void typotek::initMatrix()
 	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
 	mainDock->setWidget ( ListDockWidget::getInstance() );
 	addDockWidget ( fontmatrix::DockPosition[mainDockArea], mainDock );
+	if(mainDockArea == QString("Float"))
+		mainDock->setFloating(true);
+	if(!mainDockGeometry.isNull())
+		mainDock->setGeometry(mainDockGeometry);
 	
 	tagsDock = new QDockWidget ( tr("Tags") );
 	tagsDock->setWidget( TagsWidget::getInstance() );
 	addDockWidget(fontmatrix::DockPosition[tagsDockArea], tagsDock);
+	if(tagsDockArea == QString("Float"))
+		tagsDock->setFloating(true);
+	if(!tagsDockGeometry.isNull())
+		tagsDock->setGeometry(tagsDockGeometry);
 
 
 	createActions();
@@ -718,8 +727,12 @@ void typotek::readSettings()
 	previewSize = settings.value("PreviewSize", 15.0).toDouble();
 	previewRTL = settings.value("PreviewRTL", false).toBool();
 	previewSubtitled = settings.value("PreviewSubtitled", false).toBool();
+	
 	mainDockArea = settings.value("ToolPos", "Left").toString();
 	tagsDockArea = settings.value("TagsPos", "Right").toString();
+	mainDockGeometry = settings.value("ToolGeometry", QRect()).toRect();
+	tagsDockGeometry = settings.value("TagsGeometry", QRect()).toRect();
+	
 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
 	
 	templatesDir = settings.value ( "TemplatesDir", "./").toString();
@@ -746,17 +759,29 @@ void typotek::readSettings()
 
 void typotek::writeSettings()
 {
-	QSettings settings ;
-	settings.setValue ( "pos", pos() );
-	settings.setValue ( "size", size() );
+	QSettings settings;
+	settings.setValue( "pos", pos() );
+	settings.setValue( "size", size() );
+	
+	if(mainDock->isFloating())
+		mainDockArea = "Float";
+	if(tagsDock->isFloating())
+		tagsDockArea = "Float";
+	mainDockGeometry = mainDock->geometry();
+	tagsDockGeometry = tagsDock->geometry();
 	settings.setValue( "ToolPos", mainDockArea );
 	settings.setValue( "TagsPos", tagsDockArea );
+	settings.setValue( "ToolGeometry", mainDockGeometry);
+	settings.setValue( "TagsGeometry", tagsDockGeometry);
+	
 	settings.setValue( "SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
-	settings.setValue("DatabaseDriver",databaseDriver);
-	settings.setValue("DatabaseHostname",databaseHostname);
-	settings.setValue("DatabaseDbName",databaseDbName);
-	settings.setValue("DatabaseUser",databaseUser);
-	settings.setValue("DatabasePassword",databasePassword);
+	
+	settings.setValue( "DatabaseDriver",databaseDriver);
+	settings.setValue( "DatabaseHostname",databaseHostname);
+	settings.setValue( "DatabaseDbName",databaseDbName);
+	settings.setValue( "DatabaseUser",databaseUser);
+	settings.setValue( "DatabasePassword",databasePassword);
+	
 	save();
 
 }

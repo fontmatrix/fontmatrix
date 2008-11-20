@@ -26,6 +26,7 @@ TagsWidget::TagsWidget(QWidget * parent)
 	
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
+	connect ( newTagName, SIGNAL(editingFinished() ), this, SLOT(slotNewTag()));
 }
 
 TagsWidget::~ TagsWidget()
@@ -49,10 +50,11 @@ void TagsWidget::slotSwitchCheckState(QListWidgetItem * item)
 
 void TagsWidget::slotNewTag()
 {
-	QString nTag;
+	QString nTag( newTagName->text() );
+	newTagName->clear();
 	bool ok;
-	nTag = QInputDialog::getText(this,"Fontmatrix",tr("Add new tag"),QLineEdit::Normal, QString() , &ok );
-	if ( !ok || nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ))
+// 	nTag = QInputDialog::getText(this,"Fontmatrix",tr("Add new tag"),QLineEdit::Normal, QString() , &ok );
+	if ( nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ))
 		return;
 
 	FMFontDb::DB()->addTagToDB( nTag );

@@ -107,7 +107,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void slotFeedTheCompleter();
 		void slotFolderViewContextMenu(const QPoint&);
 		void slotTabChanged(int i);
-		void slotPanoseChecked(bool checked);
+// 		void slotPanoseChecked(bool checked);
 		
 		void slotPreviewUpdateSize(int);
 		void slotPreviewSelected(const QModelIndex & index);

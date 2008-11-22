@@ -23,6 +23,9 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsItemGroup>
 #include <QFontMetricsF>
+#include <QSettings>
+#include <QVariant>
+#include <QColor>
 
 /**
 	DataSet
@@ -101,6 +104,7 @@ ParallelCoorView::ParallelCoorView(QWidget * parent)
 	}
 #endif
 	initPensAndBrushes();
+	doConnect();
 }
 
 ParallelCoorView::ParallelCoorView(ParallelCoorDataSet * dataset, QWidget * parent)
@@ -123,10 +127,11 @@ ParallelCoorView::ParallelCoorView(ParallelCoorDataSet * dataset, QWidget * pare
 	}
 #endif
 	initPensAndBrushes();
+	doConnect();
 }
 
 ParallelCoorView::~ParallelCoorView()
-{
+{	
 }
 
 void ParallelCoorView::selectField(const QString & field)
@@ -176,12 +181,12 @@ ParallelCoorView::Units::Units(int width, int height, int count)
 void ParallelCoorView::initPensAndBrushes()
 {
 	// bars
-	pens["bar"] = QPen(QColor(0,0,0,16), 6.0, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
-	pens["bar-hover"] = QPen(QColor(0,0,0,16), 6.0, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+	pens["bar"] = QPen(QColor(200,200,200), 6.0, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+	pens["bar-hover"] = QPen(QColor(160,160,160), 6.0, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
 	
 	// vertices
 	pens["vertice-filter"] = QPen(Qt::black, 1.0);
-	pens["vertice-unfilter"] = QPen(Qt::lightGray, 1.0);
+	pens["vertice-unfilter"] = QPen(QColor(200,200,200), 1.0);
 	
 	// marks
 	double size(0.5);
@@ -191,6 +196,19 @@ void ParallelCoorView::initPensAndBrushes()
 	
 	// debug
 	pens["debug-1"] = QPen(Qt::blue, 5.0);
+	
+	QString cat("Panose/color-%1");
+	QSettings settings;
+	foreach(QString attr, pens.keys())
+	{
+		pens[attr].setColor( QColor(settings.value(cat.arg(attr),pens[attr].color().name()).toString()) );
+		settings.setValue(cat.arg(attr),pens[attr].color().name());
+	}
+	foreach(QString attr, brushes.keys())
+	{
+		brushes[attr].setColor( QColor(settings.value(cat.arg(attr),brushes[attr].color().name()).toString()) );
+		settings.setValue(cat.arg(attr),pens[attr].color().name());
+	}
 }
 
 void ParallelCoorView::cleanLists(ItemList il)
@@ -311,15 +329,16 @@ void ParallelCoorView::drawVertices()
 				for(int vi(1);vi<pol.count();++vi)
 				{
 					bool f ( matchFilter ( m_dataSet->getData().at ( a ) ) );
-					QLineF lf(pol[vi-1],pol[vi]);
-					if(f ? (!cflines.contains(lf)) : (!culines.contains(lf)))
+// 					if(f)
 					{
-						vertices << scene()->addLine ( lf, f ? pens["vertice-filter"] : pens["vertice-unfilter"] );
-						vertices.last()->setZValue(f ? 100.0 : 1.0);
-						f ? (cflines << lf) : (culines << lf) ;
+						QLineF lf(pol[vi-1],pol[vi]);
+						if(f ? (!cflines.contains(lf)) : (!culines.contains(lf)))
+						{
+							vertices << scene()->addLine ( lf, f ? pens["vertice-filter"] : pens["vertice-unfilter"] );
+							vertices.last()->setZValue(f ? 100.0 : 1.0);
+							f ? (cflines << lf) : (culines << lf) ;
+						}
 					}
-// 					else
-// 						qDebug()<<"Cached Line"<<(f?cflines.indexOf(lf):culines.indexOf(lf)) ;
 				}
 			}
 		}
@@ -720,6 +739,28 @@ void ParallelCoorMarkItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 		value->click(2);
 	else
 		value->click();
+}
+
+void ParallelCoorView::slotSaveColors()
+{
+// 	qDebug()<<"ParallelCoorView::~ParallelCoorView()";
+// 	QString cat("Panose/%1");
+// 	QSettings settings;
+// 	foreach(QString attr, pens.keys())
+// 	{
+// 		qDebug()<<cat.arg(attr);
+// 		settings.setValue(cat.arg(attr),pens[attr].color() );
+// 	}
+// 	foreach(QString attr, brushes.keys())
+// 	{
+// 		qDebug()<<cat.arg(attr);
+// 		settings.setValue(cat.arg(attr),brushes[attr].color() );
+// 	}
+}
+
+void ParallelCoorView::doConnect()
+{
+// 	connect(this, SIGNAL(destroyed( QObject* )), this, SLOT(slotSaveColors()));
 }
 
 

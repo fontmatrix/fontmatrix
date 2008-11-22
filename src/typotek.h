@@ -89,7 +89,7 @@ class typotek:public QMainWindow
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );
-		void open(QStringList files);
+		void openList( QStringList files );
 		bool save();
 		void slotCloseToSystray(bool isEnabled);
 		void slotSystrayStart(bool isEnabled);

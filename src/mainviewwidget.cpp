@@ -156,7 +156,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 		shaperTypeCombo->addItem(sIt.key(), sIt.value());
 	}
 	
-	classSplitter->restoreState(settings.value("ClassificationSplitter").toByteArray());
+	classSplitter->restoreState(settings.value("WState/ClassificationSplitter").toByteArray());
 	slotShowClassification();
 	//CONNECT
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
@@ -2236,7 +2236,7 @@ void MainViewWidget::slotPanoseFilter()
 void MainViewWidget::slotSaveClassSplitter()
 {
 	QSettings settings;
-	settings.setValue("ClassificationSplitter", classSplitter->saveState());
+	settings.setValue("WState/ClassificationSplitter", classSplitter->saveState());
 }
 
 

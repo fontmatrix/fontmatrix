@@ -68,8 +68,8 @@ void PrefsPanelDialog::initSystrayPrefs ( bool hasSystray, bool isVisible, bool 
 	activateAllConfirmation->setChecked ( allConfirmation );
 	tagsConfirmation->setChecked ( tagConfirmation );
 	QSettings settings ;
-	closeToSystray->setChecked ( settings.value ( "SystrayCloseToTray", true ).toBool() );
-	startToSystemTray->setChecked ( settings.value ( "SystrayStartToTray", false ).toBool() );
+	closeToSystray->setChecked ( settings.value ( "Systray/CloseToTray", true ).toBool() );
+	startToSystemTray->setChecked ( settings.value ( "Systray/StartToTray", false ).toBool() );
 	previewSizeSpin->setValue ( typotek::getInstance()->getPreviewSize() );
 
 }
@@ -79,11 +79,11 @@ void PrefsPanelDialog::initSampleTextPrefs()
 	//At least fill the sampletext list :)
 	sampleTextNamesList->addItems ( typotek::getInstance()->namedSamplesNames() );
 	QSettings settings;
-	fontSizeSpin->setValue ( settings.value ( "SampleFontSize",14.0 ).toDouble() );
-	interLineSpin->setValue ( settings.value ( "SampleInterline",18.0 ).toDouble() );
-	dictEdit->setText ( settings.value ( "HyphenationDict", "" ).toString() );
-	leftBox->setValue ( settings.value ( "HyphLeft", 2 ).toInt() );
-	rightBox->setValue ( settings.value ( "HyphRight", 3 ).toInt() );
+	fontSizeSpin->setValue ( settings.value ( "Sample/FontSize",14.0 ).toDouble() );
+	interLineSpin->setValue ( settings.value ( "Sample/Interline",18.0 ).toDouble() );
+	dictEdit->setText ( settings.value ( "Sample/HyphenationDict", "" ).toString() );
+	leftBox->setValue ( settings.value ( "Sample/HyphLeft", 2 ).toInt() );
+	rightBox->setValue ( settings.value ( "Sample/HyphRight", 3 ).toInt() );
 }
 
 void PrefsPanelDialog::initFilesAndFolders()
@@ -179,19 +179,19 @@ void PrefsPanelDialog::applySampleText()
 	QSettings s;
 	if ( hyphenator->loadDict ( dictEdit->text(), leftBox->value(), rightBox->value() ) )
 	{
-		s.setValue ( "HyphenationDict", dictEdit->text() );
-		s.setValue ( "HyphLeft", leftBox->value() );
-		s.setValue ( "HyphRight", rightBox->value() );
+		s.setValue ( "Sample/HyphenationDict", dictEdit->text() );
+		s.setValue ( "Sample/HyphLeft", leftBox->value() );
+		s.setValue ( "Sample/HyphRight", rightBox->value() );
 
 	}
 	else   // use the previous values
 	{
-		dictEdit->setText ( s.value ( "HyphenationDict", "" ).toString() );
-		leftBox->setValue ( s.value ( "HyphLeft", 2 ).toInt() );
-		rightBox->setValue ( s.value ( "HyphRight", 3 ).toInt() );
-		s.setValue ( "HyphenationDict", "" );
-		s.setValue ( "HyphLeft", 2 );
-		s.setValue ( "HyphRight", 3 );
+		dictEdit->setText ( s.value ( "Sample/HyphenationDict", "" ).toString() );
+		leftBox->setValue ( s.value ( "Sample/HyphLeft", 2 ).toInt() );
+		rightBox->setValue ( s.value ( "Sample/HyphRight", 3 ).toInt() );
+		s.setValue ( "Sample/HyphenationDict", "" );
+		s.setValue ( "Sample/HyphLeft", 2 );
+		s.setValue ( "Sample/HyphRight", 3 );
 	}
 }
 
@@ -282,7 +282,7 @@ void PrefsPanelDialog::updateWordSize ( double d )
 {
 
 	QSettings settings;
-	settings.setValue ( "PreviewSize", d );
+	settings.setValue ( "Preview/Size", d );
 	typotek::getInstance()->setPreviewSize ( d );
 	typotek::getInstance()->setWord ( previewWord->text(), true );
 }
@@ -292,7 +292,7 @@ void PrefsPanelDialog::updateWordRTL ( int rtl )
 {
 	bool booleanState = ( rtl == Qt::Checked ) ? true : false;
 	QSettings settings;
-	settings.setValue ( "PreviewRTL", booleanState );
+	settings.setValue ( "Preview/RTL", booleanState );
 	typotek::getInstance()->setPreviewRTL ( booleanState );
 }
 
@@ -300,7 +300,7 @@ void PrefsPanelDialog::updateWordSubtitled(int sub )
 {
 	bool booleanState = ( sub == Qt::Checked ) ? true : false;
 	QSettings settings;
-	settings.setValue ( "PreviewSubtitled", booleanState );
+	settings.setValue ( "Preview/Subtitled", booleanState );
 	typotek::getInstance()->setPreviewSubtitled ( booleanState );
 }
 

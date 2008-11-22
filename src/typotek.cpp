@@ -180,29 +180,26 @@ void typotek::initMatrix()
 	if(!hyphenator)
 	{
 		QSettings st;
-		QString dP( st.value("HyphenationDict", "hyph.dic").toString() );
+		QString dP( st.value("Sample/HyphenationDict", "hyph.dic").toString() );
 		if(QFileInfo(dP).exists())
 		{
 			hyphenator = new FMHyphenator();
-			if (!hyphenator->loadDict(dP, st.value("HyphLeft", 2).toInt(), st.value("HyphRight", 3).toInt())) {
-				st.setValue("HyphenationDict", "");
-				st.setValue("HyphLeft", 2);
-				st.setValue("HyphRight", 3);
+			if (!hyphenator->loadDict(dP, st.value("Sample/HyphLeft", 2).toInt(), st.value("Sample/HyphRight", 3).toInt())) {
+				st.setValue("Sample/HyphenationDict", "");
+				st.setValue("Sample/HyphLeft", 2);
+				st.setValue("Sample/HyphRight", 3);
 			}
 		}
 		else
 		{
 			hyphenator = new FMHyphenator(); // init the hyphenator anyway for the prefs
-			st.setValue("HyphenationDict", "");
-			st.setValue("HyphLeft", 2);
-			st.setValue("HyphRight", 3);
+			st.setValue("Sample/HyphenationDict", "");
+			st.setValue("Sample/HyphLeft", 2);
+			st.setValue("Sample/HyphRight", 3);
 			qDebug()<<"Err H"<<dP;
 		}
 	}
 }
-
-
-
 
 void typotek::doConnect()
 {
@@ -217,22 +214,21 @@ void typotek::doConnect()
 
 }
 
-
 void typotek::closeEvent ( QCloseEvent *event )
 {
 	QSettings settings ;
 	if ( systray )
 	{
-		if ( systray->isVisible() && settings.value ( "SystrayCloseToTray", true ).toBool() )
+		if ( systray->isVisible() && settings.value ( "Systray/CloseToTray", true ).toBool() )
 		{
-			if ( !settings.value ( "SystrayCloseNoteShown", false ).toBool() )
+			if ( !settings.value ( "Systray/CloseNoteShown", false ).toBool() )
 			{
 				QMessageBox::information ( this, tr ( "Fontmatrix" ),
 				                           tr ( "The program will keep running in the "
 				                                "system tray. To terminate the program, "
 				                                "choose <b>Exit</b> in the context menu "
 				                                "of the system tray entry." ) );
-				settings.setValue ( "SystrayCloseNoteShown", true );
+				settings.setValue ( "Systray/CloseNoteShown", true );
 			}
 			hide();
 			event->ignore();
@@ -245,7 +241,6 @@ void typotek::closeEvent ( QCloseEvent *event )
 	event->accept();
 	
 }
-
 
 /// IMPORT
 // if announce == true user will be shown a dialog of imported fonts
@@ -316,9 +311,6 @@ void typotek::open(QString path, bool announce, bool collect)
 		shouldAskTali = false;
 	}
 
-
-
-	FMFontDb::DB()->TransactionBegin();
 	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
 	bool showProgress = pathList.count() > 1;
 	if (showProgress) { // show progress bar only if there's more than one font
@@ -327,6 +319,7 @@ void typotek::open(QString path, bool announce, bool collect)
 		progress.setValue ( 0 );
 		progress.show();
 	}
+	FMFontDb::DB()->TransactionBegin();
 	QString importstring ( tr ( "Import" ) +  " %1" );
 	FMFontDb *DB(FMFontDb::DB());
 	for ( int i = 0 ; i < pathList.count(); ++i )
@@ -364,9 +357,9 @@ void typotek::open(QString path, bool announce, bool collect)
 		}
 	}
 
+	FMFontDb::DB()->TransactionEnd();
 	progress.close();
 
-	FMFontDb::DB()->TransactionEnd();
 	if (announce) {
 		if (showFontListDialog) {
 			// The User needs and deserves to know what fonts hve been imported
@@ -384,7 +377,7 @@ void typotek::open(QString path, bool announce, bool collect)
 
 }
 
-void typotek::open ( QStringList files )
+void typotek::openList ( QStringList files )
 {
 	QStringList pathList = files;
 	QStringList nameList;
@@ -455,7 +448,6 @@ void typotek::open ( QStringList files )
 
 }
 
-
 /// EXPORT
 void typotek::slotExportFontSet()
 {
@@ -488,14 +480,11 @@ bool typotek::save()
 
 }
 
-
 void typotek::about()
 {
 	AboutWidget aabout(this);
 	aabout.exec();
 }
-
-
 
 void typotek::createActions()
 {
@@ -699,7 +688,6 @@ void typotek::createMenus()
 
 }
 
-
 void typotek::createStatusBar()
 {
 	statusBar()->showMessage ( tr ( "Ready" ) );
@@ -720,42 +708,42 @@ void typotek::readSettings()
 {
 	relayStartingStepIn(tr("Load settings"));
 	QSettings settings;
-	QPoint pos = settings.value ( "pos", QPoint ( 200, 200 ) ).toPoint();
-	QSize size = settings.value ( "size", QSize ( 400, 400 ) ).toSize();
+	QPoint pos = settings.value ( "WState/pos", QPoint ( 200, 200 ) ).toPoint();
+	QSize size = settings.value ( "WState/size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
 	move ( pos );
 	
 	fonteditorPath = settings.value ( "FontEditor", "/usr/bin/fontforge" ).toString();
 	useInitialTags = settings.value ( "UseInitialTags", false ).toBool();
 	showFontListDialog = settings.value("ShowImportedFonts", true).toBool();
-	previewSize = settings.value("PreviewSize", 15.0).toDouble();
-	previewRTL = settings.value("PreviewRTL", false).toBool();
-	previewSubtitled = settings.value("PreviewSubtitled", false).toBool();
+	previewSize = settings.value("Preview/Size", 15.0).toDouble();
+	previewRTL = settings.value("Preview/RTL", false).toBool();
+	previewSubtitled = settings.value("Preview/Subtitled", false).toBool();
 	
-	mainDockArea = settings.value("ToolPos", "Left").toString();
-	tagsDockArea = settings.value("TagsPos", "Right").toString();
-	mainDockGeometry = settings.value("ToolGeometry", QRect()).toRect();
-	tagsDockGeometry = settings.value("TagsGeometry", QRect()).toRect();
+	mainDockArea = settings.value("Docks/ToolPos", "Left").toString();
+	tagsDockArea = settings.value("Docks/TagsPos", "Right").toString();
+	mainDockGeometry = settings.value("Docks/ToolGeometry", QRect()).toRect();
+	tagsDockGeometry = settings.value("Docks/TagsGeometry", QRect()).toRect();
 	
 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
 	
-	templatesDir = settings.value ( "TemplatesDir", "./").toString();
-	m_welcomeURL = settings.value("WelcomeURL").toString();
-	m_remoteTmpDir = settings.value("RemoteTmpDir", QDir::tempPath()).toString();
+	templatesDir = settings.value ( "Places/TemplatesDir", "./").toString();
+	m_welcomeURL = settings.value("Places/WelcomeURL").toString();
+	m_remoteTmpDir = settings.value("Places/RemoteTmpDir", QDir::tempPath()).toString();
 	
-	defaultOTFScript = settings.value("OTFScript").toString();
-	defaultOTFLang = settings.value("OTFLang").toString();
-	defaultOTFGPOS = settings.value("OTFGPOS").toString().split(";",QString::SkipEmptyParts);
-	defaultOTFGSUB = settings.value("OTFGSUB").toString().split(";",QString::SkipEmptyParts);
+	defaultOTFScript = settings.value("OTF/Script").toString();
+	defaultOTFLang = settings.value("OTF/Lang").toString();
+	defaultOTFGPOS = settings.value("OTF/GPOS").toString().split(";",QString::SkipEmptyParts);
+	defaultOTFGSUB = settings.value("OTF/GSUB").toString().split(";",QString::SkipEmptyParts);
 	chartInfoFontSize = settings.value("ChartInfoFontSize", 8).toInt();
 	chartInfoFontName = settings.value("ChartInfoFontFamily", QFont().family() ).toString();
 	
 	
-	databaseDriver = settings.value("DatabaseDriver","QSQLITE").toString();
-	databaseHostname = settings.value("DatabaseHostname","").toString();
-	databaseDbName = settings.value("DatabaseDbName", ownDir.absolutePath()+ QDir::separator() + "Data.sql").toString();
-	databaseUser = settings.value("DatabaseUser","").toString();
-	databasePassword = settings.value("DatabasePassword","").toString();
+	databaseDriver = settings.value("Database/Driver","QSQLITE").toString();
+	databaseHostname = settings.value("Database/Hostname","").toString();
+	databaseDbName = settings.value("Database/DbName", ownDir.absolutePath()+ QDir::separator() + "Data.sql").toString();
+	databaseUser = settings.value("Database/User","").toString();
+	databasePassword = settings.value("Database/Password","").toString();
 	if( !QSqlDatabase::drivers().contains(databaseDriver) )
 		qDebug()<<"The SQL driver you request is not available("<< databaseDriver <<")";
 	
@@ -764,8 +752,8 @@ void typotek::readSettings()
 void typotek::writeSettings()
 {
 	QSettings settings;
-	settings.setValue( "pos", pos() );
-	settings.setValue( "size", size() );
+	settings.setValue( "WState/pos", pos() );
+	settings.setValue( "WState/size", size() );
 	
 	if(mainDock->isFloating())
 		mainDockArea = "Float";
@@ -773,18 +761,18 @@ void typotek::writeSettings()
 		tagsDockArea = "Float";
 	mainDockGeometry = mainDock->geometry();
 	tagsDockGeometry = tagsDock->geometry();
-	settings.setValue( "ToolPos", mainDockArea );
-	settings.setValue( "TagsPos", tagsDockArea );
-	settings.setValue( "ToolGeometry", mainDockGeometry);
-	settings.setValue( "TagsGeometry", tagsDockGeometry);
+	settings.setValue( "Docks/ToolPos", mainDockArea );
+	settings.setValue( "Docks/TagsPos", tagsDockArea );
+	settings.setValue( "Docks/ToolGeometry", mainDockGeometry);
+	settings.setValue( "Docks/TagsGeometry", tagsDockGeometry);
 	
-	settings.setValue( "SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
+	settings.setValue( "WState/SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
 	
-	settings.setValue( "DatabaseDriver",databaseDriver);
-	settings.setValue( "DatabaseHostname",databaseHostname);
-	settings.setValue( "DatabaseDbName",databaseDbName);
-	settings.setValue( "DatabaseUser",databaseUser);
-	settings.setValue( "DatabasePassword",databasePassword);
+	settings.setValue( "Database/Driver",databaseDriver);
+	settings.setValue( "Database/Hostname",databaseHostname);
+	settings.setValue( "Database/DbName",databaseDbName);
+	settings.setValue( "Database/User",databaseUser);
+	settings.setValue( "Database/Password",databasePassword);
 	
 	save();
 
@@ -1083,119 +1071,6 @@ void typotek::slotRemoteIsReady()
 // 	qDebug()<<"END OF slotRemoteIsReady()";
 }
 
-
-
-// QList< FontItem * > typotek::getFonts ( QString pattern, QString field , bool mark)
-// {
-// 
-// 	if ( pattern.isEmpty() )
-// 	{
-// 		if(mark)
-// 			theMainView->resetCrumb();
-// 		return fontMap;
-// 	}
-// 
-// 	bool negate ( false );
-// 	QString rPattern ( pattern );
-// 	if ( pattern.startsWith ( "!" ) )
-// 	{
-// 		negate = true;
-// 		rPattern = pattern.mid ( 1 );
-// 	}
-// 
-// 	QList< FontItem * > ret;
-// 	ret.clear();
-// 	QList< FontItem * > superSet ( theMainView->curFonts() ) ;
-// 
-// 	if ( superSet.isEmpty() )
-// 	{
-// 		if(mark)
-// 			theMainView->resetCrumb();
-// 		superSet = fontMap;
-// 	}
-// 
-// 	if(mark)
-// 		theMainView->addFilterToCrumb ( pattern );
-// 	int superSetCount ( superSet.count() );
-// 
-// 	qDebug() <<"PATERN ="<< rPattern<<": FIELD ="<< field<<":"<< superSetCount;
-// 
-// 	if ( field == "tag" )
-// 	{
-// 		for ( int i =0; i < superSetCount; ++i )
-// 		{
-// 			if ( superSet[i]->tags().contains ( rPattern ) )
-// 			{
-// // 				qDebug()<< "TAG MATCH"<<superSet[i]->family();
-// 				ret.append ( superSet[i] );
-// 			}
-// 		}
-// 	}
-// 	else if( field.startsWith("Panose/") )
-// 	{
-// 		QString sf(field.mid(7));
-// 		qDebug()<<"PANOSE"<< sf<< rPattern;
-// 		for ( int i =0; i < superSetCount; ++i )
-// 		{
-// 			if ( superSet[i]->panose(sf) == rPattern )
-// 			{
-// 				ret.append ( superSet[i] );
-// 			}
-// 		}
-// 	}
-// 	else if(field == tr ( "Unicode character" ))
-// 	{
-// 		/// WARNING - Unicode fields does not support negation.
-// 		int startC(0xFFFFFFFF);
-// 		int endC(0);
-// 		int patCount(rPattern.count());
-// 		for(int a(0); a < patCount; ++a)
-// 		{
-// 			unsigned int ca(rPattern[a].unicode());
-// 			if( ca < startC)
-// 				startC = ca;
-// 			if(ca > endC)
-// 				endC = ca;
-// 		}
-// 		for ( int i =0; i < superSetCount; ++i )
-// 		{
-// 			int cc(superSet[i]->countCoverage ( startC, endC ) );
-// 			if ( cc >= patCount )
-// 			{
-// 				qDebug()<<"U U+ fam r"<< startC<< endC<<superSet[i]->family()<<cc;
-// 				ret.append ( superSet[i] );
-// 			}
-// 		}
-// 	}
-// 	else if ( field == tr ( "All fields" ) )
-// 	{
-// 		for ( int i =0; i < superSetCount; ++i )
-// 		{
-// 			if ( negate ?
-// 			        ( !superSet[i]->infoText().contains ( rPattern,Qt::CaseInsensitive ) ) :
-// 						  ( superSet[i]->infoText().contains (rPattern,Qt::CaseInsensitive ) ) )
-// 			{
-// 				ret.append ( superSet[i] );
-// 			}
-// 		}
-// 	}
-// 	else
-// 	{
-// 		for ( int i =0; i < superSetCount; ++i )
-// 		{
-// 			if ( negate ?
-// 			        ( !superSet[i]->value ( field ).contains ( rPattern , Qt::CaseInsensitive ) ) :
-// 						  ( superSet[i]->value ( field ).contains ( rPattern , Qt::CaseInsensitive ) ) )
-// 			{
-// 				ret.append ( superSet[i] );
-// 			}
-// 		}
-// 	}
-// 
-// 	qDebug() <<"RET"<< ret.count();
-// 	return ret;
-// }
-
 void typotek::resetFilter()
 {
 	theMainView->resetCrumb();
@@ -1212,13 +1087,6 @@ QList<FontItem*> typotek::getCurrentFonts()
 {
 	return theMainView->curFonts();
 }
-
-// void typotek::popupTagsetEditor()
-// {
-// 	TagSetEditor ed(this);
-// 	ed.exec();
-// 	ListDockWidget::getInstance()->reloadTagsCombo();
-// }
 
 void typotek::keyPressEvent ( QKeyEvent * event )
 {
@@ -1261,28 +1129,6 @@ void typotek::helpEnd()
 
 	theHelp->deleteLater();
 }
-
-
-// FontItem* typotek::getFont ( QString s )
-// {
-// 	if ( realFontMap.contains ( s ) )
-// 	{
-// 		return realFontMap.value ( s );
-// 	}
-// 	return 0;
-// }
-
-// FontItem* typotek::getFont ( int i )
-// {
-// 	if ( i < fontMap.count() && i >= 0 )
-// 	{
-// 		return fontMap.at ( i );
-// 	}
-// 	else
-// 	{
-// 		return 0;
-// 	}
-// }
 
 void typotek::slotEditFont()
 {
@@ -1373,7 +1219,7 @@ void typotek::dropEvent ( QDropEvent * event )
 
 // 	qDebug() << ret.join("||");
 	if ( ret.count() )
-		open ( ret );
+		openList( ret );
 
 }
 
@@ -1391,7 +1237,6 @@ void typotek::dragEnterEvent ( QDragEnterEvent * event )
 		statusBar()->showMessage ( tr ( "You bring something over me I can’t handle" ), 2000 );
 	}
 }
-
 
 void typotek::slotPrefsPanel(PrefsPanelDialog::PAGE page)
 {
@@ -1417,7 +1262,6 @@ void typotek::slotPrefsPanelDefault()
 {
 	slotPrefsPanel(PrefsPanelDialog::PAGE_GENERAL);
 }
-
 
 void typotek::forwardUpdateView()
 {
@@ -1470,14 +1314,14 @@ void typotek::systrayTagsConfirmation ( bool isEnabled )
 void typotek::slotCloseToSystray ( bool isEnabled )
 {
 	QSettings settings ;
-	settings.setValue ( "SystrayCloseToTray", isEnabled );
-	settings.setValue ( "SystrayCloseNoteShown", false );
+	settings.setValue ( "Systray/CloseToTray", isEnabled );
+	settings.setValue ( "Systray/CloseNoteShown", false );
 }
 
 void typotek::slotSystrayStart( bool isEnabled )
 {
 	QSettings settings ;
-	settings.setValue ( "SystrayStartToTray", isEnabled );
+	settings.setValue ( "Systray/StartToTray", isEnabled );
 }
 
 void typotek::addNamedSampleFragment ( QString name, QString sampleFragment )
@@ -1490,7 +1334,6 @@ void typotek::addNamedSampleFragment ( QString name, QString sampleFragment )
 	m_namedSamples[name] = lines.join ( "\n" );
 }
 
-
 QString typotek::namedSample ( QString name )
 {
 	if ( name.isEmpty() )
@@ -1502,7 +1345,6 @@ void typotek::setSampleText ( QString s )
 {
 	m_namedSamples[defaultSampleName()] += s;
 }
-
 
 void typotek::changeSample ( QString name, QString text )
 {
@@ -1591,15 +1433,15 @@ void typotek::setTemplatesDir(const QString & dir)
 {
 	templatesDir = dir;
 	QSettings settings;
-	settings.setValue("TemplatesDir", templatesDir);
+	settings.setValue("Places/TemplatesDir", templatesDir);
 
 }
 
 void typotek::changeFontSizeSettings(double fSize, double lSize)
 {
 	QSettings settings;
-	settings.setValue("SampleFontSize", fSize);
-	settings.setValue("SampleInterline", lSize);
+	settings.setValue("Sample/FontSize", fSize);
+	settings.setValue("Sample/Interline", lSize);
 	theMainView->reSize(fSize,lSize);
 }
 
@@ -1643,7 +1485,7 @@ void typotek::setRemoteTmpDir(const QString & s)
 		m_remoteTmpDir = s;
 
 	QSettings settings;
-	settings.setValue("RemoteTmpDir", m_remoteTmpDir);
+	settings.setValue("Places/RemoteTmpDir", m_remoteTmpDir);
 }
 
 void typotek::slotRepair()
@@ -1978,7 +1820,6 @@ void typotek::slotTagsDockAreaChanged(Qt::DockWidgetArea area)
 		tagsDockArea = "Bottom";
 }
 
-
 FMHyphenator* typotek::getHyphenator() const
 {
 	return hyphenator;
@@ -2009,71 +1850,63 @@ void typotek::slotUpdateLayOptStatus()
 	}
 }
 
-
 QString typotek::getDefaultOTFScript() const
 {
 	return defaultOTFScript;
 }
-
 
 void typotek::setDefaultOTFScript ( const QString& theValue )
 {
 	if(theValue != defaultOTFScript)
 	{
 		QSettings st;
-		st.setValue("OTFScript" , theValue);
+		st.setValue("OTF/Script" , theValue);
 	}
 	defaultOTFScript = theValue;
 
 }
-
 
 QString typotek::getDefaultOTFLang() const
 {
 	return defaultOTFLang;
 }
 
-
 void typotek::setDefaultOTFLang ( const QString& theValue )
 {
 	if(theValue != defaultOTFLang)
 	{
 		QSettings st;
-		st.setValue("OTFLang" , theValue);
+		st.setValue("OTF/Lang" , theValue);
 	}
 	defaultOTFLang = theValue;
 }
-
 
 QStringList typotek::getDefaultOTFGPOS() const
 {
 	return defaultOTFGPOS;
 }
 
-
 void typotek::setDefaultOTFGPOS ( const QStringList& theValue )
 {
 	if(theValue != defaultOTFGPOS)
 	{
 		QSettings st;
-		st.setValue("OTFGPOS" , theValue.join(";"));
+		st.setValue("OTF/GPOS" , theValue.join(";"));
 	}
 	defaultOTFGPOS = theValue;
 }
-
 
 QStringList typotek::getDefaultOTFGSUB() const
 {
 	return defaultOTFGSUB;
 }
 
-
 void typotek::setDefaultOTFGSUB ( const QStringList& theValue )
 {
 	if(theValue != defaultOTFGSUB)
 	{
 		QSettings st;
-		st.setValue("OTFGSUB" , theValue.join(";"));
+		st.setValue("OTF/GSUB" , theValue.join(";"));
 	}
 	defaultOTFGSUB = theValue;
 }

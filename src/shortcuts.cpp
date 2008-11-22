@@ -55,7 +55,7 @@ QList<QAction*> Shortcuts::getActions()
 
 QString Shortcuts::settingsKey(QAction *action)
 {
-	return QString("ActionShortcut-%1").arg(cleanName(action));
+	return QString("ActionShortcut/%1").arg(cleanName(action));
 }
 
 QString Shortcuts::cleanName(QAction *action)

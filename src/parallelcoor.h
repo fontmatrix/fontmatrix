@@ -172,6 +172,7 @@ class ParallelCoorView : public QGraphicsView
 		void filterChanged();
 
 	private:
+		void doConnect();
 		// At some point the dataset will send signals
 		// when data is updated. Thus, beeing a descendant of
 		// QObject, it will "inherit" the Q_DISABLE_COPY macro.
@@ -217,6 +218,9 @@ class ParallelCoorView : public QGraphicsView
 		void drawVertices();
 		void drawFields();
 		void drawValues();
+		
+	private slots:
+		void slotSaveColors();
 		
 	public:
 		static QMap<QString, QPen> pens;

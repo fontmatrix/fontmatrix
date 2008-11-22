@@ -40,13 +40,13 @@ Systray::Systray()
 
 	settings = new QSettings;
 
-	showAllConfirmation = settings->value("SystrayAllConfirmation", true).toBool();
-	showTagsConfirmation = settings->value("SystrayTagsConfirmation", false).toBool();
+	showAllConfirmation = settings->value("Systray/AllConfirmation", true).toBool();
+	showTagsConfirmation = settings->value("Systray/TagsConfirmation", false).toBool();
 
-	slotSetActivateAll(settings->value("SystrayActivateAllVisible", false).toBool());
+	slotSetActivateAll(settings->value("Systray/ActivateAllVisible", false).toBool());
 
 	trayIcon->setIcon(QIcon(":/fontmatrix_systray_icon.png"));
-	if (settings->value("SystrayVisible", false).toBool())
+	if (settings->value("Systray/Visible", false).toBool())
 		trayIcon->show();
 	else
 		trayIcon->hide();
@@ -64,14 +64,14 @@ void Systray::slotSetVisible(bool isVisible)
 	else
 		trayIcon->hide();
 
-	settings->setValue("SystrayVisible", isVisible);
+	settings->setValue("Systray/Visible", isVisible);
 }
 
 void Systray::slotSetActivateAll(bool isVisible)
 {
 	activateAllAction->setVisible(isVisible);
 	deactivateAllAction->setVisible(isVisible);
-	settings->setValue("SystrayActivateAllVisible", isVisible);
+	settings->setValue("Systray/ActivateAllVisible", isVisible);
 }
 
 void Systray::show()
@@ -314,13 +314,13 @@ bool Systray::tagsConfirmation()
 void Systray::requireAllConfirmation(bool doRequire)
 {
 	showAllConfirmation = doRequire;
-	settings->setValue("SystrayAllConfirmation", doRequire);
+	settings->setValue("Systray/AllConfirmation", doRequire);
 }
 
 void Systray::requireTagsConfirmation(bool doRequire)
 {
 	showTagsConfirmation = doRequire;
-	settings->setValue("SystrayTagsConfirmation", doRequire);
+	settings->setValue("Systray/TagsConfirmation", doRequire);
 }
 
 void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)

@@ -85,7 +85,7 @@ void FmRepair::fillActNotLinked()
 	QStringList activated;
 	for(int i(0); i < flist.count();++i)
 	{
-		if(!flist[i]->isLocked() && flist[i]->isActivated())
+		if(/*!flist[i]->isLocked() && */flist[i]->isActivated())
 			activated << flist[i]->path();
 	}
 	
@@ -133,7 +133,7 @@ void FmRepair::fillDeactLinked()
 	QStringList deactivated;
 	for(int i(0); i < flist.count();++i)
 	{
-		if(!flist[i]->isLocked() && !flist[i]->isRemote() && !flist[i]->isActivated())
+		if(/*!flist[i]->isLocked() &&*/ !flist[i]->isRemote() && !flist[i]->isActivated())
 			deactivated << flist[i]->path();
 	}
 	qDebug() << deactivated.join("\nDEACT : ");

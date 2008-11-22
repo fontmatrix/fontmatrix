@@ -33,6 +33,14 @@ class FMActivate : public QObject
 		
 	signals:
 		void activationEvent(QString);
+		
+	private:
+		/*
+		Add and Remove fonts in ~/.fonts.conf
+		with <selecfont><rejectfont><glob> sequence
+		*/
+		bool addFcReject(const QString& path);
+		bool remFcReject(const QString& path);
 	
 };
 

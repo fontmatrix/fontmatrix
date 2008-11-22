@@ -340,13 +340,14 @@ void MainViewWidget::fillTree()
 				FontItem *fPointer = fit.value();
 				orderedCurrentFonts << fPointer;
 				QString var( fit.key() );
-
+				if(typo->isSysFont(fit.value()))
+					var+="*";
 				QTreeWidgetItem *entry = new QTreeWidgetItem ( ord );
 				entry->setText ( 0,  var );
 // 				entry->setText ( 1, fPointer->path() );
 				entry->setToolTip( 0, fPointer->path() );
 				entry->setData ( 0, 100, "fontfile" );
-				if(fPointer->isLocked() || fPointer->isRemote() )
+				if(/*fPointer->isLocked() ||*/ fPointer->isRemote() )
 				{
 					entry->setFlags(Qt::ItemIsSelectable);
 				}
@@ -643,7 +644,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 		bool wantActivate = (item->checkState(0) == Qt::Checked) ? true : false;
 // 		m_lists->previewList->slotSelect(fontname);
 		slotFontSelectedByName(fontname);
-		if ( !theVeryFont->isLocked() )
+// 		if ( !theVeryFont->isLocked() )
 		{
 			if(theVeryFont->isActivated())
 			{

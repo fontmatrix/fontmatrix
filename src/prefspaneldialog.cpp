@@ -35,7 +35,7 @@ PrefsPanelDialog::PrefsPanelDialog ( QWidget *parent )
 	previewSubtitled->setChecked ( typotek::getInstance()->getPreviewSubtitled() );
 	initTagBox->setChecked ( typotek::getInstance()->initialTags() );
 	showNamesBox->setChecked ( typotek::getInstance()->showImportedFonts() );
-	familyNameScheme->setChecked ( !typotek::getInstance()->familySchemeFreetype() );
+// 	familyNameScheme->setChecked ( !typotek::getInstance()->familySchemeFreetype() );
 
 	chartFontCombo->setCurrentFont ( QFont(typotek::getInstance()->getChartInfoFontName()) );
 	chartFontSpin->setValue( typotek::getInstance()->getChartInfoFontSize() );
@@ -150,7 +150,7 @@ void PrefsPanelDialog::doConnect()
 	connect ( fontEditorBrowse, SIGNAL ( clicked() ), this, SLOT ( slotFontEditorBrowse() ) );
 
 	connect ( initTagBox, SIGNAL ( clicked ( bool ) ), typotek::getInstance(), SLOT ( slotUseInitialTags ( bool ) ) );
-	connect ( familyNameScheme,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotFamilyNotPreferred ( bool ) ) );
+// 	connect ( familyNameScheme,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotFamilyNotPreferred ( bool ) ) );
 	connect ( splashCheck,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotSplashScreen ( bool ) ) );
 
 	connect ( templatesDirBrowse,SIGNAL ( clicked( ) ),this, SLOT ( slotTemplatesBrowse() ) );
@@ -640,13 +640,13 @@ void PrefsPanelDialog::setSelected ( const QString &actionText )
 }
 
 
-void PrefsPanelDialog::slotFamilyNotPreferred ( bool state )
-{
-	qDebug() <<"slotFamilyNotPreferred("<< state <<")";
-	QSettings settings;
-	settings.setValue ( "FamilyPreferred", state );
-	typotek::getInstance()->setFamilySchemeFreetype ( !state );
-}
+// void PrefsPanelDialog::slotFamilyNotPreferred ( bool state )
+// {
+// 	qDebug() <<"slotFamilyNotPreferred("<< state <<")";
+// 	QSettings settings;
+// 	settings.setValue ( "FamilyPreferred", !state );
+// 	typotek::getInstance()->setFamilySchemeFreetype ( !state );
+// }
 
 void PrefsPanelDialog::slotSplashScreen ( bool state )
 {

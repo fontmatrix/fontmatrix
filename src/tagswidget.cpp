@@ -122,14 +122,14 @@ void TagsWidget::prepare ( QList< FontItem * > fonts )
 	theTaggedFonts = fonts;
 
 	bool readOnly ( false );
-	for ( int i ( 0 ); i < theTaggedFonts.count() ; ++i )
-	{
-		if ( theTaggedFonts[i]->isLocked() )
-		{
-			readOnly = true;
-			break;
-		}
-	}
+// 	for ( int i ( 0 ); i < theTaggedFonts.count() ; ++i )
+// 	{
+// 		if ( theTaggedFonts[i]->isLocked() )
+// 		{
+// 			readOnly = true;
+// 			break;
+// 		}
+// 	}
 	tagsListWidget->clear();
 	QString tot;
 	for ( int i=0;i<theTaggedFonts.count();++i )

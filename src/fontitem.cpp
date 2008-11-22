@@ -575,16 +575,16 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 		moreInfo_type1();
 
 	m_type = FT_Get_X11_Font_Format ( m_face ); 
-	if ( typotek::getInstance()->familySchemeFreetype() || !m_isOpenType )
+// 	if ( typotek::getInstance()->familySchemeFreetype() || !m_isOpenType )
 	{
 		m_family = m_face->family_name;
 		m_variant = m_face->style_name;
 	}
-	else
-	{
-		m_family = getAlternateFamilyName();
-		m_variant = getAlternateVariantName();
-	}
+// 	else
+// 	{
+// 		m_family = getAlternateFamilyName();
+// 		m_variant = getAlternateVariantName();
+// 	}
 	m_numGlyphs = m_face->num_glyphs;
 	m_numFaces = m_face->num_faces;
 
@@ -594,7 +594,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 // 	}
 
 
-	m_lock = false;
+// 	m_lock = false;
 	pixList.clear();
 	sceneList.clear();
 
@@ -626,7 +626,7 @@ FontItem::FontItem(QString path, QString family, QString variant, QString type,b
 	renderReturnWidth = false;
 	unitPerEm = 0;
 	m_FTHintMode = 0;
-	m_lock = false;
+// 	m_lock = false;
 	allIsRendered = false;
 	isUpToDate = false;
 	
@@ -3571,7 +3571,7 @@ void FontItem::trimSpacesIndex()
 
 QString FontItem::activationName()
 {
-	if ( m_remote || m_lock )
+	if ( m_remote /*|| m_lock*/ )
 		return QString();
 
 	QFileInfo fi ( m_path );
@@ -3581,7 +3581,7 @@ QString FontItem::activationName()
 
 QString FontItem::activationAFMName()
 {
-	if ( m_remote || m_lock )
+	if ( m_remote /*|| m_lock*/ )
 		return QString();
 	if ( m_afm.isEmpty() )
 		return QString();

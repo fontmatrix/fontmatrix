@@ -203,7 +203,7 @@ class FontItem : public QObject
 // 		bool m_VertUD;// Vertical Up Down
 		int m_progression;
 		
-		bool m_lock;
+// 		bool m_lock;
 		
 		QMap<int,double> advanceCache;
 
@@ -315,9 +315,9 @@ class FontItem : public QObject
 		bool isLocal();
 
 		// Relative to fontactionwidget
-		void lock() {m_lock=true;};
-		void unLock() {m_lock=false;};
-		bool isLocked() {return m_lock;};
+// 		void lock() {m_lock=true;};
+// 		void unLock() {m_lock=false;};
+// 		bool isLocked() {return m_lock;};
 
 // 		int debug_size();
 

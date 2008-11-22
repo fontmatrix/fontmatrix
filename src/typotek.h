@@ -198,6 +198,7 @@ class typotek:public QMainWindow
 
 		void addFcDirItem(const QString &dirPath);
 		QStringList getSystemFontDirs();
+		QStringList sysFontList;
 
 		RemoteDir *remoteDir;
 		QString m_remoteTmpDir;
@@ -227,7 +228,8 @@ class typotek:public QMainWindow
 		QString databaseUser;
 		QString databasePassword;
 
-	public:
+	public:		
+		bool isSysFont(FontItem* f);
 // 		int getFontCount(){return fontMap.count(); }
 // 		FontItem* getFont ( int i ) ;
 // 		FontItem* getFont ( QString s );

@@ -725,7 +725,7 @@ void typotek::readSettings()
 	mainDockGeometry = settings.value("Docks/ToolGeometry", QRect()).toRect();
 	tagsDockGeometry = settings.value("Docks/TagsGeometry", QRect()).toRect();
 	
-	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
+// 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
 	
 	templatesDir = settings.value ( "Places/TemplatesDir", "./").toString();
 	m_welcomeURL = settings.value("Places/WelcomeURL").toString();
@@ -891,7 +891,7 @@ QStringList typotek::getSystemFontDirs()
 	QString sysDir( (char*)FcStrListNext(sysDirList) );
 	while(!sysDir.isEmpty())
 	{
-		if(!sysDir.contains("fontmatrix"))
+		if(!sysDir.contains("Fontmatrix"))
 		{
 			qDebug()<< "SYSDIR"<<sysDir;
 			retList << sysDir;
@@ -901,7 +901,6 @@ QStringList typotek::getSystemFontDirs()
 #endif //HAVE_FONTCONFIG
 #ifdef PLATFORM_APPLE
 	retList << "/Library/Fonts";
-	retList << "/Network/Library/Fonts";
 	retList << "/System/Library/Fonts";
 #endif // PLATFORM_APPLE
 #if _WIN32
@@ -910,74 +909,44 @@ QStringList typotek::getSystemFontDirs()
 	return retList;
 }
 
+bool typotek::isSysFont(FontItem * f)
+{
+	if(f)
+	{
+		if(sysFontList.contains(f->path()))
+			return true;
+	}
+	return false;
+}
+
 void typotek::initDir()
 {
-	qDebug() <<"initDir()";
-	
 	DataLoader loader ( &ResourceFile );
 	int lRes(loader.load());
-// 	if( lRes == FONTDATA_VERSION_MISMATCH )
-// 	{
-// 		QMessageBox::warning ( this, tr("Fontmatrix - data warning"),
-// 				       tr("Your database has not been loaded because of a version mismatch.\nIt is not a problem, you just lost fonts references, tags & sample texts. If you badly need to keep these datas, do not quit Fontmatrix before you have copied the database*. At this point and with a minimum of XML skill, you should be able to get old database into new format.\n\n*database is") + QString(" " +QDir::homePath()+ QString(QDir::separator()) + ".fontmatrix.data"),
-// 	     QMessageBox::Ok, QMessageBox::NoButton );
-// 	}
-// 	/// load font files
-// 	qDebug() <<"load font files";
-// // 	QStringList pathList = loader.fontList();
-// 	QMap<QString,FontLocalInfo> pathList = loader.fastList();
-// 	int fontnr = pathList.count();
-// 
-// 	relayStartingStepIn ( tr ( "Loading" ) +" "+ QString::number ( fontnr ) +" "+tr ( "fonts present in database" ) );
-// 
-// 	QMap<QString,FontLocalInfo>::const_iterator pit;
-// 	for ( pit = pathList.begin(); pit != pathList.end(); ++ pit )
-// 	{
-// 		FontItem *fi = new FontItem ( pit.value().file, false, true );
-// 		if ( !fi->isValid() )
-// 		{
-// 			qDebug() << "ERROR loading : " << pit.value().file ;
-// 			continue;
-// 		}
-// 		fi->fileLocal ( pit.value() );
-// 		fi->unLock();
-// 		if ( tagsMap.value ( fi->path() ).contains ( "Activated_On" ) )
-// 			fi->setActivated ( true );
-// // 		fontMap.append ( fi );
-// // 		realFontMap[fi->path() ] = fi;
-// 		fi->setTags ( tagsMap.value ( fi->path() ) );
-// // 			relayStartingStepIn(zigouigoui.at( i % 8 ) );
-// // 			relayStartingStepIn( QString::number( fontnr - i ) );
-// 	}
-// // 	}
-// // 	qDebug() <<  fontMap.count() << " font files loaded.";
-
 
 	/// let’s load system fonts
-#define SYSTEM_FONTS 0
+#define SYSTEM_FONTS 1
 	if(SYSTEM_FONTS)
 	{
-		QString SysColFon = tr ( "Collected System Font" );
+		QString SysColFon = tr ( "System Fonts" );
 		QStringList tagsList(FMFontDb::DB()->getTags());
-		if ( !tagsList.contains ( SysColFon ) )
-			tagsList << SysColFon;
-	
+			
 		int sysCounter ( 0 );
 	
 		QStringList sysDir ( getSystemFontDirs() );
+		
+		QStringList yetHereFonts;
+		QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
+		for ( int i=0;i < fontMap.count() ; ++i )
+			yetHereFonts << fontMap[i]->path();
+		
 		for ( int sIdx ( 0 ); sIdx < sysDir.count(); ++sIdx )
 		{
 			QDir theDir ( sysDir[sIdx] );
 			QStringList syspathList;
 			QStringList nameList;
 	
-			QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );
-	
-			QStringList yetHereFonts;
-			QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
-			for ( int i=0;i < fontMap.count() ; ++i )
-				yetHereFonts << fontMap[i]->path();
-	
+			QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );	
 			QStringList filters;
 			filters << "*.otf" << "*.pfb" << "*.ttf" ;
 			foreach ( QString dr, dirList )
@@ -988,24 +957,23 @@ void typotek::initDir()
 				{
 					if ( !yetHereFonts.contains ( fp.absoluteFilePath() ) )
 						syspathList <<  fp.absoluteFilePath();
+					sysFontList << fp.absoluteFilePath();
 				}
 			}
 	
 			int sysFontCount ( syspathList.count() );
 			relayStartingStepIn ( tr ( "Adding" ) +" "+ QString::number ( sysFontCount ) +" "+tr ( "fonts from system directories" ) );
+			FMFontDb::DB()->TransactionBegin();
 			for ( int i = 0 ; i < sysFontCount; ++i )
 			{
 				QFile ff ( syspathList.at ( i ) );
 				QFileInfo fi ( syspathList.at ( i ) );
 				{
-					FontItem *fitem = new FontItem ( fi.absoluteFilePath(), false, false );
-					if ( fitem->isValid() )
+					FontItem *fitem = FMFontDb::DB()->Font( fi.absoluteFilePath(), false );
+					if ( fitem )
 					{
-						fitem->lock();
 						fitem->setActivated ( true );
 						fitem->addTag ( SysColFon );
-	// 					fontMap.append ( fitem );
-	// 					realFontMap[fitem->path() ] = fitem;
 						++sysCounter;
 					}
 					else
@@ -1014,22 +982,23 @@ void typotek::initDir()
 					}
 				}
 			}
+			FMFontDb::DB()->TransactionEnd();
 		}
-		relayStartingStepIn ( QString::number ( sysCounter ) + " " + tr ( "fonts available from system" ) );
+		relayStartingStepIn ( QString::number ( sysCounter ) + " " + tr ( "sytem fonts added." ) );
 	}
 
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 	/// Remote dirs
 	//TODO
-	QSettings settings;
-	QStringList remoteDirV ( settings.value ( "RemoteDirectories" ).toStringList() );
-	if ( !remoteDirV.isEmpty() )
-	{
-		relayStartingStepIn ( tr ( "Catching" ) +" "+ QString::number ( remoteDirV.count() ) +" "+tr ( "font descriptions from network" ) );
-		remoteDir = new RemoteDir ( remoteDirV );
-		connect ( remoteDir,SIGNAL ( listIsReady() ),this,SLOT ( slotRemoteIsReady() ) );
-		remoteDir->run();
-	}
+// 	QSettings settings;
+// 	QStringList remoteDirV ( settings.value ( "RemoteDirectories" ).toStringList() );
+// 	if ( !remoteDirV.isEmpty() )
+// 	{
+// 		relayStartingStepIn ( tr ( "Catching" ) +" "+ QString::number ( remoteDirV.count() ) +" "+tr ( "font descriptions from network" ) );
+// 		remoteDir = new RemoteDir ( remoteDirV );
+// 		connect ( remoteDir,SIGNAL ( listIsReady() ),this,SLOT ( slotRemoteIsReady() ) );
+// 		remoteDir->run();
+// 	}
 }
 
 static bool slotRemoteIsReadyRunOnce = false;
@@ -1959,6 +1928,7 @@ void typotek::slotShowTTTables()
 		dia.exec();
 	}
 }
+
 
 
 

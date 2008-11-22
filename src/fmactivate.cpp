@@ -18,6 +18,9 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QDomDocument>
+#include <QDomNodeList>
+#include <QDomElement>
 
 FMActivate* FMActivate::instance = 0;
 
@@ -26,8 +29,8 @@ FMActivate * FMActivate::getInstance()
 	if(!instance)
 	{
 		instance = new FMActivate;
+		Q_ASSERT(instance);
 	}
-	Q_ASSERT(instance);
 	return instance;
 }
 
@@ -35,10 +38,11 @@ FMActivate * FMActivate::getInstance()
 void FMActivate::activate(FontItem * fit, bool act)
 {
 	qDebug() << "Activation of " << fit->path() << act;
-	if ( act )
+	typotek *T(typotek::getInstance());
+	if ( act ) // Activation
 	{
 
-		if ( !fit->isLocked() )
+		if ( !T->isSysFont(fit) )
 		{
 			if ( !fit->isActivated() )
 			{
@@ -46,7 +50,7 @@ void FMActivate::activate(FontItem * fit, bool act)
 
 // 				QFileInfo fofi ( fit->path() );
 
-				if ( !QFile::copy ( fit->path() , typotek::getInstance()->getManagedDir() + "/" + fit->activationName() ) )
+				if ( !QFile::copy ( fit->path() , T->getManagedDir() + "/" + fit->activationName() ) )
 				{
 					qDebug() << "unable to copy " << fit->path() ;
 				}
@@ -57,7 +61,7 @@ void FMActivate::activate(FontItem * fit, bool act)
 					{
 						
 // 						QFileInfo afm ( fit->afm() );
-						if ( !QFile::copy( fit->afm(), typotek::getInstance()->getManagedDir() + "/" + fit->activationAFMName() ) )
+						if ( !QFile::copy( fit->afm(), T->getManagedDir() + "/" + fit->activationAFMName() ) )
 						{
 							qDebug() << "unable to copy " << fit->afm();
 						}
@@ -84,16 +88,16 @@ void FMActivate::activate(FontItem * fit, bool act)
 		}
 
 	}
-	else
+	else // Deactivation
 	{
 
-		if ( !fit->isLocked() )
+		if ( !T->isSysFont(fit) )
 		{
 			if ( fit->isActivated() )
 			{
 				fit->setActivated ( false );
 // 				QFileInfo fofi ( fit->path() );
-				if ( !QFile::remove ( typotek::getInstance()->getManagedDir() + "/" + fit->activationName() ) )
+				if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationName() ) )
 				{
 					qDebug() << "unable to unlink " << fit->name() ;
 				}
@@ -102,7 +106,7 @@ void FMActivate::activate(FontItem * fit, bool act)
 					if ( !fit->afm().isEmpty() )
 					{
 // 						QFileInfo afm ( fit->afm() );
-						if ( !QFile::remove ( typotek::getInstance()->getManagedDir() + "/" + fit->activationAFMName() ) )
+						if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationAFMName() ) )
 						{
 							qDebug() << "unable to unlink " << fit->afm() ;
 						}
@@ -131,18 +135,18 @@ void FMActivate::activate(FontItem * fit, bool act)
 void FMActivate::activate(FontItem * fit, bool act)
 {
 	qDebug() << "Activation of " << fit->path() << act;
-	if ( act )
+	typotek *T(typotek::getInstance());
+	if ( act ) // Activation
 	{
-
-		if ( !fit->isLocked() )
+		fit->setActivated ( true );
+		if ( !T->isSysFont(fit) )
 		{
 			if ( !fit->isActivated() )
 			{
-				fit->setActivated ( true );
 
 // 				QFileInfo fofi ( fit->path() );
 
-				if ( !QFile::link ( fit->path() , typotek::getInstance()->getManagedDir() + "/" + fit->activationName() ) )
+				if ( !QFile::link ( fit->path() , T->getManagedDir() + "/" + fit->activationName() ) )
 				{
 					qDebug() << "unable to link " << fit->path() ;
 				}
@@ -153,7 +157,7 @@ void FMActivate::activate(FontItem * fit, bool act)
 					{
 						
 // 						QFileInfo afm ( fit->afm() );
-						if ( !QFile::link ( fit->afm(), typotek::getInstance()->getManagedDir() + "/" + fit->activationAFMName() ) )
+						if ( !QFile::link ( fit->afm(), T->getManagedDir() + "/" + fit->activationAFMName() ) )
 						{
 							qDebug() << "unable to link " << fit->afm();
 						}
@@ -176,20 +180,20 @@ void FMActivate::activate(FontItem * fit, bool act)
 		}
 		else
 		{
-			qDebug() << "\tIs Locked";
+			remFcReject(fit->path());
+			
 		}
 
 	}
-	else
+	else // Deactivation
 	{
-
-		if ( !fit->isLocked() )
+		fit->setActivated ( false );
+		if ( !T->isSysFont(fit) )
 		{
 			if ( fit->isActivated() )
 			{
-				fit->setActivated ( false );
 // 				QFileInfo fofi ( fit->path() );
-				if ( !QFile::remove ( typotek::getInstance()->getManagedDir() + "/" + fit->activationName() ) )
+				if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationName() ) )
 				{
 					qDebug() << "unable to unlink " << fit->name() ;
 				}
@@ -198,7 +202,7 @@ void FMActivate::activate(FontItem * fit, bool act)
 					if ( !fit->afm().isEmpty() )
 					{
 // 						QFileInfo afm ( fit->afm() );
-						if ( !QFile::remove ( typotek::getInstance()->getManagedDir() + "/" + fit->activationAFMName() ) )
+						if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationAFMName() ) )
 						{
 							qDebug() << "unable to unlink " << fit->afm() ;
 						}
@@ -210,7 +214,7 @@ void FMActivate::activate(FontItem * fit, bool act)
 		}
 		else
 		{
-			qDebug() << "\tIs Locked";
+			addFcReject(fit->path());
 		}
 	}
 	
@@ -220,30 +224,21 @@ void FMActivate::activate(FontItem * fit, bool act)
 
 void FMActivate::activate(QList< FontItem * > fitList, bool act)
 {
-	QTime t;
-	int t1(0),t2(0),t3(0);
+// 	QTime t;
+// 	int t1(0),t2(0),t3(0);
 	QMap<FontItem*, bool> stack;
+	typotek *T(typotek::getInstance());
 	foreach(FontItem * fit , fitList)
 	{
-		qDebug() << "Batch Activation of " << fit->path() << act;
-		t1=t2=t3=0;
-		t.start();
-		if ( act )
+		if ( act ) // Activation
 		{
+			stack[fit] = true;
 	
-			if ( !fit->isLocked() )
+			if ( !T->isSysFont(fit) )
 			{
 				if ( !fit->isActivated() )
-				{
-					t1 = t.elapsed();
-					t.start();
-// 					fit->setActivated ( true );
-					stack[fit] = true;
-					t2 = t.elapsed();
-					t.start();
-	// 				QFileInfo fofi ( fit->path() );
-	
-					if ( !QFile::link ( fit->path() , typotek::getInstance()->getManagedDir() + "/" + fit->activationName() ) )
+				{	
+					if ( !QFile::link ( fit->path() , T->getManagedDir() + "/" + fit->activationName() ) )
 					{
 						qDebug() << "unable to link " << fit->path() ;
 					}
@@ -252,9 +247,7 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 						qDebug() << fit->path() << " linked" ;
 						if ( !fit->afm().isEmpty() )
 						{
-							
-	// 						QFileInfo afm ( fit->afm() );
-							if ( !QFile::link ( fit->afm(), typotek::getInstance()->getManagedDir() + "/" + fit->activationAFMName() ) )
+							if ( !QFile::link ( fit->afm(), T->getManagedDir() + "/" + fit->activationAFMName() ) )
 							{
 								qDebug() << "unable to link " << fit->afm();
 							}
@@ -268,7 +261,6 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 							qDebug()<<"There is no AFM file attached to "<<fit->path();
 						}
 					}
-					t3 = t.elapsed();
 				}
 				else
 				{
@@ -278,21 +270,18 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 			}
 			else
 			{
-				qDebug() << "\tIs Locked";
+				remFcReject(fit->path());
 			}
 	
 		}
-		else
+		else // Deactivation
 		{
-	
-			if ( !fit->isLocked() )
+			stack[fit] = false;
+			if ( !T->isSysFont(fit) )
 			{
 				if ( fit->isActivated() )
 				{
-// 					fit->setActivated ( false );
-					stack[fit] = false;
-	// 				QFileInfo fofi ( fit->path() );
-					if ( !QFile::remove ( typotek::getInstance()->getManagedDir() + "/" + fit->activationName() ) )
+					if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationName() ) )
 					{
 						qDebug() << "unable to unlink " << fit->name() ;
 					}
@@ -300,23 +289,21 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 					{
 						if ( !fit->afm().isEmpty() )
 						{
-	// 						QFileInfo afm ( fit->afm() );
-							if ( !QFile::remove ( typotek::getInstance()->getManagedDir() + "/" + fit->activationAFMName() ) )
+							if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationAFMName() ) )
 							{
 								qDebug() << "unable to unlink " << fit->afm() ;
 							}
 						}
-	// 					typo->adaptator()->private_signal ( 0, fofi.fileName() );
 					}
 				}
 	
 			}
 			else
 			{
-				qDebug() << "\tIs Locked";
+				addFcReject(fit->path());
+				
 			}
 		}
-		qDebug()<<t1<<t2<<t3;
 	}
 	
 	FMFontDb::DB()->TransactionBegin();
@@ -327,6 +314,152 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 	FMFontDb::DB()->TransactionEnd();
 	
 	emit activationEvent ( "" );
+}
+
+bool FMActivate::addFcReject(const QString & path)
+{
+	qDebug()<<"FMActivate::addFcReject"<<path;
+#ifdef HAVE_FONTCONFIG
+	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
+	if ( !fcfile.open ( QFile::ReadWrite ) )
+	{
+		qWarning()<<"Cannot open"<< fcfile.fileName();
+		return false;
+	}
+	else
+	{
+		QDomDocument fc ( "fontconfig" );
+		fc.setContent ( &fcfile );
+		QDomNodeList sellist = fc.elementsByTagName ( "selectfont" );
+		// First we search if there’s yet an entry for path
+		if(!sellist.isEmpty())
+		{
+			for ( int s(0); s < sellist.count(); ++s )
+			{
+				QDomNodeList rejectlist( sellist.at(s).toElement().elementsByTagName("rejectfont") );
+				if(!rejectlist.isEmpty())
+				{
+					for( int r(0); r < rejectlist.count(); ++r )
+					{
+						QDomNodeList globlist(rejectlist.at(r).toElement().elementsByTagName("glob"));
+						if(!globlist.isEmpty())
+						{
+							for( int g(0); g < globlist.count(); ++g )
+							{
+								QString t( globlist.at(g).toElement().text() );
+								if(t == path)
+								{
+									qDebug()<<"Already here";
+									return true;
+								}
+							}
+							
+						}
+					}
+				}
+			}
+		}
+		
+		// Now we can write in the first place available
+		if(!sellist.isEmpty())
+		{
+			QDomNodeList rejectlist( sellist.at(0).toElement().elementsByTagName("rejectfont") );
+			if(!rejectlist.isEmpty())
+			{
+// 				QDomNodeList globlist( rejectlist.at(0).toElement().elementsByTagName("glob") );
+// 				if(!globlist.isEmpty())
+// 				{
+// 					QDomText pathelem = fc.createTextNode( path );
+// 					globlist.at(0).toElement().appendChild(pathelem);
+// 				}
+// 				else
+// 				{
+					QDomElement globelem = fc.createElement ( "glob" );
+					QDomText pathelem = fc.createTextNode( path );
+					globelem.appendChild(pathelem);
+					rejectlist.at(0).toElement().appendChild(globelem);
+// 				}
+			}
+			else
+			{
+				QDomElement rejelem = fc.createElement ( "rejectfont" );
+				QDomElement globelem = fc.createElement ( "glob" );
+				QDomText pathelem = fc.createTextNode( path );
+				globelem.appendChild(pathelem);
+				rejelem.appendChild(globelem);
+				sellist.at(0).toElement().appendChild(rejelem);
+			}
+		}
+		else
+		{
+			QDomElement root = fc.documentElement();
+			QDomElement selelem = fc.createElement ( "selectfont" );
+			QDomElement rejelem = fc.createElement ( "rejectfont" );
+			QDomElement globelem = fc.createElement ( "glob" );
+			QDomText pathelem = fc.createTextNode( path );
+			globelem.appendChild(pathelem);
+			rejelem.appendChild(globelem);
+			selelem.appendChild(rejelem);
+			root.appendChild(selelem);
+		}
+		
+		fcfile.resize ( 0 );
+		QTextStream ts ( &fcfile );
+		fc.save ( ts,4 );
+		fcfile.close();
+	}
+#endif
+	return true;
+}
+
+bool FMActivate::remFcReject(const QString & path)
+{
+#ifdef HAVE_FONTCONFIG
+	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
+	if ( !fcfile.open ( QFile::ReadWrite ) )
+	{
+		return false;
+	}
+	else
+	{
+		QDomDocument fc ( "fontconfig" );
+		fc.setContent ( &fcfile );
+		QDomNodeList sellist = fc.elementsByTagName ( "selectfont" );
+		
+		if(!sellist.isEmpty())
+		{
+			for ( int s(0); s < sellist.count(); ++s )
+			{
+				QDomNodeList rejectlist( sellist.at(s).toElement().elementsByTagName("rejectfont") );
+				if(!rejectlist.isEmpty())
+				{
+					for( int r(0); r < rejectlist.count(); ++r )
+					{
+						QDomNodeList globlist(rejectlist.at(r).toElement().elementsByTagName("glob"));
+						if(!globlist.isEmpty())
+						{
+							for( int g(0); g < globlist.count(); ++g )
+							{
+								QString t( globlist.at(g).toElement().text() );
+								if(t == path)
+								{
+									rejectlist.at(r).removeChild(globlist.at(g).toElement());
+									fcfile.resize ( 0 );
+									QTextStream ts ( &fcfile );
+									fc.save ( ts,4 );
+									fcfile.close();
+									return true;
+								}
+							}
+							
+						}
+					}
+				}
+			}
+		}
+	}
+#endif
+	return true;
 }
 
 #endif

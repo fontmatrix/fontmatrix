@@ -817,7 +817,7 @@ bool FMFontDb::insertTemporaryFont ( const QString & path )
 		return false;
 	}
 	temporaryFont[absPath] = item;
-	item->lock();
+// 	item->lock();
 	return true;
 
 }

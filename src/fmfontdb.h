@@ -150,8 +150,8 @@ class FMFontDb : public QSqlDatabase
 
 		QList<FontItem*> AllFonts();
 		QStringList AllFontNames();
-		FontItem* FirstFont();
-		FontItem* NextFont();
+// 		FontItem* FirstFont();
+// 		FontItem* NextFont();
 
 		QList<FontItem*> Fonts ( const QVariant& pattern, Field field );
 		QList<FontItem*> Fonts ( const QVariant& pattern, InfoItem info, int codeLang = 0 );

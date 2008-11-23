@@ -278,7 +278,7 @@ int DataExport::buildTemplate(const QString& templateDirPath)
 	exp << sBOTTOM;
 	
 	file.close();	
-
+	return fonts.count();
 }
 
 

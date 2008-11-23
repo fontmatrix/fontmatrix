@@ -776,13 +776,13 @@ bool FMFontDb::Remove ( const QString & id )
 	return true;
 }
 
-FontItem * FMFontDb::FirstFont()
-{
-}
-
-FontItem * FMFontDb::NextFont()
-{
-}
+// FontItem * FMFontDb::FirstFont()
+// {
+// }
+// 
+// FontItem * FMFontDb::NextFont()
+// {
+// }
 
 bool FMFontDb::insertTemporaryFont ( const QString & path )
 {

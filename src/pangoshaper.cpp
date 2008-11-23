@@ -23,6 +23,7 @@ PangoShaper::~ PangoShaper()
 
 GlyphList PangoShaper::doShape(const QString & s)
 {
+	return GlyphList();
 }
 
 

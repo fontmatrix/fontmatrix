@@ -115,7 +115,7 @@ int FMOwnShaper::loadRules(QString lang)
 		}
 		
 	}
-	
+	return 0;
 }
 
 void FMOwnShaper::fillIn(const QString& s)

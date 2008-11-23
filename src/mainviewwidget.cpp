@@ -2092,12 +2092,12 @@ QByteArray MainViewWidget::splitterState(int spl)
 
 unsigned int MainViewWidget::hinting()
 {
-	if(noHinting->isChecked())
-		return FT_LOAD_NO_HINTING ;
-	else if(lightHinting->isChecked())
+	if(lightHinting->isChecked())
 		return FT_LOAD_TARGET_LIGHT;
 	else if(normalHinting->isChecked())
 		return FT_LOAD_TARGET_NORMAL;
+		
+	return FT_LOAD_NO_HINTING ;
 }
 
 void MainViewWidget::slotHintChanged(int )

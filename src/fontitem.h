@@ -289,6 +289,10 @@ class FontItem : public QObject
 		//return count codes that remain
 		int renderChart(QGraphicsScene *scene, int begin_code, int end_code ,double pwidth, double pheight);
 		int countCoverage ( int begin_code, int end_code );
+		int firstChar();
+		int lastChar();
+		int countChars();
+		int nextChar(int from, int offset = 1);
 		void deRender ( QGraphicsScene *scene );
 		void deRenderAll();
 		

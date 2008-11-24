@@ -6,6 +6,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmfontcompareview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontdb.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontstrings.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphhighlight.cpp
@@ -24,6 +25,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmshaper_own.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmverticalbutton.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontbook.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontbookdialog.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fontcomparewidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontitem.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontmatrixshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/helpwidget.cpp
@@ -77,6 +79,7 @@ ${M17N_LIBRARIES}
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
 fmactivate.h
+fmfontcompareview.h
 fmglyphhighlight.h
 fmglyphsview.h
 fmlayoptwidget.h
@@ -87,6 +90,7 @@ fmpreviewlist.h
 fmrepair.h
 fmsampletextview.h
 fontbookdialog.h
+fontcomparewidget.h
 fontitem.h
 helpwidget.h
 importtags.h
@@ -110,6 +114,7 @@ QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
 SET(fontmatrix_UIS
 ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
+${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfonts.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/help.ui

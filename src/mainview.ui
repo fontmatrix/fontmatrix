@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0" >
-    <widget class="QTabWidget" name="tabView" >
+    <widget class="QTabWidget" name="tabWidget" >
      <property name="enabled" >
       <bool>true</bool>
      </property>
@@ -893,6 +893,16 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tabCompare" >
+      <attribute name="title" >
+       <string>Compare</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_17" >
+       <item row="0" column="0" >
+        <widget class="FontCompareWidget" native="1" name="widget" />
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
@@ -934,6 +944,12 @@
    <class>ParallelCoorView</class>
    <extends>QGraphicsView</extends>
    <header>parallelcoor.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FontCompareWidget</class>
+   <extends>QWidget</extends>
+   <header>fontcomparewidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

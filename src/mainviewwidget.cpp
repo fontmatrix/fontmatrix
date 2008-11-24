@@ -1993,7 +1993,7 @@ QGraphicsScene * MainViewWidget::currentSampleScene()
 {
 	if(!loremView->isVisible())
 	{
-		tabView->setCurrentIndex(1);
+		tabWidget->setCurrentIndex(1);
 		stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
 		slotView(true);
 	}

@@ -1970,8 +1970,71 @@ QByteArray FontItem::pixarray ( uchar * b, int len )
 	return buffer;
 }
 
-//Render all is dangerous ;)
-// We now render langs
+
+
+int FontItem::firstChar()
+{
+	if(!ensureFace())
+		return 0;
+	
+	FT_UInt anIndex (1);
+	FT_UInt fc ( FT_Get_First_Char ( m_face, &anIndex ));
+	releaseFace();
+	
+	return fc;
+}
+
+int FontItem::lastChar()
+{
+	if(!ensureFace())
+		return 0;
+	
+	FT_UInt index (1);
+	FT_UInt cc =  FT_Get_First_Char ( m_face, &index );
+	int lc(0);
+	while ( index )
+	{
+		lc = cc;
+		cc = FT_Get_Next_Char ( m_face, cc, &index );
+	}
+	
+	releaseFace();
+	return lc ;
+}
+
+int FontItem::countChars()
+{
+	if(!ensureFace())
+		return 0;
+	
+	FT_UInt index (1);
+	FT_UInt cc =  FT_Get_First_Char ( m_face, &index );
+	int n(0);
+	while ( index )
+	{
+		++n;
+		cc = FT_Get_Next_Char ( m_face, cc, &index );
+	}
+	
+	releaseFace();
+	return n;
+}
+
+int FontItem::nextChar(int from, int offset)
+{
+	if(!ensureFace())
+		return 0;
+	
+	FT_UInt index (1);
+	int cc(from);
+	for ( int i(0); i < offset; ++i )
+	{
+		cc = FT_Get_Next_Char ( m_face, cc, &index );
+	}
+	
+	releaseFace();
+	return cc;
+}
 
 int FontItem::countCoverage ( int begin_code, int end_code )
 {
@@ -4002,6 +4065,7 @@ QStringList FontItem::charmaps()
 	}
 	return ret;
 }
+
 
 
 

@@ -1,0 +1,116 @@
+<ui version="4.0" >
+ <class>CompareWidget</class>
+ <widget class="QWidget" name="CompareWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>790</width>
+    <height>669</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="1" colspan="2" >
+    <layout class="QVBoxLayout" name="verticalLayout_2" >
+     <item>
+      <widget class="QGroupBox" name="fgbox" >
+       <property name="title" >
+        <string>Fonts</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_15" >
+        <item row="0" column="0" colspan="2" >
+         <widget class="QListWidget" name="compareList" />
+        </item>
+        <item row="1" column="0" >
+         <widget class="QPushButton" name="compareAdd" >
+          <property name="text" >
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QPushButton" name="compareRemove" >
+          <property name="text" >
+           <string>Remove</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox" >
+       <property name="title" >
+        <string>Show</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_16" >
+        <item row="0" column="0" >
+         <widget class="QCheckBox" name="compareFill" >
+          <property name="text" >
+           <string>Fill</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QCheckBox" name="compareControls" >
+          <property name="text" >
+           <string>Controls</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QCheckBox" name="compareMetrics" >
+          <property name="text" >
+           <string>Metrics</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0" >
+    <widget class="FMFontCompareView" name="compareView" />
+   </item>
+   <item row="1" column="0" colspan="2" >
+    <widget class="QSlider" name="compareCharSelect" >
+     <property name="toolTip" >
+      <string>Select a character</string>
+     </property>
+     <property name="minimum" >
+      <number>1</number>
+     </property>
+     <property name="value" >
+      <number>1</number>
+     </property>
+     <property name="tracking" >
+      <bool>true</bool>
+     </property>
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" >
+    <widget class="QLabel" name="compareCharName" >
+     <property name="text" >
+      <string>Name of character</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FMFontCompareView</class>
+   <extends>QGraphicsView</extends>
+   <header>fmfontcompareview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

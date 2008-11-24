@@ -16,6 +16,8 @@
 
 #include <QGraphicsLineItem>
 #include <QGraphicsRectItem>
+#include <QGraphicsSimpleTextItem>
+#include <QGraphicsEllipseItem>
 #include <QSettings>
 #include <QDebug>
 
@@ -24,13 +26,13 @@ FMFontCompareItem::FMFontCompareItem()
 	:uuid(QUuid::createUuid()), scene(0),font(0),zindex(0),char_code(0),path(0)
 {
 	// Nothing special :)
-	qDebug()<< "Create" <<uuid.toString();
+// 	qDebug()<< "Create" <<uuid.toString();
 }
 
 FMFontCompareItem::FMFontCompareItem(QGraphicsScene * s, FontItem * f, int z)
 	:uuid(QUuid::createUuid()), scene(s), font(f), zindex(z),char_code(0),path(0)
 {
-	qDebug()<< "Create" <<uuid.toString();
+// 	qDebug()<< "Create" <<uuid.toString();
 	color.setRgb(qrand() % 255,qrand() % 255, qrand() % 255, 255);
 }
 
@@ -41,23 +43,27 @@ FMFontCompareItem::~ FMFontCompareItem()
 
 void FMFontCompareItem::clear()
 {
-	qDebug()<< "Clearing" <<uuid.toString();
+// 	qDebug()<< "Clearing" <<uuid.toString();
 	
 	foreach(QGraphicsLineItem* li, lines_controls)
 	{
 		delete li;
 	}
+	lines_controls.clear();
 	foreach(QGraphicsLineItem* li, lines_metrics)
 	{
 		delete li;
 	}
-	foreach(QGraphicsRectItem *ri, points)
+	lines_metrics.clear();
+	foreach(QGraphicsEllipseItem *ri, points)
 	{
 		delete ri;
 	}
+	points.clear();
 	if(path)
 	{
 		delete path;
+		path = 0;
 	}
 }
 
@@ -76,7 +82,7 @@ void FMFontCompareItem::toScreen()
 		scene->addItem(li);
 		li->setZValue(zindex);
 	}
-	foreach(QGraphicsRectItem *ri, points)
+	foreach(QGraphicsEllipseItem *ri, points)
 	{
 		scene->addItem(ri);
 		ri->setZValue(zindex);
@@ -93,14 +99,21 @@ QRectF FMFontCompareItem::boundingRect()
 	if(!path)
 		return QRectF();
 	
-	return path->boundingRect();
+	return path->path().boundingRect();
 }
 
-void FMFontCompareItem::drawPoint(QPointF point)
+void FMFontCompareItem::drawPoint(QPointF point , bool control)
 {
-	QRectF r(point.x()-5,point.y()-5,10,10);
-	QGraphicsRectItem *ri = new QGraphicsRectItem(r);
-	ri->setBrush(FMFontCompareView::brushes["control-point"]);
+	double u = control ? 2.0 : 4.0;
+
+	QRectF r(point.x()-u,point.y()-u,2*u,2*u);
+	QGraphicsEllipseItem *ri = new QGraphicsEllipseItem(r);
+	ri->setBrush(Qt::NoBrush);
+	if(control)
+		ri->setPen(FMFontCompareView::pens["control-point"]);
+	else
+		ri->setPen(FMFontCompareView::pens["point"]);
+		
 	
 	points << ri;
 }
@@ -112,7 +125,7 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	if(!font)
 		return;
 	
-	path = font->itemFromChar(char_code, 500.0);
+	path = font->itemFromChar(char_code, 1000.0);
 	if(!path)
 		return;
 	path->setPen(QPen(color));
@@ -124,46 +137,46 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	else
 		path->setBrush(QBrush());
 	
-	if(elems.testFlag(Controls))
+	if(elems.testFlag(Points))
 	{
 		QPointF curPos;
 		for (int i = 0; i < path->path().elementCount(); ++i) 
 		{
 			const QPainterPath::Element &cur = path->path().elementAt(i);
  	
-			switch (cur.type) {
-				case QPainterPath::MoveToElement:
-					drawPoint(curPos);
-					curPos = cur;
-					break;
-				case QPainterPath::LineToElement:
-					curPos = cur;
-					break;
-				case QPainterPath::CurveToElement:
+			if(cur.isMoveTo())
+			{
+				curPos = cur;
+			}
+			else if(cur.isLineTo())
+			{
+				drawPoint(curPos,false);
+				curPos = cur;
+			}
+			else if(cur.isCurveTo())
+			{
+				const QPainterPath::Element &c1 = path->path().elementAt(i + 1);
+				const QPainterPath::Element &c2 = path->path().elementAt(i + 2);
+				
+				drawPoint(curPos,false);
+				drawPoint(c2,false);
+				if(elems.testFlag(Controls))
 				{
-					const QPainterPath::Element &c1 = path->path().elementAt(i + 1);
-					const QPainterPath::Element &c2 = path->path().elementAt(i + 2);
- 	
-					Q_ASSERT(c1.type == QPainterPath::CurveToDataElement);
-					Q_ASSERT(c2.type == QPainterPath::CurveToDataElement);
-					
-					drawPoint(cur);
-					QLineF l1(curPos, c1);
-					QLineF l2(c2, cur);
+					drawPoint(cur,true);
+					drawPoint(c1,true);
+					QLineF l1(curPos, cur);
+					QLineF l2(c2, c1);
 					lines_controls << new QGraphicsLineItem(l1);
 					lines_controls.last()->setPen(FMFontCompareView::pens["control-line"]);
 					lines_controls << new QGraphicsLineItem(l2);
 					lines_controls.last()->setPen(FMFontCompareView::pens["control-line"]);
-					
-					
-					i += 2;
-					curPos = cur;
-					break;
 				}
-				case QPainterPath::CurveToDataElement:
-					Q_ASSERT(false);
-					break;
+				
+				i += 2;
+				curPos = c2;
 			}
+			else
+				qDebug()<<"Unknown point type"<<cur.type;
 		}
  	
 	}
@@ -219,6 +232,8 @@ void FMFontCompareView::removeFont(int level)
 		{
 			glyphs[i-1] = glyphs[i];
 			glyphs.remove(i);
+			elements[i-1] = elements[i];
+			elements.remove(i);
 		}
 	}
 	
@@ -234,17 +249,24 @@ void FMFontCompareView::changeChar(uint ccode)
 	updateGlyphs();
 }
 
-void FMFontCompareView::show(int level, FMFontCompareItem::GElements elems)
+void FMFontCompareView::setElements(int level, FMFontCompareItem::GElements elems)
 {
+	qDebug()<<"FMFontCompareView::setElements"<<level<<elems;
 	elements[level] = elems;
 	updateGlyphs();
+}
+
+FMFontCompareItem::GElements FMFontCompareView::getElements(int level)
+{
+	return elements[level];
 }
 
 void FMFontCompareView::initPensAndBrushes()
 {
 	// Controls
-	pens["control-line"] = QPen(QColor(200,200,200), 1.0, Qt::DotLine , Qt::FlatCap, Qt::MiterJoin);
-	brushes["control-point"] = QBrush(Qt::red);
+	pens["control-line"] = QPen(QColor(20,20,20), 1.0, Qt::DotLine , Qt::FlatCap, Qt::MiterJoin);
+	pens["control-point"] = QPen(Qt::black);
+	pens["point"] = QPen(Qt::red);
 	
 	// Fill
 	brushes["fill"] = QBrush(QColor(0,0,0,32));
@@ -272,19 +294,19 @@ void FMFontCompareView::updateGlyphs()
 		glyphs[l]->show(elements[l]);
 		maxrect = maxrect.united(glyphs[l]->boundingRect());
 	}
-// 	double hratio(static_cast<double>(width()) / maxrect.width());
-// 	double vratio(static_cast<double>(height()) / maxrect.height());
-// 	double shape_ratio(qMin(hratio, vratio) * 0.9);
-// 	double view_ratio(qMin(hratio, vratio) * 1.5);
-// 
-// 	setMatrix(QMatrix(),false);
-// 	scale(shape_ratio, shape_ratio);
-// 	
-// 	QMatrix m;
-// 	m.scale(view_ratio, view_ratio );
-// 	QRectF vr(m.mapRect(maxrect));
-// 	ensureVisible(vr);
-// 	
+	double hratio(static_cast<double>(width()) / maxrect.width());
+	double vratio(static_cast<double>(height()) / maxrect.height());
+	double shape_ratio(qMin(hratio, vratio) * 0.9);
+	double view_ratio(qMin(hratio, vratio) * 1.5);
+
+	setMatrix(QMatrix(),false);
+	scale(shape_ratio, shape_ratio);
+	
+	QMatrix m;
+	m.scale(view_ratio, view_ratio );
+	QRectF vr(m.mapRect(maxrect));
+	ensureVisible(vr);
+	
 // 	qDebug()<<"M"<<maxrect;
 // 	qDebug()<<"S"<<vr;
 // 	qDebug()<<"V"<<rect();

@@ -15,7 +15,7 @@
 #include "typotek.h"
 #include "fmfontdb.h"
 
-#include <QInputDialog>
+#include <QDebug>
 
 FontCompareWidget::FontCompareWidget(QWidget * parent)
 	:QWidget(parent)
@@ -25,9 +25,11 @@ FontCompareWidget::FontCompareWidget(QWidget * parent)
 	connect( compareAdd,SIGNAL(clicked()), this, SLOT(addFont()));
 	connect( compareRemove,SIGNAL(clicked()), this, SLOT(removeFont()));
 	connect( compareFill,SIGNAL(clicked()), this, SLOT(fillChange()));
+	connect( comparePoints,SIGNAL(clicked()), this, SLOT(pointsChange()));
 	connect( compareControls,SIGNAL(clicked()), this, SLOT(controlsChange()));
 	connect( compareMetrics,SIGNAL(clicked()), this, SLOT(metricsChange()));
 	connect( compareCharSelect,SIGNAL(valueChanged(int)), this, SLOT(characterChange(int)));
+	connect( compareList, SIGNAL(currentItemChanged ( QListWidgetItem * , QListWidgetItem *  )  ), this, SLOT(fontChange(QListWidgetItem*, QListWidgetItem * )));
 }
 
 FontCompareWidget::~ FontCompareWidget()
@@ -36,32 +38,32 @@ FontCompareWidget::~ FontCompareWidget()
 
 void FontCompareWidget::addFont()
 {
-// 	QList<FontItem*> fl(typotek::getInstance()->getCurrentFonts());
-// 	QMap<QString, FontItem*> fm;
-// 	foreach(FontItem* f, fl)
-// 	{
-// 		fm[f->path()] = f;
-// 	}
-// 	bool ok;
-// 	QString item = QInputDialog::getItem(this, "Fontmatrix", "Please select a font file", fm.keys() , 0, false, &ok);
-// 	if (ok && !item.isEmpty())
-// 	{
-		FontItem *f(typotek::getInstance()->getSelectedFont());
-		if(!f)
-			return;
-		curFont = f->path();
-		QListWidgetItem* witem = new QListWidgetItem(f->fancyName());
-		witem->setData(Qt::UserRole, f->path());
-		witem->setToolTip(f->path()); // Here we say: « Deux fois valent mieux qu’une !»
-		compareList->addItem(witem);
-		
-		compareView->changeFont(compareList->row(witem), f);
-		QPixmap px(32,32);
-		px.fill(compareView->getColor(compareList->row(witem)));
-		witem->setIcon( QIcon(px) );
-		compareCharSelect->setRange( f->firstChar(),  f->firstChar() +  f->countChars() );
-		compareCharSelect->setValue(f->firstChar());
-// 	}
+	FontItem *f(typotek::getInstance()->getSelectedFont());
+	if(!f)
+		return;
+	curFont = f->path();
+	QListWidgetItem* witem = new QListWidgetItem(f->fancyName());
+	witem->setData(Qt::UserRole, f->path());
+	witem->setToolTip(f->path()); // Here we say: « Deux fois valent mieux qu’une !»
+	compareList->addItem(witem);
+	compareList->setItemSelected(witem, true);
+	
+	compareView->changeFont(compareList->row(witem), f);
+	QPixmap px(32,32);
+	px.fill(compareView->getColor(compareList->row(witem)));
+	witem->setIcon( QIcon(px) );
+	compareCharSelect->setRange( f->firstChar(),  f->firstChar() +  f->countChars() );
+	
+	if((compareList->count()>1) && (!compareCharName->text().isEmpty()))
+	{
+		compareView->changeChar(compareCharName->text().at(0).unicode());
+	}
+	
+
+	compareFill->setCheckState(Qt::Unchecked);
+	comparePoints->setChecked(false);
+	compareControls->setCheckState(Qt::Unchecked);
+	compareMetrics->setCheckState(Qt::Unchecked);
 }
 
 void FontCompareWidget::removeFont()
@@ -78,14 +80,47 @@ void FontCompareWidget::removeFont()
 
 void FontCompareWidget::fillChange()
 {
+	if(compareList->selectedItems().isEmpty())
+		return;
+	int r(compareList->row(compareList->selectedItems().at(0)));
+	if(compareFill->isChecked())
+		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Fill);
+	else
+		compareView->setElements(r, compareView->getElements(r) ^ FMFontCompareItem::Fill);
+	
+}
+
+void FontCompareWidget::pointsChange()
+{
+	if(compareList->selectedItems().isEmpty())
+		return;
+	int r(compareList->row(compareList->selectedItems().at(0)));
+	if(comparePoints->isChecked())
+		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Points);
+	else
+		compareView->setElements(r, compareView->getElements(r) ^ FMFontCompareItem::Points);
 }
 
 void FontCompareWidget::controlsChange()
 {
+	if(compareList->selectedItems().isEmpty())
+		return;
+	int r(compareList->row(compareList->selectedItems().at(0)));
+	if(compareControls->isChecked())
+		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Controls);
+	else
+		compareView->setElements(r, compareView->getElements(r) ^ FMFontCompareItem::Controls);
 }
 
 void FontCompareWidget::metricsChange()
 {
+	if(compareList->selectedItems().isEmpty())
+		return;
+	int r(compareList->row(compareList->selectedItems().at(0)));
+	if(compareMetrics->isChecked())
+		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Metrics);
+	else
+		compareView->setElements(r, compareView->getElements(r) ^ FMFontCompareItem::Metrics);
 }
 
 void FontCompareWidget::characterChange(int v)
@@ -97,9 +132,49 @@ void FontCompareWidget::characterChange(int v)
 	
 }
 
-void FontCompareWidget::fontChange(QListWidgetItem * witem)
+void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * olditem)
 {
 	curFont = witem->data(Qt::UserRole).toString();
+	
 	FontItem *f(FMFontDb::DB()->Font(curFont));
 	compareCharSelect->setRange( f->firstChar(),  f->firstChar() +  f->countChars() );
+	
+	int r(compareList->row(witem));
+	FMFontCompareItem::GElements e(compareView->getElements(r));
+	if(e.testFlag(FMFontCompareItem::Fill))
+	{
+		compareFill->setCheckState(Qt::Checked);
+	}
+	else
+	{
+		compareFill->setCheckState(Qt::Unchecked);
+	}
+	
+	if(e.testFlag(FMFontCompareItem::Points))
+	{
+		comparePoints->setChecked(true);
+	}
+	else
+	{
+		comparePoints->setChecked(false);
+	}
+	
+	if(e.testFlag(FMFontCompareItem::Controls))
+	{
+		compareControls->setCheckState(Qt::Checked);
+	}
+	else
+	{
+		compareControls->setCheckState(Qt::Unchecked);
+	}
+	
+	if(e.testFlag(FMFontCompareItem::Metrics))
+	{
+		compareMetrics->setCheckState(Qt::Checked);
+	}
+	else
+	{
+		compareMetrics->setCheckState(Qt::Unchecked);
+	}
 }
+

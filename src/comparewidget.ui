@@ -54,18 +54,36 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" >
-         <widget class="QCheckBox" name="compareControls" >
-          <property name="text" >
-           <string>Controls</string>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="0" >
          <widget class="QCheckBox" name="compareMetrics" >
           <property name="text" >
            <string>Metrics</string>
           </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QGroupBox" name="comparePoints" >
+          <property name="enabled" >
+           <bool>true</bool>
+          </property>
+          <property name="title" >
+           <string>Points</string>
+          </property>
+          <property name="checkable" >
+           <bool>true</bool>
+          </property>
+          <property name="checked" >
+           <bool>false</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2" >
+           <item row="0" column="0" >
+            <widget class="QCheckBox" name="compareControls" >
+             <property name="text" >
+              <string>Controls</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>

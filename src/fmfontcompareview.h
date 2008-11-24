@@ -19,20 +19,28 @@
 
 class QGraphicsLineItem;
 class QGraphicsRectItem;
+class QGraphicsEllipseItem;
 class FontItem;
 
 class FMFontCompareItem
 {
 	public:
-		enum GElement{Fill, Controls, Metrics};
+		enum GElement
+		{
+			Contour 	= 0,
+			Fill		= 0x1,
+   			Points		= 0x2,
+			Controls	= 0x4,
+			Metrics 	= 0x8
+		};
 		Q_DECLARE_FLAGS ( GElements,GElement )
 		FMFontCompareItem();
 		FMFontCompareItem ( QGraphicsScene * s, FontItem * f, int z );
 		~FMFontCompareItem();
 		void show ( GElements elems );
-		void setChar(uint c){char_code = c;}
+		void setChar ( uint c ) {char_code = c;}
 		QRectF boundingRect();
-		QColor getColor(){return color;}
+		QColor getColor() {return color;}
 	private:
 		const QUuid uuid;
 		QGraphicsScene *scene;
@@ -43,12 +51,12 @@ class FMFontCompareItem
 		QGraphicsPathItem* path;
 		QList<QGraphicsLineItem*> lines_controls;
 		QList<QGraphicsLineItem*> lines_metrics;
-		QList<QGraphicsRectItem*> points;
+		QList<QGraphicsEllipseItem*> points;
 
 		void clear();
-		void drawPoint ( QPointF point );
+		void drawPoint ( QPointF point , bool control);
 		void toScreen();
-		
+
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS ( FMFontCompareItem::GElements )
 
@@ -63,8 +71,9 @@ class FMFontCompareView : public QGraphicsView
 		void changeFont ( int level, FontItem* font );
 		void removeFont ( int level );
 		void changeChar ( uint ccode );
-		void show ( int level, FMFontCompareItem::GElements elems );
-		QColor getColor(int level);
+		void setElements ( int level, FMFontCompareItem::GElements elems );
+		FMFontCompareItem::GElements getElements ( int level );
+		QColor getColor ( int level );
 
 		static QMap<QString, QPen> pens;
 		static QMap<QString, QBrush> brushes;

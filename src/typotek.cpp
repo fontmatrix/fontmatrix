@@ -984,7 +984,7 @@ void typotek::initDir()
 			}
 			FMFontDb::DB()->TransactionEnd();
 		}
-		relayStartingStepIn ( QString::number ( sysCounter ) + " " + tr ( "sytem fonts added." ) );
+		relayStartingStepIn ( QString::number ( sysCounter ) + " " + tr ( "system fonts added." ) );
 	}
 
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();

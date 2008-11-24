@@ -208,6 +208,20 @@ void FMFontCompareView::removeFont(int level)
 		glyphs.remove(level);
 	}
 	elements.remove(level);
+	int maxLevel(0);
+	foreach(int l, glyphs.keys())
+	{
+		maxLevel = qMax(maxLevel, l);
+	}
+	for(int i(level+1); i <= maxLevel; ++i)
+	{
+		if(glyphs.contains(i))
+		{
+			glyphs[i-1] = glyphs[i];
+			glyphs.remove(i);
+		}
+	}
+	
 }
 
 void FMFontCompareView::changeChar(uint ccode)

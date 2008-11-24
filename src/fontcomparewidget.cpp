@@ -36,33 +36,44 @@ FontCompareWidget::~ FontCompareWidget()
 
 void FontCompareWidget::addFont()
 {
-	QList<FontItem*> fl(typotek::getInstance()->getCurrentFonts());
-	QMap<QString, FontItem*> fm;
-	foreach(FontItem* f, fl)
-	{
-		fm[f->path()] = f;
-	}
-	bool ok;
-	QString item = QInputDialog::getItem(this, "Fontmatrix", "Please select a font file", fm.keys() , 0, false, &ok);
-	if (ok && !item.isEmpty())
-	{
-		curFont = fm[item]->path();
-		QListWidgetItem* witem = new QListWidgetItem(fm[item]->fancyName());
-		witem->setData(Qt::UserRole, fm[item]->path());
-		witem->setToolTip(fm[item]->path()); // Here we say: « Deux fois valent mieux qu’une !»
+// 	QList<FontItem*> fl(typotek::getInstance()->getCurrentFonts());
+// 	QMap<QString, FontItem*> fm;
+// 	foreach(FontItem* f, fl)
+// 	{
+// 		fm[f->path()] = f;
+// 	}
+// 	bool ok;
+// 	QString item = QInputDialog::getItem(this, "Fontmatrix", "Please select a font file", fm.keys() , 0, false, &ok);
+// 	if (ok && !item.isEmpty())
+// 	{
+		FontItem *f(typotek::getInstance()->getSelectedFont());
+		if(!f)
+			return;
+		curFont = f->path();
+		QListWidgetItem* witem = new QListWidgetItem(f->fancyName());
+		witem->setData(Qt::UserRole, f->path());
+		witem->setToolTip(f->path()); // Here we say: « Deux fois valent mieux qu’une !»
 		compareList->addItem(witem);
 		
-		compareView->changeFont(compareList->row(witem), fm[item]);
+		compareView->changeFont(compareList->row(witem), f);
 		QPixmap px(32,32);
 		px.fill(compareView->getColor(compareList->row(witem)));
 		witem->setIcon( QIcon(px) );
-		compareCharSelect->setRange( fm[item]->firstChar(),  fm[item]->firstChar() +  fm[item]->countChars() );
-		compareCharSelect->setValue(fm[item]->firstChar());
-	}
+		compareCharSelect->setRange( f->firstChar(),  f->firstChar() +  f->countChars() );
+		compareCharSelect->setValue(f->firstChar());
+// 	}
 }
 
 void FontCompareWidget::removeFont()
 {
+	if(compareList->selectedItems().isEmpty())
+		return;
+	QListWidgetItem *witem(compareList->selectedItems().at(0));
+	int idx(compareList->row(witem));
+	
+	compareView->removeFont(idx);
+	delete witem;
+	
 }
 
 void FontCompareWidget::fillChange()

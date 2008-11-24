@@ -1057,6 +1057,11 @@ QList<FontItem*> typotek::getCurrentFonts()
 	return theMainView->curFonts();
 }
 
+FontItem * typotek::getSelectedFont()
+{
+	return theMainView->selectedFont();
+}
+
 void typotek::keyPressEvent ( QKeyEvent * event )
 {
 // 	qDebug() << "typotek::keyPressEvent(QKeyEvent * "<<event<<")";

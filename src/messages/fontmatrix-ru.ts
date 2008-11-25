@@ -98,24 +98,29 @@
         <translation>Заливку</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="60"/>
+        <location filename="../comparewidget.ui" line="82"/>
         <source>Controls</source>
         <translation>Рычаги</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="67"/>
+        <location filename="../comparewidget.ui" line="60"/>
         <source>Metrics</source>
         <translation>Метрики</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="82"/>
+        <location filename="../comparewidget.ui" line="100"/>
         <source>Select a character</source>
         <translation>Выберите символ</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="101"/>
+        <location filename="../comparewidget.ui" line="119"/>
         <source>Name of character</source>
         <translation>Название символа</translation>
+    </message>
+    <message>
+        <location filename="../comparewidget.ui" line="70"/>
+        <source>Points</source>
+        <translation>Узлы</translation>
     </message>
 </context>
 <context>
@@ -340,7 +345,7 @@
         <location filename="../fmfontstrings.cpp" line="84"/>
         <source>Script</source>
         <comment>Family Type</comment>
-        <translation type="unfinished">Письменность</translation>
+        <translation>Рукописная</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="85"/>
@@ -1361,12 +1366,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="300"/>
         <source>Friendly Name</source>
-        <translation>Их удобочитаемое название</translation>
+        <translation>Удобочитаемое название</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="634"/>
         <source>Glyphs</source>
-        <translation>Знаки</translation>
+        <translation>Глифы</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="672"/>
@@ -1476,7 +1481,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="861"/>
         <source>Classification</source>
-        <translation>Классификация по Panose</translation>
+        <translation>Классификация</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="898"/>
@@ -3693,7 +3698,7 @@ the following tag:</source>
     <message>
         <location filename="../multiprintdialog.ui" line="61"/>
         <source>Glyphs chart</source>
-        <translation>Знаки</translation>
+        <translation>Карта глифов</translation>
     </message>
     <message>
         <location filename="../multiprintdialog.ui" line="68"/>

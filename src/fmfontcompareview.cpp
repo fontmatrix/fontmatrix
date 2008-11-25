@@ -133,7 +133,7 @@ void FMFontCompareItem::drawPoint(QPointF point , bool control)
 
 void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 {
-	qDebug()<<"FMFontCompareItem::show"<<char_code<<font->fancyName();
+// 	qDebug()<<"FMFontCompareItem::show"<<char_code<<font->fancyName();
 	// As it’s lightweight graphic, no need to be too much circonvoluted
 	clear();
 	if(!font)
@@ -234,6 +234,7 @@ FMFontCompareView::FMFontCompareView(QWidget * parent)
 	:QGraphicsView(parent)
 {
 	setScene(new QGraphicsScene(0,-1000,1000,1000,this));
+	scene()->setBackgroundBrush(Qt::white);
 	setRenderHint(QPainter::Antialiasing,true);
 	theRect = scene()->addRect ( QRectF(),QPen ( QColor ( 10,10,200 ) ), QColor ( 10,10,200,100 ) );
 	theRect->setZValue ( 1000.0 );
@@ -301,7 +302,7 @@ void FMFontCompareView::changeChar(int level, uint ccode)
 
 void FMFontCompareView::setElements(int level, FMFontCompareItem::GElements elems)
 {
-	qDebug()<<"FMFontCompareView::setElements"<<level<<elems;
+// 	qDebug()<<"FMFontCompareView::setElements"<<level<<elems;
 	elements[level] = elems;
 	updateGlyphs();
 }

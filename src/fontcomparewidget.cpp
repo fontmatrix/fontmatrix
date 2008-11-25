@@ -15,6 +15,12 @@
 #include "typotek.h"
 #include "fmfontdb.h"
 
+// #define RECORD_MY_REMIX
+#ifdef RECORD_MY_REMIX
+#include <QImage>
+#include <QPainter>
+#endif
+
 #include <QDebug>
 
 FontCompareWidget::FontCompareWidget(QWidget * parent)
@@ -168,6 +174,17 @@ void FontCompareWidget::characterChange(int v)
 	}
 	
 	compareCharName->setText(QChar(nc));
+#ifdef RECORD_MY_REMIX
+	// a bit of fun!
+	QImage img(compareView->size(), QImage::Format_ARGB32);
+	QPainter p(&img);
+	p.setRenderHint(QPainter::Antialiasing,true);
+	compareView->render(&p);
+	
+	QString ip(QString("cmp-%1.png").arg(curcode,8, 10,  QChar('0') ));
+	img.save(ip.toLocal8Bit());
+	
+#endif
 	
 }
 

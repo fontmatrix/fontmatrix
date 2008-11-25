@@ -76,7 +76,7 @@ ListDockWidget::ListDockWidget()
 	folderViewContextMenu = 0;
 
 	QSettings settings;
-	QString lastUsedDir = settings.value("LastUsedFolder", QDir::homePath()).toString();
+	QString lastUsedDir = settings.value("Places/LastUsedFolder", QDir::homePath()).toString();
 	QDir d(lastUsedDir);
 	if (!d.exists())
 		lastUsedDir = QDir::homePath();
@@ -385,7 +385,7 @@ void ListDockWidget::settingsDir(const QString &path)
 		dirPath = fi.absoluteDir().absolutePath();
 
 	QSettings settings;
-	settings.setValue("LastUsedFolder", dirPath);
+	settings.setValue("Places/LastUsedFolder", dirPath);
 
 	s = path;
 }
@@ -394,7 +394,7 @@ void ListDockWidget::slotTabChanged(int i)
 {
 	if (i == 2) {  // if the new tab is the folder view
 		QSettings settings;
-		QString lastUsedDir = settings.value("LastUsedFolder", QDir::homePath()).toString();
+		QString lastUsedDir = settings.value("Places/LastUsedFolder", QDir::homePath()).toString();
 		QDir d(lastUsedDir);
 		if (!d.exists())
 			lastUsedDir = QDir::homePath();

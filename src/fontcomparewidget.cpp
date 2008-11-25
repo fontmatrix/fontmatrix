@@ -134,6 +134,8 @@ void FontCompareWidget::characterChange(int v)
 
 void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * olditem)
 {
+	if((!witem) || (!compareList->count()))
+		return;
 	curFont = witem->data(Qt::UserRole).toString();
 	
 	FontItem *f(FMFontDb::DB()->Font(curFont));

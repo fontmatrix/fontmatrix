@@ -139,7 +139,7 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	if(!font)
 		return;
 	
-	path = font->itemFromChar( char_code, font->getUnitPerEm() );
+	path = font->itemFromChar( char_code, 1000 );
 	if(!path)
 	{
 		qDebug()<<"Unable to load char"<<char_code<<"from font"<<font->fancyName();

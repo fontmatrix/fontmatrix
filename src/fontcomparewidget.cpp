@@ -98,10 +98,11 @@ void FontCompareWidget::addFont()
 	
 	compareCharBox->clear();
 	int cc(f->firstChar());
+	QStringList cl;
 	for(int co(1); co <= cn; co++)
 	{
 		compareCharBox->addItem(QString("%1  (U+%2)").arg(QChar(cc)).arg(cc,4,16,QChar('0')),cc);
-		cc = f->nextChar(cc,co);
+		cc = f->nextChar(cc,1);
 	}
 	compareCharBox->adjustSize();
 	compareFill->setCheckState(Qt::Unchecked);
@@ -171,7 +172,7 @@ void FontCompareWidget::metricsChange()
 
 void FontCompareWidget::characterChange(int v)
 {
-	qDebug()<<"FontCompareWidget::characterChange"<<v;
+// 	qDebug()<<"FontCompareWidget::characterChange"<<v;
 	FontItem *f(FMFontDb::DB()->Font(curFont));
 	if(!f)
 		return;
@@ -195,6 +196,8 @@ void FontCompareWidget::characterChange(int v)
 		nc = f->nextChar( f->firstChar() , v);
 		curcode = nc;
 	}
+	
+	compareCharBox->setCurrentIndex(v);
 	
 	if(compareSyncChars->isChecked())
 		compareView->changeChar(curcode);
@@ -224,10 +227,12 @@ void FontCompareWidget::characterChange(int v)
 
 void FontCompareWidget::characterBoxChange(int i)
 {
-	qDebug()<<"FontCompareWidget::characterBoxChange"<<i;
+// 	qDebug()<<"FontCompareWidget::characterBoxChange"<<i;
 	FontItem *f(FMFontDb::DB()->Font(curFont));
 	if(!f)
 		return;
+	
+	compareCharSelect->setValue(i);
 	
 	int nc(compareCharBox->itemData(i).toInt());
 	curcode = nc;
@@ -262,8 +267,8 @@ void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * ol
 	int cc(f->firstChar());
 	for(int co(1); co <= cn; co++)
 	{
-		compareCharBox->addItem(QString("%1  (U+%2)").arg(QChar(cc)).arg(cc,4,16,QChar('0')),cc);
-		cc = f->nextChar(cc,co);
+		compareCharBox->addItem( QString("%1  (U+%2)").arg(QChar(cc)).arg(cc,4,16,QChar('0')),cc);
+		cc = f->nextChar(cc,1);
 	}
 	compareCharBox->adjustSize();
 	

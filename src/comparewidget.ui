@@ -13,7 +13,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" >
-   <item row="0" column="0" colspan="3" >
+   <item row="0" column="0" colspan="4" >
     <widget class="QSplitter" name="splitter" >
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
@@ -157,13 +157,6 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="2" >
-    <widget class="QLabel" name="compareCharName" >
-     <property name="text" >
-      <string>Name of character</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0" >
     <widget class="QCheckBox" name="compareSyncChars" >
      <property name="text" >
@@ -171,6 +164,19 @@
      </property>
      <property name="checked" >
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" >
+    <widget class="QComboBox" name="compareCharBox" >
+     <property name="maxVisibleItems" >
+      <number>12</number>
+     </property>
+     <property name="sizeAdjustPolicy" >
+      <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+     </property>
+     <property name="minimumContentsLength" >
+      <number>8</number>
      </property>
     </widget>
    </item>

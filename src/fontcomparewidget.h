@@ -28,6 +28,9 @@ class FontCompareWidget : public QWidget, private Ui::CompareWidget
 		uint curcode;
 		bool neverUsed;
 		
+		void doconnect();
+		void dodisconnect();
+		
 	private slots:
 		void addFont();
 		void removeFont();
@@ -35,7 +38,8 @@ class FontCompareWidget : public QWidget, private Ui::CompareWidget
 		void pointsChange();
 		void controlsChange();
 		void metricsChange();
-		void characterChange(int v);	
+		void characterChange(int v);
+		void characterBoxChange(int i);
 		void fontChange(QListWidgetItem * witem, QListWidgetItem * olditem = 0);
 		void syncChange(int state);
 };

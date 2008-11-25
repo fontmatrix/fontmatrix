@@ -28,6 +28,15 @@ FontCompareWidget::FontCompareWidget(QWidget * parent)
 {
 	setupUi(this);
 	
+	doconnect();
+}
+
+FontCompareWidget::~ FontCompareWidget()
+{
+	
+}
+void FontCompareWidget::doconnect()
+{
 	connect( compareAdd,SIGNAL(clicked()), this, SLOT(addFont()));
 	connect( compareRemove,SIGNAL(clicked()), this, SLOT(removeFont()));
 	connect( compareFill,SIGNAL(clicked()), this, SLOT(fillChange()));
@@ -35,13 +44,23 @@ FontCompareWidget::FontCompareWidget(QWidget * parent)
 	connect( compareControls,SIGNAL(clicked()), this, SLOT(controlsChange()));
 	connect( compareMetrics,SIGNAL(clicked()), this, SLOT(metricsChange()));
 	connect( compareCharSelect,SIGNAL(valueChanged(int)), this, SLOT(characterChange(int)));
-// 	connect( compareList, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*)));
+	connect( compareCharBox,SIGNAL(currentIndexChanged(int)), this, SLOT(characterBoxChange(int)));
 	connect( compareList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*,QListWidgetItem*)));
 	connect( compareSyncChars, SIGNAL(stateChanged( int )), this, SLOT(syncChange(int)));
 }
 
-FontCompareWidget::~ FontCompareWidget()
+void FontCompareWidget::dodisconnect()
 {
+	disconnect( compareAdd,SIGNAL(clicked()), this, SLOT(addFont()));
+	disconnect( compareRemove,SIGNAL(clicked()), this, SLOT(removeFont()));
+	disconnect( compareFill,SIGNAL(clicked()), this, SLOT(fillChange()));
+	disconnect( comparePoints,SIGNAL(clicked()), this, SLOT(pointsChange()));
+	disconnect( compareControls,SIGNAL(clicked()), this, SLOT(controlsChange()));
+	disconnect( compareMetrics,SIGNAL(clicked()), this, SLOT(metricsChange()));
+	disconnect( compareCharSelect,SIGNAL(valueChanged(int)), this, SLOT(characterChange(int)));
+	disconnect( compareCharBox,SIGNAL(currentIndexChanged(int)), this, SLOT(characterBoxChange(int)));
+	disconnect( compareList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*,QListWidgetItem*)));
+	disconnect( compareSyncChars, SIGNAL(stateChanged( int )), this, SLOT(syncChange(int)));
 }
 
 void FontCompareWidget::addFont()
@@ -49,6 +68,7 @@ void FontCompareWidget::addFont()
 	FontItem *f(typotek::getInstance()->getSelectedFont());
 	if(!f)
 		return;
+	dodisconnect();
 	curFont = f->path();
 	QListWidgetItem* witem = new QListWidgetItem(f->fancyName());
 	witem->setData(Qt::UserRole, f->path());
@@ -60,7 +80,10 @@ void FontCompareWidget::addFont()
 	QPixmap px(32,32);
 	px.fill(compareView->getColor(compareList->row(witem)));
 	witem->setIcon( QIcon(px) );
-	compareCharSelect->setRange( 0 ,   f->countChars() );
+	
+	int cn(f->countChars());
+	compareCharSelect->setRange( 0 ,  cn );	
+	
 	
 	if(!neverUsed)
 	{
@@ -72,11 +95,21 @@ void FontCompareWidget::addFont()
 		characterChange(0);
 		neverUsed = false;
 	}
-
+	
+	compareCharBox->clear();
+	int cc(f->firstChar());
+	for(int co(1); co <= cn; co++)
+	{
+		compareCharBox->addItem(QString("%1  (U+%2)").arg(QChar(cc)).arg(cc,4,16,QChar('0')),cc);
+		cc = f->nextChar(cc,co);
+	}
+	compareCharBox->adjustSize();
 	compareFill->setCheckState(Qt::Unchecked);
 	comparePoints->setChecked(false);
 	compareControls->setCheckState(Qt::Unchecked);
 	compareMetrics->setCheckState(Qt::Unchecked);
+	
+	doconnect();
 }
 
 void FontCompareWidget::removeFont()
@@ -138,6 +171,7 @@ void FontCompareWidget::metricsChange()
 
 void FontCompareWidget::characterChange(int v)
 {
+	qDebug()<<"FontCompareWidget::characterChange"<<v;
 	FontItem *f(FMFontDb::DB()->Font(curFont));
 	if(!f)
 		return;
@@ -163,17 +197,17 @@ void FontCompareWidget::characterChange(int v)
 	}
 	
 	if(compareSyncChars->isChecked())
-		compareView->changeChar(nc);
+		compareView->changeChar(curcode);
 	else
 	{
 		if(!compareList->selectedItems().isEmpty())
 		{
 			int r(compareList->row(compareList->selectedItems().first()));
-			compareView->changeChar(r,nc);
+			compareView->changeChar(r,curcode);
 		}
 	}
 	
-	compareCharName->setText(QChar(nc));
+// 	compareCharName->setText(QChar(nc));
 #ifdef RECORD_MY_REMIX
 	// a bit of fun!
 	QImage img(compareView->size(), QImage::Format_ARGB32);
@@ -186,6 +220,27 @@ void FontCompareWidget::characterChange(int v)
 	
 #endif
 	
+}
+
+void FontCompareWidget::characterBoxChange(int i)
+{
+	qDebug()<<"FontCompareWidget::characterBoxChange"<<i;
+	FontItem *f(FMFontDb::DB()->Font(curFont));
+	if(!f)
+		return;
+	
+	int nc(compareCharBox->itemData(i).toInt());
+	curcode = nc;
+	if(compareSyncChars->isChecked())
+		compareView->changeChar(curcode);
+	else
+	{
+		if(!compareList->selectedItems().isEmpty())
+		{
+			int r(compareList->row(compareList->selectedItems().first()));
+			compareView->changeChar(r,curcode);
+		}
+	}
 }
 
 void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * olditem)
@@ -201,7 +256,18 @@ void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * ol
 	curFont = witem->data(Qt::UserRole).toString();
 	
 	FontItem *f(FMFontDb::DB()->Font(curFont));
-	compareCharSelect->setRange( 0,   f->countChars() );
+	
+	int cn(f->countChars());
+	compareCharBox->clear();
+	int cc(f->firstChar());
+	for(int co(1); co <= cn; co++)
+	{
+		compareCharBox->addItem(QString("%1  (U+%2)").arg(QChar(cc)).arg(cc,4,16,QChar('0')),cc);
+		cc = f->nextChar(cc,co);
+	}
+	compareCharBox->adjustSize();
+	
+	compareCharSelect->setRange( 0,  cn );
 	
 	int r(compareList->row(witem));
 	FMFontCompareItem::GElements e(compareView->getElements(r));
@@ -244,10 +310,11 @@ void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * ol
 
 void FontCompareWidget::syncChange(int state)
 {
-	if((state == Qt::Checked) && (!neverUsed) && (!compareCharName->text().isEmpty()))
+	if((state == Qt::Checked) && (!neverUsed))
 	{
-		qDebug()<<"CHAR"<<compareCharName->text()<<compareCharName->text().at(0).unicode();
 		characterChange(-1);
 	}
 }
+
+
 

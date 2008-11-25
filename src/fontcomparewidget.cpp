@@ -18,7 +18,7 @@
 #include <QDebug>
 
 FontCompareWidget::FontCompareWidget(QWidget * parent)
-	:QWidget(parent)
+	:QWidget(parent),neverUsed(true)
 {
 	setupUi(this);
 	
@@ -31,6 +31,7 @@ FontCompareWidget::FontCompareWidget(QWidget * parent)
 	connect( compareCharSelect,SIGNAL(valueChanged(int)), this, SLOT(characterChange(int)));
 // 	connect( compareList, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*)));
 	connect( compareList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*,QListWidgetItem*)));
+	connect( compareSyncChars, SIGNAL(stateChanged( int )), this, SLOT(syncChange(int)));
 }
 
 FontCompareWidget::~ FontCompareWidget()
@@ -53,13 +54,18 @@ void FontCompareWidget::addFont()
 	QPixmap px(32,32);
 	px.fill(compareView->getColor(compareList->row(witem)));
 	witem->setIcon( QIcon(px) );
-	compareCharSelect->setRange( f->firstChar(),  f->firstChar() +  f->countChars() );
+	compareCharSelect->setRange( 0 ,   f->countChars() );
 	
-	if((compareList->count()>1) && (!compareCharName->text().isEmpty()))
+	if(!neverUsed)
 	{
-		compareView->changeChar(compareCharName->text().at(0).unicode());
+		compareView->changeChar(curcode);
 	}
-	
+	else
+	{
+		compareView->fitGlyphsView();
+		characterChange(0);
+		neverUsed = false;
+	}
 
 	compareFill->setCheckState(Qt::Unchecked);
 	comparePoints->setChecked(false);
@@ -71,7 +77,7 @@ void FontCompareWidget::removeFont()
 {
 	if(compareList->selectedItems().isEmpty())
 		return;
-	QListWidgetItem *witem(compareList->selectedItems().at(0));
+	QListWidgetItem *witem(compareList->selectedItems().first());
 	int idx(compareList->row(witem));
 	
 	compareView->removeFont(idx);
@@ -83,7 +89,7 @@ void FontCompareWidget::fillChange()
 {
 	if(compareList->selectedItems().isEmpty())
 		return;
-	int r(compareList->row(compareList->selectedItems().at(0)));
+	int r(compareList->row(compareList->selectedItems().first()));
 	if(compareFill->isChecked())
 		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Fill);
 	else
@@ -95,7 +101,7 @@ void FontCompareWidget::pointsChange()
 {
 	if(compareList->selectedItems().isEmpty())
 		return;
-	int r(compareList->row(compareList->selectedItems().at(0)));
+	int r(compareList->row(compareList->selectedItems().first()));
 	if(comparePoints->isChecked())
 		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Points);
 	else
@@ -106,7 +112,7 @@ void FontCompareWidget::controlsChange()
 {
 	if(compareList->selectedItems().isEmpty())
 		return;
-	int r(compareList->row(compareList->selectedItems().at(0)));
+	int r(compareList->row(compareList->selectedItems().first()));
 	if(compareControls->isChecked())
 		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Controls);
 	else
@@ -117,7 +123,7 @@ void FontCompareWidget::metricsChange()
 {
 	if(compareList->selectedItems().isEmpty())
 		return;
-	int r(compareList->row(compareList->selectedItems().at(0)));
+	int r(compareList->row(compareList->selectedItems().first()));
 	if(compareMetrics->isChecked())
 		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Metrics);
 	else
@@ -127,8 +133,40 @@ void FontCompareWidget::metricsChange()
 void FontCompareWidget::characterChange(int v)
 {
 	FontItem *f(FMFontDb::DB()->Font(curFont));
-	int nc(f->nextChar( f->firstChar() , v) );
-	compareView->changeChar(nc);
+	if(!f)
+		return;
+	int nc(0);
+	if(v < 0)
+	{
+		nc = curcode;
+	}
+	else if(v == 0) // someone  asked for first char, just avoid a white space!
+	{
+		do
+		{
+			compareCharSelect->setValue(v);
+			nc = f->nextChar( f->firstChar() , v);
+			++v;
+			
+		}while(f->legitimateNonPathChars.contains(nc));
+	}
+	else
+	{
+		nc = f->nextChar( f->firstChar() , v);
+		curcode = nc;
+	}
+	
+	if(compareSyncChars->isChecked())
+		compareView->changeChar(nc);
+	else
+	{
+		if(!compareList->selectedItems().isEmpty())
+		{
+			int r(compareList->row(compareList->selectedItems().first()));
+			compareView->changeChar(r,nc);
+		}
+	}
+	
 	compareCharName->setText(QChar(nc));
 	
 }
@@ -136,11 +174,17 @@ void FontCompareWidget::characterChange(int v)
 void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * olditem)
 {
 	if(!witem)
+	{
+		compareFill->setCheckState(Qt::Unchecked);
+		comparePoints->setChecked(false);
+		compareControls->setCheckState(Qt::Unchecked);
+		compareMetrics->setCheckState(Qt::Unchecked);
 		return;
+	}
 	curFont = witem->data(Qt::UserRole).toString();
 	
 	FontItem *f(FMFontDb::DB()->Font(curFont));
-	compareCharSelect->setRange( f->firstChar(),  f->firstChar() +  f->countChars() );
+	compareCharSelect->setRange( 0,   f->countChars() );
 	
 	int r(compareList->row(witem));
 	FMFontCompareItem::GElements e(compareView->getElements(r));
@@ -178,6 +222,15 @@ void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * ol
 	else
 	{
 		compareMetrics->setCheckState(Qt::Unchecked);
+	}
+}
+
+void FontCompareWidget::syncChange(int state)
+{
+	if((state == Qt::Checked) && (!neverUsed) && (!compareCharName->text().isEmpty()))
+	{
+		qDebug()<<"CHAR"<<compareCharName->text()<<compareCharName->text().at(0).unicode();
+		characterChange(-1);
 	}
 }
 

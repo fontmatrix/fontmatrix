@@ -244,7 +244,7 @@ QVariant FMFontDb::getValue ( const QString & id, Field field, bool useCache )
 
 FontInfoMap FMFontDb::getInfoMap ( const QString & id )
 {
-	qDebug() <<"getInfoMap"<<id;
+// 	qDebug() <<"getInfoMap"<<id;
 	FontInfoMap ret;
 	if ( id.isEmpty() )
 	{
@@ -359,7 +359,7 @@ void FMFontDb::setTags ( const QString & id, const QStringList & tl )
 
 QStringList FMFontDb::getTags()
 {
-	qDebug() <<"getTags";
+// 	qDebug() <<"getTags";
 	QString qs ( QString ( "SELECT %1 FROM %2" )
 	             .arg ( fieldName[Tags] )
 	             .arg ( tableName[Tag] ) );
@@ -380,7 +380,7 @@ QStringList FMFontDb::getTags()
 
 void FMFontDb::addTagToDB ( const QString & t )
 {
-	qDebug() << "addtag"<< t;
+// 	qDebug() << "addtag"<< t;
 	QString vs ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4','%5')" )
 	             .arg ( tableName[Tag] )
 	             .arg ( fieldName[Id] )
@@ -415,7 +415,7 @@ void FMFontDb::editTag(const QString & tOld, const QString & tNew)
 
 void FMFontDb::initFMDb()
 {
-	qDebug() <<"initFMDb";
+// 	qDebug() <<"initFMDb";
 
 	setHostName ( typotek::getInstance()->getDatabaseHostname() );
 	setDatabaseName ( typotek::getInstance()->getDatabaseDbName() );
@@ -587,7 +587,7 @@ int FMFontDb::getId ( const QString & fontid )
 
 FontItem * FMFontDb::Font ( const QString & id , bool noTemporary )
 {
-	qDebug() <<"Font"<<id;
+// 	qDebug() <<"Font"<<id;
 	FontItem * fitem ( 0 );
 	if ( id.isEmpty() )
 		return fitem;
@@ -662,13 +662,13 @@ void FMFontDb::TransactionBegin()
 		transaction();
 		transactionError.clear();
 		++transactionDeep;
-		qDebug() <<"TransactionBegin";
+// 		qDebug() <<"TransactionBegin";
 	}
 }
 
 bool FMFontDb::TransactionEnd()
 {
-	qDebug() <<"TransactionEnd";
+// 	qDebug() <<"TransactionEnd";
 
 	--transactionDeep;
 	if ( transactionDeep > 0 )

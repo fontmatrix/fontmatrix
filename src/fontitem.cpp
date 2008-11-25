@@ -65,8 +65,8 @@ QMap<int, QString> langIdMap;
 int theLocalLangCode;
 
 
-QList<int> legitimateNonPathChars;
-QMap< int, QString > fstypeMap;
+QList<int> FontItem::legitimateNonPathChars;
+QMap< int, QString > FontItem::fstypeMap;
 
 QVector<QRgb> gray256Palette;
 QVector<QRgb> invertedGray256Palette;

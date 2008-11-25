@@ -75,27 +75,36 @@ void FMFontCompareItem::toScreen()
 {
 	if(!scene)
 		return;
+	QRectF itemsBB(scene->sceneRect());
 	foreach(QGraphicsLineItem* li, lines_controls)
 	{
 		scene->addItem(li);
+		itemsBB = itemsBB.united(li->boundingRect());
 		li->setZValue(zindex);
 		
 	}
 	foreach(QGraphicsLineItem* li, lines_metrics)
 	{
 		scene->addItem(li);
+		itemsBB = itemsBB.united(li->boundingRect());
 		li->setZValue(zindex);
 	}
 	foreach(QGraphicsEllipseItem *ri, points)
 	{
 		scene->addItem(ri);
+		itemsBB = itemsBB.united(ri->boundingRect());
 		ri->setZValue(zindex);
 	}
 	if(path)
 	{
 		scene->addItem(path);
+		itemsBB = itemsBB.united(path->boundingRect());
 		path->setZValue(zindex);
 	}
+	
+	scene->setSceneRect(itemsBB);
+// 	qDebug()<<"R"<<scene->sceneRect();
+	
 }
 
 QRectF FMFontCompareItem::boundingRect()
@@ -124,14 +133,18 @@ void FMFontCompareItem::drawPoint(QPointF point , bool control)
 
 void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 {
+	qDebug()<<"FMFontCompareItem::show"<<char_code<<font->fancyName();
 	// As it’s lightweight graphic, no need to be too much circonvoluted
 	clear();
 	if(!font)
 		return;
 	
-	path = font->itemFromChar(char_code, 1000.0);
+	path = font->itemFromChar( char_code, font->getUnitPerEm() );
 	if(!path)
+	{
+		qDebug()<<"Unable to load char"<<char_code<<"from font"<<font->fancyName();
 		return;
+	}
 	path->setPen(QPen(color));
 	
 	if(elems.testFlag(Fill))
@@ -220,11 +233,16 @@ QMap<QString, QBrush> FMFontCompareView::brushes;
 FMFontCompareView::FMFontCompareView(QWidget * parent)
 	:QGraphicsView(parent)
 {
-	setScene(new QGraphicsScene(this));
+	setScene(new QGraphicsScene(0,-1000,1000,1000,this));
 	setRenderHint(QPainter::Antialiasing,true);
 	theRect = scene()->addRect ( QRectF(),QPen ( QColor ( 10,10,200 ) ), QColor ( 10,10,200,100 ) );
 	theRect->setZValue ( 1000.0 );
 	initPensAndBrushes();
+	setInteractive ( true );
+	isSelecting = false;
+	isPanning = false;
+	setAlignment ( Qt::AlignVCenter | Qt::AlignHCenter );
+	setTransformationAnchor ( QGraphicsView::NoAnchor );
 }
 
 FMFontCompareView::~ FMFontCompareView()
@@ -274,6 +292,13 @@ void FMFontCompareView::changeChar(uint ccode)
 	updateGlyphs();
 }
 
+void FMFontCompareView::changeChar(int level, uint ccode)
+{
+	if(glyphs.contains(level))
+		glyphs[level]->setChar(ccode);
+	updateGlyphs();
+}
+
 void FMFontCompareView::setElements(int level, FMFontCompareItem::GElements elems)
 {
 	qDebug()<<"FMFontCompareView::setElements"<<level<<elems;
@@ -313,31 +338,10 @@ void FMFontCompareView::initPensAndBrushes()
 
 void FMFontCompareView::updateGlyphs()
 {
-// 	QRectF maxrect;
 	foreach(int l, glyphs.keys())
 	{
 		glyphs[l]->show(elements[l]);
-// 		maxrect = maxrect.united(glyphs[l]->boundingRect());
 	}
-// 	double hratio(static_cast<double>(width()) / maxrect.width());
-// 	double vratio(static_cast<double>(height()) / maxrect.height());
-// 	double shape_ratio(qMin(hratio, vratio) * 0.9);
-// 	double view_ratio(qMin(hratio, vratio) * 1.5);
-// 
-// 	setMatrix(QMatrix(),false);
-// 	scale(shape_ratio, shape_ratio);
-// 	
-// 	QMatrix m;
-// 	m.scale(view_ratio, view_ratio );
-// 	QRectF vr(m.mapRect(maxrect));
-// 	ensureVisible(vr);
-// 	
-// 	qDebug()<<"M"<<maxrect;
-// 	qDebug()<<"S"<<vr;
-// 	qDebug()<<"V"<<rect();
-// 	qDebug()<<"VR"<<vr;
-// 	qDebug()<<"MR"<<maxrect;
-	
 }
 
 QColor FMFontCompareView::getColor(int level)
@@ -368,13 +372,14 @@ void FMFontCompareView::mouseReleaseEvent(QMouseEvent * e)
 	{
 		isPanning = false;
 		QApplication::restoreOverrideCursor();
+		updateGlyphs();
 		return;
 	}
 	if ( !isSelecting )
 		return;
 	if ( mouseStartPoint.toPoint() == mapToScene ( e->pos() ).toPoint() )
 	{
-		setMatrix(QMatrix(),false);
+		fitGlyphsView();
 		isSelecting = false;
 		theRect->setRect ( QRectF() );
 		return;
@@ -398,6 +403,7 @@ void FMFontCompareView::mouseMoveEvent(QMouseEvent * e)
 		verticalScrollBar()->setValue ( verticalScrollBar()->value() + vDelta );
 		horizontalScrollBar()->setValue ( horizontalScrollBar()->value() + hDelta );
 		mouseStartPoint = pos;
+		updateGlyphs();
 		return;
 	}
 	if ( !isSelecting )
@@ -423,11 +429,33 @@ void FMFontCompareView::wheelEvent(QWheelEvent * e)
 		if ( e->orientation() == Qt::Horizontal )
 			horizontalScrollBar()->setValue ( horizontalScrollBar()->value() - e->delta() );
 	}
+	updateGlyphs();
 }
 
 void FMFontCompareView::resizeEvent(QResizeEvent * event)
 {
 	updateGlyphs();
+}
+
+void FMFontCompareView::fitGlyphsView()
+{
+	QRectF maxrect;
+	foreach(int l, glyphs.keys())
+	{
+		maxrect = maxrect.united(glyphs[l]->boundingRect());
+	}
+	double hratio(static_cast<double>(width()) / maxrect.width());
+	double vratio(static_cast<double>(height()) / maxrect.height());
+	double shape_ratio(qMin(hratio, vratio) * 0.9);
+	double view_ratio(qMin(hratio, vratio) * 1.5);
+	
+	setMatrix(QMatrix(),false);
+	scale(shape_ratio, shape_ratio);
+		
+	QMatrix m;
+	m.scale(view_ratio, view_ratio );
+	QRectF vr(m.mapRect(maxrect));
+	ensureVisible(vr);
 }
 
 

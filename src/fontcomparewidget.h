@@ -25,6 +25,8 @@ class FontCompareWidget : public QWidget, private Ui::CompareWidget
 		
 	private:
 		QString curFont;
+		uint curcode;
+		bool neverUsed;
 		
 	private slots:
 		void addFont();
@@ -35,6 +37,7 @@ class FontCompareWidget : public QWidget, private Ui::CompareWidget
 		void metricsChange();
 		void characterChange(int v);	
 		void fontChange(QListWidgetItem * witem, QListWidgetItem * olditem = 0);
+		void syncChange(int state);
 };
 
 #endif

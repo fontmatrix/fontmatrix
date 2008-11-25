@@ -71,9 +71,11 @@ class FMFontCompareView : public QGraphicsView
 		void changeFont ( int level, FontItem* font );
 		void removeFont ( int level );
 		void changeChar ( uint ccode );
+		void changeChar ( int level, uint ccode );
 		void setElements ( int level, FMFontCompareItem::GElements elems );
 		FMFontCompareItem::GElements getElements ( int level );
 		QColor getColor ( int level );
+		void fitGlyphsView();
 
 		static QMap<QString, QPen> pens;
 		static QMap<QString, QBrush> brushes;
@@ -94,6 +96,7 @@ class FMFontCompareView : public QGraphicsView
 
 		void initPensAndBrushes();
 		uint thechar;
+		
 		
 		
 		QPointF mouseStartPoint;

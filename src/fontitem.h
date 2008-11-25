@@ -106,6 +106,10 @@ class FontItem : public QObject
 		};
 		Q_DECLARE_FLAGS(FsType, FsTypeFlag)
 
+		static QList<int> legitimateNonPathChars;
+		static QMap< int, QString > fstypeMap;
+		void fillLegitimateSpaces();
+		void fillLangIdMap();
 	private:
 		bool isUpToDate;
 		bool m_valid;
@@ -138,10 +142,7 @@ class FontItem : public QObject
 // 		QString m_panose;
 		double unitPerEm;
 		
-		void fillLegitimateSpaces();
-		void fillLangIdMap();
-		void fill256Palette();
-		void fillInvertedPalette();
+		
 		
 		QString getAlternateFamilyName();
 		QString getAlternateVariantName();
@@ -151,11 +152,6 @@ class FontItem : public QObject
 		bool m_isOpenType;
 		FMOtf *otf;
 
-// 		QString m_author;
-// 		QString m_foundry;
-
-// 		QStringList m_tags;
-// 		QString m_cacheInfo;
 		static FT_Library theLibrary;
 		FT_Error      ft_error;
 		FT_Face m_face;
@@ -164,6 +160,8 @@ class FontItem : public QObject
 		
 
 		QImage glyphImage();
+		void fill256Palette();
+		void fillInvertedPalette();
 		
 		bool m_rasterFreetype;
 		unsigned int m_FTHintMode;

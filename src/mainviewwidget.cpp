@@ -1338,7 +1338,7 @@ void MainViewWidget::fillUniPlanes()
 {
 // 	uniPlanes[ "Basic Multilingual Plane (BMP)"] = qMakePair(0x0000,0xFFFF) ;
 	// BMP is huge, we split it into langs
-	uniPlanes[ tr( "000Basic Latin" ) ] = qMakePair ( 0x0000,0x007F );
+	uniPlanes[ tr( "000Basic Latin" ) ] = qMakePair ( 0x0020,0x007F );
 	uniPlanes[ tr( "001Latin-1 Supplement" ) ] = qMakePair ( 0x0080,0x00FF );
 	uniPlanes[ tr( "002Latin Extended-A" ) ] = qMakePair ( 0x0100,0x017F );
 	uniPlanes[ tr( "003Latin Extended-B" ) ] = qMakePair ( 0x0180,0x024F );

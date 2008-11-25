@@ -80,6 +80,13 @@ class FMFontCompareView : public QGraphicsView
 
 	public slots:
 		void updateGlyphs();
+		
+	protected:
+		void mousePressEvent ( QMouseEvent * e ) ;
+		void mouseReleaseEvent ( QMouseEvent * e )  ;
+		void mouseMoveEvent ( QMouseEvent * e ) ;
+		void wheelEvent ( QWheelEvent * e );
+		void resizeEvent ( QResizeEvent * event );
 
 	private:
 		QMap<int, FMFontCompareItem*> glyphs; // < Z-index, glyph >
@@ -87,6 +94,13 @@ class FMFontCompareView : public QGraphicsView
 
 		void initPensAndBrushes();
 		uint thechar;
+		
+		
+		QPointF mouseStartPoint;
+		QGraphicsRectItem *theRect;
+		QGraphicsRectItem *fPage;
+		bool isSelecting;
+		bool isPanning;
 };
 
 #endif

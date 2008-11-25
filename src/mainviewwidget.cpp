@@ -1218,7 +1218,6 @@ void MainViewWidget::slotZoom ( int z )
 			double horiScaleT (( double ) QApplication::desktop()->physicalDpiX() / 72.0);
 			double vertScaleT ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0);
 			QTransform adjustAbsoluteViewT( horiScaleT , 0, 0,vertScaleT, 0, 0 );
-			qDebug()<<"m"<< adjustAbsoluteViewT;
 			trans =  adjustAbsoluteViewT;
 		}
 	}

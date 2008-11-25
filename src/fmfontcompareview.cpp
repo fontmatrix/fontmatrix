@@ -19,6 +19,9 @@
 #include <QGraphicsSimpleTextItem>
 #include <QGraphicsEllipseItem>
 #include <QSettings>
+#include <QWheelEvent>
+#include <QScrollBar>
+#include <QApplication>
 #include <QDebug>
 
 /// Item
@@ -33,7 +36,8 @@ FMFontCompareItem::FMFontCompareItem(QGraphicsScene * s, FontItem * f, int z)
 	:uuid(QUuid::createUuid()), scene(s), font(f), zindex(z),char_code(0),path(0)
 {
 // 	qDebug()<< "Create" <<uuid.toString();
-	color.setRgb(qrand() % 255,qrand() % 255, qrand() % 255, 255);
+	int ml(159);
+	color.setRgb(qrand() % ml,qrand() % ml, qrand() % ml, 255);
 }
 
 FMFontCompareItem::~ FMFontCompareItem()
@@ -183,7 +187,26 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	
 	if(elems.testFlag(Metrics))
 	{
-		// TODO draw metrics in compare fonts.
+		double xadvance(path->data(GLYPH_DATA_HADVANCE).toDouble());
+		QPointF XY(scene->views().first()->mapToScene(0,0));
+		QPointF WH(scene->views().first()->mapToScene(scene->views().first()->width(), scene->views().first()->height()));
+		double minx(XY.x());
+		double maxx(WH.x());
+		double miny(XY.y());
+		double maxy(WH.y());
+		
+		QLine leftL(0,miny,0,maxy);
+		QLine rightL(xadvance,miny,xadvance,maxy);
+		QLine bottomL(minx,0,maxx,0);
+		QPen mPen(color,1.0);
+// 		mPen.setCosmetic(true);
+		lines_controls << new QGraphicsLineItem(leftL);
+		lines_controls.last()->setPen(mPen);
+		lines_controls << new QGraphicsLineItem(rightL);
+		lines_controls.last()->setPen(mPen);
+		lines_controls << new QGraphicsLineItem(bottomL);
+		lines_controls.last()->setPen(mPen);
+		
 	}
 	
 	toScreen();
@@ -199,6 +222,8 @@ FMFontCompareView::FMFontCompareView(QWidget * parent)
 {
 	setScene(new QGraphicsScene(this));
 	setRenderHint(QPainter::Antialiasing,true);
+	theRect = scene()->addRect ( QRectF(),QPen ( QColor ( 10,10,200 ) ), QColor ( 10,10,200,100 ) );
+	theRect->setZValue ( 1000.0 );
 	initPensAndBrushes();
 }
 
@@ -288,25 +313,25 @@ void FMFontCompareView::initPensAndBrushes()
 
 void FMFontCompareView::updateGlyphs()
 {
-	QRectF maxrect;
+// 	QRectF maxrect;
 	foreach(int l, glyphs.keys())
 	{
 		glyphs[l]->show(elements[l]);
-		maxrect = maxrect.united(glyphs[l]->boundingRect());
+// 		maxrect = maxrect.united(glyphs[l]->boundingRect());
 	}
-	double hratio(static_cast<double>(width()) / maxrect.width());
-	double vratio(static_cast<double>(height()) / maxrect.height());
-	double shape_ratio(qMin(hratio, vratio) * 0.9);
-	double view_ratio(qMin(hratio, vratio) * 1.5);
-
-	setMatrix(QMatrix(),false);
-	scale(shape_ratio, shape_ratio);
-	
-	QMatrix m;
-	m.scale(view_ratio, view_ratio );
-	QRectF vr(m.mapRect(maxrect));
-	ensureVisible(vr);
-	
+// 	double hratio(static_cast<double>(width()) / maxrect.width());
+// 	double vratio(static_cast<double>(height()) / maxrect.height());
+// 	double shape_ratio(qMin(hratio, vratio) * 0.9);
+// 	double view_ratio(qMin(hratio, vratio) * 1.5);
+// 
+// 	setMatrix(QMatrix(),false);
+// 	scale(shape_ratio, shape_ratio);
+// 	
+// 	QMatrix m;
+// 	m.scale(view_ratio, view_ratio );
+// 	QRectF vr(m.mapRect(maxrect));
+// 	ensureVisible(vr);
+// 	
 // 	qDebug()<<"M"<<maxrect;
 // 	qDebug()<<"S"<<vr;
 // 	qDebug()<<"V"<<rect();
@@ -320,6 +345,89 @@ QColor FMFontCompareView::getColor(int level)
 	if(glyphs.contains(level))
 		return glyphs[level]->getColor();
 	return QColor();
+}
+
+void FMFontCompareView::mousePressEvent(QMouseEvent * e)
+{
+	if ( e->button() == Qt::MidButton )
+	{
+		mouseStartPoint =  e->pos() ;
+		isPanning = true;
+		QApplication::setOverrideCursor (QCursor(Qt::ClosedHandCursor));
+	}
+	else
+	{
+		mouseStartPoint = mapToScene ( e->pos() );
+		isSelecting = true;
+	}
+}
+
+void FMFontCompareView::mouseReleaseEvent(QMouseEvent * e)
+{
+	if ( isPanning )
+	{
+		isPanning = false;
+		QApplication::restoreOverrideCursor();
+		return;
+	}
+	if ( !isSelecting )
+		return;
+	if ( mouseStartPoint.toPoint() == mapToScene ( e->pos() ).toPoint() )
+	{
+		setMatrix(QMatrix(),false);
+		isSelecting = false;
+		theRect->setRect ( QRectF() );
+		return;
+	}
+
+	QRect zoomRect ( mouseStartPoint.toPoint(),mapToScene ( e->pos() ).toPoint() );
+	ensureVisible ( zoomRect );
+	isSelecting = false;
+	fitInView ( theRect->sceneBoundingRect(), Qt::KeepAspectRatio );
+	theRect->setRect ( QRectF() );
+
+}
+
+void FMFontCompareView::mouseMoveEvent(QMouseEvent * e)
+{
+	if ( isPanning )
+	{
+		QPointF pos ( e->pos() );
+		int vDelta ( mouseStartPoint.y() - pos.y() );
+		int hDelta ( mouseStartPoint.x() - pos.x() );
+		verticalScrollBar()->setValue ( verticalScrollBar()->value() + vDelta );
+		horizontalScrollBar()->setValue ( horizontalScrollBar()->value() + hDelta );
+		mouseStartPoint = pos;
+		return;
+	}
+	if ( !isSelecting )
+		return;
+
+	QRectF r ( mouseStartPoint,mapToScene ( e->pos() ) );
+	theRect->setRect ( r );
+}
+
+void FMFontCompareView::wheelEvent(QWheelEvent * e)
+{
+	if ( e->modifiers().testFlag ( Qt::ControlModifier ) && e->orientation() == Qt::Vertical )
+	{
+		double d(  1.0 + ( static_cast<double>(e->delta()) / 1000.0 ) );
+		QTransform trans;
+		trans.scale ( d,d );
+		setTransform(trans,true);
+	}
+	else
+	{
+		if ( e->orientation() == Qt::Vertical )
+			verticalScrollBar()->setValue ( verticalScrollBar()->value() - e->delta() );
+		if ( e->orientation() == Qt::Horizontal )
+			horizontalScrollBar()->setValue ( horizontalScrollBar()->value() - e->delta() );
+	}
+}
+
+void FMFontCompareView::resizeEvent(QResizeEvent * event)
+{
+	updateGlyphs();
 }
 
 

@@ -29,7 +29,8 @@ FontCompareWidget::FontCompareWidget(QWidget * parent)
 	connect( compareControls,SIGNAL(clicked()), this, SLOT(controlsChange()));
 	connect( compareMetrics,SIGNAL(clicked()), this, SLOT(metricsChange()));
 	connect( compareCharSelect,SIGNAL(valueChanged(int)), this, SLOT(characterChange(int)));
-	connect( compareList, SIGNAL(currentItemChanged ( QListWidgetItem * , QListWidgetItem *  )  ), this, SLOT(fontChange(QListWidgetItem*, QListWidgetItem * )));
+// 	connect( compareList, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*)));
+	connect( compareList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*,QListWidgetItem*)));
 }
 
 FontCompareWidget::~ FontCompareWidget()
@@ -134,7 +135,7 @@ void FontCompareWidget::characterChange(int v)
 
 void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * olditem)
 {
-	if((!witem) || (!compareList->count()))
+	if(!witem)
 		return;
 	curFont = witem->data(Qt::UserRole).toString();
 	

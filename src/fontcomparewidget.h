@@ -30,10 +30,12 @@ class FontCompareWidget : public QWidget, private Ui::CompareWidget
 		
 		void doconnect();
 		void dodisconnect();
+		void resetElements();
 		
 	private slots:
 		void addFont();
 		void removeFont();
+		void showChange();
 		void fillChange();
 		void pointsChange();
 		void controlsChange();

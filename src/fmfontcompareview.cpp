@@ -139,7 +139,11 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	if(!font)
 		return;
 	
-	path = font->itemFromChar( char_code, 1000 );
+	if(!elems.testFlag(Contour))
+		return;
+	
+	double sf( 1000.0 / font->getUnitPerEm()  );
+	path = font->itemFromChar( char_code, 1000.0 );
 	if(!path)
 	{
 		qDebug()<<"Unable to load char"<<char_code<<"from font"<<font->fancyName();
@@ -149,7 +153,9 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	
 	if(elems.testFlag(Fill))
 	{
-		path->setBrush(FMFontCompareView::brushes["fill"]);
+		QColor fcol(color);
+		fcol.setAlpha(255 / qMax(zindex+1,2));
+		path->setBrush(/*FMFontCompareView::brushes["fill"]*/fcol);
 	}
 	else
 		path->setBrush(QBrush());
@@ -200,7 +206,7 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	
 	if(elems.testFlag(Metrics))
 	{
-		double xadvance(path->data(GLYPH_DATA_HADVANCE).toDouble());
+		double xadvance(path->data(GLYPH_DATA_HADVANCE).toDouble() * sf);
 		QPointF XY(scene->views().first()->mapToScene(0,0));
 		QPointF WH(scene->views().first()->mapToScene(scene->views().first()->width(), scene->views().first()->height()));
 		double minx(XY.x());
@@ -253,6 +259,7 @@ FMFontCompareView::~ FMFontCompareView()
 void FMFontCompareView::changeFont(int level, FontItem * font)
 {
 	glyphs[level] = new FMFontCompareItem(scene(), font, level);
+	elements[level] |= FMFontCompareItem::Contour;
 	updateGlyphs();
 }
 

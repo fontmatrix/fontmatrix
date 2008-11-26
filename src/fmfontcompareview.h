@@ -27,11 +27,12 @@ class FMFontCompareItem
 	public:
 		enum GElement
 		{
-			Contour 	= 0,
-			Fill		= 0x1,
-   			Points		= 0x2,
-			Controls	= 0x4,
-			Metrics 	= 0x8
+			Nothing		= 0,
+			Contour 	= 0x1,
+			Fill		= 0x2,
+			Points		= 0x4,
+			Controls	= 0x8,
+			Metrics 	= 0x10
 		};
 		Q_DECLARE_FLAGS ( GElements,GElement )
 		FMFontCompareItem();
@@ -54,7 +55,7 @@ class FMFontCompareItem
 		QList<QGraphicsEllipseItem*> points;
 
 		void clear();
-		void drawPoint ( QPointF point , bool control);
+		void drawPoint ( QPointF point , bool control );
 		void toScreen();
 
 };
@@ -82,7 +83,7 @@ class FMFontCompareView : public QGraphicsView
 
 	public slots:
 		void updateGlyphs();
-		
+
 	protected:
 		void mousePressEvent ( QMouseEvent * e ) ;
 		void mouseReleaseEvent ( QMouseEvent * e )  ;
@@ -96,9 +97,9 @@ class FMFontCompareView : public QGraphicsView
 
 		void initPensAndBrushes();
 		uint thechar;
-		
-		
-		
+
+
+
 		QPointF mouseStartPoint;
 		QGraphicsRectItem *theRect;
 		QGraphicsRectItem *fPage;

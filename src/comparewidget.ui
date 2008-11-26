@@ -77,9 +77,12 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox" >
+          <widget class="QGroupBox" name="compareShow" >
            <property name="title" >
             <string>Show</string>
+           </property>
+           <property name="checkable" >
+            <bool>true</bool>
            </property>
            <layout class="QGridLayout" name="gridLayout_16" >
             <item row="0" column="0" >

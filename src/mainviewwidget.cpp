@@ -1111,7 +1111,9 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		return;
 
 	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
-	qDebug()<<"K T"<<key<<tag;
+// 	qDebug()<<"K T"<<key<<tag;
+	resetCrumb();
+	addFilterToCrumb(tag);
 	if(key == "TAG") // regular tag
 	{
 		m_lists->fontTree->clear();
@@ -1133,17 +1135,17 @@ void MainViewWidget::slotFilterTag ( QString tag )
 // 	{
 // 		slotFilterTagset ( tag );
 // 	}
-	else if(key == "TAG_IS_PANOSE")
-	{
-		m_lists->fontTree->clear();
-		fontsetHasChanged = true;
-		QStringList pl( tag.split("-") );
-		QString fs ( pl[1] );
-		QString ff ( pl[0] );
-// 		currentFonts = typo->getFonts ( fs,"Panose/"+ff ) ;
-		currentOrdering = "family";
-		fillTree();
-	}
+// 	else if(key == "TAG_IS_PANOSE")
+// 	{
+// 		m_lists->fontTree->clear();
+// 		fontsetHasChanged = true;
+// 		QStringList pl( tag.split("-") );
+// 		QString fs ( pl[1] );
+// 		QString ff ( pl[0] );
+// // 		currentFonts = typo->getFonts ( fs,"Panose/"+ff ) ;
+// 		currentOrdering = "family";
+// 		fillTree();
+// 	}
 }
 
 

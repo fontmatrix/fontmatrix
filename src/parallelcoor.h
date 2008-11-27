@@ -166,7 +166,7 @@ class ParallelCoorView : public QGraphicsView
 		virtual void redraw();
 		
 		void resizeEvent ( QResizeEvent * event );
-		
+		void showEvent ( QShowEvent * event );
 	signals:
 		void selectedField(const QString&);
 		void filterChanged();

@@ -461,13 +461,20 @@ void ParallelCoorView::drawValues()
 
 void ParallelCoorView::updateGraphic()
 {
-	redraw();
+	if(isVisible())
+		redraw();
 }
 
 void ParallelCoorView::resizeEvent(QResizeEvent * event)
 {
-	redraw();
+	updateGraphic();
 	QGraphicsView::resizeEvent(event);
+}
+
+void ParallelCoorView::showEvent(QShowEvent * event)
+{
+	updateGraphic();
+	QGraphicsView::showEvent(event);
 }
 
 
@@ -496,7 +503,7 @@ void ParallelCoorView::setFilter ( const QMap< QString, QStringList >& theValue 
 	}
 	
 	emit filterChanged();
-	redraw();
+	updateGraphic();
 }
 
 

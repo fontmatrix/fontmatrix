@@ -39,7 +39,7 @@ class FMFontCompareItem
 		FMFontCompareItem();
 		FMFontCompareItem ( QGraphicsScene * s, FontItem * f, int z );
 		~FMFontCompareItem();
-		void show ( GElements elems );
+		void show ( GElements elems, double offset = 0.0 );
 		void setChar ( uint c ) {char_code = c;}
 		QRectF boundingRect();
 		QColor getColor() {return color;}
@@ -78,6 +78,8 @@ class FMFontCompareView : public QGraphicsView
 		void changeChar ( int level, uint ccode );
 		void setElements ( int level, FMFontCompareItem::GElements elems );
 		FMFontCompareItem::GElements getElements ( int level );
+		void setOffset (int level, double offset);
+		double getOffset(int level);
 		QColor getColor ( int level );
 		void fitGlyphsView();
 
@@ -97,6 +99,7 @@ class FMFontCompareView : public QGraphicsView
 	private:
 		QMap<int, FMFontCompareItem*> glyphs; // < Z-index, glyph >
 		QMap<int, FMFontCompareItem::GElements> elements; // what to show
+		QMap<int, double> offsets;
 
 		void initPensAndBrushes();
 		uint thechar;

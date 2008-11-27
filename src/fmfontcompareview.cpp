@@ -141,7 +141,7 @@ void FMFontCompareItem::drawPoint(QPointF point , bool control)
 	points << ri;
 }
 
-void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
+void FMFontCompareItem::show(FMFontCompareItem::GElements elems, double offset)
 {
 // 	qDebug()<<"FMFontCompareItem::show"<<char_code<<font->fancyName();
 	// As it’s lightweight graphic, no need to be too much circonvoluted
@@ -160,6 +160,7 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 		qDebug()<<"Unable to load char"<<char_code<<"from font"<<font->fancyName();
 		return;
 	}
+	path->moveBy(offset, 0.0);
 	path->setPen(QPen(color));
 	
 	if(elems.testFlag(Fill))
@@ -176,8 +177,8 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 		QPointF curPos;
 		for (int i = 0; i < path->path().elementCount(); ++i) 
 		{
-			const QPainterPath::Element &cur = path->path().elementAt(i);
- 	
+			QPainterPath::Element cur = path->path().elementAt(i);
+ 			cur.x += offset;
 			if(cur.isMoveTo())
 			{
 				curPos = cur;
@@ -189,9 +190,10 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 			}
 			else if(cur.isCurveTo())
 			{
-				const QPainterPath::Element &c1 = path->path().elementAt(i + 1);
-				const QPainterPath::Element &c2 = path->path().elementAt(i + 2);
-				
+				QPainterPath::Element c1 = path->path().elementAt(i + 1);
+				QPainterPath::Element c2 = path->path().elementAt(i + 2);
+				c1.x += offset;
+				c2.x += offset;
 				drawPoint(curPos,false);
 				drawPoint(c2,false);
 				if(elems.testFlag(Controls))
@@ -217,15 +219,15 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	
 	if(elems.testFlag(Metrics))
 	{
-		double xadvance(path->data(GLYPH_DATA_HADVANCE).toDouble() * sf);
+		double xadvance((path->data(GLYPH_DATA_HADVANCE).toDouble() * sf) + offset);
 		QPointF XY(scene->views().first()->mapToScene(0,0));
 		QPointF WH(scene->views().first()->mapToScene(scene->views().first()->width(), scene->views().first()->height()));
-		double minx(XY.x());
-		double maxx(WH.x());
+		double minx(XY.x() + offset);
+		double maxx(WH.x() + offset);
 		double miny(XY.y());
 		double maxy(WH.y());
 		
-		QLine leftL(0,miny,0,maxy);
+		QLine leftL(offset, miny, offset, maxy);
 		QLine rightL(xadvance,miny,xadvance,maxy);
 		QLine bottomL(minx,0,maxx,0);
 		QPen mPen(color,1.0);
@@ -277,6 +279,7 @@ void FMFontCompareView::changeFont(int level, FontItem * font)
 {
 	glyphs[level] = new FMFontCompareItem(scene(), font, level);
 	elements[level] |= FMFontCompareItem::Contour;
+	offsets[level] = 0.0;
 	updateGlyphs();
 }
 
@@ -289,6 +292,7 @@ void FMFontCompareView::removeFont(int level)
 		glyphs.remove(level);
 	}
 	elements.remove(level);
+	offsets.remove(level);
 	int maxLevel(0);
 	foreach(int l, glyphs.keys())
 	{
@@ -301,8 +305,12 @@ void FMFontCompareView::removeFont(int level)
 			glyphs[i-1] = glyphs[i];
 			glyphs.remove(i);
 			glyphs[i-1]->setIndex(i-1);
+			
 			elements[i-1] = elements[i];
 			elements.remove(i);
+			
+			offsets[i-1] = offsets[i];
+			offsets.remove(i);
 		}
 	}
 	updateGlyphs();
@@ -337,6 +345,17 @@ FMFontCompareItem::GElements FMFontCompareView::getElements(int level)
 	return elements[level];
 }
 
+void FMFontCompareView::setOffset(int level, double offset)
+{
+	offsets[level] = offset;
+	updateGlyphs();
+}
+
+double FMFontCompareView::getOffset(int level)
+{
+	return offsets[level];
+}
+
 void FMFontCompareView::initPensAndBrushes()
 {
 	// Controls
@@ -366,7 +385,7 @@ void FMFontCompareView::updateGlyphs()
 {
 	foreach(int l, glyphs.keys())
 	{
-		glyphs[l]->show(elements[l]);
+		glyphs[l]->show(elements[l], offsets[l]);
 	}
 }
 

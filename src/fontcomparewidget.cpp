@@ -21,13 +21,17 @@
 #include <QPainter>
 #endif
 
+#include <QSettings>
 #include <QDebug>
 
 FontCompareWidget::FontCompareWidget(QWidget * parent)
 	:QWidget(parent),neverUsed(true)
 {
 	setupUi(this);
-	
+	QSettings settings;
+	int maxOffset(settings.value("Compare/MaxOffset", 2000).toInt());
+	settings.setValue("Compare/MaxOffset",maxOffset);
+	compareOffset->setRange(0, maxOffset);
 	doconnect();
 }
 
@@ -44,6 +48,7 @@ void FontCompareWidget::doconnect()
 	connect( comparePoints,SIGNAL(clicked()), this, SLOT(pointsChange()));
 	connect( compareControls,SIGNAL(clicked()), this, SLOT(controlsChange()));
 	connect( compareMetrics,SIGNAL(clicked()), this, SLOT(metricsChange()));
+	connect( compareOffset, SIGNAL(valueChanged(int)), this, SLOT(offsetChange(int)));
 	connect( compareCharSelect,SIGNAL(valueChanged(int)), this, SLOT(characterChange(int)));
 	connect( compareCharBox,SIGNAL(currentIndexChanged(int)), this, SLOT(characterBoxChange(int)));
 	connect( compareList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*,QListWidgetItem*)));
@@ -59,6 +64,7 @@ void FontCompareWidget::dodisconnect()
 	disconnect( comparePoints,SIGNAL(clicked()), this, SLOT(pointsChange()));
 	disconnect( compareControls,SIGNAL(clicked()), this, SLOT(controlsChange()));
 	disconnect( compareMetrics,SIGNAL(clicked()), this, SLOT(metricsChange()));
+	disconnect( compareOffset, SIGNAL(valueChanged(int)), this, SLOT(offsetChange(int)));
 	disconnect( compareCharSelect,SIGNAL(valueChanged(int)), this, SLOT(characterChange(int)));
 	disconnect( compareCharBox,SIGNAL(currentIndexChanged(int)), this, SLOT(characterBoxChange(int)));
 	disconnect( compareList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(fontChange(QListWidgetItem*,QListWidgetItem*)));
@@ -73,6 +79,9 @@ void FontCompareWidget::resetElements()
 	comparePoints->setChecked(false);
 	compareControls->setCheckState(Qt::Unchecked);
 	compareMetrics->setCheckState(Qt::Unchecked);
+	
+	compareOffset->setValue(0);
+	compareOffsetValue->setText(QString::number(0));
 }
 
 void FontCompareWidget::addFont()
@@ -193,6 +202,15 @@ void FontCompareWidget::metricsChange()
 		compareView->setElements(r, compareView->getElements(r) ^ FMFontCompareItem::Metrics);
 }
 
+void FontCompareWidget::offsetChange(int o)
+{
+	if(compareList->selectedItems().isEmpty())
+		return;
+	int r(compareList->row(compareList->selectedItems().first()));
+	compareView->setOffset(r, o);	
+	compareOffsetValue->setText(QString::number(o));
+}
+
 void FontCompareWidget::characterChange(int v)
 {
 // 	qDebug()<<"FontCompareWidget::characterChange"<<v;
@@ -274,12 +292,13 @@ void FontCompareWidget::characterBoxChange(int i)
 
 void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * olditem)
 {
-	resetElements();
 	if(!witem)
 	{
+		resetElements();
 		return;
 	}
 	dodisconnect();
+	resetElements();
 	
 	curFont = witem->data(Qt::UserRole).toString();
 	FontItem *f(FMFontDb::DB()->Font(curFont));
@@ -304,6 +323,9 @@ void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * ol
 	
 	int r(compareList->row(witem));
 	FMFontCompareItem::GElements e(compareView->getElements(r));
+	
+	compareOffset->setValue(compareView->getOffset(r));
+	compareOffsetValue->setText(QString::number(compareView->getOffset(r)));
 	
 	if(e.testFlag(FMFontCompareItem::Contour))
 	{

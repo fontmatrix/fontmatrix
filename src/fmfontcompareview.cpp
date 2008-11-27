@@ -64,6 +64,11 @@ void FMFontCompareItem::clear()
 		delete ri;
 	}
 	points.clear();
+	foreach(QGraphicsSimpleTextItem *ti, text_metrics)
+	{
+		delete ti;
+	}
+	text_metrics.clear();
 	if(path)
 	{
 		delete path;
@@ -94,6 +99,11 @@ void FMFontCompareItem::toScreen()
 		scene->addItem(ri);
 		itemsBB = itemsBB.united(ri->boundingRect());
 		ri->setZValue(zindex);
+	}
+	foreach(QGraphicsSimpleTextItem *ti, text_metrics)
+	{
+		scene->addItem(ti);
+		ti->setZValue(zindex);
 	}
 	if(path)
 	{
@@ -142,8 +152,9 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 	if(!elems.testFlag(Contour))
 		return;
 	
-	double sf( 1000.0 / font->getUnitPerEm()  );
-	path = font->itemFromChar( char_code, 1000.0 );
+	double fsize(1000.0);
+	double sf( fsize / font->getUnitPerEm()  );
+	path = font->itemFromChar( char_code, fsize );
 	if(!path)
 	{
 		qDebug()<<"Unable to load char"<<char_code<<"from font"<<font->fancyName();
@@ -226,6 +237,12 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems)
 		lines_controls << new QGraphicsLineItem(bottomL);
 		lines_controls.last()->setPen(mPen);
 		
+		QString advanceString("%1/%2");
+		text_metrics << new QGraphicsSimpleTextItem(advanceString.arg(path->data(GLYPH_DATA_HADVANCE).toDouble()).arg(font->getUnitPerEm()));
+		double th(text_metrics.last()->boundingRect().height());
+		text_metrics.last()->setPos(xadvance, th * zindex );
+		text_metrics.last()->setBrush(color);
+		
 	}
 	
 	toScreen();
@@ -283,11 +300,12 @@ void FMFontCompareView::removeFont(int level)
 		{
 			glyphs[i-1] = glyphs[i];
 			glyphs.remove(i);
+			glyphs[i-1]->setIndex(i-1);
 			elements[i-1] = elements[i];
 			elements.remove(i);
 		}
 	}
-	
+	updateGlyphs();
 }
 
 void FMFontCompareView::changeChar(uint ccode)

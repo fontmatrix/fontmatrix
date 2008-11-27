@@ -20,6 +20,7 @@
 class QGraphicsLineItem;
 class QGraphicsRectItem;
 class QGraphicsEllipseItem;
+class QGraphicsSimpleTextItem;
 class FontItem;
 
 class FMFontCompareItem
@@ -42,6 +43,7 @@ class FMFontCompareItem
 		void setChar ( uint c ) {char_code = c;}
 		QRectF boundingRect();
 		QColor getColor() {return color;}
+		void setIndex(int i){zindex = i;}
 	private:
 		const QUuid uuid;
 		QGraphicsScene *scene;
@@ -53,6 +55,7 @@ class FMFontCompareItem
 		QList<QGraphicsLineItem*> lines_controls;
 		QList<QGraphicsLineItem*> lines_metrics;
 		QList<QGraphicsEllipseItem*> points;
+		QList<QGraphicsSimpleTextItem*> text_metrics;
 
 		void clear();
 		void drawPoint ( QPointF point , bool control );

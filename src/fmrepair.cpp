@@ -85,7 +85,7 @@ void FmRepair::fillActNotLinked()
 	QStringList activated;
 	for(int i(0); i < flist.count();++i)
 	{
-		if(/*!flist[i]->isLocked() && */flist[i]->isActivated())
+		if((!t->isSysFont(flist[i])) && (flist[i]->isActivated()))
 			activated << flist[i]->path();
 	}
 	

@@ -163,6 +163,7 @@ class FMFontDb : public QSqlDatabase
 		void removeTagFromDB ( const QString& t );
 		void editTag (const QString& tOld, const QString& tNew);
 		void addTag ( const QString& id, const QString& t );
+		void addTag ( const QStringList& idlist, const QString& t );
 		void removeTag ( const QString& id, const QString& t );
 		void setTags ( const QString& id, const QStringList& tl );
 

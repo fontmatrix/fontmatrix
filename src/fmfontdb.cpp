@@ -316,7 +316,6 @@ QList<FontDBResult> FMFontDb::getInfo ( const QList< FontItem * > & fonts, InfoI
 void FMFontDb::addTag ( const QString & id, const QString & t )
 {
 	int nId ( getId ( id ) );
-
 	QString ts ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4','%5')" )
 	             .arg ( tableName[Tag] )
 	             .arg ( fieldName[Id] )
@@ -324,7 +323,35 @@ void FMFontDb::addTag ( const QString & id, const QString & t )
 	             .arg ( nId )
 	             .arg ( t ) );
 	QSqlQuery query ( ts,*this );
-	bool res ( query.exec() );
+	if ( query.exec() )
+		qDebug()<<nId<<"TAGGING SUCCESS";
+	else
+		qDebug()<<nId<<"TAGGING ERROR";
+}
+
+void FMFontDb::addTag(const QStringList & idlist, const QString & t)
+{
+	QVariantList nidlist;
+	QVariantList taglist;
+	QString qs ( QString ( "INSERT INTO %1(%2,%3) VALUES(?,?)" )
+			.arg ( tableName[Tag] )
+			.arg ( fieldName[Id] )
+			.arg ( fieldName[Tags] ) );
+	QSqlQuery query ( *this );
+	query.prepare ( qs );
+	foreach ( QString id, idlist)
+	{
+		nidlist << getId ( id );
+		taglist << t;
+	}
+	query.addBindValue ( nidlist );
+	query.addBindValue ( taglist );
+
+	if ( !query.execBatch() )
+	{
+		transactionError << lastError();
+	}
+
 }
 
 void FMFontDb::removeTag ( const QString & id, const QString & t )
@@ -659,16 +686,20 @@ void FMFontDb::TransactionBegin()
 		++transactionDeep;
 	else
 	{
-		transaction();
-		transactionError.clear();
-		++transactionDeep;
+		if(transaction())
+		{
+			transactionError.clear();
+			++transactionDeep;
+		}
+		else
+			qDebug()<< "Cannot BEGIN transaction";
 // 		qDebug() <<"TransactionBegin";
 	}
 }
 
 bool FMFontDb::TransactionEnd()
 {
-// 	qDebug() <<"TransactionEnd";
+// 	qDebug() <<"TransactionEnd"<< (transactionDeep - 1);
 
 	--transactionDeep;
 	if ( transactionDeep > 0 )
@@ -821,7 +852,6 @@ bool FMFontDb::insertTemporaryFont ( const QString & path )
 	return true;
 
 }
-
 
 
 

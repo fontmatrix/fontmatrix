@@ -99,7 +99,7 @@ namespace fontmatrix
 		QStringList localEntries ( dir.entryList ( QDir::AllDirs | QDir::NoDotAndDotDot ) );
 		foreach ( QString dirEntry, localEntries )
 		{
-			qDebug() << "[exploreDirs] - " + dir.absolutePath() + "/" + dirEntry;
+// 			qDebug() << "[exploreDirs] - " + dir.absolutePath() + "/" + dirEntry;
 			QDir d ( dir.absolutePath() + "/" + dirEntry );
 			exploreDirs ( d, deep + 1 );
 			if ( !retDirList.contains ( d.absolutePath() ) )
@@ -322,6 +322,7 @@ void typotek::open(QString path, bool announce, bool collect)
 	FMFontDb::DB()->TransactionBegin();
 	QString importstring ( tr ( "Import" ) +  " %1" );
 	FMFontDb *DB(FMFontDb::DB());
+	QList<FontItem*> nf;
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
 		QString pathCur(pathList.at ( i ));
@@ -341,7 +342,7 @@ void typotek::open(QString path, bool announce, bool collect)
 				FontItem *fitem (DB->Font(fi.absoluteFilePath(), true));
 				if ( fitem )
 				{
-					fitem->setTags ( tali );
+					nf << fitem;
 					fitem->setActivated(false);
 					if (announce || collect)
 						nameList << fitem->fancyName();
@@ -356,8 +357,18 @@ void typotek::open(QString path, bool announce, bool collect)
 			}
 		}
 	}
-
-	FMFontDb::DB()->TransactionEnd();
+	
+	QStringList tl;
+	foreach(QString tag, tali)
+	{
+		tl.clear();
+		foreach(FontItem* f, nf)
+		{
+			tl << f->path();
+		}
+		DB->addTag(tl, tag);
+	}
+	DB->TransactionEnd();
 	progress.close();
 
 	if (announce) {
@@ -393,8 +404,8 @@ void typotek::openList ( QStringList files )
 // // // // // // 	else
 // // // // // // 		tali << "Activated_Off" ;
 
-
-	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
+	FMFontDb *DB(FMFontDb::DB());
+	QList<FontItem*> fontMap(DB->AllFonts());
 	for(int i=0;i < fontMap.count() ; ++i)
 	{
 		if(pathList.contains( fontMap[i]->path()))
@@ -402,11 +413,12 @@ void typotek::openList ( QStringList files )
 
 	}
 
-	FMFontDb::DB()->TransactionBegin();
+	DB->TransactionBegin();
 	QProgressDialog progress ( tr ( "Importing font files... " ),tr ( "cancel" ), 0, pathList.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 	progress.setAutoReset ( false );
 
+	QList<FontItem*> nf;
 	QString importstring ( tr ( "Import" ) +" %1" );
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
@@ -418,9 +430,10 @@ void typotek::openList ( QStringList files )
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
 
-		FontItem *fitem = FMFontDb::DB()->Font( fi.absoluteFilePath() ,true);
+		FontItem *fitem = DB->Font( fi.absoluteFilePath() ,true);
 		if ( fitem )
 		{
+			nf << fitem;
 			nameList << fitem->fancyName();
 		}
 		else
@@ -430,10 +443,19 @@ void typotek::openList ( QStringList files )
 			nameList << "__FAILEDTOLOAD__" + fi.fileName();
 		}
 	}
-
+	QStringList tl;
+	foreach(QString tag, tali)
+	{
+		tl.clear();
+		foreach(FontItem* f, nf)
+		{
+			tl << f->path();
+		}
+		DB->addTag(tl, tag);
+	}
+	DB->TransactionEnd();
 	progress.close();
 
-	FMFontDb::DB()->TransactionEnd();
 	// The User needs and deserves to know what fonts hve been imported
 	if (showFontListDialog) {
 		// The User needs and deserves to know what fonts hve been imported
@@ -886,6 +908,7 @@ QStringList typotek::getSystemFontDirs()
 {
 	QStringList retList;
 #ifdef HAVE_FONTCONFIG // For Unices (OSX excluded)
+	QStringList tmpList;
 	FcConfig* FcInitLoadConfig();
 	FcStrList *sysDirList = FcConfigGetFontDirs(0);
 	QString sysDir( (char*)FcStrListNext(sysDirList) );
@@ -893,11 +916,25 @@ QStringList typotek::getSystemFontDirs()
 	{
 		if(!sysDir.contains("Fontmatrix"))
 		{
-			qDebug()<< "SYSDIR"<<sysDir;
-			retList << sysDir;
+			tmpList << sysDir;
 		}
 		sysDir = ( (char*)FcStrListNext(sysDirList) );
 	}
+	foreach(QString path, tmpList)
+	{
+		bool root(true);
+		foreach(QString ref, tmpList)
+		{
+			if(path != ref)
+			{
+				if(ref.startsWith(path))
+					root = false;
+			}
+		}
+		if(root)
+			retList << path;
+	}
+	
 #endif //HAVE_FONTCONFIG
 #ifdef PLATFORM_APPLE
 	retList << "/Library/Fonts";
@@ -931,9 +968,10 @@ void typotek::initDir()
 		QString SysColFon = tr ( "System Fonts" );
 		QStringList tagsList(FMFontDb::DB()->getTags());
 			
-		int sysCounter ( 0 );
+		QList<FontItem*> sysFontPtrs;
 	
 		QStringList sysDir ( getSystemFontDirs() );
+		qDebug()<<sysDir.join("\n");
 		
 		QStringList yetHereFonts;
 		QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
@@ -962,30 +1000,45 @@ void typotek::initDir()
 			}
 	
 			int sysFontCount ( syspathList.count() );
-			relayStartingStepIn ( tr ( "Adding" ) +" "+ QString::number ( sysFontCount ) +" "+tr ( "fonts from system directories" ) );
-			FMFontDb::DB()->TransactionBegin();
-			for ( int i = 0 ; i < sysFontCount; ++i )
+			if(sysFontCount > 0)
 			{
-				QFile ff ( syspathList.at ( i ) );
-				QFileInfo fi ( syspathList.at ( i ) );
+				relayStartingStepIn ( tr ( "Adding" ) +" "+ QString::number ( sysFontCount ) +" "+tr ( "fonts from","followed by a directory name" )  +" "+sysDir[sIdx]);
+				qDebug()<< ( tr ( "Adding" ) +" "+ QString::number ( sysFontCount ) +" "+tr ( "fonts from","followed by a directory name" )  +" "+sysDir[sIdx]);
+				FMFontDb::DB()->TransactionBegin();
+				for ( int i = 0 ; i < sysFontCount; ++i )
 				{
-					FontItem *fitem = FMFontDb::DB()->Font( fi.absoluteFilePath(), false );
-					if ( fitem )
+					QFile ff ( syspathList.at ( i ) );
+					QFileInfo fi ( syspathList.at ( i ) );
 					{
-						fitem->setActivated ( true );
-						fitem->addTag ( SysColFon );
-						++sysCounter;
-					}
-					else
-					{
-						qDebug() << "Can’t open this font because it’s broken : " << fi.fileName() ;
+						FontItem *fitem = FMFontDb::DB()->Font( fi.absoluteFilePath(), false );
+						if ( fitem )
+						{
+// 							qDebug()<<"\t"<<fitem <<fitem->path();
+							fitem->setActivated ( true );
+// 							fitem->addTag ( SysColFon );
+							sysFontPtrs << fitem;
+						}
+						else
+						{
+							qDebug() << "Cannot open this font because its broken : " << fi.fileName() ;
+						}
 					}
 				}
+				FMFontDb::DB()->TransactionEnd();
 			}
-			FMFontDb::DB()->TransactionEnd();
 		}
-		relayStartingStepIn ( QString::number ( sysCounter ) + " " + tr ( "system fonts added." ) );
+		
+		relayStartingStepIn ( QString::number ( sysFontPtrs.count() ) + " " + tr ( "system fonts added." ) );
+		
+		// So much complicated only because otherwise, tags were added twice with SQLite ???
+		QStringList tl;
+		foreach(FontItem* sfp, sysFontPtrs)
+		{
+			tl << sfp->path();
+		}
+		FMFontDb::DB()->addTag(tl, SysColFon);
 	}
+	
 
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 	/// Remote dirs

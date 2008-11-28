@@ -267,13 +267,32 @@ void ParallelCoorView::redraw()
 		qWarning()<<"Empty Dataset";
 		return;
 	}
-
-	cleanLists(AllList);
+	if(controlSize != size())
+	{
+		// there will be another resize event soon, no need to draw now
+		return;
+	}
+	
 	units = Units(width(), height(), m_dataSet->count());
+	QTime t;
+	int tclean, tbar, tvert, tfield, tval;
+	t.start();
+	cleanLists(AllList);
+	tclean = t.elapsed();
+	t.start();
 	drawBars();
+	tbar = t.elapsed();
+	t.start();
 	drawVertices();
+	tvert = t.elapsed();
+	t.start();
 	drawFields();
+	tfield = t.elapsed();
+	t.start();
 	drawValues();
+	tval = t.elapsed();
+
+	qDebug()<<"C"<<tclean<<"B"<<tbar<<"Ve"<<tvert<<"F"<<tfield<<"Va"<<tval;
 }
 
 void ParallelCoorView::drawBars()
@@ -294,7 +313,11 @@ void ParallelCoorView::drawBars()
 
 void ParallelCoorView::drawVertices()
 {
-// 	qDebug()<<this<<"::drawVertices"<<vertices.count();
+// 	qDebug()<<this<<"::drawVertices"<<m_dataSet->getData().count();
+	int tc, td, ta, to;
+	tc = td = ta = to = 0;
+	QTime t;
+	t.start();
 	const int N ( m_dataSet->getData().count() );
 	QMap<int, QMap< int, QPointF> > placeCoords;
 	for ( int k ( 0 );k < m_dataSet->count(); ++k )
@@ -308,14 +331,18 @@ void ParallelCoorView::drawVertices()
 			placeCoords[k][l] = QPointF ( x,y );
 		}
 	}	
-	QList<QLineF> cflines;
-	QList<QLineF> culines;
-	
+// 	QList<QLineF> cflines;
+// 	QList<QLineF> culines;
+	QMap<double, QMap<double ,QList<QPointF> > > cflines;
+	QMap<double, QMap<double ,QList<QPointF> > > culines;
+	to = t.elapsed();		
+	QGraphicsLineItem *li;
 	for ( int a ( 0 );a<N;++a )
 	{
 // 		if( m_dataSet->getData().at(a).count() == m_dataSet->count() )
 		{
 			QList<QPointF> pol;
+			t.start();
 			for ( int b ( 0 ); b < m_dataSet->getData().at ( a ).count() ; ++b )
 			{
 				if(placeCoords[b].contains( m_dataSet->getData().at ( a ).at ( b ) ))
@@ -324,26 +351,65 @@ void ParallelCoorView::drawVertices()
 					pol << QPointF( placeCoords[b][0] );
 
 			}
+			tc += t.elapsed();
+			t.start();
 			if ( pol.count() == m_dataSet->count() )
 			{
 				for(int vi(1);vi<pol.count();++vi)
 				{
 					bool f ( matchFilter ( m_dataSet->getData().at ( a ) ) );
-// 					if(f)
+					if(f)
 					{
-						QLineF lf(pol[vi-1],pol[vi]);
-						if(f ? (!cflines.contains(lf)) : (!culines.contains(lf)))
+						if(cflines.contains(pol[vi-1].x()))
 						{
-							vertices << scene()->addLine ( lf, f ? pens["vertice-filter"] : pens["vertice-unfilter"] );
-							vertices.last()->setZValue(f ? 100.0 : 1.0);
-							f ? (cflines << lf) : (culines << lf) ;
+							if(cflines[pol[vi-1].x()].contains(pol[vi-1].y()))
+							{
+								if(cflines[pol[vi-1].x()][pol[vi-1].y()].contains(pol[vi]))
+								{
+									continue;
+								}
+							}
 						}
+						QLineF lf(pol[vi-1],pol[vi]);
+						li = new QGraphicsLineItem( lf );
+						li->setPen(  pens["vertice-filter"] );
+						li->setZValue(100.0);
+						vertices << li;
+						cflines[pol[vi-1].x()][pol[vi-1].y()] << pol[vi];
+					}
+					else
+					{
+						if(culines.contains(pol[vi-1].x()))
+						{
+							if(culines[pol[vi-1].x()].contains(pol[vi-1].y()))
+							{
+								if(culines[pol[vi-1].x()][pol[vi-1].y()].contains(pol[vi]))
+								{
+									continue;
+								}
+							}
+						}
+						QLineF lf(pol[vi-1],pol[vi]);
+						li = new QGraphicsLineItem( lf );
+						li->setPen(  pens["vertice-unfilter"] );
+						vertices << li;
+						culines[pol[vi-1].x()][pol[vi-1].y()] << pol[vi];
 					}
 				}
 			}
+			td += t.elapsed();
+			
 		}
 	}
-// 	qDebug()<<"R"<< cflines.count() << culines.count();
+	t.start();
+	int vcount(vertices.count());
+	QGraphicsScene * ls(scene());
+	for(int i(0); i < vcount; ++i)
+	{
+		ls->addItem( vertices[i] );
+	}
+	ta = t.elapsed();
+	qDebug()<<"R"<< to << tc << td << ta;
 }
 
 void ParallelCoorView::drawFields()
@@ -467,13 +533,14 @@ void ParallelCoorView::updateGraphic()
 
 void ParallelCoorView::resizeEvent(QResizeEvent * event)
 {
+	controlSize = size();
 	updateGraphic();
 	QGraphicsView::resizeEvent(event);
 }
 
 void ParallelCoorView::showEvent(QShowEvent * event)
 {
-	updateGraphic();
+// 	updateGraphic();
 	QGraphicsView::showEvent(event);
 }
 

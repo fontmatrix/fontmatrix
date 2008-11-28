@@ -219,6 +219,8 @@ class ParallelCoorView : public QGraphicsView
 		void drawFields();
 		void drawValues();
 		
+		QSize controlSize;
+		
 	private slots:
 		void slotSaveColors();
 		

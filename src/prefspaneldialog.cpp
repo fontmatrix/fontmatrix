@@ -166,7 +166,7 @@ void PrefsPanelDialog::doConnect()
 	connect ( clearButton, SIGNAL ( clicked() ), this, SLOT ( slotClearShortcut() ) );
 	connect ( changeButton, SIGNAL ( clicked() ), this, SLOT ( slotChangeShortcut() ) );
 	connect ( shortcutList, SIGNAL ( clicked ( const QModelIndex& ) ), this, SLOT ( slotActionSelected ( const QModelIndex& ) ) );
-	connect ( shortcutList, SIGNAL ( activated ( const QModelIndex& ) ), changeButton, SLOT ( toggle() ) );
+	// connect ( shortcutList, SIGNAL ( activated ( const QModelIndex& ) ), changeButton, SLOT ( toggle() ) );
 
 	connect ( closeButton,SIGNAL ( clicked() ),this,SLOT ( slotClose() ) );
 }
@@ -438,6 +438,7 @@ void PrefsPanelDialog::slotClearShortcut()
 	QString iText = item->text();
 
 	Shortcuts::getInstance()->clearShortcut ( iText );
+	shortcutLabel->clear();
 	reloadShortcuts();
 	setSelected ( iText );
 }

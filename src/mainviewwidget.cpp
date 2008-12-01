@@ -158,7 +158,23 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	classSplitter->restoreState(settings.value("WState/ClassificationSplitter").toByteArray());
 	slotShowClassification();
-	//CONNECT
+	currentOrdering = "family" ;
+	
+// 	fillTree();
+	doConnect();
+	
+
+
+}
+
+
+MainViewWidget::~MainViewWidget()
+{
+}
+
+
+void MainViewWidget::doConnect()
+{
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
@@ -166,6 +182,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
+	connect ( this, SIGNAL(listChanged()), m_lists, SLOT(slotPreviewUpdate()));
+	
+	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	
 	connect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
 	connect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
@@ -217,26 +236,78 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	connect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
 	connect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
 	connect ( classSplitter, SIGNAL(splitterMoved(int,int)), this, SLOT(slotSaveClassSplitter()));
-	
-	// END CONNECT
-
-	currentOrdering = "family" ;
-	fillTree();
-
-
 }
 
-
-MainViewWidget::~MainViewWidget()
+void MainViewWidget::disConnect()
 {
-}
+	disconnect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
+	disconnect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
+	disconnect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+	disconnect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
+	disconnect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
+	disconnect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
+	disconnect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
+	disconnect ( this, SIGNAL(listChanged()), m_lists, SLOT(slotPreviewUpdate()));
+	
+	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
+	
+	disconnect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
+	disconnect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
+	disconnect( fontInfoText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
+	disconnect( fontInfoText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
 
+	disconnect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
+	disconnect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
+	
+	disconnect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	disconnect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	
+	disconnect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
+	disconnect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
+	disconnect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
+	disconnect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
+	disconnect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
+	disconnect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
+	disconnect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
+
+	disconnect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
+	disconnect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	
+
+	disconnect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	disconnect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
+	
+	disconnect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
+	disconnect ( this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
+
+	disconnect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+
+	
+	disconnect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
+	disconnect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
+	disconnect ( liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
+
+	disconnect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
+	disconnect ( saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
+	disconnect ( resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
+	disconnect ( shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+	disconnect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+	
+	disconnect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
+	disconnect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
+
+	disconnect ( pushToPlayButton, SIGNAL(clicked ( bool ) ), this, SLOT(slotPushOnPlayground()) );
+	
+	disconnect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
+	disconnect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
+	disconnect ( classSplitter, SIGNAL(splitterMoved(int,int)), this, SLOT(slotSaveClassSplitter()));
+}
 
 void MainViewWidget::fillTree()
 {
 // 	qDebug()<< "MainViewWidget::fillTree("<< curItemName <<")";
-	QTime fillTime(0, 0, 0, 0);
-	fillTime.start();
+// 	QTime fillTime(0, 0, 0, 0);
+// 	fillTime.start();
 	m_lists->savePosition();
 	QTreeWidgetItem *curItem = 0;
 
@@ -251,8 +322,8 @@ void MainViewWidget::fillTree()
 	}
 	m_lists->fontTree->clear();
 
-	qDebug("LOGS Time elapsed: %d ms", fillTime.elapsed());
-	fillTime.restart();
+// 	qDebug("LOGS Time elapsed: %d ms", fillTime.elapsed());
+// 	fillTime.restart();
 
 	// build the in-memory tree that hold the ordered current fonts set
 	QMap< QChar,QMap< QString,QMap< QString,FontItem*> > > keyList;
@@ -277,8 +348,8 @@ void MainViewWidget::fillTree()
 		realFamilyName[ordFamily] = family;
 	}
 
-	qDebug("MULTI Time elapsed: %d ms", fillTime.elapsed());
-	fillTime.restart();
+// 	qDebug("MULTI Time elapsed: %d ms", fillTime.elapsed());
+// 	fillTime.restart();
 
 	// Rebuild the the tree
 	QFont alphaFont ( "helvetica",14,QFont::Bold,false );
@@ -287,10 +358,10 @@ void MainViewWidget::fillTree()
 	QMap< QString,QMap< QString,FontItem*> >::const_iterator oit;
 	QMap< QString,FontItem*>::const_iterator fit;
 
-	QTime tt(0,0);
-	tt.start();
-	int tttotal(0);
-	int tcount(0);
+// 	QTime tt(0,0);
+// 	tt.start();
+// 	int tttotal(0);
+// 	int tcount(0);
 	
 	QMap<FontItem*,bool> act ;
 	FMFontDb::DB()->TransactionBegin();
@@ -335,8 +406,8 @@ void MainViewWidget::fillTree()
 
 			for(fit = oit.value().constBegin(); fit != oit.value().constEnd(); ++fit)
 			{
-				++tcount;
-				tt.restart();
+// 				++tcount;
+// 				tt.restart();
 				FontItem *fPointer = fit.value();
 				orderedCurrentFonts << fPointer;
 				QString var( fit.key() );
@@ -373,7 +444,7 @@ void MainViewWidget::fillTree()
 
 				if ( entry->toolTip( 0 ) == curItemName )
 					curItem = entry;
-				tttotal += tt.elapsed();
+// 				tttotal += tt.elapsed();
 			}
 
 			if ( checkyes && chekno )
@@ -399,7 +470,7 @@ void MainViewWidget::fillTree()
 	}
 // 	qDebug()<<"SUB TREE Time Total: "<<tttotal<<" ms; Iterations : "  << tcount<< "; Average" << (double)tttotal / (double)tcount <<" ms/It";
 // 	qDebug("TREE Time elapsed: %d ms", fillTime.elapsed());
-	fillTime.restart();
+// 	fillTime.restart();
 
 // 	m_lists->previewList->slotRefill ( currentFonts, fontsetHasChanged );
 	if ( curItem )
@@ -434,7 +505,8 @@ void MainViewWidget::fillTree()
 // 	m_lists->fontTree->setColumnWidth(0,200);
 
 	fontsetHasChanged = false;
-	m_lists->slotPreviewUpdate();
+	listChanged();
+// 	m_lists->slotPreviewUpdate();
 // 	qDebug("END Time elapsed: %d ms", fillTime.elapsed());
 }
 

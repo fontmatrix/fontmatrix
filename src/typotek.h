@@ -52,11 +52,14 @@ class typotek:public QMainWindow
 {
 		Q_OBJECT
 
-	public:
+		static typotek* instance;
+		static bool matrix;
 		typotek();
-		void initMatrix();
 		~typotek();
-
+	public:
+		static typotek* getInstance();
+		void initMatrix();
+		
 	protected:
 		void closeEvent ( QCloseEvent *event );
 		void keyPressEvent ( QKeyEvent * event ) ;
@@ -69,14 +72,12 @@ class typotek:public QMainWindow
 		void printFamily();
 
 		void fontBook();
-// 		void popupTagsetEditor();
 		void slotActivateCurrents();
 		void slotDeactivateCurrents();
 		void slotEditFont();
 		void about();
 		void helpBegin();
 		void helpEnd();
-// 		void slotWord();
 		void slotExportFontSet();
 		void slotRemoteIsReady();
 		void slotRepair();
@@ -99,12 +100,12 @@ class typotek:public QMainWindow
 		void slotPrefsPanelDefault();
 		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
 		void relayStartingStepIn(QString s);
+		void showToltalFilteredFonts();
 
 	signals:
 		void tagAdded(QString);
 		void relayStartingStepOut(QString, int, QColor);
 		void previewHasChanged();
-// 		void wordHasChanged(QString);
 
 	private:
 		void createActions();
@@ -144,7 +145,6 @@ class typotek:public QMainWindow
 		QAction *aboutAct;
 		QAction *aboutQtAct;
 		QAction *fontBookAct;
-// 		QAction *tagsetAct;
 		QAction *activCurAct;
 		QAction *deactivCurAct;
 		QAction *helpAct;
@@ -183,6 +183,7 @@ class typotek:public QMainWindow
 		QString m_theWord;
 
 		QLabel *curFontPresentation;
+		QLabel *countFilteredFonts;
 
 		Systray *systray;
 
@@ -209,11 +210,9 @@ class typotek:public QMainWindow
 		QString tagsDockArea;
 		QRect mainDockGeometry;
 		QRect tagsDockGeometry;
-
-
+		
 		FMHyphenator *hyphenator;
 
-// 		bool waitLayoutForPrint;
 		QString defaultOTFScript;
 		QString defaultOTFLang;
 		QStringList defaultOTFGPOS;
@@ -230,25 +229,9 @@ class typotek:public QMainWindow
 
 	public:		
 		bool isSysFont(FontItem* f);
-// 		int getFontCount(){return fontMap.count(); }
-// 		FontItem* getFont ( int i ) ;
-// 		FontItem* getFont ( QString s );
-// 		QList<FontItem*> getAllFonts() {return fontMap;};
-// 		QList<FontItem*> getFonts ( QString pattern, QString field , bool mark = true);
 		QList<FontItem*> getCurrentFonts();
 		FontItem* getSelectedFont();
 		void resetFilter();
-
-// 		void addTagMapEntry(QString key, QStringList value){tagsMap[key] = value;};
-// 		void addTagSetMapEntry(QString key, QStringList value){tagSetMap[key] = value;};
-// 		void removeTagFromSet(QString set, QString tag){tagSetMap[set].removeAll(tag);};
-// 		void addTagToSet(QString set, QString tag){tagSetMap[set].append(tag);};
-// 		void removeTagset(QString key){tagSetMap.remove(key);};
-// 		QStringList tagsets(){return tagSetMap.keys();};
-// 		QStringList tagsOfSet(QString set){return tagSetMap[set];};
-
-		static typotek* instance;
-		static typotek* getInstance(){return instance;};
 
 		QString getManagedDir(){return managedDir.absolutePath();};
 
@@ -256,7 +239,7 @@ class typotek:public QMainWindow
 
 		void setSampleText(QString s);
 
-		void presentFontName(QString s){curFontPresentation->setText(s);};
+		void presentFontName(QString s);
 
 		void forwardUpdateView();
 

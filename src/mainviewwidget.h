@@ -78,6 +78,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		bool fontsetHasChanged;
 		QGraphicsRectItem *curGlyph;
 		
+		void doConnect();
+		void disConnect();
 		void allActivation(bool act);
 		void activation(FontItem* fit, bool act, bool andUpdate = true);
 		void activation(QList<FontItem*> fit, bool act);
@@ -210,6 +212,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void newTag(QString);
 		void tagAdded(QString);
 		void stopLayout();
+		void listChanged();
 
 	public:
 		QString defaultOrd() {return ord[0];};

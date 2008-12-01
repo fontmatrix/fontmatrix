@@ -72,6 +72,7 @@
 
 
 typotek* typotek::instance = 0;
+bool typotek::matrix = false;
 QString typotek::fonteditorPath = "/usr/bin/fontforge";
 extern bool __FM_SHOW_FONTLOADED;
 extern int fm_num_face_opened;
@@ -124,20 +125,29 @@ namespace fontmatrix
 
 /// *****************************************************
 
+typotek * typotek::getInstance()
+{
+	if(!instance)
+	{
+		instance = new typotek;
+		Q_ASSERT(instance);
+	}
+	return instance;
+}
+
 typotek::typotek()
 {
-	instance = this;
 	setWindowTitle ( "Fontmatrix" );
 	setupDrop();
-// 	qDebug()<<"Policy"<<sizePolicy().horizontalPolicy();
-
 	hyphenator = 0;
 	theHelp = 0;
 }
 
 void typotek::initMatrix()
 {
-	qDebug()<<"initMatrix()";
+	if(matrix)
+		return;
+	matrix = true;
 	m_defaultSampleName = tr("default") ;
 	fontmatrix::fillDockPos();
 
@@ -246,24 +256,25 @@ void typotek::closeEvent ( QCloseEvent *event )
 // if announce == true user will be shown a dialog of imported fonts
 // if announce == false and collect == true all fonts imported will be
 // collected and announced next time announce == true
-void typotek::open(QString path, bool announce, bool collect)
+void typotek::open ( QString path, bool announce, bool collect )
 {
 	static QStringList nameList;
 	static QStringList tali; // tali gets reseted when announce = true then the shouldAskTali is also set to true
 	static bool shouldAskTali = true; // initial tags is only asked once if collect == true
 	QStringList pathList;
 
-	QFileInfo finfo(path);
-	if (finfo.isDir() || path.isEmpty()) { // importing a directory
+	QFileInfo finfo ( path );
+	if ( finfo.isDir() || path.isEmpty() ) // importing a directory
+	{
 		static QSettings settings;
-		static QString dir = settings.value("Places/LastUsedFolder", QDir::homePath()).toString(); // first time use the home path then remember the last used dir
-		QDir d(dir);
-		if (!d.exists())
+		static QString dir = settings.value ( "Places/LastUsedFolder", QDir::homePath() ).toString(); // first time use the home path then remember the last used dir
+		QDir d ( dir );
+		if ( !d.exists() )
 			dir = QDir::homePath();
 
 		QString tmpdir;
 
-		if(!path.isEmpty())
+		if ( !path.isEmpty() )
 			tmpdir = path;
 		else
 			tmpdir = QFileDialog::getExistingDirectory ( this, tr ( "Add Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
@@ -272,19 +283,19 @@ void typotek::open(QString path, bool announce, bool collect)
 			return; // user choose to cancel the import process
 
 		dir = tmpdir; // only set dir if importing wasn't cancelled
-		settings.setValue("Places/LastUsedFolder", dir);
+		settings.setValue ( "Places/LastUsedFolder", dir );
 
 		QDir theDir ( dir );
-	// 	addFcDirItem(theDir.absolutePath());
+		// 	addFcDirItem(theDir.absolutePath());
 
-		QStringList dirList( fontmatrix::exploreDirs(dir,0) );
-	// 	qDebug() << dirList.join ( "\n" );
+		QStringList dirList ( fontmatrix::exploreDirs ( dir,0 ) );
+		// 	qDebug() << dirList.join ( "\n" );
 
 		QStringList yetHereFonts;
 // 		for(int i=0;i < fontMap.count() ; ++i)
 // 			yetHereFonts << fontMap[i]->path();
 		yetHereFonts = FMFontDb::DB()->AllFontNames();
-		
+
 		QStringList filters;
 		filters << "*.otf" << "*.pfb" << "*.ttf" ;
 		foreach ( QString dr, dirList )
@@ -293,19 +304,32 @@ void typotek::open(QString path, bool announce, bool collect)
 			QFileInfoList fil= d.entryInfoList ( filters );
 			foreach ( QFileInfo fp, fil )
 			{
-				if((!yetHereFonts.contains(fp.absoluteFilePath())) && (!fp.isSymLink())) // #12232 
-					pathList <<  fp.absoluteFilePath();
+				if ( ( !yetHereFonts.contains ( fp.absoluteFilePath() ) ) )
+				{
+					if ( fp.isSymLink() ) // #12232
+					{
+						QFileInfo fsym ( fp.symLinkTarget() );
+						if ( ( !fsym.isSymLink() ) // hey, donnot try to fool us with nested symlinks :)
+						        && ( fsym.exists() )
+						        && ( !yetHereFonts.contains ( fsym.absoluteFilePath() ) ) )
+							pathList <<  fsym.absoluteFilePath();
+
+					}
+					else
+						pathList <<  fp.absoluteFilePath();
+				}
 			}
 		}
-	} else if (finfo.isFile())
+	}
+	else if ( finfo.isFile() )
 		pathList <<  finfo.absoluteFilePath();
 
 	/* Everybody say it’s useless...
 		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
-	QStringList tagsList(FMFontDb::DB()->getTags());
+	QStringList tagsList ( FMFontDb::DB()->getTags() );
 	if ( useInitialTags && shouldAskTali )
 	{
-		ImportTags imp(this,tagsList);
+		ImportTags imp ( this,tagsList );
 		imp.exec();
 		tali = imp.tags();
 		shouldAskTali = false;
@@ -313,7 +337,8 @@ void typotek::open(QString path, bool announce, bool collect)
 
 	QProgressDialog progress ( tr ( "Importing font files... " ), tr ( "cancel" ), 0, pathList.count(), this );
 	bool showProgress = pathList.count() > 1;
-	if (showProgress) { // show progress bar only if there's more than one font
+	if ( showProgress ) // show progress bar only if there's more than one font
+	{
 		progress.setWindowModality ( Qt::WindowModal );
 		progress.setAutoReset ( false );
 		progress.setValue ( 0 );
@@ -321,63 +346,68 @@ void typotek::open(QString path, bool announce, bool collect)
 	}
 	FMFontDb::DB()->TransactionBegin();
 	QString importstring ( tr ( "Import" ) +  " %1" );
-	FMFontDb *DB(FMFontDb::DB());
+	FMFontDb *DB ( FMFontDb::DB() );
 	QList<FontItem*> nf;
 	for ( int i = 0 ; i < pathList.count(); ++i )
 	{
-		QString pathCur(pathList.at ( i ));
-		if (showProgress) {
+		QString pathCur ( pathList.at ( i ) );
+		if ( showProgress )
+		{
 			progress.setLabelText ( importstring.arg ( pathCur ) );
 			progress.setValue ( i );
 			if ( progress.wasCanceled() )
 				break;
 		}
 
-	
-		
+
+
 		{
-			QFile ff ( pathCur);
+			QFile ff ( pathCur );
 			QFileInfo fi ( pathCur );
 			{
-				FontItem *fitem (DB->Font(fi.absoluteFilePath(), true));
+				FontItem *fitem ( DB->Font ( fi.absoluteFilePath(), true ) );
 				if ( fitem )
 				{
 					nf << fitem;
-					fitem->setActivated(false);
-					if (announce || collect)
+					fitem->setActivated ( false );
+					if ( announce || collect )
 						nameList << fitem->fancyName();
 				}
 				else
 				{
 					QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
 					statusBar()->showMessage ( errorFont );
-					if (announce || collect)
+					if ( announce || collect )
 						nameList << "__FAILEDTOLOAD__" + fi.fileName();
 				}
 			}
 		}
 	}
-	
+
 	QStringList tl;
-	foreach(QString tag, tali)
+	foreach ( QString tag, tali )
 	{
 		tl.clear();
-		foreach(FontItem* f, nf)
+		foreach ( FontItem* f, nf )
 		{
 			tl << f->path();
 		}
-		DB->addTag(tl, tag);
+		DB->addTag ( tl, tag );
 	}
 	DB->TransactionEnd();
 	progress.close();
 
-	if (announce) {
-		if (showFontListDialog) {
+	if ( announce )
+	{
+		if ( showFontListDialog )
+		{
 			// The User needs and deserves to know what fonts hve been imported
 			ImportedFontsDialog ifd ( this, nameList );
 			ifd.exec();
-		} else { // show info in the statusbar
-			statusBar()->showMessage(tr("Fonts imported: %1").arg(nameList.count()), 3000);
+		}
+		else   // show info in the statusbar
+		{
+			statusBar()->showMessage ( tr ( "Fonts imported: %1" ).arg ( nameList.count() ), 3000 );
 		}
 		nameList.clear();
 		tali.clear();
@@ -390,27 +420,36 @@ void typotek::open(QString path, bool announce, bool collect)
 
 void typotek::openList ( QStringList files )
 {
-	QStringList pathList = files;
+	QStringList pathList;
 	QStringList nameList;
 	QStringList tali;
-	QStringList tagsList(FMFontDb::DB()->getTags());
+	QStringList tagsList ( FMFontDb::DB()->getTags() );
 	if ( useInitialTags )
 	{
-		ImportTags imp(this,tagsList);
+		ImportTags imp ( this,tagsList );
 		imp.exec();
 		tali = imp.tags();
-// 		tali << "Activated_Off" ;
 	}
-// // // // // // 	else
-// // // // // // 		tali << "Activated_Off" ;
 
-	FMFontDb *DB(FMFontDb::DB());
-	QList<FontItem*> fontMap(DB->AllFonts());
-	for(int i=0;i < fontMap.count() ; ++i)
+	FMFontDb *DB ( FMFontDb::DB() );
+	QStringList fontMap ( DB->AllFontNames() );
+	foreach ( QString file, files )
 	{
-		if(pathList.contains( fontMap[i]->path()))
-			pathList.removeAll(fontMap[i]->path());
+		QFileInfo fp ( file );
+		if ( ( !fontMap.contains ( fp.absoluteFilePath() ) ) )
+		{
+			if ( fp.isSymLink() ) // #12232
+			{
+				QFileInfo fsym ( fp.symLinkTarget() );
+				if ( ( !fsym.isSymLink() )
+				        && ( fsym.exists() )
+				        && ( !fontMap.contains ( fsym.absoluteFilePath() ) ) )
+					pathList <<  fsym.absoluteFilePath();
 
+			}
+			else
+				pathList <<  fp.absoluteFilePath();
+		}
 	}
 
 	DB->TransactionBegin();
@@ -430,7 +469,7 @@ void typotek::openList ( QStringList files )
 		QFile ff ( pathList.at ( i ) );
 		QFileInfo fi ( pathList.at ( i ) );
 
-		FontItem *fitem = DB->Font( fi.absoluteFilePath() ,true);
+		FontItem *fitem = DB->Font ( fi.absoluteFilePath() ,true );
 		if ( fitem )
 		{
 			nf << fitem;
@@ -444,25 +483,28 @@ void typotek::openList ( QStringList files )
 		}
 	}
 	QStringList tl;
-	foreach(QString tag, tali)
+	foreach ( QString tag, tali )
 	{
 		tl.clear();
-		foreach(FontItem* f, nf)
+		foreach ( FontItem* f, nf )
 		{
 			tl << f->path();
 		}
-		DB->addTag(tl, tag);
+		DB->addTag ( tl, tag );
 	}
 	DB->TransactionEnd();
 	progress.close();
 
 	// The User needs and deserves to know what fonts hve been imported
-	if (showFontListDialog) {
+	if ( showFontListDialog )
+	{
 		// The User needs and deserves to know what fonts hve been imported
 		ImportedFontsDialog ifd ( this, nameList );
 		ifd.exec();
-	} else { // show info in the statusbar
-		statusBar()->showMessage(tr("Fonts imported: %1").arg(nameList.count()), 3000);
+	}
+	else   // show info in the statusbar
+	{
+		statusBar()->showMessage ( tr ( "Fonts imported: %1" ).arg ( nameList.count() ), 3000 );
 	}
 
 	theMainView->slotReloadFontList();
@@ -713,17 +755,24 @@ void typotek::createMenus()
 void typotek::createStatusBar()
 {
 	statusBar()->showMessage ( tr ( "Ready" ) );
-
+			
 	statusProgressBar = new QProgressBar(this);
 	statusProgressBar->setMaximumSize(200,20);
 	statusBar()->addPermanentWidget(statusProgressBar);
 	statusProgressBar->hide();
 
-	QFont statusFontFont ( "sans-serif",10 );
-	curFontPresentation = new QLabel ( tr ( "Nothing Selected" ) );
+	QFont statusFontFont ( "sans-serif", 10 );
+	curFontPresentation = new QLabel ( "" );
+	curFontPresentation->setFrameShape(QFrame::StyledPanel);
 	curFontPresentation->setAlignment ( Qt::AlignRight );
 	curFontPresentation->setFont ( statusFontFont );
 	statusBar()->addPermanentWidget ( curFontPresentation );
+	
+	countFilteredFonts = new QLabel ( "" );
+	countFilteredFonts->setFrameShape(QFrame::StyledPanel);
+	countFilteredFonts->setAlignment ( Qt::AlignRight );
+	countFilteredFonts->setFont ( statusFontFont );
+	statusBar()->addPermanentWidget ( countFilteredFonts );
 }
 
 void typotek::readSettings()
@@ -1986,6 +2035,17 @@ void typotek::slotShowTTTables()
 		dia.exec();
 	}
 }
+
+void typotek::showToltalFilteredFonts()
+{
+	countFilteredFonts->setText( tr( "Filtered Font(s) : %n", "number of filtererd fonts showed in status bar", theMainView->curFonts().count() ) );
+}
+
+void typotek::presentFontName(QString s)
+{
+	curFontPresentation->setText(tr("Current Font :", "followed by currently selected font name (in status bar)") +s);
+}
+
 
 
 

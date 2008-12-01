@@ -32,6 +32,7 @@
 #include <QSettings>
 
 #include "typotek.h"
+#include "mainviewwidget.h"
 #include "listdockwidget.h"
 #include "fmpaths.h"
 #include "systray.h"
@@ -74,7 +75,7 @@ int main ( int argc, char *argv[] )
 		__FM_SHOW_FONTLOADED = false;
 	}
 
-	typotek * mw = new typotek;
+	typotek * mw = typotek::getInstance();
 
 
 	QSettings settings;
@@ -136,8 +137,8 @@ int main ( int argc, char *argv[] )
 	LazyInit lazyInit;
 	// Now we should have A running ListDockWidget in main thread
 	QObject::connect(&lazyInit, SIGNAL(endOfRun()), ListDockWidget::getInstance(), SLOT(unlockFilter()) );
-
 	lazyInit.start(QThread::LowestPriority);
+	mw->getTheMainView()->slotViewAll();
 
 	return app.exec();
 }

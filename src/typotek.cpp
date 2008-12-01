@@ -139,6 +139,7 @@ typotek::typotek()
 {
 	setWindowTitle ( "Fontmatrix" );
 	setupDrop();
+	theMainView = 0;
 	hyphenator = 0;
 	theHelp = 0;
 }
@@ -889,6 +890,7 @@ void typotek::checkOwnDir()
 	managedDir.setPath ( QDir::homePath() + fontmanaged );
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + fontmanaged );
+	ownDir = managedDir;
 	ResourceFile.setFileName ( QDir::homePath() + sep +"fontmatrix.data" );
 #else
 	QString rootDir(QDir::homePath() + sep + ".Fontmatrix" + sep);  

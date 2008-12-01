@@ -72,7 +72,7 @@ Qt::ItemFlags FMPreviewModel::flags(const QModelIndex & index) const
 
 int FMPreviewModel::rowCount(const QModelIndex & parent) const
 {
-	if(parent.isValid())
+	if(parent.isValid() || !typotek::getInstance()->getTheMainView())
 		return 0;
 	QList< FontItem * > cl(typotek::getInstance()->getCurrentFonts());
 	return cl.count();

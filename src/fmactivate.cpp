@@ -126,7 +126,13 @@ void FMActivate::activate(FontItem * fit, bool act)
 }
 
 #elif _WIN32
-void FMActivate::activate(FontItem * fit, bool act)
+
+void FMActivate::activate(FontItem* fit , bool act )
+{
+	//TODO implement activation/deactivation for Windows
+}
+
+void FMActivate::activate(QList<FontItem*> fitList, bool act)
 {
 	//TODO implement activation/deactivation for Windows
 }

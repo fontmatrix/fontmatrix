@@ -61,7 +61,7 @@ QString FMPaths::TranslationsDir()
 #ifdef PLATFORM_APPLE
 	QString QMDirPath = QApplication::applicationDirPath();
 	QString dirsep(QDir::separator());
-	QMDirPath +=  dirsep + ".." + dirsep + "Resources" + dirsep + "locale" + dirsep;	
+	QMDirPath +=  dirsep + ".." + dirsep + "Resources" + dirsep + "Locales" + dirsep;	
 #elif _WIN32
 	QString QMDirPath = QApplication::applicationDirPath();
 	QString dirsep(QDir::separator());

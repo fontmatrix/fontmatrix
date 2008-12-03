@@ -1439,11 +1439,21 @@ void typotek::setWord ( QString s, bool updateView )
 	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i(0); i < fontMap.count(); ++i)
 		fontMap[i]->clearPreview() ;
-	if ( updateView )
-	{
-		ListDockWidget::getInstance()->forcePreviewRefill();
-		theMainView->slotView ( true );
-	}
+
+	emit previewHasChanged();
+}
+
+void typotek::setPreviewSize(double d)
+{
+	if(previewSize == d)
+		return;
+	
+	previewSize = d;
+	
+	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
+	for(int i(0); i < fontMap.count(); ++i)
+		fontMap[i]->clearPreview() ;
+	emit previewHasChanged();
 }
 
 void typotek::setPreviewRTL(bool d)

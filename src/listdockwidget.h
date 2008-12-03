@@ -55,8 +55,6 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 
 		bool nameItemIsVisible(QTreeWidgetItem *item);
 
-		void forcePreviewRefill();
-
 		QModelIndex getFolderCurrentIndex(){return currentFIndex;}
 
 		QString getCurrentField() const
@@ -109,8 +107,13 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void slotTabChanged(int i);
 // 		void slotPanoseChecked(bool checked);
 		
+		// Concerns the width of the preview widget
 		void slotPreviewUpdateSize(int);
 		void slotPreviewSelected(const QModelIndex & index);
+		
+		// text & size of the preview
+		void slotPreviewText(const QString& p);
+		void slotPreviewSize(double d);
 
 	signals:
 		void folderSelectFont(const QString&);
@@ -139,6 +142,7 @@ private slots:
 	void slotImportDir();
 	void slotImportDirRecursively();
 	void slotImportFile();
+	
 };
 
 #endif

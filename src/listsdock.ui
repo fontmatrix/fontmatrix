@@ -308,8 +308,14 @@ p, li { white-space: pre-wrap; }
         <property name="margin" >
          <number>2</number>
         </property>
-        <item row="0" column="0" >
+        <item row="0" column="0" colspan="2" >
          <widget class="FMPreviewView" name="listPreview" />
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLineEdit" name="previewText" />
+        </item>
+        <item row="1" column="1" >
+         <widget class="QDoubleSpinBox" name="previewSize" />
         </item>
        </layout>
       </widget>

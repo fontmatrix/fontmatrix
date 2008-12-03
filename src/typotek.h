@@ -267,7 +267,7 @@ class typotek:public QMainWindow
 
 		void setWord(QString s, bool updateView);
 		QString word(){return m_theWord;};
-		void setPreviewSize(double d){ previewSize = d; }
+		void setPreviewSize(double d);
 		double getPreviewSize(){ return previewSize; }
 		void setPreviewRTL(bool d);
 		bool getPreviewRTL(){ return previewRTL; }

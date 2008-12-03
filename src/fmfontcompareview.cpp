@@ -227,9 +227,9 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems, double offset)
 		double miny(XY.y());
 		double maxy(WH.y());
 		
-		QLine leftL(offset, miny, offset, maxy);
-		QLine rightL(xadvance,miny,xadvance,maxy);
-		QLine bottomL(minx,0,maxx,0);
+		QLineF leftL(offset, miny, offset, maxy);
+		QLineF rightL(xadvance,miny,xadvance,maxy);
+		QLineF bottomL(minx,0.0,maxx,0.0);
 		QPen mPen(color,1.0);
 // 		mPen.setCosmetic(true);
 		lines_controls << new QGraphicsLineItem(leftL);
@@ -443,8 +443,8 @@ void FMFontCompareView::mouseMoveEvent(QMouseEvent * e)
 	if ( isPanning )
 	{
 		QPointF pos ( e->pos() );
-		int vDelta ( mouseStartPoint.y() - pos.y() );
-		int hDelta ( mouseStartPoint.x() - pos.x() );
+		int vDelta ( qRound(mouseStartPoint.y() - pos.y()) );
+		int hDelta ( qRound(mouseStartPoint.x() - pos.x()) );
 		verticalScrollBar()->setValue ( verticalScrollBar()->value() + vDelta );
 		horizontalScrollBar()->setValue ( horizontalScrollBar()->value() + hDelta );
 		mouseStartPoint = pos;

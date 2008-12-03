@@ -231,8 +231,8 @@ FMOtf::FMOtf ( FT_Face f , double scale )
 // 	}
 // 	else
 	{
-		hbFont.x_scale = scale;
-		hbFont.y_scale = scale;
+		hbFont.x_scale = static_cast<uint32_t>(scale);
+		hbFont.y_scale = static_cast<uint32_t>(scale);
 	}
 
 	glyphAlloc = false;

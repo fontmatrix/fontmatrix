@@ -62,8 +62,8 @@ void FMPlayGround::mouseMoveEvent ( QMouseEvent * e )
 	if ( isPanning )
 	{
 		QPointF pos ( e->pos() );
-		int vDelta ( mouseStartPoint.y() - pos.y() );
-		int hDelta ( mouseStartPoint.x() - pos.x() );
+		int vDelta ( qRound(mouseStartPoint.y() - pos.y()) );
+		int hDelta ( qRound(mouseStartPoint.x() - pos.x()) );
 		verticalScrollBar()->setValue ( verticalScrollBar()->value() + vDelta );
 		horizontalScrollBar()->setValue ( horizontalScrollBar()->value() + hDelta );
 		mouseStartPoint = pos;

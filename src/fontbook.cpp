@@ -124,7 +124,8 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 				ital = true;
 			if ( fbc.textStyle.font.contains ( "bold", Qt::CaseInsensitive ) )
 				bold = QFont::Bold;
-			qfontCache[fbc.textStyle.name] = QFont ( fbc.textStyle.font,fbc.textStyle.fontsize, bold, ital );
+			qfontCache[fbc.textStyle.name] = QFont ( fbc.textStyle.font,10, bold, ital );
+			qfontCache[fbc.textStyle.name].setPointSizeF(fbc.textStyle.fontsize );
 
 			fbc.textStyle.lineheight = QString ( tStyle.namedItem ( "lineheight" ).toElement().text() ).toDouble() ;
 			fbc.textStyle.margin_top = QString ( tStyle.namedItem ( "margintop" ).toElement().text() ).toDouble() ;

@@ -324,7 +324,7 @@ void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * ol
 	int r(compareList->row(witem));
 	FMFontCompareItem::GElements e(compareView->getElements(r));
 	
-	compareOffset->setValue(compareView->getOffset(r));
+	compareOffset->setValue(qRound(compareView->getOffset(r)));
 	compareOffsetValue->setText(QString::number(compareView->getOffset(r)));
 	
 	if(e.testFlag(FMFontCompareItem::Contour))

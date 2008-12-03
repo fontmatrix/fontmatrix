@@ -152,6 +152,11 @@ void FMLayOptWidget::setValue ( V v, int value )
 	}
 }
 
+void FMLayOptWidget::setValue(V v, double value)
+{
+	setValue(v, qRound(value));
+}
+
 double FMLayOptWidget::getValue ( V v )
 {
 	switch ( v )
@@ -172,4 +177,5 @@ double FMLayOptWidget::getValue ( V v )
 	}
 	return 0.0;
 }
+
 

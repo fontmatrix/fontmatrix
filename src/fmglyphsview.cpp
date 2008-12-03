@@ -114,7 +114,7 @@ void FMGlyphsView::wheelEvent(QWheelEvent * e)
 
 QRectF FMGlyphsView::visibleSceneRect()
 {
-	QRectF rr(mapToScene(0.0, 0.0, width(), height()).boundingRect());
+	QRectF rr(mapToScene(0.0, 0.0, static_cast<double>(width()), static_cast<double>(height())).boundingRect());
 	return rr;
 }
 

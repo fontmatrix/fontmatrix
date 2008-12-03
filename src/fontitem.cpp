@@ -965,7 +965,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 
 	// Set size
 	FT_Set_Char_Size ( m_face,
-	                   size  * 64 ,
+	                   qRound( size  * 64 ),
 	                   0,
 	                   QApplication::desktop()->physicalDpiX(),
 	                   QApplication::desktop()->physicalDpiY() );
@@ -976,7 +976,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	                           FT_LOAD_NO_SCALE  );
 	if ( ft_error )
 	{
-		QPixmap square ( size , size );
+		QPixmap square ( qRound(size) , qRound(size) );
 		square.fill ( Qt::red );
 		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
 		glyph->setData ( GLYPH_DATA_GLYPH ,index );
@@ -999,7 +999,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
 	if ( ft_error )
 	{
-		QPixmap square ( size , size );
+		QPixmap square ( qRound(size) , qRound(size) );
 		square.fill ( Qt::red );
 		QGraphicsPixmapItem *glyph = new QGraphicsPixmapItem ( square );
 		glyph->setData ( GLYPH_DATA_GLYPH , index );
@@ -1016,7 +1016,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 
 	if ( img.isNull() && !spaceIndex.contains ( index ) )
 	{
-		QPixmap square ( size , size );
+		QPixmap square ( qRound(size) , qRound(size) );
 		square.fill ( Qt::red );
 		glyph->setPixmap ( square );
 		glyph->setData ( GLYPH_DATA_GLYPH , index );
@@ -2302,7 +2302,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 
 int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code ,double pwidth, double pheight )
 {
-	qDebug() <<"FontItem::renderChart ("<< begin_code<<end_code <<")";
+// 	qDebug() <<"FontItem::renderChart ("<< begin_code<<end_code <<")";
 
 	ensureFace();
 	int nl ( 0 );
@@ -2312,7 +2312,7 @@ int FontItem::renderChart ( QGraphicsScene * scene, int begin_code, int end_code
 	FT_UInt   gindex = 1;
 	double sizz = 50;
 	charcode = begin_code;
-	adjustGlyphsPerRow ( pwidth );
+	adjustGlyphsPerRow ( qRound(pwidth) );
 
 	double leftMargin = 30 + ( ( pwidth - ( m_glyphsPerRow * 100 ) ) / 2 );
 	double aestheticTopMargin = 0;
@@ -2723,12 +2723,12 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 // 	qDebug() << theSize << theHeight << theWidth;
 	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
 	bool pRTL = typotek::getInstance()->getPreviewRTL();
-	QPoint pen ( pRTL ? theWidth - 20 : 20 , theSize *  pt2px );
+	QPointF pen ( pRTL ? theWidth - 20 : 20 , theSize *  pt2px );
 
 	double fsize = theSize ;
 	double scalefactor = theSize / m_face->units_per_EM;
 
-	QPixmap linePixmap ( theWidth,theHeight );
+	QPixmap linePixmap ( qRound(theWidth), qRound(theHeight) );
 	linePixmap.fill ( bg_color );
 	QPainter apainter ( &linePixmap );
 	QVector<QRgb> palette;
@@ -2744,7 +2744,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		}
 
 		FT_Set_Char_Size ( m_face,
-		                   fsize  * 64 ,
+		                   qRound(fsize  * 64) ,
 		                   0,
 		                   QApplication::desktop()->physicalDpiX(),
 		                   QApplication::desktop()->physicalDpiY() );
@@ -2810,7 +2810,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 
 			pen.ry() = ( theSize * pt2px ) - m_glyph->bitmap_top;
 
-			apainter.drawImage ( pen.x() + leftBearing, pen.y(), glyphImage() );
+			apainter.drawImage ( qRound(pen.x() + leftBearing),qRound( pen.y()), glyphImage() );
 
 			pen.rx() +=  advance;
 
@@ -2827,7 +2827,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 	if ( !theOneLinePreviewPixmap.isNull() )
 		return theOneLinePreviewPixmap;
 
-	theOneLinePreviewPixmap = QPixmap ( theWidth,theHeight );
+	theOneLinePreviewPixmap = QPixmap ( qRound(theWidth), qRound(theHeight) );
 	theOneLinePreviewPixmap.fill ( Qt::lightGray );
 	return theOneLinePreviewPixmap;
 }
@@ -3244,7 +3244,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 // 	qDebug() <<  allRect.topLeft() << view->mapToScene ( allRect.topLeft() );
 
 	// We’ll try to have a square subRect that fit in view ;-)
-	int squareSideUnit = qMin ( allRect.width() ,  allRect.height() ) * 0.1;
+	int squareSideUnit = qMin ( allRect.width() * 0.1,  allRect.height() * 0.1) ;
 	int squareSide = 8 * squareSideUnit;
 	int squareXOffset = ( allRect.width() - squareSide ) / 2;
 	int squareYOffset = ( allRect.height() - squareSide ) / 2;
@@ -3258,7 +3258,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	painter.drawRoundRect ( subRect,5,5 );
 	painter.setPen ( QPen ( QColor ( 0,0,255,120 ) ) );
 
-	ft_error = FT_Set_Pixel_Sizes ( m_face, 0, subRect.height() * 0.8 );
+	ft_error = FT_Set_Pixel_Sizes ( m_face, 0, qRound(subRect.height() * 0.8) );
 	if ( ft_error )
 	{
 		return -1;
@@ -3288,8 +3288,8 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	if ( img.width() > subRect.width() )
 	{
 		scaledBy = ( double ) subRect.width() / ( double ) img.width() * 0.8;
-		qDebug() <<"scaledBy = " << scaledBy ;
-		img = img.scaledToWidth ( subRect.width() * 0.8,Qt::SmoothTransformation );
+// 		qDebug() <<"scaledBy = " << scaledBy ;
+		img = img.scaledToWidth ( qRound(subRect.width() * 0.8 ),Qt::SmoothTransformation );
 
 	}
 
@@ -3301,14 +3301,14 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 
 	// Draw metrics
 	QPoint pPos ( gPos );
-	pPos.rx() -= m_face->glyph->bitmap_left * scaledBy;
-	pPos.ry() += m_face->glyph->bitmap_top * scaledBy;
+	pPos.rx() -= qRound(m_face->glyph->bitmap_left * scaledBy);
+	pPos.ry() += qRound(m_face->glyph->bitmap_top * scaledBy);
 	//left
 	painter.drawLine ( pPos.x() , 0,
 	                   pPos.x() , allRect.bottom() );
 	//right
-	painter.drawLine ( pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy , 0,
-	                   pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy , allRect.bottom() );
+	painter.drawLine (  qRound(pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy ), 0,
+			    qRound( pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy), allRect.bottom() );
 	//baseline
 	painter.drawLine ( 0, pPos.y() ,
 	                   allRect.right(),  pPos.y() );
@@ -3413,7 +3413,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 			                           altP.width() - 10,
 			                           altP.height()  - 10,
 			                           20,20 );
-			altPainter.drawImage ( altI.width() / 2.0, altI.height() / 2.0 , altI );
+			altPainter.drawImage ( qRound(altI.width() / 2.0), qRound(altI.height() / 2.0) , altI );
 
 			gpi->setPixmap ( altP );
 

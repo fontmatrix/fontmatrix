@@ -26,6 +26,7 @@ class FMLayOptWidget : public QWidget , private Ui::LayoutOptionWidget
 		int vToInt(V v){return v;}
 		void setRange(V v, int min, int max);
 		void setValue(V v, int value);
+		void setValue(V v, double value);
 		double getValue(V v);
 
 	private slots:

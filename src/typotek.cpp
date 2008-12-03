@@ -870,18 +870,18 @@ void typotek::checkOwnDir()
 {
 	relayStartingStepIn(tr("Check for Fontmatrix own dir"));
 	QString sep(QDir::separator());
-// #define PLATFORM_APPLE
+	
 #ifdef PLATFORM_APPLE
 
+	QString rootDir(QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep);
 	managedDir.setPath(QDir::homePath() + sep + "Library" + sep + "Fonts");
+	ownDir.setPath(rootDir);
 	if ( !managedDir.exists() )
 		managedDir.mkpath ( QDir::homePath() + sep + "Library" + sep + "Fonts" );
-	QDir dbDir;
-	if(!dbDir.exists(QDir::homePath() + sep + "Library" + sep + "Fontmatrix"))
-	{
-		dbDir.mkpath (QDir::homePath() + sep + "Library" + sep + "Fontmatrix");
-	}
-	ResourceFile.setFileName ( QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep +"fontmatrix.data" );
+	if(!ownDir.exists())
+		ownDir.mkpath (rootDir);
+	
+	ResourceFile.setFileName ( rootDir + "Resource.xml" );
 
 #elif _WIN32
 	// For win we do not hide things because it does

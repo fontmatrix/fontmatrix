@@ -211,21 +211,34 @@ void Systray::newTag(QString name)
 		ttek = typotek::getInstance();
 	QList<FontItem*> taggedFonts = FMFontDb::DB()->Fonts( name , FMFontDb::Tags );
 	ttek->resetFilter();
-	bool notAtAll = true;
-	bool all = true;
-	for(int i = 0; i < taggedFonts.count() ; ++i)
+	int nActivated(0);
+	int nFonts(taggedFonts.count());
+	for(int i = 0; i <  nFonts ; ++i)
 	{
+		Q_ASSERT(taggedFonts[i]);
 		if(taggedFonts[i]->isActivated())
-			notAtAll = false;
-		else
-			all = false;
+		{
+			++nActivated;
+			
+		}
 	}
-	if(!all && !notAtAll)
-		tmp->setIcon(QIcon(":/icon_fake_partiallychecked"));// It’s not TriCheckState and we need to inform user
-	else if(all)
-		tmp->setChecked(true);
+	if(nActivated < nFonts)
+	{
+		if(nActivated > 0)
+		{
+			QFont f(tmp->font());
+			f.setBold(true);
+			tmp->setFont(f);
+			tmp->setText(name + " "+QString::number(nActivated)+"/"+QString::number(nFonts));
+			tmp->setChecked(false);
+		}
+		else
+		{
+			tmp->setChecked(false);
+		}
+	}
 	else
-		tmp->setChecked(false);
+		tmp->setChecked(true);
 	
 	tagActions[name] = tmp;
 }

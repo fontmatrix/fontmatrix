@@ -125,6 +125,15 @@ void FMActivate::activate(FontItem * fit, bool act)
 	emit activationEvent ( fit->path() );
 }
 
+void FMActivate::activate(QList<FontItem*> fitList, bool act)
+{
+	// FIXME its bad
+	foreach(FontItem* fit, fitList)
+	{
+		activate(fit, act);
+	}
+}
+
 #elif _WIN32
 
 void FMActivate::activate(FontItem* fit , bool act )
@@ -324,7 +333,6 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 
 bool FMActivate::addFcReject(const QString & path)
 {
-	qDebug()<<"FMActivate::addFcReject"<<path;
 #ifdef HAVE_FONTCONFIG
 	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
 	if ( !fcfile.open ( QFile::ReadWrite ) )

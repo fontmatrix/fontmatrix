@@ -7,8 +7,11 @@
 // Author: Riku Leino <riku.leino@gmail.com>, (C) 2008
 //         David L. Wagner, International Business Machines Corp., 2002
 //
-// Copyright: See COPYING file that comes with this distribution
-//
+// This file is free software; you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published
+// by the Free Software Foundation; either version 2.1 of the License, or
+// (at your option) any later version.
+// http://www.gnu.org/copyleft/lesser.html
 //
 
 #ifndef PANOSEMATCH_H
@@ -19,12 +22,12 @@ class PanoseMatch {
 public:
 	/** Init the matcher with the Panose string for the selected font */
 	PanoseMatch(const QString &selected);
-	
+
 	PanoseMatch(){}
 	~PanoseMatch(){}
 
 	void setAttributes(const QString &attrs);
-	
+
 	/** Determine the difference between the selected font and the other font. */
 	int diff (const QString &other) const;
 
@@ -70,7 +73,7 @@ class PanoseMatchFont : private PanoseMatch
 	~PanoseMatchFont(){}
 	public:
 		static QList<FontItem*> similar(FontItem* ref, int treshold);
-		
+
 };
 
 

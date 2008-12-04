@@ -36,6 +36,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/parallelcoor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/panosematch.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pangoshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/prefspaneldialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/remotedir.cpp
@@ -156,7 +157,7 @@ SET ( fontmatrix_TSS
 
 IF ( TRANSLATOR )
 	MESSAGE(STATUS "We are glad to see you handle the fontmatrix-${TRANSLATOR}.ts file, thank you very much")
-	ADD_CUSTOM_TARGET(translation 
+	ADD_CUSTOM_TARGET(translation
 			COMMAND ${QT_LUPDATE_EXECUTABLE}  ${fontmatrix_SRCS} ${fontmatrix_UIS} -ts "fontmatrix-${TRANSLATOR}.ts"
 			DEPENDS ${fontmatrix_SRCS} ${fontmatrix_UIS}
 			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/messages"
@@ -197,7 +198,7 @@ IF(UNIX AND NOT APPLE)
 	${FONTCONFIG_LIBRARIES}
 	${SHAPERS_LIBRARIES}
 	)
-	
+
 	INSTALL(TARGETS fontmatrix
 	RUNTIME DESTINATION ${FONTMATRIX_BIN}
 	)
@@ -212,7 +213,7 @@ IF(APPLE)
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
 	)
-	
+
 	target_link_libraries(fontmatrix harfbuzz hyphenate
 	${QT_LIBRARIES}
 	${FREETYPE_LIBRARIES}
@@ -225,13 +226,13 @@ IF(APPLE)
 	# NOTE: Mac users are not expected to build Fontmatrix
 	# themselves, thus paths are hard coded because it works on the Mac
 	# where we use to build it, period.
-	
+
 	# See:
 	# http://doc.trolltech.com/4.4/deployment-mac.html
 	# http://developer.apple.com/documentation/CoreFoundation/Conceptual/CFBundles/CFBundles.html
-	
+
 	SET(PROGNAME fontmatrix)
-	
+
 	SET(MACOSX_BUNDLE_BUNDLE_NAME "fontmatrix")
 	SET(MACOSX_BUNDLE_ICON_FILE "fontmatrix.icns")
 	SET(MACOSX_BUNDLE_GUI_IDENTIFIER "org.undertype.fontmatrix")
@@ -239,10 +240,10 @@ IF(APPLE)
 	SET(MACOSX_BUNDLE_SHORT_VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}")
 	SET(MACOSX_BUNDLE_BUNDLE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 	SET(MACOSX_BUNDLE_COPYRIGHT "© Fontmatrix team - 2007, 2008")
-	
+
 	SET(BUNDLE_RESOURCES_DIR	"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/")
 	SET(BUNDLE_LOCALES_DIR		"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Locales/")
-	
+
 # bundles general resources
 	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
 	COMMAND mkdir ARGS -p ${BUNDLE_RESOURCES_DIR}
@@ -275,7 +276,7 @@ IF(WIN32)
 	${FREETYPE_LIBRARIES}
 	${SHAPERS_LIBRARIES}
 	)
-	
+
 	INSTALL(TARGETS fontmatrix
 	RUNTIME DESTINATION ${FONTMATRIX_BIN}
 	)

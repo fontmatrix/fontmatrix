@@ -797,7 +797,7 @@ void typotek::readSettings()
 	mainDockGeometry = settings.value("Docks/ToolGeometry", QRect()).toRect();
 	tagsDockGeometry = settings.value("Docks/TagsGeometry", QRect()).toRect();
 	
-	panoseMatchTreshold = settings.value("Panose/MatchTreshold" , 2 ).toInt();
+	panoseMatchTreshold = settings.value("Panose/MatchTreshold" , 1000 ).toInt();
 	
 	templatesDir = settings.value ( "Places/TemplatesDir", "./").toString();
 	m_welcomeURL = settings.value("Places/WelcomeURL").toString();

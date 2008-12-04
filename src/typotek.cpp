@@ -797,7 +797,7 @@ void typotek::readSettings()
 	mainDockGeometry = settings.value("Docks/ToolGeometry", QRect()).toRect();
 	tagsDockGeometry = settings.value("Docks/TagsGeometry", QRect()).toRect();
 	
-// 	m_familySchemeFreetype = settings.value("FamilyPreferred", true).toBool();
+	panoseMatchTreshold = settings.value("Panose/MatchTreshold" , 2 ).toInt();
 	
 	templatesDir = settings.value ( "Places/TemplatesDir", "./").toString();
 	m_welcomeURL = settings.value("Places/WelcomeURL").toString();
@@ -837,6 +837,8 @@ void typotek::writeSettings()
 	settings.setValue( "Docks/TagsPos", tagsDockArea );
 	settings.setValue( "Docks/ToolGeometry", mainDockGeometry);
 	settings.setValue( "Docks/TagsGeometry", tagsDockGeometry);
+	
+	settings.setValue( "Panose/MatchTreshold", panoseMatchTreshold);
 	
 	settings.setValue( "WState/SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
 	
@@ -2059,8 +2061,13 @@ void typotek::presentFontName(QString s)
 }
 
 
+int typotek::getPanoseMatchTreshold() const
+{
+	return panoseMatchTreshold;
+}
 
 
-
-
-
+void typotek::setPanoseMatchTreshold ( int theValue )
+{
+	panoseMatchTreshold = theValue;
+}

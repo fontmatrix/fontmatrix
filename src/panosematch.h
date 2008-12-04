@@ -11,13 +11,20 @@
 //
 //
 
+#ifndef PANOSEMATCH_H
+#define PANOSEMATCH_H
+
 class PanoseMatch {
 
 public:
 	/** Init the matcher with the Panose string for the selected font */
 	PanoseMatch(const QString &selected);
-	~PanoseMatch() {};
+	
+	PanoseMatch(){}
+	~PanoseMatch(){}
 
+	void setAttributes(const QString &attrs);
+	
 	/** Determine the difference between the selected font and the other font. */
 	int diff (const QString &other) const;
 
@@ -54,3 +61,17 @@ private:
 		};
 };
 
+class FontItem;
+
+/// An helper class for Panose matching
+class PanoseMatchFont : private PanoseMatch
+{
+	PanoseMatchFont(){}
+	~PanoseMatchFont(){}
+	public:
+		static QList<FontItem*> similar(FontItem* ref, int treshold);
+		
+};
+
+
+#endif // PANOSEMATCH_H

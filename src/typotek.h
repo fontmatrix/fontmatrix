@@ -226,6 +226,8 @@ class typotek:public QMainWindow
 		QString databaseDbName;
 		QString databaseUser;
 		QString databasePassword;
+		
+		int panoseMatchTreshold;
 
 	public:		
 		bool isSysFont(FontItem* f);
@@ -330,6 +332,10 @@ class typotek:public QMainWindow
 
 	void setDatabasePassword ( const QString& theValue ){databasePassword = theValue;}
 	QString getDatabasePassword() const{return databasePassword;}
+
+	void setPanoseMatchTreshold ( int theValue );
+	int getPanoseMatchTreshold() const;
+	
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

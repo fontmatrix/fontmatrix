@@ -11,6 +11,7 @@
 //
 //
 
+#include "fmfontdb.h"
 #include "fmfontstrings.h"
 #include "panosematch.h"
 
@@ -22,6 +23,11 @@
 PanoseMatch::PanoseMatch(const QString &selected)
 {
 	attributes = parse(selected);
+}
+
+void PanoseMatch::setAttributes(const QString & attrs)
+{
+	attributes = parse(attrs);
 }
 
 /**
@@ -218,3 +224,28 @@ int PanoseMatch::calcdifflf (int p1, int p2)
   else
     return 100;
 }
+
+/// PanoseMatchFont
+
+QList< FontItem * > PanoseMatchFont::similar(FontItem * ref, int treshold)
+{
+	if((!ref) || (!treshold))
+		return QList< FontItem * >();
+	if(ref->panose().isEmpty())
+		return QList< FontItem * >();
+	
+	PanoseMatchFont * pm(new PanoseMatchFont);
+	pm->setAttributes(ref->panose());
+	
+	QList<FontItem*> all(FMFontDb::DB()->AllFonts());
+	QList<FontDBResult> dbresult( FMFontDb::DB()->getInfo(all, FMFontDb::Panose) );
+	QList<FontItem*> fil;
+	for(int i(0); i < dbresult.count() ; ++i)
+	{
+		if( pm->diff(dbresult[i].second) < treshold )
+			fil << dbresult[i].first;
+	}
+	delete  pm;
+	return fil;
+}
+

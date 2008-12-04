@@ -29,6 +29,7 @@
 #include "fontitem.h"
 #include "listdockwidget.h"
 #include "opentypetags.h"
+#include "panosematch.h"
 #include "systray.h"
 #include "typotek.h"
 #include "fmfontdb.h"
@@ -1183,9 +1184,8 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		return;
 
 	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
-// 	qDebug()<<"K T"<<key<<tag;
+	
 	setCrumb();
-	addFilterToCrumb(tag);
 	if(key == "TAG") // regular tag
 	{
 		m_lists->fontTree->clear();
@@ -1194,6 +1194,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		currentFonts = FMFontDb::DB()->Fonts(fs, FMFontDb::Tags );
 		currentOrdering = "family";
 		fillTree();
+		addFilterToCrumb(tag);
 	}
 	else if(key == "ALL_ACTIVATED")
 	{
@@ -1202,22 +1203,19 @@ void MainViewWidget::slotFilterTag ( QString tag )
 		currentFonts = FMFontDb::DB()->Fonts(1, FMFontDb::Activation );
 		currentOrdering = "family";
 		fillTree();
+		addFilterToCrumb(tr("Activated"));
 	}
-// 	else if(key == "TAGSET")
-// 	{
-// 		slotFilterTagset ( tag );
-// 	}
-// 	else if(key == "TAG_IS_PANOSE")
-// 	{
-// 		m_lists->fontTree->clear();
-// 		fontsetHasChanged = true;
-// 		QStringList pl( tag.split("-") );
-// 		QString fs ( pl[1] );
-// 		QString ff ( pl[0] );
-// // 		currentFonts = typo->getFonts ( fs,"Panose/"+ff ) ;
-// 		currentOrdering = "family";
-// 		fillTree();
-// 	}
+	else if(key == "SIMILAR")
+	{
+		if(theVeryFont)
+		{
+			m_lists->fontTree->clear();
+			fontsetHasChanged = true;
+			currentFonts = PanoseMatchFont::similar(theVeryFont, typo->getPanoseMatchTreshold() );
+			fillTree();
+			addFilterToCrumb("S://"+ theVeryFont->family());
+		}
+	}
 }
 
 

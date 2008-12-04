@@ -155,6 +155,7 @@ class ParallelCoorView : public QGraphicsView
 		ParallelCoorDataSet* getDataSet() const;
 		void setFilter ( const QMap< QString, QStringList >& theValue );
 		QMap< QString, QStringList > getFilter() const;
+		QString filterAsString();
 		void setCurrentField ( const QString& theValue );
 		QString getCurrentField() const;
 		

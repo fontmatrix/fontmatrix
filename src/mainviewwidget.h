@@ -232,7 +232,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		FMPlayGround *getPlayground();
 		
 		void addFilterToCrumb(QString filter);
-		void resetCrumb();
+		void setCrumb(QString text = QString());
 		
 		QByteArray splitterState(int spl);
 		

@@ -274,25 +274,25 @@ void ParallelCoorView::redraw()
 	}
 	
 	units = Units(width(), height(), m_dataSet->count());
-	QTime t;
-	int tclean, tbar, tvert, tfield, tval;
-	t.start();
+// 	QTime t;
+// 	int tclean, tbar, tvert, tfield, tval;
+// 	t.start();
 	cleanLists(AllList);
-	tclean = t.elapsed();
-	t.start();
+// // 	tclean = t.elapsed();
+// 	t.start();
 	drawBars();
-	tbar = t.elapsed();
-	t.start();
+// 	tbar = t.elapsed();
+// 	t.start();
 	drawVertices();
-	tvert = t.elapsed();
-	t.start();
+// // 	tvert = t.elapsed();
+// // 	t.start();
 	drawFields();
-	tfield = t.elapsed();
-	t.start();
+// 	tfield = t.elapsed();
+// 	t.start();
 	drawValues();
-	tval = t.elapsed();
+// 	tval = t.elapsed();
 
-	qDebug()<<"C"<<tclean<<"B"<<tbar<<"Ve"<<tvert<<"F"<<tfield<<"Va"<<tval;
+// 	qDebug()<<"C"<<tclean<<"B"<<tbar<<"Ve"<<tvert<<"F"<<tfield<<"Va"<<tval;
 }
 
 void ParallelCoorView::drawBars()
@@ -550,6 +550,24 @@ QMap< QString, QStringList > ParallelCoorView::getFilter() const
 	return m_filter;
 }
 
+QString ParallelCoorView::filterAsString()
+{
+	QString ret;
+	foreach(QString key, m_filter.keys())
+	{
+		const QStringList& l = m_filter[key];
+		if(!l.isEmpty())
+		{
+			if(ret.isEmpty())
+				ret += key + " {" + l.join(";") + "}";
+			else
+				ret += "\n" + key + " {" + l.join(";") + "}";
+		}
+			
+	}
+	return ret;
+	
+}
 
 void ParallelCoorView::setFilter ( const QMap< QString, QStringList >& theValue )
 {

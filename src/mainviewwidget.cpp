@@ -967,7 +967,7 @@ void MainViewWidget::slotSearch()
 	
 	if(field == 2000)  //Unicode
 	{
-		resetCrumb();
+		setCrumb();
 		addFilterToCrumb(fs);
 		currentFonts.clear();
 		QList<FontItem*> tmpList(FMFontDb::DB()->AllFonts());
@@ -1028,7 +1028,7 @@ void MainViewWidget::slotSearch()
 		}
 		else
 		{
-			resetCrumb();
+			setCrumb();
 			addFilterToCrumb((negate?"!":"") +fs);
 		}
 		if(negate)
@@ -1121,7 +1121,7 @@ void MainViewWidget::slotSearch()
 		}
 		else
 		{
-			resetCrumb();
+			setCrumb();
 			addFilterToCrumb((negate?"!":"") +fs);
 		}
 		if(negate)
@@ -1184,7 +1184,7 @@ void MainViewWidget::slotFilterTag ( QString tag )
 
 	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
 // 	qDebug()<<"K T"<<key<<tag;
-	resetCrumb();
+	setCrumb();
 	addFilterToCrumb(tag);
 	if(key == "TAG") // regular tag
 	{
@@ -1399,7 +1399,7 @@ void MainViewWidget::slotViewAll()
 	fontsetHasChanged = true;
 	currentFonts = FMFontDb::DB()->AllFonts();
 	fillTree();
-	resetCrumb();
+	setCrumb();
 }
 
 void MainViewWidget::slotViewActivated()
@@ -2085,9 +2085,9 @@ void MainViewWidget::addFilterToCrumb(QString filter)
 	m_lists->filtersCrumb->setText(t);
 }
 
-void MainViewWidget::resetCrumb()
+void MainViewWidget::setCrumb(QString text)
 {
-	m_lists->filtersCrumb->clear();
+	m_lists->filtersCrumb->setText(text);
 }
 
 // Don’t know if it’s really useful
@@ -2304,6 +2304,7 @@ void MainViewWidget::slotPanoseFilter()
 		}
 	}
 	currentFonts = fil;
+	setCrumb(classificationView->filterAsString());
 	fillTree();
 }
 

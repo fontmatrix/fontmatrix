@@ -186,7 +186,7 @@ void typotek::initMatrix()
 	createStatusBar();
 	doConnect();
 
-	theMainView->resetCrumb();
+	theMainView->setCrumb();
 
 	if(!hyphenator)
 	{
@@ -1146,7 +1146,7 @@ void typotek::slotRemoteIsReady()
 
 void typotek::resetFilter()
 {
-	theMainView->resetCrumb();
+	theMainView->setCrumb();
 }
 
 

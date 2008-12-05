@@ -783,7 +783,7 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		abcView->verticalScrollBar()->setValue ( 0 );
 		
 		// Update panose widget
-		QStringList plist(theVeryFont->panose().split(":"));
+		QStringList plist(FMFontDb::DB()->getValue(theVeryFont->path(), FMFontDb::Panose).toString().split(":"));
 		if(plist.count() == 10)
 		{
 			QMap<QString,QStringList> filter;
@@ -810,6 +810,7 @@ void MainViewWidget::slotInfoFont()
 {
 	if(theVeryFont)
 	{
+// 		qDebug()<<"MainViewWidget::slotInfoFont"<<theVeryFont->name();
 		QString fIT;
 		fIT += "<html>";
 		fIT += "<head>";
@@ -2228,7 +2229,7 @@ void MainViewWidget::slotShowClassification()
 	// Rather testing for now
 	classVariableDescription->setHtml(FontStrings::PanoseKeyInfo(FontStrings::firstPanoseKey()));
 	ParallelCoorDataType pcdata;
-	QList<FontDBResult> dbresult( FMFontDb::DB()->getInfo(currentFonts, FMFontDb::Panose) );
+	QList<FontDBResult> dbresult( FMFontDb::DB()->getValues(currentFonts, FMFontDb::Panose) );
 	for(int i(0); i < dbresult.count() ; ++i)
 	{
 		QList<int> list;
@@ -2284,7 +2285,7 @@ void MainViewWidget::slotUpdateClassDescription(const QString & ks)
 
 void MainViewWidget::slotPanoseFilter()
 {
-	QList<FontDBResult> dbresult( FMFontDb::DB()->getInfo(currentFonts, FMFontDb::Panose) );
+	QList<FontDBResult> dbresult( FMFontDb::DB()->getValues(currentFonts, FMFontDb::Panose) );
 	QList<FontItem*> fil;
 	for(int i(0); i < dbresult.count() ; ++i)
 	{

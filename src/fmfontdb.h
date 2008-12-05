@@ -55,7 +55,7 @@ class FMFontDb : public QSqlDatabase
 			Family,
 			Variant,
 			Name,
-// 			Panose,
+			Panose,
 			FileSize,
 			FsType,
 			Tags,
@@ -86,8 +86,6 @@ class FMFontDb : public QSqlDatabase
 			CompatibleMacintosh=18,
 			SampleText=19,
 			PostScriptCIDName=20,
-   // Its not an actual InfoItem but ...
-   			Panose=21,
 			AllInfo = 99
 		};
 		// http://www.microsoft.com/typography/OTSpec/os2.htm
@@ -142,6 +140,7 @@ class FMFontDb : public QSqlDatabase
 		void setInfoMap ( const QString& id, const FontInfoMap& info );
 
 		QVariant getValue ( const QString& id, Field field, bool useCache = true );
+		QList<FontDBResult> getValues ( const QList<FontItem*>& fonts, Field field );
 		FontInfoMap getInfoMap ( const QString& id );
 		QList<FontDBResult> getInfo ( const QList<FontItem*>& fonts, InfoItem info, int codeLang = 0 );
 		

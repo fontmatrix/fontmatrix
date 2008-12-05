@@ -173,6 +173,7 @@ class FontItem : public QObject
 		void encodeFace();
 		
 		QList<int> getAlternates(int ccode);
+		QString panose();
 
 		QString testFlag ( long flag , long against, QString yes, QString no );
 		QByteArray pixarray ( uchar *b, int len );
@@ -256,7 +257,6 @@ class FontItem : public QObject
 		QString infoGlyph ( int index, int code = 0 );
 		QString glyphName(int codepoint);
 		FontInfoMap rawInfo();
-		QString panose();
 		FontInfoMap moreInfo();
 		
 		// Return the length of a TT table

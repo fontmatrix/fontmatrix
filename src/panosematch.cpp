@@ -259,14 +259,15 @@ QList< FontItem * > PanoseMatchFont::similar ( FontItem * ref, int treshold )
 {
 	if ( ( !ref ) || ( !treshold ) )
 		return QList< FontItem * >();
-	if ( ref->panose().isEmpty() )
+	QString panose(FMFontDb::DB()->getValue(ref->path(), FMFontDb::Panose).toString());
+	if ( panose.isEmpty() )
 		return QList< FontItem * >();
 	
 	PanoseMatchFont * pm ( new PanoseMatchFont );
-	pm->setAttributes ( ref->panose() );
+	pm->setAttributes ( panose );
 
 	QList<FontItem*> all ( FMFontDb::DB()->AllFonts() );
-	QList<FontDBResult> dbresult ( FMFontDb::DB()->getInfo ( all, FMFontDb::Panose ) );
+	QList<FontDBResult> dbresult ( FMFontDb::DB()->getValues ( all, FMFontDb::Panose ) );
 	QList<FontItem*> fil;
 	int dr(0);
 // 	int selectMin(999999);

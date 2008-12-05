@@ -87,6 +87,7 @@ class typotek:public QMainWindow
 		void slotSwitchLayOptVisible();
 		void slotUpdateLayOptStatus();
 		void slotShowTTTables();
+		void slotEditPanose();
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );
@@ -153,7 +154,8 @@ class typotek:public QMainWindow
 		QAction *exportFontSetAct;
 		QAction *repairAct;
 		QAction *tagAll;
-		QAction *showTTTAct;	
+		QAction *showTTTAct;
+		QAction *editPanoseAct;	
 		
 		QAction *nextFamily;
 		QAction *previousFamily;

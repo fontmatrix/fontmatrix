@@ -36,6 +36,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/parallelcoor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/panosematch.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pangoshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/prefspaneldialog.cpp
@@ -98,6 +99,7 @@ importtags.h
 QHexView.h
 listdockwidget.h
 mainviewwidget.h
+panosedialog.h
 parallelcoor.h
 prefspaneldialog.h
 remotedir.h
@@ -122,6 +124,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/help.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/layoutoptions.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/listsdock.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/mainview.ui
+${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/prefs_panel.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/repair.ui
 # ${CMAKE_CURRENT_SOURCE_DIR}/tagset.ui

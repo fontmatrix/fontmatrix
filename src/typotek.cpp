@@ -46,6 +46,7 @@
 #include "fmactivate.h"
 #include "fmlayout.h"
 #include "fmfontdb.h"
+#include "panosedialog.h"
 #include "tagswidget.h"
 
 #include "winutils.h"
@@ -669,6 +670,10 @@ void typotek::createActions()
 	scuts->add(showTTTAct);
 	connect(showTTTAct,SIGNAL(triggered( )),this,SLOT(slotShowTTTables()));
 
+	editPanoseAct = new QAction(tr("Edit Panose info"), this);
+	scuts->add(editPanoseAct);
+	connect(editPanoseAct, SIGNAL(triggered()), this, SLOT(slotEditPanose()));
+	
 	nextFamily = new QAction(tr("Next Family"), this);
 	nextFamily->setShortcut(Qt::Key_PageDown);
 	scuts->add(nextFamily);
@@ -724,6 +729,7 @@ void typotek::createMenus()
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( fonteditorAct );
+	editMenu->addAction ( editPanoseAct );
 #ifdef PLATFORM_APPLE
 #elif _WIN32
 #else
@@ -2047,6 +2053,21 @@ void typotek::slotShowTTTables()
 		dia.setGeometry(drect);
 		connect(&pbutton,SIGNAL(released()),&dia,SLOT(close()));
 		dia.exec();
+	}
+}
+
+void typotek::slotEditPanose()
+{
+	if(theMainView->selectedFont())
+	{
+		FMPanoseDialog dia(theMainView->selectedFont(), this);
+		dia.exec();
+		if(dia.getOk() && ( dia.getSourcePanose() != dia.getTargetPanose() ))
+		{
+// 			qDebug()<< "Update Panose"<<theMainView->selectedFont()->path();
+			FMFontDb::DB()->setValue(theMainView->selectedFont()->path(), FMFontDb::Panose, dia.getTargetPanose());
+			theMainView->slotInfoFont();
+		}
 	}
 }
 

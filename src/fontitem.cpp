@@ -2526,7 +2526,7 @@ QString FontItem::infoText ( bool fromcache )
 			}
 		}
 		
-		QString pN(moreInfo.value(0).value(FMFontDb::Panose));
+		QString pN(FMFontDb::DB()->getValue(path(), FMFontDb::Panose, false).toString());
 		if ( !pN.isEmpty() )
 		{
 			QStringList pl(pN.split(":"));
@@ -2867,7 +2867,7 @@ FontInfoMap FontItem::moreInfo()
 QString FontItem::panose()
 {
 	if(!ensureFace())
-		return QString();
+		return QString("0:0:0:0:0:0:0:0:0:0");
 	QStringList pl;
 	TT_OS2 *os2 = static_cast<TT_OS2*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_os2 ) );
 	if ( os2 )
@@ -2875,6 +2875,13 @@ QString FontItem::panose()
 		for ( int bI ( 0 ); bI < 10; ++bI )
 		{
 			pl << QString::number ( os2->panose[bI] ) ;
+		}
+	}
+	else
+	{
+		for ( int bI ( 0 ); bI < 10; ++bI )
+		{
+			pl << QString::number ( 0 ) ;
 		}
 	}
 	releaseFace();
@@ -3060,36 +3067,36 @@ FontInfoMap FontItem::moreInfo_sfnt()
 	}
 
 	// Is there an OS/2 table?
-	TT_OS2 *os2 = static_cast<TT_OS2*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_os2 ) );
-	if ( os2 /* and  wantAutoTag*/ )
-	{
-		// PANOSE
-		QStringList pl;
-		for ( int bI ( 0 ); bI < 10; ++bI )
-		{
-			
-			pl << QString::number ( os2->panose[bI] ) ;
-		}
-
-		moreInfo[0][FMFontDb::Panose] = pl.join(":");
-		// FSTYPE (embedding status)
-		if(!os2->fsType)
-			m_OSFsType = NOT_RESTRICTED;
-		else
-		{
-			if(os2->fsType & RESTRICTED)
-				m_OSFsType |= RESTRICTED;
-			if(os2->fsType & PREVIEW_PRINT)
-				m_OSFsType |= PREVIEW_PRINT;
-			if(os2->fsType &  EDIT_EMBED)
-				m_OSFsType |= EDIT_EMBED;
-			if(os2->fsType & NOSUBSET)
-				m_OSFsType |= NOSUBSET;
-			if(os2->fsType & BITMAP_ONLY)
-				m_OSFsType |=  BITMAP_ONLY;
-		}
-
-	}
+// 	TT_OS2 *os2 = static_cast<TT_OS2*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_os2 ) );
+// 	if ( os2 /* and  wantAutoTag*/ )
+// 	{
+// 		// PANOSE
+// 		QStringList pl;
+// 		for ( int bI ( 0 ); bI < 10; ++bI )
+// 		{
+// 			
+// 			pl << QString::number ( os2->panose[bI] ) ;
+// 		}
+// 
+// 		moreInfo[0][FMFontDb::Panose] = pl.join(":");
+// 		// FSTYPE (embedding status)
+// 		if(!os2->fsType)
+// 			m_OSFsType = NOT_RESTRICTED;
+// 		else
+// 		{
+// 			if(os2->fsType & RESTRICTED)
+// 				m_OSFsType |= RESTRICTED;
+// 			if(os2->fsType & PREVIEW_PRINT)
+// 				m_OSFsType |= PREVIEW_PRINT;
+// 			if(os2->fsType &  EDIT_EMBED)
+// 				m_OSFsType |= EDIT_EMBED;
+// 			if(os2->fsType & NOSUBSET)
+// 				m_OSFsType |= NOSUBSET;
+// 			if(os2->fsType & BITMAP_ONLY)
+// 				m_OSFsType |=  BITMAP_ONLY;
+// 		}
+// 
+// 	}
 
 	releaseFace();
 	return moreInfo;
@@ -4036,21 +4043,23 @@ void FontItem::dumpIntoDB()
 	
 // 	t.start();
 	db->initRecord(m_path);
-// 	e1 = t.elapsed();
+// 	e1 = t.elapsed
 	
+	QString panString(panose());
 // 	t.start();
 	QList<FMFontDb::Field> fl;
 	QVariantList vl;
-	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name  << FMFontDb::Type << FMFontDb::FsType;
-	vl << m_family<<m_variant<<m_name<<m_type<<(int)m_OSFsType;
+	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name  << FMFontDb::Type << FMFontDb::Panose << FMFontDb::FsType ;
+	vl << m_family<<m_variant<<m_name<<m_type<< panString << (int)m_OSFsType;
 	db->setValues(m_path,fl,vl);
 // 	e2 = t.elapsed();
 	
 // 	t.start();
-	if(m_isOpenType)
-		db->setInfoMap(m_path,moreInfo_sfnt());
-	else
-		db->setInfoMap(m_path,moreInfo_type1());
+	db->setInfoMap(m_path,moreInfo());
+// 	if(m_isOpenType)
+// 		db->setInfoMap(m_path,moreInfo_sfnt());
+// 	else
+// 		db->setInfoMap(m_path,moreInfo_type1());
 // 	e3 = t.elapsed();
 	
 // 	qDebug()<<"DUMP"<<m_name<<e1<<e2<<e3;

@@ -46,6 +46,17 @@ PrefsPanelDialog::PrefsPanelDialog ( QWidget *parent )
 
 	namedSampleTextText->setText ( tr ( "Please select an item in the list or create a new one." ) );
 	namedSampleTextText->setEnabled ( false );
+	
+	QStringList webBrowsers;
+	webBrowsers << "Fontmatrix" << "firefox" << "konqueror"; // TODO fill in
+	QString browser(typotek::getInstance()->getWebBrowser()); 
+	if(!webBrowsers.contains(browser))
+		webBrowsers << browser;
+	qDebug()<<"Browsers ("<< browser <<"):"<< webBrowsers.join(" ; ");
+	browserCombo->addItems(webBrowsers);
+	browserCombo->setCurrentIndex(webBrowsers.indexOf(browser));
+	
+	browserOptions->setText(typotek::getInstance()->getWebBrowserOptions());
 
 	doConnect();
 }
@@ -148,6 +159,10 @@ void PrefsPanelDialog::doConnect()
 
 	connect ( fontEditorPath, SIGNAL ( textChanged ( const QString ) ), this, SLOT ( setupFontEditor ( QString ) ) );
 	connect ( fontEditorBrowse, SIGNAL ( clicked() ), this, SLOT ( slotFontEditorBrowse() ) );
+	
+	connect(browserButton,SIGNAL(clicked( )), this, SLOT(addAndSelectWebBrowser()));
+	connect(browserCombo, SIGNAL(activated( const QString& )), this, SLOT( selectWebBrowser(const QString& ) ));
+	connect(browserOptions, SIGNAL(textChanged( const QString& )), this, SLOT(setupWebBrowserOptions(const QString& )));
 
 	connect ( initTagBox, SIGNAL ( clicked ( bool ) ), typotek::getInstance(), SLOT ( slotUseInitialTags ( bool ) ) );
 // 	connect ( familyNameScheme,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotFamilyNotPreferred ( bool ) ) );
@@ -316,6 +331,44 @@ void PrefsPanelDialog::slotFontEditorBrowse()
 	{
 		fontEditorPath->setText ( s );
 	}
+}
+
+void PrefsPanelDialog::addAndSelectWebBrowser()
+{
+	QString s = QFileDialog::getOpenFileName ( this, tr ( "Select web browser" ) );
+	if ( !s.isEmpty() )
+	{
+		QStringList l;
+		for(int i(0); i < browserCombo->count(); i++)
+		{
+			l << browserCombo->itemText(i);
+		}
+		if(!l.contains(s))
+		{
+			browserCombo->addItem(s);
+			browserCombo->setCurrentIndex(browserCombo->count() - 1);
+		}
+		else
+		{
+			browserCombo->setCurrentIndex(l.indexOf(s));
+		}
+		selectWebBrowser(s);
+	}
+}
+
+void PrefsPanelDialog::selectWebBrowser(const QString & text)
+{
+	QSettings settings;
+	settings.setValue("Info/Browser",text);
+	typotek::getInstance()->setWebBrowser(text);
+}
+
+void PrefsPanelDialog::setupWebBrowserOptions(const QString & text)
+{
+	
+	QSettings settings;
+	settings.setValue("Info/BrowserOptions",text);
+	typotek::getInstance()->setWebBrowserOptions(text);
 }
 
 void PrefsPanelDialog::showPage ( PAGE page )

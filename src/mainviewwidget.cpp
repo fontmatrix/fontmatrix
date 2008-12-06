@@ -49,6 +49,7 @@
 #include <QLabel>
 #include <QScrollBar>
 #include <QGraphicsRectItem>
+#include <QProcess>
 #include <QProgressDialog>
 #include <QMenu>
 #include <QMessageBox>
@@ -2197,9 +2198,22 @@ void MainViewWidget::slotWebLoad(int i)
 
 void MainViewWidget::slotWebLink(const QUrl & url)
 {
-	qDebug()<<"slotWebLink("<<url<<")";
-	typo->showStatusMessage(tr("Load") + " " + url.toString());
-	fontInfoText->load(url);
+	if(typo->getWebBrowser() == QString( "Fontmatrix" ))
+	{
+		typo->showStatusMessage(tr("Load") + " " + url.toString());
+		fontInfoText->load(url);
+	}
+	else
+	{
+		QStringList arguments(typo->getWebBrowserOptions().split(" ", QString::SkipEmptyParts));
+		arguments << url.toString();
+
+		if(!QProcess::startDetached(typo->getWebBrowser(), arguments))
+		{
+			arguments.removeLast();
+			QMessageBox::warning(this,"Fontmatrix", QString(tr("An error occured when tried to load %1\nwith command: %2", "%1 is an url and %2 a program")).arg(url.toString()).arg( typo->getWebBrowser() + " " + arguments.join(" ")));
+		}
+	}
 }
 
 QList<FontItem*> MainViewWidget::curFonts()

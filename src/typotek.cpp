@@ -805,6 +805,9 @@ void typotek::readSettings()
 	
 	panoseMatchTreshold = settings.value("Panose/MatchTreshold" , 1000 ).toInt();
 	
+	webBrowser = settings.value("Info/Browser", "Fontmatrix").toString();
+	webBrowserOptions = settings.value("Info/BrowserOptions", "").toString();	
+	
 	templatesDir = settings.value ( "Places/TemplatesDir", "./").toString();
 	m_welcomeURL = settings.value("Places/WelcomeURL").toString();
 	m_remoteTmpDir = settings.value("Places/RemoteTmpDir", QDir::tempPath()).toString();
@@ -2091,4 +2094,28 @@ int typotek::getPanoseMatchTreshold() const
 void typotek::setPanoseMatchTreshold ( int theValue )
 {
 	panoseMatchTreshold = theValue;
+}
+
+
+QString typotek::getWebBrowser() const
+{
+	return webBrowser;
+}
+
+
+void typotek::setWebBrowser ( const QString& theValue )
+{
+	webBrowser = theValue;
+}
+
+
+QString typotek::getWebBrowserOptions() const
+{
+	return webBrowserOptions;
+}
+
+
+void typotek::setWebBrowserOptions ( const QString& theValue )
+{
+	webBrowserOptions = theValue;
 }

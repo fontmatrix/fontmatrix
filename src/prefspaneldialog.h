@@ -80,6 +80,10 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 
 		void setupFontEditor(QString);
 		void slotFontEditorBrowse();
+		
+		void addAndSelectWebBrowser();
+		void selectWebBrowser(const QString & text );
+		void setupWebBrowserOptions(const QString & text );
 
 		void setupTemplates(const QString&);
 		void slotTemplatesBrowse();

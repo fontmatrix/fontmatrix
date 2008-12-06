@@ -230,6 +230,9 @@ class typotek:public QMainWindow
 		QString databasePassword;
 		
 		int panoseMatchTreshold;
+		
+		QString webBrowser;
+		QString webBrowserOptions;
 
 	public:		
 		bool isSysFont(FontItem* f);
@@ -337,6 +340,13 @@ class typotek:public QMainWindow
 
 	void setPanoseMatchTreshold ( int theValue );
 	int getPanoseMatchTreshold() const;
+
+	void setWebBrowser ( const QString& theValue );
+	QString getWebBrowser() const;
+	void setWebBrowserOptions ( const QString& theValue );
+	QString getWebBrowserOptions() const;
+	
+	
 	
 
 	protected:

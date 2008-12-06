@@ -114,7 +114,7 @@ ListDockWidget::ListDockWidget()
 	for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
 	{
 		FMFontDb::InfoItem k(FontStrings::Names().keys()[gIdx]);
-		if((k !=  FMFontDb::AllInfo) && (k !=  FMFontDb::Panose) )
+		if((k !=  FMFontDb::AllInfo))
 		{
 			actn = new QAction(FontStrings::Names()[k], filterActGroup);
 			actn->setData( k );

@@ -43,6 +43,9 @@ class FMPreviewModel : public QAbstractListModel
 		
 	private:
 		QListView *m_view;
+		
+		QString styleTooltipName;
+		QString styleTooltipPath;
 };
 
 class FMPreviewView : public QListView

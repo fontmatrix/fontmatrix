@@ -25,6 +25,7 @@
 
 #include <QDebug>
 #include <QDesktopWidget>
+#include <QSettings>
 
 
 
@@ -32,6 +33,12 @@
 FMPreviewModel::FMPreviewModel( QObject * pa , QListView * wPa )
 	: QAbstractListModel(pa) , m_view(wPa)
 {
+	QSettings settings;
+	styleTooltipName = settings.value("Preview/StyleTooltipName","font-weight:bold;").toString();
+	styleTooltipPath = settings.value("Preview/StyleTooltipPath","font-weight:normal;font-size:small;").toString();
+	
+	settings.setValue("Preview/StyleTooltipName", styleTooltipName);
+	settings.setValue("Preview/StyleTooltipPath", styleTooltipPath);
 }
 
 QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
@@ -58,6 +65,21 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 	else if(role == Qt::DecorationRole)
 	{
 			return QIcon( fit->oneLinePreviewPixmap(typotek::getInstance()->word(), bgColor, width ) );
+	}
+	else if(role == Qt::ToolTipRole)
+	{
+		if(typotek::getInstance()->getPreviewSubtitled())
+		{
+			return QString("<div style=\"" + styleTooltipPath + "\">" + fit->path() + "</div>");
+		}
+		else
+		{
+			QString complete;
+			complete += "<div style=\"" + styleTooltipName + "\">" + fit->fancyName() + "</div>";
+			complete += "\n";
+			complete += "<div style=\"" + styleTooltipPath + "\">" + fit->path() + "</div>";
+			return complete;
+		}
 	}
 	
 	// fall back

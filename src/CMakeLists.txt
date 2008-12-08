@@ -4,8 +4,10 @@ set(fontmatrix_SRCS
 ${CMAKE_CURRENT_SOURCE_DIR}/aboutwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmdumpinfo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontcompareview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontdb.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontstrings.cpp
@@ -36,6 +38,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/parallelcoor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/modeltext.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/panosematch.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pangoshaper.cpp
@@ -80,6 +83,7 @@ ${M17N_LIBRARIES}
 
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
+dumpdialog.h
 fmactivate.h
 fmfontcompareview.h
 fmglyphhighlight.h
@@ -99,6 +103,7 @@ importtags.h
 QHexView.h
 listdockwidget.h
 mainviewwidget.h
+modeltext.h
 panosedialog.h
 parallelcoor.h
 prefspaneldialog.h
@@ -118,6 +123,7 @@ SET(fontmatrix_UIS
 ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
+${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfonts.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/help.ui

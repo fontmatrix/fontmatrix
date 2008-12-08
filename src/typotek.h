@@ -88,6 +88,7 @@ class typotek:public QMainWindow
 		void slotUpdateLayOptStatus();
 		void slotShowTTTables();
 		void slotEditPanose();
+		void slotDumpInfo();
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );
@@ -155,7 +156,8 @@ class typotek:public QMainWindow
 		QAction *repairAct;
 		QAction *tagAll;
 		QAction *showTTTAct;
-		QAction *editPanoseAct;	
+		QAction *editPanoseAct;
+		QAction *dumpInfoAct;
 		
 		QAction *nextFamily;
 		QAction *previousFamily;

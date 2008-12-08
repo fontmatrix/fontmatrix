@@ -436,7 +436,7 @@ void FontItem::fillLangIdMap()
 	}
 
 	theLocalLangCode = langIdMatch;
-	qDebug() <<"LANG"<<theLocalLangCode<<langIdMap[theLocalLangCode];
+// 	qDebug() <<"LANG"<<theLocalLangCode<<langIdMap[theLocalLangCode];
 }
 
 void FontItem::fill256Palette()

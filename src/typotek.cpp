@@ -20,37 +20,32 @@
 
 
 
-#include "typotek.h"
-#include "mainviewwidget.h"
-#include "fontitem.h"
-#include "hyphenate/fmhyphenator.h"
-// #include "typotekadaptator.h"
-#include "fmlayout.h"
-#include "dataloader.h"
-// #include "tagseteditor.h"
-#include "savedata.h"
 #include "aboutwidget.h"
+#include "dataexport.h"
+#include "dataloader.h"
+#include "dumpdialog.h"
+#include "fmactivate.h"
+#include "fmfontdb.h"
+#include "fmlayout.h"
+#include "fmrepair.h"
+#include "fontbook.h"
+#include "fontitem.h"
 #include "helpwidget.h"
+#include "hyphenate/fmhyphenator.h"
 #include "importedfontsdialog.h"
+#include "importtags.h"
 #include "listdockwidget.h"
+#include "mainviewwidget.h"
+#include "panosedialog.h"
+#include "prefspaneldialog.h"
+#include "remotedir.h"
+#include "savedata.h"
 #include "shortcuts.h"
 #include "systray.h"
-#include "prefspaneldialog.h"
-#include "fontbook.h"
-#include "importtags.h"
-#include "dataexport.h"
-#include "remotedir.h"
-#include "tttableview.h"
-#include "fmrepair.h"
-// #include "fmprintdialog.h"
-#include "fmactivate.h"
-#include "fmlayout.h"
-#include "fmfontdb.h"
-#include "panosedialog.h"
 #include "tagswidget.h"
-
+#include "tttableview.h"
+#include "typotek.h"
 #include "winutils.h"
-
 
 #include <QtGui>
 #include <QTextEdit>
@@ -602,6 +597,9 @@ void typotek::createActions()
 	fontBookAct->setStatusTip ( tr ( "Export a pdf that show selected fonts" ) );
 	scuts->add(fontBookAct);
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
+	
+	dumpInfoAct = new QAction(tr("Export modelled Info"), this);
+	connect(dumpInfoAct, SIGNAL(triggered()), this, SLOT(slotDumpInfo()));
 
 	exitAct = new QAction ( tr ( "E&xit" ), this );
 	exitAct->setShortcut ( tr ( "Ctrl+Q" ) );
@@ -718,6 +716,7 @@ void typotek::createMenus()
 	printMenu->addAction(printFamilyAct);
 
 	fileMenu->addAction ( fontBookAct );
+	fileMenu->addAction ( dumpInfoAct );
 	fileMenu->addSeparator();
 	fileMenu->addAction ( exitAct );
 
@@ -2072,6 +2071,19 @@ void typotek::slotEditPanose()
 			theMainView->slotInfoFont();
 		}
 	}
+}
+
+void typotek::slotDumpInfo()
+{
+	if(theMainView->selectedFont())
+	{
+		FMDumpDialog dia(theMainView->selectedFont(), this);
+		if(dia.exec() != QDialog::Accepted)
+		{
+			qDebug()<< "Dump not saved";
+		}
+	}
+	
 }
 
 void typotek::showToltalFilteredFonts()

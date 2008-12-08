@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>797</width>
+    <width>799</width>
     <height>706</height>
    </rect>
   </property>
@@ -250,7 +250,7 @@
         <item row="3" column="0" >
          <widget class="QGroupBox" name="groupBox_4" >
           <property name="title" >
-           <string>Font Editor</string>
+           <string>Fonts Editor</string>
           </property>
           <layout class="QHBoxLayout" name="_5" >
            <item>
@@ -384,9 +384,6 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="2" >
-            <widget class="QLineEdit" name="browserOptions" />
-           </item>
            <item row="0" column="2" >
             <spacer name="horizontalSpacer_3" >
              <property name="orientation" >
@@ -400,10 +397,13 @@
              </property>
             </spacer>
            </item>
-           <item row="1" column="2" >
+           <item row="2" column="1" >
+            <widget class="QLineEdit" name="browserOptions" />
+           </item>
+           <item row="2" column="0" >
             <widget class="QLabel" name="label_9" >
              <property name="text" >
-              <string>Extra options</string>
+              <string>Extra options:</string>
              </property>
              <property name="buddy" >
               <cstring>browserOptions</cstring>

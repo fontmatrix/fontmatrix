@@ -31,13 +31,13 @@
       </property>
       <property name="minimumSize" >
        <size>
-        <width>142</width>
+        <width>150</width>
         <height>0</height>
        </size>
       </property>
       <property name="font" >
        <font>
-        <pointsize>11</pointsize>
+        <pointsize>10</pointsize>
         <weight>50</weight>
         <bold>false</bold>
         <strikeout>false</strikeout>

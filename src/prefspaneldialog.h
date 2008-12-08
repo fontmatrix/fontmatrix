@@ -28,7 +28,13 @@ class PrefsPanelDialog : public QDialog, private Ui::PrefsPanel
 
 		~PrefsPanelDialog();
 
-		enum PAGE{PAGE_GENERAL,PAGE_SAMPLETEXT,PAGE_FILES,PAGE_SHORTCUTS};
+		enum PAGE{PAGE_GENERAL = 0,
+			PAGE_SYSTRAY,
+   			PAGE_DISPLAY,
+   			PAGE_SERVICES,
+			PAGE_SAMPLETEXT,
+   			PAGE_FILES,
+   			PAGE_SHORTCUTS};
 
 		void initSystrayPrefs(bool hasSystray, bool isVisible, bool hasActivateAll, bool allConfirmation, bool tagConfirmation);
 		void initSampleTextPrefs();

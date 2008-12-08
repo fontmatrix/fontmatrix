@@ -373,14 +373,15 @@ void PrefsPanelDialog::setupWebBrowserOptions(const QString & text)
 
 void PrefsPanelDialog::showPage ( PAGE page )
 {
-	if ( page == PAGE_GENERAL )
-		stackedPrefs->setCurrentIndex ( 0 );
-	else if ( page == PAGE_SAMPLETEXT )
-		stackedPrefs->setCurrentIndex ( 1 );
-	else if ( page == PAGE_FILES )
-		stackedPrefs->setCurrentIndex ( 2 );
-	else if ( page == PAGE_SHORTCUTS )
-		stackedPrefs->setCurrentIndex ( 3 );
+// 	if ( page == PAGE_GENERAL )
+// 		stackedPrefs->setCurrentIndex ( 0 );
+// 	else if ( page == PAGE_SAMPLETEXT )
+// 		stackedPrefs->setCurrentIndex ( 1 );
+// 	else if ( page == PAGE_FILES )
+// 		stackedPrefs->setCurrentIndex ( 2 );
+// 	else if ( page == PAGE_SHORTCUTS )
+// 		stackedPrefs->setCurrentIndex ( 3 );
+	stackedPrefs->setCurrentIndex( int(page) );
 }
 
 void PrefsPanelDialog::slotSelectPage ( QListWidgetItem * item )

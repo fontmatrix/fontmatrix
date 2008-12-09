@@ -47,13 +47,28 @@ FMDumpInfo::FMDumpInfo(FontItem * font, const QString & model)
 	m_name[FMFontDb::PostScriptCIDName]=  "PostScript_CID"  ;
 	FontInfoMap fim(m_font->rawInfo());
 	
-	if( fim.contains(0x0) ) // DEFAULT - generally means english in fact, which is good for our purpose.
+	/*
+	hierarchy ;-)
+	langIdMap[0x0000]="DEFAULT";
+	langIdMap[0x0009]="ENGLISH_GENERAL";
+	langIdMap[0x0409]="ENGLISH_UNITED_STATES";
+	langIdMap[0x0809]="ENGLISH_UNITED_KINGDOM";
+	*/
+	QList<int> llist;
+	llist << 0x0000 << 0x0009 << 0x0409 << 0x0809;
+	foreach(int langid, llist)
 	{
-		foreach(int key, fim[0x0].keys())
+		if( fim.contains(langid) ) // DEFAULT - generally means english in fact, which is good for our purpose.
 		{
-			m_info[m_name[key]] = fim[0x0][key];
+			foreach(int key, fim[langid].keys())
+			{
+				if( !m_info.contains(m_name[key]) )
+					m_info[m_name[key]] = fim[langid][key];
+			}
 		}
 	}
+
+	
 }
 
 FMDumpInfo::~ FMDumpInfo()

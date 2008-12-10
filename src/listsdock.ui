@@ -38,92 +38,55 @@
       <enum>Qt::Vertical</enum>
      </property>
      <widget class="QWidget" native="1" name="widget" >
-      <layout class="QGridLayout" name="gridLayout_2" >
-       <property name="margin" >
-        <number>0</number>
-       </property>
-       <property name="spacing" >
-        <number>0</number>
-       </property>
+      <layout class="QGridLayout" name="gridLayout" >
        <item row="0" column="0" >
-        <layout class="QGridLayout" name="gridLayout" >
-         <property name="spacing" >
-          <number>2</number>
-         </property>
-         <item row="0" column="1" colspan="2" >
-          <widget class="QComboBox" name="tagsCombo" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-             <horstretch>3</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="contextMenuPolicy" >
-            <enum>Qt::DefaultContextMenu</enum>
-           </property>
-           <property name="toolTip" >
-            <string>Filter view by chosing tag</string>
-           </property>
-           <property name="sizeAdjustPolicy" >
-            <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1" colspan="2" >
-          <widget class="QLineEdit" name="searchString" >
-           <property name="enabled" >
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-             <horstretch>2</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="toolTip" >
-            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If you want to negate the filter,&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">prefix the word with "!" such as in:&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">"!pattern"&lt;/span>&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If you want to enqueue the filter,&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">prefix it with "+".&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Finally, you can mix negate and queue in:&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">"+!pattern"&lt;/span> or "!+pattern"&lt;/p>&lt;/body>&lt;/html></string>
-           </property>
-          </widget>
-         </item>
+        <layout class="QFormLayout" name="formLayout" >
          <item row="0" column="0" >
-          <widget class="QLabel" name="label" >
-           <property name="text" >
-            <string>Tags</string>
-           </property>
-           <property name="alignment" >
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="buddy" >
-            <cstring>tagsCombo</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" >
-          <widget class="QToolButton" name="fieldButton" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize" >
-            <size>
-             <width>16000</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="toolTip" >
-            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+          <layout class="QVBoxLayout" name="verticalLayout_3" >
+           <item>
+            <widget class="QLabel" name="label" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="layoutDirection" >
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="text" >
+              <string>Tags</string>
+             </property>
+             <property name="alignment" >
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="buddy" >
+              <cstring>tagsCombo</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="fieldButton" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize" >
+              <size>
+               <width>64</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize" >
+              <size>
+               <width>16000</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="toolTip" >
+              <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
@@ -134,25 +97,93 @@ p, li { white-space: pre-wrap; }
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">prefix it with "+".&lt;/p>
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Finally, you can mix negate and queue in:&lt;/p>
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">"+!pattern"&lt;/span> or "!+pattern"&lt;/p>&lt;/body>&lt;/html></string>
-           </property>
-           <property name="text" >
-            <string>F</string>
-           </property>
-           <property name="popupMode" >
-            <enum>QToolButton::InstantPopup</enum>
-           </property>
-           <property name="toolButtonStyle" >
-            <enum>Qt::ToolButtonTextOnly</enum>
-           </property>
-           <property name="autoRaise" >
-            <bool>true</bool>
-           </property>
-           <property name="arrowType" >
-            <enum>Qt::NoArrow</enum>
-           </property>
-          </widget>
+             </property>
+             <property name="text" >
+              <string>F</string>
+             </property>
+             <property name="popupMode" >
+              <enum>QToolButton::InstantPopup</enum>
+             </property>
+             <property name="toolButtonStyle" >
+              <enum>Qt::ToolButtonTextBesideIcon</enum>
+             </property>
+             <property name="autoRaise" >
+              <bool>true</bool>
+             </property>
+             <property name="arrowType" >
+              <enum>Qt::DownArrow</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
-         <item row="2" column="0" >
+         <item row="0" column="1" >
+          <layout class="QVBoxLayout" name="verticalLayout_4" >
+           <item>
+            <widget class="QComboBox" name="tagsCombo" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <horstretch>3</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="contextMenuPolicy" >
+              <enum>Qt::DefaultContextMenu</enum>
+             </property>
+             <property name="toolTip" >
+              <string>Filter view by chosing tag</string>
+             </property>
+             <property name="sizeAdjustPolicy" >
+              <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2" >
+             <item>
+              <widget class="QLineEdit" name="searchString" >
+               <property name="enabled" >
+                <bool>false</bool>
+               </property>
+               <property name="sizePolicy" >
+                <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                 <horstretch>2</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="operationButton" >
+               <property name="text" >
+                <string>Op</string>
+               </property>
+               <property name="popupMode" >
+                <enum>QToolButton::InstantPopup</enum>
+               </property>
+               <property name="toolButtonStyle" >
+                <enum>Qt::ToolButtonTextBesideIcon</enum>
+               </property>
+               <property name="autoRaise" >
+                <bool>true</bool>
+               </property>
+               <property name="arrowType" >
+                <enum>Qt::DownArrow</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0" >
+        <layout class="QHBoxLayout" name="horizontalLayout" >
+         <property name="spacing" >
+          <number>0</number>
+         </property>
+         <item>
           <layout class="QVBoxLayout" name="verticalLayout" >
            <property name="spacing" >
             <number>0</number>
@@ -209,7 +240,7 @@ p, li { white-space: pre-wrap; }
            </item>
           </layout>
          </item>
-         <item row="2" column="1" colspan="2" >
+         <item>
           <widget class="QLabel" name="filtersCrumb" >
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
@@ -230,6 +261,39 @@ p, li { white-space: pre-wrap; }
             <cstring>viewAllButton</cstring>
            </property>
           </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2" >
+           <property name="spacing" >
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="saveFilterButton" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Maximum" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text" >
+              <string>save</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2" >
+             <property name="orientation" >
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>20</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -362,7 +426,6 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
   </layout>
-  <zorder>splitter</zorder>
  </widget>
  <customwidgets>
   <customwidget>

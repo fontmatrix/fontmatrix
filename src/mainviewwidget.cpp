@@ -963,18 +963,39 @@ void MainViewWidget::slotSearch()
 // 	m_lists->previewList->slotRefill(QList<FontItem*>(), true);
 	fontsetHasChanged = true;
 
-// 	QApplication::setOverrideCursor ( Qt::WaitCursor );
+	QApplication::setOverrideCursor ( Qt::WaitCursor );
 	QString fs ( m_lists->searchString->text() );
 
 	int field(  m_lists->getCurrentFieldAction()->data().toInt() );
+	QStringList ops(m_lists->getOperation());
+	bool negate(ops.contains("NO"));
+	bool queue(ops.contains("AND"));
+	m_lists->clearOperation();
+
 	
 	if(field == 2000)  //Unicode
 	{
-		setCrumb();
-		addFilterToCrumb(fs);
+		QList<FontItem*> tmpList;
+		QList<FontItem*> negList;
+		QList<FontItem*> queList;
+		QList<FontItem*> allList;
+		if(queue)
+		{
+			queList = currentFonts;
+			allList = queList;
+		}
+		else
+		{
+			setCrumb();
+			allList = FMFontDb::DB()->AllFonts();
+		}
+		addFilterToCrumb(QString((negate?"!":"")) + QString("U://") + QString(fs));
+		
+		if(negate)
+			negList = FMFontDb::DB()->AllFonts();
+		
 		currentFonts.clear();
-		QList<FontItem*> tmpList(FMFontDb::DB()->AllFonts());
-		/// WARNING - Unicode fields does not support negation.
+		
 		int startC(0xFFFFFFFF);
 		int endC(0);
 		int patCount(fs.count());
@@ -986,44 +1007,62 @@ void MainViewWidget::slotSearch()
 			if(ca > endC)
 				endC = ca;
 		}
-		int superSetCount(tmpList.count()); 
+		int superSetCount(allList.count()); 
 		for ( int i =0; i < superSetCount; ++i )
 		{
-			int cc(tmpList[i]->countCoverage ( startC, endC ) );
+			int cc(allList[i]->countCoverage ( startC, endC ) );
 			if ( cc >= patCount )
 			{
-				currentFonts.append ( tmpList[i] );
+				tmpList.append ( allList[i] );
+			}
+		}
+		
+		if(negate)
+		{
+			if(queue)
+			{
+				foreach(FontItem* f, negList)
+				{
+					if(!currentFonts.contains(f) && !tmpList.contains(f) && queList.contains(f))
+						currentFonts.append(f);
+				}
+			}
+			else // not queue
+			{
+				foreach(FontItem* f, negList)
+				{
+					if(!currentFonts.contains(f) && !tmpList.contains(f))
+						currentFonts.append(f);
+				}
+			}
+		}
+		else // not negate
+		{
+			if(queue)
+			{
+				foreach(FontItem* f, tmpList)
+				{
+					if(!currentFonts.contains(f) && queList.contains(f))
+						currentFonts.append(f);
+				}
+			}
+			else // not queue
+			{
+				foreach(FontItem* f, tmpList)
+				{
+					if(!currentFonts.contains(f))
+						currentFonts.append(f);
+				}
 			}
 		}
 	}
 	else if(field == FMFontDb::AllInfo)
 	{
-		bool negate(false);
-		bool queue(false);
-		if(fs.startsWith('+') || fs.startsWith('!'))
-		{
-			QChar st(fs[0]);
-			if(st == '+')
-				queue = true;
-			if(st == '!')
-				negate = true;
-			fs = (fs.mid(1));
-			if(fs.startsWith('+') || fs.startsWith('!'))
-			{
-				QChar st2(fs[0]);
-				if(st2 == '+')
-					queue = true;
-				if(st2 == '!')
-					negate = true;
-				
-				fs = (fs.mid(1));
-			}
-		}
 		QList<FontItem*> tmpList;
 		QList<FontItem*> negList;
 		QList<FontItem*> queList;
 		FMFontDb::InfoItem k;
-		qDebug()<<"+ !"<<queue<<negate;
+		
 		if(queue)
 		{
 			addFilterToCrumb((negate?"!":"") +fs);
@@ -1092,28 +1131,6 @@ void MainViewWidget::slotSearch()
 	}
 	else
 	{
-// 		currentFonts = FMFontDb::DB()->Fonts(fs, FMFontDb::InfoItem(field ) );
-		bool negate(false);
-		bool queue(false);
-		if(fs.startsWith('+') || fs.startsWith('!'))
-		{
-			QChar st(fs[0]);
-			if(st == '+')
-				queue = true;
-			if(st == '!')
-				negate = true;
-			fs = (fs.mid(1));
-			if(fs.startsWith('+') || fs.startsWith('!'))
-			{
-				QChar st2(fs[0]);
-				if(st2 == '+')
-					queue = true;
-				if(st2 == '!')
-					negate = true;
-				
-				fs = (fs.mid(1));
-			}
-		}
 		QList<FontItem*> tmpList;
 		QList<FontItem*> negList;
 		QList<FontItem*> queList;
@@ -1176,6 +1193,8 @@ void MainViewWidget::slotSearch()
 	currentOrdering = "family";
 	fillTree();
 	m_lists->searchString->clear();
+	
+	QApplication::restoreOverrideCursor();
 }
 
 

@@ -131,6 +131,22 @@ ListDockWidget::ListDockWidget()
 	fieldButton->setMenu(theFilterMenu);
 	fieldButton->setToolTip(currentField);
 	fieldButton->setText( allFieldName );
+	
+	theOperationMenu = new QMenu;
+	QMap<QString, QString> operations;
+
+	operations["AND"]	= tr("And","logical operation");
+	operations["OR"]	= tr("Or","logical operation") ;
+	operations["NO"]	= tr("Negate","logical operation");
+	
+	QAction * actOp(0);
+	foreach(QString op, operations.keys())
+	{ 
+		actOp = theOperationMenu->addAction(operations[op]);
+		actOp->setData(op);
+		actOp->setCheckable(true);
+	}
+	operationButton->setMenu(theOperationMenu);
 
 	searchString->setCompleter(completers.value(currentField));
 
@@ -472,6 +488,25 @@ void ListDockWidget::slotPreviewText(const QString & p)
 void ListDockWidget::slotPreviewSize(double d)
 {
 	typotek::getInstance()->setPreviewSize( d );
+}
+
+QStringList ListDockWidget::getOperation() const
+{
+	QStringList ret;
+	foreach(QAction* action, theOperationMenu->actions())
+	{
+		if(action->isChecked())
+			ret << action->data().toString();
+	}
+	return ret;
+}
+
+void ListDockWidget::clearOperation()
+{
+	foreach(QAction* action, theOperationMenu->actions())
+	{
+		action->setChecked(false);
+	}
 }
 
 

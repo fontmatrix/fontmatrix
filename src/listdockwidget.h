@@ -67,6 +67,8 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 			return currentFieldAction;
 		}
 	
+		QStringList getOperation() const;
+		void clearOperation();
 
 	private:
 		int m_position;
@@ -74,6 +76,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		QStringList ffilter;
 		QModelIndex currentFIndex;
 		QMenu *theFilterMenu;
+		QMenu *theOperationMenu;
 		QActionGroup *filterActGroup;
 		QString currentField;
 		QAction *currentFieldAction;

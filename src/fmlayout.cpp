@@ -546,6 +546,9 @@ void FMLayout::doLines()
 	bool hasHyph ( false );
 	GlyphList curHyph;
 
+	if(theString.isEmpty())
+		return;
+	
 	for ( int lIdx ( 0 ); lIdx < maxIndex ; ++lIdx )
 	{
 		if ( stopIt )
@@ -554,15 +557,19 @@ void FMLayout::doLines()
 		int end1 ( indices[ lIdx + 1 ] );
 
 		GlyphList inList ( theString.mid ( start1 , end1 - start1 /*+ 1 */ ) );
-
+		
+		if(inList.isEmpty())
+			continue;
 		if ( QChar ( inList.first().lChar ).category() == QChar::Separator_Space )
 		{
-			while ( QChar ( inList.first().lChar ).category() == QChar::Separator_Space )
+			while ( (!inList.isEmpty()) && (QChar ( inList.first().lChar ).category() == QChar::Separator_Space) )
 				inList.takeFirst();
 		}
+		if(inList.isEmpty())
+			continue;
 		if ( QChar ( inList.last().lChar ).category() == QChar::Separator_Space )
 		{
-			while ( QChar ( inList.last().lChar ).category() == QChar::Separator_Space )
+			while ((!inList.isEmpty()) && ( QChar ( inList.last().lChar ).category() == QChar::Separator_Space ) )
 				inList.takeLast();
 		}
 

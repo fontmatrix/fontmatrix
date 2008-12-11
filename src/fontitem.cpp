@@ -2068,6 +2068,25 @@ int FontItem::countCoverage ( int begin_code, int end_code )
 	return count;//something weird with freetype which put a valid glyph at the beginning of each lang ??? Or a bug here...
 }
 
+bool FontItem::hasChars(const QString & s)
+{
+	if(!ensureFace())
+		return false;
+	bool ret(true);
+	
+	foreach(QChar c, s)
+	{
+		if( !FT_Get_Char_Index( m_face, c.unicode() ) )
+		{
+			ret = false;
+			break;
+		}
+	}
+	
+	releaseFace();
+	return ret;
+}
+
 void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code )
 {
 

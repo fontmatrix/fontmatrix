@@ -2044,7 +2044,7 @@ void MainViewWidget::displayWelcomeMessage()
 	{
 		QFile wpngFile( wpng );
 		int pngWidth(fontInfoText->width() * 0.98);
-		qDebug()<<"PNGW = "<< fontInfoText->width();
+// 		qDebug()<<"PNGW = "<< fontInfoText->width();
 
 		if(!wpngFile.open(QIODevice::WriteOnly))
 			qDebug()<<"Unable to write in "<< wpngFile.fileName();
@@ -2052,16 +2052,35 @@ void MainViewWidget::displayWelcomeMessage()
 		{
 			// We’ll trick the fontitem a bit to have large text
 			QList<FontItem*> fl(FMFontDb::DB()->AllFonts());
+			QString welcomeString(tr("Welcome to Fontmatrix") );
 			if(fl.count() > 0)
 			{
-				double bkPr(typo->getPreviewSize());
-				typo->setPreviewSize(30.0);
-				int rIdx(QTime::currentTime().msec() % fl.count() );
-				FontItem *fitem( fl.at( rIdx ));
-				welcomeFontName = fitem->fancyName();
-				QPixmap welcomePix(fitem->oneLinePreviewPixmap ( tr("Welcome to Fontmatrix") , QColor(220,0,0), pngWidth) );
-				welcomePix.save(&wpngFile);
-				typo->setPreviewSize( bkPr );
+				int flcount(fl.count());
+				bool welcomeEnable(false);
+				int rIdx(0);
+				QList<int> triedFont;
+				while(triedFont.count() < flcount)
+				{
+					while(triedFont.contains(rIdx))
+						rIdx = QTime::currentTime().msec() %  flcount;
+					triedFont << rIdx;
+					FontItem * f(fl[rIdx]);
+					if(f->hasChars(welcomeString))
+					{
+						welcomeEnable = true;
+						break;
+					}	
+				}
+				if(welcomeEnable)
+				{
+					double bkPr(typo->getPreviewSize());
+					typo->setPreviewSize(30.0);
+					FontItem *fitem( fl.at( rIdx ));
+					welcomeFontName = fitem->fancyName();
+					QPixmap welcomePix(fitem->oneLinePreviewPixmap ( welcomeString , QColor(220,0,0), pngWidth) );
+					welcomePix.save(&wpngFile);
+					typo->setPreviewSize( bkPr );
+				}
 			}
 		}
 	}

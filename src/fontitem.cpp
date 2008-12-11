@@ -4037,32 +4037,19 @@ void FontItem::dumpIntoDB()
 {
 	if(!m_valid)
 		return;
-// 	QTime t;
-// 	int e1,e2,e3;
-	FMFontDb *db (FMFontDb::DB());
 	
-// 	t.start();
+	FMFontDb *db (FMFontDb::DB());
 	db->initRecord(m_path);
-// 	e1 = t.elapsed
 	
 	QString panString(panose());
-// 	t.start();
+	
 	QList<FMFontDb::Field> fl;
 	QVariantList vl;
 	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name  << FMFontDb::Type << FMFontDb::Panose << FMFontDb::FsType ;
 	vl << m_family<<m_variant<<m_name<<m_type<< panString << (int)m_OSFsType;
+	
 	db->setValues(m_path,fl,vl);
-// 	e2 = t.elapsed();
-	
-// 	t.start();
 	db->setInfoMap(m_path,moreInfo());
-// 	if(m_isOpenType)
-// 		db->setInfoMap(m_path,moreInfo_sfnt());
-// 	else
-// 		db->setInfoMap(m_path,moreInfo_type1());
-// 	e3 = t.elapsed();
-	
-// 	qDebug()<<"DUMP"<<m_name<<e1<<e2<<e3;
 }
 
 QStringList FontItem::charmaps()

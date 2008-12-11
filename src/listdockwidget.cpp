@@ -54,6 +54,8 @@ ListDockWidget::ListDockWidget()
 	setupUi(this);
 	fontTree->setIconSize(QSize(32,32));
 	
+	// Hide save filter button until it’s implemented
+	saveFilterButton->setVisible(false);
 	
 	listPreview->setModelColumn(1);
 	listPreview->setViewMode(QListView::IconMode);

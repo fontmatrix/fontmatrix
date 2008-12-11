@@ -202,6 +202,7 @@ void Systray::slotPrepareMenu()
 
 void Systray::newTag(QString name)
 {
+	qDebug()<<"Systray::newTag"<<name;
 	if (tagActions.contains(name))
 		return; // already added
 
@@ -215,6 +216,7 @@ void Systray::newTag(QString name)
 	int nFonts(taggedFonts.count());
 	for(int i = 0; i <  nFonts ; ++i)
 	{
+// 		qDebug()<<taggedFonts[i]->path();
 		Q_ASSERT(taggedFonts[i]);
 		if(taggedFonts[i]->isActivated())
 		{

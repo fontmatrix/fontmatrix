@@ -66,23 +66,37 @@ void FMFontDb::initRecord ( const QString & id )
 {
 // 	qDebug()<<"initRecord"<<id;
 	int nId ( ++internalCounter );
-	QString qs1 ( QString ( "INSERT INTO %1(%2,%3) VALUES('%4',%5)" )
+	QVariantList idlist;
+	QVariantList nidlist;
+	QString qs1 ( QString ( "INSERT INTO %1(%2,%3) VALUES(?,?)" )
 	              .arg ( tableName[InternalId] )
 	              .arg ( fieldName[FontId] )
 	              .arg ( fieldName[Id] )
-	              .arg ( id )
-	              .arg ( nId )
 	            );
-	QString qs2 ( QString ( "INSERT INTO %1(%2) VALUES(%3)" )
-	              .arg ( tableName[Data] )
-	              .arg ( fieldName[Id] )
-	              .arg ( nId )
-	            );
+	
 	QSqlQuery query ( *this );
-	if ( !query.exec ( qs1 ) )
+	query.prepare ( qs1 );
+	idlist << id;
+	nidlist << nId;
+	query.addBindValue(idlist);
+	query.addBindValue(nidlist);
+
+	if ( !query.execBatch() )
+	{
 		transactionError << lastError();
-	if ( !query.exec ( qs2 ) )
-		transactionError << lastError();
+		qDebug()<< "Error initialize record"<< id << lastError().text();
+// 		Q_ASSERT(0);
+	}
+	else // if not in internal id, no need to go further
+	{
+		QString qs2 ( QString ( "INSERT INTO %1(%2) VALUES(%3)" )
+				.arg ( tableName[Data] )
+				.arg ( fieldName[Id] )
+				.arg ( nId )
+			    );
+		if ( !query.exec ( qs2 ) )
+			transactionError << lastError();
+	}
 
 	cacheId[id] = nId;
 	reverseCacheId[nId] = id;
@@ -668,6 +682,7 @@ FontItem * FMFontDb::Font ( const QString & id , bool noTemporary )
 	}
 	else
 	{
+		qDebug() <<"New font"<< id;
 		fitem = new FontItem ( id );
 		if ( fitem->isValid() )
 		{
@@ -822,7 +837,12 @@ QList< FontItem * > FMFontDb::Fonts ( const QString & whereString, Table table )
 		{
 			int id ( query.value ( 0 ).toInt() );
 			if ( id > 0 )
-				reg[id] = fontMap.value ( id );
+			{
+				if( !fontMap.value(id) )
+					qDebug()<<"ERROR : DB contains references to id"<<id<<"which is not in fontmap";
+				else
+					reg[id] = fontMap.value ( id );
+			}
 		}
 		return reg.values();
 	}

@@ -68,6 +68,9 @@ void FMFontDb::initRecord ( const QString & id )
 	int nId ( ++internalCounter );
 	QVariantList idlist;
 	QVariantList nidlist;
+	idlist << id;
+	nidlist << nId;
+	
 	QString qs1 ( QString ( "INSERT INTO %1(%2,%3) VALUES(?,?)" )
 	              .arg ( tableName[InternalId] )
 	              .arg ( fieldName[FontId] )
@@ -76,10 +79,8 @@ void FMFontDb::initRecord ( const QString & id )
 	
 	QSqlQuery query ( *this );
 	query.prepare ( qs1 );
-	idlist << id;
-	nidlist << nId;
-	query.addBindValue(idlist);
-	query.addBindValue(nidlist);
+	query.addBindValue( idlist );
+	query.addBindValue( nidlist );
 
 	if ( !query.execBatch() )
 	{
@@ -120,7 +121,7 @@ void FMFontDb::setValue ( const QString & id, Field field, QVariant value )
 		             .arg ( value.toString() )
 		             .arg ( fieldName[Id] )
 		             .arg ( nId ) );
-		QSqlQuery query ( qs,*this );
+		QSqlQuery query ( qs, *this );
 		res = query.exec();
 	}
 	if ( !res )
@@ -132,16 +133,22 @@ void FMFontDb::setValues ( const QString & id, QList< Field > fields, QVariantLi
 	int nId ( getId ( id ) );
 	bool res ( false );
 // 	transaction();
+	QVariantList vl;
 	for ( int i ( 0 );i<fields.count();++i )
 	{
-		QString qs ( QString ( "UPDATE %1 SET %2='%3' WHERE %4='%5'" )
+		vl.clear();
+		vl << values[i];
+		QString qs ( QString ( "UPDATE %1 SET %2=? WHERE %3='%4'" )
 		             .arg ( tableName[Data] )
 		             .arg ( fieldName[fields[i]] )
-		             .arg ( values[i].toString() )
+// 		             .arg ( values[i].toString() )
 		             .arg ( fieldName[Id] )
 		             .arg ( nId ) );
-		QSqlQuery query ( qs,*this );
-		res = query.exec();
+		QSqlQuery query (*this );
+		query.prepare( qs );
+		query.addBindValue( vl );
+		
+		res = query.execBatch();
 		if ( !res )
 			break;
 	}
@@ -682,7 +689,7 @@ FontItem * FMFontDb::Font ( const QString & id , bool noTemporary )
 	}
 	else
 	{
-		qDebug() <<"New font"<< id;
+// 		qDebug() <<"New font"<< id;
 		fitem = new FontItem ( id );
 		if ( fitem->isValid() )
 		{

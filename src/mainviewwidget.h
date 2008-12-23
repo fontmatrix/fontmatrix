@@ -86,6 +86,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void fillTree();
 		void updateTree(bool checkFontActive = false);
 		
+		
+		void operateFilter(QList<FontItem*> allFiltered, const QString filterName);
+		
 		QStringList openKeys;
 		QString curItemName;
 		

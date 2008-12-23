@@ -37,6 +37,9 @@ class QCompleter;
 class QPoint;
 class FolderViewMenu;
 
+#define FILTER_FIELD_SPECIAL_TAG 2000
+#define FILTER_FIELD_SPECIAL_UNICODE 2001
+
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
 */

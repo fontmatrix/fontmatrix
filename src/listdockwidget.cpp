@@ -56,6 +56,7 @@ ListDockWidget::ListDockWidget()
 	
 	// Hide save filter button until it’s implemented
 	saveFilterButton->setVisible(false);
+
 	
 	listPreview->setModelColumn(1);
 	listPreview->setViewMode(QListView::IconMode);
@@ -89,30 +90,43 @@ ListDockWidget::ListDockWidget()
 
 	theFilterMenu = new QMenu;
 	filterActGroup = new QActionGroup(theFilterMenu);
-
-	allFieldName = FontStrings::Names()[FMFontDb::AllInfo];
-	maxFieldStringWidth = allFieldName.count();
-	currentField = allFieldName;
-	QAction *actn = new QAction(currentField, filterActGroup);
-	actn->setData(FMFontDb::AllInfo);
-	currentFieldAction = actn;
+	
+	QString tagName(tr("Tags"));
+	QAction *actn = new QAction(tagName, filterActGroup);
+	actn->setData(FILTER_FIELD_SPECIAL_TAG);
 	actn->setCheckable(true);
 	actn->setChecked(true);
 	theFilterMenu->addAction(actn);
 	
-	QString uniFName(tr("Unicode character"));
-	actn = new QAction(uniFName, filterActGroup);
-	actn->setData(2000);
+	// set defaults to Tag
+	currentField = tagName;
+	currentFieldAction = actn;
+	
+	// Filter All
+	allFieldName = FontStrings::Names()[FMFontDb::AllInfo];
+	maxFieldStringWidth = allFieldName.count();
+	actn = new QAction(allFieldName, filterActGroup);
+	actn->setData(FMFontDb::AllInfo);
 	actn->setCheckable(true);
 	theFilterMenu->addAction(actn);
+	
+	QStringListModel *lModel = new QStringListModel;
+	completers[allFieldName] = new QCompleter(this);
+	completers[allFieldName]->setModel(lModel);
+	
+	// Filter Unicode
+	QString uniFName(tr("Unicode character"));
+	actn = new QAction(uniFName, filterActGroup);
+	actn->setData(FILTER_FIELD_SPECIAL_UNICODE);
+	actn->setCheckable(true);
+	theFilterMenu->addAction(actn);
+	
 	QStringListModel *uModel = new QStringListModel;
 	completers[uniFName] = new QCompleter(this);
 	completers[uniFName]->setModel(uModel);
 
-	QStringListModel *lModel = new QStringListModel;
-	completers[currentField] = new QCompleter(this);
-	completers[currentField]->setModel(lModel);
 
+	// Filters meta-data
 	for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
 	{
 		FMFontDb::InfoItem k(FontStrings::Names().keys()[gIdx]);
@@ -132,7 +146,7 @@ ListDockWidget::ListDockWidget()
 
 	fieldButton->setMenu(theFilterMenu);
 	fieldButton->setToolTip(currentField);
-	fieldButton->setText( allFieldName );
+	fieldButton->setText( currentField );
 	
 	theOperationMenu = new QMenu;
 	QMap<QString, QString> operations;
@@ -234,6 +248,15 @@ void ListDockWidget::slotFieldChanged(QAction * action)
 	fieldButton->setToolTip(currentField);
 	fieldButton->setText( fieldString( currentField ) );
 	searchString->setCompleter(completers.value(currentField));
+	
+	if(currentFieldAction->data().toInt() == FILTER_FIELD_SPECIAL_TAG)
+	{
+		filterValueStack->setCurrentIndex(0);
+	}
+	else
+	{
+		filterValueStack->setCurrentIndex(1);
+	}
 }
 
 

@@ -2556,7 +2556,7 @@ QString FontItem::infoText ( bool fromcache )
 					FontStrings::PanoseKey k(FontStrings::Panose().keys()[i]);
 					int pValue(pl[i].toInt());
 					panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName( k ) + "</div>";
-					panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value( k ).value( pValue ) + "</div>";
+					panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value( k ).value( pValue ) + " - "+ pl[i] +"</div>";
 				}
 			}
 		}

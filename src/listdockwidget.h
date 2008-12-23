@@ -79,7 +79,7 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		QStringList ffilter;
 		QModelIndex currentFIndex;
 		QMenu *theFilterMenu;
-		QMenu *theOperationMenu;
+// 		QMenu *theOperationMenu;
 		QActionGroup *filterActGroup;
 		QString currentField;
 		QAction *currentFieldAction;

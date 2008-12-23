@@ -1040,7 +1040,6 @@ void MainViewWidget::slotFilterTag ( QString tag )
 
 	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
 	
-	setCrumb();
 	if(key == "TAG") // regular tag
 	{
 		m_lists->fontTree->clear();
@@ -1076,7 +1075,7 @@ void MainViewWidget::operateFilter(QList< FontItem * > allFiltered, const QStrin
 	QList<FontItem*> queList;	
 	
 	QStringList ops(m_lists->getOperation());
-	bool negate(ops.contains("NO"));
+	bool negate(ops.contains("NOT"));
 	bool queue(ops.contains("AND"));
 	m_lists->clearOperation();
 	

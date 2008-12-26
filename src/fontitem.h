@@ -224,6 +224,8 @@ class FontItem : public QObject
 		bool renderReturnWidth;
 
 		QString url2href(QString value);
+		QString xhtmlifies(const QString& value);
+		
 		
 	private slots:
 		void slotDownloadStart(int id);

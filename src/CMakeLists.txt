@@ -30,6 +30,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fontbookdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontcomparewidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontitem.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontmatrixshaper.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/glyphtosvghelper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/helpwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfontsdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.cpp

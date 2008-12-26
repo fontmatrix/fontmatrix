@@ -225,6 +225,8 @@ class typotek:public QMainWindow
 		int chartInfoFontSize;
 		QString chartInfoFontName;
 		
+		double previewInfoFontSize;
+		
 		QString databaseDriver;
 		QString databaseHostname;
 		QString databaseDbName;
@@ -347,6 +349,9 @@ class typotek:public QMainWindow
 	QString getWebBrowser() const;
 	void setWebBrowserOptions ( const QString& theValue );
 	QString getWebBrowserOptions() const;
+
+	double getPreviewInfoFontSize() const{return previewInfoFontSize;}
+	
 	
 	
 	

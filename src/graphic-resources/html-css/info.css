@@ -11,7 +11,7 @@ background-color : #fefefe;
 }
 
 #headline {
-    text-shadow: black 4px 4px 2px;
+/*    text-shadow: black 4px 4px 2px; */
     background-color : #ff3f00;
     color : white;
     font-family : 'sans-serif';

@@ -805,7 +805,8 @@ void typotek::readSettings()
 	panoseMatchTreshold = settings.value("Panose/MatchTreshold" , 1000 ).toInt();
 	
 	webBrowser = settings.value("Info/Browser", "Fontmatrix").toString();
-	webBrowserOptions = settings.value("Info/BrowserOptions", "").toString();	
+	webBrowserOptions = settings.value("Info/BrowserOptions", "").toString();
+	previewInfoFontSize = settings.value("Info/PreviewSize", 32.0).toDouble();
 	
 	templatesDir = settings.value ( "Places/TemplatesDir", "./").toString();
 	m_welcomeURL = settings.value("Places/WelcomeURL").toString();
@@ -845,6 +846,8 @@ void typotek::writeSettings()
 	settings.setValue( "Docks/TagsPos", tagsDockArea );
 	settings.setValue( "Docks/ToolGeometry", mainDockGeometry);
 	settings.setValue( "Docks/TagsGeometry", tagsDockGeometry);
+	
+	settings.setValue("Info/PreviewSize", previewInfoFontSize );
 	
 	settings.setValue( "Panose/MatchTreshold", panoseMatchTreshold);
 	

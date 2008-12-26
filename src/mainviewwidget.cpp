@@ -812,17 +812,23 @@ void MainViewWidget::slotInfoFont()
 	if(theVeryFont)
 	{
 // 		qDebug()<<"MainViewWidget::slotInfoFont"<<theVeryFont->name();
-		QString fIT;
-		fIT += "<html>";
+                QString fIT;
+                fIT += "<html xmlns=\"http://www.w3.org/1999/xhtml\">";
 		fIT += "<head>";
 		fIT += "<title>" + theVeryFont->fancyName() + "</title>";
 		fIT += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
 		fIT += "<link rel='stylesheet' href='file://" + FMPaths::ResourcesDir() + "info.css' type='text/css' />";
-		fIT += "</head>" +  theVeryFont->infoText(false) + "</html>";
-		fontInfoText->setHtml (fIT);
-// 		qDebug()<<"=========================================================";
-// 		qDebug()<<fIT;
-// 		qDebug()<<"=========================================================";
+                fIT += "</head ><body>" +  theVeryFont->infoText(false) + "</body> </html>";
+//		fontInfoText->setHtml (fIT);
+                fontInfoText->setContent(fIT.toUtf8(), "application/xhtml+xml");
+//                qDebug()<<"=========================================================";
+//                qDebug()<<fIT;
+//                qDebug()<<"=========================================================";
+                QFile df("fontmatrix.xhtml" );
+                if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
+                {
+                    df.write(fIT.toUtf8());
+                }
 	}
 	
 

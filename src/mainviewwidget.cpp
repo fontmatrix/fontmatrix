@@ -824,11 +824,11 @@ void MainViewWidget::slotInfoFont()
 //                qDebug()<<"=========================================================";
 //                qDebug()<<fIT;
 //                qDebug()<<"=========================================================";
-                QFile df("fontmatrix.xhtml" );
-                if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
-                {
-                    df.write(fIT.toUtf8());
-                }
+//                 QFile df("fontmatrix.xhtml" );
+//                 if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
+//                 {
+//                     df.write(fIT.toUtf8());
+//                 }
 	}
 	
 

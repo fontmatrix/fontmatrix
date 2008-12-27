@@ -26,6 +26,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QSettings>
+#include <QScrollBar>
 
 
 
@@ -53,7 +54,12 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 		return QVariant();
 	
 	QColor bgColor(255,255,255);
-	int width( m_view->width() );
+// 	int borders( 2*(m_view->frameWidth() + m_view->lineWidth() + m_view->midLineWidth()) ); 
+// 	int scrollbar(m_view->verticalScrollBar()->width());
+// 	int width( m_view->width() - (borders + scrollbar) );
+// 	qDebug()<<"W"<<width<<borders<<scrollbar;
+	// quite strange but I cannot determine accuratly the size of the visible part of the inner frame :/
+	int width( qRound(m_view->width() * 0.92) );
 	
 	if(role == Qt::DisplayRole)
 	{

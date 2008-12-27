@@ -176,8 +176,6 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
              </layout>
-             <zorder>operationNOT</zorder>
-             <zorder>operationAND</zorder>
             </widget>
            </item>
           </layout>
@@ -402,7 +400,11 @@ p, li { white-space: pre-wrap; }
          <number>2</number>
         </property>
         <item row="0" column="0" colspan="2" >
-         <widget class="FMPreviewView" name="listPreview" />
+         <widget class="FMPreviewView" name="listPreview" >
+          <property name="horizontalScrollBarPolicy" >
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0" >
          <widget class="QLineEdit" name="previewText" />

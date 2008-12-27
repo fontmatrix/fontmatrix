@@ -3844,7 +3844,8 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 	GlyphList ret;
 	if ( spec.isEmpty() || fsize <= 0.0 )
 		return ret;
-	ensureFace();
+	if( !ensureFace() )
+		return ret;
 	double scalefactor = fsize / m_face->units_per_EM  ;
 	
 	QStringList stl(spec.split(' ', QString::SkipEmptyParts));

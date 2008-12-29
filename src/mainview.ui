@@ -573,7 +573,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text" >
-                  <string>Script</string>
+                  <string comment="Writing system" >Script</string>
                  </property>
                  <property name="buddy" >
                   <cstring>langCombo</cstring>

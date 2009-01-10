@@ -59,7 +59,7 @@ class typotek:public QMainWindow
 	public:
 		static typotek* getInstance();
 		void initMatrix();
-		
+
 	protected:
 		void closeEvent ( QCloseEvent *event );
 		void keyPressEvent ( QKeyEvent * event ) ;
@@ -103,6 +103,9 @@ class typotek:public QMainWindow
 		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
 		void relayStartingStepIn(QString s);
 		void showToltalFilteredFonts();
+
+		void hide();
+		void show();
 
 	signals:
 		void tagAdded(QString);
@@ -158,7 +161,7 @@ class typotek:public QMainWindow
 		QAction *showTTTAct;
 		QAction *editPanoseAct;
 		QAction *dumpInfoAct;
-		
+
 		QAction *nextFamily;
 		QAction *previousFamily;
 		QAction *nextFont;
@@ -214,7 +217,7 @@ class typotek:public QMainWindow
 		QString tagsDockArea;
 		QRect mainDockGeometry;
 		QRect tagsDockGeometry;
-		
+
 		FMHyphenator *hyphenator;
 
 		QString defaultOTFScript;
@@ -224,21 +227,21 @@ class typotek:public QMainWindow
 
 		int chartInfoFontSize;
 		QString chartInfoFontName;
-		
+
 		double previewInfoFontSize;
-		
+
 		QString databaseDriver;
 		QString databaseHostname;
 		QString databaseDbName;
 		QString databaseUser;
 		QString databasePassword;
-		
+
 		int panoseMatchTreshold;
-		
+
 		QString webBrowser;
 		QString webBrowserOptions;
 
-	public:		
+	public:
 		bool isSysFont(FontItem* f);
 		QList<FontItem*> getCurrentFonts();
 		FontItem* getSelectedFont();
@@ -297,7 +300,7 @@ class typotek:public QMainWindow
 
 		QString defaultSampleName(){return m_defaultSampleName;}
 
-		
+
 
 	bool familySchemeFreetype() const{return m_familySchemeFreetype;}
 	void setFamilySchemeFreetype ( bool theValue ){m_familySchemeFreetype = theValue;}
@@ -351,10 +354,10 @@ class typotek:public QMainWindow
 	QString getWebBrowserOptions() const;
 
 	double getPreviewInfoFontSize() const{return previewInfoFontSize;}
-	
-	
-	
-	
+
+
+
+
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

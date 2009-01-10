@@ -167,7 +167,7 @@ void typotek::initMatrix()
 		mainDock->setFloating(true);
 	if(!mainDockGeometry.isNull())
 		mainDock->setGeometry(mainDockGeometry);
-	
+
 	tagsDock = new QDockWidget ( tr("Tags") );
 	tagsDock->setWidget( TagsWidget::getInstance() );
 	addDockWidget(fontmatrix::DockPosition[tagsDockArea], tagsDock);
@@ -242,11 +242,11 @@ void typotek::closeEvent ( QCloseEvent *event )
 			return;
 		}
 	}
-	
+
 // 	save();
 	writeSettings();
 	event->accept();
-	
+
 }
 
 /// IMPORT
@@ -597,7 +597,7 @@ void typotek::createActions()
 	fontBookAct->setStatusTip ( tr ( "Export a pdf that show selected fonts" ) );
 	scuts->add(fontBookAct);
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
-	
+
 	dumpInfoAct = new QAction(tr("Export modelled Info"), this);
 	connect(dumpInfoAct, SIGNAL(triggered()), this, SLOT(slotDumpInfo()));
 
@@ -663,7 +663,7 @@ void typotek::createActions()
 	tagAll = new QAction(tr("Tag All..."), this);
 	scuts->add(tagAll);
 	connect(tagAll,SIGNAL(triggered()),this,SLOT(slotTagAll()));
-	
+
 	showTTTAct = new QAction(tr("Show TrueType tables"),this);
 	scuts->add(showTTTAct);
 	connect(showTTTAct,SIGNAL(triggered( )),this,SLOT(slotShowTTTables()));
@@ -671,7 +671,7 @@ void typotek::createActions()
 	editPanoseAct = new QAction(tr("Edit Panose info"), this);
 	scuts->add(editPanoseAct);
 	connect(editPanoseAct, SIGNAL(triggered()), this, SLOT(slotEditPanose()));
-	
+
 	nextFamily = new QAction(tr("Next Family"), this);
 	nextFamily->setShortcut(Qt::Key_PageDown);
 	scuts->add(nextFamily);
@@ -746,11 +746,11 @@ void typotek::createMenus()
 	browseMenu->addAction(previousFamily);
 	browseMenu->addAction(nextFont);
 	browseMenu->addAction(previousFont);
-	
+
 	viewMenu = createPopupMenu();
 	viewMenu->setTitle(tr("&View"));
 	menuBar()->addMenu(viewMenu);
-			
+
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( helpAct );
 	helpMenu->addAction ( aboutAct );
@@ -761,7 +761,7 @@ void typotek::createMenus()
 void typotek::createStatusBar()
 {
 	statusBar()->showMessage ( tr ( "Ready" ) );
-			
+
 	statusProgressBar = new QProgressBar(this);
 	statusProgressBar->setMaximumSize(200,20);
 	statusBar()->addPermanentWidget(statusProgressBar);
@@ -773,7 +773,7 @@ void typotek::createStatusBar()
 	curFontPresentation->setAlignment ( Qt::AlignRight );
 	curFontPresentation->setFont ( statusFontFont );
 	statusBar()->addPermanentWidget ( curFontPresentation );
-	
+
 	countFilteredFonts = new QLabel ( "" );
 	countFilteredFonts->setFrameShape(QFrame::StyledPanel);
 	countFilteredFonts->setAlignment ( Qt::AlignRight );
@@ -789,37 +789,37 @@ void typotek::readSettings()
 	QSize size = settings.value ( "WState/size", QSize ( 400, 400 ) ).toSize();
 	resize ( size );
 	move ( pos );
-	
+
 	fonteditorPath = settings.value ( "FontEditor", "/usr/bin/fontforge" ).toString();
 	useInitialTags = settings.value ( "UseInitialTags", false ).toBool();
 	showFontListDialog = settings.value("ShowImportedFonts", true).toBool();
 	previewSize = settings.value("Preview/Size", 15.0).toDouble();
 	previewRTL = settings.value("Preview/RTL", false).toBool();
 	previewSubtitled = settings.value("Preview/Subtitled", false).toBool();
-	
+
 	mainDockArea = settings.value("Docks/ToolPos", "Left").toString();
 	tagsDockArea = settings.value("Docks/TagsPos", "Right").toString();
 	mainDockGeometry = settings.value("Docks/ToolGeometry", QRect()).toRect();
 	tagsDockGeometry = settings.value("Docks/TagsGeometry", QRect()).toRect();
-	
+
 	panoseMatchTreshold = settings.value("Panose/MatchTreshold" , 1000 ).toInt();
-	
+
 	webBrowser = settings.value("Info/Browser", "Fontmatrix").toString();
 	webBrowserOptions = settings.value("Info/BrowserOptions", "").toString();
 	previewInfoFontSize = settings.value("Info/PreviewSize", 32.0).toDouble();
-	
+
 	templatesDir = settings.value ( "Places/TemplatesDir", "./").toString();
 	m_welcomeURL = settings.value("Places/WelcomeURL").toString();
 	m_remoteTmpDir = settings.value("Places/RemoteTmpDir", QDir::tempPath()).toString();
-	
+
 	defaultOTFScript = settings.value("OTF/Script").toString();
 	defaultOTFLang = settings.value("OTF/Lang").toString();
 	defaultOTFGPOS = settings.value("OTF/GPOS").toString().split(";",QString::SkipEmptyParts);
 	defaultOTFGSUB = settings.value("OTF/GSUB").toString().split(";",QString::SkipEmptyParts);
 	chartInfoFontSize = settings.value("ChartInfoFontSize", 8).toInt();
 	chartInfoFontName = settings.value("ChartInfoFontFamily", QFont().family() ).toString();
-	
-	
+
+
 	databaseDriver = settings.value("Database/Driver","QSQLITE").toString();
 	databaseHostname = settings.value("Database/Hostname","").toString();
 	databaseDbName = settings.value("Database/DbName", ownDir.absolutePath()+ QDir::separator() + "Data.sql").toString();
@@ -827,7 +827,7 @@ void typotek::readSettings()
 	databasePassword = settings.value("Database/Password","").toString();
 	if( !QSqlDatabase::drivers().contains(databaseDriver) )
 		qDebug()<<"The SQL driver you request is not available("<< databaseDriver <<")";
-	
+
 }
 
 void typotek::writeSettings()
@@ -835,7 +835,7 @@ void typotek::writeSettings()
 	QSettings settings;
 	settings.setValue( "WState/pos", pos() );
 	settings.setValue( "WState/size", size() );
-	
+
 	if(mainDock->isFloating())
 		mainDockArea = "Float";
 	if(tagsDock->isFloating())
@@ -846,19 +846,19 @@ void typotek::writeSettings()
 	settings.setValue( "Docks/TagsPos", tagsDockArea );
 	settings.setValue( "Docks/ToolGeometry", mainDockGeometry);
 	settings.setValue( "Docks/TagsGeometry", tagsDockGeometry);
-	
+
 	settings.setValue("Info/PreviewSize", previewInfoFontSize );
-	
+
 	settings.setValue( "Panose/MatchTreshold", panoseMatchTreshold);
-	
+
 	settings.setValue( "WState/SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
-	
+
 	settings.setValue( "Database/Driver",databaseDriver);
 	settings.setValue( "Database/Hostname",databaseHostname);
 	settings.setValue( "Database/DbName",databaseDbName);
 	settings.setValue( "Database/User",databaseUser);
 	settings.setValue( "Database/Password",databasePassword);
-	
+
 	save();
 
 }
@@ -883,7 +883,7 @@ void typotek::checkOwnDir()
 {
 	relayStartingStepIn(tr("Check for Fontmatrix own dir"));
 	QString sep(QDir::separator());
-	
+
 #ifdef PLATFORM_APPLE
 
 	QString rootDir(QDir::homePath() + sep + "Library" + sep + "Fontmatrix" + sep);
@@ -893,7 +893,7 @@ void typotek::checkOwnDir()
 		managedDir.mkpath ( QDir::homePath() + sep + "Library" + sep + "Fonts" );
 	if(!ownDir.exists())
 		ownDir.mkpath (rootDir);
-	
+
 	ResourceFile.setFileName ( rootDir + "Resource.xml" );
 
 #elif _WIN32
@@ -906,7 +906,7 @@ void typotek::checkOwnDir()
 	ownDir = managedDir;
 	ResourceFile.setFileName ( QDir::homePath() + sep +"fontmatrix.data" );
 #else
-	QString rootDir(QDir::homePath() + sep + ".Fontmatrix" + sep);  
+	QString rootDir(QDir::homePath() + sep + ".Fontmatrix" + sep);
 	ownDir.setPath(rootDir);
 	// Where activated fonts are sym-linked
 	managedDir.setPath ( rootDir + "Activated" );
@@ -914,7 +914,7 @@ void typotek::checkOwnDir()
 		managedDir.mkpath ( rootDir + "Activated"  );
 
 	addFcDirItem( managedDir.absolutePath() );
-	
+
 	ResourceFile.setFileName ( rootDir + "Resource.xml" );
 #endif
 }
@@ -998,7 +998,7 @@ QStringList typotek::getSystemFontDirs()
 		if(root)
 			retList << path;
 	}
-	
+
 #endif //HAVE_FONTCONFIG
 #ifdef PLATFORM_APPLE
 	retList << "/Library/Fonts";
@@ -1031,24 +1031,24 @@ void typotek::initDir()
 	{
 		QString SysColFon = tr ( "System Fonts" );
 		QStringList tagsList(FMFontDb::DB()->getTags());
-			
+
 		QList<FontItem*> sysFontPtrs;
-	
+
 		QStringList sysDir ( getSystemFontDirs() );
 		qDebug()<<sysDir.join("\n");
-		
+
 		QStringList yetHereFonts;
 		QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 		for ( int i=0;i < fontMap.count() ; ++i )
 			yetHereFonts << fontMap[i]->path();
-		
+
 		for ( int sIdx ( 0 ); sIdx < sysDir.count(); ++sIdx )
 		{
 			QDir theDir ( sysDir[sIdx] );
 			QStringList syspathList;
 			QStringList nameList;
-	
-			QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );	
+
+			QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );
 			QStringList filters;
 			filters << "*.otf" << "*.pfb" << "*.ttf" ;
 			foreach ( QString dr, dirList )
@@ -1062,7 +1062,7 @@ void typotek::initDir()
 					sysFontList << fp.absoluteFilePath();
 				}
 			}
-	
+
 			int sysFontCount ( syspathList.count() );
 			if(sysFontCount > 0)
 			{
@@ -1091,9 +1091,9 @@ void typotek::initDir()
 				FMFontDb::DB()->TransactionEnd();
 			}
 		}
-		
+
 		relayStartingStepIn ( QString::number ( sysFontPtrs.count() ) + " " + tr ( "system fonts added." ) );
-		
+
 		// So much complicated only because otherwise, tags were added twice with SQLite ???
 		QStringList tl;
 		foreach(FontItem* sfp, sysFontPtrs)
@@ -1102,7 +1102,7 @@ void typotek::initDir()
 		}
 		FMFontDb::DB()->addTag(tl, SysColFon);
 	}
-	
+
 
 // 	qDebug()<<"TIME(fonts) : "<<fontsTime.elapsed();
 	/// Remote dirs
@@ -1460,9 +1460,9 @@ void typotek::setPreviewSize(double d)
 {
 	if(previewSize == d)
 		return;
-	
+
 	previewSize = d;
-	
+
 	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i(0); i < fontMap.count(); ++i)
 		fontMap[i]->clearPreview() ;
@@ -2049,7 +2049,7 @@ void typotek::slotShowTTTables()
 		glayout.addWidget(&tv,0,0,3,3);
 		glayout.addWidget(&pbutton,3,2);
 		pbutton.setDefault(true);
-		
+
 		QRect drect(dia.rect());
 		drect.setX(this->geometry().x() + 32);
 		drect.setY(this->geometry().y() + 32);
@@ -2086,7 +2086,7 @@ void typotek::slotDumpInfo()
 			qDebug()<< "Dump not saved";
 		}
 	}
-	
+
 }
 
 void typotek::showToltalFilteredFonts()
@@ -2133,4 +2133,18 @@ QString typotek::getWebBrowserOptions() const
 void typotek::setWebBrowserOptions ( const QString& theValue )
 {
 	webBrowserOptions = theValue;
+}
+
+void typotek::hide()
+{
+	mainDock->hide();
+	tagsDock->hide();
+	QMainWindow::hide();
+}
+
+void typotek::show()
+{
+	mainDock->show();
+	tagsDock->show();
+	QMainWindow::show();
 }

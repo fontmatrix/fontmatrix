@@ -36,6 +36,7 @@
 #include "fmfontstrings.h"
 #include "tagswidget.h"
 
+#include <cstdlib>
 
 #include <QString>
 #include <QDebug>
@@ -1937,62 +1938,55 @@ void MainViewWidget::displayWelcomeMessage()
 		fontInfoText->load(QUrl(typotek::getInstance()->welcomeURL()));
 		return;
 	}
-
+	
 	QString welcomeFontName;
-	QString wpng(QDir::tempPath() + QDir::separator() + "FontmatrixWelcome.png");
+	QString welcomeSVG;
 	if(FMFontDb::DB()->FontCount() > 0)
 	{
-		QFile wpngFile( wpng );
-		int pngWidth(fontInfoText->width() * 0.98);
-// 		qDebug()<<"PNGW = "<< fontInfoText->width();
-
-		if(!wpngFile.open(QIODevice::WriteOnly))
-			qDebug()<<"Unable to write in "<< wpngFile.fileName();
-		else
-		{
-			// We’ll trick the fontitem a bit to have large text
 			QList<FontItem*> fl(FMFontDb::DB()->AllFonts());
 			QString welcomeString(tr("Welcome to Fontmatrix") );
 			if(fl.count() > 0)
 			{
 				int flcount(fl.count());
-				bool welcomeEnable(false);
-				int rIdx(0);
+				int rIdx( std::rand() % flcount );
 				QList<int> triedFont;
 				while(triedFont.count() < flcount)
 				{
 					while(triedFont.contains(rIdx))
-						rIdx = QTime::currentTime().msec() %  flcount;
+						rIdx = std::rand() %  flcount;
 					triedFont << rIdx;
 					FontItem * f(fl[rIdx]);
 					if(f->hasChars(welcomeString))
 					{
-						welcomeEnable = true;
+						QStringList wList(welcomeString.split(" "));
+						foreach(const QString& wPart, wList)
+						{
+							welcomeSVG += "<div>";
+							welcomeSVG += f->renderSVG( wPart , 122.0);//TODO make size a setting
+							welcomeSVG += "</div>";
+						}
+						welcomeFontName = f->fancyName();
 						break;
 					}	
 				}
-				if(welcomeEnable)
-				{
-					double bkPr(typo->getPreviewSize());
-					typo->setPreviewSize(30.0);
-					FontItem *fitem( fl.at( rIdx ));
-					welcomeFontName = fitem->fancyName();
-					QPixmap welcomePix(fitem->oneLinePreviewPixmap ( welcomeString , QColor(220,0,0), pngWidth) );
-					welcomePix.save(&wpngFile);
-					typo->setPreviewSize( bkPr );
-				}
 			}
-		}
 	}
-	QString ResPat(FMPaths::ResourcesDir());
-	QFile wFile( ResPat + "welcome_"+ FMPaths::sysLoc() + ".html");
-	wFile.open(QIODevice::ReadOnly | QIODevice::Text);
-	QByteArray wArray(wFile.readAll());
-	QString wString(QString::fromUtf8(wArray.data(),wArray.length()));
-	wString.replace("##RECOURCES_DIR##", QUrl::fromLocalFile(ResPat).toString() );
-	wString.replace("##WELCOME_PNG##", QUrl::fromLocalFile(wpng).toString() );
-	wString.replace("##WELCOME_FONT##", welcomeFontName);
-	fontInfoText->setHtml(wString);
+// 	QString ResPat(FMPaths::ResourcesDir());
+// 	QFile wFile( ResPat + "welcome_"+ FMPaths::sysLoc() + ".html");
+// 	wFile.open(QIODevice::ReadOnly | QIODevice::Text);
+// 	QByteArray wArray(wFile.readAll());
+// 	QString wString(QString::fromUtf8(wArray.data(),wArray.length()));
+// 	wString.replace("##RECOURCES_DIR##", QUrl::fromLocalFile(ResPat).toString() );
+// 	wString.replace("##WELCOME_MESSAGE##", welcomeSVG);
+// 	wString.replace("##WELCOME_FONT##", welcomeFontName);
+	QString wString;
+	wString += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ;
+	wString += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" ;
+	wString += "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body style=\"background-color:#eee;\">" ;
+	wString += welcomeSVG ;
+	wString +="<div style=\"font-family:sans-serif;text-align:right;\">"+welcomeFontName+"</div>";
+	wString += "</body></html>" ;
+	fontInfoText->setContent(wString.toUtf8(), "application/xhtml+xml");
 }
 
 // QTextDocument * MainViewWidget::infoDocument()

@@ -2452,7 +2452,7 @@ QString FontItem::infoText ( bool fromcache )
 // 	if ( !m_cacheInfo.isEmpty() && fromcache )
 // 		return m_cacheInfo;
 
-	bool rFace ( false );
+	bool rFace ( ensureFace() );
 
 	/**
 	Selectors are :
@@ -2467,6 +2467,9 @@ QString FontItem::infoText ( bool fromcache )
 	.encoding
 	*/
 	QString ret;
+	
+	if(!rFace)
+		ret+="<div class=\"bigWarning\">"+ tr("Unable to get a face of this font file.") +"</div>";
 
 	FsType OSFsType ( FMFontDb::DB()->getValue ( m_path,FMFontDb::FsType ).toInt() );
 	QString embedFlags = "<div id=\"fstype\">";
@@ -2519,7 +2522,7 @@ QString FontItem::infoText ( bool fromcache )
 	}
 	QString openElem ( QString ( "<svg width=\"%1\" height=\"%2\"  xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" )
 	                   .arg ( horOffset )
-	                   .arg ( maxHeight*1.6 ) );
+	                   .arg ( rFace ? (m_face->height * scaleFactor) : (maxHeight*1.6) ) );
 	ret += openElem;
 	ret += svg;
 	ret += "</svg>";
@@ -4121,6 +4124,45 @@ QStringList FontItem::charmaps()
 	{
 		ret << FontStrings::Encoding(e);
 	}
+	return ret;
+}
+
+QString FontItem::renderSVG(const QString & s, const double& size)
+{
+	if(!ensureFace())
+		return QString();
+	
+	QString ret;
+	QString svg;
+	QTransform tf;
+	double pifs ( size );
+	double scaleFactor( pifs / unitPerEm );
+	double vertOffset ( pifs );
+	double horOffset ( 0 );
+	tf.translate ( horOffset , vertOffset );
+
+	foreach (const QChar& c, s )
+	{
+		{
+			QGraphicsPathItem * gpi ( itemFromChar ( c.unicode(), pifs ) );
+			if ( gpi )
+			{
+				GlyphToSVGHelper gtsh ( gpi->path(), tf );
+				svg += gtsh.getSVGPath();
+				horOffset += gpi->data(GLYPH_DATA_HADVANCE).toDouble() * scaleFactor;
+				tf.translate( gpi->data(GLYPH_DATA_HADVANCE).toDouble()  * scaleFactor,0 );
+				delete gpi;
+			}
+		}
+	}
+	QString openElem ( QString ( "<svg width=\"%1\" height=\"%2\"  xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" )
+			.arg ( horOffset )
+			.arg ( m_face->height * scaleFactor ) );
+	ret += openElem;
+	ret += svg;
+	ret += "</svg>";
+	
+	releaseFace();
 	return ret;
 }
 

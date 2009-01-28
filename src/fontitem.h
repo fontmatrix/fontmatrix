@@ -278,6 +278,7 @@ class FontItem : public QObject
 		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
 		QGraphicsPixmapItem* itemFromGindexPix_mt ( int index, double size );
 		
+		QString renderSVG(const QString& s, const double& size);
 		
 		/// We prepare ejection of renderLine methods
 		GlyphList glyphs(QString spec, double fsize);

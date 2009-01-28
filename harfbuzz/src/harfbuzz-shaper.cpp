@@ -1,12 +1,26 @@
-/*******************************************************************
+/*
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
- *  Copyright 2007  Trolltech ASA
+ * This is part of HarfBuzz, an OpenType Layout engine library.
  *
- *  This is part of HarfBuzz, an OpenType Layout engine library.
+ * Permission is hereby granted, without written agreement and without
+ * license or royalty fees, to use, copy, modify, and distribute this
+ * software and its documentation for any purpose, provided that the
+ * above copyright notice and the following two paragraphs appear in
+ * all copies of this software.
  *
- *  See the file name COPYING for licensing information.
+ * IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
+ * ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN
+ * IF THE COPYRIGHT HOLDER HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  *
- ******************************************************************/
+ * THE COPYRIGHT HOLDER SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING,
+ * BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
+ * ON AN "AS IS" BASIS, AND THE COPYRIGHT HOLDER HAS NO OBLIGATION TO
+ * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+ */
 
 #include "harfbuzz-shaper.h"
 #include "harfbuzz-shaper-private.h"
@@ -139,6 +153,7 @@ static void calcLineBreaks(const HB_UChar16 *uc, hb_uint32 len, HB_CharAttribute
         HB_GraphemeClass ngrapheme;
         HB_LineBreakClass ncls;
         HB_GetGraphemeAndLineBreakClass(code, &ngrapheme, &ncls);
+        charAttributes[i].charStop = graphemeTable[ngrapheme][grapheme];
         // handle surrogates
         if (ncls == HB_LineBreak_SG) {
             if (HB_IsHighSurrogate(uc[i]) && i < len - 1 && HB_IsLowSurrogate(uc[i+1])) {
@@ -155,8 +170,6 @@ static void calcLineBreaks(const HB_UChar16 *uc, hb_uint32 len, HB_CharAttribute
         // set white space and char stop flag
         if (ncls >= HB_LineBreak_SP)
             charAttributes[i].whiteSpace = true;
-
-        charAttributes[i].charStop = graphemeTable[ngrapheme][grapheme];
 
         HB_LineBreakType lineBreakType = HB_NoBreak;
         if (cls >= HB_LineBreak_LF) {
@@ -420,8 +433,6 @@ void HB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
 
     // ### zeroWidth and justification are missing here!!!!!
 
-    if(length == 0)
-	    return;
     assert(item->num_glyphs <= length);
 
 //     qDebug("QScriptEngine::heuristicSetGlyphAttributes, num_glyphs=%d", item->num_glyphs);
@@ -572,8 +583,6 @@ HB_Bool HB_BasicShape(HB_ShaperItem *shaper_item)
     return true;
 }
 
-static HB_AttributeFunction thai_attributes = 0;
-
 const HB_ScriptEngine HB_ScriptEngines[] = {
     // Common
     { HB_BasicShape, 0},
@@ -612,7 +621,7 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     // Sinhala
     { HB_IndicShape, HB_IndicAttributes },
     // Thai
-    { HB_BasicShape, thai_attributes },
+    { HB_BasicShape, HB_ThaiAttributes },
     // Lao
     { HB_BasicShape, 0 },
     // Tibetan
@@ -738,7 +747,7 @@ static const hb_uint8 sentenceBreakTable[HB_Sentence_Close + 1][HB_Sentence_Clos
 };
 
 void HB_GetSentenceBoundaries(const HB_UChar16 *string, hb_uint32 stringLength,
-                              const HB_ScriptItem */*items*/, hb_uint32 /*numItems*/,
+                              const HB_ScriptItem * /*items*/, hb_uint32 /*numItems*/,
                               HB_CharAttributes *attributes)
 {
     if (stringLength == 0)
@@ -1114,13 +1123,8 @@ HB_Bool HB_OpenTypeShape(HB_ShaperItem *item, const hb_uint32 *properties)
 
     hb_buffer_clear(face->buffer);
 
-    if(face->tmpAttributes)
-	 free(face->tmpAttributes);
-    face->tmpAttributes = (HB_GlyphAttributes *) malloc( face->length*sizeof(HB_GlyphAttributes));
-    if(face->tmpLogClusters)
-	    free(face->tmpLogClusters);
-    face->tmpLogClusters = (unsigned int *) malloc( face->length*sizeof(unsigned int));
-    
+    face->tmpAttributes = (HB_GlyphAttributes *) realloc(face->tmpAttributes, face->length*sizeof(HB_GlyphAttributes));
+    face->tmpLogClusters = (unsigned int *) realloc(face->tmpLogClusters, face->length*sizeof(unsigned int));
     for (int i = 0; i < face->length; ++i) {
         hb_buffer_add_glyph(face->buffer, item->glyphs[i], properties ? properties[i] : 0, i);
         face->tmpAttributes[i] = item->attributes[i];
@@ -1166,11 +1170,8 @@ HB_Bool HB_OpenTypePosition(HB_ShaperItem *item, int availableGlyphs, HB_Bool do
 
     bool glyphs_positioned = false;
     if (face->gpos) {
-	    if(!face->buffer->positions){
-		    //I don’t know what is the Harbuzz way to allocate memory, but I need something now
-		    face->buffer->positions = (HB_Position) malloc(face->buffer->in_length*sizeof(HB_PositionRec) ) ;
-	    }
-        memset(face->buffer->positions, 0, face->buffer->in_length*sizeof(HB_PositionRec));
+        if (face->buffer->positions)
+            memset(face->buffer->positions, 0, face->buffer->in_length*sizeof(HB_PositionRec));
         // #### check that passing "false,false" is correct
         glyphs_positioned = HB_GPOS_Apply_String(item->font, face->gpos, face->current_flags, face->buffer, false, false) != HB_Err_Not_Covered;
     }
@@ -1197,11 +1198,13 @@ HB_Bool HB_OpenTypePosition(HB_ShaperItem *item, int availableGlyphs, HB_Bool do
     }
     item->num_glyphs = face->buffer->in_length;
 
-    if (doLogClusters) {
+    if (doLogClusters && face->glyphs_substituted) {
         // we can't do this for indic, as we pass the stuf in syllables and it's easier to do it in the shaper.
         unsigned short *logClusters = item->log_clusters;
         int clusterStart = 0;
         int oldCi = 0;
+        // #### the reconstruction of the logclusters currently does not work if the original string
+        // contains surrogate pairs
         for (unsigned int i = 0; i < face->buffer->in_length; ++i) {
             int ci = face->buffer->in_string[i].cluster;
             //         DEBUG("   ci[%d] = %d mark=%d, cmb=%d, cs=%d",

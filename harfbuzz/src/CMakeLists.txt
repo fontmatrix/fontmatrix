@@ -17,7 +17,7 @@ IF(WANT_HARFBUZZ)
 	harfbuzz-indic.cpp 
 	harfbuzz-shaper-all.cpp
 	harfbuzz-shaper.cpp
-	harfbuzz-thai.cpp
+	harfbuzz-thai.c
 	harfbuzz-impl.c
 	)
 ELSE(WANT_HARFBUZZ)

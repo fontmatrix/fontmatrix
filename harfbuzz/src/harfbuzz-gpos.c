@@ -1,16 +1,31 @@
-/*******************************************************************
+/*
+ * Copyright (C) 1998-2004  David Turner and Werner Lemberg
+ * Copyright (C) 2006  Behdad Esfahbod
+ * Copyright (C) 2007  Red Hat, Inc.
  *
- *  Copyright 1996-2000 by
- *  David Turner, Robert Wilhelm, and Werner Lemberg.
+ * This is part of HarfBuzz, an OpenType Layout engine library.
  *
- *  Copyright 2006  Behdad Esfahbod
- *  Copyright 2007  Red Hat Software
+ * Permission is hereby granted, without written agreement and without
+ * license or royalty fees, to use, copy, modify, and distribute this
+ * software and its documentation for any purpose, provided that the
+ * above copyright notice and the following two paragraphs appear in
+ * all copies of this software.
  *
- *  This is part of HarfBuzz, an OpenType Layout engine library.
+ * IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
+ * ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN
+ * IF THE COPYRIGHT HOLDER HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  *
- *  See the file name COPYING for licensing information.
+ * THE COPYRIGHT HOLDER SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING,
+ * BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
+ * ON AN "AS IS" BASIS, AND THE COPYRIGHT HOLDER HAS NO OBLIGATION TO
+ * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
- ******************************************************************/
+ * Red Hat Author(s): Behdad Esfahbod
+ */
+
 #include "harfbuzz-impl.h"
 #include "harfbuzz-gpos-private.h"
 #include "harfbuzz-open-private.h"
@@ -2767,6 +2782,13 @@ static HB_Error  Load_Mark2Array( HB_Mark2Array*  m2a,
       new_offset = GET_UShort() + base_offset;
 
       FORGET_Frame();
+
+      if (new_offset == base_offset) {
+        /* Anchor table not provided.  Skip loading.
+	 * Some versions of FreeSans hit this. */
+        m2an[n].PosFormat = 0;
+	continue;
+      }
 
       cur_offset = FILE_Pos();
       if ( FILE_Seek( new_offset ) ||
@@ -5931,7 +5953,7 @@ static HB_Error  Position_CursiveChain ( HB_Buffer     buffer )
   HB_Position positions = buffer->positions;
 
   /* First handle all left-to-right connections */
-  for (j = 0; j < buffer->in_length; j--)
+  for (j = 0; j < buffer->in_length; j++)
   {
     if (positions[j].cursive_chain > 0)
       positions[j].y_pos += positions[j - positions[j].cursive_chain].y_pos;

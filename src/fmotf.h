@@ -38,8 +38,6 @@
 namespace Harfbuzz
 {
 #include <harfbuzz.h>
-#include <harfbuzz-global.h>
-#include <harfbuzz-gpos.h>
 }
 
 // using namespace std;

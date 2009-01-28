@@ -15,6 +15,8 @@
 #include <QMap>
 #include <QDebug>
 #include <QVarLengthArray>
+#include <QLibrary>
+#include <QTextCodec>
 
 namespace Harfbuzz
 {
@@ -36,7 +38,7 @@ void HB_GetGraphemeAndLineBreakClass(HB_UChar32 ch, HB_GraphemeClass *grapheme, 
 	//###
 }
 
-static HB_Error hb_getSFntTable(void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length)
+HB_Error hb_getSFntTable(void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length)
 {
 	FT_Face face = (FT_Face)font;
 	FT_ULong ftlen = *length;
@@ -49,6 +51,34 @@ static HB_Error hb_getSFntTable(void *font, HB_Tag tableTag, HB_Byte *buffer, HB
 	*length = ftlen;
 	return (HB_Error)error;
 }
+
+void *HB_Library_Resolve(const char *library, const char *symbol)
+{
+    return QLibrary::resolve(library, symbol);
+}
+
+void *HB_TextCodecForMib(int mib)
+{
+    return QTextCodec::codecForMib(mib);
+}
+
+char *HB_TextCodec_ConvertFromUnicode(void *codec, const HB_UChar16 *unicode, hb_uint32 length, hb_uint32 *outputLength)
+{
+    QByteArray data = reinterpret_cast<QTextCodec *>(codec)->fromUnicode((const QChar *)unicode, length);
+    // ### suboptimal
+    char *output = (char *)malloc(data.length() + 1);
+    memcpy(output, data.constData(), data.length() + 1);
+    if (outputLength)
+        *outputLength = data.length();
+    return output;
+}
+
+void HB_TextCodec_FreeResult(char *string)
+{
+    free(string);
+}
+
+
 }
 
 /***************** UTILS ************/

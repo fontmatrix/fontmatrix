@@ -1,7 +1,7 @@
 //
 // C++ Interface: fmshaper
 //
-// Description:
+// Description: in fact represents the Harfbuzz shaper
 //
 //
 // Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2007

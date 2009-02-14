@@ -97,6 +97,7 @@ aboutwidget.h
 dumpdialog.h
 fmactivate.h
 fmfontcompareview.h
+fmfontdb.h
 fmglyphhighlight.h
 fmglyphsview.h
 fmlayoptwidget.h

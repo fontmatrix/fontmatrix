@@ -12,16 +12,17 @@ author - Pierre marchand
 #include "PythonQt.h"
 
 class typotek;
+class FMFontDb;
 class FMPythonW : public QObject
 {
 		Q_OBJECT
 		FMPythonW();
 		~FMPythonW() {}
 		static FMPythonW * instance;
+		static const QStringList exposedClasses;
 	public:
 		static FMPythonW * getInstance();
-		
-		void run(const QString& pyScript);
+		void run ( const QString& pyScript );
 
 	public slots:
 		void nextFace();
@@ -33,12 +34,16 @@ class FMPythonW : public QObject
 		QString currentFontFamily();
 		QString currentFontStyle();
 
+		FMFontDb*  DB();
+
+		void Debug ( QVariant var );
+		void Print ( QString str );
+
 	signals:
 		void currentChanged();
 
 	private:
 		typotek* tk;
-		PythonQtObjectPtr mainContext;
 		void doConnect();
 		void init();
 

@@ -13,11 +13,13 @@
 #ifndef FMFONTDB_H
 #define FMFONTDB_H
 
-#include "fontitem.h"
+#include "fmsharestruct.h"
 
+#include <QObject>
 #include <QSqlDatabase>
 #include <QMap>
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <QSqlError>
 
@@ -29,10 +31,13 @@
 *
 */
 
+class FontItem;
+
 typedef QPair<FontItem*, QString> FontDBResult;
 
-class FMFontDb : public QSqlDatabase
+class FMFontDb : public QObject, public QSqlDatabase
 {
+	Q_OBJECT
 		// No surprise, we want it to be a singleton
 		static FMFontDb *instance;
 		FMFontDb();
@@ -144,7 +149,7 @@ class FMFontDb : public QSqlDatabase
 		FontInfoMap getInfoMap ( const QString& id );
 		QList<FontDBResult> getInfo ( const QList<FontItem*>& fonts, InfoItem info, int codeLang = 0 );
 		
-
+	public slots:
 		FontItem* Font ( const QString& id , bool noTemporary = false );
 
 		QList<FontItem*> AllFonts();

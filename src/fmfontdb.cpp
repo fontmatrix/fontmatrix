@@ -12,6 +12,7 @@
 
 #include "fmfontdb.h"
 #include "typotek.h"
+#include "fontitem.h"
 
 #include <QSqlQuery>
 #include <QSqlRecord>

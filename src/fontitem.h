@@ -51,7 +51,6 @@ class QHttp;
 class QFile;
 
 
-typedef QMap<int,QMap<int, QString> > FontInfoMap;
 
 
 #define PROGRESSION_LTR 0
@@ -86,15 +85,15 @@ struct FontLocalInfo
 
 class FontItem : public QObject
 {
-
 		Q_OBJECT
+		Q_PROPERTY(QString Family READ family)
+		Q_PROPERTY(QString Variant READ variant)
+		Q_PROPERTY(QString Path READ path)
+		Q_PROPERTY(QStringList Tags READ tags WRITE setTags)
+		Q_PROPERTY(bool OpenType READ isOpenType)
+		Q_PROPERTY(bool Active READ isActivated WRITE setActivated)
+				
 	public:
-		FontItem ( QString path , bool remote = false, bool faststart = false);
-		FontItem (QString path,  QString family, QString variant, QString type , bool active);
-		/** Needed when the item has been instantiate with "faststart=true" */
-		void updateItem();
-		~FontItem();
-		
 		enum FsTypeFlag
 		{
 		    NOT_RESTRICTED	= 0x0000,
@@ -104,7 +103,15 @@ class FontItem : public QObject
 		    NOSUBSET		= 0x0100,
 		    BITMAP_ONLY		= 0x0200
 		};
-		Q_DECLARE_FLAGS(FsType, FsTypeFlag)
+		Q_DECLARE_FLAGS ( FsType, FsTypeFlag )
+				
+		FontItem ( QString path , bool remote = false, bool faststart = false);
+		FontItem (QString path,  QString family, QString variant, QString type , bool active);
+		/** Needed when the item has been instantiate with "faststart=true" */
+		void updateItem();
+		~FontItem();
+		
+	
 
 		static QList<int> legitimateNonPathChars;
 		static QMap< int, QString > fstypeMap;
@@ -241,13 +248,13 @@ class FontItem : public QObject
 
 	public:
 
-		QString path() {return m_path;}
-		QString afm() {return m_afm;}
+		QString path() const {return m_path;}
+		QString afm() const {return m_afm;}
 		void setAfm ( QString apath ) {m_afm = apath;}
-		QString faceFlags() {return m_faceFlags;}
-		QString family() {return m_family;}
-		QString variant() {return m_variant;}
-		QStringList tags() ;
+		QString faceFlags() const {return m_faceFlags;}
+		QString family() const {return m_family;}
+		QString variant() const {return m_variant;}
+		QStringList tags() const  ;
 		int glyphsCount() {return m_numGlyphs;}
 		QString type(){return m_type;}
 		QStringList charmaps();
@@ -315,7 +322,7 @@ class FontItem : public QObject
 		QPixmap oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w = 0);
 		void clearPreview();
 
-		bool isActivated();
+		bool isActivated() const;
 		void setActivated ( bool act );
 		
 		bool isLocal();

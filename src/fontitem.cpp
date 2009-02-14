@@ -3231,7 +3231,7 @@ FontInfoMap FontItem::moreInfo_type1()
 	return moreInfo;
 }
 
-QStringList FontItem::tags()
+QStringList FontItem::tags()const 
 {
 	return FMFontDb::DB()->getValue(m_path, FMFontDb::Tags).toStringList();
 }
@@ -3262,7 +3262,7 @@ void FontItem::adjustGlyphsPerRow ( int width )
 	}
 }
 
-bool FontItem::isActivated()
+bool FontItem::isActivated() const
 {
 // 	if ( FMFontDb::DB()->getValue(m_path,FMFontDb::Activation ).toInt() > 0 )
 // 		return true;

@@ -12,6 +12,7 @@
 #include "dataexport.h"
 
 #include "typotek.h"
+#include "fontitem.h"
 #include "fmfontdb.h"
 
 #include <QFile>

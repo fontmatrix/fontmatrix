@@ -13,6 +13,7 @@
 #ifndef FMFONTSTRINGS_H
 #define FMFONTSTRINGS_H
 
+#include "fontitem.h"
 #include "fmfontdb.h"
 #include <QObject>
 

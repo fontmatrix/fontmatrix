@@ -16,6 +16,7 @@
 
 #include "typotek.h"
 #include "tagswidget.h"
+#include "fontitem.h"
 #include "fmfontdb.h"
 #include "listdockwidget.h"
 

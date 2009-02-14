@@ -67,4 +67,7 @@ struct RenderedGlyph
 typedef QList<RenderedGlyph> GlyphList;
 typedef QPair<QList<RenderedGlyph>, QList<RenderedGlyph> > RenderedHyph;
 
+
+typedef QMap<int,QMap<int, QString> > FontInfoMap;
+
 #endif

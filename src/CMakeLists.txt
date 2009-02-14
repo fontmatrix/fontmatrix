@@ -82,6 +82,16 @@ ${ICU_LIBRARIES}
 ${M17N_LIBRARIES}
 )
 
+IF(WANT_PYTHONQT)
+	SET(PYTHONQT_SCRIPTER_SRCS
+	fmpython_w.cpp
+	)
+	SET(PYTHONQT_SCRIPTER_MOC_HDRS
+	fmpython_w.h
+	)
+ENDIF(WANT_PYTHONQT)
+
+
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
 dumpdialog.h
@@ -117,7 +127,9 @@ textprogression.h
 tttableview.h
 typotek.h
 )
-QT4_WRAP_CPP(fontmatrix_MOC_SRCS ${fontmatrix_MOC_HDRS})
+QT4_WRAP_CPP(fontmatrix_MOC_SRCS 
+${fontmatrix_MOC_HDRS} 
+${PYTHONQT_SCRIPTER_MOC_HDRS})
 
 
 SET(fontmatrix_UIS
@@ -189,24 +201,27 @@ ${FONTCONFIG_INCLUDE_DIR}
 ${ICU_INCLUDE_DIR}
 ${M17N_INCLUDE_DIR}
 ${HYPHENATE_INCLUDE_DIR}
+${PYTHON_INCLUDE_PATH}
+${PYTHONQT_INCLUDE_DIRS}
 )
-
 
 
 IF(UNIX AND NOT APPLE)
 	add_executable(fontmatrix
 	${fontmatrix_SRCS}
 	${SHAPERS_SRCS}
+	${PYTHONQT_SCRIPTER_SRCS}
 	${fontmatrix_MOC_SRCS}
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
 	)
 
-	target_link_libraries(fontmatrix harfbuzz hyphenate
+	target_link_libraries(fontmatrix harfbuzz hyphenate PythonQt
 	${QT_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${FONTCONFIG_LIBRARIES}
 	${SHAPERS_LIBRARIES}
+	${PYTHON_LIBRARIES}
 	)
 
 	INSTALL(TARGETS fontmatrix
@@ -219,15 +234,17 @@ IF(APPLE)
 	add_executable(fontmatrix MACOSX_BUNDLE
 	${fontmatrix_SRCS}
 	${SHAPERS_SRCS}
+	${PYTHONQT_SCRIPTER_SRCS}
 	${fontmatrix_MOC_SRCS}
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
 	)
 
-	target_link_libraries(fontmatrix harfbuzz hyphenate
+	target_link_libraries(fontmatrix harfbuzz hyphenate PythonQt
 	${QT_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${SHAPERS_LIBRARIES}
+	${PYTHON_LIBRARIES}
 	)
 
 	# here we’ll poupulate the bundle in order to make it
@@ -276,15 +293,17 @@ IF(WIN32)
 	add_executable(fontmatrix WIN32
 	${fontmatrix_SRCS}
 	${SHAPERS_SRCS}
+	${PYTHONQT_SCRIPTER_SRCS}
 	${fontmatrix_MOC_SRCS}
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
 	)
 
-	target_link_libraries(fontmatrix harfbuzz hyphenate
+	target_link_libraries(fontmatrix harfbuzz hyphenate PythonQt
 	${QT_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${SHAPERS_LIBRARIES}
+	${PYTHON_LIBRARIES}
 	)
 
 	INSTALL(TARGETS fontmatrix

@@ -67,6 +67,12 @@
 #endif
 
 
+#ifdef HAVE_PYTHONQT
+#include "fmpython_w.h"
+#define MAX_RECENT_PYSCRIPTS 10
+#endif // HAVE_PYTHONQT
+
+
 typotek* typotek::instance = 0;
 bool typotek::matrix = false;
 QString typotek::fonteditorPath = "/usr/bin/fontforge";
@@ -697,6 +703,17 @@ void typotek::createActions()
 	layOptAct->setCheckable(true);
 	scuts->add(layOptAct);
 	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
+	
+#ifdef HAVE_PYTHONQT
+	execScriptAct = new QAction(tr("Execute Script"),this);
+	scuts->add(execScriptAct);
+	connect(execScriptAct,SIGNAL(triggered()),this,SLOT(slotExecScript()));
+	
+	execLastScriptAct = new QAction(tr("Execute Last Script"),this);
+	scuts->add(execLastScriptAct);
+	connect(execLastScriptAct,SIGNAL(triggered()),this,SLOT(slotExecLastScript()));
+
+#endif
 }
 
 void typotek::createMenus()
@@ -751,6 +768,12 @@ void typotek::createMenus()
 	viewMenu->setTitle(tr("&View"));
 	menuBar()->addMenu(viewMenu);
 
+#ifdef HAVE_PYTHONQT
+	scriptMenu = menuBar()->addMenu ( tr ( "&Scripts" ) );;
+	scriptMenu->addAction(execScriptAct);
+	scriptMenu->addAction(execLastScriptAct);
+#endif
+	
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( helpAct );
 	helpMenu->addAction ( aboutAct );
@@ -2088,7 +2111,50 @@ void typotek::slotDumpInfo()
 	}
 
 }
-
+#ifdef HAVE_PYTHONQT
+void typotek::slotExecScript()
+{
+	lastScript = QFileDialog::getOpenFileName(this,"Fontmatrix",QDir::homePath(),tr("Python scripts (*.py)"));
+	if(!lastScript.isEmpty())
+	{
+		if((recentScripts.count() < MAX_RECENT_PYSCRIPTS) && (!recentScripts.values().contains(lastScript)))
+		{
+			QFileInfo fInfo(lastScript);
+			QAction * sca (new QAction(fInfo.baseName(), this));
+			recentScripts[sca] = lastScript;
+			connect(sca, SIGNAL(triggered()), this, SLOT(slotExecRecentScript()));
+			scriptMenu->addAction(sca);
+		}
+		FMPythonW::getInstance()->run(lastScript);
+	}
+	else
+		qDebug()<<"Error: Script path empty";
+}
+void typotek::slotExecLastScript()
+{
+	if(!lastScript.isEmpty())
+	{
+		FMPythonW::getInstance()->run(lastScript);
+	}
+	else
+		qDebug()<<"Error: Script path empty";
+}
+void typotek::slotExecRecentScript()
+{
+	if(sender())
+	{
+		QAction * sca = reinterpret_cast<QAction*>(sender());
+		if(sca)
+		{
+			if(recentScripts.contains(sca))
+			{
+				lastScript = recentScripts[sca];
+				FMPythonW::getInstance()->run(lastScript);
+			}
+		}
+	}
+}
+#endif
 void typotek::showToltalFilteredFonts()
 {
 	countFilteredFonts->setText( tr( "Filtered Font(s) : %n", "number of filtererd fonts showed in status bar", theMainView->curFonts().count() ) );
@@ -2148,3 +2214,5 @@ void typotek::show()
 	tagsDock->show();
 	QMainWindow::show();
 }
+
+

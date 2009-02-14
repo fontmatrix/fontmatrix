@@ -89,6 +89,11 @@ class typotek:public QMainWindow
 		void slotShowTTTables();
 		void slotEditPanose();
 		void slotDumpInfo();
+#ifdef HAVE_PYTHONQT
+		void slotExecScript();
+		void slotExecLastScript();
+		void slotExecRecentScript();
+#endif
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );
@@ -136,6 +141,9 @@ class typotek:public QMainWindow
 		QMenu *editMenu;
 		QMenu *browseMenu;
 		QMenu *viewMenu;
+#ifdef HAVE_PYTHONQT
+		QMenu *scriptMenu;
+#endif
 		QMenu *helpMenu;
 		QToolBar *fileToolBar;
 		QToolBar *editToolBar;
@@ -161,6 +169,12 @@ class typotek:public QMainWindow
 		QAction *showTTTAct;
 		QAction *editPanoseAct;
 		QAction *dumpInfoAct;
+#ifdef HAVE_PYTHONQT
+		QAction *execScriptAct;
+		QAction *execLastScriptAct;
+		QString lastScript;
+		QMap<QAction*, QString> recentScripts;
+#endif
 
 		QAction *nextFamily;
 		QAction *previousFamily;

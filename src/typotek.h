@@ -93,6 +93,8 @@ class typotek:public QMainWindow
 		void slotExecScript();
 		void slotExecLastScript();
 		void slotExecRecentScript();
+		void slotSwitchScriptConsole();
+		void slotUpdateScriptConsoleStatus();
 #endif
 
 	public slots:
@@ -174,6 +176,7 @@ class typotek:public QMainWindow
 		QAction *execLastScriptAct;
 		QString lastScript;
 		QMap<QAction*, QString> recentScripts;
+		QAction *scriptConsoleAct;
 #endif
 
 		QAction *nextFamily;

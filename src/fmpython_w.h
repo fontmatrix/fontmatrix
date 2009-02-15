@@ -37,7 +37,6 @@ class FMPythonW : public QObject
 		FMFontDb*  DB();
 
 		void Debug ( QVariant var );
-		void Print ( QString str );
 
 	signals:
 		void currentChanged();
@@ -46,6 +45,10 @@ class FMPythonW : public QObject
 		typotek* tk;
 		void doConnect();
 		void init();
+		
+	private slots:
+		void catchStdOut(const QString& s);
+		void catchStdErr(const QString& s);
 
 };
 

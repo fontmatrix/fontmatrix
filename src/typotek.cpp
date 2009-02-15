@@ -28,6 +28,7 @@
 #include "fmfontdb.h"
 #include "fmlayout.h"
 #include "fmrepair.h"
+#include "fmscriptconsole.h"
 #include "fontbook.h"
 #include "fontitem.h"
 #include "helpwidget.h"
@@ -222,6 +223,9 @@ void typotek::doConnect()
 	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
 	connect(tagsDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotTagsDockAreaChanged(Qt::DockWidgetArea )));
 	connect(FMLayout::getLayout()->optionDialog,SIGNAL(finished( int )),this,SLOT(slotUpdateLayOptStatus()));
+#ifdef HAVE_PYTHONQT
+	connect(FMScriptConsole::getInstance(),SIGNAL(finished()), this, SLOT(slotUpdateScriptConsoleStatus()));
+#endif
 
 
 
@@ -712,6 +716,11 @@ void typotek::createActions()
 	execLastScriptAct = new QAction(tr("Execute Last Script"),this);
 	scuts->add(execLastScriptAct);
 	connect(execLastScriptAct,SIGNAL(triggered()),this,SLOT(slotExecLastScript()));
+	
+	scriptConsoleAct = new QAction(tr("Script Console"), this);
+	scriptConsoleAct->setCheckable(true);
+	scuts->add(scriptConsoleAct);
+	connect(scriptConsoleAct, SIGNAL(triggered()), this, SLOT(slotSwitchScriptConsole()));
 
 #endif
 }
@@ -771,6 +780,7 @@ void typotek::createMenus()
 #ifdef HAVE_PYTHONQT
 	scriptMenu = menuBar()->addMenu ( tr ( "&Scripts" ) );;
 	scriptMenu->addAction(execScriptAct);
+	scriptMenu->addAction(scriptConsoleAct);
 	scriptMenu->addAction(execLastScriptAct);
 #endif
 	
@@ -1952,27 +1962,39 @@ FMHyphenator* typotek::getHyphenator() const
 void typotek::slotSwitchLayOptVisible()
 {
 	if(FMLayout::getLayout()->optionDialog->isVisible())
-	{
 		FMLayout::getLayout()->optionDialog->setVisible(false);
-	}
 	else
-	{
 		FMLayout::getLayout()->optionDialog->setVisible(true);
-	}
 	slotUpdateLayOptStatus();
 }
 
 void typotek::slotUpdateLayOptStatus()
 {
 	if(FMLayout::getLayout()->optionDialog->isVisible())
-	{
 		layOptAct->setChecked(true);
-	}
 	else
-	{
 		layOptAct->setChecked(false);
-	}
 }
+
+#ifdef HAVE_PYTHONQT
+void typotek::slotSwitchScriptConsole()
+{
+	if(FMScriptConsole::getInstance()->isVisible())
+		FMScriptConsole::getInstance()->setVisible(false);
+	else
+		FMScriptConsole::getInstance()->setVisible(true);
+	slotUpdateScriptConsoleStatus();
+}
+
+void typotek::slotUpdateScriptConsoleStatus()
+{
+	qDebug()<<"slotUpdateScriptConsoleStatus"<<FMScriptConsole::getInstance()->isVisible();
+	if(FMScriptConsole::getInstance()->isVisible())
+		scriptConsoleAct->setChecked(true);
+	else
+		scriptConsoleAct->setChecked(false);
+}
+#endif
 
 QString typotek::getDefaultOTFScript() const
 {

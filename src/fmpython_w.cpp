@@ -7,6 +7,7 @@
 #include "typotek.h"
 #include "listdockwidget.h"
 #include "fmfontdb.h"
+#include "fmscriptconsole.h"
 
 #include <QFile>
 #include <QDebug>
@@ -39,7 +40,9 @@ FMPythonW * FMPythonW::getInstance()
 
 void FMPythonW::init()
 {
-	PythonQt::init();
+	PythonQt::init(PythonQt::RedirectStdOut);
+	connect(PythonQt::self(), SIGNAL(pythonStdOut(const QString&)), this, SLOT(catchStdOut(const QString&)));
+	connect(PythonQt::self(), SIGNAL(pythonStdErr(const QString&)), this, SLOT(catchStdErr(const QString&)));
 }
 
 void FMPythonW::doConnect()
@@ -123,16 +126,20 @@ void FMPythonW::Debug(QVariant var)
 	qDebug()<<var;
 }
 
-void FMPythonW::Print(QString str)
-{
-	// TODO redirect Print to a console. 
-// 	std::cout<<str.toStdString();
-	qDebug()<<str;
-}
 
 FMFontDb* FMPythonW::DB()
 {
 	return FMFontDb::DB();
+}
+
+void FMPythonW::catchStdOut(const QString & s)
+{
+	FMScriptConsole::getInstance()->Out(s);
+}
+
+void FMPythonW::catchStdErr(const QString & s)
+{
+	FMScriptConsole::getInstance()->Err(s);
 }
 
 

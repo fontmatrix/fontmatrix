@@ -84,10 +84,15 @@ ${M17N_LIBRARIES}
 
 IF(WANT_PYTHONQT)
 	SET(PYTHONQT_SCRIPTER_SRCS
-	fmpython_w.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/fmpython_w.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/fmscriptconsole.cpp
 	)
 	SET(PYTHONQT_SCRIPTER_MOC_HDRS
 	fmpython_w.h
+	fmscriptconsole.h
+	)
+	SET(PYTHONQT_SCRIPTER_UIS
+	${CMAKE_CURRENT_SOURCE_DIR}/scriptconsole.ui
 	)
 ENDIF(WANT_PYTHONQT)
 
@@ -152,7 +157,10 @@ ${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/tttablewidget.ui
 )
-QT4_WRAP_UI(fontmatrix_UIS_H ${fontmatrix_UIS})
+QT4_WRAP_UI(fontmatrix_UIS_H 
+${fontmatrix_UIS}
+${PYTHONQT_SCRIPTER_UIS}
+)
 
 
 SET(fontmatrix_RCCS

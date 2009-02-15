@@ -11,7 +11,13 @@ Requirements :
 Build instructions are:
  $ mkdir build
  $ cd build
- $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug] [-DCMAKE_INSTALL_PREFIX:PATH=/install/prefix] [-DWANT_HARFBUZZ:bool=true] [-DWANT_ICU:bool=true] [-DWANT_M17N:bool=true] [-DTRANSLATOR:string=locale*]
+ $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug]\
+ [-DCMAKE_INSTALL_PREFIX:PATH=/install/prefix]\
+ [-DWANT_HARFBUZZ:bool=true]\
+ [-DWANT_ICU:bool=true]\
+ [-DWANT_M17N:bool=true]\
+ [-DTRANSLATOR:string=locale*]\
+ [-DWANT_PYTHONQT:bool=true**]
  $ make
  
 At this point, the fontmatrix binary is in build/src/
@@ -24,9 +30,18 @@ suggestions, please take time to suscribe to the undertype-users
 mailing list ( https://mail.gna.org/listinfo/undertype-users ).
 If you want to reach us quickly, come to #fontmatrix at Freenode.
 
-*for instance, locale is one of da de en fi fr hi nb nl no ru sr sv uk zh_CN zh_TW
-If you want to help in translating. For other languages just send
-a message to the mailing list, we’ll prepare the files and provide
-instructions. For languages already listed, pass -DTRANSLATOR:string=locale
-to cmake then run "make translation" to update the ts file before you
-edit it with Qt4 Linguist program.
+————————————————————————
+* For instance, locale is one among "da de en fi fr hi nb nl no
+ru sr sv uk zh_CN zh_TW". If you want to help in translating.
+For other languages just send a message to the mailing list,
+we’ll prepare the files and provide instructions. For languages
+already listed, pass -DTRANSLATOR:string=locale to cmake then
+run "make translation" to update the ts file before you edit
+it with Qt4 Linguist program.
+
+** Python scripting is supported through PythonQt, it’s still
+experimental --if it’s possible to be more experimental than
+the whole Fontmatrix program. It’s known to build with
+PythonLibs 2.6 as it comes with openSuse 11.1. if you experience
+issues with other setup, please do not give up silently, drop us
+a word about it.

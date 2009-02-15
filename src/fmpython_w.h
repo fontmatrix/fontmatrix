@@ -22,7 +22,8 @@ class FMPythonW : public QObject
 		static const QStringList exposedClasses;
 	public:
 		static FMPythonW * getInstance();
-		void run ( const QString& pyScript );
+		void runFile ( const QString& pyScript );
+		void runString( const QString& pyScript );
 
 	public slots:
 		void nextFace();

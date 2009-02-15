@@ -2146,7 +2146,7 @@ void typotek::slotExecScript()
 			connect(sca, SIGNAL(triggered()), this, SLOT(slotExecRecentScript()));
 			scriptMenu->addAction(sca);
 		}
-		FMPythonW::getInstance()->run(lastScript);
+		FMPythonW::getInstance()->runFile(lastScript);
 	}
 	else
 		qDebug()<<"Error: Script path empty";
@@ -2155,7 +2155,7 @@ void typotek::slotExecLastScript()
 {
 	if(!lastScript.isEmpty())
 	{
-		FMPythonW::getInstance()->run(lastScript);
+		FMPythonW::getInstance()->runFile(lastScript);
 	}
 	else
 		qDebug()<<"Error: Script path empty";
@@ -2170,7 +2170,7 @@ void typotek::slotExecRecentScript()
 			if(recentScripts.contains(sca))
 			{
 				lastScript = recentScripts[sca];
-				FMPythonW::getInstance()->run(lastScript);
+				FMPythonW::getInstance()->runFile(lastScript);
 			}
 		}
 	}

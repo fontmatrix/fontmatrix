@@ -5,15 +5,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>407</height>
+    <width>640</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Script Console</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" >
-   <item row="0" column="0" >
+  <layout class="QGridLayout" name="gridLayout_5" >
+   <item row="0" column="0" colspan="2" >
     <widget class="QTabWidget" name="tabWidget" >
      <property name="currentIndex" >
       <number>0</number>
@@ -23,14 +23,52 @@
        <string>Output</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3" >
-       <item row="0" column="0" colspan="2" >
+       <item row="0" column="0" >
         <widget class="QSplitter" name="splitter" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <widget class="QWidget" native="1" name="widget" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <horstretch>2</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <layout class="QGridLayout" name="gridLayout_2" >
-           <item row="0" column="0" colspan="2" >
+           <item row="0" column="0" >
+            <widget class="QLabel" name="label_2" >
+             <property name="font" >
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text" >
+              <string>standard output</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" >
+            <spacer name="horizontalSpacer_2" >
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="2" >
+            <widget class="QPushButton" name="clearButton" >
+             <property name="text" >
+              <string>clear</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="3" >
             <widget class="QTextBrowser" name="stdOut" >
              <property name="sizePolicy" >
               <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -40,65 +78,101 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0" >
-            <spacer name="horizontalSpacer_2" >
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+          </layout>
+         </widget>
+         <widget class="QWidget" native="1" name="widget_2" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QGridLayout" name="gridLayout" >
+           <item row="0" column="0" >
+            <widget class="QLabel" name="label" >
+             <property name="font" >
+              <font>
+               <pointsize>9</pointsize>
+              </font>
              </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>418</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="1" >
-            <widget class="QPushButton" name="clearButton" >
              <property name="text" >
-              <string>clear</string>
+              <string>standard error</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" >
+            <widget class="QTextBrowser" name="stdErr" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+               <horstretch>0</horstretch>
+               <verstretch>1</verstretch>
+              </sizepolicy>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
-         <widget class="QTextBrowser" name="stdErr" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-            <horstretch>0</horstretch>
-            <verstretch>1</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
+        </widget>
+       </item>
+      </layout>
+      <zorder>splitter</zorder>
+      <zorder>widget_2</zorder>
+      <zorder>splitter</zorder>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Input</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4" >
+       <item row="0" column="0" colspan="2" >
+        <widget class="QPlainTextEdit" name="input" >
+         <property name="plainText" >
+          <string>from PythonQt import *</string>
+         </property>
         </widget>
        </item>
        <item row="1" column="0" >
-        <spacer name="horizontalSpacer" >
+        <spacer name="horizontalSpacer_3" >
          <property name="orientation" >
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
-           <width>424</width>
+           <width>527</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
        <item row="1" column="1" >
-        <widget class="QPushButton" name="closeButton" >
+        <widget class="QPushButton" name="execButton" >
          <property name="text" >
-          <string>close</string>
+          <string>execute</string>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2" >
-      <attribute name="title" >
-       <string>Input</string>
-      </attribute>
-     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <spacer name="horizontalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>424</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QPushButton" name="closeButton" >
+     <property name="text" >
+      <string>close</string>
+     </property>
     </widget>
    </item>
   </layout>

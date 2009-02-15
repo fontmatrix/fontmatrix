@@ -51,14 +51,8 @@ void FMPythonW::doConnect()
 // 	          SIGNAL ( currentChanged() ),
 // 	          SIGNAL ( currentChanged() ) );
 }
-void FMPythonW::run(const QString & pyScript)
+void FMPythonW::runFile(const QString & pyScript)
 {
-// 	qDebug()<<"FMPythonW::run"<<pyScript;
-		
-	PythonQtObjectPtr mainContext = PythonQt::self()->getMainModule();
-	PythonQt::self()->registerQObjectClassNames(exposedClasses);
-	mainContext.addObject("Fontmatrix", this );
-	
 	QFile sf(pyScript);
 	QString script;
 	if(sf.open(QIODevice::ReadOnly))
@@ -69,9 +63,20 @@ void FMPythonW::run(const QString & pyScript)
 	else
 		qDebug()<<"Error: Cannot open"<<pyScript;
 	
-	mainContext.evalScript(script, Py_file_input);
+// 	mainContext.evalScript(script, Py_file_input);
+	runString(script);
 
 }
+
+void FMPythonW::runString(const QString & pyScript)
+{
+	PythonQtObjectPtr mainContext = PythonQt::self()->getMainModule();
+	PythonQt::self()->registerQObjectClassNames(exposedClasses);
+	mainContext.addObject("Fontmatrix", this );
+	
+	mainContext.evalScript(pyScript, Py_file_input);
+}
+
 
 
 /// "exported" methods

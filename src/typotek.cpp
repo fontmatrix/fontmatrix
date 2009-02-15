@@ -28,7 +28,6 @@
 #include "fmfontdb.h"
 #include "fmlayout.h"
 #include "fmrepair.h"
-#include "fmscriptconsole.h"
 #include "fontbook.h"
 #include "fontitem.h"
 #include "helpwidget.h"
@@ -70,6 +69,7 @@
 
 #ifdef HAVE_PYTHONQT
 #include "fmpython_w.h"
+#include "fmscriptconsole.h"
 #define MAX_RECENT_PYSCRIPTS 10
 #endif // HAVE_PYTHONQT
 

@@ -5,6 +5,7 @@
 #include "fmpython_w.h"
 
 #include "typotek.h"
+#include "mainviewwidget.h"
 #include "listdockwidget.h"
 #include "fmfontdb.h"
 #include "fmscriptconsole.h"
@@ -78,6 +79,16 @@ void FMPythonW::runString(const QString & pyScript)
 }
 
 
+void FMPythonW::catchStdOut(const QString & s)
+{
+	FMScriptConsole::getInstance()->Out(s);
+}
+
+void FMPythonW::catchStdErr(const QString & s)
+{
+	FMScriptConsole::getInstance()->Err(s);
+}
+
 
 /// "exported" methods
 
@@ -137,14 +148,9 @@ FMFontDb* FMPythonW::DB()
 	return FMFontDb::DB();
 }
 
-void FMPythonW::catchStdOut(const QString & s)
+void FMPythonW::updateTree()
 {
-	FMScriptConsole::getInstance()->Out(s);
-}
-
-void FMPythonW::catchStdErr(const QString & s)
-{
-	FMScriptConsole::getInstance()->Err(s);
+	typotek::getInstance()->getTheMainView()->slotUpdateTree();
 }
 
 

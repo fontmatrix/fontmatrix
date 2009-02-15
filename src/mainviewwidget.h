@@ -173,6 +173,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotUpdateGViewSingle();
 		void slotUpdateSView();
 		void slotUpdateRView();
+		void slotUpdateTree();
 		void slotEditSampleText();
 		void slotRemoveCurrentItem();
 		

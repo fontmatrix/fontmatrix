@@ -1235,7 +1235,7 @@ void MainViewWidget::activation ( FontItem* fit , bool act , bool andUpdate )
 	FMActivate::getInstance()->activate(fit, act);
 
 	if ( andUpdate )
-		fillTree();
+		updateTree(true);
 }
 
 void MainViewWidget::activation(QList< FontItem * > fit, bool act)
@@ -1855,6 +1855,11 @@ void MainViewWidget::slotUpdateRView()
 		slotView(true);
 }
 
+
+void MainViewWidget::slotUpdateTree()
+{
+	updateTree(true);
+}
 
 
 void MainViewWidget::slotEditSampleText()

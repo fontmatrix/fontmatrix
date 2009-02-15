@@ -30,6 +30,8 @@ class FMPythonW : public QObject
 		void previousFace();
 		void nextFamily();
 		void previousFamily();
+		
+		void updateTree();
 
 		QString currentFontPath();
 		QString currentFontFamily();

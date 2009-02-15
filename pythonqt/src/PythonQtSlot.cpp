@@ -352,6 +352,10 @@ static PyGetSetDef meth_getsets [] = {
 
 #define OFF(x) offsetof(PythonQtSlotFunctionObject, x)
 
+#if PY_MINOR_VERSION < 6
+#define PY_WRITE_RESTRICTED WRITE_RESTRICTED
+#endif
+
 static PyMemberDef meth_members[] = {
   {"__module__",    T_OBJECT,     OFF(m_module), PY_WRITE_RESTRICTED},
   {NULL}

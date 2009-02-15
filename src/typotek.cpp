@@ -1988,7 +1988,6 @@ void typotek::slotSwitchScriptConsole()
 
 void typotek::slotUpdateScriptConsoleStatus()
 {
-	qDebug()<<"slotUpdateScriptConsoleStatus"<<FMScriptConsole::getInstance()->isVisible();
 	if(FMScriptConsole::getInstance()->isVisible())
 		scriptConsoleAct->setChecked(true);
 	else

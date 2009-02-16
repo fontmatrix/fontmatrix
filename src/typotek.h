@@ -89,13 +89,13 @@ class typotek:public QMainWindow
 		void slotShowTTTables();
 		void slotEditPanose();
 		void slotDumpInfo();
-#ifdef HAVE_PYTHONQT
+
 		void slotExecScript();
 		void slotExecLastScript();
 		void slotExecRecentScript();
 		void slotSwitchScriptConsole();
 		void slotUpdateScriptConsoleStatus();
-#endif
+
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );

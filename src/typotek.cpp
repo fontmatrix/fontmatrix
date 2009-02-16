@@ -1993,6 +1993,9 @@ void typotek::slotUpdateScriptConsoleStatus()
 	else
 		scriptConsoleAct->setChecked(false);
 }
+#else
+void typotek::slotSwitchScriptConsole(){}
+void typotek::slotUpdateScriptConsoleStatus(){}
 #endif
 
 QString typotek::getDefaultOTFScript() const
@@ -2132,6 +2135,7 @@ void typotek::slotDumpInfo()
 	}
 
 }
+
 #ifdef HAVE_PYTHONQT
 void typotek::slotExecScript()
 {
@@ -2175,7 +2179,12 @@ void typotek::slotExecRecentScript()
 		}
 	}
 }
+#else
+void typotek::slotExecScript(){}
+void typotek::slotExecLastScript(){}
+void typotek::slotExecRecentScript(){}
 #endif
+
 void typotek::showToltalFilteredFonts()
 {
 	countFilteredFonts->setText( tr( "Filtered Font(s) : %n", "number of filtererd fonts showed in status bar", theMainView->curFonts().count() ) );

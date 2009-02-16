@@ -92,6 +92,7 @@ class FontItem : public QObject
 		Q_PROPERTY(QStringList Tags READ tags WRITE setTags)
 		Q_PROPERTY(bool OpenType READ isOpenType)
 		Q_PROPERTY(bool Active READ isActivated WRITE setActivated)
+		Q_PROPERTY(int GlyphsCount READ glyphsCount)
 				
 	public:
 		enum FsTypeFlag
@@ -245,7 +246,16 @@ class FontItem : public QObject
 		
 	signals:
 		void dowloadFinished();
-
+		
+	public slots:
+		QString renderSVG(const QString& s, const double& size);
+		int countCoverage ( int begin_code, int end_code );
+		bool hasChars(const QString& s);
+		int firstChar();
+		int lastChar();
+		int countChars();
+		int nextChar(int from, int offset = 1);
+		
 	public:
 
 		QString path() const {return m_path;}
@@ -255,7 +265,7 @@ class FontItem : public QObject
 		QString family() const {return m_family;}
 		QString variant() const {return m_variant;}
 		QStringList tags() const  ;
-		int glyphsCount() {return m_numGlyphs;}
+		int glyphsCount() const {return m_numGlyphs;}
 		QString type(){return m_type;}
 		QStringList charmaps();
 		void setTags ( QStringList l );
@@ -285,7 +295,6 @@ class FontItem : public QObject
 		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
 		QGraphicsPixmapItem* itemFromGindexPix_mt ( int index, double size );
 		
-		QString renderSVG(const QString& s, const double& size);
 		
 		/// We prepare ejection of renderLine methods
 		GlyphList glyphs(QString spec, double fsize);
@@ -296,12 +305,7 @@ class FontItem : public QObject
 		void renderAll ( QGraphicsScene *scene, int begin_code, int end_code );
 		//return count codes that remain
 		int renderChart(QGraphicsScene *scene, int begin_code, int end_code ,double pwidth, double pheight);
-		int countCoverage ( int begin_code, int end_code );
-		bool hasChars(const QString& s);
-		int firstChar();
-		int lastChar();
-		int countChars();
-		int nextChar(int from, int offset = 1);
+		
 		void deRender ( QGraphicsScene *scene );
 		void deRenderAll();
 		

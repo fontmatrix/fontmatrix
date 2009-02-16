@@ -11,30 +11,36 @@
 			<fontsize>13.0</fontsize>
 			<lineheight>15.0</lineheight>
 			<!-- Here think that margins are relative to the whole page -->
-			<margintop>30.0</margintop>
-			<marginleft>450</marginleft>
+			<margintop>20.0</margintop>
+			<marginleft>530</marginleft>
 		</textstyle>
 	</context>
+	
 	<context level="family">
-		<text>------------------------------------------------------------------------------</text>
+		<text>++++++++++++++++++++++++</text>
 		<textstyle name="bname">
 			<font>Helvetica</font>
-			<fontsize>8.0</fontsize>
-			<lineheight>2.0</lineheight>
-			<margintop>0.0</margintop>
-			<marginleft>0.0</marginleft>
-			<marginbottom>8.0</marginbottom>
+			<fontsize>18.0</fontsize>
+			<color>#000</color>
+			<lineheight>24.0</lineheight>
+			<margintop>18.0</margintop>
+			<marginleft>120.0</marginleft>
+			<marginbottom>15.0</marginbottom>
 		</textstyle>
 	</context>
+	
 	<context level="subfamily">
-		<text>##FAMILY## ##SUBFAMILY##</text>
-		<textstyle name="cname">
+		<text>
+			##FAMILY## ##SUBFAMILY##
+		</text>
+		<textstyle name="samplename">
 			<font>_FONTMATRIX_</font>
 			<fontsize>12.0</fontsize>
-			<lineheight>15.0</lineheight>
-			<margintop>1.0</margintop>
-			<marginleft>40.0</marginleft>
-			<marginbottom>1.0</marginbottom>
+			<lineheight>16.0</lineheight>
+			<margintop>0.0</margintop>
+			<marginleft>120.0</marginleft>
+			<marginright>300.0</marginright>
+			<marginbottom>0.0</marginbottom>
 		</textstyle>
 	</context>
 </template>

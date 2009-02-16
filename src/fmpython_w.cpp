@@ -75,7 +75,8 @@ void FMPythonW::runString(const QString & pyScript)
 	PythonQt::self()->registerQObjectClassNames(exposedClasses);
 	mainContext.addObject("Fontmatrix", this );
 	
-	mainContext.evalScript(pyScript, Py_file_input);
+	QString pHead("from PythonQt import *\n");
+	mainContext.evalScript(pHead + pyScript, Py_file_input);
 }
 
 

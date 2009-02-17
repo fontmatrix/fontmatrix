@@ -1967,7 +1967,7 @@ void MainViewWidget::displayWelcomeMessage()
 						foreach(const QString& wPart, wList)
 						{
 							welcomeSVG += "<div>";
-							welcomeSVG += f->renderSVG( wPart , 122.0);//TODO make size a setting
+							welcomeSVG += f->renderSVG( wPart , QString(QSettings().value("General/WelcomeSize", tr("122.0", "Size of the welcome message" )).toString()).toDouble());
 							welcomeSVG += "</div>";
 						}
 						welcomeFontName = f->fancyName();

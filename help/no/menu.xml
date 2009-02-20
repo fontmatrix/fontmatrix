@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+	<area text="Welcome" file="index.html">
+		<submenuitem text="Readme" file="readme.html"/>
+	</area>
+</menu>

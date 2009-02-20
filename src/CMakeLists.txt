@@ -94,6 +94,7 @@ IF(WANT_PYTHONQT)
 	SET(PYTHONQT_SCRIPTER_UIS
 	${CMAKE_CURRENT_SOURCE_DIR}/scriptconsole.ui
 	)
+	SET(PYTHONQT_LIB PythonQt)
 ENDIF(WANT_PYTHONQT)
 
 
@@ -225,7 +226,8 @@ IF(UNIX AND NOT APPLE)
 	${fontmatrix_RCC_SRCS}
 	)
 
-	target_link_libraries(fontmatrix harfbuzz hyphenate PythonQt
+	target_link_libraries(fontmatrix harfbuzz hyphenate
+	${PYTHONQT_LIB}
 	${QT_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${FONTCONFIG_LIBRARIES}
@@ -249,7 +251,8 @@ IF(APPLE)
 	${fontmatrix_RCC_SRCS}
 	)
 
-	target_link_libraries(fontmatrix harfbuzz hyphenate PythonQt
+	target_link_libraries(fontmatrix harfbuzz hyphenate
+	${PYTHONQT_LIB}
 	${QT_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${SHAPERS_LIBRARIES}
@@ -308,7 +311,8 @@ IF(WIN32)
 	${fontmatrix_RCC_SRCS}
 	)
 
-	target_link_libraries(fontmatrix harfbuzz hyphenate PythonQt
+	target_link_libraries(fontmatrix harfbuzz hyphenate
+	${PYTHONQT_LIB}
 	${QT_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${SHAPERS_LIBRARIES}

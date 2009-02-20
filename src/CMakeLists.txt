@@ -31,7 +31,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fontcomparewidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontitem.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontmatrixshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/glyphtosvghelper.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/helpwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/helpbrowser.cpp
+# ${CMAKE_CURRENT_SOURCE_DIR}/helpwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfontsdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/QHexView.cpp
@@ -46,11 +47,15 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pangoshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/prefspaneldialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/remotedir.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/schelptreemodel.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/sctextbrowser.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/shortcuts.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/systray.cpp
 # ${CMAKE_CURRENT_SOURCE_DIR}/tagseteditor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/treeitem.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/treemodel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tttableview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/typotek.cpp
 )
@@ -116,7 +121,8 @@ fmsampletextview.h
 fontbookdialog.h
 fontcomparewidget.h
 fontitem.h
-helpwidget.h
+helpbrowser.h
+# helpwidget.h
 importtags.h
 QHexView.h
 listdockwidget.h
@@ -126,6 +132,7 @@ panosedialog.h
 parallelcoor.h
 prefspaneldialog.h
 remotedir.h
+sctextbrowser.h
 shortcuts.h
 systray.h
 # tagseteditor.h
@@ -146,7 +153,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfonts.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.ui
-${CMAKE_CURRENT_SOURCE_DIR}/help.ui
+# ${CMAKE_CURRENT_SOURCE_DIR}/help.ui
+${CMAKE_CURRENT_SOURCE_DIR}/helpbrowser.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/layoutoptions.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/listsdock.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/mainview.ui
@@ -226,7 +234,7 @@ IF(UNIX AND NOT APPLE)
 	${fontmatrix_RCC_SRCS}
 	)
 
-	target_link_libraries(fontmatrix harfbuzz hyphenate
+	target_link_libraries(fontmatrix harfbuzz hyphenate 
 	${PYTHONQT_LIB}
 	${QT_LIBRARIES}
 	${FREETYPE_LIBRARIES}

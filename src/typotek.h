@@ -45,8 +45,8 @@ class Systray;
 class RemoteDir;
 class FMHyphenator;
 class QProgressBar;
-class HelpWidget;
-
+// class HelpWidget;
+class HelpBrowser;
 
 class typotek:public QMainWindow
 {
@@ -191,7 +191,8 @@ class typotek:public QMainWindow
 		QAction *printPlaygroundAct;
 		QAction *printFamilyAct;
 
-		HelpWidget *theHelp;
+// 		HelpWidget *theHelp;
+		HelpBrowser *theHelp;
 
 		QAction *layOptAct;
 
@@ -372,10 +373,8 @@ class typotek:public QMainWindow
 
 	double getPreviewInfoFontSize() const{return previewInfoFontSize;}
 
-
-
-
-
+	QDir getOwnDir() const{return ownDir;}
+	
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dropEvent ( QDropEvent * event );

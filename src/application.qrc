@@ -23,6 +23,21 @@
     <file alias="icon-OTF" >icons/font_otf16.png</file>
     <file alias="icon_empty.png" >icons/action-empty-128.png</file>
   </qresource>
+  <qresource prefix="/help">
+  <!-- produce in icons/help/ with: "for i in *.png;do echo "<file alias=\"$i\">icons/help/$i</file>";done" -->
+  <file alias="document-print.png">icons/help/document-print.png</file>
+  <file alias="exit.png">icons/help/exit.png</file>
+  <file alias="go-bottom.png">icons/help/go-bottom.png</file>
+  <file alias="go-down.png">icons/help/go-down.png</file>
+  <file alias="go-first.png">icons/help/go-first.png</file>
+  <file alias="go-home.png">icons/help/go-home.png</file>
+  <file alias="go-last.png">icons/help/go-last.png</file>
+  <file alias="go-next.png">icons/help/go-next.png</file>
+  <file alias="go-previous.png">icons/help/go-previous.png</file>
+  <file alias="go-top.png">icons/help/go-top.png</file>
+  <file alias="go-up.png">icons/help/go-up.png</file>
+<file alias="help-browser.png">icons/help/help-browser.png</file>
+  </qresource>
   <qresource prefix="/texts" >
     <file alias="about" >messages/about.html</file>
     <file alias="about_people" >messages/about_people.html</file>

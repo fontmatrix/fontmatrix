@@ -16,7 +16,24 @@
 // #include <QMap>
 #include <QPair>
 
-// #include QString
+#include <QString>
+#include <QStringList>
+
+struct OTFSet
+{
+	QString script;
+	QString lang;
+	QStringList gpos_features;
+	QStringList gsub_features;
+	OTFSet() {};
+	OTFSet ( const OTFSet& os )
+	: script ( os.script ),
+		   lang ( os.lang ),
+			  gpos_features ( os.gpos_features ),
+					  gsub_features ( os.gsub_features ) {};
+					  QString dump() {return script + "|" +lang+ "|"+ gpos_features.join ( "|" ) + gsub_features.join ( "|" );}
+					  bool isEmpty() { return script.isEmpty() && lang.isEmpty() && gpos_features.isEmpty() &&  gsub_features.isEmpty() ;};
+};
 
 
 struct RenderedGlyph

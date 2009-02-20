@@ -147,16 +147,6 @@ IF(WANT_PYTHONQT)
 	else(PYTHONLIBS_FOUND)
 		MESSAGE(FATAL_ERROR "No Python Library found")
 	endif(PYTHONLIBS_FOUND)
-# 	MESSAGE(STATUS "Python Include Dir is ${PYTHON_INCLUDE_PATH}")
-# 	MESSAGE(STATUS "Python Library is ${PYTHON_LIBRARIES}")
-# 	FIND_PACKAGE(PythonQt REQUIRED)
-# 	if(PYTHONQT_FOUND)
-# 		MESSAGE(STATUS "PythonQt Library Found OK")
-# 		MESSAGE(STATUS "PythonQt Include Dir is ${PYTHONQT_INCLUDE_DIRS}")
-# 		MESSAGE(STATUS "PythonQt Library is ${PYTHONQT_LIBRARIES}")
-# 	else(PYTHONQT_FOUND)
-# 		MESSAGE(FATAL_ERROR "No PythonQt Library found")
-# 	endif(PYTHONQT_FOUND)
 	SET(PYTHONQT_INCLUDE_DIRS  ${CMAKE_SOURCE_DIR}/pythonqt/src)
 	ADD_SUBDIRECTORY(${PYTHONQT_INCLUDE_DIRS})
 	ADD_DEFINITIONS(-DHAVE_PYTHONQT)
@@ -203,8 +193,6 @@ ${CMAKE_SOURCE_DIR}/src/messages/welcome_zh_CN.html
 ${CMAKE_SOURCE_DIR}/src/messages/welcome_zh_TW.html
 )
 
-INCLUDE(help/CMakeLists.txt)
-
 # tell cmake to process CMakeLists.txt in that subdirectory
 SET(HYPHENATE_DIR src/hyphenate)
 ADD_SUBDIRECTORY(${HYPHENATE_DIR})
@@ -223,7 +211,7 @@ IF(UNIX AND NOT APPLE)
 	SET(MANDIR "share/man/")
 	SET(ICONDIR "share/icons/hicolor/48x48/apps/")
 	SET(RESOURCESDIR "share/fontmatrix/resources/")
-	SET(HELPDIR "share/fontmatrix/resources/help/")
+	SET(HELPDIR "share/fontmatrix/help/")
 	
 	INSTALL(FILES
 	fontmatrix.desktop
@@ -267,6 +255,8 @@ IF(WIN32)
 	DESTINATION "${RESOURCESDIR}"
 	)
 ENDIF(WIN32)
+
+ADD_SUBDIRECTORY(help)
 
 SET(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
 SET(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})

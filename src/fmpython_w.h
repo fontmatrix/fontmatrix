@@ -10,6 +10,7 @@ author - Pierre marchand
 #define FMPYTHON_W_H
 
 #include "PythonQt.h"
+#include "fmsharestruct.h"
 
 class typotek;
 class FMFontDb;
@@ -19,11 +20,15 @@ class FMPythonW : public QObject
 		FMPythonW();
 		~FMPythonW() {}
 		static FMPythonW * instance;
-		static const QStringList exposedClasses;
+		static const QStringList exposedClassesQOBJECT;
+		static const QStringList exposedClassesCPP;
 	public:
 		static FMPythonW * getInstance();
 		void runFile ( const QString& pyScript );
 		void runString( const QString& pyScript );
+		
+		
+
 
 	public slots:
 		void nextFace();
@@ -53,6 +58,44 @@ class FMPythonW : public QObject
 		void catchStdOut(const QString& s);
 		void catchStdErr(const QString& s);
 
+};
+
+
+class FMPythonDecorator : public QObject
+{
+	Q_OBJECT
+	public slots:
+		/// RenderGlyph
+		RenderedGlyph* new_RenderedGlyph(int g,int l,double xa,double ya,double xo,double yo,unsigned short c,bool b)
+		{
+			return new RenderedGlyph(g,l,xa,ya,xo,yo,c,b);
+		}
+		RenderedGlyph* new_RenderedGlyph()
+		{
+			return new RenderedGlyph();
+		}
+		void delete_RenderedGlyph(RenderedGlyph* rg)
+		{
+			delete rg;
+		}
+		
+		/// GlyphList
+		GlyphList* new_GlyphList()
+		{
+			return new GlyphList;
+		}
+		void delete_GlyphList(GlyphList *gl)
+		{
+			delete gl;
+		}
+		int Count(GlyphList* l)
+		{
+			return l->count();
+		}
+		const RenderedGlyph* At(GlyphList* l, int idx)
+		{
+			return &(l->at(idx));
+		}
 };
 
 #endif //FMPYTHON_W_H

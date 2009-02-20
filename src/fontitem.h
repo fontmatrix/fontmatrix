@@ -256,6 +256,11 @@ class FontItem : public QObject
 		int countChars();
 		int nextChar(int from, int offset = 1);
 		
+		/// We prepare ejection of renderLine methods
+		GlyphList glyphs(QString spec, double fsize);
+		GlyphList glyphs(QString spec, double fsize, OTFSet set);
+		GlyphList glyphs(QString spec, double fsize, QString script);
+		
 	public:
 
 		QString path() const {return m_path;}
@@ -296,10 +301,6 @@ class FontItem : public QObject
 		QGraphicsPixmapItem* itemFromGindexPix_mt ( int index, double size );
 		
 		
-		/// We prepare ejection of renderLine methods
-		GlyphList glyphs(QString spec, double fsize);
-		GlyphList glyphs(QString spec, double fsize, OTFSet set);
-		GlyphList glyphs(QString spec, double fsize, QString script);
 		
 		
 		void renderAll ( QGraphicsScene *scene, int begin_code, int end_code );

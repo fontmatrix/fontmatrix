@@ -5,66 +5,15 @@
 
 SET(FM_HELP_DIR ${CMAKE_SOURCE_DIR}/help/)
 
-SET( FM_HELP_HTML
-${FM_HELP_DIR}help_da.html
-${FM_HELP_DIR}help_de.html
-${FM_HELP_DIR}help_en.html
-${FM_HELP_DIR}help_fi.html
-${FM_HELP_DIR}help_fr.html
-${FM_HELP_DIR}help_hi.html
-${FM_HELP_DIR}help_nb.html
-${FM_HELP_DIR}help_nl.html
-${FM_HELP_DIR}help_no.html
-${FM_HELP_DIR}help_ru.html
-${FM_HELP_DIR}help_sr.html
-${FM_HELP_DIR}help_sv.html
-${FM_HELP_DIR}help_uk.html
-${FM_HELP_DIR}help_zh_CN.html
-${FM_HELP_DIR}help_zh_TW.html
-)
-
-SET( FM_HELP_CSS
-${FM_HELP_DIR}helpbase.css
-)
-
-SET( FM_HELP_JS
-${FM_HELP_DIR}js/jquery.js
-${FM_HELP_DIR}js/jquery.jtabs.pack.js
-)
-
-SET( FM_HELP_GRAPHICS
-${FM_HELP_DIR}img/tab-left.png
-${FM_HELP_DIR}img/tab-right.png
-# DA
-# DE
-# EN
-${FM_HELP_DIR}img/en/fontmatrix_en.png
-${FM_HELP_DIR}img/en/fontbook_en.png
-${FM_HELP_DIR}img/en/tagset_en.png
-${FM_HELP_DIR}img/en/import_en.png
-${FM_HELP_DIR}img/en/preferences_en.png
-# FI
-# FR
-${FM_HELP_DIR}img/fr/catalogue-fontes_fr.png
-${FM_HELP_DIR}img/fr/editeur-collections_fr.png
-${FM_HELP_DIR}img/fr/fontmatrix_fr.png
-${FM_HELP_DIR}img/fr/import-fonts_fr.png
-${FM_HELP_DIR}img/fr/preferences_fr.png
-# HI
-# NB
-# NL
-# NO
-# RU
-# SR
-# SV
-# UK
-# ZH CN
-# ZH TW
-)
-
-SET( FM_HELP_FILES
-${FM_HELP_HTML}
-${FM_HELP_CSS}
-${FM_HELP_JS}
-${FM_HELP_GRAPHICS}
-)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}en)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}fi)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}fr)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}hi)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}nb)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}no)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}ru)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}sr)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}sv)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}uk)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}zh_CN)
+ADD_SUBDIRECTORY(${FM_HELP_DIR}zh_TW)

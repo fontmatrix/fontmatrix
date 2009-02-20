@@ -26,6 +26,6 @@ class FMPaths
 
 		static QString ResourcesDir();
 		
-		static QString HelpFilePath();
+		static QString HelpDir();
 };
 #endif

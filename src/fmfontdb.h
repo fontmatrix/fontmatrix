@@ -93,46 +93,7 @@ class FMFontDb : public QObject, public QSqlDatabase
 			PostScriptCIDName=20,
 			AllInfo = 99
 		};
-		// http://www.microsoft.com/typography/OTSpec/os2.htm
-// 		enum OS2
-// 		{
-// 			Os2_Version = 0,
-// 			Os2_xAvgCharWidth,
-// 			Os2_usWeightClass,
-// 			Os2_usWidthClass,
-// 			Os2_fsType,
-// 			Os2_ySubscriptXSize,
-// 			Os2_ySubscriptYSize,
-// 			Os2_ySubscriptXOffset,
-// 			Os2_ySubscriptYOffset,
-// 			Os2_ySuperscriptXSize,
-// 			Os2_ySuperscriptXOffset,
-// 			Os2_ySuperscriptYOffset,
-// 			Os2_yStrikeoutSize,
-// 			Os2_yStrikeoutPosition,
-// 			Os2_sFamilyClass,
-// 			Os2_panose,
-// 			Os2_ulUnicodeRange1,
-// 			Os2_ulUnicodeRange2,
-// 			Os2_ulUnicodeRange3,
-// 			Os2_ulUnicodeRange4,
-// 			Os2_achVendID,
-// 			Os2_fsSelection,
-// 			Os2_usFirstCharIndex,
-// 			Os2_usLastCharIndex,
-// 			Os2_sTypoAscender,
-// 			Os2_sTypoDescender,
-// 			Os2_sTypoLineGap,
-// 			Os2_usWinAscent,
-// 			Os2_usWinDescent,
-// 			Os2_ulCodePageRange1,
-// 			Os2_ulCodePageRange2,
-// 			Os2_sxHeight,
-// 			Os2_sCapHeight,
-// 			Os2_usDefaultChar,
-// 			Os2_usBreakChar,
-// 			Os2_usMaxContext
-// 		};
+		
 		/// Here are somehow "actual" public api
 		static FMFontDb * DB();
 		void TransactionBegin();

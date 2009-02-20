@@ -15,12 +15,16 @@
 
 
 FMPythonW *FMPythonW::instance = 0;
-const QStringList FMPythonW::exposedClasses = (
-					       QStringList()    << "FontItem" 
-								<< "FMFontDb");
+const QStringList FMPythonW::exposedClassesQOBJECT = ( QStringList()
+        << "FontItem"
+        << "FMFontDb" );
+const QStringList FMPythonW::exposedClassesCPP = ( QStringList()
+        << "RenderedGlyph"
+        <<"GlyphList" );
+
 
 FMPythonW::FMPythonW()
-	:tk ( typotek::getInstance() )
+		:tk ( typotek::getInstance() )
 {
 
 }
@@ -28,22 +32,24 @@ FMPythonW::FMPythonW()
 
 FMPythonW * FMPythonW::getInstance()
 {
-	if(!instance)
+	if ( !instance )
 	{
 		instance = new FMPythonW;
-		Q_ASSERT(instance);
+		Q_ASSERT ( instance );
 		instance->init();
 		instance->doConnect();
 	}
-	
+
 	return instance;
 }
 
 void FMPythonW::init()
 {
-	PythonQt::init(PythonQt::RedirectStdOut);
-	connect(PythonQt::self(), SIGNAL(pythonStdOut(const QString&)), this, SLOT(catchStdOut(const QString&)));
-	connect(PythonQt::self(), SIGNAL(pythonStdErr(const QString&)), this, SLOT(catchStdErr(const QString&)));
+	PythonQt::init ( PythonQt::RedirectStdOut );
+	PythonQt::self()->addDecorators ( new FMPythonDecorator() );
+
+	connect ( PythonQt::self(), SIGNAL ( pythonStdOut ( const QString& ) ), this, SLOT ( catchStdOut ( const QString& ) ) );
+	connect ( PythonQt::self(), SIGNAL ( pythonStdErr ( const QString& ) ), this, SLOT ( catchStdErr ( const QString& ) ) );
 }
 
 void FMPythonW::doConnect()
@@ -52,42 +58,43 @@ void FMPythonW::doConnect()
 // 	          SIGNAL ( currentChanged() ),
 // 	          SIGNAL ( currentChanged() ) );
 }
-void FMPythonW::runFile(const QString & pyScript)
+void FMPythonW::runFile ( const QString & pyScript )
 {
-	QFile sf(pyScript);
+	QFile sf ( pyScript );
 	QString script;
-	if(sf.open(QIODevice::ReadOnly))
+	if ( sf.open ( QIODevice::ReadOnly ) )
 	{
-		
-		script = QString::fromUtf8(sf.readAll());
+
+		script = QString::fromUtf8 ( sf.readAll() );
 	}
 	else
-		qDebug()<<"Error: Cannot open"<<pyScript;
-	
+		qDebug() <<"Error: Cannot open"<<pyScript;
+
 // 	mainContext.evalScript(script, Py_file_input);
-	runString(script);
+	runString ( script );
 
 }
 
-void FMPythonW::runString(const QString & pyScript)
+void FMPythonW::runString ( const QString & pyScript )
 {
 	PythonQtObjectPtr mainContext = PythonQt::self()->getMainModule();
-	PythonQt::self()->registerQObjectClassNames(exposedClasses);
-	mainContext.addObject("Fontmatrix", this );
-	
-	QString pHead("from PythonQt import *\n");
-	mainContext.evalScript(pHead + pyScript, Py_file_input);
+	PythonQt::self()->registerQObjectClassNames ( exposedClassesQOBJECT );
+	PythonQt::self()->registerCPPClassNames ( exposedClassesCPP );
+	mainContext.addObject ( "Fontmatrix", this );
+
+	QString pHead ( "from PythonQt import *\n" );
+	mainContext.evalScript ( pHead + pyScript, Py_file_input );
 }
 
 
-void FMPythonW::catchStdOut(const QString & s)
+void FMPythonW::catchStdOut ( const QString & s )
 {
-	FMScriptConsole::getInstance()->Out(s);
+	FMScriptConsole::getInstance()->Out ( s );
 }
 
-void FMPythonW::catchStdErr(const QString & s)
+void FMPythonW::catchStdErr ( const QString & s )
 {
-	FMScriptConsole::getInstance()->Err(s);
+	FMScriptConsole::getInstance()->Err ( s );
 }
 
 
@@ -138,9 +145,9 @@ QString FMPythonW::currentFontStyle()
 	return tk->getSelectedFont()->variant();
 }
 
-void FMPythonW::Debug(QVariant var)
+void FMPythonW::Debug ( QVariant var )
 {
-	qDebug()<<var;
+	qDebug() <<var;
 }
 
 

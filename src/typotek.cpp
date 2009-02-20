@@ -30,7 +30,8 @@
 #include "fmrepair.h"
 #include "fontbook.h"
 #include "fontitem.h"
-#include "helpwidget.h"
+// #include "helpwidget.h"
+#include "helpbrowser.h"
 #include "hyphenate/fmhyphenator.h"
 #include "importedfontsdialog.h"
 #include "importtags.h"
@@ -1233,10 +1234,10 @@ void typotek::slotDeactivateCurrents()
 
 void typotek::helpBegin()
 {
-	theHelp = new HelpWidget(this);
+	theHelp = new HelpBrowser(this,tr("Fontmatrix Help"));
 	helpAct->setChecked(true);
 
-	connect( theHelp, SIGNAL( end() ), this, SLOT(helpEnd()) );
+	connect( theHelp, SIGNAL( closed() ), this, SLOT(helpEnd()) );
 
 	disconnect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpBegin() ) );
 	connect ( helpAct,SIGNAL ( triggered( ) ),this,SLOT ( helpEnd() ) );

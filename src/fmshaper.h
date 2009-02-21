@@ -38,19 +38,19 @@ class FMShaper
 		
 		QList<RenderedGlyph> doShape(QString string , bool ltr);
 
-		Harfbuzz::HB_Buffer out_buffer();
+		HB_Buffer out_buffer();
 
 	private:
 		FMOtf *anchorOTF;
 		FT_Face anchorFace;
-		Harfbuzz::HB_ShaperItem m;
+		HB_ShaperItem m;
 
 		bool faceisset;
 		bool langisset;
 		bool allocated;
 
-		Harfbuzz::HB_FontRec hbFont;
-		Harfbuzz::HB_FontClass fontClass;
+		HB_FontRec hbFont;
+		HB_FontClass fontClass;
 
 };
 

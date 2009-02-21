@@ -35,10 +35,9 @@
 #include "fmshaper_own.h"
 #include "fmsharestruct.h"
 
-namespace Harfbuzz
-{
+
 #include <harfbuzz.h>
-}
+
 
 // using namespace std;
 
@@ -54,17 +53,17 @@ class FMOtf
 		FT_Face _face;
 //   ScShaper * shaper;
 		bool useShaper;
-		Harfbuzz::HB_FontRec hbFont;
+		HB_FontRec hbFont;
 		QByteArray _memgdef,_memgsub,_memgpos;
-		Harfbuzz::HB_StreamRec* gdefstream;
-		Harfbuzz::HB_StreamRec* gsubstream;
-		Harfbuzz::HB_StreamRec* gposstream;
-		Harfbuzz::HB_GDEF _gdef;
-		Harfbuzz::HB_GSUB _gsub;
-		Harfbuzz::HB_GPOS _gpos;
+		HB_StreamRec* gdefstream;
+		HB_StreamRec* gsubstream;
+		HB_StreamRec* gposstream;
+		HB_GDEF _gdef;
+		HB_GSUB _gsub;
+		HB_GPOS _gpos;
 
 		//OTF_GlyphString mys;
-		Harfbuzz::HB_Buffer _buffer;
+		HB_Buffer _buffer;
 
 		bool glyphAlloc;
 
@@ -79,11 +78,11 @@ class FMOtf
 // 	int unicode(int gid){ return OTF_get_unicode(my, gid);}
 		int get_glyph ( int index );//{return _buffer->out_string[index].gindex;}
 		QString curTable;
-		Harfbuzz::HB_UShort curScript, curLang, curLangReq;
+		HB_UShort curScript, curLang, curLangReq;
 		QString curScriptName, curLangName;
 		QStringList curFeatures;
 
-		static Harfbuzz::HB_UShort manageAlternates ( Harfbuzz::HB_UInt    pos,Harfbuzz::HB_UShort   glyphID,Harfbuzz::HB_UShort   num_alternates,Harfbuzz::HB_UShort*  alternates, void*       data );
+		static HB_UShort manageAlternates ( HB_UInt    pos,HB_UShort   glyphID,HB_UShort   num_alternates,HB_UShort*  alternates, void*       data );
 		static QList<int> altGlyphs;
 		/*
 		 * These members functions apply features currently set
@@ -112,8 +111,8 @@ class FMOtf
 
 
 //   uint get_position(int,GlyphLayout *);
-//   uint presentAlternates(HB_UInt, Harfbuzz::HB_UShort, QList<Harfbuzz::HB_UShort>);
-		GlyphList get_position ( Harfbuzz::HB_Buffer abuffer = 0 );
+//   uint presentAlternates(HB_UInt, HB_UShort, QList<HB_UShort>);
+		GlyphList get_position ( HB_Buffer abuffer = 0 );
 
 	FT_Face face() const
 	{

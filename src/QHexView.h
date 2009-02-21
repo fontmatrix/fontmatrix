@@ -25,6 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QByteArray>
 #include <QMap>
 #include <QString>
+// added to pacify gcc44
+#include <stdint.h>
+#include <ctype.h>
 // #include "Types.h"
 
 #if defined(_MSC_VER)

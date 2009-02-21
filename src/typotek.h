@@ -233,6 +233,8 @@ class typotek:public QMainWindow
 
 		QString mainDockArea;
 		QString tagsDockArea;
+		bool mainDockVisible;
+		bool tagsDockVisible;
 		QRect mainDockGeometry;
 		QRect tagsDockGeometry;
 

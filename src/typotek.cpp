@@ -159,6 +159,7 @@ void typotek::initMatrix()
 	checkOwnDir();
 	readSettings();
 	initDir();
+	
 
 	theMainView = new MainViewWidget ( this );
 	setCentralWidget ( theMainView );
@@ -175,7 +176,7 @@ void typotek::initMatrix()
 		mainDock->setFloating(true);
 	if(!mainDockGeometry.isNull())
 		mainDock->setGeometry(mainDockGeometry);
-
+	
 	tagsDock = new QDockWidget ( tr("Tags") );
 	tagsDock->setWidget( TagsWidget::getInstance() );
 	addDockWidget(fontmatrix::DockPosition[tagsDockArea], tagsDock);
@@ -183,7 +184,6 @@ void typotek::initMatrix()
 		tagsDock->setFloating(true);
 	if(!tagsDockGeometry.isNull())
 		tagsDock->setGeometry(tagsDockGeometry);
-
 
 	createActions();
 	createMenus();
@@ -833,6 +833,8 @@ void typotek::readSettings()
 
 	mainDockArea = settings.value("Docks/ToolPos", "Left").toString();
 	tagsDockArea = settings.value("Docks/TagsPos", "Right").toString();
+	mainDockVisible  = settings.value("Docks/ToolVisible", true).toBool();
+	tagsDockVisible = settings.value("Docks/TagsVisible", true).toBool();
 	mainDockGeometry = settings.value("Docks/ToolGeometry", QRect()).toRect();
 	tagsDockGeometry = settings.value("Docks/TagsGeometry", QRect()).toRect();
 
@@ -878,6 +880,8 @@ void typotek::writeSettings()
 	tagsDockGeometry = tagsDock->geometry();
 	settings.setValue( "Docks/ToolPos", mainDockArea );
 	settings.setValue( "Docks/TagsPos", tagsDockArea );
+	settings.setValue( "Docks/ToolVisible", mainDock->isVisible() );
+	settings.setValue( "Docks/TagsVisible", tagsDock->isVisible() );
 	settings.setValue( "Docks/ToolGeometry", mainDockGeometry);
 	settings.setValue( "Docks/TagsGeometry", tagsDockGeometry);
 
@@ -2234,6 +2238,8 @@ void typotek::setWebBrowserOptions ( const QString& theValue )
 
 void typotek::hide()
 {
+	mainDockVisible = mainDock->isVisible();
+	tagsDockVisible = tagsDock->isVisible();
 	mainDock->hide();
 	tagsDock->hide();
 	QMainWindow::hide();
@@ -2241,8 +2247,8 @@ void typotek::hide()
 
 void typotek::show()
 {
-	mainDock->show();
-	tagsDock->show();
+	mainDock->setVisible(mainDockVisible);
+	tagsDock->setVisible(tagsDockVisible);
 	QMainWindow::show();
 }
 

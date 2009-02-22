@@ -16,6 +16,8 @@
 #include "typotek.h"
 #include "textprogression.h"
 
+#include <cstdlib>
+
 #include <QDialog>
 #include <QGridLayout>
 #include <QString>
@@ -866,6 +868,14 @@ void FMLayout::doDraw()
 				/**********************************************/
 				glyphList << glyph;
 				theScene->addItem ( glyph );
+				glyph->setPen(Qt::NoPen);
+#ifdef BUILD_TYPE_DEBUG 
+				// visual debug
+				QColor dbgColor( i * 255 / refGlyph.count() , i * 255 / refGlyph.count() , 0, 125);
+				glyph->setBrush(dbgColor);
+				if(refGlyph[i].lChar == 32) glyph->setBrush(Qt::blue);
+				//end visual debug
+#endif
 				glyph->setPos ( pen.x() + ( refGlyph[i].xoffset ),
 				                pen.y() + ( refGlyph[i].yoffset ) );
 				glyph->setZValue ( 100.0 );

@@ -1128,8 +1128,9 @@ static const HB_OpenTypeFeature indic_features[] = {
 };
 #endif
 
-// #define INDIC_DEBUG
+#define INDIC_DEBUG
 #ifdef INDIC_DEBUG
+#include <QDebug>
 #define IDEBUG qDebug
 #else
 #define IDEBUG if(0) printf

@@ -210,9 +210,10 @@ QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 // 		dbgS += "["+ QString::number(gIndex)+ " ; " + QString::number(gl.log)+ " ; " +( (gl.log > 32) ? QString(QChar(gl.log)) : "--")+"] ";
 // 		dbgS += QChar(gl.log);
 // 		dbgS += "[" + QString::number(gl.lChar) + "]";
+		dbgS += "["+QString::number(gIndex)+ ";" +QString::number(gl.log)+"]";
 	}
 // 	qDebug() << "EndOf FMShaper::doShape("<<string<<","<<ltr<<")";
-// 	qDebug() <<"LOGS:"<<dbgS;
+	qDebug() <<"LOGS:"<<dbgS;
 	return renderedString;
 }
 

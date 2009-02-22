@@ -4031,8 +4031,10 @@ GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 
 	otf = new FMOtf ( m_face, 0x10000 );
 	if ( !otf )
+	{
+		releaseFace();
 		return ret;
-	
+	}
 	FMShaperFactory *shaperfactory = 0;
 	switch(m_shaperType)
 	{

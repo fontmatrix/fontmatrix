@@ -174,6 +174,7 @@ QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 	QList<RenderedGlyph> renderedString;
 	int base = 0;
 	int baseCorrection = 0;
+	QString dbgS;
 	for(int gIndex = 0; gIndex < m.num_glyphs; ++gIndex)
 	{
 		HB_GlyphAttributes attr = m.attributes[gIndex];
@@ -189,7 +190,7 @@ QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 // 		if(m.attributes[gIndex].mark )
 		else
 		{
-			qDebug() << "catch a mark";
+// 			qDebug() << "catch a mark";
 // 			for(int b=base; b < gIndex; ++b)
 			{
 // 				baseCorrection = renderedString[base].xadvance;
@@ -201,11 +202,17 @@ QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 		gl.yadvance = 0.0;
 		gl.xoffset = /*ltr ?*/ ( m.offsets[gIndex].x  - baseCorrection ) /*: ( baseCorrection - m.offsets[gIndex].x )*/;
 		gl.yoffset = m.offsets[gIndex].y ;
-		gl.log = m.log_clusters[gIndex] ;
+		gl.log = m.log_clusters[gIndex];
+		gl.lChar = string.at(m.log_clusters[gIndex]).unicode();
 		renderedString << gl;
-		qDebug()<<"GL"<<gl.glyph<<gl.xadvance<<gl.xoffset<<QChar(gl.log);
+// 		if(gl.log == 32)
+// 			qDebug()<<"SPACE"<<gl.glyph<<gl.xadvance<<gl.xoffset<<gl.log;
+// 		dbgS += "["+ QString::number(gIndex)+ " ; " + QString::number(gl.log)+ " ; " +( (gl.log > 32) ? QString(QChar(gl.log)) : "--")+"] ";
+// 		dbgS += QChar(gl.log);
+// 		dbgS += "[" + QString::number(gl.lChar) + "]";
 	}
-	qDebug() << "EndOf FMShaper::doShape("<<string<<","<<ltr<<")";
+// 	qDebug() << "EndOf FMShaper::doShape("<<string<<","<<ltr<<")";
+// 	qDebug() <<"LOGS:"<<dbgS;
 	return renderedString;
 }
 

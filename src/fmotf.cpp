@@ -76,7 +76,7 @@ void HB_GetGraphemeAndLineBreakClass(HB_UChar32 ch, HB_GraphemeClass *grapheme, 
 
 HB_UChar32 getChar ( const HB_UChar16 *string, hb_uint32 length, hb_uint32 &i )
 {
-	qDebug() << "HB_UChar32 getChar";
+// 	qDebug() << "HB_UChar32 getChar";
 	HB_UChar32 ch;
 // HB_SurrogateToUcs4 expands in HB_UChar32 without prefix, i have to expand manually
 	if ( ( ( string[i] & 0xfc00 ) == 0xd800 ) //  HB_IsHighSurrogate
@@ -95,7 +95,7 @@ HB_UChar32 getChar ( const HB_UChar16 *string, hb_uint32 length, hb_uint32 &i )
 
 HB_Bool hb_stringToGlyphs ( HB_Font font, const HB_UChar16 *string, hb_uint32 length, HB_Glyph *glyphs, hb_uint32 *numGlyphs, HB_Bool /*rightToLeft*/ )
 {
-	qDebug() << "HB_Bool hb_stringToGlyphs";
+// 	qDebug() << "HB_Bool hb_stringToGlyphs";
 	FT_Face face = ( FT_Face ) font->userData;
 	if ( length > *numGlyphs )
 		return false;
@@ -114,21 +114,21 @@ HB_Bool hb_stringToGlyphs ( HB_Font font, const HB_UChar16 *string, hb_uint32 le
 
 void hb_getAdvances ( HB_Font font, const HB_Glyph * glyphs, hb_uint32 numGlyphs, HB_Fixed *advances, int flags )
 {
-	qDebug() << "void hb_getAdvances with flag("<<QString::number ( flags, 16 ) <<")";
+// 	qDebug() << "void hb_getAdvances with flag("<<QString::number ( flags, 16 ) <<")";
 	FT_Face face = ( FT_Face ) font->userData;
 	for ( hb_uint32 i = 0; i < numGlyphs; ++i )
 	{
-		qDebug() << "\tLoad index "<< i;
-		qDebug() << "\tWhich is glyph "<<glyphs[i];
+// 		qDebug() << "\tLoad index "<< i;
+// 		qDebug() << "\tWhich is glyph "<<glyphs[i];
 		FT_Load_Glyph ( face, glyphs[i],FT_LOAD_NO_SCALE );
-		qDebug() << "ADV("<< glyphs[i] <<")("<< face->glyph->metrics.horiAdvance <<")";
+// 		qDebug() << "ADV("<< glyphs[i] <<")("<< face->glyph->metrics.horiAdvance <<")";
 		advances[i] = face->glyph->metrics.horiAdvance;
 	}
 }
 
 HB_Bool hb_canRender ( HB_Font font, const HB_UChar16 *string, hb_uint32 length )
 {
-	qDebug() << "HB_Bool hb_canRender";
+// 	qDebug() << "HB_Bool hb_canRender";
 	FT_Face face = ( FT_Face ) font->userData;
 
 	for ( hb_uint32 i = 0; i < length; ++i )
@@ -140,7 +140,7 @@ HB_Bool hb_canRender ( HB_Font font, const HB_UChar16 *string, hb_uint32 length 
 
 HB_Error hb_getSFntTable ( void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length )
 {
-	qDebug() << "HB_Error hb_getSFntTable";
+// 	qDebug() << "HB_Error hb_getSFntTable";
 	FT_Face face = ( FT_Face ) font;
 	FT_ULong ftlen = *length;
 	FT_Error error = 0;
@@ -155,7 +155,7 @@ HB_Error hb_getSFntTable ( void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt
 
 HB_Error hb_getPointInOutline ( HB_Font font, HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints )
 {
-	qDebug() << "HB_Error hb_getPointInOutline";
+// 	qDebug() << "HB_Error hb_getPointInOutline";
 	HB_Error error = HB_Err_Ok;
 	FT_Face face = ( FT_Face ) font->userData;
 

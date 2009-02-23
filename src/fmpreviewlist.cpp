@@ -70,7 +70,11 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 	}
 	else if(role == Qt::DecorationRole)
 	{
-			return QIcon( fit->oneLinePreviewPixmap(typotek::getInstance()->word(), bgColor, width ) );
+		QString word(typotek::getInstance()->word());
+		word.replace("<name>", fit->fancyName());
+		word.replace("<family>", fit->family());
+		word.replace("<variant>", fit->variant());
+		return QIcon( fit->oneLinePreviewPixmap(word, bgColor, width ) );
 	}
 	else if(role == Qt::ToolTipRole)
 	{

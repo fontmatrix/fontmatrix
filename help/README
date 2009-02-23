@@ -1,0 +1,18 @@
+Fontmatrix documentation
+
+The very first thing you need to know is that documentation is a work in progress. 
+
+We will let you know when it's more or less settled, so that you don't waste 
+your precious time on trying to paint a speeding train :-)
+
+Anyway, this is how it works.
+
+Every translation has its own directory named after two-letter language code, 
+e.g. 'fr' fro French, 'de' for German, 'ru' for Russian etc.
+
+Every directory has a menu.xml file that contains description of contents 
+structure which is loaded to the sidebar in help browser to help navigating 
+contents of the documentation.
+
+The plan is to remove all help_LANG.html files along with shifting their 
+content to lang directories. See TODO for details.

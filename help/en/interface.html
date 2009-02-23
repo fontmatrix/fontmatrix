@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Fontmatrix User Manual - Understanding and using Fontmatrix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="helpbase.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<h1>Understanding and using Fontmatrix</h3>
+
+<h2>Intro</h2>
+
+<p>In the main view, each font is drawn with its own typeface. 
+You can customize the text to be drawn in this view for every 
+font face. Custom text can include Unicode symbols.</p>
+
+<p>You can preview typefaces of installed fonts listed in the 
+Windows Fonts view, typefaces of fonts listed in the List 
+view, or you can select any folder in the Folders view preview 
+all typefaces located in the selected folder.</p>
+
+		<h4><strong>User Interface</strong></h4>
+		<div class="par">
+		Main window is divided in two major parts. On the left side there are <strong>Font listing</strong>
+		and <strong>Preview </strong> tabs, while right hand side displays various info about each font, logically
+		separated into <strong>Info</strong>, <strong>Sample Text</strong>, <strong>Glyphs</strong> and <strong>Tags
+		</strong> tabs.</div>
+
+		<h4><strong>Browsing The Font List</strong></h4>
+		<div class="par">Navigating through the list is simplified by multiple levels of depth:<br />Fonts are sorted by
+		the first letter of font typeface, full typeface name and the deepest level&nbsp;&mdash; the variant. On the last two levels
+		fonts can be activated. Enabling typefaces is done by clicking on the checkbox in front of the name. You can
+		selectively enable just singular variants at the lowest level.<br />The chosen font is automatically synchronized
+		with the preview tab, framing the preview in the opposite direction. You can use Ctrl+Space to switch between the
+		tabs on the top.<br />There are additional helpers below: 'View all' and 'View activated' which are pretty self
+		explanatory.<br clear="all" />
+		When you finally get familiar with your collection of fonts you can use the search mechanism to narrow a selection
+		of fonts. Searching is optionally case sensitive. <br>The main reason this program is called a font manager is  its
+		most powerful features are tagging fonts and organizing tags into collections for specific use. More info on that is
+		to come later.</div>
+
+		<h4>Displaying Fonts</h4>
+		<div class="par">Fontmatrix offers you detailed information about your fonts. There are three types of information
+		this font manager can provide:
+		<ul>
+			<li><strong>Font Info Tab</strong>&nbsp;&mdash; The font info shows the the internal text fields which display copyright
+				information, number of glyphs, character map coverage, the Postscript name, which may be different to the
+				displayed name in some applications and sometimes a version string. On occassion, there will be descriptive
+				text and other information. </li>
+			<li><strong>Sample Text Tab</strong> By default this panel shows a sample of text and numbers from basic Latin-1,
+				but you can add your own Unicode text samples in a number of languages and scripts to display the most important
+				glyphs contained in a font. For example you can add a snippet of Arabic for use with fonts containing Arabic
+				glyphs or add other non-Latin text for non-Latin fonts. Even most non-Latin fonts do have a basic range of
+				Latin glyphs, even if the font is not used primarily for Latin texts. <br>When you open an Open Type Font,
+				below there will be an additional panel which displays the advanced Open Type features available within the
+				font. With <strong>Absolute Mode</strong> Fontmatrix uses the basic Qt library to display the glyphs. When it
+				renders onto the screen, Qt does not know that’s a glyph and does not optimize the rendering. It’s the reason
+				why its display is not optimal at a small size. Quality and precision increases with larger sizes. With
+				<strong>Freetype View</strong> is the well-known glyph rendering specialist. So we ask Freetype
+				to <em>rasterize</em> a path or otherwise create a bitmap (with antialiasing) and get the result in a simple bitmap
+				display. Thus the display has good quality even at small size (try a 4/5 pt to get the actual idea of the
+				Freetype team's skill! It’s amazing). But as it is a raster, quality will decrease when you zoom in.</li>
+			<li><strong>Glyph </strong>FIXME</li>
+		</ul></div>
+		<br clear="all" />
+</div>
+
+
+
+</body>
+</html>

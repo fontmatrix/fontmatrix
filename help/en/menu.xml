@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu>
 	<area text="Welcome" file="index.html">
-		<submenuitem text="Readme" file="readme.html"/>
 	</area>
+
+	<area text="User interface" file="interface.html">
+	</area>
+
+	<area text="Fonts management" file="management.html">
+	</area>
+
+	<area text="Search" file="search.html">
+	</area>
+
+	<area text="Comparisons" file="comparisons.html">
+	</area>
+
+	<area text="Exporting and printing" file="output.html">
+	</area>
+
+	<area text="Additional tools" file="additional.html">
+	</area>
+
+	<area text="Scripting" file="scripting.html">
+	</area>
+
+	<area text="Various resources" file="resources.html">
+	</area>
+
 </menu>

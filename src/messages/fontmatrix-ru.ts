@@ -183,7 +183,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>FMLayout</name>
     <message>
-        <location filename="../fmlayout.cpp" line="333"/>
+        <location filename="../fmlayout.cpp" line="335"/>
         <source>Text engine options</source>
         <translation>Параметры текстового движка</translation>
     </message>
@@ -1177,6 +1177,155 @@ p, li { white-space: pre-wrap; }
         <location filename="../help.ui" line="31"/>
         <source>Close</source>
         <translation>&amp;Закрыть</translation>
+    </message>
+</context>
+<context>
+    <name>HelpBrowser</name>
+    <message>
+        <location filename="../helpbrowser.cpp" line="293"/>
+        <source>&amp;File</source>
+        <translation>&amp;Файл</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="294"/>
+        <source>&amp;Edit</source>
+        <translation>&amp;Правка</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="295"/>
+        <source>&amp;Bookmarks</source>
+        <translation>&amp;Закладки</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="148"/>
+        <source>&amp;Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="298"/>
+        <source>&amp;Quit</source>
+        <translation>Вы&amp;йти</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="158"/>
+        <source>&amp;Find...</source>
+        <translation>&amp;Найти...</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="300"/>
+        <source>Find &amp;Next</source>
+        <translation>Найти &amp;следующее совпадение</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="301"/>
+        <source>Find &amp;Previous</source>
+        <translation>Найти &amp;предыдущее совпадение</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="302"/>
+        <source>&amp;Add Bookmark</source>
+        <translation>&amp;Добавить закладку</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="178"/>
+        <source>&amp;Delete</source>
+        <translation>&amp;Удалить</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="183"/>
+        <source>D&amp;elete All</source>
+        <translation>&amp;Удалить все</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="381"/>
+        <source>Find</source>
+        <translation>Искать</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="381"/>
+        <source>Search Term:</source>
+        <translation>Искомый термин:</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="413"/>
+        <source>New Bookmark</source>
+        <translation>Новая закладка</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="413"/>
+        <source>New Bookmark&apos;s Title:</source>
+        <translation>Название новой закладки:</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="672"/>
+        <source>&lt;h2&gt;&lt;p&gt;Sorry, no manual is installed!&lt;/p&gt;&lt;p&gt;Please contact your package provider or Fontmatrix team if you built the application yourself&lt;/p&gt;&lt;/h2&gt;</source>
+        <comment>HTML message for no documentation available to show</comment>
+        <translation>&lt;h2&gt;&lt;p&gt;Извините, но руководство пользователя не установлено!&lt;/p&gt;&lt;p&gt;Свяжитесь с создателем пакета дял вашего дистрибутива, либо, если вы самостоятельно собирали Fontmatrix, с разработчиками программы.&lt;/p&gt;&lt;/h2&gt;</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="137"/>
+        <source>Fontmatrix Help</source>
+        <translation>Справка по Fontmatrix</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="31"/>
+        <source>&amp;Contents</source>
+        <translation>&amp;Содержание</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="45"/>
+        <source>Se&amp;arch</source>
+        <translation>Ис&amp;кать</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="53"/>
+        <source>Searching is case insensitive</source>
+        <translation>Поиск регистронезависим</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="60"/>
+        <source>&amp;Search</source>
+        <translation>&amp;Искать</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="86"/>
+        <source>1</source>
+        <translation>1</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="79"/>
+        <source>Book&amp;marks</source>
+        <translation>&amp;Закладки</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="96"/>
+        <source>&amp;New</source>
+        <translation>&amp;Добавить</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="153"/>
+        <source>&amp;Exit</source>
+        <translation>Вы&amp;йти</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="163"/>
+        <source>Find &amp;Next...</source>
+        <translation>Найти &amp;следующее совпадение...</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="168"/>
+        <source>Find &amp;Previous...</source>
+        <translation>Найти &amp;предыдущее совпадение...</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.ui" line="173"/>
+        <source>&amp;Add</source>
+        <translation>&amp;Добавить</translation>
+    </message>
+    <message>
+        <location filename="../helpbrowser.cpp" line="291"/>
+        <source>Fontmatrix Online Help</source>
+        <translation>Справка по Fontmatrix</translation>
     </message>
 </context>
 <context>
@@ -3994,432 +4143,432 @@ the following tag:</source>
 <context>
     <name>typotek</name>
     <message>
-        <location filename="../typotek.cpp" line="155"/>
+        <location filename="../typotek.cpp" line="156"/>
         <source>default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="170"/>
+        <location filename="../typotek.cpp" line="172"/>
         <source>Browse Fonts</source>
         <translation>Поиск шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="243"/>
+        <location filename="../typotek.cpp" line="244"/>
         <source>Fontmatrix</source>
         <translation>Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="247"/>
+        <location filename="../typotek.cpp" line="248"/>
         <source>The program will keep running in the system tray. To terminate the program, choose &lt;b&gt;Exit&lt;/b&gt; in the context menu of the system tray entry.</source>
         <translation>Программа останется в области уведомления. Для завершения работы с ней выберите команду «Выйти» в контекстном меню программы из области уведомления.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="287"/>
+        <location filename="../typotek.cpp" line="288"/>
         <source>Add Directory</source>
         <translation>Добавить каталог</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="463"/>
+        <location filename="../typotek.cpp" line="464"/>
         <source>Importing font files... </source>
         <translation>Импортируются шрифтовые файлы...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="463"/>
+        <location filename="../typotek.cpp" line="464"/>
         <source>cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="468"/>
+        <location filename="../typotek.cpp" line="469"/>
         <source>Import</source>
         <translation>Импортируются</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="487"/>
+        <location filename="../typotek.cpp" line="488"/>
         <source>Can&#xe2;&#x80;&#x99;t import this font because it&#xe2;&#x80;&#x99;s broken :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="531"/>
+        <location filename="../typotek.cpp" line="532"/>
         <source>Choose the tag for filter exported fonts</source>
         <translation>Выберите метку для фильтрации
 экспортируемых шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="537"/>
+        <location filename="../typotek.cpp" line="538"/>
         <source>Choose Directory</source>
         <translation>Укажите каталог</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="564"/>
+        <location filename="../typotek.cpp" line="565"/>
         <source>&amp;Import...</source>
         <translation>&amp;Импортировать...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="565"/>
+        <location filename="../typotek.cpp" line="566"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="566"/>
+        <location filename="../typotek.cpp" line="567"/>
         <source>Import a directory</source>
         <translation>Импортировать шрифты из каталога</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="571"/>
+        <location filename="../typotek.cpp" line="572"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="576"/>
+        <location filename="../typotek.cpp" line="577"/>
         <source>Export &amp;Fonts</source>
         <translation>&amp;Экспортировать шрифты</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="577"/>
+        <location filename="../typotek.cpp" line="578"/>
         <source>Export a fontset</source>
         <translation>Экспортировать набор шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="581"/>
+        <location filename="../typotek.cpp" line="582"/>
         <source>Print Info...</source>
         <translation>Напечатать сводку...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="582"/>
+        <location filename="../typotek.cpp" line="583"/>
         <source>Print informations about the current font</source>
         <translation>Напечатать сводку по текущему шрифту</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="586"/>
+        <location filename="../typotek.cpp" line="587"/>
         <source>Print Sample...</source>
         <translation>Напечатать образец...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="587"/>
+        <location filename="../typotek.cpp" line="588"/>
         <source>Print the sample as a specimen</source>
         <translation>Напечатать образец текста</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="591"/>
+        <location filename="../typotek.cpp" line="592"/>
         <source>Print Chart...</source>
         <translation>Напечатать таблицу символов...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="592"/>
+        <location filename="../typotek.cpp" line="593"/>
         <source>Print a chart of the current font</source>
         <translation>Напечатать таблицу символов текущего шрифта</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="596"/>
+        <location filename="../typotek.cpp" line="597"/>
         <source>Print Playground...</source>
         <translation>Напечатать песочницу...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="597"/>
+        <location filename="../typotek.cpp" line="598"/>
         <source>Print the playground</source>
         <translation>Напечатать содержимое песочницы</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="601"/>
+        <location filename="../typotek.cpp" line="602"/>
         <source>Print Family...</source>
         <translation>Напечатать всю гарнитуру...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="602"/>
+        <location filename="../typotek.cpp" line="603"/>
         <source>Print a specimen of the whole family the current face belongs to</source>
         <translation>Напечатать образец гарнитуры, которой принадлежит выбранное начертание</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="606"/>
+        <location filename="../typotek.cpp" line="607"/>
         <source>Export font book...</source>
         <translation>Создать каталог шрифтов...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="607"/>
+        <location filename="../typotek.cpp" line="608"/>
         <source>Export a pdf that show selected fonts</source>
         <translation>Создать файл PDF, содержащий образцы выбранных шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="614"/>
+        <location filename="../typotek.cpp" line="615"/>
         <source>E&amp;xit</source>
         <translation>В&amp;ыйти</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="615"/>
+        <location filename="../typotek.cpp" line="616"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="616"/>
+        <location filename="../typotek.cpp" line="617"/>
         <source>Exit the application</source>
         <translation>Завершить работу с программой</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="621"/>
+        <location filename="../typotek.cpp" line="622"/>
         <source>&amp;About</source>
         <translation>&amp;О программе</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="622"/>
+        <location filename="../typotek.cpp" line="623"/>
         <source>Show the Typotek&apos;s About box</source>
         <translation>Показать окно с информацией о программе</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="626"/>
+        <location filename="../typotek.cpp" line="627"/>
         <source>About &amp;Qt</source>
         <translation>О &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="630"/>
+        <location filename="../typotek.cpp" line="631"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="641"/>
+        <location filename="../typotek.cpp" line="642"/>
         <source>Activate all current</source>
         <translation>Активировать все выбранные</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="645"/>
+        <location filename="../typotek.cpp" line="646"/>
         <source>Deactivate all current</source>
         <translation>Деактивировать все выбранные</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="649"/>
+        <location filename="../typotek.cpp" line="650"/>
         <source>Edit current font</source>
         <translation>Изменить выбранный шрифт</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1533"/>
+        <location filename="../typotek.cpp" line="1538"/>
         <source>Try to run font editor with the selected font as argument</source>
         <translation>Попытаться открыть текущий шрифт в редакторе шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1538"/>
+        <location filename="../typotek.cpp" line="1543"/>
         <source>You don&apos;t seem to have font editor installed. Path to font editor can be set in preferences.</source>
         <translation>Похоже, редактор шрифтов не установлен. Его расположение можно указать в диалоге настройки.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="662"/>
+        <location filename="../typotek.cpp" line="663"/>
         <source>Preferences</source>
         <translation>Параметры</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="666"/>
+        <location filename="../typotek.cpp" line="667"/>
         <source>Check Database</source>
         <translation>Проверить базу данных</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="673"/>
+        <location filename="../typotek.cpp" line="674"/>
         <source>Tag All...</source>
         <translation>Пометить все...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="730"/>
+        <location filename="../typotek.cpp" line="731"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="737"/>
+        <location filename="../typotek.cpp" line="738"/>
         <source>Print</source>
         <translation>Печать</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="787"/>
+        <location filename="../typotek.cpp" line="788"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="796"/>
+        <location filename="../typotek.cpp" line="797"/>
         <source>Ready</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="819"/>
+        <location filename="../typotek.cpp" line="820"/>
         <source>Load settings</source>
         <translation>Загрузка параметров</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="917"/>
+        <location filename="../typotek.cpp" line="922"/>
         <source>Check for Fontmatrix own dir</source>
         <translation>Проверка каталога Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1103"/>
+        <location filename="../typotek.cpp" line="1108"/>
         <source>Adding</source>
         <translation>Добавляется</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1189"/>
+        <location filename="../typotek.cpp" line="1194"/>
         <source>font descriptions imported from network</source>
         <translation>Взятые из сети описания шрифтов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1230"/>
+        <location filename="../typotek.cpp" line="1235"/>
         <source>Fontmatrix care</source>
         <translation>Fontmatrix заботится о вас</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1224"/>
+        <location filename="../typotek.cpp" line="1229"/>
         <source>You are about to activate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
         <translation>Сейчас будет активирована куча шрифтов, самое время 
 отменить активацию, если вы это нечаянно затеяли.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1230"/>
+        <location filename="../typotek.cpp" line="1235"/>
         <source>You are about to deactivate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
         <translation>Сейчас будет деактивирована куча шрифтов, самое время отменить деактивацию, если вы это нечаянно затеяли.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1262"/>
+        <location filename="../typotek.cpp" line="1267"/>
         <source>There is no font selected</source>
         <translation>Ни один шрифт не выбран</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1336"/>
+        <location filename="../typotek.cpp" line="1341"/>
         <source>Support of DragNDrop over http is sheduled but not yet effective</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1361"/>
+        <location filename="../typotek.cpp" line="1366"/>
         <source>You bring something over me I can&#xe2;&#x80;&#x99;t handle</source>
         <translation>Программа не умеет обрабатывать данные такого типа</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1399"/>
+        <location filename="../typotek.cpp" line="1404"/>
         <source>You provided an empty string, it&#xe2;&#x80;&#x99;s not fair</source>
         <translation>Вы мне передали пустую строку, это нечестно.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1405"/>
+        <location filename="../typotek.cpp" line="1410"/>
         <source>&quot;default&quot; is a reserved</source>
         <translation>Значение &quot;default&quot; зарезервировано программой</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1664"/>
+        <location filename="../typotek.cpp" line="1669"/>
         <source>Welcome maessage</source>
         <translation>Приветственное сообщение</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1670"/>
+        <location filename="../typotek.cpp" line="1675"/>
         <source>Print Infos</source>
         <translation>Печати сводки</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1717"/>
+        <location filename="../typotek.cpp" line="1722"/>
         <source>Print Chart</source>
         <translation>Печать таблицы символов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1782"/>
+        <location filename="../typotek.cpp" line="1787"/>
         <source>Print Playground</source>
         <translation>Печать содержимого песочницы</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1805"/>
+        <location filename="../typotek.cpp" line="1810"/>
         <source>Print Family</source>
         <translation>Печать гарнитуры</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="749"/>
+        <location filename="../typotek.cpp" line="750"/>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="514"/>
+        <location filename="../typotek.cpp" line="515"/>
         <source>Fonts imported: %1</source>
         <translation>Импортировано шрифтов: %1</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="685"/>
+        <location filename="../typotek.cpp" line="686"/>
         <source>Next Family</source>
         <translation>Следующая гарнитура</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="690"/>
+        <location filename="../typotek.cpp" line="691"/>
         <source>Next Face</source>
         <translation>Следующее начертание</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="695"/>
+        <location filename="../typotek.cpp" line="696"/>
         <source>Previous Family</source>
         <translation>Предыдущая гарнитура</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="701"/>
+        <location filename="../typotek.cpp" line="702"/>
         <source>Previous Face</source>
         <translation>Предыдущее начертание</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="706"/>
+        <location filename="../typotek.cpp" line="707"/>
         <source>Layout Options</source>
         <translation>Параметры текстового движка</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="770"/>
+        <location filename="../typotek.cpp" line="771"/>
         <source>&amp;Browse</source>
         <translation>Пере&amp;ход</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1827"/>
+        <location filename="../typotek.cpp" line="1832"/>
         <source>Not enough text to make a sample</source>
         <translation>Недостаточно текста для создания образца</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="570"/>
+        <location filename="../typotek.cpp" line="571"/>
         <source>&amp;Sync</source>
         <translation>&amp;Синхронизироваться</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="572"/>
+        <location filename="../typotek.cpp" line="573"/>
         <source>Sync with the DB file</source>
         <translation>Синхронизироваться с базой данных</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1698"/>
+        <location filename="../typotek.cpp" line="1703"/>
         <source>Print Sample</source>
         <translation>Печать образца текста</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="178"/>
+        <location filename="../typotek.cpp" line="180"/>
         <source>Tags</source>
         <translation>Метки</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="677"/>
+        <location filename="../typotek.cpp" line="678"/>
         <source>Show TrueType tables</source>
         <translation>Показать таблицы TrueType</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2095"/>
+        <location filename="../typotek.cpp" line="2100"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="777"/>
+        <location filename="../typotek.cpp" line="778"/>
         <source>&amp;View</source>
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1065"/>
+        <location filename="../typotek.cpp" line="1070"/>
         <source>System Fonts</source>
         <translation>Системные шрифты</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1128"/>
+        <location filename="../typotek.cpp" line="1133"/>
         <source>system fonts added.</source>
         <translation>системных шрифтов добавлено.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1103"/>
+        <location filename="../typotek.cpp" line="1108"/>
         <source>fonts from</source>
         <comment>followed by a directory name</comment>
         <translation>шрифтов из</translation>
     </message>
     <message numerus="yes">
-        <location filename="../typotek.cpp" line="2190"/>
+        <location filename="../typotek.cpp" line="2195"/>
         <source>Filtered Font(s) : %n</source>
         <comment>number of filtererd fonts showed in status bar</comment>
         <translation>
@@ -4429,45 +4578,50 @@ it is time to cancel if it was not your intent</source>
         </translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2195"/>
+        <location filename="../typotek.cpp" line="2200"/>
         <source>Current Font :</source>
         <comment>followed by currently selected font name (in status bar)</comment>
         <translation>Текущий шрифт: </translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="681"/>
+        <location filename="../typotek.cpp" line="682"/>
         <source>Edit Panose info</source>
         <translation>Изменить данные PANOSE</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="611"/>
+        <location filename="../typotek.cpp" line="612"/>
         <source>Export modelled Info</source>
         <translation>Заполнить метаданными шаблон...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="712"/>
+        <location filename="../typotek.cpp" line="713"/>
         <source>Execute Script</source>
         <translation>Выполнить сценарий</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="716"/>
+        <location filename="../typotek.cpp" line="717"/>
         <source>Execute Last Script</source>
         <translation>Выполнить последний сценарий</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="720"/>
+        <location filename="../typotek.cpp" line="721"/>
         <source>Script Console</source>
         <translation>Консоль</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="781"/>
+        <location filename="../typotek.cpp" line="782"/>
         <source>&amp;Scripts</source>
         <translation>С&amp;ценарии</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2142"/>
+        <location filename="../typotek.cpp" line="2147"/>
         <source>Python scripts (*.py)</source>
         <translation>Сценарии на Python (*.py)</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1241"/>
+        <source>Fontmatrix Help</source>
+        <translation type="unfinished">Справка по Fontmatrix</translation>
     </message>
 </context>
 </TS>

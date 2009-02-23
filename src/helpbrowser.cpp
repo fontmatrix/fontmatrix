@@ -288,7 +288,7 @@ void HelpBrowser::changeEvent(QEvent *e)
 
 void HelpBrowser::languageChange()
 {
-	setWindowTitle( tr( "Scribus Online Help" ) );
+	setWindowTitle( tr( "Fontmatrix Online Help" ) );
 	
 	fileMenu->setTitle(tr("&File"));
 	editMenu->setTitle(tr("&Edit"));

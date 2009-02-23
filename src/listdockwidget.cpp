@@ -67,6 +67,7 @@ ListDockWidget::ListDockWidget()
 	previewModel = new FMPreviewModel( this, listPreview );
 	listPreview->setModel(previewModel);
 	previewText->setText(typotek::getInstance()->word());
+	previewText->setToolTip(tr("You can use the following keywords to be replaced by data from fonts: <strong>&#60;name&#62;</strong> ; <strong>&#60;family&#62;</strong> ; <strong>&#60;variant&#62;</strong>"));
 	previewSize->setValue(typotek::getInstance()->getPreviewSize());
 
 	// Folders tree

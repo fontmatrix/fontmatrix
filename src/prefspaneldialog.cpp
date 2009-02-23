@@ -30,6 +30,7 @@ PrefsPanelDialog::PrefsPanelDialog ( QWidget *parent )
 
 	systrayFrame->setCheckable ( true );
 	previewWord->setText ( typotek::getInstance()->word() );
+	previewWord->setToolTip(tr("You can use the following keywords to be replaced by data from fonts: <strong>&#60;name&#62;</strong> ; <strong>&#60;family&#62;</strong> ; <strong>&#60;variant&#62;</strong>"));
 	previewSizeSpin->setValue ( pSize );
 	previewIsRTL->setChecked ( typotek::getInstance()->getPreviewRTL() );
 	previewSubtitled->setChecked ( typotek::getInstance()->getPreviewSubtitled() );

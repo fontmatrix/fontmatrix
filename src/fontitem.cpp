@@ -1292,6 +1292,7 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 			if ( record )
 				glyphList.append ( glyph );
 			scene->addItem ( glyph );
+			glyph->setPen(Qt::NoPen);
 			
 			mayBeRemoved.append(glyph);
 			
@@ -1576,6 +1577,7 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 				retValue = refGlyph[i].log;
 			
 			scene->addItem ( glyph );
+			glyph->setPen(Qt::NoPen);
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
 			                pen.y() + ( refGlyph[i].yoffset * scalefactor ) );
 			glyph->setZValue ( 100.0 );
@@ -1872,6 +1874,7 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 				retValue = refGlyph[i].log;
 			
 			scene->addItem ( glyph );
+			glyph->setPen(Qt::NoPen);
 			glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * scalefactor ),
 			                pen.y() - ( refGlyph[i].yoffset * scalefactor ) );
 			glyph->setZValue ( 100.0 );
@@ -2149,6 +2152,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					uint ucharcode = charcode;
 
 					scene->addItem ( pitem );
+					pitem->setPen(Qt::NoPen);
 					pitem->setPos ( pen );
 					pitem->setData ( 1,"glyph" );
 					pitem->setData ( 2,gindex );

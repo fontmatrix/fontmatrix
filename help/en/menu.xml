@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu>
 	<area text="Welcome" file="index.html">
+		<submenuitem text="News" file="readme.html"/>
 	</area>
 
 	<area text="User interface" file="interface.html">
@@ -16,6 +17,9 @@
 	</area>
 
 	<area text="Exporting and printing" file="output.html">
+		<submenuitem text="Exporting fonts" file="export_fonts.html"/>
+		<submenuitem text="Printings fonts" file="printing_fonts.html"/>
+		<submenuitem text="Creating font books" file="creating_font_books.html"/>
 	</area>
 
 	<area text="Additional tools" file="additional.html">

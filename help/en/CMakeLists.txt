@@ -11,6 +11,9 @@ output.html
 additional.html
 scripting.html
 resources.html
+export_fonts.html
+printing_fonts.html
+creating_font_books.html
 )
 
 INSTALL(FILES ${FM_HELP_FILES_EN}

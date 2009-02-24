@@ -30,7 +30,7 @@ class FMFontCompareItem
 		{
 			Nothing		= 0,
 			Contour 	= 0x1,
-			Fill		= 0x2,
+// 			Fill		= 0x2,
 			Points		= 0x4,
 			Controls	= 0x8,
 			Metrics 	= 0x10
@@ -39,10 +39,10 @@ class FMFontCompareItem
 		FMFontCompareItem();
 		FMFontCompareItem ( QGraphicsScene * s, FontItem * f, int z );
 		~FMFontCompareItem();
-		void show ( GElements elems, double offset = 0.0 );
+		void show ( GElements elems, QColor color, double offset = 0.0 );
 		void setChar ( uint c ) {char_code = c;}
 		QRectF boundingRect();
-		QColor getColor() {return color;}
+// 		QColor getColor() {return color;}
 		void setIndex(int i){zindex = i;}
 	private:
 		const QUuid uuid;
@@ -50,7 +50,7 @@ class FMFontCompareItem
 		FontItem* font;
 		int zindex;
 		uint char_code;
-		QColor color;
+// 		QColor color;
 		QGraphicsPathItem* path;
 		QList<QGraphicsLineItem*> lines_controls;
 		QList<QGraphicsLineItem*> lines_metrics;
@@ -60,6 +60,8 @@ class FMFontCompareItem
 		void clear();
 		void drawPoint ( QPointF point , bool control );
 		void toScreen();
+		
+		static const QString toolTipModel;
 
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS ( FMFontCompareItem::GElements )
@@ -78,9 +80,10 @@ class FMFontCompareView : public QGraphicsView
 		void changeChar ( int level, uint ccode );
 		void setElements ( int level, FMFontCompareItem::GElements elems );
 		FMFontCompareItem::GElements getElements ( int level );
+		void setColor ( int level, QColor color);
+		QColor getColor ( int level );
 		void setOffset (int level, double offset);
 		double getOffset(int level);
-		QColor getColor ( int level );
 		void fitGlyphsView();
 
 		static QMap<QString, QPen> pens;
@@ -99,6 +102,7 @@ class FMFontCompareView : public QGraphicsView
 	private:
 		QMap<int, FMFontCompareItem*> glyphs; // < Z-index, glyph >
 		QMap<int, FMFontCompareItem::GElements> elements; // what to show
+		QMap<int, QColor> colors;
 		QMap<int, double> offsets;
 
 		void initPensAndBrushes();

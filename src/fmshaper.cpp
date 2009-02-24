@@ -123,6 +123,12 @@ QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 	if(!faceisset)
 		setFont();
 	
+	QMap<unsigned int, unsigned short> glyphToChar; // ugly and wrong, but shaper doesnt preserve any data about glyph generation.
+	foreach(QChar c, string)
+	{
+		glyphToChar[FT_Get_Char_Index(anchorFace, c.unicode())] = c.unicode();
+	}
+	
 	m.kerning_applied = false;
 	m.string = reinterpret_cast<const HB_UChar16 *> ( string.constData() );
 	m.stringLength = string.length();
@@ -203,14 +209,15 @@ QList< RenderedGlyph > FMShaper::doShape(QString string, bool ltr)
 		gl.xoffset = /*ltr ?*/ ( m.offsets[gIndex].x  - baseCorrection ) /*: ( baseCorrection - m.offsets[gIndex].x )*/;
 		gl.yoffset = m.offsets[gIndex].y ;
 		gl.log = m.log_clusters[gIndex];
-		gl.lChar = string.at(m.log_clusters[gIndex]).unicode();
+// 		gl.lChar = string.at(m.log_clusters[gIndex]).unicode();
+		gl.lChar = glyphToChar[ m.glyphs[m.log_clusters[gIndex]] ];
 		renderedString << gl;
 // 		if(gl.log == 32)
 // 			qDebug()<<"SPACE"<<gl.glyph<<gl.xadvance<<gl.xoffset<<gl.log;
 // 		dbgS += "["+ QString::number(gIndex)+ " ; " + QString::number(gl.log)+ " ; " +( (gl.log > 32) ? QString(QChar(gl.log)) : "--")+"] ";
 // 		dbgS += QChar(gl.log);
 // 		dbgS += "[" + QString::number(gl.lChar) + "]";
-		dbgS += "["+QString::number(gIndex)+ ";" +QString::number(gl.log)+"]";
+		dbgS += "["+QString::number(gIndex)+ ";" +QString(QChar(gl.lChar))+"]";
 	}
 // 	qDebug() << "EndOf FMShaper::doShape("<<string<<","<<ltr<<")";
 	qDebug() <<"LOGS:"<<dbgS;

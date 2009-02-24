@@ -32,19 +32,50 @@ FontCompareWidget::FontCompareWidget(QWidget * parent)
 	int maxOffset(settings.value("Compare/MaxOffset", 2000).toInt());
 	settings.setValue("Compare/MaxOffset",maxOffset);
 	compareOffset->setRange(0, maxOffset);
+	initColors();
 	doconnect();
 }
 
 FontCompareWidget::~ FontCompareWidget()
 {
-	
+
 }
+
+void FontCompareWidget::initColors()
+{
+	QSettings settings;
+	QStringList defaultColors;
+	defaultColors << "aqua" 
+			<< "brown" 
+			<< "chartreuse" 
+			<< "cornflowerblue" 
+			<< "darkblue" 
+			<< "darkmagenta" 
+			<< "olive" 
+			<< "darkgrey" 
+			<< "mediumvioletred" 
+			<< "palevioletred" 
+			<< "midnightblue" 
+			<< "red" ;
+	QPixmap px(32,32);
+	compareFillColor->addItem(tr("None", "No fill color in comprae glyph"), "transparent");
+	QString colorN("Compare/color%1");
+	for(int i(0); i < 12; ++i)
+	{
+		QString colStr(settings.value(colorN.arg(i), defaultColors[i]).toString());
+		settings.value(colorN.arg(i), colStr);// as usual, we write it back to settings so user (me as well ;)) can see it if he opens the config file
+		QColor col(colStr);
+		px.fill(col);
+		compareFillColor->addItem(QIcon(px), colStr, col.name());
+	}
+}
+
 void FontCompareWidget::doconnect()
 {
 	connect( compareAdd,SIGNAL(clicked()), this, SLOT(addFont()));
 	connect( compareRemove,SIGNAL(clicked()), this, SLOT(removeFont()));
 	connect( compareShow,SIGNAL(clicked()), this, SLOT(showChange()));
-	connect( compareFill,SIGNAL(clicked()), this, SLOT(fillChange()));
+	connect( compareFillColor,SIGNAL(currentIndexChanged(int)), this, SLOT(fillChange(int)));
 	connect( comparePoints,SIGNAL(clicked()), this, SLOT(pointsChange()));
 	connect( compareControls,SIGNAL(clicked()), this, SLOT(controlsChange()));
 	connect( compareMetrics,SIGNAL(clicked()), this, SLOT(metricsChange()));
@@ -60,7 +91,7 @@ void FontCompareWidget::dodisconnect()
 	disconnect( compareAdd,SIGNAL(clicked()), this, SLOT(addFont()));
 	disconnect( compareRemove,SIGNAL(clicked()), this, SLOT(removeFont()));
 	disconnect( compareShow,SIGNAL(clicked()), this, SLOT(showChange()));
-	disconnect( compareFill,SIGNAL(clicked()), this, SLOT(fillChange()));
+	disconnect( compareFillColor,SIGNAL(currentIndexChanged(int)), this, SLOT(fillChange(int)));
 	disconnect( comparePoints,SIGNAL(clicked()), this, SLOT(pointsChange()));
 	disconnect( compareControls,SIGNAL(clicked()), this, SLOT(controlsChange()));
 	disconnect( compareMetrics,SIGNAL(clicked()), this, SLOT(metricsChange()));
@@ -75,7 +106,7 @@ void FontCompareWidget::resetElements()
 {
 	compareShow->setChecked(true);
 	compareCharBox->adjustSize();
-	compareFill->setCheckState(Qt::Unchecked);
+	compareFillColor->setCurrentIndex(0);
 	comparePoints->setChecked(false);
 	compareControls->setCheckState(Qt::Unchecked);
 	compareMetrics->setCheckState(Qt::Unchecked);
@@ -97,9 +128,12 @@ void FontCompareWidget::addFont()
 	compareList->addItem(witem);
 	compareList->setItemSelected(witem, true);
 	
+	int r(compareList->row(witem));
 	compareView->changeFont(compareList->row(witem), f);
+	QColor c(compareFillColor->itemData(0).toString());
+	compareView->setColor(r, c);
 	QPixmap px(32,32);
-	px.fill(compareView->getColor(compareList->row(witem)));
+	px.fill(compareView->getColor(r));
 	witem->setIcon( QIcon(px) );
 	
 	int cn(f->countChars());
@@ -157,15 +191,19 @@ void FontCompareWidget::showChange()
 		compareView->setElements(r, compareView->getElements(r) ^ FMFontCompareItem::Contour);
 }
 
-void FontCompareWidget::fillChange()
+void FontCompareWidget::fillChange(int newIdx)
 {
 	if(compareList->selectedItems().isEmpty())
 		return;
-	int r(compareList->row(compareList->selectedItems().first()));
-	if(compareFill->isChecked())
-		compareView->setElements(r, compareView->getElements(r) | FMFontCompareItem::Fill);
-	else
-		compareView->setElements(r, compareView->getElements(r) ^ FMFontCompareItem::Fill);
+	QListWidgetItem * witem(compareList->selectedItems().first());
+	int r(compareList->row(witem));
+	QString colorString(compareFillColor->itemData( newIdx ).toString());
+	QColor color(colorString);
+	compareView->setColor(r,color);
+	
+	QPixmap px(32,32);
+	px.fill(color);
+	witem->setIcon( QIcon(px) );
 	
 }
 
@@ -327,6 +365,10 @@ void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * ol
 	compareOffset->setValue(qRound(compareView->getOffset(r)));
 	compareOffsetValue->setText(QString::number(compareView->getOffset(r)));
 	
+	QString colStr(compareView->getColor(r).name());
+	int colIdx(compareFillColor->findData(colStr));
+	compareFillColor->setCurrentIndex(colIdx);
+	
 	if(e.testFlag(FMFontCompareItem::Contour))
 	{
 		compareShow->setChecked(true);
@@ -335,15 +377,6 @@ void FontCompareWidget::fontChange(QListWidgetItem * witem, QListWidgetItem * ol
 	{
 		compareShow->setChecked(false);
 	}
-	if(e.testFlag(FMFontCompareItem::Fill))
-	{
-		compareFill->setCheckState(Qt::Checked);
-	}
-	else
-	{
-		compareFill->setCheckState(Qt::Unchecked);
-	}
-	
 	if(e.testFlag(FMFontCompareItem::Points))
 	{
 		comparePoints->setChecked(true);

@@ -24,6 +24,8 @@
 #include <QApplication>
 #include <QDebug>
 
+const QString FMFontCompareItem::toolTipModel = QString("<strong>x</strong>: %1 <strong>y</strong>: %2");
+
 /// Item
 FMFontCompareItem::FMFontCompareItem()
 	:uuid(QUuid::createUuid()), scene(0),font(0),zindex(0),char_code(0),path(0)
@@ -36,8 +38,8 @@ FMFontCompareItem::FMFontCompareItem(QGraphicsScene * s, FontItem * f, int z)
 	:uuid(QUuid::createUuid()), scene(s), font(f), zindex(z),char_code(0),path(0)
 {
 // 	qDebug()<< "Create" <<uuid.toString();
-	int ml(159);
-	color.setRgb(qrand() % ml,qrand() % ml, qrand() % ml, 255);
+// 	int ml(159);
+// 	color.setRgb(qrand() % ml,qrand() % ml, qrand() % ml, 255);
 }
 
 FMFontCompareItem::~ FMFontCompareItem()
@@ -136,12 +138,12 @@ void FMFontCompareItem::drawPoint(QPointF point , bool control)
 		ri->setPen(FMFontCompareView::pens["control-point"]);
 	else
 		ri->setPen(FMFontCompareView::pens["point"]);
-		
 	
+	ri->setToolTip(toolTipModel.arg(point.x()).arg(-point.y()));
 	points << ri;
 }
 
-void FMFontCompareItem::show(FMFontCompareItem::GElements elems, double offset)
+void FMFontCompareItem::show(FMFontCompareItem::GElements elems, QColor color, double offset)
 {
 // 	qDebug()<<"FMFontCompareItem::show"<<char_code<<font->fancyName();
 	// As it’s lightweight graphic, no need to be too much circonvoluted
@@ -163,14 +165,19 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems, double offset)
 	path->moveBy(offset, 0.0);
 	path->setPen(QPen(color));
 	
-	if(elems.testFlag(Fill))
+	QColor brushColor(color);
+	QColor penColor(color);
+	
+	if(brushColor.alpha() > 0)
 	{
-		QColor fcol(color);
-		fcol.setAlpha(255 / qMax(zindex+1,2));
-		path->setBrush(/*FMFontCompareView::brushes["fill"]*/fcol);
+		brushColor.setAlpha(255 / qMax(zindex+1,2));
 	}
-	else
-		path->setBrush(QBrush());
+	penColor.setAlpha(176);
+	
+	path->setBrush(brushColor);
+	path->setPen(penColor);
+	
+		
 	
 	if(elems.testFlag(Points))
 	{
@@ -230,7 +237,7 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems, double offset)
 		QLineF leftL(offset, miny, offset, maxy);
 		QLineF rightL(xadvance,miny,xadvance,maxy);
 		QLineF bottomL(minx,0.0,maxx,0.0);
-		QPen mPen(color,1.0);
+		QPen mPen(penColor,1.0);
 // 		mPen.setCosmetic(true);
 		lines_controls << new QGraphicsLineItem(leftL);
 		lines_controls.last()->setPen(mPen);
@@ -345,6 +352,12 @@ FMFontCompareItem::GElements FMFontCompareView::getElements(int level)
 	return elements[level];
 }
 
+void FMFontCompareView::setColor(int level, QColor color)
+{
+	colors[level] = color;
+	updateGlyphs();
+}
+
 void FMFontCompareView::setOffset(int level, double offset)
 {
 	offsets[level] = offset;
@@ -385,15 +398,16 @@ void FMFontCompareView::updateGlyphs()
 {
 	foreach(int l, glyphs.keys())
 	{
-		glyphs[l]->show(elements[l], offsets[l]);
+		glyphs[l]->show(elements[l], colors[l], offsets[l]);
 	}
 }
 
 QColor FMFontCompareView::getColor(int level)
 {
-	if(glyphs.contains(level))
-		return glyphs[level]->getColor();
-	return QColor();
+// 	if(glyphs.contains(level))
+// 		return glyphs[level]->getColor();
+// 	return QColor();
+	return colors[level];
 }
 
 void FMFontCompareView::mousePressEvent(QMouseEvent * e)
@@ -502,7 +516,6 @@ void FMFontCompareView::fitGlyphsView()
 	QRectF vr(m.mapRect(maxrect));
 	ensureVisible(vr);
 }
-
 
 
 

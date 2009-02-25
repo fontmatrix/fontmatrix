@@ -1760,10 +1760,13 @@ void MainViewWidget::slotSearchCharName()
 		return;
 	QString name(charSearchLine->text());
 	unsigned short cc(theVeryFont->getNamedChar(name));
-	charSearchLine->clear();
 	qDebug()<<"CS"<<name<<cc;
 	if(!cc)
+	{
+		// TODO display a usefull message
+		charSearchLine->clear();
 		return;
+	}
 	
 	foreach(const QString& key, uniPlanes.keys())
 	{
@@ -1788,22 +1791,14 @@ void MainViewWidget::slotSearchCharName()
 						QGraphicsRectItem* ms(reinterpret_cast<QGraphicsRectItem*> (sit));
 						if(ms)
 						{
-							abcView->ensureVisible(ms);
-							new FMGlyphHighlight(abcScene, ms->rect(), 600, 24);
+							QRectF rf(ms->rect());
+							new FMGlyphHighlight(abcScene, rf, 600, 24);
 						}
 						else
 						{
 							qDebug()<<"ERROR: An select item not being a QRect?";
-							if(sit)
-							{
-								abcView->ensureVisible(sit);
-								new FMGlyphHighlight(abcScene, ms->boundingRect(), 600, 24);
-							}
-							else
-							{
-								qDebug()<<"ERROR: Nor a valid pointer!!!!";
-							}
 						}
+						charSearchLine->clear();
 						return;
 						
 					}

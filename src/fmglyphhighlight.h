@@ -15,7 +15,9 @@
 
 #include <QObject>
 #include <QPointF>
+#include <QRectF>
 
+class QGraphicsScene;
 class QGraphicsRectItem;
 class QTimeLine;
 
@@ -23,7 +25,7 @@ class FMGlyphHighlight : QObject
 {
 	Q_OBJECT
 	public:
-		FMGlyphHighlight(QGraphicsRectItem* rect);
+		FMGlyphHighlight(QGraphicsScene* scene, const QRectF& rect, int time = 300, int frames = 12);
 		~FMGlyphHighlight();
 	private:
 		QGraphicsRectItem *m_rect;

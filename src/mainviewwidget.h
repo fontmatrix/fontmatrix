@@ -160,6 +160,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotViewAll();
 		void slotViewActivated();
 		void slotPlaneSelected(int);
+		void slotSearchCharName();
 		void slotAdjustGlyphView(int width);
 		void slotFeatureChanged();
 		void slotSampleChanged();

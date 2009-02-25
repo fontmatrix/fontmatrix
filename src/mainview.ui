@@ -676,7 +676,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="3" >
+       <item row="0" column="4" >
         <widget class="QLabel" name="unicodeCoverageStat" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
@@ -692,7 +692,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="4" >
+       <item row="0" column="6" >
         <widget class="QToolButton" name="clipboardCheck" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
@@ -721,7 +721,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1" colspan="5" >
+       <item row="1" column="1" colspan="7" >
         <widget class="Line" name="line" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
@@ -743,7 +743,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="7" >
+       <item row="2" column="0" colspan="9" >
         <widget class="FMGlyphsView" name="abcView" >
          <property name="focusPolicy" >
           <enum>Qt::NoFocus</enum>
@@ -759,8 +759,21 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0" colspan="5" >
+       <item row="3" column="0" colspan="7" >
         <widget class="QLineEdit" name="uniLine" />
+       </item>
+       <item row="0" column="5" >
+        <widget class="QLineEdit" name="charSearchLine" >
+         <property name="toolTip" >
+          <string>Search a character by name, press enter after editing to run the search.</string>
+         </property>
+         <property name="inputMask" >
+          <string/>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

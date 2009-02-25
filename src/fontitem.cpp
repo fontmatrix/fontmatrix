@@ -2098,7 +2098,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 // 	if ( allIsRendered )
 // 		return;
 	FMGlyphsView *allView = reinterpret_cast<FMGlyphsView*> ( scene->views() [0] );
-	qDebug() <<"renderAll("<< begin_code<<","<<end_code <<")";
+// 	qDebug() <<"renderAll("<< begin_code<<","<<end_code <<")";
 	deRenderAll();
 	if ( !allView->isVisible() )
 	{
@@ -4168,6 +4168,62 @@ QString FontItem::renderSVG(const QString & s, const double& size)
 	ret += svg;
 	ret += "</svg>";
 	
+	releaseFace();
+	return ret;
+}
+
+unsigned short FontItem::getNamedChar(const QString & name)
+{
+	if(!ensureFace())
+		return 0;
+	unsigned short ret(0);
+	
+	if(FT_HAS_GLYPH_NAMES( m_face ))
+	{
+		int bLen(256);
+		char* buffer(new char[bLen]);
+		FT_UInt index (1);
+		FT_UInt cc =  FT_Get_First_Char ( m_face, &index );
+		QString cname;
+		while ( index )
+		{
+			FT_Get_Glyph_Name(m_face, index , buffer, bLen);
+			cname = QString::fromAscii(buffer);
+// 			qDebug()<<"NC"<<cname<<cc<<index;
+			if(0 == name.compare(cname))
+			{
+					ret = cc;
+					break;
+			}
+			cc = FT_Get_Next_Char ( m_face, cc, &index );
+		}
+		delete[] buffer;
+	}
+	
+	releaseFace();
+	return ret;
+}
+
+QStringList FontItem::getNames()
+{
+	QStringList ret;
+	if(!ensureFace())
+		return ret;
+	if(FT_HAS_GLYPH_NAMES( m_face ))
+	{
+		int bLen(256);
+		char* buffer(new char[bLen]);
+		FT_UInt index (1);
+		FT_UInt cc =  FT_Get_First_Char ( m_face, &index );
+		QString cname;
+		while ( index )
+		{
+			FT_Get_Glyph_Name(m_face, index , buffer, bLen);
+			ret << QString::fromAscii(buffer);
+			cc = FT_Get_Next_Char ( m_face, cc, &index );
+		}
+		delete[] buffer;
+	}
 	releaseFace();
 	return ret;
 }

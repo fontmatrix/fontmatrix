@@ -18,14 +18,14 @@
 #include <QPen>
 #include <QDebug>	
 
-FMGlyphHighlight::FMGlyphHighlight(QGraphicsRectItem * rect)
+FMGlyphHighlight::FMGlyphHighlight(QGraphicsScene* scene, const QRectF& rect, int time, int frames)
 {
 // 	qDebug()<<"Create an HighLight";
-	m_rect = new QGraphicsRectItem(rect->rect(), 0, rect->scene());
+	m_rect = new QGraphicsRectItem(rect, 0, scene);
 	m_rect->setZValue(10000);
 	initialPos = m_rect->pos();
-	m_timeline = new QTimeLine(300);
-	maxFrame = 12;
+	m_timeline = new QTimeLine(time);
+	maxFrame = frames;
 	m_timeline->setFrameRange(0,maxFrame);
 	
 	connect( m_timeline,SIGNAL(frameChanged(int)), this, SLOT(animate (int)) );

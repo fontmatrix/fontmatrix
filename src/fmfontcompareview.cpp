@@ -139,7 +139,8 @@ void FMFontCompareItem::drawPoint(QPointF point , bool control)
 	else
 		ri->setPen(FMFontCompareView::pens["point"]);
 	
-	ri->setToolTip(toolTipModel.arg(point.x()).arg(-point.y()));
+	QString label(toolTipModel.arg(point.x()).arg(-point.y()));
+	ri->setToolTip(label.replace("-","−"));
 	points << ri;
 }
 

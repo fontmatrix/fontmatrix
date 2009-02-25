@@ -39,6 +39,7 @@
 #include <cstdlib>
 
 #include <QString>
+#include <QCompleter>
 #include <QDebug>
 #include <QGraphicsItemAnimation>
 #include <QGraphicsItem>
@@ -55,6 +56,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QSettings>
+#include <QStringListModel>
 #include <QTime>
 #include <QTimeLine>
 #include <QClipboard>
@@ -163,7 +165,11 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	slotShowClassification();
 	currentOrdering = "family" ;
 	
-// 	fillTree();
+	QStringListModel* cslModel(new QStringListModel);
+	QCompleter* cslCompleter(new QCompleter(charSearchLine));
+	cslCompleter->setModel(cslModel);
+	charSearchLine->setCompleter(cslCompleter);
+	
 	doConnect();
 	
 
@@ -207,6 +213,7 @@ void MainViewWidget::doConnect()
 	connect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
 	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
 	connect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
+	connect ( charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
 
 	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -272,6 +279,7 @@ void MainViewWidget::disConnect()
 	disconnect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
 	disconnect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
 	disconnect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
+	disconnect ( charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
 
 	disconnect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	disconnect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -776,6 +784,9 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		}
 		fillOTTree();
 		fillUniPlanesCombo ( theVeryFont );
+		QStringListModel *m = reinterpret_cast<QStringListModel*>(charSearchLine->completer()->model());
+		if(m) 
+			m->setStringList(theVeryFont->getNames());
 		slotView ( true );
 		typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
 		m_lists->fontTree->headerItem()->setText(0, tr("Names")+" ("+theVeryFont->family()+")");
@@ -1743,10 +1754,71 @@ void MainViewWidget::slotPlaneSelected ( int i )
 	abcView->verticalScrollBar()->setValue ( 0 );
 }
 
+void MainViewWidget::slotSearchCharName()
+{	
+	if(!theVeryFont)
+		return;
+	QString name(charSearchLine->text());
+	unsigned short cc(theVeryFont->getNamedChar(name));
+	charSearchLine->clear();
+	qDebug()<<"CS"<<name<<cc;
+	if(!cc)
+		return;
+	
+	foreach(const QString& key, uniPlanes.keys())
+	{
+		if((cc >= uniPlanes[key].first)
+		  && (cc < uniPlanes[key].second))
+		{
+			QString ks(key.mid(3));
+			qDebug()<<"ZONZ"<<cc<<ks<<uniPlanes[key].first<<uniPlanes[key].second;
+			int idx(uniPlaneCombo->findText(ks));
+			uniPlaneCombo->setCurrentIndex(idx);
+			slotPlaneSelected(idx);
+// 			QString dbgS;
+			bool inFrame(false);
+			while(!inFrame)
+			{
+				foreach(QGraphicsItem* sit, abcScene->items())
+				{
+					if((sit->data(1).toString() == "select")
+					&& (sit->data(3).toInt() == cc))
+					{
+						inFrame = true;
+						QGraphicsRectItem* ms(reinterpret_cast<QGraphicsRectItem*> (sit));
+						if(ms)
+						{
+							abcView->ensureVisible(ms);
+							new FMGlyphHighlight(abcScene, ms->rect(), 600, 24);
+						}
+						else
+						{
+							qDebug()<<"ERROR: An select item not being a QRect?";
+							if(sit)
+							{
+								abcView->ensureVisible(sit);
+								new FMGlyphHighlight(abcScene, ms->boundingRect(), 600, 24);
+							}
+							else
+							{
+								qDebug()<<"ERROR: Nor a valid pointer!!!!";
+							}
+						}
+						return;
+						
+					}
+				}
+				int sv(abcView->verticalScrollBar()->value());
+				abcView->verticalScrollBar()->setValue(sv + abcView->height());
+			}
+		}
+	}
+	
+}
 
 void MainViewWidget::slotShowOneGlyph()
 {
-// 	qDebug() <<"slotShowOneGlyph()";
+	qDebug() <<"slotShowOneGlyph()"<<abcScene->selectedItems().count();
 	if ( abcScene->selectedItems().isEmpty() )
 		return;
 	if ( abcView->lock() )
@@ -1760,7 +1832,7 @@ void MainViewWidget::slotShowOneGlyph()
 				fancyGlyphData = curGlyph->data ( 3 ).toInt();
 				if(clipboardCheck->isChecked())
 				{
-					new FMGlyphHighlight(curGlyph);
+					new FMGlyphHighlight(abcScene, curGlyph->rect());
 					QString simpleC;
 					simpleC += QChar(fancyGlyphData);
 					QApplication::clipboard()->setText(simpleC, QClipboard::Clipboard);
@@ -1783,7 +1855,8 @@ void MainViewWidget::slotShowOneGlyph()
 		}
 		abcView->unlock();
 	}
-
+	else
+		qDebug()<<"cannot lock ABCview";
 }
 
 void MainViewWidget::slotShowAllGlyph()
@@ -2263,7 +2336,6 @@ void MainViewWidget::slotSaveClassSplitter()
 	QSettings settings;
 	settings.setValue("WState/ClassificationSplitter", classSplitter->saveState());
 }
-
 
 
 

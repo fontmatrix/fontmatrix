@@ -255,6 +255,8 @@ class FontItem : public QObject
 		int lastChar();
 		int countChars();
 		int nextChar(int from, int offset = 1);
+		unsigned short getNamedChar(const QString& name);
+		QStringList getNames();
 		
 		/// We prepare ejection of renderLine methods
 		GlyphList glyphs(QString spec, double fsize);

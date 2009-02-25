@@ -26,6 +26,7 @@
 #include "dumpdialog.h"
 #include "fmactivate.h"
 #include "fmfontdb.h"
+#include "fmfontextract.h"
 #include "fmlayout.h"
 #include "fmrepair.h"
 #include "fontbook.h"
@@ -709,6 +710,10 @@ void typotek::createActions()
 	scuts->add(layOptAct);
 	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
 	
+	extractFontAction = new QAction(tr("Extract fonts…"),this);
+	scuts->add(extractFontAction);
+	connect(extractFontAction,SIGNAL(triggered()),this,SLOT(slotExtractFont()));
+	
 #ifdef HAVE_PYTHONQT
 	execScriptAct = new QAction(tr("Execute Script"),this);
 	scuts->add(execScriptAct);
@@ -754,6 +759,8 @@ void typotek::createMenus()
 	editMenu->addAction ( activCurAct );
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
+	editMenu->addAction(extractFontAction);
+	editMenu->addSeparator();	
 	editMenu->addAction ( fonteditorAct );
 	editMenu->addAction ( editPanoseAct );
 #ifdef PLATFORM_APPLE
@@ -2141,6 +2148,13 @@ void typotek::slotDumpInfo()
 
 }
 
+void typotek::slotExtractFont()
+{
+	FMFontExtract ex(this);
+	ex.exec();
+}
+
+
 #ifdef HAVE_PYTHONQT
 void typotek::slotExecScript()
 {
@@ -2251,5 +2265,6 @@ void typotek::show()
 	tagsDock->setVisible(tagsDockVisible);
 	QMainWindow::show();
 }
+
 
 

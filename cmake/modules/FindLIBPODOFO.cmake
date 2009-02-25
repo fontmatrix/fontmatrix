@@ -1,0 +1,58 @@
+# Directly borrowed to Scribus
+SET(useshared)
+IF(WIN32)
+    IF(NOT DEFINED LIBPODOFO_SHARED)
+        MESSAGE("FATAL: Win32 users MUST set LIBPODOFO_SHARED")
+        MESSAGE("FATAL: Set -DLIBPODOFO_SHARED=0 if linking to a static library PoDoFo")
+        MESSAGE("FATAL: or -DLIBPODOFO_SHARED=1 if linking to a DLL build of PoDoFo")
+        MESSAGE(FATAL_ERROR "LIBPODOFO_SHARED unset on win32 build")
+    ELSE(NOT DEFINED LIBPODOFO_SHARED)
+        IF(LIBPODOFO_SHARED)
+            SET(useshared "-DUSING_SHARED_PODOFO")
+        ENDIF(LIBPODOFO_SHARED)
+    ENDIF(NOT DEFINED LIBPODOFO_SHARED)
+ENDIF(WIN32)
+
+FIND_PATH(LIBPODOFO_INCLUDE_DIR
+  NAMES podofo/podofo.h
+  PATHS 
+    "${LIBPODOFO_DIR}/include"
+    "${LIBPODOFO_DIR}/src"
+    "${LIBPODOFO_DIR}"
+    /usr/include
+    /usr/local/include
+  )
+	
+SET(LIBPODOFO_FIND_QUIETLY 1)
+	
+FIND_LIBRARY(LIBPODOFO_LIBRARY
+  NAMES libpodofo podofo
+  PATHS 
+    "${LIBPODOFO_DIR}/lib" 
+    "${LIBPODOFO_DIR}/src" 
+    "${LIBPODOFO_DIR}"
+    /usr/lib /usr/local/lib
+)
+
+IF(LIBPODOFO_INCLUDE_DIR AND LIBPODOFO_LIBRARY)
+  SET(LIBPODOFO_FOUND TRUE CACHE BOOLEAN "Was libpodofo found")
+ENDIF(LIBPODOFO_INCLUDE_DIR AND LIBPODOFO_LIBRARY)
+
+SET(LIBPODOFO_CFLAGS "${useshared}" CACHE STRING "Extra flags for compiling against PoDoFo")
+
+IF(NOT LIBPODOFO_FIND_QUIETLY)
+  IF(LIBPODOFO_INCLUDE_DIR)
+      MESSAGE("podofo/podofo.h: ${LIBPODOFO_INCLUDE_DIR}")
+  ELSE(LIBPODOFO_INCLUDE_DIR)
+      MESSAGE("podofo/podofo.h: not found")
+  ENDIF(LIBPODOFO_INCLUDE_DIR)
+  
+  IF(LIBPODOFO_LIBRARY)
+    MESSAGE("podofo lib: ${LIBPODOFO_LIBRARY}")
+  ELSE(LIBPODOFO_LIBRARY)
+    MESSAGE("podofo lib: not found")
+  ENDIF(LIBPODOFO_LIBRARY)
+  
+  MESSAGE("PoDoFo cflags: ${useshared}")
+  
+ENDIF(NOT LIBPODOFO_FIND_QUIETLY)

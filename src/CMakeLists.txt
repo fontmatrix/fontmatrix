@@ -10,6 +10,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmdumpinfo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontcompareview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontdb.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmfontextract.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontstrings.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphhighlight.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphsview.cpp
@@ -76,6 +77,12 @@ IF(M17NSHAPER)
 	)
 ENDIF(M17NSHAPER)
 
+IF(PODOFO)
+	SET(PODOFO_SRCS
+	fmpdffontextractor.cpp
+	)
+ENDIF(PODOFO)
+
 SET(SHAPERS_SRCS
 ${HARFBUZZ_SRCS}
 ${ICU_SRCS}
@@ -109,6 +116,7 @@ dumpdialog.h
 fmactivate.h
 fmfontcompareview.h
 fmfontdb.h
+fmfontextract.h
 fmglyphhighlight.h
 fmglyphsview.h
 fmlayoptwidget.h
@@ -151,6 +159,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui
+${CMAKE_CURRENT_SOURCE_DIR}/fontextractordialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfonts.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.ui
 # ${CMAKE_CURRENT_SOURCE_DIR}/help.ui
@@ -221,6 +230,7 @@ ${M17N_INCLUDE_DIR}
 ${HYPHENATE_INCLUDE_DIR}
 ${PYTHON_INCLUDE_PATH}
 ${PYTHONQT_INCLUDE_DIRS}
+${LIBPODOFO_INCLUDE_DIR}
 )
 
 
@@ -232,6 +242,7 @@ IF(UNIX AND NOT APPLE)
 	${fontmatrix_MOC_SRCS}
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
+	${PODOFO_SRCS}
 	)
 
 	target_link_libraries(fontmatrix harfbuzz hyphenate 
@@ -241,6 +252,7 @@ IF(UNIX AND NOT APPLE)
 	${FONTCONFIG_LIBRARIES}
 	${SHAPERS_LIBRARIES}
 	${PYTHON_LIBRARIES}
+	${LIBPODOFO_LIBRARY}
 	)
 
 	INSTALL(TARGETS fontmatrix
@@ -257,6 +269,7 @@ IF(APPLE)
 	${fontmatrix_MOC_SRCS}
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
+	${PODOFO_SRCS}
 	)
 
 	target_link_libraries(fontmatrix harfbuzz hyphenate
@@ -265,6 +278,7 @@ IF(APPLE)
 	${FREETYPE_LIBRARIES}
 	${SHAPERS_LIBRARIES}
 	${PYTHON_LIBRARIES}
+	${LIBPODOFO_LIBRARY}
 	)
 
 	# here we’ll poupulate the bundle in order to make it
@@ -317,6 +331,7 @@ IF(WIN32)
 	${fontmatrix_MOC_SRCS}
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
+	${PODOFO_SRCS}
 	)
 
 	target_link_libraries(fontmatrix harfbuzz hyphenate
@@ -325,6 +340,7 @@ IF(WIN32)
 	${FREETYPE_LIBRARIES}
 	${SHAPERS_LIBRARIES}
 	${PYTHON_LIBRARIES}
+	${LIBPODOFO_LIBRARY}
 	)
 
 	INSTALL(TARGETS fontmatrix

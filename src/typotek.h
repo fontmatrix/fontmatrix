@@ -96,6 +96,7 @@ class typotek:public QMainWindow
 		void slotSwitchScriptConsole();
 		void slotUpdateScriptConsoleStatus();
 
+		void slotExtractFont();
 
 	public slots:
 		void open( QString path = QString(), bool announce = true, bool collect = false );
@@ -179,6 +180,8 @@ class typotek:public QMainWindow
 		QAction *scriptConsoleAct;
 #endif
 
+		QAction *extractFontAction;
+		
 		QAction *nextFamily;
 		QAction *previousFamily;
 		QAction *nextFont;

@@ -81,6 +81,7 @@ void FMFontExtract::slotBrowseDoc()
 	if(path.isEmpty())
 		return;
 	lastPath = path;
+	docPath->setText(path);
 	loadDoc(path);
 }
 

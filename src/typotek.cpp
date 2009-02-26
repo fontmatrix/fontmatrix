@@ -710,7 +710,7 @@ void typotek::createActions()
 	scuts->add(layOptAct);
 	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
 	
-	extractFontAction = new QAction(tr("Extract fonts…"),this);
+	extractFontAction = new QAction(tr("Extract fonts..."),this);
 	scuts->add(extractFontAction);
 	connect(extractFontAction,SIGNAL(triggered()),this,SLOT(slotExtractFont()));
 	

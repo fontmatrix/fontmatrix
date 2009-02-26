@@ -190,7 +190,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fmfontextract.cpp" line="63"/>
         <source>Not built with PDF extractor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Программа собрана без поддержки извлечения шрифтов из PDF.</translation>
     </message>
     <message>
         <location filename="../fmfontextract.cpp" line="68"/>
@@ -292,7 +292,7 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Выбрать каталог</translation>
     </message>
     <message>
-        <location filename="../fontextractordialog.ui" line="83"/>
+        <location filename="../fontextractordialog.ui" line="70"/>
         <source>&amp;Extract</source>
         <translation>&amp;Извлечь</translation>
     </message>
@@ -300,6 +300,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../fontextractordialog.ui" line="31"/>
         <source>File name</source>
         <translation>Имя файла</translation>
+    </message>
+    <message>
+        <location filename="../fontextractordialog.ui" line="80"/>
+        <source>Close</source>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>
@@ -3999,26 +4004,26 @@ rstuvxyz
 <context>
     <name>TagsWidget</name>
     <message>
-        <location filename="../tagswidget.cpp" line="211"/>
+        <location filename="../tagswidget.cpp" line="218"/>
         <source>Edit</source>
         <comment>followed by a tag name</comment>
         <translation>Изменить метку</translation>
     </message>
     <message>
-        <location filename="../tagswidget.cpp" line="214"/>
+        <location filename="../tagswidget.cpp" line="221"/>
         <source>Remove tag &quot;%1&quot; from database</source>
         <comment>the %%1 is a tag name</comment>
         <translation>Удалить метку «%1» из базы данных</translation>
     </message>
     <message>
-        <location filename="../tagswidget.cpp" line="229"/>
+        <location filename="../tagswidget.cpp" line="236"/>
         <source>Please confirm that you want to remove
 the following tag from database:</source>
         <translation>Подтвердите желание удалить из базы данных
 следующую метку:</translation>
     </message>
     <message>
-        <location filename="../tagswidget.cpp" line="248"/>
+        <location filename="../tagswidget.cpp" line="255"/>
         <source>Please provide a replacement name for
 the following tag:</source>
         <translation>Укажите новой название следующей метки:</translation>
@@ -4518,27 +4523,27 @@ it is time to cancel if it was not your intent</source>
         <translation>Значение &quot;default&quot; зарезервировано программой</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1676"/>
+        <location filename="../typotek.cpp" line="1678"/>
         <source>Welcome maessage</source>
         <translation>Приветственное сообщение</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1682"/>
+        <location filename="../typotek.cpp" line="1684"/>
         <source>Print Infos</source>
         <translation>Печати сводки</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1729"/>
+        <location filename="../typotek.cpp" line="1731"/>
         <source>Print Chart</source>
         <translation>Печать таблицы символов</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1794"/>
+        <location filename="../typotek.cpp" line="1796"/>
         <source>Print Playground</source>
         <translation>Печать содержимого песочницы</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1817"/>
+        <location filename="../typotek.cpp" line="1819"/>
         <source>Print Family</source>
         <translation>Печать гарнитуры</translation>
     </message>
@@ -4583,7 +4588,7 @@ it is time to cancel if it was not your intent</source>
         <translation>Пере&amp;ход</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1839"/>
+        <location filename="../typotek.cpp" line="1841"/>
         <source>Not enough text to make a sample</source>
         <translation>Недостаточно текста для создания образца</translation>
     </message>
@@ -4598,7 +4603,7 @@ it is time to cancel if it was not your intent</source>
         <translation>Синхронизироваться с базой данных</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1710"/>
+        <location filename="../typotek.cpp" line="1712"/>
         <source>Print Sample</source>
         <translation>Печать образца текста</translation>
     </message>
@@ -4613,7 +4618,7 @@ it is time to cancel if it was not your intent</source>
         <translation>Показать таблицы TrueType</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2107"/>
+        <location filename="../typotek.cpp" line="2109"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -4639,7 +4644,7 @@ it is time to cancel if it was not your intent</source>
         <translation>шрифтов из</translation>
     </message>
     <message numerus="yes">
-        <location filename="../typotek.cpp" line="2209"/>
+        <location filename="../typotek.cpp" line="2211"/>
         <source>Filtered Font(s) : %n</source>
         <comment>number of filtererd fonts showed in status bar</comment>
         <translation>
@@ -4649,7 +4654,7 @@ it is time to cancel if it was not your intent</source>
         </translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2214"/>
+        <location filename="../typotek.cpp" line="2216"/>
         <source>Current Font :</source>
         <comment>followed by currently selected font name (in status bar)</comment>
         <translation>Текущий шрифт: </translation>
@@ -4685,7 +4690,7 @@ it is time to cancel if it was not your intent</source>
         <translation>С&amp;ценарии</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2161"/>
+        <location filename="../typotek.cpp" line="2163"/>
         <source>Python scripts (*.py)</source>
         <translation>Сценарии на Python (*.py)</translation>
     </message>
@@ -4696,8 +4701,8 @@ it is time to cancel if it was not your intent</source>
     </message>
     <message>
         <location filename="../typotek.cpp" line="713"/>
-        <source>Extract fonts&#xe2;&#x80;&#xa6;</source>
-        <translation type="unfinished"></translation>
+        <source>Extract fonts...</source>
+        <translation>Извлечь шрифты...</translation>
     </message>
 </context>
 </TS>

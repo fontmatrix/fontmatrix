@@ -1657,7 +1657,8 @@ void typotek::slotTagAll()
 			emit tagAdded(tali[t]);
 		}
 	}
-
+	
+	FMFontDb::DB()->TransactionBegin();
 	QList<FontItem*> curfonts = theMainView->curFonts();
 	for(int i(0) ; i < curfonts.count(); ++i)
 	{
@@ -1667,6 +1668,7 @@ void typotek::slotTagAll()
 		}
 
 	}
+	FMFontDb::DB()->TransactionEnd();
 	TagsWidget::getInstance()->newTag();
 }
 

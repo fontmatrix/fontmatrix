@@ -86,11 +86,17 @@ void TagsWidget::slotFinalize()
 	}
 
 	QStringList sourceTags;
-	QStringList refTags;
+	
+	QMap<QString,QStringList> refTagLists;
 	for ( int i=0;i<theTaggedFonts.count();++i )
 	{
-		refTags = sourceTags = theTaggedFonts[i]->tags();
-		qDebug() <<refTags.join ( " " );
+		refTagLists[theTaggedFonts[i]->path()] = theTaggedFonts[i]->tags();
+	}
+	FMFontDb::DB()->TransactionBegin();
+	for ( int i=0;i<theTaggedFonts.count();++i )
+	{
+		QStringList refTags = sourceTags = refTagLists[theTaggedFonts[i]->path()];
+// 		qDebug() <<refTags.join ( " " );
 		for ( int t = 0; t < noTags.count(); ++t )
 		{
 			sourceTags.removeAll ( noTags[t] );
@@ -98,7 +104,7 @@ void TagsWidget::slotFinalize()
 		sourceTags += plusTags;
 		sourceTags = sourceTags.toSet().toList();
 		bool changed ( false );
-		qDebug() <<sourceTags.join ( " " );
+// 		qDebug() <<sourceTags.join ( " " );
 		if ( refTags.count() != sourceTags.count() )
 			changed = true;
 		else
@@ -115,6 +121,7 @@ void TagsWidget::slotFinalize()
 		if ( changed )
 			theTaggedFonts[i]->setTags ( sourceTags );
 	}
+	FMFontDb::DB()->TransactionEnd();
 }
 
 void TagsWidget::prepare ( QList< FontItem * > fonts )

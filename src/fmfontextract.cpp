@@ -20,9 +20,12 @@
 #endif
 
 FMFontExtract::FMFontExtract(QWidget * parent)
-	:QDialog(parent),extractorPDF(0), lastPath(QDir::homePath()), lastDir(QDir::homePath())
+	:QDialog(parent), lastPath(QDir::homePath()), lastDir(QDir::homePath())
 {
 	setupUi(this);
+#ifdef HAVE_PODOFO	
+	extractorPDF = 0;
+#endif
 	docPath->clear();
 	
 	connect(browsePDF,SIGNAL(clicked()),this,SLOT(slotBrowseDoc()));
@@ -106,11 +109,15 @@ void FMFontExtract::slotExtract()
 			names << fontList->item(i)->text();
 	}
 	QString odir(outputDir->text() + QDir::separator());
-	
+
 	foreach(QString name,names)
 	{
-		
-		QString fnam(odir + name + "." + extractorPDF->fontType(name));
+		QString ext = ".xxx";
+#ifdef HAVE_PODOFO
+		ext = "." + extractorPDF->fontType(name);
+#endif	
+	
+		QString fnam(odir + name + ext);
 		if(QFile::exists(fnam))
 			QFile::remove(fnam);
 		QFile f(fnam);

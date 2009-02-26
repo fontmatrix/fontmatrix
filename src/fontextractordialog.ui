@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Dialog</string>
+   <string>Font extractor</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" >
    <item row="0" column="0" >
@@ -28,7 +28,7 @@
          </sizepolicy>
         </property>
         <property name="text" >
-         <string>TextLabel</string>
+         <string>FIle name</string>
         </property>
         <property name="buddy" >
          <cstring>browsePDF</cstring>
@@ -38,7 +38,7 @@
       <item row="0" column="1" >
        <widget class="QPushButton" name="browsePDF" >
         <property name="text" >
-         <string>Browse</string>
+         <string>&amp;Browse</string>
         </property>
        </widget>
       </item>
@@ -60,7 +60,7 @@
       <item row="1" column="1" >
        <widget class="QPushButton" name="browseDir" >
         <property name="text" >
-         <string>Select Dir</string>
+         <string>&amp;Select Dir</string>
         </property>
        </widget>
       </item>
@@ -80,7 +80,7 @@
       <item row="2" column="1" >
        <widget class="QPushButton" name="extractButton" >
         <property name="text" >
-         <string>Extract</string>
+         <string>&amp;Extract</string>
         </property>
        </widget>
       </item>

@@ -1507,7 +1507,7 @@ void typotek::setPreviewSize(double d)
 		return;
 
 	previewSize = d;
-
+	ListDockWidget::getInstance()->previewSize->setValue(previewSize);
 	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i(0); i < fontMap.count(); ++i)
 		fontMap[i]->clearPreview() ;

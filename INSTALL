@@ -17,7 +17,8 @@ Build instructions are:
  [-DWANT_ICU:bool=true]\
  [-DWANT_M17N:bool=true]\
  [-DTRANSLATOR:string=locale*]\
- [-DWANT_PYTHONQT:bool=true**]
+ [-DWANT_PYTHONQT:bool=true**]\
+ [-DWANT_PODOFO:bool=true***]
  $ make
  
 At this point, the fontmatrix binary is in build/src/
@@ -45,3 +46,5 @@ the whole Fontmatrix program. It’s known to build with
 PythonLibs 2.6 as it comes with openSuse 11.1. if you experience
 issues with other setup, please do not give up silently, drop us
 a word about it.
+
+*** Makes extracting embedded fonts from PDF files possible.

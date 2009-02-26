@@ -1764,7 +1764,7 @@ void MainViewWidget::slotSearchCharName()
 	if(!cc)
 	{
 		// TODO display a usefull message
-		charSearchLine->clear();
+// 		charSearchLine->clear();
 		return;
 	}
 	
@@ -1792,13 +1792,13 @@ void MainViewWidget::slotSearchCharName()
 						if(ms)
 						{
 							QRectF rf(ms->rect());
-							new FMGlyphHighlight(abcScene, rf, 600, 24);
+							new FMGlyphHighlight(abcScene, rf, 2000, 160);
 						}
 						else
 						{
 							qDebug()<<"ERROR: An select item not being a QRect?";
 						}
-						charSearchLine->clear();
+// 						charSearchLine->clear();
 						return;
 						
 					}

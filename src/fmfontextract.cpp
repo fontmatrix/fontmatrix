@@ -105,15 +105,20 @@ void FMFontExtract::slotExtract()
 			names << fontList->item(i)->text();
 	}
 	QString odir(outputDir->text() + QDir::separator());
+	
 	foreach(QString name,names)
 	{
+		
 		QString fnam(odir + name + "." + extractorPDF->fontType(name));
 		if(QFile::exists(fnam))
 			QFile::remove(fnam);
 		QFile f(fnam);
 		if(f.open(QIODevice::WriteOnly))
 		{
-			extractorPDF->write(name, &f);
+#ifdef HAVE_PODOFO
+			if(extractorPDF)
+				extractorPDF->write(name, &f);
+#endif
 		}
 	}
 	

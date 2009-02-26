@@ -28,7 +28,7 @@
          </sizepolicy>
         </property>
         <property name="text" >
-         <string>FIle name</string>
+         <string>File name</string>
         </property>
         <property name="buddy" >
          <cstring>browsePDF</cstring>

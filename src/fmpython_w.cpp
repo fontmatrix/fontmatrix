@@ -77,14 +77,22 @@ void FMPythonW::runFile ( const QString & pyScript )
 
 void FMPythonW::runString ( const QString & pyScript )
 {
+	m_scriptAsString = pyScript;
+	// TODO make the priority  configurable
+	start();
+}
+
+void FMPythonW::run()
+{
 	PythonQtObjectPtr mainContext = PythonQt::self()->getMainModule();
 	PythonQt::self()->registerQObjectClassNames ( exposedClassesQOBJECT );
 	PythonQt::self()->registerCPPClassNames ( exposedClassesCPP );
 	mainContext.addObject ( "Fontmatrix", this );
 
 	QString pHead ( "from PythonQt import *\n" );
-	mainContext.evalScript ( pHead + pyScript, Py_file_input );
+	mainContext.evalScript ( pHead + m_scriptAsString , Py_file_input );
 }
+
 
 
 void FMPythonW::catchStdOut ( const QString & s )
@@ -160,6 +168,5 @@ void FMPythonW::updateTree()
 {
 	typotek::getInstance()->getTheMainView()->slotUpdateTree();
 }
-
 
 

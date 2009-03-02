@@ -29,7 +29,7 @@
        <string>Input</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_7" >
-       <item row="0" column="0" colspan="4" >
+       <item row="0" column="0" colspan="5" >
         <widget class="QStackedWidget" name="stackInput" >
          <property name="currentIndex" >
           <number>0</number>
@@ -92,10 +92,23 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="3" >
+       <item row="1" column="4" >
         <widget class="QPushButton" name="execButton" >
          <property name="text" >
           <string>execute</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3" >
+        <widget class="QLabel" name="runLabel" >
+         <property name="font" >
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text" >
+          <string>running label</string>
          </property>
         </widget>
        </item>
@@ -122,7 +135,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>368</width>
+            <width>241</width>
             <height>369</height>
            </rect>
           </property>
@@ -167,7 +180,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>368</width>
+            <width>241</width>
             <height>369</height>
            </rect>
           </property>

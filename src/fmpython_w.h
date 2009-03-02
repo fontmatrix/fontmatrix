@@ -12,9 +12,11 @@ author - Pierre marchand
 #include "PythonQt.h"
 #include "fmsharestruct.h"
 
+#include <QThread>
+
 class typotek;
 class FMFontDb;
-class FMPythonW : public QObject
+class FMPythonW : public QThread
 {
 		Q_OBJECT
 		FMPythonW();
@@ -27,9 +29,9 @@ class FMPythonW : public QObject
 		void runFile ( const QString& pyScript );
 		void runString( const QString& pyScript );
 		
+	protected:
+		void run();
 		
-
-
 	public slots:
 		void nextFace();
 		void previousFace();
@@ -53,6 +55,8 @@ class FMPythonW : public QObject
 		typotek* tk;
 		void doConnect();
 		void init();
+		
+		QString m_scriptAsString;
 		
 	private slots:
 		void catchStdOut(const QString& s);

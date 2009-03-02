@@ -30,8 +30,16 @@ class FMScriptConsole : public QWidget, private Ui::ScriptConsole
 		void Out(const QString& s);
 		void Err(const QString& s);
 		
+		
 	protected:
 		void hideEvent( QHideEvent * event ) ;
+		
+	private:
+		QString outBuffer;
+		
+	public slots:
+		void startRunNotice();
+		void endRunNotice();
 		
 	private slots:
 		void execScript();

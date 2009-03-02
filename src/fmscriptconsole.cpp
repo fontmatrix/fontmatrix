@@ -26,6 +26,9 @@ FMScriptConsole::FMScriptConsole()
 	:QWidget(0)
 {
 	setupUi(this);
+	
+	runLabel->setText("");
+	
 	new SyntaxHighlighter(input->document());
 	
 	connect(execButton, SIGNAL(clicked()), this, SLOT(execScript()));
@@ -33,6 +36,9 @@ FMScriptConsole::FMScriptConsole()
 	connect(saveButton,  SIGNAL(clicked()), this, SLOT(saveScript()));
 	
 	connect(scriptsList, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(selectScript(QListWidgetItem*)));
+	
+	connect(FMPythonW::getInstance(), SIGNAL(started()),this, SLOT(startRunNotice()));
+	connect(FMPythonW::getInstance(), SIGNAL(finished()), this, SLOT(endRunNotice()));
 }
 
 FMScriptConsole * FMScriptConsole::getInstance()
@@ -47,18 +53,24 @@ FMScriptConsole * FMScriptConsole::getInstance()
 
 void FMScriptConsole::Out(const QString & s)
 {
-	QString t(stdOut->toPlainText());
-	t.append(s);
-	stdOut->setText(t);
-	stdOut->textCursor().movePosition(QTextCursor::End);
+// 	qDebug()<<"ConsoleOut:"<< s;
+	outBuffer += s;
+	if(FMPythonW::getInstance()->isRunning())
+	{
+		return;
+	}
+	stdOut->insertPlainText(outBuffer);
+	stdOut->moveCursor(QTextCursor::End);
+	outBuffer.clear();
 }
 
 void FMScriptConsole::Err(const QString & s)
 {
-	QString t(stdErr->toPlainText());
-	t.append(s);
-	stdErr->setText(t);
-	stdErr->textCursor().movePosition(QTextCursor::End);
+	stdErr->insertPlainText(s);
+// 	QString t(stdErr->toPlainText());
+// 	t.append(s);
+// 	stdErr->setText(t);
+	stdErr->moveCursor(QTextCursor::End);
 }
 
 void FMScriptConsole::hideEvent(QHideEvent * event)
@@ -259,6 +271,30 @@ SyntaxHighlighter::SyntaxColors::~SyntaxColors()
 	settings.setValue("Python/SyntaxString",stringColor.name());
 	settings.setValue("Python/SyntaxText",textColor.name());
 	
+}
+
+void FMScriptConsole::startRunNotice()
+{
+	qDebug()<<"startRunNotice";
+	outBuffer.clear();
+	execButton->setDisabled(true);
+	saveButton->setDisabled(true);
+	loadButton->setDisabled(true);
+	runLabel->setText(tr("Running"));
+}
+
+void FMScriptConsole::endRunNotice()
+{
+	qDebug()<<"endRunNotice";
+	execButton->setEnabled(true);
+	saveButton->setEnabled(true);
+	loadButton->setEnabled(true);
+	runLabel->setText("");
+	
+	// flush std buffer;
+	stdOut->insertPlainText(outBuffer);
+	stdOut->moveCursor(QTextCursor::End);
+	outBuffer.clear();
 }
 
 

@@ -493,19 +493,22 @@ void MainViewWidget::fillTree()
 			m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 		}
 
-		QColor scol (255,240,221,255);
-		QColor pcol (255,211,155,255);
+// // 		QColor scol (255,240,221,255);
+// // 		QColor pcol (255,211,155,255);
+// 		QColor scol (QApplication::palette().highlight().color());
+// 		QColor pcol (scol);
+// 		QFont selFont;
+// 		selFont.setBold(true);
+// 		curItem->parent()->setBackgroundColor ( 0,pcol );
+// 		curItem->parent()->setBackgroundColor ( 1,pcol );
+// 		curItem->parent()->setFont(0, selFont);
+// 		curItem->setBackgroundColor ( 0,scol );
+// // 		curItem->setBackgroundColor ( 1,scol );
+// 		curItem->setFont(0,selFont);
 		QFont selFont;
-		selFont.setBold(true);
-		curItem->parent()->setBackgroundColor ( 0,pcol );
-		curItem->parent()->setBackgroundColor ( 1,pcol );
-		curItem->parent()->setFont(0, selFont);
-		curItem->setBackgroundColor ( 0,scol );
-// 		curItem->setBackgroundColor ( 1,scol );
-		curItem->setFont(0,selFont);
-
-
-// 		curItem->setSelected ( true );
+		selFont.setBold ( true );
+		curItem->parent()->setFont ( 0, selFont );
+		curItem->setSelected(true);
 	}
 	else
 	{
@@ -545,6 +548,7 @@ void MainViewWidget::updateTree ( bool checkFontActive )
 					varItem->parent()->setFont ( 0, deselect );
 					varItem->parent()->setBackgroundColor ( 0, Qt::transparent );
 					varItem->parent()->setBackgroundColor ( 1, Qt::transparent );
+					varItem->setSelected(false);
 				}
 				else if ( varItem->toolTip ( 0 ) == curItemName )
 				{
@@ -591,20 +595,21 @@ void MainViewWidget::updateTree ( bool checkFontActive )
 // 	m_lists->previewList->slotRefill ( currentFonts, false );
 	if ( curItem )
 	{
-// 		qDebug() << "get curitem : " << curItem->text ( 0 ) << curItem->text ( 1 );
-
-		QColor scol ( 255,240,221,255 );
-		QColor pcol ( 255,211,155,255 );
+// 		QColor scol (QApplication::palette().highlight().color());
+// 		QColor pcol (scol);
+// 		QFont selFont;
+// 		selFont.setBold ( true );
+// 		curItem->parent()->setBackgroundColor ( 0,pcol );
+// 		curItem->parent()->setFont ( 0, selFont );
+// 		curItem->setBackgroundColor ( 0,scol );
+// 		curItem->setFont ( 0,selFont );
+// 		if ( !curItem->parent()->isExpanded() )
+// 			curItem->parent()->setExpanded ( true );
+		
 		QFont selFont;
 		selFont.setBold ( true );
-		curItem->parent()->setBackgroundColor ( 0,pcol );
-// 		curItem->parent()->setBackgroundColor ( 1,pcol );
 		curItem->parent()->setFont ( 0, selFont );
-		curItem->setBackgroundColor ( 0,scol );
-// 		curItem->setBackgroundColor ( 1,scol );
-		curItem->setFont ( 0,selFont );
-		if ( !curItem->parent()->isExpanded() )
-			curItem->parent()->setExpanded ( true );
+		curItem->setSelected(true);
 	}
 	else
 	{

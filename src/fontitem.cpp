@@ -2124,6 +2124,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	
 	QFont infoFont ( typotek::getInstance()->getChartInfoFontName() , typotek::getInstance()->getChartInfoFontSize() );
 	QBrush selBrush ( QColor ( 255,255,255,0 ) );
+	QColor txtColor(60,60,60,255);
 	if ( begin_code >= 0 )
 	{
 		if ( m_isEncoded )
@@ -2162,6 +2163,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					pitem->setZValue ( 10 );
 
 					QGraphicsTextItem *tit= scene->addText ( glyphName ( charcode ), infoFont );
+					tit->setDefaultTextColor(txtColor);
 					tit->setPos ( pen.x()-27,pen.y() + 15 );
 					tit->setData ( 1,"label" );
 					tit->setData ( 2,gindex );
@@ -2170,6 +2172,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					tit->setZValue ( 1 );
 
 					QGraphicsTextItem *tit2= scene->addText ( "U+" + QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) )  +" ("+ QString::number ( charcode ) +")"  , infoFont );
+					tit2->setDefaultTextColor(txtColor);
 					tit2->setPos ( pen.x()-27,pen.y() + 28 );
 					tit2->setData ( 1,"label" );
 					tit2->setData ( 2,gindex );
@@ -2223,6 +2226,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					pitem->setZValue ( 10 );
 
 					QGraphicsTextItem *tit= scene->addText ( QString ( "%1" ).arg ( charcode,4,16,QLatin1Char ( '0' ) ) , infoFont );
+					tit->setDefaultTextColor(txtColor);
 					tit->setPos ( pen.x(),pen.y() + 15 );
 					tit->setData ( 1,"label" );
 					tit->setData ( 2,gindex );
@@ -2295,6 +2299,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				pitem->setZValue ( 10 );
 
 				QGraphicsTextItem *tit= scene->addText ( QString ( "I+%1" ).arg ( i ), infoFont );
+				tit->setDefaultTextColor(txtColor);
 				tit->setPos ( pen.x(),pen.y() + 15 );
 				tit->setData ( 1,"label" );
 				tit->setData ( 2,i );
@@ -3328,6 +3333,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	QPixmap pix ( allRect.width(), allRect.height() );
 	pix.fill ( QColor ( 30,0,0,120 ) );
 	QPainter painter ( &pix );
+	painter.setRenderHint(QPainter::Antialiasing, true);
 	painter.setBrush ( Qt::white );
 	painter.setPen ( QPen ( QBrush( QColor ( 0,0,0,255 ) ), 3/*, Qt::DashLine*/ ) );
 	painter.drawRoundRect ( subRect,5,5 );
@@ -3402,7 +3408,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	textIt->setTextWidth ( squareSide );
 
 	QString itemNameStyle ( "background-color:#333;color:white;font-weight:bold;font-size:10pt" );
-	QString itemValueStyle ( "background-color:#eee;font-style:italic;font-size:10pt" );
+	QString itemValueStyle ( "background-color:#eee;color:black;font-style:italic;font-size:10pt" );
 	if ( charcodeIsAGlyphIndex )
 	{
 		QString html;

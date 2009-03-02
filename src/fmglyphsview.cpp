@@ -31,6 +31,7 @@ FMGlyphsView::FMGlyphsView(QWidget *parent)
 	setObjectName("theglyphsview");
 	setAlignment (Qt::AlignLeft | Qt::AlignTop);
 	setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+	setBackgroundBrush(Qt::white);
 	m_state = AllView;
 	m_lock = false;
 	

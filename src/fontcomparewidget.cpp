@@ -63,10 +63,14 @@ void FontCompareWidget::initColors()
 	for(int i(0); i < 12; ++i)
 	{
 		QString colStr(settings.value(colorN.arg(i), defaultColors[i]).toString());
-		settings.value(colorN.arg(i), colStr);// as usual, we write it back to settings so user (me as well ;)) can see it if he opens the config file
 		QColor col(colStr);
 		px.fill(col);
 		compareFillColor->addItem(QIcon(px), colStr, col.name());
+	}
+	for(int i(0); i < 12; ++i)
+	{
+		QString colStr(settings.value(colorN.arg(i), defaultColors[i]).toString());
+		settings.setValue(colorN.arg(i), colStr);// as usual, we write it back to settings so user (me as well ;)) can see it if he opens the config file
 	}
 }
 

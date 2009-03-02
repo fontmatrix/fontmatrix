@@ -352,7 +352,7 @@ static PyGetSetDef meth_getsets [] = {
 
 #define OFF(x) offsetof(PythonQtSlotFunctionObject, x)
 
-#if PY_MINOR_VERSION < 6
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 6
 #define PY_WRITE_RESTRICTED WRITE_RESTRICTED
 #endif
 

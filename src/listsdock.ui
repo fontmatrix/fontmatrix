@@ -404,6 +404,15 @@ p, li { white-space: pre-wrap; }
           <property name="horizontalScrollBarPolicy" >
            <enum>Qt::ScrollBarAlwaysOff</enum>
           </property>
+          <property name="resizeMode" >
+           <enum>QListView::Adjust</enum>
+          </property>
+          <property name="layoutMode" >
+           <enum>QListView::SinglePass</enum>
+          </property>
+          <property name="uniformItemSizes" >
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item row="1" column="0" >

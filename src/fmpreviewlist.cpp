@@ -31,7 +31,7 @@
 
 
 
-FMPreviewModel::FMPreviewModel( QObject * pa , QListView * wPa )
+FMPreviewModel::FMPreviewModel( QObject * pa , FMPreviewView * wPa )
 	: QAbstractListModel(pa) , m_view(wPa)
 {
 	QSettings settings;
@@ -59,7 +59,8 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 // 	int width( m_view->width() - (borders + scrollbar) );
 // 	qDebug()<<"W"<<width<<borders<<scrollbar;
 	// quite strange but I cannot determine accuratly the size of the visible part of the inner frame :/
-	int width( qRound(m_view->width() * 0.92) );
+// 	int width( qRound(m_view->width() * 0.92) );
+	int width(m_view->getUsedWidth());
 	
 	if(role == Qt::DisplayRole)
 	{
@@ -112,6 +113,7 @@ int FMPreviewModel::rowCount(const QModelIndex & parent) const
 
 void FMPreviewModel::dataChanged()
 {
+	m_view->updateLayout();
 	emit layoutChanged();
 }
 
@@ -122,5 +124,14 @@ FMPreviewView::FMPreviewView(QWidget * parent)
 
 void FMPreviewView::resizeEvent(QResizeEvent * event)
 {
-	emit widthChanged(this->width());
+	int borders( 2*(frameWidth() + lineWidth() + midLineWidth()) ); 
+	int scrollbar(verticalScrollBar()->width());
+	usedWidth = this->width() - (borders + scrollbar);
+	
+	emit widthChanged(usedWidth);
+}
+
+void FMPreviewView::updateLayout()
+{
+	emit widthChanged(usedWidth);
 }

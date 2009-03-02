@@ -2798,7 +2798,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 	bool pRTL = typotek::getInstance()->getPreviewRTL();
 	QPointF pen ( pRTL ? theWidth - 20 : 20 , theSize *  pt2px );
 
-	double fsize = theSize ;
+	int fsize = qRound(theSize) * 64  ;
 	double scalefactor = theSize / m_face->units_per_EM;
 
 	QPixmap linePixmap ( qRound(theWidth), qRound(theHeight) );
@@ -2817,7 +2817,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		}
 
 		FT_Set_Char_Size ( m_face,
-		                   qRound(fsize  * 64) ,
+		                   fsize,
 		                   0,
 		                   QApplication::desktop()->physicalDpiX(),
 		                   QApplication::desktop()->physicalDpiY() );
@@ -2866,7 +2866,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 			double leftBearing = ( double ) m_glyph->metrics.horiBearingX * scalefactor * pt2px;
 // 			qDebug() << oneline[i] <<  m_glyph->metrics.horiAdvance  << advance ;
 			FT_Set_Char_Size ( m_face,
-			                   fsize  * 64 ,
+			                   fsize,
 			                   0,
 			                   QApplication::desktop()->physicalDpiX(),
 			                   QApplication::desktop()->physicalDpiY() );

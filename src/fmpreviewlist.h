@@ -28,10 +28,29 @@ class FontItem;
 class MainViewWidget;
 class QListView;
 
+class FMPreviewView : public QListView
+{
+	Q_OBJECT
+	public:
+		FMPreviewView(QWidget * parent = 0);
+		~FMPreviewView(){};
+		int getUsedWidth() const{return usedWidth;}
+	protected:
+		void resizeEvent ( QResizeEvent * event );
+	private:
+		int usedWidth;
+		
+	public slots:
+		void updateLayout();
+	signals:
+		void widthChanged(int);
+		
+};
+
 class FMPreviewModel : public QAbstractListModel
 {
 	public:
-		FMPreviewModel ( QObject * pa , QListView * wPa);
+		FMPreviewModel ( QObject * pa , FMPreviewView * wPa);
 		//returns a preview
 		QVariant data ( const QModelIndex &index, int role = Qt::DisplayRole ) const;
 		//returns flags for items
@@ -41,24 +60,14 @@ class FMPreviewModel : public QAbstractListModel
 		
 		void dataChanged();
 		
+		
 	private:
-		QListView *m_view;
+		FMPreviewView *m_view;
 		
 		QString styleTooltipName;
 		QString styleTooltipPath;
 };
 
-class FMPreviewView : public QListView
-{
-	Q_OBJECT
-	public:
-		FMPreviewView(QWidget * parent = 0);
-		~FMPreviewView(){};
-		
-	protected:
-		void resizeEvent ( QResizeEvent * event );
-	signals:
-		void widthChanged(int);
-};
+
 
 #endif

@@ -10,6 +10,7 @@
 //
 //
 #include "fmpaths.h"
+#include "typotek.h"
 
 #include <QApplication>
 
@@ -117,6 +118,12 @@ QString FMPaths::ResourcesDir()
 #endif
 	getThis()->FMPathsDB["ResourcesDir"] = QMDirPath;
 	return getThis()->FMPathsDB["ResourcesDir"];
+}
+
+QString FMPaths::ScriptsDir()
+{
+	QString sep(QDir::separator());
+	return typotek::getInstance()->getOwnDir().absolutePath() + sep + "Scripts"+ sep;
 }
 
 

@@ -114,7 +114,7 @@ int FMPreviewModel::rowCount(const QModelIndex & parent) const
 void FMPreviewModel::dataChanged()
 {
 	m_view->updateLayout();
-	emit layoutChanged();
+	emit layoutChanged ();
 }
 
 FMPreviewView::FMPreviewView(QWidget * parent)

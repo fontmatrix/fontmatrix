@@ -35,6 +35,9 @@ class FMScriptConsole : public QWidget, private Ui::ScriptConsole
 		
 	private slots:
 		void execScript();
+		void showSelectPage(bool);
+		void selectScript(QListWidgetItem *);
+		void saveScript();
 		
 	signals:
 		void finished();

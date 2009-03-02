@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>545</height>
+    <width>760</width>
+    <height>522</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -14,61 +14,123 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_5" >
    <item row="0" column="0" colspan="2" >
-    <widget class="QTabWidget" name="tabWidget" >
-     <property name="currentIndex" >
-      <number>0</number>
+    <widget class="QSplitter" name="splitter" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="tab" >
-      <attribute name="title" >
+     <widget class="QGroupBox" name="groupBox" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title" >
+       <string>Input</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_7" >
+       <item row="0" column="0" colspan="4" >
+        <widget class="QStackedWidget" name="stackInput" >
+         <property name="currentIndex" >
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="P1" >
+          <layout class="QGridLayout" name="gridLayout_6" >
+           <item row="0" column="0" >
+            <widget class="QPlainTextEdit" name="input" >
+             <property name="plainText" >
+              <string># Type your script right here
+</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="P2" >
+          <layout class="QGridLayout" name="gridLayout_4" >
+           <property name="margin" >
+            <number>0</number>
+           </property>
+           <item row="0" column="0" >
+            <widget class="QListWidget" name="scriptsList" >
+             <property name="sortingEnabled" >
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QPushButton" name="loadButton" >
+         <property name="text" >
+          <string>load</string>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QPushButton" name="saveButton" >
+         <property name="text" >
+          <string>save</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" >
+        <spacer name="horizontalSpacer_3" >
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>468</width>
+           <height>48</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="3" >
+        <widget class="QPushButton" name="execButton" >
+         <property name="text" >
+          <string>execute</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_2" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title" >
        <string>Output</string>
-      </attribute>
+      </property>
       <layout class="QGridLayout" name="gridLayout_3" >
        <item row="0" column="0" >
-        <widget class="QSplitter" name="splitter" >
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
+        <widget class="QToolBox" name="toolBox" >
+         <property name="currentIndex" >
+          <number>0</number>
          </property>
-         <widget class="QWidget" native="1" name="widget" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-            <horstretch>2</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QWidget" name="page" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>368</width>
+            <height>369</height>
+           </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_2" >
-           <item row="0" column="0" >
-            <widget class="QLabel" name="label_2" >
-             <property name="font" >
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text" >
-              <string>standard output</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" >
-            <spacer name="horizontalSpacer_2" >
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="2" >
-            <widget class="QPushButton" name="clearButton" >
-             <property name="text" >
-              <string>clear</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="3" >
+          <attribute name="label" >
+           <string>Standard Output</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout" >
+           <item row="0" column="0" colspan="2" >
             <widget class="QTextBrowser" name="stdOut" >
              <property name="sizePolicy" >
               <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -78,29 +140,42 @@
              </property>
             </widget>
            </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" native="1" name="widget_2" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <layout class="QGridLayout" name="gridLayout" >
-           <item row="0" column="0" >
-            <widget class="QLabel" name="label" >
-             <property name="font" >
-              <font>
-               <pointsize>9</pointsize>
-              </font>
+           <item row="1" column="0" >
+            <spacer name="horizontalSpacer_2" >
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
              </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>290</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="1" >
+            <widget class="QPushButton" name="clearButton" >
              <property name="text" >
-              <string>standard error</string>
+              <string>clear</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0" >
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_2" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>368</width>
+            <height>369</height>
+           </rect>
+          </property>
+          <attribute name="label" >
+           <string>Standard Error</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_2" >
+           <item row="0" column="0" >
             <widget class="QTextBrowser" name="stdErr" >
              <property name="sizePolicy" >
               <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -112,41 +187,6 @@
            </item>
           </layout>
          </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2" >
-      <attribute name="title" >
-       <string>Input</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_4" >
-       <item row="0" column="0" colspan="2" >
-        <widget class="QPlainTextEdit" name="input" >
-         <property name="plainText" >
-          <string># Type your script right here
-</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" >
-        <spacer name="horizontalSpacer_3" >
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0" >
-          <size>
-           <width>527</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="1" >
-        <widget class="QPushButton" name="execButton" >
-         <property name="text" >
-          <string>execute</string>
-         </property>
         </widget>
        </item>
       </layout>
@@ -184,12 +224,12 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>399</x>
-     <y>629</y>
+     <x>937</x>
+     <y>689</y>
     </hint>
     <hint type="destinationlabel" >
      <x>491</x>
-     <y>-9</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -200,12 +240,44 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>362</x>
-     <y>396</y>
+     <x>919</x>
+     <y>610</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>331</x>
-     <y>341</y>
+     <x>790</x>
+     <y>415</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>loadButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>saveButton</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>40</x>
+     <y>623</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>96</x>
+     <y>626</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>loadButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>execButton</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>66</x>
+     <y>636</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>396</x>
+     <y>625</y>
     </hint>
    </hints>
   </connection>

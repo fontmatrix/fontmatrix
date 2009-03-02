@@ -12,9 +12,14 @@
 
 #include "fmscriptconsole.h"
 #include "fmpython_w.h"
+#include "fmpaths.h"
 
 #include <QCloseEvent>
+#include <QDir>
+#include <QInputDialog>
+#include <QMessageBox>
 #include <QSettings>
+#include <QDebug>
 
 FMScriptConsole * FMScriptConsole::instance = 0;
 FMScriptConsole::FMScriptConsole()
@@ -24,6 +29,10 @@ FMScriptConsole::FMScriptConsole()
 	new SyntaxHighlighter(input->document());
 	
 	connect(execButton, SIGNAL(clicked()), this, SLOT(execScript()));
+	connect(loadButton, SIGNAL (toggled(bool)), this, SLOT(showSelectPage(bool)));
+	connect(saveButton,  SIGNAL(clicked()), this, SLOT(saveScript()));
+	
+	connect(scriptsList, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(selectScript(QListWidgetItem*)));
 }
 
 FMScriptConsole * FMScriptConsole::getInstance()
@@ -61,6 +70,75 @@ void FMScriptConsole::execScript()
 {
 	QString sc(input->toPlainText());
 	FMPythonW::getInstance()->runString(sc);
+}
+
+void FMScriptConsole::showSelectPage(bool cho)
+{
+	if(cho)
+	{
+		scriptsList->clear();
+		
+		QDir Rdir(FMPaths::ResourcesDir() + "Scripts");
+		Rdir.setNameFilters(QStringList()<<"*.py");
+		QStringList Rfiles(Rdir.entryList());
+		scriptsList->addItems(Rfiles);
+		
+		QDir dir(FMPaths::ScriptsDir());
+		dir.setNameFilters(QStringList()<<"*.py");
+		QStringList files(dir.entryList());
+		scriptsList->addItems(files);
+		
+		stackInput->setCurrentIndex(1);
+	}
+	else
+		stackInput->setCurrentIndex(0);
+}
+
+void FMScriptConsole::selectScript(QListWidgetItem * item)
+{
+	if(!item)
+		return;
+	// first personal scripts
+	QFile f(FMPaths::ScriptsDir()+item->text());
+	if(f.open(QIODevice::ReadOnly))
+	{
+		QByteArray a(f.readAll());
+		input->setPlainText(a);
+		loadButton->setChecked(false);
+		return;
+	}
+	// then system ones
+	QFile rf(FMPaths::ResourcesDir() + "Scripts"+QDir::separator()+item->text());
+	if(rf.open(QIODevice::ReadOnly))
+	{
+		QByteArray a(rf.readAll());
+		input->setPlainText(a);
+		loadButton->setChecked(false);
+		return;
+	}
+	
+}
+
+void FMScriptConsole::saveScript()
+{
+	QString f(QInputDialog::getText(this,"Fontmatrix", tr("A name for the script to save:")));
+	if(f.isEmpty())
+		return;
+	if(!f.endsWith(".py"))
+		f += ".py";
+	QDir dir(FMPaths::ScriptsDir());
+	dir.setNameFilters(QStringList()<<"*.py");
+	QStringList files(dir.entryList());
+	if(files.contains(f))
+	{
+		QMessageBox::warning(this, "Fontmatrix", tr("The file %1 already exists").arg(f));
+		return;
+	}
+	QFile file(FMPaths::ScriptsDir() + f);
+	if(file.open(QIODevice::WriteOnly))
+	{
+		file.write(input->toPlainText().toUtf8());
+	}
 }
 
 
@@ -182,4 +260,6 @@ SyntaxHighlighter::SyntaxColors::~SyntaxColors()
 	settings.setValue("Python/SyntaxText",textColor.name());
 	
 }
+
+
 

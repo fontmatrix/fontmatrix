@@ -859,6 +859,43 @@ QList< FontItem * > FMFontDb::Fonts ( const QString & whereString, Table table )
 bool FMFontDb::Remove ( const QString & id )
 {
 	// TODO  implement remove
+// 	return true;
+	int nId ( getId ( id ) );
+
+	QSqlQuery queryTag ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
+	                     .arg ( tableName[Tag] )
+	                     .arg ( fieldName[Id] )
+	                     .arg ( nId ),
+	                     *this );
+
+	QSqlQuery queryInfo ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
+	                      .arg ( tableName[Info] )
+	                      .arg ( fieldName[Id] )
+	                      .arg ( nId ) ,
+	                      *this );
+
+	QSqlQuery queryData ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
+	                      .arg ( tableName[Data] )
+	                      .arg ( fieldName[Id] )
+	                      .arg ( nId ) ,
+	                      *this );
+
+	QSqlQuery queryInternal ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
+	                          .arg ( tableName[InternalId] )
+	                          .arg ( fieldName[Id] )
+	                          .arg ( nId ) ,
+	                          *this );
+	
+	if(!queryTag.exec())
+		return false;
+	if(!queryInfo.exec())
+		return false;
+	if(!queryData.exec())
+		return false;
+	if(!queryInternal.exec())
+		return false;
+	
+	
 	return true;
 }
 

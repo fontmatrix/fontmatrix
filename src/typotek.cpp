@@ -384,7 +384,7 @@ void typotek::open ( QString path, bool announce, bool collect )
 				}
 				else
 				{
-					QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
+					QString errorFont ( tr ( "Cannot import this font because it is broken:" ) +" "+fi.fileName() );
 					statusBar()->showMessage ( errorFont );
 					if ( announce || collect )
 						nameList << "__FAILEDTOLOAD__" + fi.fileName();
@@ -486,7 +486,7 @@ void typotek::openList ( QStringList files )
 		}
 		else
 		{
-			QString errorFont ( tr ( "Can’t import this font because it’s broken :" ) +" "+fi.fileName() );
+			QString errorFont ( tr ( "Cannot import this font because it is broken: " ) +" "+fi.fileName() );
 			statusBar()->showMessage ( errorFont );
 			nameList << "__FAILEDTOLOAD__" + fi.fileName();
 		}
@@ -1129,7 +1129,7 @@ void typotek::initDir()
 						}
 						else
 						{
-							qDebug() << "Cannot open this font because its broken : " << fi.fileName() ;
+							qDebug() << "Cannot open this font because its broken: " << fi.fileName() ;
 						}
 					}
 				}
@@ -2209,12 +2209,12 @@ void typotek::slotExecRecentScript(){}
 
 void typotek::showToltalFilteredFonts()
 {
-	countFilteredFonts->setText( tr( "Filtered Font(s) : %n", "number of filtererd fonts showed in status bar", theMainView->curFonts().count() ) );
+	countFilteredFonts->setText( tr( "Filtered Font(s): %n", "number of filtererd fonts showed in status bar", theMainView->curFonts().count() ) );
 }
 
 void typotek::presentFontName(QString s)
 {
-	curFontPresentation->setText(tr("Current Font :", "followed by currently selected font name (in status bar)") +s);
+	curFontPresentation->setText(tr("Current Font:", "followed by currently selected font name (in status bar)") +s);
 }
 
 

@@ -65,7 +65,7 @@
        <item row="1" column="0" >
         <widget class="QPushButton" name="loadButton" >
          <property name="text" >
-          <string>load</string>
+          <string>Load</string>
          </property>
          <property name="checkable" >
           <bool>true</bool>
@@ -75,7 +75,7 @@
        <item row="1" column="1" >
         <widget class="QPushButton" name="saveButton" >
          <property name="text" >
-          <string>save</string>
+          <string>Save</string>
          </property>
         </widget>
        </item>
@@ -95,7 +95,7 @@
        <item row="1" column="4" >
         <widget class="QPushButton" name="execButton" >
          <property name="text" >
-          <string>execute</string>
+          <string>Execute</string>
          </property>
         </widget>
        </item>
@@ -108,7 +108,7 @@
           </font>
          </property>
          <property name="text" >
-          <string>running label</string>
+          <string>Running label</string>
          </property>
         </widget>
        </item>

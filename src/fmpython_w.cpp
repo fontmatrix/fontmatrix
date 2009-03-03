@@ -153,6 +153,7 @@ QString FMPythonW::currentFontStyle()
 	return tk->getSelectedFont()->variant();
 }
 
+
 void FMPythonW::Debug ( QVariant var )
 {
 	qDebug() <<var;
@@ -168,5 +169,4 @@ void FMPythonW::updateTree()
 {
 	typotek::getInstance()->getTheMainView()->slotUpdateTree();
 }
-
 

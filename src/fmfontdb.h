@@ -151,7 +151,7 @@ class FMFontDb : public QObject, public QSqlDatabase
 		// We maintain a map of instanciated fonts
 		QMap<int,FontItem*> fontMap;
 		QMap<int,FontItem*>::iterator fontCursor;
-		void clearFontMap();
+// 		void clearFontMap();
 		QMap<QString , FontItem*> temporaryFont;
 
 		QList<QSqlError> transactionError;

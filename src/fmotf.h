@@ -34,6 +34,9 @@
 
 #include "fmshaper_own.h"
 #include "fmsharestruct.h"
+// added to pacify gcc44 PL
+#include <stdint.h>
+#include <ctype.h>
 
 
 #include <harfbuzz.h>

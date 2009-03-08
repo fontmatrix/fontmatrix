@@ -91,6 +91,7 @@ bool FMDumpInfo::dumpInfo(const QString& filepath)
 	}
 	ts << re;
 	file.close();
+        return true;
 }
 
 

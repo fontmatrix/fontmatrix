@@ -8,7 +8,14 @@ Requirements :
 *not to mention that you need the developpement packages.
 	
 
-Build instructions are:
+Build instructions are (where $FM_SOURCE_DIR is
+the root directory of the Fontmatrix source
+distribution, the very same directory where this
+INSTALL file is. To be more specific, you must replace
+the expression "$FM_SOURCE_DIR" by the actual path
+of the root directory of the Fontmatrix source
+distribution):
+ $ cd $FM_SOURCE_DIR
  $ mkdir build
  $ cd build
  $ cmake ..  [-DCMAKE_BUILD_TYPE=Debug]\
@@ -24,7 +31,7 @@ Build instructions are:
 At this point, the fontmatrix binary is in build/src/
 directory, if you want, you can try to install it (default 
 installation path is /usr/local) with:
- $ make install
+ # make install
 
 If you encounter problems or just have questions or if you have 
 suggestions, please take time to suscribe to the undertype-users

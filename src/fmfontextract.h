@@ -13,11 +13,10 @@
 #ifndef FMFONTEXTRACT_H
 #define FMFONTEXTRACT_H
 
-#include "ui_fontextractordialog.h"
+#include <QMap>
 
-#ifdef HAVE_PODOFO
-class FMPDFFontExtractor;
-#endif
+#include "ui_fontextractordialog.h"
+#include "fmfontextractorbase.h"
 
 class FMFontExtract : public QDialog, private Ui::FontExtractorDialog
 {
@@ -28,9 +27,9 @@ class FMFontExtract : public QDialog, private Ui::FontExtractorDialog
 		~FMFontExtract();
 
 	private:
-#ifdef HAVE_PODOFO
-		FMPDFFontExtractor * extractorPDF;
-#endif
+		QMap<QString,FMFontExtractorBase*> extractors;
+		FMFontExtractorBase* currentExtractor;
+				
 		void loadDoc(const QString& path);
 		QString lastPath;
 		QString lastDir;

@@ -14,6 +14,7 @@
 
 #include <QFileInfo>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #ifdef HAVE_PODOFO
 #include "fmpdffontextractor.h"
@@ -23,9 +24,17 @@ FMFontExtract::FMFontExtract(QWidget * parent)
 	:QDialog(parent), lastPath(QDir::homePath()), lastDir(QDir::homePath())
 {
 	setupUi(this);
-#ifdef HAVE_PODOFO	
-	extractorPDF = 0;
+	currentExtractor = 0;
+#ifdef HAVE_PODOFO
+	FMPDFFontExtractor * pdfExtr(new FMPDFFontExtractor);
+	foreach(QString e, pdfExtr->extensions())
+	{
+		extractors[e] = pdfExtr;
+	}
 #endif
+	
+	
+	
 	docPath->clear();
 	
 	connect(browsePDF,SIGNAL(clicked()),this,SLOT(slotBrowseDoc()));
@@ -36,10 +45,17 @@ FMFontExtract::FMFontExtract(QWidget * parent)
 
 FMFontExtract::~ FMFontExtract()
 {
-#ifdef HAVE_PODOFO
-	if(extractorPDF)
-		delete extractorPDF;
-#endif
+	QList<FMFontExtractorBase*> extP;
+	foreach(FMFontExtractorBase* b, extractors.values())
+	{
+		if(!extP.contains(b))
+			extP << b;
+	}
+	foreach(FMFontExtractorBase* b, extP)
+	{
+		if(b)
+			delete b;
+	}
 }
 
 void FMFontExtract::loadDoc(const QString & path)
@@ -50,21 +66,20 @@ void FMFontExtract::loadDoc(const QString & path)
 		docPath->setText(tr("File does not exist:") + " " + fi.fileName());
 		return;
 	}
-	if((fi.suffix() == "pdf") || (fi.suffix() == "PDF"))
+	
+	QString suffix(fi.suffix());
+
+	if(extractors.contains(suffix))
 	{
-#ifdef HAVE_PODOFO
-		if(extractorPDF)
-			delete extractorPDF;
+		currentExtractor = extractors[suffix];
 		fontList->clear();
-		
-		extractorPDF = new FMPDFFontExtractor(path);
-		foreach(QString n, extractorPDF->list())
+		if(currentExtractor->loadFile(path))
 		{
-			fontList->addItem(n);
+			foreach(QString n, currentExtractor->list())
+			{
+				fontList->addItem(n);
+			}
 		}
-#else
-		docPath->setText(tr("Not built with PDF extractor."));
-#endif
 	}
 	else
 	{
@@ -79,8 +94,8 @@ void FMFontExtract::loadDoc(const QString & path)
 
 void FMFontExtract::slotBrowseDoc()
 {
-	QString filters( "Portable Document Format (*.pdf *.PDF)" );
-	QString path( QFileDialog::getOpenFileName ( this, "Fontmatrix", lastPath ,filters) );
+// 	QString filters( "Portable Document Format (*.pdf *.PDF)" );
+	QString path( QFileDialog::getOpenFileName ( this, "Fontmatrix", lastPath) );
 	if(path.isEmpty())
 		return;
 	lastPath = path;
@@ -110,24 +125,23 @@ void FMFontExtract::slotExtract()
 	}
 	QString odir(outputDir->text() + QDir::separator());
 
+	QStringList failedExt;
 	foreach(QString name,names)
 	{
-		QString ext = ".xxx";
-#ifdef HAVE_PODOFO
-		ext = "." + extractorPDF->fontType(name);
-#endif	
 	
-		QString fnam(odir + name + ext);
+		QString fnam(odir + name + currentExtractor->fontType(name));
 		if(QFile::exists(fnam))
 			QFile::remove(fnam);
 		QFile f(fnam);
 		if(f.open(QIODevice::WriteOnly))
 		{
-#ifdef HAVE_PODOFO
-			if(extractorPDF)
-				extractorPDF->write(name, &f);
-#endif
+			if(!currentExtractor->write(name, &f))
+				failedExt << name;
 		}
+	}
+	if(!failedExt.isEmpty())
+	{
+		QMessageBox::information(this,"Fontmatrix",tr("Failed to extract:\n%1").arg(failedExt.join("\n")));
 	}
 	
 }

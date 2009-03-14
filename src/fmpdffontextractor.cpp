@@ -16,30 +16,54 @@
 #include <QFile>
 
 
-FMPDFFontExtractor::FMPDFFontExtractor(const QString & pdfFile)
+
+FMPDFFontExtractor::FMPDFFontExtractor()
 	:cachedList(false)
 {
-	if(!QFile::exists(pdfFile))
+
+}
+
+bool FMPDFFontExtractor::loadFile(const QString & filePath)
+{
+	cachedList = false;
+	mfont.clear();
+	mType.clear();
+	if(document)
+		delete document;
+	
+	if(!QFile::exists(filePath))
+	{
 		document = 0;
+		return false;
+	}
 	else
 	{
 		try
 		{
-			document = new PoDoFo::PdfMemDocument(pdfFile.toLocal8Bit().data());
+			document = new PoDoFo::PdfMemDocument(filePath.toLocal8Bit().data());
 		}
 		catch(PoDoFo::PdfError& e)
 		{
 			qDebug()<<"PoDoFo::Error:"<<PoDoFo::PdfError::ErrorMessage( e.GetError() );
-			qDebug()<<"Unable to process the PDF file"<<pdfFile;
+			qDebug()<<"Unable to process the PDF file"<<filePath;
 			document = 0;
+			return false;
 		}
 	}
+	return true;
 }
 
 FMPDFFontExtractor::~ FMPDFFontExtractor()
 {
 	if(document)
 		delete document;
+}
+
+QStringList FMPDFFontExtractor::extensions()
+{
+	QStringList ret;
+	ret << "pdf" << "PDF";
+	return ret;
 }
 
 QStringList FMPDFFontExtractor::list()
@@ -149,3 +173,6 @@ QString FMPDFFontExtractor::fontType(const QString & name)
 {
 	return mType.value(name);
 }
+
+
+

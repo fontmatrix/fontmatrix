@@ -13,16 +13,19 @@
 #define FMPDFFONTEXTRACTOR
 
 #include <QMap>
-#include <QStringList>
-#include <QIODevice>
+
+#include "fmfontextractorbase.h"
 
 #include <podofo/podofo.h>
 
-class FMPDFFontExtractor
+class FMPDFFontExtractor : public FMFontExtractorBase
 {
 	public:
-		FMPDFFontExtractor(const QString& pdfFile);
+		FMPDFFontExtractor();
 		~FMPDFFontExtractor();
+		
+		bool loadFile(const QString& filePath);
+		QStringList extensions();
 		
 		QStringList list();
 		QString fontType(const QString& name);

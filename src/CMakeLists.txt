@@ -14,6 +14,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmfontextract.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontstrings.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphhighlight.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphsview.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmkernfeat.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayoptwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayout.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmnamelist.cpp

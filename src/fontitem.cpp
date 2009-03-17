@@ -26,6 +26,7 @@
 #include "typotek.h"
 #include "fmbaseshaper.h"
 #include "hyphenate/fmhyphenator.h"
+#include "fmkernfeat.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -4232,6 +4233,16 @@ QStringList FontItem::getNames()
 	}
 	releaseFace();
 	return ret;
+}
+
+void FontItem::exploreKernFeature()
+{
+	if(!ensureFace())
+		return;
+	
+	FMKernFeature kf(m_face);
+	
+	releaseFace();
 }
 
 

@@ -263,6 +263,9 @@ class FontItem : public QObject
 		GlyphList glyphs(QString spec, double fsize, OTFSet set);
 		GlyphList glyphs(QString spec, double fsize, QString script);
 		
+		// experiences go there
+		void exploreKernFeature();
+		
 	public:
 
 		QString path() const {return m_path;}
@@ -380,6 +383,7 @@ class FontItem : public QObject
 	unsigned int getFTHintMode() const;
 	
 	void dumpIntoDB();
+	
 	
 };
 

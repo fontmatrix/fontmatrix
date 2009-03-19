@@ -11,6 +11,8 @@
 //
 
 #include <QDebug>
+#include <QFileDialog>
+#include <QFile>
 
 #include "tttableview.h"
 
@@ -47,6 +49,7 @@ TTTableView::TTTableView(FontItem * font, QWidget * parent)
 	tView->resizeColumnToContents(DESCRIPTION);
 	
 	connect(tView,SIGNAL(itemSelectionChanged()),this,SLOT(updateHexView()));
+	connect(exportButton,SIGNAL(clicked()),this,SLOT(exportHex()));
 	
 	if(hasTable)
 	{
@@ -70,12 +73,31 @@ void TTTableView::updateHexView()
 		return;
 	
 	QString table(tView->selectedItems()[0]->text(NAME));
-	QByteArray ar(m_font->tableData(table));
+	curTable = m_font->tableData(table);
 	
 	m_data.clear();
-	for(int i(0);i<ar.count();++i)
+	for(int i(0);i<curTable.count();++i)
 	{
-		m_data << ar.at(i);
+		m_data << curTable.at(i);
 	}
 	hexView->setData(&m_data);
 }
+
+void TTTableView::exportHex()
+{
+	if(curTable.isEmpty())
+		return;
+	
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"));
+	if(fileName.isEmpty())
+		return;
+	QFile f(fileName);
+	if(f.open(QIODevice::WriteOnly))
+	{
+		f.seek(0);
+		
+		f.write(curTable);
+	}
+}
+
+

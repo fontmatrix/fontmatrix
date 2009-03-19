@@ -36,8 +36,12 @@ class TTTableView : public QWidget, private Ui::TTTableWidget
 		TTTableView(FontItem * font, QWidget * parent = 0);
 		~TTTableView();
 		
+	private:
+		QByteArray curTable;
+		
 	private slots:
 		void updateHexView();
+		void exportHex();
 		
 };
 

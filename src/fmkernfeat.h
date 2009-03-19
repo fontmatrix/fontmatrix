@@ -23,20 +23,61 @@
 class FMKernFeature
 {
 	public:
-		FMKernFeature(FT_Face face);
+		FMKernFeature ( FT_Face face );
 		~FMKernFeature();
-		
-		
+
+
 	private:
+		FT_Face p_face;
+		QString glyphname ( int index );
 		QByteArray GPOSTableRaw;
-		QList<unsigned int> coverage;
-		QMap<unsigned int, unsigned int> pairs;
-		
+		QMap<quint16,QList<quint16> > coverages;
+		QMap<quint16, QMap<quint16, double> > pairs;
+
 		void makeCoverage();
-		void makePairs();
-		
+		void makePairs ( quint16 subtableOffset );
+
+		typedef QMap<quint16, QList<quint16> > ClassDefTable; // <Class , list<GLyph> >
+		ClassDefTable getClass ( quint16 classDefOffset, quint16 coverageId );
+
 		// return a uint16 from position index in GPOSTableRaw
-		inline quint16 toUint16(int index);
+		inline quint16 toUint16 ( quint16 index );
+
+		/*
+		0x0001 	XPlacement 	Includes horizontal adjustment for placement
+		0x0002 	YPlacement 	Includes vertical adjustment for placement
+		0x0004 	XAdvance 	Includes horizontal adjustment for advance
+		0x0008 	YAdvance 	Includes vertical adjustment for advance
+		0x0010 	XPlaDevice 	Includes horizontal Device table for placement
+		0x0020 	YPlaDevice 	Includes vertical Device table for placement
+		0x0040 	XAdvDevice 	Includes horizontal Device table for advance
+		0x0080 	YAdvDevice 	Includes vertical Device table for advance
+		0xF000 	Reserved 	For future use
+		*/
+		enum ValueFormat
+		{
+			XPlacement = 0x0001,
+			YPlacement = 0x0002,
+			XAdvance = 0x0004,
+			YAdvance = 0x0008,
+			XPlaDevice,
+			YPlaDevice,
+			XAdvDevice,
+			YAdvDevice
+		};
+// 		struct ValueRecord
+// 		{
+// 			qint16 XPlacement;
+// 			qint16 YPlacement;
+// 			qint16 XAdvance;
+// 			qint16 YAdvance;
+// 			quint16 XPlaDevice;
+// 			quint16 YPlaDevice;
+// 			quint16 XAdvDevice;
+// 			quint16 YAdvDevice;
+// 
+// 			ValueRecord ( quint16 globalOffset, FMKernFeature* kf );
+// 		};
 };
 
 

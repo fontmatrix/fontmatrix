@@ -15,10 +15,12 @@
 #include FT_TRUETYPE_TABLES_H
 #include FT_TRUETYPE_TAGS_H
 
+#include <QStringList>
 #include <QDebug>
 
 
 FMKernFeature::FMKernFeature ( FT_Face face )
+		:p_face ( face )
 {
 	FT_ULong length = 0;
 	if ( !FT_Load_Sfnt_Table ( face, TTAG_GPOS , 0, NULL, &length ) )
@@ -27,9 +29,8 @@ FMKernFeature::FMKernFeature ( FT_Face face )
 		{
 			GPOSTableRaw.resize ( length );
 			FT_Load_Sfnt_Table ( face, TTAG_GPOS, 0, ( FT_Byte * ) GPOSTableRaw.data (), &length );
-			
+
 			makeCoverage();
-			qDebug()<<"Coverage:"<<coverage.count();
 		}
 		else
 			GPOSTableRaw.clear();
@@ -45,8 +46,8 @@ void FMKernFeature::makeCoverage()
 {
 	if ( GPOSTableRaw.isEmpty() )
 		return;
-	
-	bool out(true);
+
+	bool out ( true );
 	quint16 FeatureList_Offset= toUint16 ( 6 );
 	quint16 LookupList_Offset = toUint16 ( 8 );
 
@@ -63,105 +64,341 @@ void FMKernFeature::makeCoverage()
 		if ( tag == TTAG_kern )
 		{
 			FeatureKern_Offset << ( toUint16 ( rawIdx + 4 ) + FeatureList_Offset );
-			if(out)
+			if ( out )
 			{
-				qDebug()<<"KERN"<<FeatureKern_Offset;
+				qDebug() <<"KERN"<<FeatureKern_Offset;
 			}
-			
+
 		}
 	}
-	
+
 	// Extract indices of lookups for feture kern
 	QList<quint16> LookupListIndex;
-	foreach(quint16 kern, FeatureKern_Offset)
+	foreach ( quint16 kern, FeatureKern_Offset )
 	{
-		quint16 LookupCount( toUint16 ( kern + 2) );
-		if(out)
+		quint16 LookupCount ( toUint16 ( kern + 2 ) );
+		if ( out )
 		{
-			qDebug()<<"\tParams"<<toUint16 ( kern );
-			qDebug()<<"\tLookupCount"<<LookupCount;
+			qDebug() <<"\tParams"<<toUint16 ( kern );
+			qDebug() <<"\tLookupCount"<<LookupCount;
 		}
 		for ( int llio ( 0 ) ; llio < LookupCount; ++llio )
 		{
-			quint16 Idx ( toUint16 (kern + 4 + ( llio * 2 ) ));
-			if(!LookupListIndex.contains(Idx))
+			quint16 Idx ( toUint16 ( kern + 4 + ( llio * 2 ) ) );
+			if ( !LookupListIndex.contains ( Idx ) )
 			{
 				LookupListIndex <<Idx ;
 			}
 		}
-		if(out)
-			qDebug()<<"\tLookupIndex"<<LookupListIndex;
+		if ( out )
+			qDebug() <<"\tLookupIndex"<<LookupListIndex;
 	}
-	
-	
+
+
 	// Extract offsets of lookup tables for feature kern
 	QList<quint16> LookupTables;
 	QList<quint16> PairAdjustmentSubTables;
 	for ( int i ( 0 ); i < LookupListIndex.count(); ++i )
 	{
-		int rawIdx( LookupList_Offset + 2 + ( LookupListIndex[i] * 2 ) );
+		int rawIdx ( LookupList_Offset + 2 + ( LookupListIndex[i] * 2 ) );
 		quint16 Lookup ( toUint16 ( rawIdx )  + LookupList_Offset );
-		quint16 SubTableCount( toUint16(Lookup + 4) );
-		for(int stIdx(0); stIdx < SubTableCount; ++ stIdx)
+		quint16 SubTableCount ( toUint16 ( Lookup + 4 ) );
+		for ( int stIdx ( 0 ); stIdx < SubTableCount; ++ stIdx )
 		{
-			quint16 SubTable(toUint16(Lookup + 6 + (2 * stIdx)) + Lookup);
+			quint16 SubTable ( toUint16 ( Lookup + 6 + ( 2 * stIdx ) ) + Lookup );
 
 			quint16 PosFormat ( toUint16 ( SubTable ) );
 			quint16 Coverage_Offset ( toUint16 ( SubTable + 2 ) + SubTable );
 			quint16 CoverageFormat ( toUint16 ( Coverage_Offset ) );
-		
-			if(out)
+
+			if ( out )
 			{
-				qDebug()<<"\t\tPosFormat"<<PosFormat;
-				qDebug()<<"\t\tCoverageFormat"<<CoverageFormat;
+				qDebug() <<"\t\tPosFormat"<<PosFormat;
+				qDebug() <<"\t\tCoverageFormat"<<CoverageFormat;
 			}
 			if ( 1 == CoverageFormat ) // glyph indices based
 			{
 				quint16 GlyphCount ( toUint16 ( Coverage_Offset + 2 ) );
 				quint16 GlyphID ( Coverage_Offset + 4 );
-				if(out)
-					qDebug()<<"\t\t\tGlyphCount"<<GlyphCount;
+				if ( out )
+					qDebug() <<"\t\t\tGlyphCount"<<GlyphCount;
 				for ( unsigned int gl ( 0 ); gl < GlyphCount; ++gl )
 				{
-					coverage << toUint16 ( GlyphID + ( gl * 2 ) );
+					coverages[SubTable] << toUint16 ( GlyphID + ( gl * 2 ) );
 				}
 			}
-			else if( 2 == CoverageFormat) // Coverage Format2 => ranges based
+			else if ( 2 == CoverageFormat ) // Coverage Format2 => ranges based
 			{
 				quint16 RangeCount ( toUint16 ( Coverage_Offset + 2 ) );
-				if(out)
-					qDebug()<<"\t\t\tRangeCount" <<RangeCount;
+				if ( out )
+					qDebug() <<"\t\t\tRangeCount" <<RangeCount;
 				int gl_base ( 0 );
 				for ( int r ( 0 ); r < RangeCount; ++r )
 				{
-					quint16 rBase ( Coverage_Offset + 2 + ( r * 6 ) );
+					quint16 rBase ( Coverage_Offset + 4 + ( r * 6 ) );
 					quint16 Start ( toUint16 ( rBase ) );
 					quint16 End ( toUint16 ( rBase + 2 ) );
 					quint16 StartCoverageIndex ( toUint16 ( rBase + 4 ) );
+					if(out)
+						qDebug()<<"\t\t\t\tRange"<<Start<<End<<StartCoverageIndex;
 					for ( unsigned int gl ( Start ); gl <= End; ++gl )
-						coverage << gl;
+						coverages[SubTable]  << gl;
 				}
 			}
 			else
-				qDebug()<<"Unknow Coverage Format:"<<CoverageFormat;
+				qDebug() <<"Unknow Coverage Format:"<<CoverageFormat;
+
+			if(out)
+				qDebug()<<"\t\t**Built a coverage array of length:"<<coverages[SubTable].count();
+			makePairs ( SubTable );
 		}
-		
+
 	}
 
 }
 
-quint16 FMKernFeature::toUint16(int index)
+#define VALUE_RECORD_LEN 2
+void FMKernFeature::makePairs ( quint16 subtableOffset )
 {
-	if((index + 2) >= GPOSTableRaw.count() )
+	/*
+	Lookup Type 2:
+	Pair Adjustment Positioning Subtable
+	*/
+// 	qDebug()<<"Pair Adjustment Positioning Subtable"<<subtableOffset;
+	quint16 PosFormat ( toUint16 ( subtableOffset ) );
+	quint16 Coverage ( toUint16 ( subtableOffset +2 ) );
+
+	if ( PosFormat == 1 )
 	{
-		qDebug()<< "HORROR!" << index << GPOSTableRaw.count() ;
+		quint16 ValueFormat1 ( toUint16 ( subtableOffset +4 ) );
+		quint16 ValueFormat2 ( toUint16 ( subtableOffset +6 ) );
+		quint16 PairSetCount ( toUint16 ( subtableOffset +8 ) );
+		for ( int psIdx ( 0 ); psIdx < PairSetCount; ++ psIdx )
+		{
+			unsigned int FirstGlyph ( coverages[subtableOffset][psIdx] );
+			quint16 PairSetOffset ( toUint16 ( subtableOffset +10 + ( 2 * psIdx ) ) +  subtableOffset );
+			quint16 PairValueCount ( toUint16 ( PairSetOffset ) );
+			quint16 PairValueRecord ( PairSetOffset + 2 );
+			for ( int pvIdx ( 0 );pvIdx < PairValueCount; ++pvIdx )
+			{
+				quint16 recordBase ( PairValueRecord + ( ( VALUE_RECORD_LEN + VALUE_RECORD_LEN + 2 ) * pvIdx ) );
+				quint16 SecondGlyph ( toUint16 ( recordBase ) );
+// 				ValueRecord Value1 ( recordBase + 2, this );
+// 				ValueRecord Value2 ( recordBase + 2 + 16, this );
+				qint16 Value1(toUint16(recordBase + 2));
+				// for now, just be barbarian :)
+				pairs[FirstGlyph][SecondGlyph] = double ( Value1 );
+
+			}
+
+		}
+	}
+	else if ( PosFormat == 2 )
+	{
+		quint16 ValueFormat1 ( toUint16 ( subtableOffset +4 ) );
+		quint16 ValueFormat2 ( toUint16 ( subtableOffset +6 ) );
+		quint16 ClassDef1 ( toUint16 ( subtableOffset +8 )  + subtableOffset );
+		quint16 ClassDef2 ( toUint16 ( subtableOffset +10 ) + subtableOffset );
+		quint16 Class1Count ( toUint16 ( subtableOffset +12 ) );
+		quint16 Class2Count ( toUint16 ( subtableOffset +14 ) );
+		quint16 Class1Record ( subtableOffset +16 );
+
+		// first extract classses
+		ClassDefTable Class1Data ( getClass ( ClassDef1 , subtableOffset ) );
+		ClassDefTable Class2Data ( getClass ( ClassDef2 , subtableOffset ) );
+
+		qDebug()<<"_________________________________\n\t\tValueFormat1";
+		qDebug()<<"XPlacement"<<((ValueFormat1 & XPlacement) == XPlacement);
+		qDebug()<<"YPlacement"<<((ValueFormat1 & YPlacement) == YPlacement);
+		qDebug()<<"XAdvance"<<((ValueFormat1 & XAdvance) == XAdvance);
+		qDebug()<<"YAdvance"<<((ValueFormat1 & YAdvance) == YAdvance);
+		qDebug()<<"_________________________________\n\t\tValueFormat2";
+		qDebug()<<"XPlacement"<<((ValueFormat2 & XPlacement) == XPlacement);
+		qDebug()<<"YPlacement"<<((ValueFormat2 & YPlacement) == YPlacement);
+		qDebug()<<"YAdvance"<<((ValueFormat2 & YAdvance) == YAdvance);
+		qDebug()<<"YAdvance"<<((ValueFormat2 & YAdvance) == YAdvance);
+		
+		qDebug()<<"_________________________________\n\t\tLeft Classes";
+		for( quint16 C1 ( 0 );C1 < Class1Count; ++C1 )
+		{
+			QList<quint16> Class1(Class1Data[C1]);
+			QString cdbg(QString::number(C1).rightJustified(4,QChar(32)));
+			foreach(quint16 gl, Class1)
+			{
+				cdbg += " "+glyphname(gl);
+			}
+			qDebug()<<cdbg;
+		}
+		qDebug()<<"_________________________________\n\t\tRight Classes";
+		for( quint16 C2 ( 0 );C2 < Class2Count; ++C2 )
+		{
+			QList<quint16> Class2(Class2Data[C2]);
+			QString cdbg(QString::number(C2).rightJustified(4,QChar(32)));
+			foreach(quint16 gl, Class2)
+			{
+				cdbg += " "+glyphname(gl);
+			}
+			qDebug()<<cdbg;
+		}
+		QString hdbg("     ");
+		for(int i(0);i < Class2Count; ++i)
+			hdbg += QString::number(i).rightJustified(5,QChar(32));
+		
+		if(ValueFormat1 && ValueFormat2)
+		{
+			for ( quint16 C1 ( 0 );C1 < Class1Count; ++C1 )
+			{
+				QList<quint16> Class1(Class1Data[C1]);
+				quint16 Class2Record (Class1Record + ( C1 * ( 2 * VALUE_RECORD_LEN * Class2Count) ) );
+	// 			qDebug()<<"\tClass2Record"<<C1<<VALUE_RECORD_LEN<<Class2Count<<Class2Record;
+				for ( quint16 C2 ( 0 );C2 < Class2Count; ++C2 )
+				{
+					qint16 Value1(toUint16(Class2Record + ( C2 * ( 2 * VALUE_RECORD_LEN ) ) ) );
+					QList<quint16> Class2(Class2Data[C2]);
+					// keep it barbarian :D
+					foreach(quint16 FirstGlyph, Class1)
+					{
+						foreach(quint16 SecondGlyph, Class2)
+						{
+							if(Value1)
+								pairs[FirstGlyph][SecondGlyph] = double ( Value1 );
+						}
+					}
+				}
+			}
+		}
+		else if(ValueFormat1 && (!ValueFormat2))
+		{
+			qDebug()<<"VF1"<< ValueFormat1<<"WF2"<<ValueFormat2;
+			qDebug()<<hdbg;
+			for ( quint16 C1 ( 0 );C1 < Class1Count; ++C1 )
+			{
+				QString cdbg(QString::number(C1).rightJustified(5,QChar(32)));
+				QList<quint16> Class1(Class1Data[C1]);
+				quint16 Class2Record (Class1Record + ( C1 * (  VALUE_RECORD_LEN * Class2Count) ) );
+				for ( quint16 C2 ( 0 );C2 < Class2Count; ++C2 )
+				{
+					qint16 Value1(toUint16(Class2Record + ( C2 * VALUE_RECORD_LEN  ) ) );
+					cdbg +=  QString::number(Value1).rightJustified(5,QChar(32));
+// 					cdbg +=  QString::number(Class2Record + ( C2 * VALUE_RECORD_LEN  )).rightJustified(8,QChar(32));
+					QList<quint16> Class2(Class2Data[C2]);
+					// keep it barbarian :D
+					foreach(quint16 FirstGlyph, Class1)
+					{
+						foreach(quint16 SecondGlyph, Class2)
+						{
+							if(Value1)
+								pairs[FirstGlyph][SecondGlyph] = double ( Value1 );
+						}
+					}
+				}
+				qDebug()<<cdbg;
+			}
+		}
+		else
+		{
+			qDebug() <<"ValueFormat1 is null or both ValueFormat1 and ValueFormat2 are null";
+		}
+
+	}
+	else
+		qDebug() <<"unknown PosFormat"<<PosFormat;
+	
+}
+
+quint16 FMKernFeature::toUint16 ( quint16 index )
+{
+	if ( ( index + 2 ) >= GPOSTableRaw.count() )
+	{
+// 		qDebug() << "HORROR!" << index << GPOSTableRaw.count() ;
 		return 0;
 	}
-	quint16 c1(GPOSTableRaw.at(index));
-	quint16 c2(GPOSTableRaw.at(index + 1));
+	quint16 c1 ( GPOSTableRaw.at ( index ) );
+	quint16 c2 ( GPOSTableRaw.at ( index + 1 ) );
 	c1 &= 0xFF;
 	c2 &= 0xFF;
-	quint16 ret((c1 << 8) | c2 );
+	quint16 ret ( ( c1 << 8 ) | c2 );
 // 	qDebug()<<"**"<<index<<"("<<c1 << c2 <<")"<<ret;
 	return ret;
 }
+
+
+
+QString FMKernFeature::glyphname ( int index )
+{
+	QByteArray key ( 1001,0 );
+	if ( FT_HAS_GLYPH_NAMES ( p_face ) )
+	{
+		FT_Get_Glyph_Name ( p_face, index, key.data() , 1000 );
+		if ( key[0] == char ( 0 ) )
+		{
+			key = "noname";
+		}
+	}
+	else
+	{
+		key = "noname";
+	}
+	return QString ( key );
+}
+
+FMKernFeature::ClassDefTable FMKernFeature::getClass ( quint16 classDefOffset, quint16 coverageId )
+{
+	ClassDefTable ret;
+	ret[0] = coverages[coverageId];
+// 	ret[0] = QList<quint16>();
+	quint16 ClassFormat ( toUint16 ( classDefOffset ) );
+	if ( ClassFormat == 1 )
+	{
+// 		qDebug()<<"ClassFormat1";
+		quint16 StartGlyph ( toUint16 ( classDefOffset +2 ) );
+		quint16 GlyphCount ( toUint16 ( classDefOffset +4 ) );
+		quint16 ClassValueArray ( classDefOffset + 6 );
+		for ( quint16 CV ( 0 );CV < GlyphCount; ++CV )
+		{
+			ret[0].removeAll(StartGlyph + CV);
+			ret[ toUint16 ( ClassValueArray + ( CV * 2 ) ) ] << StartGlyph + CV;
+		}
+	}
+	else if ( ClassFormat == 2 )
+	{
+// 		qDebug()<<"ClassFormat2";
+		quint16 ClassRangeCount ( toUint16 ( classDefOffset + 2 ) );
+		quint16 ClassRangeRecord ( classDefOffset + 4 );
+		for ( int CRR ( 0 ); CRR < ClassRangeCount; ++CRR )
+		{
+			quint16 Start ( toUint16 ( ClassRangeRecord + ( CRR * 6 ) ) );
+			quint16 End ( toUint16 ( ClassRangeRecord + ( CRR * 6 ) + 2 ) );
+			quint16 Class ( toUint16 ( ClassRangeRecord + ( CRR * 6 ) + 4 ) );
+// 			qDebug()<<"CRC"<<Start<<End<<Class;
+			for ( quint16 gl ( Start ); gl <= End; ++gl )
+			{
+				ret[0].removeAll(gl);
+				ret[Class] << gl;
+			}
+		}
+	}
+	else
+		qDebug() <<"Unknown Class Table type";
+	
+// 	foreach(quint16 c, ret.keys())
+// 	{
+// 		if(c>0)
+// 		{
+// 			QStringList dl;
+// 			foreach(quint16 lg, ret[c])
+// 			{
+// 				dl << glyphname(lg);
+// 			}
+// 			if(!dl.contains("noname"))
+// 				qDebug()<<"\t"<< c <<dl.join(";");
+// 			else
+// 				qDebug()<<"ERROR nonames"<<dl.count();
+// 		}
+// 		else
+// 			qDebug()<<"\t"<< c <<ret[c].count();
+// 	}
+
+	return ret;
+}
+

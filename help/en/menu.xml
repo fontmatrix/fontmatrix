@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu>
 	<area text="Welcome" file="index.html">
-		<submenuitem text="News" file="readme.html"/>
+		<submenuitem text="What's new" file="news.html"/>
 	</area>
 
 	<area text="User interface" file="interface.html">
@@ -27,9 +27,25 @@
 	</area>
 
 	<area text="Additional tools" file="additional.html">
+		<submenuitem text="Checking database" file="additional_db_check.html"/>
+		<submenuitem text="Editing PANOSE metadata" file="additional_editing_panose.html"/>
+		<submenuitem text="Viewing TrueType tables" file="additional_ttf_tables.html"/>
 	</area>
 
 	<area text="Scripting" file="scripting.html">
+	</area>
+
+	<area text="Setting up" file="setting_up.html">
+		<submenuitem text="Preferences" file="setting_up_preferences.html">
+			<submenuitem text="General" file="setting_up_preferences_general.html"/>
+			<submenuitem text="System tray" file="setting_up_preferences_system_tray.html"/>
+			<submenuitem text="Display" file="setting_up_preferences_display.html"/>
+			<submenuitem text="Service" file="setting_up_preferences_service.html"/>
+			<submenuitem text="Samples collection" file="setting_up_preferences_samples_collection.html"/>
+			<submenuitem text="Files &amp; folders" file="setting_up_preferences_files_and_folders.html"/>
+			<submenuitem text="Shortcuts" file="setting_up_preferences_shortcuts.html"/>
+		</submenuitem>
+		<submenuitem text="Layout engine options" file="setting_up_layout_engine_options.html"/>
 	</area>
 
 	<area text="Various resources" file="resources.html">

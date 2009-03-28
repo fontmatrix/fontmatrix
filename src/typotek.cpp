@@ -172,6 +172,7 @@ void typotek::initMatrix()
 
 	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
 	mainDock->setWidget ( ListDockWidget::getInstance() );
+	mainDock->setStatusTip ( tr ( "Show/hide fonts browsing sidebar" ) );
 	addDockWidget ( fontmatrix::DockPosition[mainDockArea], mainDock );
 	if(mainDockArea == QString("Float"))
 		mainDock->setFloating(true);
@@ -180,6 +181,7 @@ void typotek::initMatrix()
 	
 	tagsDock = new QDockWidget ( tr("Tags") );
 	tagsDock->setWidget( TagsWidget::getInstance() );
+	tagsDock->setStatusTip ( tr ( "Show/hide tags list sidebar" ) );
 	addDockWidget(fontmatrix::DockPosition[tagsDockArea], tagsDock);
 	if(tagsDockArea == QString("Float"))
 		tagsDock->setFloating(true);
@@ -529,7 +531,7 @@ void typotek::slotExportFontSet()
 // 	items.removeAll ( "Activated_On" );
 // 	items.removeAll ( "Activated_Off" );
 	bool ok;
-	QString item = QInputDialog::getItem ( this, "Fontmatrix Tags",
+	QString item = QInputDialog::getItem ( this, tr ( "Fontmatrix Tags" ),
 	                                       tr ( "Choose the tag for filter exported fonts" ), items, 0, false, &ok );
 	if ( ok && !item.isEmpty() )
 	{
@@ -606,11 +608,12 @@ void typotek::createActions()
 	connect (printFamilyAct,SIGNAL( triggered() ), this, SLOT ( printFamily()) );
 
 	fontBookAct = new QAction ( QIcon ( ":/fontmatrix_fontbookexport_icon.png" ), tr ( "Export font book..." ),this );
-	fontBookAct->setStatusTip ( tr ( "Export a pdf that show selected fonts" ) );
+	fontBookAct->setStatusTip ( tr ( "Export a PDF document that shows selected fonts" ) );
 	scuts->add(fontBookAct);
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
 
-	dumpInfoAct = new QAction(tr("Export modelled Info"), this);
+	dumpInfoAct = new QAction(tr("Export modelled info..."), this);
+	dumpInfoAct->setStatusTip ( tr ( "Create a template file for packaging currently selected font to a Linux distribution" ) );
 	connect(dumpInfoAct, SIGNAL(triggered()), this, SLOT(slotDumpInfo()));
 
 	exitAct = new QAction ( tr ( "E&xit" ), this );
@@ -621,15 +624,18 @@ void typotek::createActions()
 
 
 	aboutAct = new QAction ( tr ( "&About" ), this );
-	aboutAct->setStatusTip ( tr ( "Show the Typotek's About box" ) );
+	aboutAct->setStatusTip ( tr ( "Show information about Fontmatrix" ) );
 	scuts->add(aboutAct);
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
 
 	aboutQtAct = new QAction ( tr ( "About &Qt" ), this );
+	aboutQtAct->setStatusTip ( tr ( "Show information about Qt" ) );
 	scuts->add(aboutQtAct);
 	connect (aboutQtAct,SIGNAL(triggered()), QApplication::instance(),SLOT(aboutQt()));
 
 	helpAct = new QAction ( tr ( "Help" ), this );
+	helpAct->setShortcut ( tr ( "F1" ) );
+	helpAct->setStatusTip ( tr ( "Read documentation on Fontmatrix" ) );
 	helpAct->setCheckable(true);
 	helpAct->setChecked(false);
 	scuts->add(helpAct);
@@ -641,10 +647,12 @@ void typotek::createActions()
 // 	connect ( tagsetAct,SIGNAL ( triggered( ) ),this,SLOT ( popupTagsetEditor() ) );
 
 	activCurAct = new QAction ( tr ( "Activate all current" ),this );
+	activCurAct->setStatusTip ( tr ( "Activate all currently visible fonts" ) );
 	scuts->add(activCurAct);
 	connect ( activCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotActivateCurrents() ) );
 
 	deactivCurAct = new QAction ( tr ( "Deactivate all current" ),this );
+	deactivCurAct->setStatusTip ( tr ( "Deactivate all currently visible fonts" ) );
 	scuts->add(deactivCurAct);
 	connect ( deactivCurAct,SIGNAL ( triggered( ) ),this,SLOT ( slotDeactivateCurrents() ) );
 
@@ -653,19 +661,21 @@ void typotek::createActions()
 	connect ( fonteditorAct,SIGNAL ( triggered( ) ),this,SLOT ( slotEditFont() ) );
 	if ( QFile::exists ( fonteditorPath ) )
 	{
-		fonteditorAct->setStatusTip ( tr ( "Try to run font editor with the selected font as argument" ) );
+		fonteditorAct->setStatusTip ( tr ( "Edit currently selected font in a font editor of your choice" ) );
 	}
 	else
 	{
 		fonteditorAct->setEnabled ( false );
-		fonteditorAct->setStatusTip ( tr ( "You don't seem to have font editor installed. Path to font editor can be set in preferences." ) );
+		fonteditorAct->setStatusTip ( tr ( "You don't seem to have a font editor installed. Path to font editor can be set in Preferences dialog." ) );
 	}
 
 	prefsAct = new QAction ( tr ( "Preferences" ),this );
+	prefsAct->setStatusTip ( tr ( "Setup Fontmatrix" ) );
 	scuts->add(prefsAct);
 	connect ( prefsAct,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanelDefault() ) );
 
 	repairAct = new QAction ( tr("Check Database"), this);
+	repairAct->setStatusTip ( tr ( "Check Fontmatrix database for dead links to font files" ) );
 	scuts->add(repairAct);
 	connect( repairAct, SIGNAL ( triggered() ),this,SLOT (slotRepair()));
 
@@ -673,57 +683,69 @@ void typotek::createActions()
 		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
 
 	tagAll = new QAction(tr("Tag All..."), this);
+	tagAll->setStatusTip ( tr ( "Tag all currently visible files" ) );
 	scuts->add(tagAll);
 	connect(tagAll,SIGNAL(triggered()),this,SLOT(slotTagAll()));
 
 	showTTTAct = new QAction(tr("Show TrueType tables"),this);
+	showTTTAct->setStatusTip ( tr ( "View hexadecimal values of TrueType tables for currently selected font file" ) );
 	scuts->add(showTTTAct);
 	connect(showTTTAct,SIGNAL(triggered( )),this,SLOT(slotShowTTTables()));
 
-	editPanoseAct = new QAction(tr("Edit Panose info"), this);
+	editPanoseAct = new QAction(tr("Edit PANOSE metadata"), this);
+	editPanoseAct->setStatusTip ( tr ( "Edit PANOSE metadata without saving changes to font files" ) );
 	scuts->add(editPanoseAct);
 	connect(editPanoseAct, SIGNAL(triggered()), this, SLOT(slotEditPanose()));
 
 	nextFamily = new QAction(tr("Next Family"), this);
 	nextFamily->setShortcut(Qt::Key_PageDown);
+	nextFamily->setStatusTip ( tr ( "Switch to the next font family in the list" ) );
 	scuts->add(nextFamily);
 	connect(nextFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFamily()));
 
 	nextFont = new QAction(tr("Next Face"), this);
 	nextFont->setShortcut(Qt::Key_Down);
+	nextFont->setStatusTip ( tr ( "Switch to the next font face in the list" ) );
 	scuts->add(nextFont);
 	connect(nextFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFont()));
 
 	previousFamily = new QAction(tr("Previous Family"), this);
 	previousFamily->setShortcut(Qt::Key_PageUp);
+	previousFamily->setStatusTip ( tr ( "Switch to the previous font family in the list" ) );
 	scuts->add(previousFamily);
 	connect(previousFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFamily()));
 
 
 	previousFont = new QAction(tr("Previous Face"), this);
 	previousFont->setShortcut(Qt::Key_Up);
+	previousFont->setStatusTip ( tr ( "Switch to the previous font face in the list" ) );
 	scuts->add(previousFont);
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
 	layOptAct = new QAction(tr("Layout Options"),this);
+	layOptAct->setStatusTip ( tr ( "View and edit layout engine variables" ) );
 	layOptAct->setCheckable(true);
 	scuts->add(layOptAct);
 	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
 	
 	extractFontAction = new QAction(tr("Extract fonts..."),this);
+	extractFontAction->setStatusTip ( tr ( "Extract fonts from documents like PDF to PFM file format" ) );
 	scuts->add(extractFontAction);
 	connect(extractFontAction,SIGNAL(triggered()),this,SLOT(slotExtractFont()));
 	
 #ifdef HAVE_PYTHONQT
-	execScriptAct = new QAction(tr("Execute Script"),this);
+	execScriptAct = new QAction(tr("Execute Script..."),this);
+	execScriptAct->setStatusTip ( tr ( "Execute a Python script" ) );
 	scuts->add(execScriptAct);
 	connect(execScriptAct,SIGNAL(triggered()),this,SLOT(slotExecScript()));
 	
 	execLastScriptAct = new QAction(tr("Execute Last Script"),this);
+	execLastScriptAct->setStatusTip ( tr ( "Execute the last chosen Python script" ) );
 	scuts->add(execLastScriptAct);
 	connect(execLastScriptAct,SIGNAL(triggered()),this,SLOT(slotExecLastScript()));
 	
-	scriptConsoleAct = new QAction(tr("Script Console"), this);
+	scriptConsoleAct = new QAction(tr("Script Console..."), this);
+	scriptConsoleAct->setStatusTip ( tr ( "Open Python scripting console" ) );
 	scriptConsoleAct->setCheckable(true);
 	scuts->add(scriptConsoleAct);
 	connect(scriptConsoleAct, SIGNAL(triggered()), this, SLOT(slotSwitchScriptConsole()));

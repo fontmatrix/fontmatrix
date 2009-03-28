@@ -613,7 +613,7 @@ void typotek::createActions()
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
 
 	dumpInfoAct = new QAction(tr("Export modelled info..."), this);
-	dumpInfoAct->setStatusTip ( tr ( "Create a template file for packaging currently selected font to a Linux distribution" ) );
+	dumpInfoAct->setStatusTip ( tr ( "Fill a template file with metadata for packaging currently selected font to a Linux distribution" ) );
 	connect(dumpInfoAct, SIGNAL(triggered()), this, SLOT(slotDumpInfo()));
 
 	exitAct = new QAction ( tr ( "E&xit" ), this );

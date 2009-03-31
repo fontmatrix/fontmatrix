@@ -595,17 +595,6 @@ void MainViewWidget::updateTree ( bool checkFontActive )
 // 	m_lists->previewList->slotRefill ( currentFonts, false );
 	if ( curItem )
 	{
-// 		QColor scol (QApplication::palette().highlight().color());
-// 		QColor pcol (scol);
-// 		QFont selFont;
-// 		selFont.setBold ( true );
-// 		curItem->parent()->setBackgroundColor ( 0,pcol );
-// 		curItem->parent()->setFont ( 0, selFont );
-// 		curItem->setBackgroundColor ( 0,scol );
-// 		curItem->setFont ( 0,selFont );
-// 		if ( !curItem->parent()->isExpanded() )
-// 			curItem->parent()->setExpanded ( true );
-		
 		QFont selFont;
 		selFont.setBold ( true );
 		curItem->parent()->setFont ( 0, selFont );
@@ -798,6 +787,7 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		typo->presentFontName ( theVeryFont->fancyName() );
 // 		fillTree();
 		updateTree();
+		m_lists->listPreview->setCurrentFont(theVeryFont->path());
 		abcView->verticalScrollBar()->setValue ( 0 );
 		
 		// Update panose widget

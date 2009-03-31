@@ -42,6 +42,8 @@ class FMPreviewView : public QListView
 		
 	public slots:
 		void updateLayout();
+		void setCurrentFont(const QString& name);
+				
 	signals:
 		void widthChanged(int);
 		

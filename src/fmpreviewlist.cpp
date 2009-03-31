@@ -135,3 +135,29 @@ void FMPreviewView::updateLayout()
 {
 	emit widthChanged(usedWidth);
 }
+
+void FMPreviewView::setCurrentFont(const QString & name)
+{
+	QList<FontItem*> fl( typotek::getInstance()->getCurrentFonts() );
+	const int fl_count(fl.count());
+	int rFont(fl_count);
+	for(int i(0); i < fl_count ; ++i)
+	{
+		if(fl[i]->path() == name)
+		{
+			rFont = i;
+			break;
+		}
+	}
+	
+	if(rFont != fl_count)
+	{
+		QAbstractListModel *mod(reinterpret_cast<QAbstractListModel*>(model()));
+		QModelIndex mi(mod->index(rFont));
+		if(mi.isValid())
+		{
+			selectionModel()->setCurrentIndex(mi, QItemSelectionModel::ClearAndSelect);
+			// scrollTo ( mi );
+		}
+	}
+}

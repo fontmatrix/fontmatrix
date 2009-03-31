@@ -310,7 +310,7 @@ quint16 FMKernFeature::toUint16 ( quint16 index )
 {
 	if ( ( index + 2 ) >= GPOSTableRaw.count() )
 	{
-// 		qDebug() << "HORROR!" << index << GPOSTableRaw.count() ;
+		qDebug() << "HORROR!" << index << GPOSTableRaw.count() ;
 		return 0;
 	}
 	quint16 c1 ( GPOSTableRaw.at ( index ) );

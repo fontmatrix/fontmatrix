@@ -28,6 +28,7 @@
 #include "fmfontdb.h"
 #include "fmfontextract.h"
 #include "fmlayout.h"
+#include "fmpaths.h"
 #include "fmrepair.h"
 #include "fontbook.h"
 #include "fontitem.h"
@@ -872,6 +873,8 @@ void typotek::readSettings()
 	webBrowser = settings.value("Info/Browser", "Fontmatrix").toString();
 	webBrowserOptions = settings.value("Info/BrowserOptions", "").toString();
 	previewInfoFontSize = settings.value("Info/PreviewSize", 32.0).toDouble();
+	
+	infoStyle = settings.value("Info/Style", FMPaths::ResourcesDir() + "info.css").toString();
 
 	templatesDir = settings.value ( "Places/TemplatesDir", "./").toString();
 	m_welcomeURL = settings.value("Places/WelcomeURL").toString();
@@ -915,6 +918,7 @@ void typotek::writeSettings()
 	settings.setValue( "Docks/TagsGeometry", tagsDockGeometry);
 
 	settings.setValue("Info/PreviewSize", previewInfoFontSize );
+	settings.setValue("Info/Style", infoStyle );
 
 	settings.setValue( "Panose/MatchTreshold", panoseMatchTreshold);
 
@@ -2291,5 +2295,7 @@ void typotek::show()
 	QMainWindow::show();
 }
 
-
-
+void typotek::setInfoStyle ( const QString& theValue )
+{
+	infoStyle = theValue;
+}

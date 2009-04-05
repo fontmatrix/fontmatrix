@@ -824,7 +824,7 @@ void MainViewWidget::slotInfoFont()
 		fIT += "<head>";
 		fIT += "<title>" + theVeryFont->fancyName() + "</title>";
 		fIT += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
-		fIT += "<link rel='stylesheet' href='file://" + FMPaths::ResourcesDir() + "info.css' type='text/css' />";
+		fIT += "<link rel='stylesheet' href='file://" + typo->getInfoStyle() + "' type='text/css' />";
                 fIT += "</head ><body>" +  theVeryFont->infoText(false) + "</body> </html>";
 //		fontInfoText->setHtml (fIT);
                 fontInfoText->setContent(fIT.toUtf8(), "application/xhtml+xml");

@@ -16,6 +16,7 @@ author - Pierre marchand
 
 class typotek;
 class FMFontDb;
+class FontItem;
 class FMPythonW : public QThread
 {
 		Q_OBJECT
@@ -43,6 +44,8 @@ class FMPythonW : public QThread
 		QString currentFontPath();
 		QString currentFontFamily();
 		QString currentFontStyle();
+		QStringList currentFontNames();
+		QList<FontItem*> currentFonts();
 
 		FMFontDb*  DB();
 

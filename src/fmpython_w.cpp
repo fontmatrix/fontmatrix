@@ -153,6 +153,26 @@ QString FMPythonW::currentFontStyle()
 	return tk->getSelectedFont()->variant();
 }
 
+QStringList FMPythonW::currentFontNames()
+{
+	QStringList ret;
+	if ( !tk->getSelectedFont() )
+		return ret;
+	
+	foreach(FontItem* fi, tk->getCurrentFonts())
+	{
+		ret << fi->path();
+	}
+	return ret;
+}
+
+QList<FontItem*> FMPythonW::currentFonts()
+{
+	if ( !tk->getSelectedFont() )
+		return QList<FontItem*>();
+	return tk->getCurrentFonts();
+}
+
 
 void FMPythonW::Debug ( QVariant var )
 {

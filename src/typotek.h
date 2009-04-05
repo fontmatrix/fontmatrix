@@ -263,6 +263,8 @@ class typotek:public QMainWindow
 
 		QString webBrowser;
 		QString webBrowserOptions;
+		
+		QString infoStyle;
 
 	public:
 		bool isSysFont(FontItem* f);
@@ -379,6 +381,10 @@ class typotek:public QMainWindow
 	double getPreviewInfoFontSize() const{return previewInfoFontSize;}
 
 	QDir getOwnDir() const{return ownDir;}
+
+	void setInfoStyle ( const QString& theValue );
+	QString getInfoStyle() const{ return infoStyle; }
+	
 	
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);

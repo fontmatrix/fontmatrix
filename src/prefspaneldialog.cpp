@@ -13,6 +13,8 @@
 #include "typotek.h"
 #include "shortcuts.h"
 #include "hyphenate/fmhyphenator.h"
+#include "fmpaths.h"
+
 #include <QDebug>
 #include <QToolTip>
 #include <QSettings>
@@ -48,16 +50,27 @@ PrefsPanelDialog::PrefsPanelDialog ( QWidget *parent )
 	namedSampleTextText->setText ( tr ( "Please select an item in the list or create a new one." ) );
 	namedSampleTextText->setEnabled ( false );
 	
+	/// browser
 	QStringList webBrowsers;
 	webBrowsers << "Fontmatrix" << "firefox" << "konqueror"; // TODO fill in
 	QString browser(typotek::getInstance()->getWebBrowser()); 
 	if(!webBrowsers.contains(browser))
 		webBrowsers << browser;
-	qDebug()<<"Browsers ("<< browser <<"):"<< webBrowsers.join(" ; ");
+// 	qDebug()<<"Browsers ("<< browser <<"):"<< webBrowsers.join(" ; ");
 	browserCombo->addItems(webBrowsers);
 	browserCombo->setCurrentIndex(webBrowsers.indexOf(browser));
 	
 	browserOptions->setText(typotek::getInstance()->getWebBrowserOptions());
+	
+	
+	/// CSS
+	QDir cssDir(FMPaths::ResourcesDir());
+	QStringList cssList(cssDir.entryList(QStringList("*.css")));
+	QFileInfo cssCurrent(typotek::getInstance()->getInfoStyle());
+	QString cssName(cssCurrent.fileName());
+	infoStyleCombo->addItems(cssList);
+	infoStyleCombo->setCurrentIndex(cssList.indexOf(cssName));
+	
 
 	doConnect();
 }
@@ -164,6 +177,8 @@ void PrefsPanelDialog::doConnect()
 	connect(browserButton,SIGNAL(clicked( )), this, SLOT(addAndSelectWebBrowser()));
 	connect(browserCombo, SIGNAL(activated( const QString& )), this, SLOT( selectWebBrowser(const QString& ) ));
 	connect(browserOptions, SIGNAL(textChanged( const QString& )), this, SLOT(setupWebBrowserOptions(const QString& )));
+	
+	connect(infoStyleCombo, SIGNAL(activated( const QString& )), this, SLOT( selectInfoStyle(const QString& ) ));
 
 	connect ( initTagBox, SIGNAL ( clicked ( bool ) ), typotek::getInstance(), SLOT ( slotUseInitialTags ( bool ) ) );
 // 	connect ( familyNameScheme,SIGNAL ( toggled ( bool ) ),this,SLOT ( slotFamilyNotPreferred ( bool ) ) );
@@ -370,6 +385,11 @@ void PrefsPanelDialog::setupWebBrowserOptions(const QString & text)
 	QSettings settings;
 	settings.setValue("Info/BrowserOptions",text);
 	typotek::getInstance()->setWebBrowserOptions(text);
+}
+
+void PrefsPanelDialog::selectInfoStyle(const QString & css)
+{
+	typotek::getInstance()->setInfoStyle(FMPaths::ResourcesDir() + css);
 }
 
 void PrefsPanelDialog::showPage ( PAGE page )

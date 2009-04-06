@@ -18,11 +18,13 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QMessageBox>
 
 FmRepair::FmRepair(QWidget *parent)
 	:QDialog(parent)
 {
 	setupUi(this);
+// 	listItems.clear();
 	fillLists();
 	doConnect();
 	
@@ -30,6 +32,11 @@ FmRepair::FmRepair(QWidget *parent)
 
 FmRepair::~ FmRepair()
 {
+// 	foreach(QListWidgetItem* lit , listItems)
+// 	{
+// 		if(lit)
+// 			delete lit;
+// 	}
 }
 
 void FmRepair::doConnect()
@@ -46,6 +53,9 @@ void FmRepair::doConnect()
 	connect(selectAllDeactLink,SIGNAL(clicked()),this,SLOT(slotSelAllDeactLinked()));
 	connect(delinkDeactLink,SIGNAL(clicked()),this,SLOT(slotDelinkDeactLinked()));
 	connect(activateDeactLink,SIGNAL(clicked()),this,SLOT(slotActivateDeactLinked()));
+	
+	connect(selectAllUnreferenced,SIGNAL(clicked()),this,SLOT(slotSelectAllUnref()));
+	connect(removeUnreferenced,SIGNAL(clicked()),this,SLOT(slotRemoveUnref()));
 }
 
 void FmRepair::fillLists()
@@ -53,6 +63,7 @@ void FmRepair::fillLists()
 	fillDeadLink();
 	fillActNotLinked();
 	fillDeactLinked();
+	fillUnreferenced();
 }
 
 void FmRepair::fillDeadLink()
@@ -72,6 +83,7 @@ void FmRepair::fillDeadLink()
 				lit->setCheckState(Qt::Unchecked);
 				lit->setToolTip(list[i].absoluteFilePath());
 				deadList->addItem(lit);
+// 				listItems << lit;
 			}
 		}
 	}
@@ -122,6 +134,7 @@ void FmRepair::fillActNotLinked()
 			lit->setCheckState(Qt::Unchecked);
 			lit->setToolTip(activated[i]);
 			actNotLinkList->addItem(lit);
+// 			listItems << lit;
 		}
 	}
 }
@@ -134,10 +147,10 @@ void FmRepair::fillDeactLinked()
 	QStringList deactivated;
 	for(int i(0); i < flist.count();++i)
 	{
-		if(/*!flist[i]->isLocked() &&*/ !flist[i]->isRemote() && !flist[i]->isActivated())
+		if(!t->isSysFont(flist[i]) && !flist[i]->isRemote() && !flist[i]->isActivated())
 			deactivated << flist[i]->path();
 	}
-	qDebug() << deactivated.join("\nDEACT : ");
+// 	qDebug() << deactivated.join("\nDEACT : ");
 	QStringList linked;
 	QDir md(t->getManagedDir());
 	md.setFilter( QDir::Files );
@@ -157,15 +170,16 @@ void FmRepair::fillDeactLinked()
 	{
 		if(deactivated.contains(linked[i]))
 		{
-			qDebug() << "NO " << linked[i] ;
+// 			qDebug() << "NO " << linked[i] ;
 			QListWidgetItem *lit = new QListWidgetItem(linked[i]);
 			lit->setCheckState(Qt::Unchecked);
 			lit->setToolTip(linked[i]);
 			deactLinkList->addItem(lit);
+// 			listItems << lit;
 		}
 		else
 		{
-			qDebug() << "OK " << linked[i] ;
+// 			qDebug() << "OK " << linked[i] ;
 		}
 	}
 }
@@ -287,3 +301,46 @@ void FmRepair::slotActivateDeactLinked()
 
 
 
+
+
+void FmRepair::fillUnreferenced()
+{
+	unrefList->clear();
+	foreach(const QString& fid, FMFontDb::DB()->AllFontNames())
+	{
+		if(!QFile::exists(fid))
+		{
+			QListWidgetItem *lit = new QListWidgetItem(fid);
+			lit->setCheckState(Qt::Unchecked);
+			unrefList->addItem(lit);
+// 			listItems << lit;
+		}
+	}
+}
+
+void FmRepair::slotSelectAllUnref()
+{
+	for(int i(0); i < unrefList->count(); ++i)
+	{
+		unrefList->item(i)->setCheckState(Qt::Checked);
+	}
+}
+
+void FmRepair::slotRemoveUnref()
+{
+	FMFontDb *db(FMFontDb::DB());
+	QStringList failed;
+	for(int i(0); i < unrefList->count(); ++i)
+	{
+		if(unrefList->item(i)->checkState() == Qt::Checked)
+		{
+			if(!db->Remove(unrefList->item(i)->text()))
+				failed << unrefList->item(i)->text();
+		}
+	}
+// 	if(failed.count() > 0)
+// 	{
+// 		QMessageBox::warning(this,"Fontmatrix - warning",failed.join("\n"));
+// 	}
+	fillUnreferenced();
+}

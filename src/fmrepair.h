@@ -26,9 +26,13 @@ class FmRepair : public QDialog, private Ui::repairDialog
 		void fillDeadLink();
 		void fillActNotLinked();
 		void fillDeactLinked();
+		void fillUnreferenced();
 		void fillLists();
 		
 		void doConnect();
+		
+// 		QList<QListWidgetItem*> listItems;
+		
 	private slots:
 		void slotSelAllDead();
 		void slotRemoveDead();
@@ -40,6 +44,10 @@ class FmRepair : public QDialog, private Ui::repairDialog
 		void slotSelAllDeactLinked();
 		void slotDelinkDeactLinked();
 		void slotActivateDeactLinked();
+		
+		void slotSelectAllUnref();
+		void slotRemoveUnref();
+		
 	
 };
 

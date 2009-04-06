@@ -860,9 +860,12 @@ bool FMFontDb::Remove ( const QString & id )
 {
 	// TODO  implement remove
 // 	return true;
+// 	qDebug()<<"Remove"<<id;
 	int nId ( getId ( id ) );
 	
 	fontMap.remove(nId);
+	reverseCacheId.remove(nId);
+	cacheId.remove(id);
 
 	QSqlQuery queryTag ( QString ( "DELETE FROM %1 WHERE %2='%3'" )
 	                     .arg ( tableName[Tag] )

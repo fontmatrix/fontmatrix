@@ -157,41 +157,64 @@ void FMKernFeature::makeCoverage()
 
 }
 
-#define VALUE_RECORD_LEN 2
+
 void FMKernFeature::makePairs ( quint16 subtableOffset )
 {
 	/*
 	Lookup Type 2:
 	Pair Adjustment Positioning Subtable
 	*/
-// 	qDebug()<<"Pair Adjustment Positioning Subtable"<<subtableOffset;
+
 	quint16 PosFormat ( toUint16 ( subtableOffset ) );
-	quint16 Coverage ( toUint16 ( subtableOffset +2 ) );
 
 	if ( PosFormat == 1 )
 	{
 		quint16 ValueFormat1 ( toUint16 ( subtableOffset +4 ) );
 		quint16 ValueFormat2 ( toUint16 ( subtableOffset +6 ) );
 		quint16 PairSetCount ( toUint16 ( subtableOffset +8 ) );
-		for ( int psIdx ( 0 ); psIdx < PairSetCount; ++ psIdx )
+		if ( ValueFormat1 && ValueFormat2 )
 		{
-			unsigned int FirstGlyph ( coverages[subtableOffset][psIdx] );
-			quint16 PairSetOffset ( toUint16 ( subtableOffset +10 + ( 2 * psIdx ) ) +  subtableOffset );
-			quint16 PairValueCount ( toUint16 ( PairSetOffset ) );
-			quint16 PairValueRecord ( PairSetOffset + 2 );
-			for ( int pvIdx ( 0 );pvIdx < PairValueCount; ++pvIdx )
+			for ( int psIdx ( 0 ); psIdx < PairSetCount; ++ psIdx )
 			{
-				quint16 recordBase ( PairValueRecord + ( ( VALUE_RECORD_LEN + VALUE_RECORD_LEN + 2 ) * pvIdx ) );
-				quint16 SecondGlyph ( toUint16 ( recordBase ) );
-// 				ValueRecord Value1 ( recordBase + 2, this );
-// 				ValueRecord Value2 ( recordBase + 2 + 16, this );
-				qint16 Value1(toUint16(recordBase + 2));
-				// for now, just be barbarian :)
-				pairs[FirstGlyph][SecondGlyph] = double ( Value1 );
+				unsigned int FirstGlyph ( coverages[subtableOffset][psIdx] );
+				quint16 PairSetOffset ( toUint16 ( subtableOffset +10 + ( 2 * psIdx ) ) +  subtableOffset );
+				quint16 PairValueCount ( toUint16 ( PairSetOffset ) );
+				quint16 PairValueRecord ( PairSetOffset + 2 );
+				for ( int pvIdx ( 0 );pvIdx < PairValueCount; ++pvIdx )
+				{
+					quint16 recordBase ( PairValueRecord + ( ( 2 + 2 + 2 ) * pvIdx ) );
+					quint16 SecondGlyph ( toUint16 ( recordBase ) );
+					qint16 Value1 ( toInt16 ( recordBase + 2 ) );
+					pairs[FirstGlyph][SecondGlyph] = double ( Value1 );
+
+				}
 
 			}
-
 		}
+		else if ( ValueFormat1 && ( !ValueFormat2 ) )
+		{
+			for ( int psIdx ( 0 ); psIdx < PairSetCount; ++ psIdx )
+			{
+				unsigned int FirstGlyph ( coverages[subtableOffset][psIdx] );
+				quint16 PairSetOffset ( toUint16 ( subtableOffset +10 + ( 2 * psIdx ) ) +  subtableOffset );
+				quint16 PairValueCount ( toUint16 ( PairSetOffset ) );
+				quint16 PairValueRecord ( PairSetOffset + 2 );
+				for ( int pvIdx ( 0 );pvIdx < PairValueCount; ++pvIdx )
+				{
+					quint16 recordBase ( PairValueRecord + ( ( 2 + 2 ) * pvIdx ) );
+					quint16 SecondGlyph ( toUint16 ( recordBase ) );
+					qint16 Value1 ( toInt16 ( recordBase + 2 ) );
+					pairs[FirstGlyph][SecondGlyph] = double ( Value1 );
+
+				}
+
+			}
+		}
+		else
+		{
+			qDebug() <<"ValueFormat1 is null or both ValueFormat1 and ValueFormat2 are null";
+		}
+
 	}
 	else if ( PosFormat == 2 )
 	{
@@ -207,92 +230,49 @@ void FMKernFeature::makePairs ( quint16 subtableOffset )
 		ClassDefTable Class1Data ( getClass ( ClassDef1 , subtableOffset ) );
 		ClassDefTable Class2Data ( getClass ( ClassDef2 , subtableOffset ) );
 
-		qDebug()<<"_________________________________\n\t\tValueFormat1";
-		qDebug()<<"XPlacement"<<((ValueFormat1 & XPlacement) == XPlacement);
-		qDebug()<<"YPlacement"<<((ValueFormat1 & YPlacement) == YPlacement);
-		qDebug()<<"XAdvance"<<((ValueFormat1 & XAdvance) == XAdvance);
-		qDebug()<<"YAdvance"<<((ValueFormat1 & YAdvance) == YAdvance);
-		qDebug()<<"_________________________________\n\t\tValueFormat2";
-		qDebug()<<"XPlacement"<<((ValueFormat2 & XPlacement) == XPlacement);
-		qDebug()<<"YPlacement"<<((ValueFormat2 & YPlacement) == YPlacement);
-		qDebug()<<"YAdvance"<<((ValueFormat2 & YAdvance) == YAdvance);
-		qDebug()<<"YAdvance"<<((ValueFormat2 & YAdvance) == YAdvance);
-		
-		qDebug()<<"_________________________________\n\t\tLeft Classes";
-		for( quint16 C1 ( 0 );C1 < Class1Count; ++C1 )
-		{
-			QList<quint16> Class1(Class1Data[C1]);
-			QString cdbg(QString::number(C1).rightJustified(4,QChar(32)));
-			foreach(quint16 gl, Class1)
-			{
-				cdbg += " "+glyphname(gl);
-			}
-			qDebug()<<cdbg;
-		}
-		qDebug()<<"_________________________________\n\t\tRight Classes";
-		for( quint16 C2 ( 0 );C2 < Class2Count; ++C2 )
-		{
-			QList<quint16> Class2(Class2Data[C2]);
-			QString cdbg(QString::number(C2).rightJustified(4,QChar(32)));
-			foreach(quint16 gl, Class2)
-			{
-				cdbg += " "+glyphname(gl);
-			}
-			qDebug()<<cdbg;
-		}
-		QString hdbg("     ");
-		for(int i(0);i < Class2Count; ++i)
-			hdbg += QString::number(i).rightJustified(5,QChar(32));
-		
-		if(ValueFormat1 && ValueFormat2)
+		if ( ValueFormat1 && ValueFormat2 )
 		{
 			for ( quint16 C1 ( 0 );C1 < Class1Count; ++C1 )
 			{
-				QList<quint16> Class1(Class1Data[C1]);
-				quint16 Class2Record (Class1Record + ( C1 * ( 2 * VALUE_RECORD_LEN * Class2Count) ) );
-	// 			qDebug()<<"\tClass2Record"<<C1<<VALUE_RECORD_LEN<<Class2Count<<Class2Record;
+				QList<quint16> Class1 ( Class1Data[C1] );
+				quint16 Class2Record ( Class1Record + ( C1 * ( 2 * 2 * Class2Count ) ) );
 				for ( quint16 C2 ( 0 );C2 < Class2Count; ++C2 )
 				{
-					qint16 Value1(toUint16(Class2Record + ( C2 * ( 2 * VALUE_RECORD_LEN ) ) ) );
-					QList<quint16> Class2(Class2Data[C2]);
+					qint16 Value1 ( toInt16 ( Class2Record + ( C2 * ( 2 * 2 ) ) ) );
+					QList<quint16> Class2 ( Class2Data[C2] );
 					// keep it barbarian :D
-					foreach(quint16 FirstGlyph, Class1)
+					foreach ( quint16 FirstGlyph, Class1 )
 					{
-						foreach(quint16 SecondGlyph, Class2)
+						foreach ( quint16 SecondGlyph, Class2 )
 						{
-							if(Value1)
+							if ( Value1 )
 								pairs[FirstGlyph][SecondGlyph] = double ( Value1 );
 						}
 					}
 				}
 			}
 		}
-		else if(ValueFormat1 && (!ValueFormat2))
+		else if ( ValueFormat1 && ( !ValueFormat2 ) )
 		{
-			qDebug()<<"VF1"<< ValueFormat1<<"WF2"<<ValueFormat2;
-			qDebug()<<hdbg;
 			for ( quint16 C1 ( 0 );C1 < Class1Count; ++C1 )
 			{
-				QString cdbg(QString::number(C1).rightJustified(5,QChar(32)));
-				QList<quint16> Class1(Class1Data[C1]);
-				quint16 Class2Record (Class1Record + ( C1 * (  VALUE_RECORD_LEN * Class2Count) ) );
+				QString cdbg ( QString::number ( C1 ).rightJustified ( 5,QChar ( 32 ) ) );
+				QList<quint16> Class1 ( Class1Data[C1] );
+				quint16 Class2Record ( Class1Record + ( C1 * ( 2 * Class2Count ) ) );
 				for ( quint16 C2 ( 0 );C2 < Class2Count; ++C2 )
 				{
-					qint16 Value1(toUint16(Class2Record + ( C2 * VALUE_RECORD_LEN  ) ) );
-					cdbg +=  QString::number(Value1).rightJustified(5,QChar(32));
-// 					cdbg +=  QString::number(Class2Record + ( C2 * VALUE_RECORD_LEN  )).rightJustified(8,QChar(32));
-					QList<quint16> Class2(Class2Data[C2]);
-					// keep it barbarian :D
-					foreach(quint16 FirstGlyph, Class1)
+					qint16 Value1 ( toInt16 ( Class2Record + ( C2 * 2 ) ) );
+					QList<quint16> Class2 ( Class2Data[C2] );
+
+					foreach ( quint16 FirstGlyph, Class1 )
 					{
-						foreach(quint16 SecondGlyph, Class2)
+						foreach ( quint16 SecondGlyph, Class2 )
 						{
-							if(Value1)
+							if ( Value1 )
 								pairs[FirstGlyph][SecondGlyph] = double ( Value1 );
 						}
 					}
 				}
-				qDebug()<<cdbg;
 			}
 		}
 		else
@@ -303,14 +283,12 @@ void FMKernFeature::makePairs ( quint16 subtableOffset )
 	}
 	else
 		qDebug() <<"unknown PosFormat"<<PosFormat;
-	
 }
 
 quint16 FMKernFeature::toUint16 ( quint16 index )
 {
 	if ( ( index + 2 ) >= GPOSTableRaw.count() )
 	{
-		qDebug() << "HORROR!" << index << GPOSTableRaw.count() ;
 		return 0;
 	}
 	quint16 c1 ( GPOSTableRaw.at ( index ) );
@@ -322,6 +300,20 @@ quint16 FMKernFeature::toUint16 ( quint16 index )
 	return ret;
 }
 
+qint16 FMKernFeature::toInt16 ( quint16 index )
+{
+	if ( ( index + 2 ) > GPOSTableRaw.count() )
+	{
+		return 0;
+	}
+	// FIXME I just do not know how it has to be done *properly*
+	quint16 c1 ( GPOSTableRaw.at ( index ) );
+	quint16 c2 ( GPOSTableRaw.at ( index + 1 ) );
+	c1 &= 0xFF;
+	c2 &= 0xFF;
+	qint16 ret ( ( c1 << 8 ) | c2 );
+	return ret;
+}
 
 
 QString FMKernFeature::glyphname ( int index )

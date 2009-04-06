@@ -42,7 +42,8 @@ class FMKernFeature
 
 		// return a uint16 from position index in GPOSTableRaw
 		inline quint16 toUint16 ( quint16 index );
-
+		// return a int16 from position index in GPOSTableRaw
+		inline qint16 toInt16 ( quint16 index );
 		/*
 		0x0001 	XPlacement 	Includes horizontal adjustment for placement
 		0x0002 	YPlacement 	Includes vertical adjustment for placement
@@ -60,24 +61,11 @@ class FMKernFeature
 			YPlacement = 0x0002,
 			XAdvance = 0x0004,
 			YAdvance = 0x0008,
-			XPlaDevice,
-			YPlaDevice,
-			XAdvDevice,
-			YAdvDevice
+			XPlaDevice = 0x0010,
+			YPlaDevice = 0x0020,
+			XAdvDevice = 0x0040,
+			YAdvDevice = 0x0080
 		};
-// 		struct ValueRecord
-// 		{
-// 			qint16 XPlacement;
-// 			qint16 YPlacement;
-// 			qint16 XAdvance;
-// 			qint16 YAdvance;
-// 			quint16 XPlaDevice;
-// 			quint16 YPlaDevice;
-// 			quint16 XAdvDevice;
-// 			quint16 YAdvDevice;
-// 
-// 			ValueRecord ( quint16 globalOffset, FMKernFeature* kf );
-// 		};
 };
 
 

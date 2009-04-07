@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="ru_RU">
-<defaultcodec></defaultcodec>
 <context>
     <name>About</name>
     <message>
@@ -186,11 +185,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../fmfontextract.cpp" line="66"/>
         <source>File does not exist:</source>
         <translation>Файл не существует:</translation>
-    </message>
-    <message>
-        <location filename="../fmfontextract.cpp" line="66"/>
-        <source>Not built with PDF extractor.</source>
-        <translation type="obsolete">Программа собрана без поддержки извлечения шрифтов из PDF.</translation>
     </message>
     <message>
         <location filename="../fmfontextract.cpp" line="86"/>
@@ -1444,21 +1438,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ImportedFonts</name>
     <message>
-        <location filename="../importedfonts.ui" line="13"/>
-        <source>Dialog</source>
-        <translation type="obsolete">Результат импорта</translation>
-    </message>
-    <message>
-        <location filename="../importedfonts.ui" line="24"/>
-        <source>Imported Fonts</source>
-        <translation type="obsolete">Импортированные шрифты</translation>
-    </message>
-    <message>
-        <location filename="../importedfonts.ui" line="58"/>
-        <source>Ok</source>
-        <translation type="obsolete">ОК</translation>
-    </message>
-    <message>
         <location filename="../importedfonts.ui" line="52"/>
         <source>&lt;qt&gt;Instead of showing this dialog imported font count
 will be shown in the status bar. If you choose not to
@@ -1468,11 +1447,6 @@ in preferences.&lt;/qt&gt;</source>
 импортированных шрифтов в статусной строке.
 Вы можете отменить этот выбор в диалоге
 настройки программы.&lt;/qt&gt;</translation>
-    </message>
-    <message>
-        <location filename="../importedfonts.ui" line="84"/>
-        <source>Do not show this dialog again</source>
-        <translation type="obsolete">Больше не показывать этот диалог</translation>
     </message>
     <message>
         <location filename="../importedfonts.ui" line="13"/>
@@ -1690,17 +1664,17 @@ p, li { white-space: pre-wrap; }
         <translation>Образец текста</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="423"/>
+        <location filename="../mainview.ui" line="426"/>
         <source>Font Size</source>
         <translation>Кегль шрифта</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="806"/>
+        <location filename="../mainview.ui" line="815"/>
         <source> pt</source>
         <translation> pt</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="611"/>
+        <location filename="../mainview.ui" line="620"/>
         <source>Use shaper</source>
         <translation>Использовать шейпер</translation>
     </message>
@@ -1715,27 +1689,27 @@ p, li { white-space: pre-wrap; }
         <translation>Удобочитаемое название</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="634"/>
+        <location filename="../mainview.ui" line="643"/>
         <source>Glyphs</source>
         <translation>Глифы</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="672"/>
+        <location filename="../mainview.ui" line="681"/>
         <source>Coverage of Unicode Interval :</source>
         <translation>Охват блока Unicode:</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="752"/>
+        <location filename="../mainview.ui" line="761"/>
         <source>Clicking on a glyph will show details about it</source>
         <translation>Щелкните по символу для подробного просмотра</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="782"/>
+        <location filename="../mainview.ui" line="791"/>
         <source>Playground</source>
         <translation>Песочница</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="847"/>
+        <location filename="../mainview.ui" line="856"/>
         <source>push</source>
         <translation>Добавить</translation>
     </message>
@@ -1760,47 +1734,42 @@ p, li { white-space: pre-wrap; }
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="367"/>
-        <source>SampleText</source>
-        <translation>Образец текста</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="474"/>
+        <location filename="../mainview.ui" line="480"/>
         <source>FreeType</source>
         <translation>Отрисовка через FreeType</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="526"/>
+        <location filename="../mainview.ui" line="535"/>
         <source>Native Qt objects</source>
         <translation>Отрисовка средствами Qt</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="538"/>
+        <location filename="../mainview.ui" line="547"/>
         <source>World is wide</source>
         <translation>Мир велик</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="592"/>
+        <location filename="../mainview.ui" line="601"/>
         <source>Shaper type</source>
         <translation>Тип шейпера:</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="704"/>
+        <location filename="../mainview.ui" line="713"/>
         <source>Set Mode &quot;Copy Character to Clipboard&quot;</source>
         <translation>Включить режим копирования символов в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="493"/>
+        <location filename="../mainview.ui" line="499"/>
         <source>No hinting</source>
         <translation>Без уточнения</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="503"/>
+        <location filename="../mainview.ui" line="509"/>
         <source>Light Hinting</source>
         <translation>Слабое уточнение</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="510"/>
+        <location filename="../mainview.ui" line="516"/>
         <source>Normal Hinting</source>
         <translation>Обычное уточнение</translation>
     </message>
@@ -1810,35 +1779,55 @@ p, li { white-space: pre-wrap; }
         <translation>Параметры отображения</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="406"/>
-        <source>edit</source>
-        <translation>Изменить</translation>
-    </message>
-    <message>
-        <location filename="../mainview.ui" line="707"/>
+        <location filename="../mainview.ui" line="716"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="874"/>
+        <location filename="../mainview.ui" line="883"/>
         <source>Classification</source>
         <translation>Классификация</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="911"/>
+        <location filename="../mainview.ui" line="920"/>
         <source>Compare</source>
         <translation>Сравнение глифов</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="576"/>
+        <location filename="../mainview.ui" line="585"/>
         <source>Script</source>
         <comment>Writing system</comment>
         <translation>Письменность:</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="768"/>
+        <location filename="../mainview.ui" line="777"/>
         <source>Search a character by name, press enter after editing to run the search.</source>
         <translation>Поиск глифа по его названию, нажатие клавиши Ввод запускает поиск</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="367"/>
+        <source>Sample text</source>
+        <translation>Текст образца</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="406"/>
+        <source>Edit sample text</source>
+        <translation>Изменить текст образца</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="409"/>
+        <source>Edit</source>
+        <translation>Изменить</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="477"/>
+        <source>FreeType based rasterized rendering</source>
+        <translation>Растрированный рендеринг на основе FreeType</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="532"/>
+        <source>Vectorized rendering using native toolkit (Qt)</source>
+        <translation>Векторный рендеринг средствами графической библиотеки Qt</translation>
     </message>
 </context>
 <context>
@@ -4001,11 +3990,6 @@ rstuvxyz
 <context>
     <name>TTTableWidget</name>
     <message>
-        <location filename="../tttablewidget.ui" line="13"/>
-        <source>Form</source>
-        <translation type="obsolete">Form</translation>
-    </message>
-    <message>
         <location filename="../tttablewidget.ui" line="19"/>
         <source>TrueType Tables </source>
         <translation>Таблицы TrueType</translation>
@@ -4024,11 +4008,6 @@ rstuvxyz
         <location filename="../tttablewidget.ui" line="44"/>
         <source>Size</source>
         <translation>Размер</translation>
-    </message>
-    <message>
-        <location filename="../tttablewidget.ui" line="85"/>
-        <source>Export</source>
-        <translation type="obsolete">Экспортировать</translation>
     </message>
     <message>
         <location filename="../tttablewidget.ui" line="13"/>
@@ -4193,11 +4172,6 @@ the following tag:</source>
 <context>
     <name>multiPrintDialog</name>
     <message>
-        <location filename="../multiprintdialog.ui" line="19"/>
-        <source>Dialog</source>
-        <translation type="obsolete">Диалог</translation>
-    </message>
-    <message>
         <location filename="../multiprintdialog.ui" line="41"/>
         <source>Views</source>
         <translation>Панели</translation>
@@ -4231,57 +4205,52 @@ the following tag:</source>
 <context>
     <name>repairDialog</name>
     <message>
-        <location filename="../repair.ui" line="13"/>
-        <source>Dialog</source>
-        <translation type="obsolete">Проверка базы данных</translation>
-    </message>
-    <message>
-        <location filename="../repair.ui" line="23"/>
+        <location filename="../repair.ui" line="47"/>
         <source>Dead links</source>
         <translation>Мертвые ссылки</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="134"/>
+        <location filename="../repair.ui" line="202"/>
         <source>Select all</source>
         <translation>Выбрать все</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="59"/>
+        <location filename="../repair.ui" line="222"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="67"/>
+        <location filename="../repair.ui" line="91"/>
         <source>Activated Not Linked</source>
-        <translation>Активировать несвязанные</translation>
+        <translation>Активированные несвязанные</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="103"/>
+        <location filename="../repair.ui" line="127"/>
         <source>Re-link</source>
         <translation>Повторно связать</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="110"/>
+        <location filename="../repair.ui" line="134"/>
         <source>Deactivate</source>
         <translation>Деактивировать</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="118"/>
+        <location filename="../repair.ui" line="142"/>
         <source>Deactivated Linked</source>
         <translation>Деактивированные связанные</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="154"/>
+        <location filename="../repair.ui" line="178"/>
         <source>De-link</source>
         <translation>Убрать ссылку</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="161"/>
+        <location filename="../repair.ui" line="185"/>
         <source>Activate</source>
         <translation>Активировать</translation>
     </message>
     <message>
-        <location filename="../repair.ui" line="187"/>
+        <location filename="../repair.ui" line="34"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -4289,6 +4258,11 @@ the following tag:</source>
         <location filename="../repair.ui" line="13"/>
         <source>Database repair</source>
         <translation>Проверка и восстановление базы данных</translation>
+    </message>
+    <message>
+        <location filename="../repair.ui" line="193"/>
+        <source>Unreferenced Files</source>
+        <translation>Несвязанные файлы</translation>
     </message>
 </context>
 <context>
@@ -4458,11 +4432,6 @@ the following tag:</source>
         <translation>Создать каталог шрифтов...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="609"/>
-        <source>Export a pdf that show selected fonts</source>
-        <translation type="obsolete">Создать файл PDF, содержащий образцы выбранных шрифтов</translation>
-    </message>
-    <message>
         <location filename="../typotek.cpp" line="620"/>
         <source>E&amp;xit</source>
         <translation>В&amp;ыход</translation>
@@ -4481,11 +4450,6 @@ the following tag:</source>
         <location filename="../typotek.cpp" line="627"/>
         <source>&amp;About</source>
         <translation>&amp;О программе</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="624"/>
-        <source>Show the Typotek&apos;s About box</source>
-        <translation type="obsolete">Показать окно с информацией о программе</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="632"/>
@@ -4742,29 +4706,9 @@ it is time to cancel if it was not your intent</source>
         <translation>шрифтов из</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="683"/>
-        <source>Edit Panose info</source>
-        <translation type="obsolete">Изменить данные PANOSE</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="613"/>
-        <source>Export modelled Info</source>
-        <translation type="obsolete">Заполнить метаданными шаблон...</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="718"/>
-        <source>Execute Script</source>
-        <translation type="obsolete">Выполнить сценарий</translation>
-    </message>
-    <message>
         <location filename="../typotek.cpp" line="743"/>
         <source>Execute Last Script</source>
         <translation>Выполнить последний сценарий</translation>
-    </message>
-    <message>
-        <location filename="../typotek.cpp" line="726"/>
-        <source>Script Console</source>
-        <translation type="obsolete">Консоль</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="812"/>

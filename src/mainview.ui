@@ -59,7 +59,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex" >
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="elideMode" >
       <enum>Qt::ElideRight</enum>
@@ -77,7 +77,7 @@
         <number>0</number>
        </property>
        <item row="0" column="0" >
-        <widget class="QWebView" native="1" name="fontInfoText" >
+        <widget class="QWebView" name="fontInfoText" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
            <horstretch>0</horstretch>
@@ -267,11 +267,11 @@
           </property>
           <widget class="QWidget" name="pageOT" >
            <layout class="QGridLayout" name="gridLayout_4" >
-            <property name="margin" >
-             <number>0</number>
-            </property>
             <property name="horizontalSpacing" >
              <number>4</number>
+            </property>
+            <property name="margin" >
+             <number>0</number>
             </property>
             <item row="0" column="0" colspan="3" >
              <widget class="QTreeWidget" name="OpenTypeTree" >
@@ -364,7 +364,7 @@
             <item row="0" column="0" >
              <widget class="QGroupBox" name="groupBox_2" >
               <property name="title" >
-               <string>SampleText</string>
+               <string>Sample text</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_9" >
                <property name="margin" >
@@ -402,8 +402,11 @@
                      <height>24</height>
                     </size>
                    </property>
+                   <property name="toolTip" >
+                    <string>Edit sample text</string>
+                   </property>
                    <property name="text" >
-                    <string>edit</string>
+                    <string>Edit</string>
                    </property>
                   </widget>
                  </item>
@@ -470,6 +473,9 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="toolTip" >
+                    <string>FreeType based rasterized rendering</string>
+                   </property>
                    <property name="text" >
                     <string>FreeType</string>
                    </property>
@@ -521,6 +527,9 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="toolTip" >
+                    <string>Vectorized rendering using native toolkit (Qt)</string>
                    </property>
                    <property name="text" >
                     <string>Native Qt objects</string>
@@ -893,7 +902,7 @@
            </sizepolicy>
           </property>
          </widget>
-         <widget class="QWebView" native="1" name="classVariableDescription" >
+         <widget class="QWebView" name="classVariableDescription" >
           <property name="sizePolicy" >
            <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
             <horstretch>0</horstretch>
@@ -922,6 +931,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>FMSampleTextView</class>
    <extends>QGraphicsView</extends>
    <header>fmsampletextview.h</header>
@@ -941,12 +956,6 @@
    <class>FMPlayGround</class>
    <extends>QGraphicsView</extends>
    <header>fmplayground.h</header>
-  </customwidget>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QWebView</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>FMVerticalButton</class>

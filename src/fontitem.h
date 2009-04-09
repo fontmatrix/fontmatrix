@@ -305,6 +305,8 @@ class FontItem : public QObject
 		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
 		QGraphicsPixmapItem* itemFromGindexPix_mt ( int index, double size );
 		
+		QImage charImage(int charcode, double size);
+		
 		
 		
 		
@@ -329,7 +331,7 @@ class FontItem : public QObject
 		QString activationAFMName();
 
 // 		QIcon oneLinePreviewIcon ( QString oneline );
-		QPixmap oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w = 0);
+		QPixmap oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w = 0, int fsize = 0);
 		void clearPreview();
 
 		bool isActivated() const;

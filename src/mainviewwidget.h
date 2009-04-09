@@ -224,6 +224,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QGraphicsScene* glyphsScene()const{return abcScene;};
 		QGraphicsScene* textScene()const{return loremScene;};
 		QList<FontItem*> curFonts();
+		void setCurFonts(QList<FontItem*> flist);
 		FontItem* selectedFont(){return theVeryFont;};
 		
 		void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}

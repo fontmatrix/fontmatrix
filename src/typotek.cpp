@@ -27,6 +27,7 @@
 #include "fmactivate.h"
 #include "fmfontdb.h"
 #include "fmfontextract.h"
+#include "fmmatchraster.h"
 #include "fmlayout.h"
 #include "fmpaths.h"
 #include "fmrepair.h"
@@ -734,6 +735,11 @@ void typotek::createActions()
 	scuts->add(extractFontAction);
 	connect(extractFontAction,SIGNAL(triggered()),this,SLOT(slotExtractFont()));
 	
+	matchRasterAct = new QAction(tr("Match Raster..."), this); // FIXME find a name for it
+	scuts->add(matchRasterAct);
+	connect(matchRasterAct,SIGNAL(triggered()),this,SLOT(slotMatchRaster()));
+	
+	
 #ifdef HAVE_PYTHONQT
 	execScriptAct = new QAction(tr("Execute Script..."),this);
 	execScriptAct->setStatusTip ( tr ( "Execute a Python script" ) );
@@ -783,6 +789,7 @@ void typotek::createMenus()
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
 	editMenu->addAction(extractFontAction);
+	editMenu->addAction(matchRasterAct);
 	editMenu->addSeparator();	
 	editMenu->addAction ( fonteditorAct );
 	editMenu->addAction ( editPanoseAct );
@@ -2183,6 +2190,12 @@ void typotek::slotExtractFont()
 	ex.exec();
 }
 
+void typotek::slotMatchRaster()
+{
+	FMMatchRaster mr(this);
+	mr.exec();
+}
+
 
 #ifdef HAVE_PYTHONQT
 void typotek::slotExecScript()
@@ -2299,3 +2312,4 @@ void typotek::setInfoStyle ( const QString& theValue )
 {
 	infoStyle = theValue;
 }
+

@@ -831,11 +831,11 @@ void MainViewWidget::slotInfoFont()
 //                qDebug()<<"=========================================================";
 //                qDebug()<<fIT;
 //                qDebug()<<"=========================================================";
-//                 QFile df("fontmatrix.xhtml" );
-//                 if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
-//                 {
-//                     df.write(fIT.toUtf8());
-//                 }
+                QFile df("fontmatrix.xhtml" );
+                if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
+                {
+                    df.write(fIT.toUtf8());
+                }
 	}
 	
 
@@ -2224,6 +2224,14 @@ QList<FontItem*> MainViewWidget::curFonts()
 	return orderedCurrentFonts;
 }
 
+void MainViewWidget::setCurFonts(QList< FontItem * > flist)
+{
+	currentFonts = flist;
+	fillTree();
+	
+}
+
+
 void MainViewWidget::slotShowULine(bool checked)
 {
 	if(checked)
@@ -2326,7 +2334,6 @@ void MainViewWidget::slotSaveClassSplitter()
 	QSettings settings;
 	settings.setValue("WState/ClassificationSplitter", classSplitter->saveState());
 }
-
 
 
 

@@ -1050,6 +1050,31 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 }
 
 
+QImage FontItem::charImage(int charcode, double size)
+{
+	if(!ensureFace())
+		return QImage();
+	
+	// Set size
+	FT_Set_Char_Size ( m_face,  qRound( size  * 64 ), 0, QApplication::desktop()->physicalDpiX(),QApplication::desktop()->physicalDpiY() );
+	if(FT_Load_Char( m_face, charcode , FT_LOAD_DEFAULT))
+	{
+		releaseFace();
+		return QImage();
+	}
+	if(FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL ))
+	{
+		releaseFace();
+		return QImage();
+	}
+
+	
+	QImage cImg( glyphImage() );
+	releaseFace();
+	return cImg;
+}
+
+
 /// Nature line
 double FontItem::renderLine ( QGraphicsScene * scene,
                               QString spec,
@@ -2769,7 +2794,7 @@ QGraphicsPathItem * FontItem::hasCodepointLoaded ( int code )
 }
 
 
-QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w )
+QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w , int size_f )
 {
 	if ( m_remote )
 		return fixedPixmap;
@@ -2782,7 +2807,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		return QPixmap();
 	QRectF savedRect = theOneLineScene->sceneRect();
 
-	double theSize = typotek::getInstance()->getPreviewSize();
+	double theSize = (size_f == 0) ? typotek::getInstance()->getPreviewSize() : size_f;
 	double pt2px = QApplication::desktop()->physicalDpiX() / 72.0;
 	double theHeight = theSize * 1.3 * pt2px;
 	double theWidth;
@@ -3805,12 +3830,18 @@ QList< int > FontItem::getAlternates ( int ccode )
 
 QImage FontItem::glyphImage()
 {
-	QImage img ( m_face->glyph->bitmap.buffer,
-	             m_face->glyph->bitmap.width,
-	             m_face->glyph->bitmap.rows,
-	             m_face->glyph->bitmap.pitch,
-	             QImage::Format_Indexed8 );
-
+	QImage img ( m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows, QImage::Format_Indexed8);
+// 	QImage img ( m_face->glyph->bitmap.buffer,
+// 	             m_face->glyph->bitmap.width,
+// 	             m_face->glyph->bitmap.rows,
+// 	             m_face->glyph->bitmap.pitch,
+// 	             QImage::Format_Indexed8 );
+	
+// 	qDebug()<<"GSlot"<< m_face->glyph->bitmap.buffer 
+// 			<< m_face->glyph->bitmap.width 
+// 			<< m_face->glyph->bitmap.rows 
+// 			<< m_face->glyph->bitmap.pitch ;
+	
 	if ( m_face->glyph->bitmap.num_grays != 256 )
 	{
 		QVector<QRgb> palette;
@@ -3825,6 +3856,23 @@ QImage FontItem::glyphImage()
 	{
 		img.setColorTable ( gray256Palette );
 	}
+	
+	
+	unsigned char * cursor(m_face->glyph->bitmap.buffer);
+// 	QString dbs;
+	for(int r(0); r < m_face->glyph->bitmap.rows; ++r)
+	{
+// 		dbs.clear();
+		for(int x(0); x < m_face->glyph->bitmap.width; ++x)
+		{
+			img.setPixel( x, r, *(cursor + x));
+// 			dbs += (*(cursor + x) > 0) ? "+" : ".";
+		}
+// 		qDebug()<<dbs;
+		cursor += m_face->glyph->bitmap.pitch;
+	}
+	
+
 
 	return img;
 }
@@ -4244,6 +4292,7 @@ void FontItem::exploreKernFeature()
 	
 	releaseFace();
 }
+
 
 
 

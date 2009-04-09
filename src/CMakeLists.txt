@@ -17,6 +17,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphsview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmkernfeat.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayoptwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayout.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmmatchraster.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmnamelist.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmotf.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmpaths.cpp
@@ -37,8 +38,10 @@ ${CMAKE_CURRENT_SOURCE_DIR}/helpbrowser.cpp
 # ${CMAKE_CURRENT_SOURCE_DIR}/helpwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfontsdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/iview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/QHexView.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/parallelcoor.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/puzzleviewimp.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
@@ -122,6 +125,7 @@ fmglyphhighlight.h
 fmglyphsview.h
 fmlayoptwidget.h
 fmlayout.h
+fmmatchraster.h
 fmnamelist.h
 fmplayground.h
 fmpreviewlist.h
@@ -133,6 +137,7 @@ fontitem.h
 helpbrowser.h
 # helpwidget.h
 importtags.h
+iview.h
 QHexView.h
 listdockwidget.h
 mainviewwidget.h
@@ -168,6 +173,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/helpbrowser.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/layoutoptions.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/listsdock.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/mainview.ui
+${CMAKE_CURRENT_SOURCE_DIR}/matchraster.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/prefs_panel.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/repair.ui

@@ -16,7 +16,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle" >
-   <string>Form</string>
+   <string>Text layout engine options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2" >
    <item row="0" column="0" >
@@ -88,7 +88,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label" >
           <property name="text" >
-           <string>before</string>
+           <string>Before</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -134,7 +134,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label_2" >
           <property name="text" >
-           <string>exact</string>
+           <string>Exact</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -232,7 +232,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label_3" >
           <property name="text" >
-           <string>after</string>
+           <string>After</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -304,7 +304,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label_5" >
           <property name="text" >
-           <string>end</string>
+           <string>End</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>
@@ -439,7 +439,7 @@
         <item row="2" column="0" colspan="4" >
          <widget class="QLabel" name="label_6" >
           <property name="text" >
-           <string>max compression</string>
+           <string>Max. compression</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>

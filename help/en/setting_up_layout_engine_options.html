@@ -2,14 +2,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Fontmatrix User Manual - Setting up - Layout engine options</title>
+<title>Fontmatrix User Manual - Setting up - Text layout engine options</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>Layout engine options</h1>
 
-<p>TODO</p>
+<p>Fontmatrix uses its own text layout engine (TLE) to support advanced OpenType features. When the TLE looks for best break, it builds a list of possibilities and attaches the difference between the break node and the line width to each node. At the end it selects the list that has the little distance.</p>
+
+<p>Since the TLE has a number of variables you could tune, they can be customized to your liking. Use "Edit - Text layout engine options" command to open the dialog.</p>
+
+<p><b>TODO: a screenshot</b></p>
+
+<p>The dialog is very much like an audio equalizer: you change weights of each variable, dragging slider up and down.</p>
+
+<ul>
+<li>Before&nbsp;&mdash; factor applied to a break node that comes before the first OUT_OF_LINE node</li>
+<li>Exact&nbsp;&mdash; factor applied to the first OUT_OF_LINE node</li>
+<li>After&nbsp;&mdash; factor applied to nodes that come after the first OUT_OF_LINE node</li>
+<li>End&nbsp;&mdash; factor same for the last line of the paragraph</li>
+<li>H-penalty&nbsp;&mdash; super factor applied to the node score, if it is an hyphen node</li>
+<li>Max. compression&nbsp;&mdash; <b>TODO</b></li>
+</ul>
+
+<p>If you have read until this sentence, you are Fontmatrix developer and the text was never improved to become human readable. So go and fix this. Otherwise, report to the bug tracker :)</p>
 
 </body>
 </html>

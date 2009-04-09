@@ -45,7 +45,7 @@
 			<submenuitem text="Files &amp; folders" file="setting_up_preferences_files_and_folders.html"/>
 			<submenuitem text="Shortcuts" file="setting_up_preferences_shortcuts.html"/>
 		</submenuitem>
-		<submenuitem text="Layout engine options" file="setting_up_layout_engine_options.html"/>
+		<submenuitem text="Text layout engine options" file="setting_up_layout_engine_options.html"/>
 	</area>
 
 	<area text="Various resources" file="resources.html">

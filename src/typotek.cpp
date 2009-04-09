@@ -724,8 +724,8 @@ void typotek::createActions()
 	scuts->add(previousFont);
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
-	layOptAct = new QAction(tr("Layout Options"),this);
-	layOptAct->setStatusTip ( tr ( "View and edit layout engine variables" ) );
+	layOptAct = new QAction(tr("Text layout engine options"),this);
+	layOptAct->setStatusTip ( tr ( "View and edit text layout engine variables" ) );
 	layOptAct->setCheckable(true);
 	scuts->add(layOptAct);
 	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));

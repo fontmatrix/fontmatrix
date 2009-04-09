@@ -735,7 +735,8 @@ void typotek::createActions()
 	scuts->add(extractFontAction);
 	connect(extractFontAction,SIGNAL(triggered()),this,SLOT(slotExtractFont()));
 	
-	matchRasterAct = new QAction(tr("Match Raster..."), this); // FIXME find a name for it
+	matchRasterAct = new QAction(tr("Find a font using raster sample..."), this); // FIXME find a name for it
+	matchRasterAct->setStatusTip ( tr ( "Find a font using a raster sample of a letter" ) );
 	scuts->add(matchRasterAct);
 	connect(matchRasterAct,SIGNAL(triggered()),this,SLOT(slotMatchRaster()));
 	

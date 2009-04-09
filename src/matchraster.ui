@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Dialog</string>
+   <string>Find a font using raster sample</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2" >
    <item row="0" column="0" >
@@ -38,14 +38,14 @@
           <item row="0" column="1" >
            <widget class="QPushButton" name="browseButton" >
             <property name="text" >
-             <string>Browse</string>
+             <string>&amp;Browse</string>
             </property>
            </widget>
           </item>
           <item row="0" column="2" >
            <widget class="QPushButton" name="loadButton" >
             <property name="text" >
-             <string>Load</string>
+             <string>&amp;Load</string>
             </property>
            </widget>
           </item>
@@ -61,7 +61,7 @@
           </sizepolicy>
          </property>
          <property name="title" >
-          <string>Setup</string>
+          <string>Raster sample preview</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_4" >
           <item row="0" column="0" >
@@ -88,7 +88,7 @@
                <item row="0" column="0" >
                 <widget class="QLabel" name="label_2" >
                  <property name="text" >
-                  <string>Character:</string>
+                  <string>C&amp;haracter:</string>
                  </property>
                  <property name="buddy" >
                   <cstring>letter</cstring>
@@ -116,7 +116,7 @@
              <item row="0" column="2" >
               <widget class="QPushButton" name="searchButton" >
                <property name="text" >
-                <string>Search</string>
+                <string>&amp;Search</string>
                </property>
               </widget>
              </item>
@@ -168,7 +168,7 @@
        <item row="2" column="3" >
         <widget class="QPushButton" name="cancelButton" >
          <property name="text" >
-          <string>Cancel</string>
+          <string>&amp;Cancel</string>
          </property>
         </widget>
        </item>

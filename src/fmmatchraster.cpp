@@ -33,8 +33,9 @@ FMMatchRaster::FMMatchRaster ( QWidget * parent )
 {
 	setupUi ( this );
 	QSettings settings;
-	m_compsize = settings.value ( "MatchRaster/Size", 120 ).toInt();
+	m_compsize = settings.value ( "MatchRaster/CompareSize", 120 ).toInt();
 	m_matchLimit = settings.value ( "MatchRaster/Limit", 800.0 ).toDouble();
+	m_minRefSize = settings.value ( "MatchRaster/ReferenceSize", 160 ).toInt();
 
 	m_progressValue = 0;
 	m_waitingForButton = false;
@@ -51,6 +52,8 @@ FMMatchRaster::FMMatchRaster ( QWidget * parent )
 
 	connect ( buttonBox,SIGNAL ( rejected() ),this,SLOT ( slotRefuseFont() ) );
 	connect ( buttonBox,SIGNAL ( accepted() ),this,SLOT ( slotAcceptFont() ) );
+
+	connect ( stopButton,SIGNAL ( clicked() ), this, SLOT ( slotStop() ) );
 }
 
 FMMatchRaster::~ FMMatchRaster()
@@ -78,6 +81,26 @@ void FMMatchRaster::addImage ( const QString & text )
 	bool ok;
 	refCodepoint = ( letter->text().count() != 4 ) ? letter->text().at ( 0 ).unicode() : letter->text().toUInt ( &ok, 16 );
 	refImage = iView->getPixmap().toImage().copy ( curRect );
+	const unsigned int iw(refImage.width());
+	const unsigned int ih(refImage.height());
+	if((iw < m_minRefSize) && (ih < m_minRefSize))
+	{
+		double dw(iw);
+		double dh(ih);
+		double minS(m_minRefSize);
+		double ratio( minS / qMin(dw, dh) );
+		dw *= ratio;
+		dh *= ratio;
+		refImage = refImage.scaled(qRound(dw), qRound(dh), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+	}
+	else if(iw < m_minRefSize)
+	{
+		refImage = refImage.scaledToWidth(m_minRefSize, Qt::SmoothTransformation);
+	}
+	else if(ih < m_minRefSize)
+	{
+		refImage = refImage.scaledToHeight(m_minRefSize, Qt::SmoothTransformation);
+	}
 
 }
 
@@ -89,6 +112,9 @@ void FMMatchRaster::search()
 		remainFonts = compFonts = typotek::getInstance()->getCurrentFonts() ;
 		progressBar->setRange ( 0, compFonts.count() );
 		stackedWidget->setCurrentIndex ( 1 );
+
+		if ( !checkInteractive->isChecked() )
+			questionWidget->setVisible ( false );
 	}
 	else
 	{
@@ -103,108 +129,42 @@ void FMMatchRaster::search()
 		remainFonts.removeAll ( fit );
 
 		fontName->setText ( fit->fancyName() );
-		QImage cImg ( fit->charImage ( refCodepoint , m_compsize ) );
-		const int cw = cImg.width();
-		const int ch = cImg.height();
-		if ( ( !cImg.isNull() ) && ( cw > 0 ) && ( ch > 0 ) )
+		QImage adjustedImg ( autoCrop ( fit->charImage ( refCodepoint , m_compsize ) ) );
+		if ( !adjustedImg.isNull() )
 		{
-			// crop it
-			QRect r;
-			const QRgb wp = cImg.pixel ( 0,0 );
-			bool topReached ( false );
-			for ( int y ( 0 ); y < ch; ++y )
-			{
-
-				for ( int x ( 0 );x <  cw; ++x )
-				{
-					if ( cImg.pixel ( x,y ) != wp )
-					{
-						topReached = true;
-						r.setTop ( y );
-						break;
-					}
-				}
-				if ( topReached )
-					break;
-			}
-			bool bottomReached ( false );
-			for ( int y ( ch - 1 ); y >= 0; --y )
-			{
-
-				for ( int x ( cw-1 );x >=0; --x )
-				{
-					if ( cImg.pixel ( x,y ) != wp )
-					{
-						bottomReached = true;
-						r.setBottom ( y );
-						break;
-					}
-				}
-				if ( bottomReached )
-					break;
-			}
-			r.setLeft ( cw );
-			for ( int y ( 0 ); y < ch; ++y )
-			{
-
-				for ( int x ( 0 );x <  cw; ++x )
-				{
-					if ( cImg.pixel ( x,y ) != wp )
-					{
-						r.setLeft ( qMin ( x,r.left() ) );
-						break;
-					}
-				}
-			}
-			r.setRight ( 0 );
-			for ( int y ( 0 ); y < ch; ++y )
-			{
-
-				for ( int x ( cw -1 );x >= 0; --x )
-				{
-					if ( cImg.pixel ( x,y ) != wp )
-					{
-						r.setRight ( qMax ( x,r.right() ) );
-						break;
-					}
-				}
-			}
-			QImage adjustedImg ( cImg.copy ( r ).scaled ( refImage.width(),refImage.height() ) );
 			PuzzleViewImp comp ( adjustedImg , QColor ( Qt::black ).rgb() );
 			double compResult ( ref.CompMean ( comp ) );
-// 				qDebug() <<((result > 1000.0)?"\t":"*")<< result << fit->fancyName();
 			if ( compResult >= 0.0 )
 			{
 				if ( compResult < m_matchLimit )
 				{
 					if ( !filteredFonts.contains ( fit ) )
 					{
-						compView->setEnabled ( true );
-						compView->setImage ( QPixmap::fromImage ( adjustedImg ) );
-						compView->setEnabled ( false );
-						scoreLabel->setText ( tr ( "The font %1 scores %2.\nDo you want to add it to the filtered fonts?" )
-						                      .arg ( fit->fancyName() )
-						                      .arg ( compResult ) );
-						buttonBox->setEnabled ( true );
-						waitingFont = fit;
-						m_waitingForButton = true;
-						return;
+						if ( checkInteractive->isChecked() )
+						{
+							compView->setEnabled ( true );
+							compView->setImage ( QPixmap::fromImage ( adjustedImg ) );
+							compView->setEnabled ( false );
+							scoreLabel->setText ( tr ( "The font %1 scores %2.\nDo you want to add it to the filtered fonts?" )
+							                      .arg ( fit->fancyName() )
+							                      .arg ( compResult ) );
+							buttonBox->setEnabled ( true );
+							waitingFont = fit;
+							m_waitingForButton = true;
+							return;
+						}
+						else
+						{
+							if ( !filteredFonts.contains ( fit ) )
+								filteredFonts << fit;
+						}
 					}
 				}
 			}
 		}
 	}
 
-
-	if ( filteredFonts.count() > 0 )
-	{
-		typotek::getInstance()->getTheMainView()->setCurFonts ( filteredFonts );
-	}
-	else
-	{
-		QMessageBox::information ( this, "Fontmatrix", tr ( "No font matches the submitted image" ) );
-	}
-	close();
+	slotStop();
 }
 
 void FMMatchRaster::recordCurrentRect ( QRect r )
@@ -219,7 +179,7 @@ void FMMatchRaster::recordCurrentColor ( QRgb c )
 
 void FMMatchRaster::slotAcceptFont()
 {
-	if(!filteredFonts.contains(waitingFont))
+	if ( !filteredFonts.contains ( waitingFont ) )
 		filteredFonts << waitingFont;
 	waitingFont = 0;
 	search();
@@ -229,4 +189,92 @@ void FMMatchRaster::slotRefuseFont()
 {
 	waitingFont = 0;
 	search();
+}
+
+void FMMatchRaster::slotStop()
+{
+	if ( (waitingFont != 0) && (!filteredFonts.contains ( waitingFont )) )
+		filteredFonts << waitingFont;
+	if ( filteredFonts.count() > 0 )
+	{
+		typotek::getInstance()->getTheMainView()->setCurFonts ( filteredFonts );
+	}
+	else
+	{
+		QMessageBox::information ( this, "Fontmatrix", tr ( "No font match the submitted image" ) );
+	}
+	close();
+}
+
+QImage FMMatchRaster::autoCrop ( const QImage & cImg )
+{
+	const int cw = cImg.width();
+	const int ch = cImg.height();
+	if ( ( !cImg.isNull() ) && ( cw > 0 ) && ( ch > 0 ) )
+	{
+		QRect r;
+		const QRgb wp = cImg.pixel ( 0,0 );
+		bool topReached ( false );
+		for ( int y ( 0 ); y < ch; ++y )
+		{
+
+			for ( int x ( 0 );x <  cw; ++x )
+			{
+				if ( cImg.pixel ( x,y ) != wp )
+				{
+					topReached = true;
+					r.setTop ( y );
+					break;
+				}
+			}
+			if ( topReached )
+				break;
+		}
+		bool bottomReached ( false );
+		for ( int y ( ch - 1 ); y >= 0; --y )
+		{
+
+			for ( int x ( cw-1 );x >=0; --x )
+			{
+				if ( cImg.pixel ( x,y ) != wp )
+				{
+					bottomReached = true;
+					r.setBottom ( y );
+					break;
+				}
+			}
+			if ( bottomReached )
+				break;
+		}
+		r.setLeft ( cw );
+		for ( int y ( 0 ); y < ch; ++y )
+		{
+
+			for ( int x ( 0 );x <  cw; ++x )
+			{
+				if ( cImg.pixel ( x,y ) != wp )
+				{
+					r.setLeft ( qMin ( x,r.left() ) );
+					break;
+				}
+			}
+		}
+		r.setRight ( 0 );
+		for ( int y ( 0 ); y < ch; ++y )
+		{
+
+			for ( int x ( cw -1 );x >= 0; --x )
+			{
+				if ( cImg.pixel ( x,y ) != wp )
+				{
+					r.setRight ( qMax ( x,r.right() ) );
+					break;
+				}
+			}
+		}
+
+		if ( !r.isNull() )
+			return cImg.copy ( r ).scaled ( refImage.width(),refImage.height() );
+	}
+	return QImage();
 }

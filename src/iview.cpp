@@ -305,6 +305,9 @@ void IView::resizeEvent(QResizeEvent * event)
 void IView::selectGlyph(const QPointF & scenepos)
 {
 // 	const unsigned int treshold (5); 
+	if(!curImage)
+		return;
+	
 	QPoint imgp(curImage->mapFromScene(scenepos).toPoint());
 	QImage cImg(curImage->pixmap().toImage());
 	QRgb ref(cImg.pixel(imgp));

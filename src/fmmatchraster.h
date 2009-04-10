@@ -33,6 +33,7 @@ class FMMatchRaster : public QDialog , private Ui::MatchRasterDialog
 		QImage refImage;
 		
 		int m_compsize;
+		int m_minRefSize;
 		bool m_waitingForButton;
 		int m_progressValue;
 		double m_matchLimit;
@@ -42,6 +43,8 @@ class FMMatchRaster : public QDialog , private Ui::MatchRasterDialog
 		QList<FontItem*> filteredFonts;
 		FontItem* waitingFont;
 		
+		QImage autoCrop(const QImage& img);
+		
 	private slots:
 		void browseImage();
 		void loadImage();
@@ -50,6 +53,8 @@ class FMMatchRaster : public QDialog , private Ui::MatchRasterDialog
 		
 		void slotAcceptFont();
 		void slotRefuseFont();
+		
+		void slotStop();
 		
 		void recordCurrentRect(QRect);
 		void recordCurrentColor(QRgb);

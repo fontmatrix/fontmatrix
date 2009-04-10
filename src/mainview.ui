@@ -59,7 +59,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex" >
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="elideMode" >
       <enum>Qt::ElideRight</enum>
@@ -77,7 +77,7 @@
         <number>0</number>
        </property>
        <item row="0" column="0" >
-        <widget class="QWebView" name="fontInfoText" >
+        <widget class="QWebView" native="1" name="fontInfoText" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
            <horstretch>0</horstretch>
@@ -902,7 +902,7 @@
            </sizepolicy>
           </property>
          </widget>
-         <widget class="QWebView" name="classVariableDescription" >
+         <widget class="QWebView" native="1" name="classVariableDescription" >
           <property name="sizePolicy" >
            <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
             <horstretch>0</horstretch>

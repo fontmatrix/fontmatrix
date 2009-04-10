@@ -40,6 +40,7 @@ FMMatchRaster::FMMatchRaster ( QWidget * parent )
 	m_progressValue = 0;
 	m_waitingForButton = false;
 	waitingFont = 0;
+	refCodepoint = 0;
 
 
 	connect ( browseButton,SIGNAL ( clicked() ),this, SLOT ( browseImage() ) );
@@ -102,10 +103,15 @@ void FMMatchRaster::addImage ( const QString & text )
 		refImage = refImage.scaledToHeight(m_minRefSize, Qt::SmoothTransformation);
 	}
 
+// 	refImage.save("REFIMAGE.png");
 }
 
 void FMMatchRaster::search()
 {
+	if((refImage.isNull()) || (!refCodepoint))
+	{
+		return;
+	}
 	buttonBox->setEnabled ( false );
 	if ( !m_waitingForButton )
 	{
@@ -136,6 +142,7 @@ void FMMatchRaster::search()
 			double compResult ( ref.CompMean ( comp ) );
 			if ( compResult >= 0.0 )
 			{
+// 				qDebug()<<((compResult < m_matchLimit)? "****":"\t")<<compResult<<fit->fancyName();
 				if ( compResult < m_matchLimit )
 				{
 					if ( !filteredFonts.contains ( fit ) )
@@ -273,7 +280,9 @@ QImage FMMatchRaster::autoCrop ( const QImage & cImg )
 			}
 		}
 
-		if ( !r.isNull() )
+		if ( (!r.isNull())
+			&& ( r.width() > 0) 
+			&& (r.height() > 0) )
 			return cImg.copy ( r ).scaled ( refImage.width(),refImage.height() );
 	}
 	return QImage();

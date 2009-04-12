@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="ru_RU">
+<defaultcodec></defaultcodec>
 <context>
     <name>About</name>
     <message>
@@ -210,14 +211,14 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>FMMatchRaster</name>
     <message>
-        <location filename="../fmmatchraster.cpp" line="186"/>
+        <location filename="../fmmatchraster.cpp" line="156"/>
         <source>The font %1 scores %2.
 Do you want to add it to the filtered fonts?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ts?</translation>
     </message>
     <message>
-        <location filename="../fmmatchraster.cpp" line="205"/>
-        <source>No font matches the submitted image</source>
+        <location filename="../fmmatchraster.cpp" line="211"/>
+        <source>No font match the submitted image</source>
         <translation>Ни один шрифт в коллекции не соответствует указанному образцу</translation>
     </message>
 </context>
@@ -2616,7 +2617,7 @@ with command: %2</source>
         <translation>Значение символа по таблице Unicode (четыре символа в шестнадцатеричной кодировке)</translation>
     </message>
     <message>
-        <location filename="../matchraster.ui" line="224"/>
+        <location filename="../matchraster.ui" line="195"/>
         <source>Compare with:</source>
         <translation>Образец сравнивается с:</translation>
     </message>
@@ -2641,7 +2642,7 @@ with command: %2</source>
         <translation>&amp;Искать</translation>
     </message>
     <message>
-        <location filename="../matchraster.ui" line="171"/>
+        <location filename="../matchraster.ui" line="252"/>
         <source>&amp;Cancel</source>
         <translation>О&amp;тменить</translation>
     </message>
@@ -2654,6 +2655,21 @@ with command: %2</source>
         <location filename="../matchraster.ui" line="64"/>
         <source>Raster sample preview</source>
         <translation>Предпросмотр образца символа</translation>
+    </message>
+    <message>
+        <location filename="../matchraster.ui" line="139"/>
+        <source>Interactive</source>
+        <translation>Интерактивно</translation>
+    </message>
+    <message>
+        <location filename="../matchraster.ui" line="149"/>
+        <source>Click on the letter to let Fontmatrix compute the bounding box</source>
+        <translation>Щёлкните по символу, чтобы Fontmatrix вычислил его площадку</translation>
+    </message>
+    <message>
+        <location filename="../matchraster.ui" line="238"/>
+        <source>Stop</source>
+        <translation>Стоп</translation>
     </message>
 </context>
 <context>
@@ -4971,12 +4987,12 @@ it is time to cancel if it was not your intent</source>
     <message>
         <location filename="../typotek.cpp" line="738"/>
         <source>Find a font using raster sample...</source>
-        <translation>Найти шрифт по растровому образцу...</translation>
+        <translation>Найти шрифты по растровому образцу...</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="739"/>
         <source>Find a font using a raster sample of a letter</source>
-        <translation>Найти шрифт по растровому образцу одного символа</translation>
+        <translation>Найти шрифты по растровому образцу одного символа</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="727"/>

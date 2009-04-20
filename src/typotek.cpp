@@ -621,17 +621,20 @@ void typotek::createActions()
 	exitAct = new QAction ( tr ( "E&xit" ), this );
 	exitAct->setShortcut ( tr ( "Ctrl+Q" ) );
 	exitAct->setStatusTip ( tr ( "Exit the application" ) );
+        exitAct->setMenuRole(QAction::QuitRole);
 	scuts->add(exitAct);
 	connect ( exitAct, SIGNAL ( triggered() ), this, SLOT ( close() ) );
 
 
 	aboutAct = new QAction ( tr ( "&About" ), this );
 	aboutAct->setStatusTip ( tr ( "Show information about Fontmatrix" ) );
+        aboutAct->setMenuRole(QAction::AboutRole);
 	scuts->add(aboutAct);
 	connect ( aboutAct, SIGNAL ( triggered() ), this, SLOT ( about() ) );
 
 	aboutQtAct = new QAction ( tr ( "About &Qt" ), this );
 	aboutQtAct->setStatusTip ( tr ( "Show information about Qt" ) );
+        aboutQtAct->setMenuRole(QAction::AboutQtRole);
 	scuts->add(aboutQtAct);
 	connect (aboutQtAct,SIGNAL(triggered()), QApplication::instance(),SLOT(aboutQt()));
 
@@ -673,6 +676,7 @@ void typotek::createActions()
 
 	prefsAct = new QAction ( tr ( "Preferences" ),this );
 	prefsAct->setStatusTip ( tr ( "Setup Fontmatrix" ) );
+        prefsAct->setMenuRole(QAction::PreferencesRole);
 	scuts->add(prefsAct);
 	connect ( prefsAct,SIGNAL ( triggered() ),this,SLOT ( slotPrefsPanelDefault() ) );
 

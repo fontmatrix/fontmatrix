@@ -1868,7 +1868,7 @@ void MainViewWidget::slotShowAllGlyph()
 
 void MainViewWidget::slotUpdateGView()
 {
-// 	qDebug()<<"slotUpdateGView()";
+//        qDebug()<<"slotUpdateGView()";
 	// If all is how I think it must be, we don’t need to check anything here :)
 	if(theVeryFont && abcView->lock())
 	{

@@ -24,17 +24,41 @@
 #include <QGraphicsItem>
 #include <QScrollBar>
 
-FMGlyphsView::FMGlyphsView(QWidget *parent)
- : QGraphicsView(parent)
+#ifdef HAVE_QTOPENGL
+#include <QGLWidget>
+#endif
+
+FMGlyphsView::FMGlyphsView ( QWidget *parent )
+		: QGraphicsView ( parent )
 {
 	// There is just one instance and we want to identify it
-	setObjectName("theglyphsview");
-	setAlignment (Qt::AlignLeft | Qt::AlignTop);
+	setObjectName ( "theglyphsview" );
+
+#ifdef HAVE_QTOPENGL
+	QGLFormat glfmt;
+	glfmt.setSampleBuffers ( true );
+	QGLWidget *glwgt = new QGLWidget ( glfmt );
+	if ( glwgt->format().sampleBuffers() )
+	{
+		setViewport ( glwgt );
+		qDebug() <<"opengl enabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+	}
+	else
+	{
+		qDebug() <<"opengl disabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+		delete glwgt;
+	}
+#endif
+
+	setAlignment ( Qt::AlignLeft | Qt::AlignTop );
 	setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	setBackgroundBrush(Qt::white);
+	setBackgroundBrush ( Qt::white );
 	m_state = AllView;
 	m_lock = false;
-	
+	m_oper = false;
+
+	connect ( verticalScrollBar() , SIGNAL ( valueChanged ( int ) ), this, SLOT ( slotViewMoved ( int ) ) );
+
 }
 
 
@@ -42,108 +66,101 @@ FMGlyphsView::~FMGlyphsView()
 {
 }
 
-void FMGlyphsView::resizeEvent(QResizeEvent * event)
+void FMGlyphsView::resizeEvent ( QResizeEvent * event )
 {
-	if(m_state == SingleView)
+	if ( m_state == SingleView )
 		emit pleaseUpdateSingle();
 
 	emit pleaseUpdateMe();
 
 }
 
-void FMGlyphsView::showEvent(QShowEvent * event)
+void FMGlyphsView::showEvent ( QShowEvent * event )
 {
 	emit pleaseUpdateMe();
 }
 
-void FMGlyphsView::mouseReleaseEvent(QMouseEvent * e)
+void FMGlyphsView::mouseReleaseEvent ( QMouseEvent * e )
 {
 // 	Basically, we just do the job, but legacy implementation
 // 	does something I can’t figure out that leads to segfault ??
-	if(e->button() == Qt::LeftButton)
+	if ( e->button() == Qt::LeftButton )
 	{
-		QList<QGraphicsItem*> gg = scene()->items(mapToScene(e->pos()));
-		foreach(QGraphicsItem* ii, gg)
+		QList<QGraphicsItem*> gg = scene()->items ( mapToScene ( e->pos() ) );
+		foreach ( QGraphicsItem* ii, gg )
 		{
-			if(ii->data(1).toString() == "select" && m_state == AllView)
-				ii->setSelected(true);
+			if ( ii->data ( 1 ).toString() == "select" && m_state == AllView )
+				ii->setSelected ( true );
 		}
-		
-		if(m_state == AllView)
+
+		if ( m_state == AllView )
 			emit pleaseShowSelected();
-		else if( m_state == SingleView)
+		else if ( m_state == SingleView )
 			emit pleaseShowAll();
 	}
 }
 
-void FMGlyphsView::mousePressEvent(QMouseEvent * e)
+void FMGlyphsView::mousePressEvent ( QMouseEvent * e )
 {
 	// We just catch it to avoid a waeird segfault ... we’ll see later for a plain fix
 // 	if(e->button() == Qt::LeftButton)
 // 		QGraphicsView::mouseReleaseEvent(e);
 }
 
-void FMGlyphsView::setState(ViewState s)
+void FMGlyphsView::setState ( ViewState s )
 {
-	if(s == SingleView)
+	if ( s == SingleView )
 	{
 		setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-		setFocusPolicy(Qt::NoFocus);
-		
+		setFocusPolicy ( Qt::NoFocus );
+
 	}
-	else if(s == AllView)
+	else if ( s == AllView )
 	{
-		
+
 		setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-		setFocusPolicy(Qt::WheelFocus);
-		
+		setFocusPolicy ( Qt::WheelFocus );
+
 	}
 	m_state = s;
 }
 
-void FMGlyphsView::hideEvent(QHideEvent * event)
+void FMGlyphsView::hideEvent ( QHideEvent * event )
 {
-	if(m_state == SingleView)
+	if ( m_state == SingleView )
 		emit pleaseShowAll();
 }
 
-void FMGlyphsView::wheelEvent(QWheelEvent * e)
+void FMGlyphsView::wheelEvent ( QWheelEvent * e )
 {
-	if(m_state == AllView)
-		QGraphicsView::wheelEvent(e);
+	if ( m_state == AllView )
+	{
+		QGraphicsView::wheelEvent ( e );
+	}
 }
 
 QRectF FMGlyphsView::visibleSceneRect()
 {
-	QRectF rr(mapToScene(0.0, 0.0, static_cast<double>(width()), static_cast<double>(height())).boundingRect());
+	QRectF rr ( mapToScene ( 0.0, 0.0, static_cast<double> ( width() ), static_cast<double> ( height() ) ).boundingRect() );
 	return rr;
 }
 
-void FMGlyphsView::slotViewMoved()
+void FMGlyphsView::slotViewMoved ( int v )
 {
-	if(m_state == AllView)
+	if ( m_state == AllView )
 		emit pleaseUpdateMe();
 }
 
-void FMGlyphsView::scrollContentsBy(int dx, int dy)
-{
-// 	qDebug() << "FMGlyphsView::scrollContentsBy(int "<<dx<<", int "<<dy<<")";
-	QAbstractScrollArea::scrollContentsBy ( dx,  dy );
-	int pos = verticalScrollBar()->value();
-	if(pos != 0 || m_state == AllView)
-		emit pleaseUpdateMe();
-// 	qDebug() << "bang";
-}
 
-void FMGlyphsView::keyPressEvent(QKeyEvent * e)
+void FMGlyphsView::keyPressEvent ( QKeyEvent * e )
 {
-	if(m_state == AllView)
-		QAbstractScrollArea::keyPressEvent(e);
+	if ( m_state == AllView )
+		QAbstractScrollArea::keyPressEvent ( e );
 }
 
 bool FMGlyphsView::lock()
 {
-	if(m_lock)
+	if ( m_lock )
 		return false;
 	m_lock = true;
 	return true;

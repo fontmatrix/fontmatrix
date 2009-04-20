@@ -2123,8 +2123,9 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	ensureFace();
 // 	if ( allIsRendered )
 // 		return;
+//        scene->blockSignals(true);
 	FMGlyphsView *allView = reinterpret_cast<FMGlyphsView*> ( scene->views() [0] );
-// 	qDebug() <<"renderAll("<< begin_code<<","<<end_code <<")";
+//        qDebug() <<"renderAll("<< begin_code<<","<<end_code <<")";
 	deRenderAll();
 	if ( !allView->isVisible() )
 	{
@@ -2135,6 +2136,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 
 	adjustGlyphsPerRow ( allView->width() );
 	QRectF exposedRect ( allView->visibleSceneRect() );
+//        qDebug() << exposedRect;
 
 	double leftMargin = ( ( exposedRect.width() - ( 100 * m_glyphsPerRow ) ) / 2 ) + 30;
 	double aestheticTopMargin = 12;
@@ -2351,7 +2353,8 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 	allIsRendered = true;
 	releaseFace();
 
-	exposedRect = allView->visibleSceneRect();
+//        scene->blockSignals(false);
+//	exposedRect = allView->visibleSceneRect();
 // 	qDebug() << "ENDOFRENDERALL" <<exposedRect.x() << exposedRect.y() << exposedRect.width() << exposedRect.height();
 }
 

@@ -46,9 +46,10 @@ class FMGlyphsView : public QGraphicsView
 	private:
 		ViewState m_state;
 		bool m_lock;
+                bool m_oper;
 		
 	private slots:
-		void slotViewMoved();
+                void slotViewMoved(int);
 
 	signals:
 		/**
@@ -67,8 +68,7 @@ class FMGlyphsView : public QGraphicsView
 		void hideEvent ( QHideEvent * event );
 		void mouseReleaseEvent ( QMouseEvent * e );
 		void mousePressEvent ( QMouseEvent * e ) ;
-		void wheelEvent ( QWheelEvent * e );
-		void scrollContentsBy ( int dx, int dy );
+                void wheelEvent ( QWheelEvent * e );
 		void keyPressEvent ( QKeyEvent * e );
 	private:
 		FMGlyphsView(const FMGlyphsView&) {};

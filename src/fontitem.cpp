@@ -2662,70 +2662,38 @@ QString FontItem::infoText ( bool fromcache )
 	}
 
 	/// Times to manually order presentation!
-
+	
+	QList<FMFontDb::InfoItem> order;
+	order 	<< FMFontDb::FontFamily
+		<< FMFontDb::FontSubfamily
+		<< FMFontDb::FullFontName
+		<< FMFontDb::PostscriptName
+		<< FMFontDb::Designer
+		<< FMFontDb::Description
+		<< FMFontDb::LicenseDescription
+		<< FMFontDb::Copyright
+		<< FMFontDb::PostScriptCIDName
+		<< FMFontDb::SampleText
+		<< FMFontDb::VersionString
+		<< FMFontDb::Trademark
+		<< FMFontDb::ManufacturerName
+		<< FMFontDb::URLVendor
+		<< FMFontDb::URLDesigner
+		<< FMFontDb::LicenseInfoURL
+		<< FMFontDb::PreferredFamily
+		<< FMFontDb::PreferredSubfamily
+		<< FMFontDb::CompatibleMacintosh
+		<< FMFontDb::UniqueFontIdentifier;
+	
 	QString modelItem ( "<div class=\"infoblock\"><div class=\"infoname\"> %1 </div> %2 </div>" );
-	if ( orderedInfo.contains ( FMFontDb::FontFamily ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::FontFamily ] )
-		       .arg ( orderedInfo[ FMFontDb::FontFamily ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::FontSubfamily ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::FontSubfamily ] )
-		       .arg ( orderedInfo[ FMFontDb::FontSubfamily ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::FullFontName ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::FullFontName ] )
-		       .arg ( orderedInfo[ FMFontDb::FullFontName ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::PostscriptName ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::PostscriptName ] )
-		       .arg ( orderedInfo[ FMFontDb::PostscriptName ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::Designer ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::Designer ] )
-		       .arg ( orderedInfo[ FMFontDb::Designer ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::Description ) )
-		ret += modelItem.arg ( FontStrings::Names() [  FMFontDb::Description ] )
-		       .arg ( orderedInfo[  FMFontDb::Description ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::LicenseDescription ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::LicenseDescription ] )
-		       .arg ( orderedInfo[ FMFontDb::LicenseDescription ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::Copyright ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::Copyright ] )
-		       .arg ( orderedInfo[ FMFontDb::Copyright ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::PostScriptCIDName ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::PostScriptCIDName ] )
-		       .arg ( orderedInfo[ FMFontDb::PostScriptCIDName ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::SampleText ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::SampleText ] )
-		       .arg ( orderedInfo[ FMFontDb::SampleText ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::VersionString ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::VersionString ] )
-		       .arg ( orderedInfo[ FMFontDb::VersionString ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::Trademark ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::Trademark ] )
-		       .arg ( orderedInfo[ FMFontDb::Trademark ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::ManufacturerName ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::ManufacturerName ] )
-		       .arg ( orderedInfo[ FMFontDb::ManufacturerName ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::URLVendor ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::URLVendor ] )
-		       .arg ( orderedInfo[ FMFontDb::URLVendor ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::URLDesigner ) )
-		ret += modelItem.arg ( FontStrings::Names() [  FMFontDb::URLDesigner ] )
-		       .arg ( orderedInfo[  FMFontDb::URLDesigner ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::LicenseInfoURL ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::LicenseInfoURL ] )
-		       .arg ( orderedInfo[ FMFontDb::LicenseInfoURL ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::PreferredFamily ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::PreferredFamily ] )
-		       .arg ( orderedInfo[ FMFontDb::PreferredFamily ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::PreferredSubfamily ) )
-		ret += modelItem.arg ( FontStrings::Names() [  FMFontDb::PreferredSubfamily] )
-		       .arg ( orderedInfo[FMFontDb::PreferredSubfamily  ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::CompatibleMacintosh ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::CompatibleMacintosh ] )
-		       .arg ( orderedInfo[ FMFontDb::CompatibleMacintosh ].join ( " " ) );
-	if ( orderedInfo.contains ( FMFontDb::UniqueFontIdentifier ) )
-		ret += modelItem.arg ( FontStrings::Names() [ FMFontDb::UniqueFontIdentifier ] )
-		       .arg ( orderedInfo[ FMFontDb::UniqueFontIdentifier ].join ( " " ) );
-
-
+	QMap<FMFontDb::InfoItem, QString> tNames(FontStrings::Names());
+	foreach(FMFontDb::InfoItem key, order)
+	{
+		if (orderedInfo.contains(key))
+			ret += modelItem.arg(tNames.value(key))
+					.arg(orderedInfo[key].join(" "));
+	}
+	
 	ret += "</div>"; // general
 	ret += "<div id=\"panose_block\">" + panBlockOut + "</div>";
 

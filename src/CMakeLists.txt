@@ -121,6 +121,7 @@ fmactivate.h
 fmfontcompareview.h
 fmfontdb.h
 fmfontextract.h
+fmfontstrings.h
 fmglyphhighlight.h
 fmglyphsview.h
 fmlayoptwidget.h

@@ -19,6 +19,7 @@
 
 class FontStrings : public QObject
 {
+	Q_OBJECT
 		FontStrings();
 		~FontStrings() {}
 		static FontStrings* instance;

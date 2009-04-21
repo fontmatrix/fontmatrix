@@ -59,6 +59,7 @@ int main ( int argc, char *argv[] )
 	if(translator.load( FMPaths::TranslationFile(), FMPaths::TranslationsDir() ))
 	{
 		app.installTranslator(&translator);
+		qDebug()<< "Translator is installed."<<FMPaths::TranslationsDir() + FMPaths::TranslationFile();
 	}
 	else
 	{

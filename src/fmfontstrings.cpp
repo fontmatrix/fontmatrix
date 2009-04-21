@@ -55,6 +55,7 @@ void FontStrings::fillNamesMeaning()
 	m_name[FMFontDb::PostScriptCIDName]= tr ( "PostScript CID findfont name" );
 // 	m_name[FMFontDb::Panose]= tr("Panose");
 	m_name[FMFontDb::AllInfo]= tr("All fields");
+	
 }
 
 void FontStrings::fillPanoseMap()

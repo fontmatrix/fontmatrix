@@ -336,6 +336,19 @@ void typotek::open ( QString path, bool announce, bool collect )
 	}
 	else if ( finfo.isFile() )
 		pathList <<  finfo.absoluteFilePath();
+	
+	// It can happen that you wrongly select a dir, it is time to let the user cancel the import.
+	// I want it :) - pm
+	if ( ( pathList.count() > 1 )
+	        && ( QMessageBox::question ( this,
+	                                     QString ( "Fontmatrix - %1" ).arg ( tr ( "confirmation" ) ) ,
+	                                     tr ( "Do you confirm you want to import these %1 fonts?" ).arg ( pathList.count() ),
+	                                     QMessageBox::Yes | QMessageBox::No,
+	                                     QMessageBox::No )
+	             != QMessageBox::Yes ) )
+	{
+		return;
+	}
 
 	/* Everybody say it’s useless...
 		NO IT'S NOT. I'm a keen fan of this feature. Let's make it optional */
@@ -431,6 +444,7 @@ void typotek::open ( QString path, bool announce, bool collect )
 
 }
 
+/// Import files in a drop event.
 void typotek::openList ( QStringList files )
 {
 	QStringList pathList;

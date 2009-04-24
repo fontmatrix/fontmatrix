@@ -1262,31 +1262,31 @@ void MainViewWidget::activation(QList< FontItem * > fit, bool act)
 
 void MainViewWidget::allActivation ( bool act )
 {
-
-	QProgressDialog progress(tr("Activation event"),tr("Cancel"),1,currentFonts.count(),this);
-	progress.setWindowModality ( Qt::WindowModal );
-	progress.setAutoReset(false);
-	QString activString = act ? tr("Activation of :") : tr("Deactivation of :");
-	int i =1;
-	foreach ( FontItem* fit, currentFonts )
-	{
-		activation ( fit,act, false );// false here prevents to refill TreeView eachtime.
-		progress.setLabelText ( activString + " " +( fit->name() ) );
-		progress.setValue ( ++i );
-		if ( progress.wasCanceled() )
-			break;
-	}
-	fillTree();
+// TODO remove me :)
+// 	QProgressDialog progress(tr("Activation event"),tr("Cancel"),1,currentFonts.count(),this);
+// 	progress.setWindowModality ( Qt::WindowModal );
+// 	progress.setAutoReset(false);
+// 	QString activString = act ? tr("Activation of :") : tr("Deactivation of :");
+// 	int i =1;
+// 	foreach ( FontItem* fit, currentFonts )
+// 	{
+// 		activation ( fit,act, false );// false here prevents to refill TreeView eachtime.
+// 		progress.setLabelText ( activString + " " +( fit->name() ) );
+// 		progress.setValue ( ++i );
+// 		if ( progress.wasCanceled() )
+// 			break;
+// 	}
+// 	fillTree();
 }
 
 void MainViewWidget::slotDesactivateAll()
 {
-	allActivation ( false );
+	activation(currentFonts, false);
 }
 
 void MainViewWidget::slotActivateAll()
 {
-	allActivation ( true );
+	activation(currentFonts, true);
 }
 
 void MainViewWidget::slotSetSampleText ( QString s )

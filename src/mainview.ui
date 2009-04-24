@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
-    <height>601</height>
+    <width>815</width>
+    <height>571</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -655,98 +655,108 @@
        <iconset resource="application.qrc" >
         <normaloff>:/fontmatrix_glypg.png</normaloff>:/fontmatrix_glypg.png</iconset>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_16" >
-       <property name="topMargin" >
-        <number>0</number>
-       </property>
+      <layout class="QGridLayout" name="gridLayout_18" >
        <item row="0" column="0" >
         <widget class="QWidget" native="1" name="widget_2" >
-         <layout class="QFormLayout" name="formLayout" >
-          <property name="horizontalSpacing" >
-           <number>2</number>
-          </property>
-          <property name="verticalSpacing" >
-           <number>2</number>
-          </property>
+         <layout class="QGridLayout" name="gridLayout_16" >
           <property name="margin" >
            <number>0</number>
           </property>
+          <property name="spacing" >
+           <number>2</number>
+          </property>
           <item row="0" column="0" >
-           <widget class="QLabel" name="unicodeCoverageStat" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip" >
-             <string>Coverage of Unicode Interval</string>
-            </property>
-            <property name="text" >
-             <string>Block:</string>
-            </property>
-            <property name="margin" >
-             <number>2</number>
-            </property>
-            <property name="buddy" >
-             <cstring>uniPlaneCombo</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" >
-           <widget class="QComboBox" name="uniPlaneCombo" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="acceptDrops" >
-             <bool>true</bool>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout" >
+            <item>
+             <widget class="QLabel" name="unicodeCoverageStat" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip" >
+               <string>Coverage of Unicode Interval</string>
+              </property>
+              <property name="text" >
+               <string>Block:</string>
+              </property>
+              <property name="margin" >
+               <number>2</number>
+              </property>
+              <property name="buddy" >
+               <cstring>uniPlaneCombo</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="uniPlaneCombo" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="acceptDrops" >
+               <bool>true</bool>
+              </property>
+              <property name="sizeAdjustPolicy" >
+               <enum>QComboBox::AdjustToContents</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="toolButton" >
+              <property name="toolTip" >
+               <string>More Options</string>
+              </property>
+              <property name="text" >
+               <string>...</string>
+              </property>
+              <property name="checkable" >
+               <bool>true</bool>
+              </property>
+              <property name="autoRaise" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item row="1" column="0" >
-           <widget class="QLabel" name="label_2" >
-            <property name="text" >
-             <string>Search:</string>
+           <widget class="QWidget" native="1" name="characterSearchWidget" >
+            <property name="enabled" >
+             <bool>true</bool>
             </property>
-            <property name="buddy" >
-             <cstring>charSearchLine</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" >
-           <widget class="QLineEdit" name="charSearchLine" >
-            <property name="toolTip" >
-             <string>Search a character by name, press enter after editing to run the search.</string>
-            </property>
-            <property name="inputMask" >
-             <string/>
-            </property>
-            <property name="text" >
-             <string/>
-            </property>
+            <layout class="QFormLayout" name="formLayout" >
+             <item row="0" column="0" >
+              <widget class="QLabel" name="label_2" >
+               <property name="text" >
+                <string>Search:</string>
+               </property>
+               <property name="buddy" >
+                <cstring>charSearchLine</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" >
+              <widget class="QLineEdit" name="charSearchLine" >
+               <property name="toolTip" >
+                <string>Search a character by name, press enter after editing to run the search.</string>
+               </property>
+               <property name="inputMask" >
+                <string/>
+               </property>
+               <property name="text" >
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
         </widget>
-       </item>
-       <item row="0" column="1" >
-        <spacer name="horizontalSpacer_2" >
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType" >
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0" >
-          <size>
-           <width>19</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item row="0" column="2" >
         <widget class="QWidget" native="1" name="widget_3" >
@@ -763,7 +773,7 @@
              <string>Set Mode "Copy Character to Clipboard"</string>
             </property>
             <property name="text" >
-             <string>Copy</string>
+             <string>Copy Mode</string>
             </property>
             <property name="icon" >
              <iconset resource="application.qrc" >
@@ -791,7 +801,7 @@
             <property name="sizeHint" stdset="0" >
              <size>
               <width>20</width>
-              <height>17</height>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -823,6 +833,19 @@
        </item>
        <item row="2" column="0" colspan="3" >
         <widget class="QLineEdit" name="uniLine" />
+       </item>
+       <item row="0" column="1" >
+        <spacer name="horizontalSpacer_2" >
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1032,5 +1055,22 @@
  <resources>
   <include location="application.qrc" />
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>toolButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>characterSearchWidget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>369</x>
+     <y>87</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>220</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

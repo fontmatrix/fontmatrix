@@ -165,6 +165,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	slotShowClassification();
 	currentOrdering = "family" ;
 	
+	characterSearchWidget->setVisible(false);
+	
 	QStringListModel* cslModel(new QStringListModel);
 	QCompleter* cslCompleter(new QCompleter(charSearchLine));
 	cslCompleter->setModel(cslModel);

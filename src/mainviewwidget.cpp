@@ -884,7 +884,10 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	int coverage = theVeryFont->countCoverage ( uniPair.first, uniPair.second );
 	int interval = uniPair.second - uniPair.first;
 	coverage = coverage * 100 / ( interval + 1 );// against /0 exception
-	unicodeCoverageStat->setText ( QString::number ( coverage ) + "\%" );
+	
+	//: percentage of Unicode block coverage is indicated between parenthesis
+	QString statstring(tr("Block (%1):").arg( QString::number ( coverage ) + "\%"));
+	unicodeCoverageStat->setText ( statstring );
 
 	if ( abcView->isVisible() )
 	{

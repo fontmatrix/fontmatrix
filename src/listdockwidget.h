@@ -84,6 +84,11 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		QString currentField;
 		QAction *currentFieldAction;
 		QString allFieldName;
+		QAction *collapseFamiliesAction;
+		QAction *collapseAlphaAction;
+		QAction *expandFamiliesAction;
+		QAction *expandAlphaAction;
+		
 		
 		QMap<QString, QCompleter*> completers;
 
@@ -112,6 +117,11 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		void slotFolderViewContextMenu(const QPoint&);
 		void slotTabChanged(int i);
 // 		void slotPanoseChecked(bool checked);
+		
+		void slotCollapseFamilies();
+		void slotCollapseAlpha();
+		void slotExpandFamilies();
+		void slotExpandAlpha();
 		
 		// Concerns the width of the preview widget
 		void slotPreviewUpdateSize(int);

@@ -93,8 +93,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	radioRenderGroup->addButton(freetypeRadio);
 	radioRenderGroup->addButton(nativeRadio);
 	stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
-	splitter_2->restoreState(settings.value("SplitterViewState").toByteArray());
 	toolPanelWidth = splitter_2->sizes().at(1);
+	restoreSplitterState();
 	if(toolPanelWidth == 0)
 	{
 		settingsButton->setChecked(false);
@@ -115,6 +115,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	curGlyph = 0;
 	fancyGlyphInUse = -1;
 
+	activateByFamilyOnly = settings.value("ActivateOnlyFamily", false).toBool();
+	m_lists->actFacesButton->setChecked(!activateByFamilyOnly);
 
 	fillUniPlanes();
 	refillSampleList();
@@ -194,6 +196,7 @@ void MainViewWidget::doConnect()
 	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 	connect ( this, SIGNAL(listChanged()), m_lists, SLOT(slotPreviewUpdate()));
+	connect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 	
 	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	
@@ -260,6 +263,7 @@ void MainViewWidget::disConnect()
 	disconnect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	disconnect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
 	disconnect ( this, SIGNAL(listChanged()), m_lists, SLOT(slotPreviewUpdate()));
+	disconnect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 	
 	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	
@@ -452,7 +456,11 @@ void MainViewWidget::fillTree()
 				{
 					chekno = true;
 				}
-				entry->setCheckState ( 0 , act[fPointer] ?  Qt::Checked : Qt::Unchecked );
+				if( !activateByFamilyOnly )
+				{
+					entry->setCheckState ( 0 , act[fPointer] ?  Qt::Checked : Qt::Unchecked );
+				}
+				
 				entry->setData ( 0,200, entry->checkState ( 0 ) );
 
 				if ( entry->toolTip( 0 ) == curItemName )
@@ -2159,14 +2167,21 @@ void MainViewWidget::slotChangeViewPage(QAbstractButton* but)
 	slotView(true);
 }
 
-QByteArray MainViewWidget::splitterState(int spl)
+QByteArray MainViewWidget::saveSplitterState()
 {
-	if(spl == SPLITTER_VIEW_1)
-		return splitter_2->saveState();
-	
-	return QByteArray();
+	QSettings settings;
+	settings.setValue( "WState/SplitterViewState", splitter_2->saveState());
+	settings.setValue( "WState/SplitterList1", ListDockWidget::getInstance()->listSplit1->saveState());
+	settings.setValue( "WState/SplitterList2", ListDockWidget::getInstance()->listSplit2->saveState());
 }
 
+void MainViewWidget::restoreSplitterState()
+{
+	QSettings settings;
+	splitter_2->restoreState(settings.value("WState/SplitterViewState").toByteArray());
+	ListDockWidget::getInstance()->listSplit1->restoreState(settings.value("WState/SplitterList1").toByteArray());
+	ListDockWidget::getInstance()->listSplit2->restoreState(settings.value("WState/SplitterList2").toByteArray());
+}
 
 unsigned int MainViewWidget::hinting()
 {
@@ -2339,6 +2354,16 @@ void MainViewWidget::slotSaveClassSplitter()
 	QSettings settings;
 	settings.setValue("WState/ClassificationSplitter", classSplitter->saveState());
 }
+
+void MainViewWidget::toggleFacesCheckBoxes(bool state)
+{
+	if(state == activateByFamilyOnly)
+	{
+		activateByFamilyOnly = !state;
+		fillTree();
+	}
+}
+
 
 
 

@@ -30,8 +30,6 @@
 #define VIEW_PAGE_OPENTYPE 0
 #define VIEW_PAGE_SETTINGS 1
 
-#define SPLITTER_VIEW_1 1
-
 class QGraphicsScene;
 class typotek;
 class FontItem;
@@ -77,6 +75,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		FontItem *theVeryFont; 
 		bool fontsetHasChanged;
 		QGraphicsRectItem *curGlyph;
+		bool activateByFamilyOnly;
 		
 		void doConnect();
 		void disConnect();
@@ -211,6 +210,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		void slotSaveClassSplitter();
 		
+		void toggleFacesCheckBoxes(bool);
 		
 	signals:
 		void faceChanged();
@@ -240,7 +240,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void addFilterToCrumb(QString filter);
 		void setCrumb(QString text = QString());
 		
-		QByteArray splitterState(int spl);
+		QByteArray saveSplitterState();
+		void restoreSplitterState();
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

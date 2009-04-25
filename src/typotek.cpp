@@ -948,7 +948,7 @@ void typotek::writeSettings()
 
 	settings.setValue( "Panose/MatchTreshold", panoseMatchTreshold);
 
-	settings.setValue( "WState/SplitterViewState", theMainView->splitterState(SPLITTER_VIEW_1));
+	theMainView->saveSplitterState();
 
 	settings.setValue( "Database/Driver",databaseDriver);
 	settings.setValue( "Database/Hostname",databaseHostname);

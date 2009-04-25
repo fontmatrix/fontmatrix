@@ -24,6 +24,7 @@
 #include "fmfontstrings.h"
 #include "fmpreviewlist.h"
 #include "mainviewwidget.h"
+#include "shortcuts.h"
 
 #include <QDebug>
 #include <QDesktopWidget>
@@ -149,21 +150,22 @@ ListDockWidget::ListDockWidget()
 	fieldButton->setToolTip(currentField);
 	fieldButton->setText( currentField );
 	
-// 	theOperationMenu = new QMenu;
-// 	QMap<QString, QString> operations;
-// 
-// 	operations["AND"]	= tr("And","logical operation");
-// 	operations["OR"]	= tr("Or","logical operation") ;
-// 	operations["NO"]	= tr("Negate","logical operation");
-// 	
-// 	QAction * actOp(0);
-// 	foreach(QString op, operations.keys())
-// 	{ 
-// 		actOp = theOperationMenu->addAction(operations[op]);
-// 		actOp->setData(op);
-// 		actOp->setCheckable(true);
-// 	}
-// 	operationButton->setMenu(theOperationMenu);
+	collapseAlphaAction = new QAction(tr("Collapse Top Level"), this);
+	Shortcuts::getInstance()->add(collapseAlphaAction);
+	collapseFamiliesAction = new QAction(tr("Collapse Families"), this);
+	Shortcuts::getInstance()->add(collapseFamiliesAction);
+	
+	expandAlphaAction = new QAction(tr("Expand Top Level"), this);
+	Shortcuts::getInstance()->add(expandAlphaAction);
+	expandFamiliesAction = new QAction(tr("Expand Families"), this);
+	Shortcuts::getInstance()->add(expandFamiliesAction);
+	
+	QMenu * collapseMenu = new QMenu(this);
+	collapseMenu->addAction(collapseFamiliesAction);
+	collapseMenu->addAction(collapseAlphaAction);
+	collapseMenu->addAction(expandFamiliesAction);
+	collapseMenu->addAction(expandAlphaAction);
+	collapseButton->setMenu(collapseMenu);
 
 	searchString->setCompleter(completers.value(currentField));
 
@@ -172,6 +174,11 @@ ListDockWidget::ListDockWidget()
 	initTagCombo();
 	
 // 	connect( panoseButton, SIGNAL(clicked( bool )), this, SLOT(slotPanoseChecked(bool)));
+	
+	connect(collapseAlphaAction, SIGNAL(triggered()),this,SLOT(slotCollapseAlpha()));
+	connect(collapseFamiliesAction, SIGNAL(triggered()),this,SLOT(slotCollapseFamilies()));
+	connect(expandAlphaAction,SIGNAL(triggered()), this, SLOT(slotExpandAlpha()));
+	connect(expandFamiliesAction,SIGNAL(triggered()), this, SLOT(slotExpandFamilies()));
 	
 	connect( filterActGroup,SIGNAL(triggered( QAction* )),this,SLOT(slotFieldChanged(QAction*)));
 	connect( searchString,SIGNAL(returnPressed()),this,SLOT(slotFeedTheCompleter()));
@@ -542,3 +549,48 @@ void ListDockWidget::clearOperation()
 }
 
 
+
+
+void ListDockWidget::slotCollapseFamilies()
+{
+	const int tliCount(fontTree->topLevelItemCount());
+	for(int i(0); i < tliCount; ++i)
+	{
+		int fCount(fontTree->topLevelItem(i)->childCount());
+		for(int f(0); f < fCount; ++f)
+		{
+			fontTree->topLevelItem(i)->child(f)->setExpanded(false);
+		}
+	}
+}
+
+void ListDockWidget::slotCollapseAlpha()
+{
+	const int tliCount(fontTree->topLevelItemCount());
+	for(int i(0); i < tliCount; ++i)
+	{
+		fontTree->topLevelItem(i)->setExpanded(false);
+	}
+}
+
+void ListDockWidget::slotExpandFamilies()
+{
+	const int tliCount(fontTree->topLevelItemCount());
+	for(int i(0); i < tliCount; ++i)
+	{
+		int fCount(fontTree->topLevelItem(i)->childCount());
+		for(int f(0); f < fCount; ++f)
+		{
+			fontTree->topLevelItem(i)->child(f)->setExpanded(true);
+		}
+	}
+}
+
+void ListDockWidget::slotExpandAlpha()
+{
+	const int tliCount(fontTree->topLevelItemCount());
+	for(int i(0); i < tliCount; ++i)
+	{
+		fontTree->topLevelItem(i)->setExpanded(true);
+	}
+}

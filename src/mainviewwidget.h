@@ -240,7 +240,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void addFilterToCrumb(QString filter);
 		void setCrumb(QString text = QString());
 		
-		QByteArray saveSplitterState();
+		void saveSplitterState();
 		void restoreSplitterState();
 		
 	protected:

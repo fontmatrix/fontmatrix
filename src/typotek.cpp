@@ -929,6 +929,7 @@ void typotek::writeSettings()
 	QSettings settings;
 	settings.setValue( "WState/pos", pos() );
 	settings.setValue( "WState/size", size() );
+	theMainView->saveSplitterState();
 
 	if(mainDock->isFloating())
 		mainDockArea = "Float";
@@ -947,8 +948,6 @@ void typotek::writeSettings()
 	settings.setValue("Info/Style", infoStyle );
 
 	settings.setValue( "Panose/MatchTreshold", panoseMatchTreshold);
-
-	theMainView->saveSplitterState();
 
 	settings.setValue( "Database/Driver",databaseDriver);
 	settings.setValue( "Database/Hostname",databaseHostname);

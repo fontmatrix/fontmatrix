@@ -2167,7 +2167,7 @@ void MainViewWidget::slotChangeViewPage(QAbstractButton* but)
 	slotView(true);
 }
 
-QByteArray MainViewWidget::saveSplitterState()
+void MainViewWidget::saveSplitterState()
 {
 	QSettings settings;
 	settings.setValue( "WState/SplitterViewState", splitter_2->saveState());

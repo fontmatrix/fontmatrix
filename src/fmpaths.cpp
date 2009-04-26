@@ -27,6 +27,7 @@ QString FMPaths::sysLoc()
 	if(getThis()->FMPathsDB.contains("sysLoc"))
 		return getThis()->FMPathsDB["sysLoc"];
 	QMap<QLocale::Language, QString> la;
+	la[QLocale::Czech] = "cs";
 	la[QLocale::Danish] = "da";
 	la[QLocale::German] = "de";
 	la[QLocale::English] = "en";

@@ -195,6 +195,7 @@ application.qrc
 QT4_ADD_RESOURCES(fontmatrix_RCC_SRCS ${fontmatrix_RCCS})
 
 SET ( fontmatrix_TSS
+      messages/fontmatrix-cs.ts
       messages/fontmatrix-da.ts
       messages/fontmatrix-de.ts
       messages/fontmatrix-en.ts

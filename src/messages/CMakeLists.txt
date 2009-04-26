@@ -1,4 +1,5 @@
 SET ( fontmatrix_TSS
+      fontmatrix-cs.ts
       fontmatrix-da.ts
       fontmatrix-de.ts
       fontmatrix-en.ts

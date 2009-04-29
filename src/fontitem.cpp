@@ -2261,6 +2261,7 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 					tit->setData ( 3,0 );
 					labList.append ( tit );
 					tit->setZValue ( 1 );
+					
 
 					QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
 					rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
@@ -2334,7 +2335,15 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 				tit->setData ( 3,0 );
 				labList.append ( tit );
 				tit->setZValue ( 1 );
-
+					
+				QGraphicsTextItem *tit2= scene->addText ( glyphName ( i , false), infoFont );
+				tit2->setDefaultTextColor(txtColor);
+				tit2->setPos ( pen.x()-27,pen.y() + 30 );
+				tit2->setData ( 1,"label" );
+				tit2->setData ( 2,i );
+				labList.append ( tit2 );
+				tit2->setZValue ( 1 );
+				
 				QGraphicsRectItem *rit = scene->addRect ( pen.x() -30,pen.y() -50,100,100,selPen,selBrush );
 				rit->setFlag ( QGraphicsItem::ItemIsSelectable,true );
 				rit->setData ( 1,"select" );
@@ -2705,15 +2714,22 @@ QString FontItem::infoText ( bool fromcache )
 	return ret;
 }
 
-QString FontItem::glyphName ( int codepoint )
+QString FontItem::glyphName ( int codepoint, bool codeIsChar )
 {
 	ensureFace();
 
-	int index = FT_Get_Char_Index ( m_face, codepoint );
-	if ( index== 0 )
+	int index(0);
+	
+	if(codeIsChar)
 	{
-		return "noname";
+		FT_Get_Char_Index ( m_face, codepoint );
+		if ( index== 0 )
+		{
+			return "noname";
+		}
 	}
+	else
+		index = codepoint;
 
 	QByteArray key ( 1001,0 );
 	if ( FT_HAS_GLYPH_NAMES ( m_face ) )

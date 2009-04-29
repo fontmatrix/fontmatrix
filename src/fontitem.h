@@ -284,7 +284,7 @@ class FontItem : public QObject
 		QString fancyName() {return m_family + " " + m_variant;}
 		QString infoText ( bool fromcache = true );
 		QString infoGlyph ( int index, int code = 0 );
-		QString glyphName(int codepoint);
+		QString glyphName(int codepoint, bool codeIsChar = true);
 		FontInfoMap rawInfo();
 		FontInfoMap moreInfo();
 		

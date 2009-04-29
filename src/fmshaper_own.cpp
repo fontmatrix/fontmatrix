@@ -57,7 +57,7 @@ int FMOwnShaper::loadRules(QString lang)
 {
 	QSettings stg;
 	QString actualSDir;
-	QString ShaperDir(stg.value("ShaperDataDir").toString());
+	QString ShaperDir(stg.value("Places/ShaperDataDir").toString());
 	if(ShaperDir.isEmpty())
 	{
 		actualSDir = ":/shapers/";

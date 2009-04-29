@@ -1,7 +1,6 @@
 % this is the "test match file
-% "ABC" => "BCA"
-U0041U0042U0043|U0042U0043U0041
-% "B(VOYELLE)C" => "C\1"
-U0042.(VOYELLE)U0043|U0043(kern).1(kern)
-% f f i => f_f_i
-U0066U0066U0069|U0066(liga)U0066(liga)U0069(liga)
+% set finals and initials
+
+.(X) .(SPACE) | .1(fina; liga; kern) .2
+.(X) .(PUNCT) | .1(fina; liga; kern) .2
+.(X) | .1(liga; kern)

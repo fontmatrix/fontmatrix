@@ -591,11 +591,13 @@ void MainViewWidget::updateTree ( bool checkFontActive )
 						bool isActive ( f->isActivated() );
 						if ( isActive )
 						{
-							varItem->setCheckState ( 0,Qt::Checked );
+							if( !activateByFamilyOnly )
+								varItem->setCheckState ( 0,Qt::Checked );
 						}
 						else
 						{
-							varItem->setCheckState ( 0,Qt::Unchecked );
+							if( !activateByFamilyOnly )
+								varItem->setCheckState ( 0,Qt::Unchecked );
 						}
 					}
 				}

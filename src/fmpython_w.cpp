@@ -89,7 +89,7 @@ void FMPythonW::run()
 	PythonQt::self()->registerCPPClassNames ( exposedClassesCPP );
 	mainContext.addObject ( "Fontmatrix", this );
 
-	QString pHead ( "from PythonQt import *\n" );
+	QString pHead ( "# -*- coding: utf-8 -*-\n\nfrom PythonQt import *\n" );
 	mainContext.evalScript ( pHead + m_scriptAsString , Py_file_input );
 }
 

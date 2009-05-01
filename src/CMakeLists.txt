@@ -225,6 +225,7 @@ QT4_ADD_TRANSLATION ( fontmatrix_QMS ${fontmatrix_TSS} )
 ADD_CUSTOM_TARGET ( translation_release ALL DEPENDS ${fontmatrix_QMS} )
 
 # ADD_SUBDIRECTORY(messages)
+ADD_SUBDIRECTORY(scripts)
 
 include_directories(
 ${CMAKE_CURRENT_SOURCE_DIR}

@@ -945,6 +945,10 @@
       <attribute name="title" >
        <string>Classification</string>
       </attribute>
+      <attribute name="icon" >
+       <iconset resource="application.qrc" >
+        <normaloff>:/fontmatrix_clasification.png</normaloff>:/fontmatrix_clasification.png</iconset>
+      </attribute>
       <layout class="QGridLayout" name="gridLayout_13" >
        <property name="margin" >
         <number>0</number>
@@ -981,6 +985,10 @@
      <widget class="QWidget" name="tabCompare" >
       <attribute name="title" >
        <string>Compare</string>
+      </attribute>
+      <attribute name="icon" >
+       <iconset resource="application.qrc" >
+        <normaloff>:/fontmatrix_compare.png</normaloff>:/fontmatrix_compare.png</iconset>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_17" >
        <item row="0" column="0" >

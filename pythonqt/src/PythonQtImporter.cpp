@@ -233,7 +233,7 @@ PythonQtImporter_load_module(PyObject *obj, PyObject *args)
   Py_DECREF(code);
   if (Py_VerboseFlag)
     PySys_WriteStderr("import %s # loaded from %s\n",
-          fullname, modpath);
+          fullname, modpath.toLocal8Bit().data());
   return mod;
 error:
   Py_DECREF(code);
@@ -759,7 +759,7 @@ void PythonQtImport::init()
   mod = Py_InitModule4("PythonQtImport", NULL, mlabimport_doc,
            NULL, PYTHON_API_VERSION);
 
-  PythonQtImportError = PyErr_NewException("PythonQtImport.PythonQtImportError",
+  PythonQtImportError = PyErr_NewException(QString("PythonQtImport.PythonQtImportError").toLocal8Bit().data(),
               PyExc_ImportError, NULL);
   if (PythonQtImportError == NULL)
     return;
@@ -776,7 +776,7 @@ void PythonQtImport::init()
 
   // set our importer into the path_hooks to handle all path on sys.path
   PyObject* classobj = PyDict_GetItemString(PyModule_GetDict(mod), "PythonQtImporter");
-  PyObject* path_hooks = PySys_GetObject("path_hooks");
+  PyObject* path_hooks = PySys_GetObject(QString("path_hooks").toLocal8Bit().data());
   PyList_Append(path_hooks, classobj);
   
 #ifndef WIN32

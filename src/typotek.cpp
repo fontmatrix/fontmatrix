@@ -1080,15 +1080,21 @@ QStringList typotek::getSystemFontDirs()
 		}
 		sysDir = ( (char*)FcStrListNext(sysDirList) );
 	}
+	// Because we will go recursivly through these directories, we just want to list the top most ones.
 	foreach(QString path, tmpList)
 	{
+// 		qDebug()<< "PATH"<<path;
 		bool root(true);
 		foreach(QString ref, tmpList)
 		{
 			if(path != ref)
 			{
-				if(ref.startsWith(path))
+				if(path.startsWith(ref))
+				{
 					root = false;
+					break;
+				}
+// 				qDebug()<<"\tREF"<<ref<<root;
 			}
 		}
 		if(root)
@@ -1103,6 +1109,8 @@ QStringList typotek::getSystemFontDirs()
 #if _WIN32
 	retList << getWin32SystemFontDir();
 #endif // _WIN32
+	
+	qDebug()<<retList.join("\n");
 	return retList;
 }
 
@@ -1131,7 +1139,6 @@ void typotek::initDir()
 		QList<FontItem*> sysFontPtrs;
 
 		QStringList sysDir ( getSystemFontDirs() );
-		qDebug()<<sysDir.join("\n");
 
 		QStringList yetHereFonts;
 		QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());

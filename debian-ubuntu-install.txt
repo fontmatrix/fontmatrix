@@ -1,0 +1,19 @@
+
+Installing fontmatrix from source on Debian and Ubuntu:
+
+
+sudo apt-get install build-essential
+sudo apt-get build-dep fontmatrix
+sudo apt-get install libqt4-sql-sqlite python-dev libicu-dev 
+
+cd fontmatrix
+mkdir  build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Debug -DWANT_PYTHONQT:bool=true -DWANT_ICU:bool=true -DWANT_HARFBUZZ:bool=true 
+make 
+sudo make install 
+
+
+
+
+

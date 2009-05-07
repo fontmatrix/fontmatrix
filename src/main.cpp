@@ -126,7 +126,10 @@ int main ( int argc, char *argv[] )
 
 	mw->initMatrix();
 
-	if ( typotek::getInstance()->getSystray()->isVisible() && settings.value ( "Systray/CloseToTray", true ).toBool() ) {
+	if (	(typotek::getInstance()->getSystray())
+		&& (typotek::getInstance()->getSystray()->isVisible())
+		&& (settings.value ( "Systray/CloseToTray", true ).toBool()) ) 
+	{
 		if ( ! settings.value ( "Systray/StartToTray", false ).toBool() )
 			mw->show();
 		else

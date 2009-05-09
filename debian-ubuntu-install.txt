@@ -1,17 +1,37 @@
 
-Installing fontmatrix from source on Debian and Ubuntu:
+Step-by-step instructions to install fontmatrix from source on Debian and Ubuntu:
+
+first we install the compilation metapackage by typing:
+ sudo apt-get install build-essential
+
+then we install the various build dependencies already known by the package database by typing:
+  sudo apt-get build-dep fontmatrix
+
+then we add a few extra dependencies added in the svn version of fontmatrix by typing:
+  sudo apt-get install libqt4-sql-sqlite python-dev libicu-dev 
+
+then we retrive the source code by typing:
+  sudo apt-get install subversion 
+  svn co http://svn.gna.org/svn/undertype fontmatrix
+
+then we build from source by typing:  
+  cd fontmatrix
+  mkdir  build
+  cd build
+  cmake .. -DCMAKE_BUILD_TYPE=Debug -DWANT_PYTHONQT:bool=true -DWANT_ICU:bool=true -DWANT_HARFBUZZ:bool=true 
+  make 
 
 
-sudo apt-get install build-essential
-sudo apt-get build-dep fontmatrix
-sudo apt-get install libqt4-sql-sqlite python-dev libicu-dev 
+then we install the compiled version locally by typing:  
+  sudo make install
 
-cd fontmatrix
-mkdir  build
-cd build
-cmake .. -DCMAKE_BUILD_TYPE=Debug -DWANT_PYTHONQT:bool=true -DWANT_ICU:bool=true -DWANT_HARFBUZZ:bool=true 
-make 
-sudo make install 
+this will move the files to /usr/local/
+
+
+to uninstall all files written in the manifest you can type:
+ sudo xargs rm < install_manifest.txt
+
+
 
 
 

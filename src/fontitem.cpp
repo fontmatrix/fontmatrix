@@ -2722,7 +2722,7 @@ QString FontItem::glyphName ( int codepoint, bool codeIsChar )
 	
 	if(codeIsChar)
 	{
-		FT_Get_Char_Index ( m_face, codepoint );
+		index = FT_Get_Char_Index ( m_face, codepoint );
 		if ( index== 0 )
 		{
 			return "noname";

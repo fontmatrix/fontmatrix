@@ -306,7 +306,7 @@ class FontItem : public QObject
 		QGraphicsPixmapItem* itemFromGindexPix_mt ( int index, double size );
 		
 		QImage charImage(int charcode, double size);
-		
+		QImage glyphImage(int index, double size);
 		
 		
 		

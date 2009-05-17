@@ -20,6 +20,7 @@
 
 
 #include "fmotf.h"
+#include "fmaltcontext.h"
 
 #include <QDebug>
 #include <QLibrary>
@@ -329,6 +330,7 @@ FMOtf::FMOtf ( FT_Face f , double scale )
 			        !HB_Load_GSUB_Table ( gsubstream, &_gsub, NULL, NULL ) )
 			{
 				GSUB = 1;
+				qDebug()<<"REGISTER alternate substitutions callback";
 				HB_GSUB_Register_Alternate_Function( _gsub, manageAlternates ,0);
 			}
 			else
@@ -1009,14 +1011,27 @@ GlyphList FMOtf::get_position ( HB_Buffer abuffer )
 
 HB_UShort FMOtf::manageAlternates(HB_UInt pos, HB_UShort glyphID, HB_UShort num_alternates, HB_UShort * alternates, void * data)
 {
-	qDebug()<<"manageAlternates("<<  glyphID <<")";
-	altGlyphs.clear();
-	for(int i(0); i < num_alternates; ++i)
-	{
-		altGlyphs << alternates[i];
-		qDebug() << "\t"<<alternates[i];
-	}
-	
+	// ALTERNATES
+//	FMAltContext * actx(FMAltContextLib::GetCurrentContext());
+//	if(actx)
+//	{
+//		if((!actx->control(pos) != glyphID))
+//		{
+//			actx->setControl( pos, glyphID);
+//			actx->setSelect( pos, 0);
+////			actx->addAlt(pos, glyphID);
+//			for(int i(0); i < num_alternates; ++i)
+//			{
+//				actx->addAlt(pos, alternates[i]);
+//			}
+////			qDebug()<<"F"<<actx->chunkString()<< pos << glyphID << actx->alts(pos);
+//			return (HB_UShort) 0;
+//		}
+//		else
+//		{
+//			return (HB_UShort) actx->select(pos);
+//		}
+//	}
 	return (HB_UShort) 0;
 }
 

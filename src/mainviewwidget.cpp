@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "mainviewwidget.h"
 #include "fmactivate.h"
+#include "fmaltcontext.h"
 #include "fmbaseshaper.h"
 #include "fmglyphhighlight.h"
 #include "fmglyphsview.h"
@@ -950,12 +951,24 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			if ( processScript )
 			{
 				for(int p(0);p<stl.count();++p)
+				{
 					list << theVeryFont->glyphs( stl[p] , fSize, script );
+				}
 			}
 			else if(processFeatures)
 			{
+				// Experimental code to handle alternate is commented out
+				// Do not uncomment
+//				FMAltContext * actx ( FMAltContextLib::SetCurrentContext(sampleTextCombo->currentText(), theVeryFont->path()));
+//				int rs(0);
+//				actx->setPar(rs);
 				for(int p(0);p<stl.count();++p)	
+				{
 					list << theVeryFont->glyphs( stl[p] , fSize, deFillOTTree());
+//					actx->setPar(++rs);
+				}
+//				actx->cleanup();
+//				FMAltContextLib::SetCurrentContext(sampleTextCombo->currentText(), theVeryFont->path());
 			}
 			else
 			{

@@ -6,6 +6,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmaltcontext.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmaltselector.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmdumpinfo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontcompareview.cpp
@@ -118,6 +120,8 @@ SET(fontmatrix_MOC_HDRS
 aboutwidget.h
 dumpdialog.h
 fmactivate.h
+fmaltcontext.h
+fmaltselector.h
 fmfontcompareview.h
 fmfontdb.h
 fmfontextract.h
@@ -163,6 +167,7 @@ ${PYTHONQT_SCRIPTER_MOC_HDRS})
 
 SET(fontmatrix_UIS
 ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
+${CMAKE_CURRENT_SOURCE_DIR}/altselectorwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui

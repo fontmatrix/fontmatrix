@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "fontitem.h"
+#include "fmaltcontext.h"
 #include "fmotf.h"
 #include "fmfontdb.h"
 #include "fmfontstrings.h"
@@ -1074,7 +1075,29 @@ QImage FontItem::charImage(int charcode, double size)
 	return cImg;
 }
 
+QImage FontItem::glyphImage(int index, double size)
+{
+	if(!ensureFace())
+		return QImage();
 
+	// Set size
+	FT_Set_Char_Size ( m_face,  qRound( size  * 64 ), 0, QApplication::desktop()->physicalDpiX(),QApplication::desktop()->physicalDpiY() );
+	if(FT_Load_Glyph( m_face, index , FT_LOAD_DEFAULT))
+	{
+		releaseFace();
+		return QImage();
+	}
+	if(FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL ))
+	{
+		releaseFace();
+		return QImage();
+	}
+
+
+	QImage cImg( glyphImage() );
+	releaseFace();
+	return cImg;
+}
 /// Nature line
 double FontItem::renderLine ( QGraphicsScene * scene,
                               QString spec,
@@ -4001,8 +4024,14 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 	
 	otf = new FMOtf ( m_face, 0x10000 );
 	if ( !otf )
+	{
+		releaseFace();
 		return Gret;
-	
+	}
+
+//	FMAltContext * actx ( FMAltContextLib::GetCurrentContext());
+//	int cword(0);
+//	int cchunk(0);
 	QStringList stl(spec.split(' ',QString::SkipEmptyParts));
 	
 	double scalefactor = fsize / m_face->units_per_EM  ;
@@ -4012,6 +4041,10 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 	delete glyph;
 	for(QStringList::const_iterator sIt(stl.constBegin());sIt != stl.constEnd(); ++ sIt)
 	{
+//		actx->setWord(cword);
+//		actx->setChunk(cchunk);
+//		actx->fileWord(*sIt);
+//		actx->fileChunk(*sIt);
 		if(sIt != stl.constBegin())
 		{
 			Gret << wSpace;
@@ -4039,6 +4072,8 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 				QString addOnSecond;
 				addOnFirst =  hl[i].first.endsWith("-") ? "": "-";
 // 				addOnSecond = (*sIt).endsWith(".")?".":"";
+//				actx->setChunk(++cchunk);
+//				actx->fileChunk( hl[ret[i].log].first + addOnFirst);
 				ret[i].hyphen.first = otf->procstring ( hl[ret[i].log].first + addOnFirst, set );
 				for(int f(0); f < ret[i].hyphen.first.count(); ++f)
 				{
@@ -4047,6 +4082,9 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 					ret[i].hyphen.first[f].xoffset *= scalefactor;
 					ret[i].hyphen.first[f].yoffset *= scalefactor;
 				}
+
+//				actx->setChunk(++cchunk);
+//				actx->fileChunk( hl[ret[i].log].second + addOnSecond );
 				ret[i].hyphen.second = otf->procstring ( hl[ret[i].log].second + addOnSecond, set );
 				for(int f(0); f < ret[i].hyphen.second.count(); ++f)
 				{
@@ -4059,6 +4097,8 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 		}
 		
 		Gret << ret;
+//		cchunk = 0;
+//		++cword;
 		
 	}
 	delete otf;

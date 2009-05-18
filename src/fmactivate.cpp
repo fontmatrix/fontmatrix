@@ -22,7 +22,30 @@
 #include <QDomNodeList>
 #include <QDomElement>
 
+
+
 FMActivate* FMActivate::instance = 0;
+
+FMActivate::FMActivate()
+{
+	setErrorStrings();
+}
+
+void FMActivate::setErrorStrings()
+{
+	//: Activation subroutine failed to make a symbolic link to the font file
+	errorStrings[NO_LINK] = tr("Unable to link");
+	//: The Font asked for activation is already activated
+	errorStrings[ALREADY_ACTIVE] = tr("Font already activated");
+	//: Activation subroutine failed to remove a symbolic link to the font file
+	errorStrings[NO_UNLINK] = tr("Unable to un-link");
+	//: The Font asked for de-activation is already de-activated
+	errorStrings[ALREADY_UNACTIVE] = tr("Font already de-activated");
+	//: A postcript font (pfb) without its metrics file (afm)
+	errorStrings[MISSING_AFM] = tr("Cannot link or copy the metrics file");
+	//: A generic error in activation or deactivation process
+	errorStrings[ERROR] = tr("Error", "activation");
+}
 
 FMActivate * FMActivate::getInstance()
 {
@@ -35,111 +58,107 @@ FMActivate * FMActivate::getInstance()
 }
 
 #ifdef PLATFORM_APPLE
-void FMActivate::activate(FontItem * fit, bool act)
-{
-	qDebug() << "Activation of " << fit->path() << act;
-	typotek *T(typotek::getInstance());
-	if ( act ) // Activation
-	{
-
-		if ( !T->isSysFont(fit) )
-		{
-			if ( !fit->isActivated() )
-			{
-				fit->setActivated ( true );
-
-// 				QFileInfo fofi ( fit->path() );
-
-				if ( !QFile::copy ( fit->path() , T->getManagedDir() + "/" + fit->activationName() ) )
-				{
-					qDebug() << "unable to copy " << fit->path() ;
-				}
-				else
-				{
-					qDebug() << fit->path() << " copied" ;
-					if ( !fit->afm().isEmpty() )
-					{
-						
-// 						QFileInfo afm ( fit->afm() );
-						if ( !QFile::copy( fit->afm(), T->getManagedDir() + "/" + fit->activationAFMName() ) )
-						{
-							qDebug() << "unable to copy " << fit->afm();
-						}
-						else
-						{
-							qDebug() << fit->afm() << "copied"; 
-						}
-					}
-					else
-					{
-						qDebug()<<"There is no AFM file attached to "<<fit->path();
-					}
-				}
-			}
-			else
-			{
-				qDebug() << "\tYet activated";
-			}
-
-		}
-		else
-		{
-			qDebug() << "\tIs Locked";
-		}
-
-	}
-	else // Deactivation
-	{
-
-		if ( !T->isSysFont(fit) )
-		{
-			if ( fit->isActivated() )
-			{
-				fit->setActivated ( false );
-// 				QFileInfo fofi ( fit->path() );
-				if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationName() ) )
-				{
-					qDebug() << "unable to unlink " << fit->name() ;
-				}
-				else
-				{
-					if ( !fit->afm().isEmpty() )
-					{
-// 						QFileInfo afm ( fit->afm() );
-						if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationAFMName() ) )
-						{
-							qDebug() << "unable to unlink " << fit->afm() ;
-						}
-					}
-// 					typo->adaptator()->private_signal ( 0, fofi.fileName() );
-				}
-			}
-
-		}
-		else
-		{
-			qDebug() << "\tIs Locked";
-		}
-	}
-	
-	emit activationEvent ( fit->path() );
-}
 
 void FMActivate::activate(QList<FontItem*> fitList, bool act)
 {
-	// FIXME its bad
-	foreach(FontItem* fit, fitList)
+	// TODO insert error messages.
+	QMap<FontItem*, bool> stack;
+	typotek *T(typotek::getInstance());
+	foreach(FontItem * fit , fitList)
 	{
-		activate(fit, act);
+		qDebug() << "Activation of " << fit->path() << act;
+		if ( act ) // Activation
+		{
+
+			if ( !T->isSysFont(fit) )
+			{
+				if ( !fit->isActivated() )
+				{
+					fit->setActivated ( true );
+
+					// 				QFileInfo fofi ( fit->path() );
+
+					if ( !QFile::copy ( fit->path() , T->getManagedDir() + "/" + fit->activationName() ) )
+					{
+						qDebug() << "unable to copy " << fit->path() ;
+					}
+					else
+					{
+						// Success
+						stack[fit] = true;
+						qDebug() << fit->path() << " copied" ;
+						if ( !fit->afm().isEmpty() )
+						{
+
+							// 						QFileInfo afm ( fit->afm() );
+							if ( !QFile::copy( fit->afm(), T->getManagedDir() + "/" + fit->activationAFMName() ) )
+							{
+								qDebug() << "unable to copy " << fit->afm();
+							}
+							else
+							{
+								qDebug() << fit->afm() << "copied";
+							}
+						}
+						else
+						{
+							qDebug()<<"There is no AFM file attached to "<<fit->path();
+						}
+					}
+				}
+				else
+				{
+					qDebug() << "\tYet activated";
+				}
+
+			}
+			else
+			{
+				qDebug() << "\tIs Locked";
+			}
+
+		}
+		else // Deactivation
+		{
+
+			if ( !T->isSysFont(fit) )
+			{
+				if ( fit->isActivated() )
+				{
+					fit->setActivated ( false );
+					// 				QFileInfo fofi ( fit->path() );
+					if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationName() ) )
+					{
+						qDebug() << "unable to unlink " << fit->name() ;
+					}
+					else
+					{
+						// Success
+						stack[fit] = false;
+						if ( !fit->afm().isEmpty() )
+						{
+							// 						QFileInfo afm ( fit->afm() );
+							if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationAFMName() ) )
+							{
+								qDebug() << "unable to unlink " << fit->afm() ;
+							}
+						}
+						// 					typo->adaptator()->private_signal ( 0, fofi.fileName() );
+					}
+				}
+
+			}
+			else
+			{
+				qDebug() << "\tIs Locked";
+			}
+		}
 	}
+
+	emit activationEvent ( fit->path() );
 }
 
 #elif _WIN32
-
-void FMActivate::activate(FontItem* fit , bool act )
-{
-	//TODO implement activation/deactivation for Windows
-}
 
 void FMActivate::activate(QList<FontItem*> fitList, bool act)
 {
@@ -147,108 +166,15 @@ void FMActivate::activate(QList<FontItem*> fitList, bool act)
 }
 
 #else // fontconfig
-void FMActivate::activate(FontItem * fit, bool act)
-{
-	qDebug() << "Activation of " << fit->path() << act;
-	typotek *T(typotek::getInstance());
-	if ( act ) // Activation
-	{
-		fit->setActivated ( true );
-		if ( !T->isSysFont(fit) )
-		{
-			if ( !fit->isActivated() )
-			{
-
-// 				QFileInfo fofi ( fit->path() );
-
-				if ( !QFile::link ( fit->path() , T->getManagedDir() + "/" + fit->activationName() ) )
-				{
-					qDebug() << "unable to link " << fit->path() ;
-				}
-				else
-				{
-					qDebug() << fit->path() << " linked" ;
-					if ( !fit->afm().isEmpty() )
-					{
-						
-// 						QFileInfo afm ( fit->afm() );
-						if ( !QFile::link ( fit->afm(), T->getManagedDir() + "/" + fit->activationAFMName() ) )
-						{
-							qDebug() << "unable to link " << fit->afm();
-						}
-						else
-						{
-							qDebug() << fit->afm() << " linked"; 
-						}
-					}
-					else
-					{
-						qDebug()<<"There is no AFM file attached to "<<fit->path();
-					}
-				}
-			}
-			else
-			{
-				qDebug() << "\tYet activated";
-			}
-
-		}
-		else
-		{
-			remFcReject(fit->path());
-			
-		}
-
-	}
-	else // Deactivation
-	{
-		fit->setActivated ( false );
-		if ( !T->isSysFont(fit) )
-		{
-			if ( fit->isActivated() )
-			{
-// 				QFileInfo fofi ( fit->path() );
-				if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationName() ) )
-				{
-					qDebug() << "unable to unlink " << fit->name() ;
-				}
-				else
-				{
-					if ( !fit->afm().isEmpty() )
-					{
-// 						QFileInfo afm ( fit->afm() );
-						if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationAFMName() ) )
-						{
-							qDebug() << "unable to unlink " << fit->afm() ;
-						}
-					}
-// 					typo->adaptator()->private_signal ( 0, fofi.fileName() );
-				}
-			}
-
-		}
-		else
-		{
-			addFcReject(fit->path());
-		}
-	}
-	
-	emit activationEvent ( fit->path() );
-// 	typo->save();
-}
 
 void FMActivate::activate(QList< FontItem * > fitList, bool act)
 {
-// 	QTime t;
-// 	int t1(0),t2(0),t3(0);
 	QMap<FontItem*, bool> stack;
 	typotek *T(typotek::getInstance());
 	foreach(FontItem * fit , fitList)
 	{
 		if ( act ) // Activation
 		{
-			stack[fit] = true;
-	
 			if ( !T->isSysFont(fit) )
 			{
 				if ( !fit->isActivated() )
@@ -256,15 +182,19 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 					if ( !QFile::link ( fit->path() , T->getManagedDir() + "/" + fit->activationName() ) )
 					{
 						qDebug() << "unable to link " << fit->path() ;
+						m_errors[fit->path()] =  errorStrings[NO_LINK];
 					}
 					else
 					{
+						// Success
+						stack[fit] = true;
 						qDebug() << fit->path() << " linked" ;
 						if ( !fit->afm().isEmpty() )
 						{
 							if ( !QFile::link ( fit->afm(), T->getManagedDir() + "/" + fit->activationAFMName() ) )
 							{
 								qDebug() << "unable to link " << fit->afm();
+								m_errors[fit->path()] =  errorStrings[MISSING_AFM];
 							}
 							else
 							{
@@ -280,6 +210,7 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 				else
 				{
 					qDebug() << "\tYet activated";
+					m_errors[fit->path()] = errorStrings[ALREADY_ACTIVE];
 				}
 	
 			}
@@ -291,7 +222,6 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 		}
 		else // Deactivation
 		{
-			stack[fit] = false;
 			if ( !T->isSysFont(fit) )
 			{
 				if ( fit->isActivated() )
@@ -299,17 +229,25 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 					if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationName() ) )
 					{
 						qDebug() << "unable to unlink " << fit->name() ;
+						m_errors[fit->path()] =  errorStrings[NO_UNLINK];
 					}
 					else
 					{
+						stack[fit] = false;
 						if ( !fit->afm().isEmpty() )
 						{
 							if ( !QFile::remove ( T->getManagedDir() + "/" + fit->activationAFMName() ) )
 							{
 								qDebug() << "unable to unlink " << fit->afm() ;
+								// if having warnings would not be over done, it would be a warning!
+								m_errors[fit->afm()] =  errorStrings[NO_UNLINK];
 							}
 						}
 					}
+				}
+				else
+				{
+					m_errors[fit->path()] = errorStrings[ALREADY_UNACTIVE];
 				}
 	
 			}
@@ -330,6 +268,8 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 	
 	emit activationEvent ( "" );
 }
+
+#endif
 
 bool FMActivate::addFcReject(const QString & path)
 {
@@ -422,7 +362,7 @@ bool FMActivate::addFcReject(const QString & path)
 		fc.save ( ts,4 );
 		fcfile.close();
 	}
-#endif
+#endif //  HAVE_FONTCONFIG
 	return true;
 }
 
@@ -472,8 +412,13 @@ bool FMActivate::remFcReject(const QString & path)
 			}
 		}
 	}
-#endif
+#endif //  HAVE_FONTCONFIG
 	return true;
 }
 
-#endif
+QMap<QString,QString> FMActivate::errors()
+{
+	QMap<QString,QString> ret(m_errors);
+	m_errors.clear();
+	return ret;
+}

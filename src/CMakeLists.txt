@@ -6,6 +6,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmactivationreport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmaltcontext.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmaltselector.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
@@ -167,6 +168,7 @@ ${PYTHONQT_SCRIPTER_MOC_HDRS})
 
 SET(fontmatrix_UIS
 ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
+${CMAKE_CURRENT_SOURCE_DIR}/activationreportdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/altselectorwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui

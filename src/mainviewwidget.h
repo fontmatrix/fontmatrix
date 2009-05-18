@@ -80,7 +80,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void doConnect();
 		void disConnect();
 		void allActivation(bool act);
-		void activation(FontItem* fit, bool act, bool andUpdate = true);
 		void activation(QList<FontItem*> fit, bool act);
 		void fillTree();
 		void updateTree(bool checkFontActive = false);
@@ -220,12 +219,12 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void listChanged();
 
 	public:
-		QString defaultOrd() {return ord[0];};
-		QGraphicsScene* glyphsScene()const{return abcScene;};
-		QGraphicsScene* textScene()const{return loremScene;};
+		QString defaultOrd() {return ord[0];}
+		QGraphicsScene* glyphsScene()const{return abcScene;}
+		QGraphicsScene* textScene()const{return loremScene;}
 		QList<FontItem*> curFonts();
 		void setCurFonts(QList<FontItem*> flist);
-		FontItem* selectedFont(){return theVeryFont;};
+		FontItem* selectedFont(){return theVeryFont;}
 		
 		void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 		void refillSampleList();

@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "mainviewwidget.h"
 #include "fmactivate.h"
+#include "fmactivationreport.h"
 #include "fmaltcontext.h"
 #include "fmbaseshaper.h"
 #include "fmglyphhighlight.h"
@@ -740,14 +741,18 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			{
 				if(!wantActivate)
 				{
-					activation(theVeryFont,false,true);
+					QList<FontItem*> fl;
+					fl << theVeryFont;
+					activation(fl,false);
 				}
 			}
 			else
 			{
 				if(wantActivate)
 				{
-					activation(theVeryFont,true,true);
+					QList<FontItem*> fl;
+					fl << theVeryFont;
+					activation(fl,true);
 				}
 			}
 		}
@@ -1262,16 +1267,6 @@ void MainViewWidget::slotAppendTag ( QString tag )
 	m_lists->reloadTagsCombo();
 }
 
-void MainViewWidget::activation ( FontItem* fit , bool act , bool andUpdate )
-{
-	if(fit->isActivated() == act)
-		return;
-	FMActivate::getInstance()->activate(fit, act);
-
-	if ( andUpdate )
-		updateTree(true);
-}
-
 void MainViewWidget::activation(QList< FontItem * > fit, bool act)
 {
 	// First check if one of the font is in a different state than required
@@ -1283,28 +1278,20 @@ void MainViewWidget::activation(QList< FontItem * > fit, bool act)
 	}
 	if(actualF.count() == 0)
 		return;
+
+	// TODO check for duplicates before we activate them.
+
+	// we tr("purge") errors;
+	FMActivate::getInstance()->errors();
 	FMActivate::getInstance()->activate(actualF, act);
+	QMap<QString,QString> actErr(FMActivate::getInstance()->errors());
+	if(actErr.count() > 0)
+	{
+		FMActivationReport ar(this, actErr);
+		ar.exec();
+	}
+
 	updateTree(true);
-}
-
-
-void MainViewWidget::allActivation ( bool act )
-{
-// TODO remove me :)
-// 	QProgressDialog progress(tr("Activation event"),tr("Cancel"),1,currentFonts.count(),this);
-// 	progress.setWindowModality ( Qt::WindowModal );
-// 	progress.setAutoReset(false);
-// 	QString activString = act ? tr("Activation of :") : tr("Deactivation of :");
-// 	int i =1;
-// 	foreach ( FontItem* fit, currentFonts )
-// 	{
-// 		activation ( fit,act, false );// false here prevents to refill TreeView eachtime.
-// 		progress.setLabelText ( activString + " " +( fit->name() ) );
-// 		progress.setValue ( ++i );
-// 		if ( progress.wasCanceled() )
-// 			break;
-// 	}
-// 	fillTree();
 }
 
 void MainViewWidget::slotDesactivateAll()
@@ -1330,7 +1317,9 @@ void MainViewWidget::slotActivate ( bool act, QTreeWidgetItem * item, int column
 	FontItem * FoIt = FMFontDb::DB()->Font( item->text ( 1 ) );
 	if ( FoIt )
 	{
-		activation ( FoIt, act );
+		QList<FontItem*> fl;
+		fl.append(FoIt);
+		activation ( fl, act );
 	}
 }
 

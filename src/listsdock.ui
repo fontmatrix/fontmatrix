@@ -351,7 +351,7 @@ p, li { white-space: pre-wrap; }
             <item row="0" column="0" >
              <widget class="QToolButton" name="collapseButton" >
               <property name="text" >
-               <string>collapse or expand</string>
+               <string>Collapse or expand</string>
               </property>
               <property name="popupMode" >
                <enum>QToolButton::InstantPopup</enum>
@@ -367,7 +367,7 @@ p, li { white-space: pre-wrap; }
             <item row="0" column="2" >
              <widget class="QPushButton" name="actFacesButton" >
               <property name="text" >
-               <string>show face boxes</string>
+               <string>Show face boxes</string>
               </property>
               <property name="checkable" >
                <bool>true</bool>

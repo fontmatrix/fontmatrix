@@ -22,6 +22,7 @@ IView::IView ( QWidget * parent )
 		:QGraphicsView ( parent )
 {
 	curImage = 0;
+	m_controlRect = false;
 	setScene ( new QGraphicsScene );
 	setInteractive ( true );
 	theRect = QRect();
@@ -57,6 +58,7 @@ IView::IView ( QWidget * parent )
 
 void IView::mouseMoveEvent ( QMouseEvent * e )
 {
+	////qDebug()<<"IView::mouseMoveEvent";
 	if ( isPanning )
 	{
 		QPointF pos ( e->pos() );
@@ -105,27 +107,20 @@ void IView::mouseMoveEvent ( QMouseEvent * e )
 	if ( !isSelecting )
 		return;
 
-// 	QPointF mp(mapToScene ( e->pos() ));
-// // 	if(mp.x() < curRect->rect().x())
-// // 	{
-// // 		QRectF r ( mp, curRect->rect().bottomLeft() );
-// // 		theRect = r.toRect() ;
-// // 	}
-// // 	else if(mp.y() < curRect->rect().y())
-// // 	{
-// // 		QRectF r ( mp, mouseStartPoint );
-// // 		theRect = r.toRect() ;
-// // 	}
-// // 	else
-// 	{
-// 		QRectF r ( mouseStartPoint, mp );
-// 		theRect = r.normalized().toRect() ;
-// 	}
-// 	emit rectChange(theRect);
+	if(m_controlRect)
+	{
+		QPointF mp(mapToScene ( e->pos() ));
+		{
+			QRectF r ( mouseStartPoint, mp );
+			theRect = r.normalized().toRect() ;
+		}
+		emit rectChange(theRect);
+	}
 }
 
 void IView::mousePressEvent ( QMouseEvent * e )
 {
+	//qDebug()<<"IView::mousePressEvent";
 	if ( !scene() )
 		return;
 
@@ -138,43 +133,48 @@ void IView::mousePressEvent ( QMouseEvent * e )
 	else
 	{
 		QPointF pressPoint(mapToScene ( e->pos() ));
-		selectGlyph(pressPoint);
-// 		QRectF rectTL(curTL->rect());
-// 		rectTL.translate(curRect->rect().topLeft());
-// 		
-// 		QRectF rectTR(curTR->rect());
-// 		rectTR.translate(curRect->rect().topRight());
-// 		
-// 		QRectF rectBR(curBR->rect());
-// 		rectBR.translate(curRect->rect().bottomRight());
-// 		
-// 		QRectF rectBL(curBL->rect());
-// 		rectBL.translate(curRect->rect().bottomLeft());
-// 		
-// 		if(rectTL.contains( pressPoint ))
-// 		{
-// 			mouseStartPoint = curRect->rect().bottomRight();
-// 		}
-// 		else if(rectTR.contains( pressPoint ))
-// 		{
-// 			mouseStartPoint = curRect->rect().bottomLeft();
-// 		}
-// 		else if(rectBR.contains( pressPoint ))
-// 		{
-// 			mouseStartPoint = curRect->rect().topLeft();
-// 		}
-// 		else if(rectBL.contains( pressPoint ))
-// 		{
-// 			mouseStartPoint = curRect->rect().topRight();
-// 		}
-// 		else
-// 			mouseStartPoint = pressPoint;
+		if(!m_controlRect)
+			selectGlyph(pressPoint);
+		else
+		{
+			QRectF rectTL(curTL->rect());
+			rectTL.translate(curRect->rect().topLeft());
+
+			QRectF rectTR(curTR->rect());
+			rectTR.translate(curRect->rect().topRight());
+
+			QRectF rectBR(curBR->rect());
+			rectBR.translate(curRect->rect().bottomRight());
+
+			QRectF rectBL(curBL->rect());
+			rectBL.translate(curRect->rect().bottomLeft());
+
+			if(rectTL.contains( pressPoint ))
+			{
+				mouseStartPoint = curRect->rect().bottomRight();
+			}
+			else if(rectTR.contains( pressPoint ))
+			{
+				mouseStartPoint = curRect->rect().bottomLeft();
+			}
+			else if(rectBR.contains( pressPoint ))
+			{
+				mouseStartPoint = curRect->rect().topLeft();
+			}
+			else if(rectBL.contains( pressPoint ))
+			{
+				mouseStartPoint = curRect->rect().topRight();
+			}
+			else
+				mouseStartPoint = pressPoint;
+		}
 		isSelecting = true;
 	}
 }
 
 void IView::mouseReleaseEvent ( QMouseEvent * e )
 {
+	//qDebug()<<"IView::mouseReleaseEvent";
 	if ( isPanning )
 	{
 		isPanning = false;
@@ -185,12 +185,13 @@ void IView::mouseReleaseEvent ( QMouseEvent * e )
 		return;
 
 	isSelecting = false;
-	theRect = QRect();
+//	theRect = QRect();
 
 }
 
 void IView::setImage ( const QString & path )
 {
+	//qDebug()<<"IView::setImage";
 	if ( curImage )
 	{
 		delete curImage;
@@ -210,6 +211,7 @@ void IView::setImage ( const QString & path )
 
 void IView::setImage(const QPixmap & pixmap)
 {
+	//qDebug()<<"IView::setImage";
 	if ( curImage )
 	{
 		delete curImage;
@@ -224,6 +226,7 @@ void IView::setImage(const QPixmap & pixmap)
 
 QPixmap IView::getPixmap()
 {
+	//qDebug()<<"IView::getPixmap";
 	if ( curImage )
 	{
 		return  curImage->pixmap();
@@ -234,6 +237,7 @@ QPixmap IView::getPixmap()
 
 void IView::drawSelRect(QRect r)
 {
+	//qDebug()<<"IView::drawSelRect";
 	if(r.isNull())
 	{
 		curSel->setPolygon ( QPolygonF() );
@@ -261,22 +265,25 @@ void IView::drawSelRect(QRect r)
 	
 	
 	// edges
-// 	QRectF baseR(-4,-4,8,8);
-// 	QTransform t;
-// 	double hs(transform().m11());
-// 	double vs(transform().m22());
-// 	t.scale(1.0 / hs, 1.0 / vs);
-// 	baseR = t.mapRect(baseR);
-// 	
-// 	curTL->setRect(baseR);
-// 	curTR->setRect(baseR);
-// 	curBR->setRect(baseR);
-// 	curBL->setRect(baseR);
-// 	
-// 	curTL->setPos(r.topLeft());
-// 	curTR->setPos(r.topRight());
-// 	curBL->setPos(r.bottomLeft());
-// 	curBR->setPos(r.bottomRight());
+	if(m_controlRect)
+	{
+		QRectF baseR(-4,-4,8,8);
+		QTransform t;
+		double hs(transform().m11());
+		double vs(transform().m22());
+		t.scale(1.0 / hs, 1.0 / vs);
+		baseR = t.mapRect(baseR);
+
+		curTL->setRect(baseR);
+		curTR->setRect(baseR);
+		curBR->setRect(baseR);
+		curBL->setRect(baseR);
+
+		curTL->setPos(r.topLeft());
+		curTR->setPos(r.topRight());
+		curBL->setPos(r.bottomLeft());
+		curBR->setPos(r.bottomRight());
+	}
 	
 	
 }
@@ -284,6 +291,7 @@ void IView::drawSelRect(QRect r)
 
 void IView::fitImage()
 {
+	//qDebug()<<"IView::fitImage";
 	if(!curImage)
 		return;
 	
@@ -299,11 +307,13 @@ void IView::fitImage()
 
 void IView::resizeEvent(QResizeEvent * event)
 {
+	//qDebug()<<"View::resizeEvent";
 	fitImage();
 }
 
 void IView::selectGlyph(const QPointF & scenepos)
 {
+	//qDebug()<<"IView::selectGlyph";
 // 	const unsigned int treshold (5); 
 	if(!curImage)
 		return;
@@ -375,10 +385,28 @@ void IView::selectGlyph(const QPointF & scenepos)
 			}
 		}
 	}
-	qDebug()<<"R"<<r.top()<<r.right()<<r.bottom()<<r.left();
+	//qDebug()<<"R"<<r.top()<<r.right()<<r.bottom()<<r.left();
 	theRect = r;
 	emit selColorChanged(ref);
 	emit rectChange(theRect);
 // 	drawSelRect(r);
+}
+
+void IView::setControlRect(bool u)
+{
+	//qDebug()<<"IView::setControlRect";
+	m_controlRect = u;
+	if (u)
+	{
+		//qDebug()<<"CR"<<theRect;
+		emit rectChange(theRect);
+	}
+	else
+	{
+		curTL->setRect(QRect());
+		curTR->setRect(QRect());
+		curBR->setRect(QRect());
+		curBL->setRect(QRect());
+	}
 }
 

@@ -30,6 +30,9 @@ class IView: public QGraphicsView
 		void setImage(const QPixmap& pixmap);
 		QPixmap getPixmap();
 
+		// control if the rect can be tweak by user or not
+		void setControlRect(bool u);
+
 	signals:
 		void rectChange(QRect);
 		void selColorChanged(QRgb);
@@ -58,6 +61,8 @@ class IView: public QGraphicsView
 		void fitImage();
 		
 		void selectGlyph(const QPointF& scenepos);
+
+		bool m_controlRect;
 		
 	private slots:
 		void drawSelRect(QRect);

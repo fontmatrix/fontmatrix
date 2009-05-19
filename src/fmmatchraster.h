@@ -44,12 +44,21 @@ class FMMatchRaster : public QDialog , private Ui::MatchRasterDialog
 		FontItem* waitingFont;
 		
 		QImage autoCrop(const QImage& img);
+
+	protected:
+		void moveEvent ( QMoveEvent * event );
+		void resizeEvent ( QResizeEvent * event );
 		
 	private slots:
 		void browseImage();
 		void loadImage();
+		void grabScreen();
+		void enterGrabMode(bool);
+		void zoomChanged(int);
 		void addImage(const QString & text);
 		void search();
+
+		void switchControlRect(bool);
 		
 		void slotAcceptFont();
 		void slotRefuseFont();

@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>569</width>
-    <height>550</height>
+    <width>340</width>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -33,27 +33,89 @@
          </property>
          <layout class="QGridLayout" name="gridLayout" >
           <item row="0" column="0" >
-           <widget class="QLineEdit" name="imagePath" />
+           <layout class="QHBoxLayout" name="horizontalLayout" >
+            <item>
+             <widget class="QCheckBox" name="grabModeBox" >
+              <property name="text" >
+               <string>Grab mode</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2" >
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QSlider" name="grabZoom" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                <horstretch>1</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip" >
+               <string>Zoom level</string>
+              </property>
+              <property name="minimum" >
+               <number>1</number>
+              </property>
+              <property name="maximum" >
+               <number>10</number>
+              </property>
+              <property name="sliderPosition" >
+               <number>1</number>
+              </property>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition" >
+               <enum>QSlider::TicksAbove</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="0" column="1" >
-           <widget class="QPushButton" name="browseButton" >
-            <property name="text" >
-             <string>&amp;Browse</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2" >
-           <widget class="QPushButton" name="loadButton" >
-            <property name="text" >
-             <string>&amp;Load</string>
-            </property>
-           </widget>
+          <item row="1" column="0" >
+           <layout class="QHBoxLayout" name="horizontalLayout_2" >
+            <item>
+             <widget class="QLineEdit" name="imagePath" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                <horstretch>1</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="readOnly" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="browseButton" >
+              <property name="text" >
+               <string>&amp;Browse</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
        </item>
        <item row="1" column="0" colspan="4" >
-        <widget class="QGroupBox" name="groupBox_2" >
+        <widget class="QGroupBox" name="sampleBox" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
            <horstretch>0</horstretch>
@@ -64,7 +126,7 @@
           <string>Raster sample preview</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_4" >
-          <item row="1" column="0" >
+          <item rowspan="2" row="1" column="0" >
            <widget class="IView" name="iView" >
             <property name="sizePolicy" >
              <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -74,7 +136,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0" >
+          <item row="4" column="0" colspan="2" >
            <widget class="QWidget" native="1" name="widget" >
             <property name="sizePolicy" >
              <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
@@ -135,6 +197,9 @@
              </item>
              <item row="0" column="2" >
               <widget class="QCheckBox" name="checkInteractive" >
+               <property name="toolTip" >
+                <string>If set, you will be prompted for each matching font</string>
+               </property>
                <property name="text" >
                 <string>Interactive</string>
                </property>
@@ -143,13 +208,32 @@
             </layout>
            </widget>
           </item>
-          <item row="0" column="0" >
+          <item row="1" column="1" >
            <widget class="QLabel" name="label_3" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+              <horstretch>2</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text" >
              <string>Click on the letter to let Fontmatrix compute the bounding box</string>
             </property>
+            <property name="scaledContents" >
+             <bool>false</bool>
+            </property>
             <property name="alignment" >
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2" >
+           <widget class="QCheckBox" name="tweakRectBox" >
+            <property name="text" >
+             <string>Tweak rect</string>
             </property>
            </widget>
           </item>
@@ -284,12 +368,60 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>559</x>
-     <y>493</y>
+     <x>335</x>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>562</x>
-     <y>516</y>
+     <x>339</x>
+     <y>440</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>grabModeBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>browseButton</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>234</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>277</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>grabModeBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>imagePath</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>216</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>234</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>grabModeBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>grabZoom</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>201</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>274</x>
+     <y>57</y>
     </hint>
    </hints>
   </connection>

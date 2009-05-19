@@ -17,6 +17,7 @@
 #include "mainviewwidget.h"
 #include "fontitem.h"
 
+#include <QDesktopWidget>
 #include <QFileDialog>
 #include <QFile>
 #include <QDir>
@@ -44,7 +45,9 @@ FMMatchRaster::FMMatchRaster ( QWidget * parent )
 
 
 	connect ( browseButton,SIGNAL ( clicked() ),this, SLOT ( browseImage() ) );
-	connect ( loadButton, SIGNAL ( clicked() ),this, SLOT ( loadImage() ) );
+	connect ( grabZoom , SIGNAL ( valueChanged(int) ) ,this, SLOT ( zoomChanged(int)) );
+	connect ( grabModeBox , SIGNAL ( toggled(bool) ) ,this, SLOT ( enterGrabMode(bool) ) );
+	connect ( tweakRectBox, SIGNAL(toggled(bool)),this,SLOT(switchControlRect(bool)));
 	connect ( letter,SIGNAL ( textChanged ( const QString & ) ),this,SLOT ( addImage ( const QString & ) ) );
 	connect ( searchButton,SIGNAL ( clicked() ),this,SLOT ( search() ) );
 
@@ -65,6 +68,7 @@ void FMMatchRaster::browseImage()
 {
 	QString ifile ( QFileDialog::getOpenFileName ( this, "Fontmatrix - Browse Image", QDir::homePath() ) );
 	imagePath->setText ( ifile );
+	loadImage();
 }
 
 void FMMatchRaster::loadImage()
@@ -286,4 +290,56 @@ QImage FMMatchRaster::autoCrop ( const QImage & cImg )
 			return cImg.copy ( r ).scaled ( refImage.width(),refImage.height() );
 	}
 	return QImage();
+}
+
+void FMMatchRaster::switchControlRect(bool cr)
+{
+	if(cr && grabModeBox->isChecked())
+	{
+		grabModeBox->setChecked(false);
+	}
+	iView->setControlRect(cr);
+}
+
+void FMMatchRaster::grabScreen()
+{
+	int ratio(grabZoom->value());
+	QRect wr(geometry());
+	QRect vr(iView->geometry());
+	QRect absr(wr.x() - (vr.width() /ratio),
+		   wr.y() + vr.y() + sampleBox->geometry().y(),
+		   vr.width()	/ ratio,
+		   vr.height()	/ ratio);
+	iView->setImage(QPixmap::grabWindow ( QApplication::desktop()->winId(), absr.x(), absr.y(), absr.width(), absr.height()));
+	//		qDebug()<<"iView"<<iView->geometry()<<"this"<<geometry();
+
+}
+
+void FMMatchRaster::moveEvent ( QMoveEvent * event )
+{
+	if(grabModeBox->isChecked())
+	{
+		grabScreen();
+	}
+	QDialog::moveEvent(event);
+}
+
+void FMMatchRaster::resizeEvent ( QResizeEvent * event )
+{
+	if(grabModeBox->isChecked())
+	{
+		grabScreen();
+	}
+	QDialog::resizeEvent(event);
+}
+
+void FMMatchRaster::enterGrabMode(bool e)
+{
+	if(e)
+		grabScreen();
+}
+
+void FMMatchRaster::zoomChanged(int)
+{
+	grabScreen();
 }

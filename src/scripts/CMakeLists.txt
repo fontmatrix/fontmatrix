@@ -4,6 +4,7 @@ SET(SAMPLE_SCRIPTS
 fontforge_subset.py
 fonttools_showxml.py
 xetex_fontbook.py
+import_tags.py
 )
 
 IF(UNIX AND NOT APPLE)

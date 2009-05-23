@@ -2316,8 +2316,10 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 		while ( anIndex )
 		{
 			anyChar =  FT_Get_Next_Char ( m_face,anyChar,&anIndex );
-			if ( anIndex )
+			if ( anIndex && (anIndex <= m_numGlyphs))
+			{
 				notCovered[anIndex] = false;
+			}
 		}
 
 		// 2/ fill with glyphs

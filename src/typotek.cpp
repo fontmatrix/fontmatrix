@@ -1569,6 +1569,7 @@ void typotek::changeSample ( QString name, QString text )
 		dataLoader = new DataLoader();
 
 	dataLoader->update(name, text);
+	theMainView->refillSampleList();
 }
 
 QString typotek::defaultSampleName()

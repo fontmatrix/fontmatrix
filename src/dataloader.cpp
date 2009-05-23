@@ -84,6 +84,7 @@ void DataLoader::load()
 // TODO
 bool DataLoader::update(const QString& name, const QString& sample)
 {
+	qDebug()<<"DataLoader::update"<<name<<sample;
 	QDir uDir(FMPaths::SamplesDir());
 	QFile fp(uDir.absoluteFilePath(name));
 	if(fp.open(QIODevice::WriteOnly | QIODevice::Truncate))

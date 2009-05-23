@@ -363,6 +363,19 @@
            <item row="0" column="0" colspan="2" >
             <widget class="QFontComboBox" name="chartFontCombo" />
            </item>
+           <item row="1" column="1" >
+            <widget class="QSpinBox" name="chartFontSpin" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="suffix" >
+              <string> pt</string>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="0" >
             <widget class="QLabel" name="label_8" >
              <property name="sizePolicy" >
@@ -382,23 +395,9 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1" >
-            <widget class="QSpinBox" name="chartFontSpin" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="suffix" >
-              <string> pt</string>
-             </property>
-            </widget>
-           </item>
           </layout>
           <zorder>chartFontCombo</zorder>
           <zorder>chartFontSpin</zorder>
-          <zorder>horizontalSpacer_7</zorder>
           <zorder>label_8</zorder>
          </widget>
         </item>
@@ -686,7 +685,7 @@
           <property name="title" >
            <string>Sample Texts</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_8" >
+          <layout class="QGridLayout" name="gridLayout_16" >
            <item row="0" column="0" >
             <widget class="QSplitter" name="splitter_2" >
              <property name="orientation" >
@@ -752,13 +751,58 @@
                </item>
               </layout>
              </widget>
-             <widget class="QTextEdit" name="namedSampleTextText" >
+             <widget class="QWidget" native="1" name="widget_2" >
               <property name="sizePolicy" >
-               <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
                 <horstretch>3</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <layout class="QGridLayout" name="gridLayout_8" >
+               <item row="0" column="0" colspan="3" >
+                <widget class="QTextEdit" name="namedSampleTextText" >
+                 <property name="sizePolicy" >
+                  <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+                   <horstretch>3</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2" >
+                <widget class="QPushButton" name="commitSample" >
+                 <property name="text" >
+                  <string>Save</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" >
+                <spacer name="horizontalSpacer_7" >
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0" >
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="1" >
+                <spacer name="horizontalSpacer_8" >
+                 <property name="orientation" >
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0" >
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
              </widget>
             </widget>
            </item>
@@ -970,8 +1014,6 @@
     </widget>
    </item>
   </layout>
-  <zorder>closeButton</zorder>
-  <zorder>splitter</zorder>
  </widget>
  <resources>
   <include location="application.qrc" />

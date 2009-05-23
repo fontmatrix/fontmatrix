@@ -148,7 +148,7 @@ void PrefsPanelDialog::doConnect()
 {
 	connect ( catList,SIGNAL ( itemClicked( QListWidgetItem *  ) ),this,SLOT ( slotSelectPage ( QListWidgetItem * ) ) );
 
-	connect ( namedSampleTextText,SIGNAL ( textChanged() ),this,SLOT ( validateSampleName() ) );
+	connect ( commitSample,SIGNAL ( clicked() ),this,SLOT ( validateSampleName() ) );
 	connect ( addSampleTextNameButton,SIGNAL ( released() ),this,SLOT ( addSampleName() ) );
 	connect ( newSampleTextNameText,SIGNAL ( editingFinished() ),this,SLOT ( addSampleName() ) );
 	connect ( deleteSampleTextNameButton,SIGNAL ( released() ),this,SLOT ( deleteSampleName() ) );
@@ -270,9 +270,9 @@ void PrefsPanelDialog::displayNamedText()
 {
 	namedSampleTextText->setEnabled ( true );
 	QString name ( sampleTextNamesList->currentItem()->text() );
-// 	qDebug() << "name is "<< name;
-	QString text ( typotek::getInstance()->namedSample ( name ) );
-// 	qDebug() << "text is " << text;
+//	qDebug() << "name is "<< name;
+	QString text ( typotek::getInstance()->namedSample ( QString("User::") +name ) );
+//	qDebug() << "text is " << text;
 	namedSampleTextText->setPlainText ( text );
 }
 

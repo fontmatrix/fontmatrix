@@ -102,7 +102,7 @@ void PrefsPanelDialog::initSystrayPrefs ( bool hasSystray, bool isVisible, bool 
 void PrefsPanelDialog::initSampleTextPrefs()
 {
 	//At least fill the sampletext list :)
-	sampleTextNamesList->addItems ( typotek::getInstance()->namedSamplesNames() );
+	sampleTextNamesList->addItems ( typotek::getInstance()->namedSamplesNames().value(QString("User")) );
 	QSettings settings;
 	fontSizeSpin->setValue ( settings.value ( "Sample/FontSize",14.0 ).toDouble() );
 	interLineSpin->setValue ( settings.value ( "Sample/Interline",18.0 ).toDouble() );

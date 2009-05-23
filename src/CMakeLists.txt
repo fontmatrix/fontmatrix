@@ -54,7 +54,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/panosematch.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pangoshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/prefspaneldialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/remotedir.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
+#${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/schelptreemodel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/sctextbrowser.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/shortcuts.cpp

@@ -127,4 +127,10 @@ QString FMPaths::ScriptsDir()
 	return typotek::getInstance()->getOwnDir().absolutePath() + sep + "Scripts"+ sep;
 }
 
+QString FMPaths::SamplesDir()
+{
+	QString sep(QDir::separator());
+	return typotek::getInstance()->getOwnDir().absolutePath() + sep + "Samples"+ sep;
+}
+
 

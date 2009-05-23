@@ -18,153 +18,88 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "dataloader.h"
-#include "typotek.h"
+#include "fmpaths.h"
 
-
-#include <QDomDocument>
-#include <QDomNodeList>
-#include <QMessageBox>
-#include <QString>
-#include <QStatusBar>
 #include <QDebug>
+#include <QDir>
+#include <QFile>
 
-extern bool __FM_SHOW_FONTLOADED;
-
-DataLoader::DataLoader ( QFile *file )
-		: m_file ( file )
+DataLoader::DataLoader ()
 {
-	m_typo = typotek::getInstance();
-
+	load();
 }
 
-
-DataLoader::~DataLoader()
+void DataLoader::reload()
 {
+	load();
 }
 
-int DataLoader::load()
+void DataLoader::load()
 {
-	QDomDocument doc ( "fontdata" );
-	QStringList fallbackSample ( QObject::tr ( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?." ).split ( "\n" ) );
-	QString defaultWord(QObject::tr ( "hamburgefonstiv" ));
-	if ( !m_file->open ( QFile::ReadOnly ) )
+	sm.clear();
+	pm.clear();
+	// First we load system samples
+	QDir samplesDir(FMPaths::ResourcesDir() + "Samples" );
+	foreach(QString ld,
+		samplesDir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs) )
 	{
-		for ( uint i = 0; i < fallbackSample.count(); ++i )
+		QDir lang(samplesDir.absoluteFilePath(ld));
+		foreach(QString st,
+			lang.entryList(QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files) )
 		{
-			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
+			QFile fp(lang.absoluteFilePath(st));
+			if(fp.open(QIODevice::ReadOnly))
+			{
+				sm[ld][st] = QString::fromUtf8(fp.readAll());
+			}
 		}
-		m_typo->setWord ( defaultWord , false );
-		
-		return FONTDATA_NO_FILE;
 	}
-	if ( !doc.setContent ( m_file ) )
-	{
-		m_file->close();
-		m_typo->statusBar()->showMessage ( QString ( "ERROR loading xml for %1" ).arg ( m_file->fileName() ),3000 );
-		
-		for ( uint i = 0; i < fallbackSample.count(); ++i )
-		{
-			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
-		}
-		m_typo->setWord ( defaultWord , false );
-		
-		return FONTDATA_NO_CONTENT;
-	}
-	
-	m_file->close();
-	QDomElement rootElement(doc.documentElement());
-	
-	if(rootElement.nodeName() != "fontmatrix")
-	{
-		for ( uint i = 0; i < fallbackSample.count(); ++i )
-		{
-			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
-		}
-		m_typo->setWord ( defaultWord , false );
-		
-		return FONTDATA_NOT_FONTMATRIX;
-	}
-	if(rootElement.attributeNode("version").value() != "1.1")
-	{
-		for ( uint i = 0; i < fallbackSample.count(); ++i )
-		{
-			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName() , fallbackSample[i] );
-		}
-		m_typo->setWord ( defaultWord , false );
-		
-		return FONTDATA_VERSION_MISMATCH;
-	}
-	
-	
-// 	QStringList collectedTags;
 
-// 	//loading tagsets
-// 	QDomNodeList setList = doc.elementsByTagName ( "tagset" );
-// 	if ( setList.length() == 0 )
-// 	{
-// 		m_typo->statusBar()->showMessage ( QString ( "WARNING: no tagset in %1" ).arg ( m_file->fileName() ),3000 );
-// 	}
-// 	for ( uint i = 0; i < setList.length(); ++i )
-// 	{
-// 		QDomNode col = setList.item ( i );
-// 		QString set = col.toElement().attributeNode ( "name" ).value();
-// 		QDomNodeList taglist = col.toElement().elementsByTagName ( "tag" );
-// 		QStringList tl;
-// 		for ( int ti = 0; ti < taglist.count(); ++ti )
-// 		{
-// 			tl << taglist.at ( ti ).toElement().text();
-// 		}
-// // 		m_typo->addTagSetMapEntry ( set,tl );
-// 		collectedTags << tl;
-// 
-// // 		qDebug() << set << tl.join(":");
-// 	}
-// 	collectedTags.removeAll ( "" );
-// // 	typotek::tagsList = collectedTags.toSet().toList();
-	
-	
-
-	//loading sample text
-	QString sampleText;
-	QDomNodeList sampleList = doc.elementsByTagName ( "sampleline" );
-	if ( sampleList.length() == 0 )
+	// Then personals
+	QDir uDir(FMPaths::SamplesDir());
+	if(!uDir.exists())
 	{
-		m_typo->statusBar()->showMessage ( QString ( "WARNING: no sample text in %1" ).arg ( m_file->fileName() ),3000 );
-		QStringList fallbackSample ( QObject::tr ( "ABCDEFGH\nIJKLMNOPQ\nRSTUVXYZ\n\nabcdefgh\nijklmnopq\nrstuvxyz\n0123456789\n,;:!?." ).split ( "\n" ) );
-		for ( uint i = 0; i < fallbackSample.count(); ++i )
-		{
-			m_typo->addNamedSampleFragment ( m_typo->defaultSampleName(), fallbackSample[i] );
-		}
+		qDebug()<<"Create Directory:"<<uDir.absolutePath();
+		uDir.mkpath(uDir.absolutePath());
 	}
 	else
 	{
-		for ( uint i = 0; i < sampleList.length(); ++i )
+		foreach(QString ld, uDir.entryList(QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files) )
 		{
-			QDomNode col = sampleList.item ( i );
-			QString name = col.toElement().attributeNode ( "name" ).value();
-			if ( name.isEmpty()
-			        || name == "default" ) // rather to not break previous installation
-				name = m_typo->defaultSampleName();
-			m_typo->addNamedSampleFragment ( name, col.toElement().text() );
+			QFile fp(uDir.absoluteFilePath(ld));
+			if(fp.open(QIODevice::ReadOnly))
+			{
+				pm[ld] = QString::fromUtf8(fp.readAll());
+			}
 		}
 	}
 
-	//loading preview word
-	QString pWord;
-	QDomNodeList previewList = doc.elementsByTagName ( "previewword" );
-	if ( previewList.length() == 0 )
+	// Emergency !!
+	if(sm.isEmpty() && pm.isEmpty())
 	{
-		m_typo->statusBar()->showMessage ( QString ( "WARNING: no preview word in %1" ).arg ( m_file->fileName() ),3000 );
-		pWord =  QObject::tr ( "hamburgefonstiv" );
+		sm["Emergency"]["Text"] = QString("Emergency Text");
 	}
-	else
-	{
-		QDomNode col = previewList.item ( 0 );
-		pWord = col.toElement().text();
-	}
-	m_typo->setWord ( pWord, false );
-	
-	return FONTDATA_OK;
 }
 
+// TODO
+bool DataLoader::update(const QString& name, const QString& sample)
+{
+	QDir uDir(FMPaths::SamplesDir());
+	QFile fp(uDir.absoluteFilePath(name));
+	if(fp.open(QIODevice::WriteOnly | QIODevice::Truncate))
+	{
+		fp.write(sample.toUtf8());
+	}
+	pm[name] = sample;
+}
 
+bool DataLoader::remove(const QString& name)
+{
+	QDir uDir(FMPaths::SamplesDir());
+	QFile fp(uDir.absoluteFilePath(name));
+	if(fp.exists())
+	{
+		if(fp.remove())
+			pm.remove(name);
+	}
+}

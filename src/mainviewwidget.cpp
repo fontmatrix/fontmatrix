@@ -235,7 +235,7 @@ void MainViewWidget::doConnect()
 	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 
 	
-	connect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
+	connect ( sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
 	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 	connect ( liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
 
@@ -302,7 +302,7 @@ void MainViewWidget::disConnect()
 	disconnect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 
 	
-	disconnect ( sampleTextCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotSampleChanged() ) );
+	disconnect ( sampleTextTree,SIGNAL ( itemSelectionChanged() ),this,SLOT ( slotSampleChanged() ) );
 	disconnect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 	disconnect ( liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
 
@@ -952,7 +952,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			double fSize(sampleFontSize);
 			
 			QList<GlyphList> list;
-			QStringList stl( typo->namedSample(sampleTextCombo->currentText() ).split("\n"));
+			QStringList stl( typo->namedSample(sampleTextTree->currentItem()->data(0, Qt::UserRole).toString() ).split("\n"));
 			if ( processScript )
 			{
 				for(int p(0);p<stl.count();++p)
@@ -964,7 +964,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 			{
 				// Experimental code to handle alternate is commented out
 				// Do not uncomment
-//				FMAltContext * actx ( FMAltContextLib::SetCurrentContext(sampleTextCombo->currentText(), theVeryFont->path()));
+//				FMAltContext * actx ( FMAltContextLib::SetCurrentContext(sampleTextTree->currentText(), theVeryFont->path()));
 //				int rs(0);
 //				actx->setPar(rs);
 				for(int p(0);p<stl.count();++p)	
@@ -973,7 +973,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 //					actx->setPar(++rs);
 				}
 //				actx->cleanup();
-//				FMAltContextLib::SetCurrentContext(sampleTextCombo->currentText(), theVeryFont->path());
+//				FMAltContextLib::SetCurrentContext(sampleTextTree->currentText(), theVeryFont->path());
 			}
 			else
 			{
@@ -1702,35 +1702,60 @@ void MainViewWidget::slotSampleChanged()
 
 void MainViewWidget::refillSampleList()
 {
-	sampleTextCombo->clear();
+	sampleTextTree->clear();
 	playString->clear();
 
-	QStringList pList( typo->namedSample(typo->defaultSampleName()).split("\n") );
-	foreach(QString pString, pList)
-	{
-		playString->addItem(pString.left( MAX_PALYSTRING_LEN ));
-	}
+//	QString pList( typo->namedSample(typo->defaultSampleName()).split("\n") );
+//	foreach(QString pString, pList)
+//	{
+//		playString->addItem(pString.left( MAX_PALYSTRING_LEN ));
+//	}
 
-	QStringList sl = typo->namedSamplesNames();
-	for ( int i = 0;i < sl.count(); ++i )
+	QTreeWidgetItem * curIt = 0;
+	QMap<QString, QList<QString> > sl = typo->namedSamplesNames();
+	QList<QString> ul( sl.take(QString("User")) );
+	if(ul.count())
 	{
-		if ( sl[i] == typo->defaultSampleName() )
+		QTreeWidgetItem * uRoot = new QTreeWidgetItem(sampleTextTree);
+		//: Identify root of user defined sample texts
+		uRoot->setText(0, tr("User"));
+		bool first(true);
+		foreach(QString uk, ul)
 		{
-			continue;
-		}
-		else
-		{
-			sampleTextCombo->addItem ( sl[i] );
-			QStringList nl(typo->namedSample(sl[i]).split("\n")) ;
-			foreach(QString pString, nl)
+			if(first)
 			{
-				playString->addItem(pString.left( MAX_PALYSTRING_LEN ));
+				first = false;
+				uRoot->setData(0, Qt::UserRole , QString("User::") + uk);
+				curIt = uRoot;
 			}
-
+			QTreeWidgetItem * it = new QTreeWidgetItem();
+			it->setText(0, uk);
+			it->setData(0, Qt::UserRole , QString("User::") + uk);
+			uRoot->addChild(it);
 		}
 	}
-	sampleTextCombo-> insertItem ( 0,typo->defaultSampleName() );
-	sampleTextCombo->setCurrentIndex ( 0 );
+	foreach(QString k, sl.keys())
+	{
+		QTreeWidgetItem * kRoot = new QTreeWidgetItem(sampleTextTree);
+		kRoot->setText(0, k);
+		bool first(true);
+		foreach(QString n, sl[k])
+		{
+			if(first)
+			{
+				first = false;
+				kRoot->setData(0, Qt::UserRole , k + QString("::") + n);
+				if(!curIt)
+					curIt = kRoot;
+			}
+			QTreeWidgetItem * it = new QTreeWidgetItem();
+			it->setText(0, n);
+			it->setData(0, Qt::UserRole, k + QString("::") + n);
+			kRoot->addChild(it);
+		}
+	}
+
+	sampleTextTree->setCurrentItem(curIt);
 }
 
 void MainViewWidget::slotFTRasterChanged()
@@ -2010,7 +2035,7 @@ void MainViewWidget::slotPushOnPlayground()
 
 QString MainViewWidget::sampleName()
 {
-	QString ret( sampleTextCombo->currentText() );
+	QString ret( sampleTextTree->currentItem()->data(0, Qt::UserRole).toString() );
 	if (ret.isEmpty())
 		ret = typo->defaultSampleName();
 	return ret;

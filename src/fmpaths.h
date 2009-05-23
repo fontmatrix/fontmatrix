@@ -13,7 +13,7 @@
 class FMPaths
 {
 		QMap<QString,QString> FMPathsDB;
-		FMPaths() {};
+		FMPaths() {}
 		static FMPaths *instance;
 		static FMPaths *getThis();
 	public:
@@ -29,5 +29,7 @@ class FMPaths
 		static QString HelpDir();
 		
 		static QString ScriptsDir();
+
+		static QString SamplesDir();
 };
 #endif

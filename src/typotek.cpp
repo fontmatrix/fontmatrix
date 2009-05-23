@@ -43,7 +43,7 @@
 #include "panosedialog.h"
 #include "prefspaneldialog.h"
 #include "remotedir.h"
-#include "savedata.h"
+//#include "savedata.h"
 #include "shortcuts.h"
 #include "systray.h"
 #include "tagswidget.h"
@@ -149,6 +149,7 @@ typotek::typotek()
 	theMainView = 0;
 	hyphenator = 0;
 	theHelp = 0;
+	dataLoader = 0;
 }
 
 void typotek::initMatrix()
@@ -156,7 +157,6 @@ void typotek::initMatrix()
 	if(matrix)
 		return;
 	matrix = true;
-	m_defaultSampleName = tr("default") ;
 	fontmatrix::fillDockPos();
 
 	checkOwnDir();
@@ -566,7 +566,6 @@ void typotek::slotExportFontSet()
 
 bool typotek::save()
 {
-	SaveData saver ( &ResourceFile, this );
 	return true;
 
 }
@@ -886,6 +885,7 @@ void typotek::readSettings()
 	previewSize = settings.value("Preview/Size", 15.0).toDouble();
 	previewRTL = settings.value("Preview/RTL", false).toBool();
 	previewSubtitled = settings.value("Preview/Subtitled", false).toBool();
+	m_theWord = settings.value("Preview/Word", "<name>" ).toString();
 
 	mainDockArea = settings.value("Docks/ToolPos", "Left").toString();
 	tagsDockArea = settings.value("Docks/TagsPos", "Right").toString();
@@ -946,6 +946,8 @@ void typotek::writeSettings()
 
 	settings.setValue("Info/PreviewSize", previewInfoFontSize );
 	settings.setValue("Info/Style", infoStyle );
+
+	settings.setValue("Preview/Word", m_theWord);
 
 	settings.setValue( "Panose/MatchTreshold", panoseMatchTreshold);
 
@@ -1126,9 +1128,6 @@ bool typotek::isSysFont(FontItem * f)
 
 void typotek::initDir()
 {
-	DataLoader loader ( &ResourceFile );
-	int lRes(loader.load());
-
 	/// let’s load system fonts
 #define SYSTEM_FONTS 1
 	if(SYSTEM_FONTS)
@@ -1462,29 +1461,6 @@ void typotek::forwardUpdateView()
 	theMainView->slotView ( true );
 }
 
-void typotek::addNamedSample ( QString name, QString sample )
-{
-	if ( name.isEmpty() || sample.isEmpty() )
-	{
-		statusBar()->showMessage ( tr ( "You provided an empty string, it’s not fair" ), 3000 );
-		return;
-	}
-
-	if ( name == defaultSampleName() )
-	{
-		statusBar()->showMessage ( tr ( "\"default\" is a reserved" ), 3000 );
-		return;
-	}
-	m_namedSamples[name] = sample;
-	theMainView->refillSampleList();
-}
-
-void typotek::removeNamedSample(const QString& key)
-{
-	m_namedSamples.remove(key);
-	theMainView->refillSampleList();
-}
-
 void typotek::setSystrayVisible ( bool isVisible )
 {
 	systray->slotSetVisible ( isVisible );
@@ -1518,33 +1494,109 @@ void typotek::slotSystrayStart( bool isEnabled )
 	settings.setValue ( "Systray/StartToTray", isEnabled );
 }
 
-void typotek::addNamedSampleFragment ( QString name, QString sampleFragment )
-{
-	// No need to check, it’s just for the loader
-	QStringList lines = m_namedSamples[name].split ( "\n" );
-	if ( lines[0].isEmpty() )
-		lines.removeAt ( 0 );
-	lines << sampleFragment;
-	m_namedSamples[name] = lines.join ( "\n" );
-}
 
 QString typotek::namedSample ( QString name )
 {
-	if ( name.isEmpty() )
-		return m_namedSamples[defaultSampleName()];
-	return m_namedSamples[name];
+	if(!dataLoader)
+		dataLoader = new DataLoader();
+
+//	qDebug()<<"typotek::namedSample"<<name;
+
+	const QMap<QString,QString>& us(dataLoader->userSamples());
+	foreach(const QString& k, us.keys())
+	{
+		QString id(QString("User::") + k);
+//		qDebug()<<"\t"<<id;
+		if(id == name)
+		{
+			return us[k];
+		}
+	}
+
+	const QMap<QString, QMap<QString,QString> >& ss(dataLoader->systemSamples());
+	foreach(const QString& pk, ss.keys())
+	{
+		foreach(const QString& sk, ss[pk].keys())
+		{
+			QString id(pk + QString("::") + sk);
+//			qDebug()<<"\t"<<id;
+			if(id == name)
+			{
+				return ss[pk][sk];
+			}
+		}
+	}
+	return QString();
 }
 
-void typotek::setSampleText ( QString s )
+QMap<QString,QList<QString> > typotek::namedSamplesNames()
 {
-	m_namedSamples[defaultSampleName()] += s;
+	if(!dataLoader)
+		dataLoader = new DataLoader();
+
+	QMap<QString,QList<QString> > ret;
+	const QMap<QString,QString>& us(dataLoader->userSamples());
+	const QMap<QString, QMap<QString,QString> >& ss(dataLoader->systemSamples());
+	foreach(const QString& key, ss.keys())
+	{
+		ret[key] << ss[key].keys();
+	}
+	ret[QString("User")] << us.keys();
+	return ret;
+}
+
+void typotek::addNamedSample ( QString name, QString sample )
+{
+	if(!dataLoader)
+		dataLoader = new DataLoader();
+
+	dataLoader->update(name, sample);
+	theMainView->refillSampleList();
+}
+
+void typotek::removeNamedSample(const QString& key)
+{
+	if(!dataLoader)
+		dataLoader = new DataLoader();
+
+	dataLoader->remove(key);
+	theMainView->refillSampleList();
 }
 
 void typotek::changeSample ( QString name, QString text )
 {
-	if ( !m_namedSamples.contains ( name ) )
-		return;
-	m_namedSamples[name] = text;
+	if(!dataLoader)
+		dataLoader = new DataLoader();
+
+	dataLoader->update(name, text);
+}
+
+QString typotek::defaultSampleName()
+{
+	if(!dataLoader)
+		dataLoader = new DataLoader();
+
+	const QMap<QString,QString>& us(dataLoader->userSamples());
+	if(us.contains(tr("default")))
+		return QString("User::") + QString("default");
+	else if(us.count() > 0)
+		return us[us.keys().first()];
+	else
+	{
+		const QMap<QString, QMap<QString,QString> >& ss(dataLoader->systemSamples());
+		QString l(QLocale::system().language());
+		if((ss.contains(l)) && (ss[l].count() > 0))
+			return ss[l][ss[l].keys().first()];
+		else
+		{
+			foreach(QString k, ss.keys())
+			{
+				if(ss[k].count() > 0)
+					return ss[k][ss[k].keys().first()];
+			}
+		}
+	}
+	return QString();
 }
 
 void typotek::setWord ( QString s, bool updateView )

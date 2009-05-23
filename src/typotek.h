@@ -47,6 +47,7 @@ class FMHyphenator;
 class QProgressBar;
 // class HelpWidget;
 class HelpBrowser;
+class DataLoader;
 
 class typotek:public QMainWindow
 {
@@ -209,7 +210,8 @@ class typotek:public QMainWindow
 		QDir ownDir;
 		QDir managedDir;
 
-		QMap<QString,QString> m_namedSamples;
+		DataLoader * dataLoader;
+//		QMap<QString,QString> m_namedSamples;
 		QString m_theWord;
 
 		QLabel *curFontPresentation;
@@ -234,7 +236,6 @@ class typotek:public QMainWindow
 		RemoteDir *remoteDir;
 		QString m_remoteTmpDir;
 
-		QString m_defaultSampleName;
 
 		QString mainDockArea;
 		QString tagsDockArea;
@@ -284,19 +285,21 @@ class typotek:public QMainWindow
 
 		void forwardUpdateView();
 
+		// TODO there is a lot of things here which MUST go to an independent PrefsManager class
+
 		Systray *getSystray() const {return systray;}
 		void setSystrayVisible(bool);
 		void showActivateAllSystray(bool);
 		void systrayAllConfirmation(bool);
 		void systrayTagsConfirmation(bool);
 
+		// Samples
 		QString namedSample(QString name);
-		QStringList namedSamplesNames(){return m_namedSamples.uniqueKeys();};
+		QMap<QString,QList<QString> > namedSamplesNames();
 		void addNamedSample(QString name, QString sample);
-		void addNamedSampleFragment(QString name, QString sampleFragment);
 		void removeNamedSample(const QString& key);
-
 		void changeSample(QString name, QString text);
+		QString defaultSampleName();
 
 		void setFontEditorPath(const QString &path);
 		QString fontEditorPath() {return fonteditorPath;};
@@ -325,7 +328,7 @@ class typotek:public QMainWindow
 		QString remoteTmpDir() const {return m_remoteTmpDir;}
 		void setRemoteTmpDir(const QString &s);
 
-		QString defaultSampleName(){return m_defaultSampleName;}
+
 
 
 

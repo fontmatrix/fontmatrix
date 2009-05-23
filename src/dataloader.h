@@ -20,39 +20,30 @@
 #ifndef DATALOADER_H
 #define DATALOADER_H
 
-#include <QFile>
-#include <QStringList>
-
-#include "fontitem.h"
-
-#define FONTDATA_OK 0
-#define FONTDATA_NO_CONTENT 1
-#define FONTDATA_NO_FILE 2
-#define FONTDATA_NOT_FONTMATRIX 3
-#define FONTDATA_VERSION_MISMATCH 4
-
-
-class typotek;
+#include <QMap>
+#include <QString>
 
 /**
 	@author Pierre Marchand <pierre@oep-h.com>
 */
 class DataLoader
 {
-		
-	public:
-		DataLoader ( QFile *file );
+	
+	QMap<QString, QMap<QString,QString> > sm;
+	QMap<QString,QString> pm;
 
-		~DataLoader();
-		int load();
-		QStringList fontList() const { return m_fontList; }
-		QMap<  QString,FontLocalInfo > fastList() const { return m_fastList; }
-	private :
-		QFile *m_file;
-		typotek *m_typo;
-		QStringList m_fontList;
-		QMap<  QString,FontLocalInfo > m_fastList;
+	void load();
+public:
+	DataLoader();
+	~DataLoader(){}
 
+	bool update(const QString& name, const QString& sample);
+	bool remove(const QString& name);
+	void reload();
+
+
+	const QMap<QString, QMap<QString,QString> >& systemSamples()const{return sm;}
+	const QMap<QString,QString>& userSamples()const{return pm;}
 
 };
 

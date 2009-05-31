@@ -12,7 +12,7 @@ then we add a few extra dependencies added in the svn version of fontmatrix by t
 
 then we retrive the source code by typing:
   sudo apt-get install subversion 
-  svn co http://svn.gna.org/svn/undertype fontmatrix
+  svn co http://svn.gna.org/svn/undertype/trunk/tools/typotek fontmatrix
 
 then we build from source by typing:  
   cd fontmatrix

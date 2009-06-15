@@ -14,6 +14,7 @@
 #include "typotek.h"
 #include "fontitem.h"
 #include "fmfontdb.h"
+#include "fminfodisplay.h"
 
 #include <QFile>
 #include <QXmlStreamWriter>
@@ -104,7 +105,8 @@ int DataExport::buildIndex()
 			xmlStream.writeCharacters( QFileInfo(fitem->path()).fileName() );
 			xmlStream.writeEndElement();
 			xmlStream.writeStartElement("info");
-			xmlStream.writeCharacters( fitem->infoText() );
+			FMInfoDisplay fid(fitem);
+			xmlStream.writeCharacters( fid.getHtml() );
 			xmlStream.writeEndElement();
 			QStringList tl = fitem->tags();
 // 			tl.removeAll("Activated_On");

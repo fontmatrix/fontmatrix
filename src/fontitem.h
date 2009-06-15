@@ -111,11 +111,10 @@ class FontItem : public QObject
 		void updateItem();
 		~FontItem();
 		
-	
-
+		
 		static QList<int> legitimateNonPathChars;
 		void fillLegitimateSpaces();
-		void fillLangIdMap();
+		
 	private:
 		bool isUpToDate;
 		bool m_valid;
@@ -227,9 +226,6 @@ class FontItem : public QObject
 		
 		// if true return width, else return number of _chars_ consumed
 		bool renderReturnWidth;
-
-		QString url2href(QString value);
-		QString xhtmlifies(const QString& value);
 		
 		
 	private slots:
@@ -279,7 +275,6 @@ class FontItem : public QObject
 		void addTag(const QString &t);
 		QString name();
 		QString fancyName() {return m_family + " " + m_variant;}
-		QString infoText ( bool fromcache = true );
 		QString infoGlyph ( int index, int code = 0 );
 		QString glyphName(int codepoint, bool codeIsChar = true);
 		FontInfoMap rawInfo();
@@ -383,6 +378,18 @@ class FontItem : public QObject
 	unsigned int getFTHintMode() const;
 	
 	void dumpIntoDB();
+
+	bool getUnicodeBuiltIn() const;
+
+	FT_Encoding getCurrentEncoding() const;
+
+	double getUnitPerEm() const;
+
+	QList< FT_Encoding > getCharsets() const;
+	
+	
+	
+	
 	
 	
 };

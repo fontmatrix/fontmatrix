@@ -11,12 +11,14 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmaltcontext.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmaltselector.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmdumpinfo.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmencdata.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontcompareview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontdb.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontextract.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontstrings.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphhighlight.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphsview.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fminfodisplay.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmkernfeat.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayoptwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayout.cpp

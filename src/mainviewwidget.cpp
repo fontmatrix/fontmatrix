@@ -24,6 +24,7 @@
 #include "fmbaseshaper.h"
 #include "fmglyphhighlight.h"
 #include "fmglyphsview.h"
+#include "fminfodisplay.h"
 #include "fmlayout.h"
 #include "fmotf.h"
 #include "fmpaths.h"
@@ -836,6 +837,7 @@ void MainViewWidget::slotInfoFont()
 {
 	if(theVeryFont)
 	{
+		FMInfoDisplay fid(theVeryFont);
 // 		qDebug()<<"MainViewWidget::slotInfoFont"<<theVeryFont->name();
                 QString fIT;
                 fIT += "<html xmlns=\"http://www.w3.org/1999/xhtml\">";
@@ -843,7 +845,7 @@ void MainViewWidget::slotInfoFont()
 		fIT += "<title>" + theVeryFont->fancyName() + "</title>";
 		fIT += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
 		fIT += "<link rel='stylesheet' href='file://" + typo->getInfoStyle() + "' type='text/css' />";
-                fIT += "</head ><body>" +  theVeryFont->infoText(false) + "</body> </html>";
+                fIT += "</head ><body>" +  fid.getHtml() + "</body> </html>";
 //		fontInfoText->setHtml (fIT);
                 fontInfoText->setContent(fIT.toUtf8(), "application/xhtml+xml");
 //                qDebug()<<"=========================================================";

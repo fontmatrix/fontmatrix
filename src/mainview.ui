@@ -757,7 +757,9 @@
              <item row="0" column="1" >
               <widget class="QLineEdit" name="charSearchLine" >
                <property name="toolTip" >
-                <string>Search a character by name, press enter after editing to run the search.</string>
+                <string>Search a character by its codepoint (expressed in hexadecimal 
+and prefixed with "U+", "u+" or "+") or a glyph by its name.
+Press enter after editing to run the search.</string>
                </property>
                <property name="inputMask" >
                 <string/>

@@ -1796,8 +1796,20 @@ void MainViewWidget::slotSearchCharName()
 	if(!theVeryFont)
 		return;
 	QString name(charSearchLine->text());
-	unsigned short cc(theVeryFont->getNamedChar(name));
-	qDebug()<<"CS"<<name<<cc;
+	unsigned short cc(0);
+	if(name.startsWith("U+") 
+		  || name.startsWith("u+")
+		  || name.startsWith("+"))
+	{
+		QString vString(name.mid(name.indexOf("+")));
+		bool ok(false);
+		cc = vString.toInt(&ok, 16);
+		if(!ok)
+			cc = 0;
+	}
+	else
+		theVeryFont->getNamedChar(name);
+// 	qDebug()<<"CS"<<name<<cc;
 	if(!cc)
 	{
 		// TODO display a usefull message
@@ -1807,17 +1819,18 @@ void MainViewWidget::slotSearchCharName()
 	
 	foreach(const QString& key, uniPlanes.keys())
 	{
-		if((cc >= uniPlanes[key].first)
+		if((uniPlanes[key].first > 0)
+		   && (cc >= uniPlanes[key].first)
 		  && (cc < uniPlanes[key].second))
 		{
 			QString ks(key.mid(3));
-			qDebug()<<"ZONZ"<<cc<<ks<<uniPlanes[key].first<<uniPlanes[key].second;
+// 			qDebug()<<"ZONZ"<<cc<<ks<<uniPlanes[key].first<<uniPlanes[key].second;
 			int idx(uniPlaneCombo->findText(ks));
 			uniPlaneCombo->setCurrentIndex(idx);
 			slotPlaneSelected(idx);
 // 			QString dbgS;
 			bool inFrame(false);
-			while(!inFrame)
+// 			while(!inFrame)
 			{
 				foreach(QGraphicsItem* sit, abcScene->items())
 				{
@@ -1840,8 +1853,11 @@ void MainViewWidget::slotSearchCharName()
 						
 					}
 				}
-				int sv(abcView->verticalScrollBar()->value());
-				abcView->verticalScrollBar()->setValue(sv + abcView->height());
+				if(inFrame)
+				{
+					int sv(abcView->verticalScrollBar()->value());
+					abcView->verticalScrollBar()->setValue(sv + abcView->height());
+				}
 			}
 		}
 	}

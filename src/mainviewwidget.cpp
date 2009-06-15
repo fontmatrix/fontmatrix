@@ -1808,7 +1808,7 @@ void MainViewWidget::slotSearchCharName()
 			cc = 0;
 	}
 	else
-		theVeryFont->getNamedChar(name);
+		cc = theVeryFont->getNamedChar(name);
 // 	qDebug()<<"CS"<<name<<cc;
 	if(!cc)
 	{

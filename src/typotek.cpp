@@ -221,6 +221,17 @@ void typotek::initMatrix()
 	}
 }
 
+void typotek::postInit()
+{
+	// TODO restore last filter
+	theMainView->slotViewAll();
+	
+	QSettings st;
+	QString cname(st.value("CurrentFont","").toString());
+	if(!cname.isEmpty())
+		ListDockWidget::getInstance()->fontTree->slotSetCurrent(cname);
+}
+
 void typotek::doConnect()
 {
 	if(getSystray())
@@ -920,7 +931,9 @@ void typotek::readSettings()
 	databaseUser = settings.value("Database/User","").toString();
 	databasePassword = settings.value("Database/Password","").toString();
 	if( !QSqlDatabase::drivers().contains(databaseDriver) )
+	{
 		qDebug()<<"The SQL driver you request is not available("<< databaseDriver <<")";
+	}
 
 }
 
@@ -956,6 +969,9 @@ void typotek::writeSettings()
 	settings.setValue( "Database/DbName",databaseDbName);
 	settings.setValue( "Database/User",databaseUser);
 	settings.setValue( "Database/Password",databasePassword);
+	
+	if(theMainView->selectedFont())
+		settings.setValue("CurrentFont", theMainView->selectedFont()->path());
 
 	save();
 
@@ -2390,4 +2406,5 @@ void typotek::setInfoStyle ( const QString& theValue )
 {
 	infoStyle = theValue;
 }
+
 

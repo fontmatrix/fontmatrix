@@ -178,9 +178,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	charSearchLine->setCompleter(cslCompleter);
 	
 	doConnect();
-	
-
-
 }
 
 

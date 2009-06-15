@@ -27,7 +27,7 @@ FMNameList::~ FMNameList()
 
 void FMNameList::keyPressEvent(QKeyEvent * e)
 {
-	qDebug()<<"FMNameList::keyPressEvent("<<e<<")";
+// 	qDebug()<<"FMNameList::keyPressEvent("<<e<<")";
 	if(e->text().isEmpty())
 		return;
 
@@ -146,3 +146,27 @@ bool FMNameList::findBelow(QTreeWidgetItem *current, const QString &role)
 	} else
 		return false;
 }
+
+void FMNameList::slotSetCurrent(const QString & fname)
+{
+	qDebug()<<"FMNameList::slotSetCurrent"<<fname;
+	int tli(topLevelItemCount());
+	for(int i(0); i < tli ; ++i)
+	{
+		QTreeWidgetItem * TL(topLevelItem(i));
+		for(int family(0); family < TL->childCount(); ++family)
+		{
+			for(int face(0); face < TL->child(family)->childCount(); ++face)
+			{
+				QTreeWidgetItem * F( TL->child(family)->child(face) );
+				if(F->toolTip(0) == fname)
+				{
+					setCurrentItem(F);
+					emit currentChanged(F,0);
+					return;
+				}
+			}
+		}
+	}
+}
+

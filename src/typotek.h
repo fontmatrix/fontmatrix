@@ -60,6 +60,7 @@ class typotek:public QMainWindow
 	public:
 		static typotek* getInstance();
 		void initMatrix();
+		void postInit();
 
 	protected:
 		void closeEvent ( QCloseEvent *event );

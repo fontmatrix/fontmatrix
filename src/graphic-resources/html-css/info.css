@@ -1,13 +1,16 @@
-/******* Informations ************/
+/*
+	Informations (Fontmatrix) 
+	base style 
+*/
 
 *{
-border:0;
-margin:0;
-padding:0;
+	border:0;
+	margin:0;
+	padding:0;
 }
 
 body{
-background-color : #fefefe;
+	background-color : #fefefe;
 }
 
 #headline {
@@ -33,29 +36,29 @@ background-color : #fefefe;
 }
 
 #general{
-float:left;
-width:75%;
+	float:left;
+	width:75%;
 }
 
 .encodingcurrent{
-font-weight:bold;
+	font-weight:bold;
 }
 
 .infoblock {
-clear:both;
+	clear:both;
 }
 .infoblock:hover .langundefined {
-border-left : 10pt solid red ;
-color:black;
+	border-left : 10pt solid red ;
+	color:black;
 }
 .infoblock:hover .infoname
 {
-color:red;
+	color:red;
 }
 
 
 .infoname {
-text-align:right;
+	text-align:right;
     background-color : #fefefe;
     color:#333;
 /*     background-image : url('css-info-propertyname.png'); */
@@ -117,8 +120,8 @@ text-align:right;
 
 
 .panose_name {
-text-align:left;
-font-style:italic;
+	text-align:left;
+	font-style:italic;
     font-size : 9pt;
     color : gray;
   }
@@ -136,4 +139,29 @@ text-align:center;
     background-color:white;
     color:black;
   }
+
+
+#fstype {
+	margin-top: 24pt;
+	font-style:monospace;
+}
+
+#fstype > div{
+	margin:4pt 0;
+	padding:2pt 0 2pt 2pt;
+	border-left:2em solid black;
+}
+
+.fsname {
+	float:left;
+	padding-right: 1em;
+	font-weight:bold;
+	line-height:9pt;
+	font-size:9pt;
+}
+.fsdesc{
+	line-height:9pt;
+	font-style:italic;
+	font-size:8pt;
+}
 

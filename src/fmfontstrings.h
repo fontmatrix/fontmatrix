@@ -50,6 +50,7 @@ class FontStrings : public QObject
 		static const QString PanoseKeyInfo(PanoseKey pk);
 		static const QString Encoding(FT_Encoding enc);
 		static const QMap<QString,QString>& Tables(); 
+		static QString FsType(int fstype_part, bool shortString = true);
 
 	private:
 
@@ -59,12 +60,14 @@ class FontStrings : public QObject
 		void fillPanoseMap();
 		void panoseFromFile(const QString& path);
 		void fillTTTableList();
-
+		void fillFSftypeMap();
+		
 		QMap< PanoseKey, QMap<int, QString> > m_panoseMap;
 		QMap< PanoseKey, QString > m_panoseKeyName;
 		QMap< PanoseKey, QString > m_panoseKeyInfo;
 		QMap<FT_Encoding, QString> charsetMap;
 		QMap<QString,QString> tttableList;// <TT name, description>
+		QMap< int, QString > m_FsType;
 };
 
 #endif

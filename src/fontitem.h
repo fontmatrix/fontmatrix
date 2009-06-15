@@ -95,7 +95,7 @@ class FontItem : public QObject
 		Q_PROPERTY(int GlyphsCount READ glyphsCount)
 				
 	public:
-		enum FsTypeFlag
+		enum FsType
 		{
 		    NOT_RESTRICTED	= 0x0000,
 		    RESTRICTED		= 0x0002,
@@ -104,7 +104,6 @@ class FontItem : public QObject
 		    NOSUBSET		= 0x0100,
 		    BITMAP_ONLY		= 0x0200
 		};
-		Q_DECLARE_FLAGS ( FsType, FsTypeFlag )
 				
 		FontItem ( QString path , bool remote = false, bool faststart = false);
 		FontItem (QString path,  QString family, QString variant, QString type , bool active);
@@ -115,7 +114,6 @@ class FontItem : public QObject
 	
 
 		static QList<int> legitimateNonPathChars;
-		static QMap< int, QString > fstypeMap;
 		void fillLegitimateSpaces();
 		void fillLangIdMap();
 	private:
@@ -132,7 +130,6 @@ class FontItem : public QObject
 		int remoteId;
 		QProgressDialog *rProgressDialog;
 		
-		FsType m_OSFsType;
 		QString m_path;
 		QUrl m_url;
 		QString m_afm;
@@ -287,6 +284,7 @@ class FontItem : public QObject
 		QString glyphName(int codepoint, bool codeIsChar = true);
 		FontInfoMap rawInfo();
 		FontInfoMap moreInfo();
+		FsType getFsType();
 		
 		// Return the length of a TT table
 		int table(const QString& tableName);
@@ -389,6 +387,5 @@ class FontItem : public QObject
 	
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(FontItem::FsType)
 		 
 #endif

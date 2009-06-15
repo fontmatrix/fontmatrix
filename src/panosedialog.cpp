@@ -25,7 +25,8 @@ FMPanoseDialog::FMPanoseDialog(FontItem * font, QWidget * parent)
 	Q_ASSERT(m_font);
 	fontName->setText(m_font->fancyName());
 	m_sourcepanose = FMFontDb::DB()->getValue(m_font->path(), FMFontDb::Panose).toString();
-	populateDialog();
+	if(!m_sourcepanose.isEmpty())
+		populateDialog();
 	
 	connect(buttonBox, SIGNAL(accepted()), this, SLOT(closeOk()));
 	connect(buttonBox, SIGNAL(rejected()), this, SLOT(closeCancel()));

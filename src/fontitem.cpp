@@ -69,7 +69,6 @@ int theLocalLangCode;
 
 
 QList<int> FontItem::legitimateNonPathChars;
-QMap< int, QString > FontItem::fstypeMap;
 
 QVector<QRgb> gray256Palette;
 QVector<QRgb> invertedGray256Palette;
@@ -466,18 +465,6 @@ void FontItem::fillInvertedPalette()
 }
 
 
-void FontItem::fillFSftypeMap()
-{
-	// From http://www.microsoft.com/typography/otspec/os2.htm#fst
-	if(!fstypeMap.isEmpty())
-		return;
-	fstypeMap[FontItem::NOT_RESTRICTED] = QObject::tr("Fonts with this setting indicate that they may be embedded and permanently installed on the remote system by an application. The user of the remote system acquires the identical rights, obligations and licenses for that font as the original purchaser of the font, and is subject to the same end-user license agreement, copyright, design patent, and/or trademark as was the original purchaser.");
-	fstypeMap[FontItem::RESTRICTED] = QObject::tr("Fonts that have  only  this bit set must not be modified, embedded or exchanged in any manner without first obtaining permission of the legal owner.");
-	fstypeMap[FontItem::PREVIEW_PRINT] = QObject::tr("When this bit is set, the font may be embedded, and temporarily loaded on the remote system. Documents containing Preview & Print fonts must be opened \"read-only;\" no edits can be applied to the document.");
-	fstypeMap[FontItem::EDIT_EMBED] = QObject::tr("When this bit is set, the font may be embedded but must only be installed  temporarily  on other systems. In contrast to Preview & Print fonts, documents containing Editable fonts may be opened for reading, editing is permitted, and changes may be saved.");
-	fstypeMap[FontItem::NOSUBSET] = QObject::tr("When this bit is set, the font may not be subsetted prior to embedding. Other embedding restrictions specified in bits 0-3 and 9 also apply.");
-	fstypeMap[FontItem::BITMAP_ONLY] = QObject::tr("When this bit is set, only bitmaps contained in the font may be embedded. No outline data may be embedded. If there are no bitmaps available in the font, then the font is considered unembeddable and the embedding services will fail. Other embedding restrictions specified in bits 0-3 and 8 also apply.");
-}
 
 
 FontItem::FontItem ( QString path , bool remote, bool faststart )
@@ -2543,20 +2530,27 @@ QString FontItem::infoText ( bool fromcache )
 	if(!rFace)
 		ret+="<div class=\"bigWarning\">"+ tr("Unable to get a face of this font file.") +"</div>";
 
-	FsType OSFsType ( FMFontDb::DB()->getValue ( m_path,FMFontDb::FsType ).toInt() );
+	FsType OSFsType ( getFsType() );
 	QString embedFlags = "<div id=\"fstype\">";
-	if ( OSFsType.testFlag ( NOT_RESTRICTED ) )
-		embedFlags+="<div>" + fstypeMap[NOT_RESTRICTED] + "</div>";
-	if ( OSFsType.testFlag ( RESTRICTED ) )
-		embedFlags+="<div>" + fstypeMap[ RESTRICTED] + "</div>";
-	if ( OSFsType.testFlag ( PREVIEW_PRINT ) )
-		embedFlags+="<div>" + fstypeMap[PREVIEW_PRINT] + "</div>";
-	if ( OSFsType.testFlag ( EDIT_EMBED ) )
-		embedFlags+="<div>" + fstypeMap[EDIT_EMBED] + "</div>";
-	if ( OSFsType.testFlag ( NOSUBSET ) )
-		embedFlags+="<div>" + fstypeMap[NOSUBSET] + "</div>";
-	if ( OSFsType.testFlag ( BITMAP_ONLY ) )
-		embedFlags+="<div>" + fstypeMap[BITMAP_ONLY] + "</div>";
+	// 0 - 3 are exclusive
+	if ( OSFsType == NOT_RESTRICTED  )
+		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType( NOT_RESTRICTED , true) 
+				+ "</div><div class=\"fsdesc\">"+ FontStrings::FsType( NOT_RESTRICTED , false) + "</div></div>";
+	else if ( OSFsType & RESTRICTED )
+		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType( RESTRICTED , true) 
+				+ "</div><div class=\"fsdesc\">"+ FontStrings::FsType( RESTRICTED , false) + "</div></div>";
+	else if ( OSFsType & PREVIEW_PRINT  )
+		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType(PREVIEW_PRINT , true) 
+				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(PREVIEW_PRINT , false) + "</div></div>";
+	else if ( OSFsType & EDIT_EMBED )
+		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType(EDIT_EMBED , true) 
+				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(EDIT_EMBED , false) + "</div></div>";
+	if ( OSFsType & NOSUBSET  )
+		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType(NOSUBSET , true) 
+				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(NOSUBSET , false) + "</div></div>";
+	if ( OSFsType & BITMAP_ONLY )
+		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType(BITMAP_ONLY , true) 
+				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(BITMAP_ONLY , false) + "</div></div>";
 	embedFlags +="</div>";
 
 	QMap<int, QStringList> orderedInfo;
@@ -2728,10 +2722,10 @@ QString FontItem::infoText ( bool fromcache )
 					.arg(orderedInfo[key].join(" "));
 	}
 	
+	ret += embedFlags;
 	ret += "</div>"; // general
 	ret += "<div id=\"panose_block\">" + panBlockOut + "</div>";
 
-	ret += embedFlags;
 // 	m_cacheInfo = ret;
 	if ( rFace )
 		releaseFace();
@@ -2997,6 +2991,24 @@ QString FontItem::panose()
 	}
 	releaseFace();
 	return pl.join(":");
+}
+
+FontItem::FsType FontItem::getFsType()
+{
+	// After some thinking, it appears that it would be a nonsense to not retrieve it from the actual font file.
+	FsType fst( NOT_RESTRICTED );
+	if(!ensureFace())
+		return fst;
+	
+	TT_OS2 *os2 = static_cast<TT_OS2*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_os2 ) );
+	
+	if ( os2 )
+	{
+		fst = FsType(os2->fsType);
+	}
+
+	releaseFace();
+	return fst;
 }
 
 int FontItem::table(const QString & tableName)
@@ -4190,21 +4202,31 @@ void FontItem::setFTHintMode ( unsigned int theValue )
 // here for migration purpose
 void FontItem::dumpIntoDB()
 {
-	if(!m_valid)
+	if ( !m_valid )
 		return;
-	
-	FMFontDb *db (FMFontDb::DB());
-	db->initRecord(m_path);
-	
-	QString panString(panose());
-	
+
+	FMFontDb *db ( FMFontDb::DB() );
+	db->initRecord ( m_path );
+
+	QString panString ( panose() );
+
 	QList<FMFontDb::Field> fl;
 	QVariantList vl;
-	fl << FMFontDb::Family << FMFontDb::Variant << FMFontDb::Name  << FMFontDb::Type << FMFontDb::Panose << FMFontDb::FsType ;
-	vl << m_family<<m_variant<<m_name<<m_type<< panString << (int)m_OSFsType;
 	
-	db->setValues(m_path,fl,vl);
-	db->setInfoMap(m_path,moreInfo());
+	fl << FMFontDb::Family
+	<< FMFontDb::Variant
+	<< FMFontDb::Name
+	<< FMFontDb::Type
+	<< FMFontDb::Panose;
+	
+	vl << m_family
+	<< m_variant
+	<< m_name
+	<< m_type
+	<< panString;
+
+	db->setValues ( m_path,fl,vl );
+	db->setInfoMap ( m_path, moreInfo() );
 }
 
 QStringList FontItem::charmaps()

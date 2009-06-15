@@ -22,6 +22,7 @@ FontStrings::FontStrings()
 	fillPanoseMap();
 	fillCharsetMap();
 	fillTTTableList();
+	fillFSftypeMap();
 }
 
 FontStrings * FontStrings::getInstance()
@@ -330,6 +331,19 @@ void FontStrings::fillTTTableList()
 }
 
 
+void FontStrings::fillFSftypeMap()
+{
+	// From http://www.microsoft.com/typography/otspec/os2.htm#fst
+	
+	m_FsType[FontItem::NOT_RESTRICTED] = tr("This font may be embedded and permanently installed on the remote system by an application. The user of the remote system acquires the identical rights, obligations and licenses for that font as the original purchaser of the font, and is subject to the same end-user license agreement, copyright, design patent, and/or trademark as was the original purchaser.");
+	m_FsType[FontItem::RESTRICTED] = tr("This font must not be modified, embedded or exchanged in any manner without first obtaining permission of the legal owner.");
+	m_FsType[FontItem::PREVIEW_PRINT] = tr("This font may be embedded, and temporarily loaded on the remote system. Documents containing this font must be opened \"read-only;\" no edits can be applied to the document.");
+	m_FsType[FontItem::EDIT_EMBED] = tr("This font may be embedded but must only be installed  temporarily  on other systems. In contrast to Preview &amp; Print fonts, documents containing this font may be opened for reading, editing is permitted, and changes may be saved.");
+	m_FsType[FontItem::NOSUBSET] = tr("This font may not be subsetted prior to embedding. Other embedding restrictions specified in bits 0-3 and 9 also apply.");
+	m_FsType[FontItem::BITMAP_ONLY] = tr("Only bitmaps contained in this font may be embedded. No outline data may be embedded. If there are no bitmaps available in this font, then it is considered unembeddable and the embedding services will fail. Other embedding restrictions specified in bits 0-3 and 8 also apply.");
+}
+
+
 const QMap< FMFontDb::InfoItem, QString >& FontStrings::Names()
 {
 	FontStrings *that(getInstance());
@@ -366,6 +380,28 @@ const QMap< QString, QString > & FontStrings::Tables()
 	return that->tttableList;
 }
 
+QString FontStrings::FsType(int fstype_part, bool shortString)
+{
+	FontStrings *that(getInstance());
+	if(!shortString)
+		return that->m_FsType[fstype_part];
+	else
+	{
+		if(FontItem::NOT_RESTRICTED == fstype_part)
+			return tr("Not Restricted");
+		else if(FontItem::RESTRICTED == fstype_part)
+			return tr("Restricted");
+		else if(FontItem::PREVIEW_PRINT == fstype_part)
+			return tr("Preview/Print");
+		else if(FontItem::EDIT_EMBED == fstype_part)
+			return tr("Edit/Embed");
+		else if(FontItem::NOSUBSET == fstype_part)
+			return tr("No Subset");
+		else if(FontItem::BITMAP_ONLY == fstype_part)
+			return tr("Bitmap Only");
+	}
+}
+
 FontStrings::PanoseKey FontStrings::firstPanoseKey()
 {
 	return FamilyType;
@@ -388,7 +424,6 @@ FontStrings::PanoseKey FontStrings::nextPanoseKey ( PanoseKey pk )
 	}
 	return InvalidPK;
 }
-
 
 
 

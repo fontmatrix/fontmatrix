@@ -24,6 +24,7 @@
 
 #include <QIcon>
 #include <QSplashScreen>
+#include <QPainter>
 #include <QPixmap>
 #include <QBitmap>
 #include <QDebug>
@@ -83,42 +84,25 @@ int main ( int argc, char *argv[] )
 
 	QSplashScreen theSplash;
 	QPixmap theSplashPix ( ":/fontmatrix_splash.png" );
-	bool splash = settings.value("SplashScreen", false).toBool();
+	bool splash = settings.value("SplashScreen", true).toBool();
 	if( app.arguments().contains ( "splash" ) || splash )
 	{
-		QImage rootW = QPixmap::grabWindow ( QApplication::desktop()->winId(),
-				( QApplication::desktop()->rect().width()-theSplashPix.rect().width() ) /2,
-				  ( QApplication::desktop()->rect().height()-theSplashPix.rect().height() ) /2,
-				    theSplashPix.rect().width(),
-						    theSplashPix.rect().height() ).toImage();
-		QImage splashImg = theSplashPix.toImage();
-
-		for(int posx = 0; posx < rootW.width() ;++posx)
-		{
-			for(int posy =0;posy < rootW.height();++posy)
-			{
-				QRgb splashC(splashImg.pixel(posx,posy));
-				QRgb rootC(rootW.pixel(posx,posy));
-				uint Salpha(qAlpha(splashC));
-				uint resRed ((qRed(splashC) * Salpha / 255) +
-						(qRed(rootC) * (255 - Salpha) / 255));
-				uint resGreen((qGreen(splashC) * Salpha / 255) +
-						(qGreen(rootC) * (255 - Salpha) / 255));
-				uint resBlue((qBlue(splashC) * Salpha / 255) +
-						(qBlue(rootC) * (255 - Salpha) / 255));
-				uint resRGB(qRgb ( resRed, resGreen, resBlue ));
-				splashImg.setPixel(posx,posy,resRGB);
-			}
-		}
-		theSplash.setPixmap(QPixmap::fromImage(splashImg));
 		QFont spFont;
-		spFont.setPointSize(14);/*
-		spFont.setBold(true);*/
+		spFont.setPointSize(14);
+		QPainter p(&theSplashPix);
+		p.setFont(spFont);
+		p.setPen(Qt::white);
+		QString vString(QString("%1.%2.%3")
+				.arg(FONTMATRIX_VERSION_MAJOR)
+				.arg(FONTMATRIX_VERSION_MINOR)
+				.arg(FONTMATRIX_VERSION_PATCH));
+		p.drawText(theSplashPix.width() / 4 , theSplashPix.height() / 3, vString);
+		p.end();
+		
+		spFont.setPointSize(9);
+		theSplash.setPixmap(theSplashPix);
 		theSplash.setFont(spFont);
-		if(/*__FM_SHOW_FONTLOADED*/ 1)
-		{
-			QObject::connect ( mw,SIGNAL ( relayStartingStepOut ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
-		}
+		QObject::connect ( mw,SIGNAL ( relayStartingStepOut ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
 	}
 
 	if(splash)
@@ -137,8 +121,6 @@ int main ( int argc, char *argv[] )
 	} else
 		mw->show();
 
-	if(splash)
-		theSplash.finish ( mw );
 
 	LazyInit lazyInit;
 	QObject::connect(&lazyInit, SIGNAL(endOfRun()), ListDockWidget::getInstance(), SLOT(unlockFilter()) );
@@ -146,6 +128,9 @@ int main ( int argc, char *argv[] )
 	
 	mw->postInit();
 
+	if(splash)
+		theSplash.finish ( mw );
+	
 	return app.exec();
 }
 

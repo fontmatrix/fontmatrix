@@ -172,6 +172,8 @@ void typotek::initMatrix()
 	else
 		systray = 0;
 
+	setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::ForceTabbedDocks);
+	
 	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
 	mainDock->setWidget ( ListDockWidget::getInstance() );
 	mainDock->setStatusTip ( tr ( "Show/hide fonts browsing sidebar" ) );
@@ -189,6 +191,10 @@ void typotek::initMatrix()
 		tagsDock->setFloating(true);
 	if(!tagsDockGeometry.isNull())
 		tagsDock->setGeometry(tagsDockGeometry);
+	
+	if((mainDockArea != QString("Float")) 
+		   && (tagsDockArea == mainDockArea))
+		tabifyDockWidget(tagsDock, mainDock);
 
 	createActions();
 	createMenus();
@@ -899,7 +905,7 @@ void typotek::readSettings()
 	m_theWord = settings.value("Preview/Word", "<name>" ).toString();
 
 	mainDockArea = settings.value("Docks/ToolPos", "Left").toString();
-	tagsDockArea = settings.value("Docks/TagsPos", "Right").toString();
+	tagsDockArea = settings.value("Docks/TagsPos", "Left").toString();
 	mainDockVisible  = settings.value("Docks/ToolVisible", true).toBool();
 	tagsDockVisible = settings.value("Docks/TagsVisible", true).toBool();
 	mainDockGeometry = settings.value("Docks/ToolGeometry", QRect()).toRect();
@@ -1210,7 +1216,8 @@ void typotek::initDir()
 			}
 		}
 
-		relayStartingStepIn ( QString::number ( sysFontPtrs.count() ) + " " + tr ( "system fonts added." ) );
+		if(sysFontPtrs.count() > 0)
+			relayStartingStepIn ( QString::number ( sysFontPtrs.count() ) + " " + tr ( "system fonts added." ) );
 
 		// So much complicated only because otherwise, tags were added twice with SQLite ???
 		QStringList tl;
@@ -1721,7 +1728,7 @@ void typotek::changeFontSizeSettings(double fSize, double lSize)
 
 void typotek::relayStartingStepIn(QString s)
 {
-	int i(Qt::AlignCenter);
+	int i( Qt::AlignRight | Qt::AlignBottom );
 	QColor c(Qt::white);
 	emit relayStartingStepOut( s, i , c );
 }

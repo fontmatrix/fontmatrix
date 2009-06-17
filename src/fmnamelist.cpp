@@ -149,7 +149,7 @@ bool FMNameList::findBelow(QTreeWidgetItem *current, const QString &role)
 
 void FMNameList::slotSetCurrent(const QString & fname)
 {
-	qDebug()<<"FMNameList::slotSetCurrent"<<fname;
+// 	qDebug()<<"FMNameList::slotSetCurrent"<<fname;
 	int tli(topLevelItemCount());
 	for(int i(0); i < tli ; ++i)
 	{

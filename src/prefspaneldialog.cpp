@@ -45,7 +45,7 @@ PrefsPanelDialog::PrefsPanelDialog ( QWidget *parent )
 
 	QSettings settings;
 // 	qDebug()<< "ss" << settings.value("SplashScreen",false).toBool();
-	splashCheck->setChecked ( settings.value ( "SplashScreen",false ).toBool() );
+	splashCheck->setChecked ( settings.value ( "SplashScreen", true ).toBool() );
 
 	namedSampleTextText->setText ( tr ( "Please select an item in the list or create a new one." ) );
 	namedSampleTextText->setEnabled ( false );
@@ -726,7 +726,7 @@ void PrefsPanelDialog::setSelected ( const QString &actionText )
 
 void PrefsPanelDialog::slotSplashScreen ( bool state )
 {
-	qDebug() <<"slotSplashScreen("<< state <<")";
+// 	qDebug() <<"slotSplashScreen("<< state <<")";
 	QSettings settings;
 	settings.setValue ( "SplashScreen", state );
 }

@@ -15,6 +15,7 @@
 #include "fontitem.h"
 #include "fmfontdb.h"
 #include "fmfontstrings.h"
+#include "fmpaths.h"
 #include "glyphtosvghelper.h"
 #include "typotek.h"
 
@@ -39,8 +40,13 @@ FMInfoDisplay::FMInfoDisplay(FontItem * font)
 	.encodingcurrent
 	.encoding
 	 */
-	
-
+	html += "<html xmlns=\"http://www.w3.org/1999/xhtml\">";
+	html += "<head>";
+	html += "<title>" + font->fancyName() + "</title>";
+	html += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
+	html += "<link rel=\"stylesheet\" href=\"file://" + typotek::getInstance()->getInfoStyle() + "\" type=\"text/css\" />";
+	html += "<script type=\"text/javascript\" src=\"file://"+ FMPaths::ResourcesDir() +"fontmatrix.js\" />";
+	html += "</head ><body>";
 	html += writeSVGPreview(font);
 	html += "<div id=\"file\">" + font->path() + "</div>\n" ;
 // 	ret += "<div id=\"search\"><a href=\"http://www.myfonts.com/search?search[text]="+ m_family +"\">On myfonts</a>";
@@ -49,7 +55,7 @@ FMInfoDisplay::FMInfoDisplay(FontItem * font)
 	html += writeFsType(font);
 	html += "</div>"; // general
 	html += writePanose(font);
-
+	html += "</body> </html>";
 }
 
 

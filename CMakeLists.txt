@@ -185,6 +185,7 @@ ${CMAKE_SOURCE_DIR}/src/graphic-resources/template_default.png
 )
 SET(FM_STYLE_FILES
 ${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/info.css
+${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/fontmatrix.js
 ${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-info-propertyname.png
 ${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-info-property.png
 ${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-shadow.png

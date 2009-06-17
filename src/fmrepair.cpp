@@ -14,6 +14,7 @@
 #include "typotek.h"
 #include "fontitem.h"
 #include "fmfontdb.h"
+#include "mainviewwidget.h"
 
 #include <QDebug>
 #include <QDir>
@@ -330,14 +331,29 @@ void FmRepair::slotRemoveUnref()
 {
 	FMFontDb *db(FMFontDb::DB());
 	QStringList failed;
+	QList<FontItem*> flist(typotek::getInstance()->getTheMainView()->curFonts());
 	for(int i(0); i < unrefList->count(); ++i)
 	{
 		if(unrefList->item(i)->checkState() == Qt::Checked)
 		{
-			if(!db->Remove(unrefList->item(i)->text()))
-				failed << unrefList->item(i)->text();
+			FontItem* curItem = 0;
+			QString fId(unrefList->item(i)->text());
+			foreach(FontItem* it, flist)
+			{
+				if(it->path() == fId)
+				{
+					curItem = it;
+					break;
+				}
+			}
+			if(!db->Remove(fId))
+				failed << fId;
+			else if(curItem)
+				flist.removeAll(curItem);
+			
 		}
 	}
+	typotek::getInstance()->getTheMainView()->setCurFonts(flist);
 // 	if(failed.count() > 0)
 // 	{
 // 		QMessageBox::warning(this,"Fontmatrix - warning",failed.join("\n"));

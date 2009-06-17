@@ -31,7 +31,7 @@ AboutWidget::AboutWidget(QWidget *parent)
 	QString version_pat(QString::number( FONTMATRIX_VERSION_PATCH) );
 	theText->setSource(QUrl("qrc:/texts/about"));
 	theText_2->setSource(QUrl("qrc:/texts/about_people"));
-	versionStringLabel->setText(tr("version ") + version_maj + "." + version_min + "." + version_pat);
+	versionStringLabel->setText(tr("version") + " " +version_maj + "." + version_min + "." + version_pat);
 	
 	fontsCountLabel->setText(QString::number(FMFontDb::DB()->FontCount()) + " " +tr("fonts loaded") );
 	

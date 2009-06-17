@@ -113,9 +113,9 @@ body{
 
 #panose_block {
     background-color : #fafafa;
-    margin-left:75%;
+    margin-left:80%;
     padding:1pt;
-    border-left: 2px solid black;
+/*     border-left: 2px solid black; */
   }
 
 
@@ -129,7 +129,7 @@ body{
 
 .panose_desc {
 text-align:center;
-    font-size:11pt;
+    font-size:9pt;
     color:#333;
   }
 

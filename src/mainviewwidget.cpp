@@ -839,7 +839,7 @@ void MainViewWidget::slotInfoFont()
 //                 QFile df("fontmatrix.xhtml" );
 //                 if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
 //                 {
-//                     df.write(fIT.toUtf8());
+//                     df.write(fid.getHtml().toUtf8());
 //                 }
 	}
 	

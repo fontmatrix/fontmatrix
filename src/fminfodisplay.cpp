@@ -40,22 +40,23 @@ FMInfoDisplay::FMInfoDisplay(FontItem * font)
 	.encodingcurrent
 	.encoding
 	 */
-	html += "<html xmlns=\"http://www.w3.org/1999/xhtml\">";
-	html += "<head>";
-	html += "<title>" + font->fancyName() + "</title>";
-	html += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
-	html += "<link rel=\"stylesheet\" href=\"file://" + typotek::getInstance()->getInfoStyle() + "\" type=\"text/css\" />";
-	html += "<script type=\"text/javascript\" src=\"file://"+ FMPaths::ResourcesDir() +"fontmatrix.js\" />";
-	html += "</head ><body>";
+	html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
+	html += "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
+	html += "<head>\n";
+	html += "<title>" + font->fancyName() + "</title>\n";
+	html += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
+	html += "<link rel=\"stylesheet\" href=\"file://" + typotek::getInstance()->getInfoStyle() + "\" type=\"text/css\" />\n";
+	html += "<script type=\"text/javascript\" src=\"file://"+ FMPaths::ResourcesDir() +"fontmatrix.js\" />\n";
+	html += "</head>\n<body>\n";
 	html += writeSVGPreview(font);
 	html += "<div id=\"file\">" + font->path() + "</div>\n" ;
 // 	ret += "<div id=\"search\"><a href=\"http://www.myfonts.com/search?search[text]="+ m_family +"\">On myfonts</a>";
-	html += "<div id=\"general\">";
+	html += "<div id=\"general\">\n";
 	html += writeOrderedInfo(font);
 	html += writeFsType(font);
-	html += "</div>"; // general
+	html += "</div>\n"; // general
 	html += writePanose(font);
-	html += "</body> </html>";
+	html += "</body>\n </html>\n";
 }
 
 
@@ -75,22 +76,22 @@ QString FMInfoDisplay::writeFsType(FontItem * font)
 	// 0 - 3 are exclusive
 	if ( OSFsType == FontItem::NOT_RESTRICTED  )
 		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType( FontItem::NOT_RESTRICTED , true) 
-				+ "</div><div class=\"fsdesc\">"+ FontStrings::FsType( FontItem::NOT_RESTRICTED , false) + "</div></div>";
+				+ "</div><div class=\"fsdesc\">"+ FontStrings::FsType( FontItem::NOT_RESTRICTED , false) + "</div></div>\n";
 	else if ( OSFsType & FontItem::RESTRICTED )
 		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType( FontItem::RESTRICTED , true) 
-				+ "</div><div class=\"fsdesc\">"+ FontStrings::FsType( FontItem::RESTRICTED , false) + "</div></div>";
+				+ "</div><div class=\"fsdesc\">"+ FontStrings::FsType( FontItem::RESTRICTED , false) + "</div></div>\n";
 	else if ( OSFsType & FontItem::PREVIEW_PRINT  )
 		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType(FontItem::PREVIEW_PRINT , true) 
-				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(FontItem::PREVIEW_PRINT , false) + "</div></div>";
+				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(FontItem::PREVIEW_PRINT , false) + "</div></div>\n";
 	else if ( OSFsType & FontItem::EDIT_EMBED )
 		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType(FontItem::EDIT_EMBED , true) 
-				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(FontItem::EDIT_EMBED , false) + "</div></div>";
+				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(FontItem::EDIT_EMBED , false) + "</div></div>\n";
 	if ( OSFsType & FontItem::NOSUBSET  )
 		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType(FontItem::NOSUBSET , true) 
-				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(FontItem::NOSUBSET , false) + "</div></div>";
+				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(FontItem::NOSUBSET , false) + "</div></div>\n";
 	if ( OSFsType & FontItem::BITMAP_ONLY )
 		embedFlags+="<div><div class=\"fsname\">" + FontStrings::FsType(FontItem::BITMAP_ONLY , true) 
-				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(FontItem::BITMAP_ONLY , false) + "</div></div>";
+				+ "</div><div class=\"fsdesc\">" + FontStrings::FsType(FontItem::BITMAP_ONLY , false) + "</div></div>\n";
 	embedFlags +="</div>";
 	
 	return embedFlags;
@@ -115,7 +116,7 @@ QString FMInfoDisplay::writeSVGPreview(FontItem * font)
 			if ( gpi )
 			{
 				GlyphToSVGHelper gtsh ( gpi->path(), tf );
-				svg += gtsh.getSVGPath();
+				svg += gtsh.getSVGPath() + "\n";
 				horOffset += gpi->data(GLYPH_DATA_HADVANCE).toDouble() * scaleFactor;
 				maxHeight = qMax ( gtsh.getRect().height(), maxHeight );
 				tf.translate( gpi->data(GLYPH_DATA_HADVANCE).toDouble()  * scaleFactor,0 );
@@ -123,12 +124,12 @@ QString FMInfoDisplay::writeSVGPreview(FontItem * font)
 			}
 		}
 	}
-	QString openElem ( QString ( "<svg width=\"%1\" height=\"%2\"  xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" )
+	QString openElem ( QString ( "<svg width=\"%1\" height=\"%2\"  xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n" )
 			.arg ( horOffset )
 			.arg ( maxHeight*1.6 ));
 	
-	svg += openElem +svg + "</svg>";
-	return svg;
+	
+	return openElem + svg + "</svg>\n";
 }
 
 QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
@@ -136,8 +137,8 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 	QString ret;
 	QMap<int, QStringList> orderedInfo;
 
-	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ QObject::tr ( "Glyphs count" ) +"</div><div class=\"langundefined\">"+ QString::number ( font->glyphsCount() ) +"</div></div>";
-	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ QObject::tr ( "Font Type" ) +"</div><div class=\"langundefined\">"+ font->type() +"</div></div>";
+	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ QObject::tr ( "Glyphs count" ) +"</div><div class=\"langundefined\">"+ QString::number ( font->glyphsCount() ) +"</div></div>\n";
+	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ QObject::tr ( "Font Type" ) +"</div><div class=\"langundefined\">"+ font->type() +"</div></div>\n";
 
 
 	QStringList cmapStrings;
@@ -147,11 +148,11 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 		if ( ( c == FT_ENCODING_UNICODE ) && ( !font->getUnicodeBuiltIn() ) )
 			encString +="*";
 		if ( c == font->getCurrentEncoding() )
-			cmapStrings << "<span class=\"encodingcurrent\">" + encString + "</span>";
+			cmapStrings << "<span class=\"encodingcurrent\">" + encString + "</span>\n";
 		else
-			cmapStrings << "<span class=\"encoding\">" + encString + "</span>";
+			cmapStrings << "<span class=\"encoding\">" + encString + "</span>\n";
 	}
-	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ QObject::tr ( "Charmaps List" ) +"</div><div class=\"langundefined\">"+ font->charmaps().join( ", " ) +"</div></div>";
+	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ QObject::tr ( "Charmaps List" ) +"</div><div class=\"langundefined\">"+ font->charmaps().join( ", " ) +"</div></div>\n";
 
 	
 // 	if ( !moreInfo.isEmpty() ) // moreInfo.isNotEmpty
@@ -195,7 +196,7 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 				{
 					QString name_value(url2href(xhtmlifies(mit.value()))); // compact coding :)
 					name_value.replace ( "\n","<br/>" );
-					QString dcname ( "<div class="+ styleLangMatch +">" + name_value  +"</div>" );
+					QString dcname ( "<div class="+ styleLangMatch +">" + name_value  +"</div>\n" );
 					if ( !orderedInfo[ mit.key() ].contains ( dcname ) )
 						orderedInfo[ mit.key() ] << dcname;
 				}
@@ -203,7 +204,7 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 				{
 					QString name_value(url2href(xhtmlifies(mit.value())));
 					name_value.replace ( "\n","<br/>" );
-					QString dcname ( "<div class="+ styleLangMatch +">" +  name_value +"</div>" );
+					QString dcname ( "<div class="+ styleLangMatch +">" +  name_value +"</div>\n" );
 					if ( !orderedInfo[ mit.key() ].contains ( dcname ) )
 						orderedInfo[ mit.key() ] << dcname;
 				}
@@ -238,7 +239,7 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 			<< FMFontDb::CompatibleMacintosh
 			<< FMFontDb::UniqueFontIdentifier;
 	
-	QString modelItem ( "<div class=\"infoblock\"><div class=\"infoname\"> %1 </div> %2 </div>" );
+	QString modelItem ( "<div class=\"infoblock\"><div class=\"infoname\"> %1 </div> %2 </div>\n" );
 	QMap<FMFontDb::InfoItem, QString> tNames(FontStrings::Names());
 	foreach(FMFontDb::InfoItem key, order)
 	{
@@ -263,13 +264,13 @@ QString FMInfoDisplay::writePanose(FontItem * font)
 			{
 				FontStrings::PanoseKey k ( FontStrings::Panose().keys() [i] );
 				int pValue ( pl[i].toInt() );
-				panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName ( k ) + "</div>";
-				panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value ( k ).value ( pValue ) + " - "+ pl[i] +"</div>";
+				panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName ( k ) + "</div>\n";
+				panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value ( k ).value ( pValue ) + " - "+ pl[i] +"</div>\n";
 			}
 		}
 	}
 	
-	return "<div id=\"panose_block\">" + panBlockOut + "</div>";
+	return "<div id=\"panose_block\">" + panBlockOut + "</div>\n";
 }
 
 

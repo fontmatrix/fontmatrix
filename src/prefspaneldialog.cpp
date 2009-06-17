@@ -278,6 +278,8 @@ void PrefsPanelDialog::displayNamedText()
 
 void PrefsPanelDialog::validateSampleName()
 {
+	if(!sampleTextNamesList->currentItem())
+		return;
 	typotek::getInstance()->changeSample ( sampleTextNamesList->currentItem()->text(), namedSampleTextText->toPlainText() );
 }
 

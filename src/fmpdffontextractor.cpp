@@ -20,7 +20,7 @@
 FMPDFFontExtractor::FMPDFFontExtractor()
 	:cachedList(false)
 {
-
+	document = 0;
 }
 
 bool FMPDFFontExtractor::loadFile(const QString & filePath)
@@ -125,6 +125,7 @@ QStringList FMPDFFontExtractor::list()
 									{
 										QString n(QString::fromStdString( fontName.GetName() ));
 										mfont[n] = fontFile;
+										// we know naming it pfb is wrong 
 										mType[n] = (subtype == pType1) ? "pfb" : "ttf";
 									}
 									else

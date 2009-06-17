@@ -129,7 +129,7 @@ void FMFontExtract::slotExtract()
 	foreach(QString name,names)
 	{
 	
-		QString fnam(odir + name + currentExtractor->fontType(name));
+		QString fnam(odir + name + "." + currentExtractor->fontType(name));
 		if(QFile::exists(fnam))
 			QFile::remove(fnam);
 		QFile f(fnam);

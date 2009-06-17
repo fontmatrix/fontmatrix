@@ -81,8 +81,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	currentFonts.clear();
 
 	QSettings settings;
-	sampleFontSize = settings.value("Sample/FontSize",12.0).toDouble();
-	sampleInterSize = settings.value("Sample/Interline",16.0).toDouble();
+	sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
+	sampleInterSize = settings.value("Sample/Interline", 18.0).toDouble();
 	sampleRatio = sampleInterSize / sampleFontSize  ;
 	liveFontSizeSpin->setValue(sampleFontSize);
 

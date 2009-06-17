@@ -10,6 +10,8 @@
 //
 //
 #include "importtags.h"
+#include "fmfontdb.h"
+#include "listdockwidget.h"
 
 #include <QDebug>
 
@@ -43,14 +45,18 @@ ImportTags::~ImportTags()
 
 void ImportTags::slotNewTag()
 {
-	if(m_tags.contains(tagText->text()))
+	QString nTag(tagText->text());
+	if(m_tags.contains(nTag))
 		return;
-	if(tagText->text().simplified().isEmpty())
+	if(nTag.simplified().isEmpty())
 		return;
-	m_tags << tagText->text();
-	QListWidgetItem *it = new QListWidgetItem(tagText->text(),tagsList);
+	m_tags << nTag;
+	QListWidgetItem *it = new QListWidgetItem(nTag , tagsList);
 	it->setCheckState(Qt::Checked);	
 	tagText->clear();
+	
+	FMFontDb::DB()->addTagToDB ( nTag );
+	ListDockWidget::getInstance()->reloadTagsCombo();
 }
 
 void ImportTags::slotEnd()

@@ -229,6 +229,7 @@ class typotek:public QMainWindow
 		bool previewSubtitled;
 		bool m_familySchemeFreetype;
 		QString m_welcomeURL;
+		QString m_sysTagName;
 
 		void addFcDirItem(const QString &dirPath);
 		QStringList getSystemFontDirs();
@@ -390,6 +391,9 @@ class typotek:public QMainWindow
 
 	void setInfoStyle ( const QString& theValue );
 	QString getInfoStyle() const{ return infoStyle; }
+
+	QString getSysTagName() const { return m_sysTagName; }
+	
 	
 	
 	protected:

@@ -409,7 +409,7 @@ void ListDockWidget::initTagCombo()
 // 	}
 	
 	QStringList tl_tmp = FMFontDb::DB()->getTags();
-// 	qDebug()<<"RELOAD"<<tl_tmp.join("|");
+	qDebug()<<"RELOAD"<<tl_tmp.join("|");
 	tl_tmp.sort();
 	foreach(QString tag, tl_tmp )
 	{

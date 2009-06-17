@@ -49,22 +49,22 @@ bool __FM_SHOW_FONTLOADED;
  */
 int main ( int argc, char *argv[] )
 {
-	QCoreApplication::setOrganizationName("Undertype");
-	QCoreApplication::setApplicationName("fontmatrix");
+	QCoreApplication::setOrganizationName ( "Undertype" );
+	QCoreApplication::setApplicationName ( "fontmatrix" );
 
 	Q_INIT_RESOURCE ( application );
 	QApplication app ( argc, argv );
 	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );
 
 	QTranslator translator;
-	if(translator.load( FMPaths::TranslationFile(), FMPaths::TranslationsDir() ))
+	if ( translator.load ( FMPaths::TranslationFile(), FMPaths::TranslationsDir() ) )
 	{
-		app.installTranslator(&translator);
-		qDebug()<< "Translator is installed."<<FMPaths::TranslationsDir() + FMPaths::TranslationFile();
+		app.installTranslator ( &translator );
+		qDebug() << "Translator is installed."<<FMPaths::TranslationsDir() + FMPaths::TranslationFile();
 	}
 	else
 	{
-		qDebug()<< "Unable to load"<< FMPaths::TranslationFile() <<"in"<< FMPaths::TranslationsDir();
+		qDebug() << "Unable to load"<< FMPaths::TranslationFile() <<"in"<< FMPaths::TranslationsDir();
 	}
 
 
@@ -84,53 +84,56 @@ int main ( int argc, char *argv[] )
 
 	QSplashScreen theSplash;
 	QPixmap theSplashPix ( ":/fontmatrix_splash.png" );
-	bool splash = settings.value("SplashScreen", true).toBool();
-	if( app.arguments().contains ( "splash" ) || splash )
+	bool splash = settings.value ( "SplashScreen", true ).toBool();
+	if ( app.arguments().contains ( "splash" ) || splash )
 	{
 		QFont spFont;
-		spFont.setPointSize(14);
-		QPainter p(&theSplashPix);
-		p.setFont(spFont);
-		p.setPen(Qt::white);
-		QString vString(QString("%1.%2.%3")
-				.arg(FONTMATRIX_VERSION_MAJOR)
-				.arg(FONTMATRIX_VERSION_MINOR)
-				.arg(FONTMATRIX_VERSION_PATCH));
-		p.drawText(theSplashPix.width() / 4 , theSplashPix.height() / 3, vString);
+		spFont.setPointSize ( 14 );
+		QPainter p ( &theSplashPix );
+		p.setFont ( spFont );
+		p.setPen ( Qt::white );
+		QString vString ( QString ( "%1.%2.%3" )
+		                  .arg ( FONTMATRIX_VERSION_MAJOR )
+		                  .arg ( FONTMATRIX_VERSION_MINOR )
+		                  .arg ( FONTMATRIX_VERSION_PATCH ) );
+		p.drawText ( theSplashPix.width() / 4 , theSplashPix.height() / 3, vString );
 		p.end();
-		
-		spFont.setPointSize(9);
-		theSplash.setPixmap(theSplashPix);
-		theSplash.setFont(spFont);
-		QObject::connect ( mw,SIGNAL ( relayStartingStepOut ( QString, int, QColor ) ),&theSplash,SLOT ( showMessage ( const QString&, int, const QColor& ) ) );
+
+		spFont.setPointSize ( 9 );
+		theSplash.setPixmap ( theSplashPix );
+		theSplash.setFont ( spFont );
+		QObject::connect ( mw, SIGNAL ( relayStartingStepOut ( QString, int, QColor ) ),
+		                   &theSplash, SLOT ( showMessage ( const QString&, int, const QColor& ) ),
+		                   Qt::DirectConnection );
 	}
 
-	if(splash)
+	if ( splash )
 		theSplash.show();
 
 	mw->initMatrix();
 
-	if (	(typotek::getInstance()->getSystray())
-		&& (typotek::getInstance()->getSystray()->isVisible())
-		&& (settings.value ( "Systray/CloseToTray", true ).toBool()) ) 
+	if (	( typotek::getInstance()->getSystray() )
+	        && ( typotek::getInstance()->getSystray()->isVisible() )
+	        && ( settings.value ( "Systray/CloseToTray", true ).toBool() ) )
 	{
 		if ( ! settings.value ( "Systray/StartToTray", false ).toBool() )
 			mw->show();
 		else
 			mw->hide();
-	} else
+	}
+	else
 		mw->show();
 
 
 	LazyInit lazyInit;
-	QObject::connect(&lazyInit, SIGNAL(endOfRun()), ListDockWidget::getInstance(), SLOT(unlockFilter()) );
-	lazyInit.start(QThread::LowestPriority);
-	
+	QObject::connect ( &lazyInit, SIGNAL ( endOfRun() ), ListDockWidget::getInstance(), SLOT ( unlockFilter() ) );
+	lazyInit.start ( QThread::LowestPriority );
+
 	mw->postInit();
 
-	if(splash)
+	if ( splash )
 		theSplash.finish ( mw );
-	
+
 	return app.exec();
 }
 

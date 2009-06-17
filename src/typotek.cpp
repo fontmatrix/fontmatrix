@@ -1154,7 +1154,8 @@ void typotek::initDir()
 #define SYSTEM_FONTS 1
 	if(SYSTEM_FONTS)
 	{
-		QString SysColFon = tr ( "System Fonts" );
+		relayStartingStepIn ( tr ( "Loading System Fonts") );
+		m_sysTagName = tr ( "System Fonts" );
 		QStringList tagsList(FMFontDb::DB()->getTags());
 
 		QList<FontItem*> sysFontPtrs;
@@ -1203,7 +1204,7 @@ void typotek::initDir()
 						{
 // 							qDebug()<<"\t"<<fitem <<fitem->path();
 							fitem->setActivated ( true );
-// 							fitem->addTag ( SysColFon );
+// 							fitem->addTag ( m_sysTagName );
 							sysFontPtrs << fitem;
 						}
 						else
@@ -1225,7 +1226,7 @@ void typotek::initDir()
 		{
 			tl << sfp->path();
 		}
-		FMFontDb::DB()->addTag(tl, SysColFon);
+		FMFontDb::DB()->addTag(tl, m_sysTagName);
 	}
 
 

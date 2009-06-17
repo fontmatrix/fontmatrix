@@ -155,6 +155,9 @@ void TagsWidget::prepare ( QList< FontItem * > fonts )
 	titleLabel->setToolTip ( tot );
 	QStringList tagsList ( FMFontDb::DB()->getTags() );
 	
+	QString sysTag(typotek::getInstance()->getSysTagName());
+	tagsList.removeAll(sysTag);
+	
 	QMap<FontItem*, QStringList> tmap;
 	foreach(FontItem* fi, theTaggedFonts)
 	{
@@ -165,7 +168,7 @@ void TagsWidget::prepare ( QList< FontItem * > fonts )
 	{
 		QString cur_tag = tagsList[i];
 
-		if ( cur_tag.isEmpty() )
+		if ( (cur_tag.isEmpty()) || (cur_tag == sysTag) )
 			continue;
 
 		QListWidgetItem *lit;

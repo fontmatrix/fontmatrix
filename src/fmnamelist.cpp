@@ -17,8 +17,9 @@
 #include <QDebug>
 
 FMNameList::FMNameList(QWidget * parent)
-	:QTreeWidget(parent)
+	:QTreeWidget(parent) , m_waitKey (2000 /*ms*/)
 {
+	
 }
 
 FMNameList::~ FMNameList()
@@ -27,32 +28,53 @@ FMNameList::~ FMNameList()
 
 void FMNameList::keyPressEvent(QKeyEvent * e)
 {
-// 	qDebug()<<"FMNameList::keyPressEvent("<<e<<")";
 	if(e->text().isEmpty())
 		return;
+	int t(m_keyTime.elapsed());
+// 	qDebug()<<"FMNameList::keyPressEvent"<<e<<m_keyString<<QString("%1").arg(t);
 
-
-	QTreeWidgetItem *item = 0;
-	QString alpha = e->text().toUpper();
-// 	if(e->modifiers().testFlag( Qt::ControlModifier ))
-// 	{
-// 		curString += e->text();
-// 		alpha = curString;
-// 	}
-// 	else
-// 	{
-// 		curString = "";
-// 	}
-	for(int i(0); i < topLevelItemCount() ; ++i)
+	if(m_keyString.isEmpty() 
+		  || (t > m_waitKey) )
 	{
-		item = topLevelItem(i);
-		if(item->data(0,100).toString() == "alpha" && item->text(0) == alpha)
+		m_keyString = e->text().toUpper();
+		QTreeWidgetItem *item = 0;
+		for(int i(0); i < topLevelItemCount() ; ++i)
 		{
-			scrollToItem(item, QAbstractItemView::PositionAtTop);
-			return;
+			item = topLevelItem(i);
+			if(item->data(0,100).toString() == "alpha" && item->text(0) == m_keyString)
+			{
+				scrollToItem(item, QAbstractItemView::PositionAtTop);
+				m_keyTime.start();
+				return;
+			}
+		}
+		
+	}
+	else if(t < m_waitKey)
+	{
+		m_keyString += e->text().toUpper();
+				
+		int tli(topLevelItemCount());
+		for(int i(0); i < tli ; ++i)
+		{
+			QTreeWidgetItem * TL(topLevelItem(i));
+			for(int family(0); family < TL->childCount(); ++family)
+			{
+				if( TL->child(family)->text(0).toUpper().startsWith(m_keyString) )
+				{
+					scrollToItem(TL->child(family) , QAbstractItemView::PositionAtTop);
+					m_keyTime.start();
+					return;
+				}
+			}
 		}
 	}
-// 	QTreeWidget::keyPressEvent(e);
+	else
+	{
+		m_keyString.clear();
+	}
+
+
 }
 
 void FMNameList::slotNextFamily()

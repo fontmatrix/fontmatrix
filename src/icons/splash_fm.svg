@@ -29,7 +29,7 @@
          offset="0"
          id="stop3547" />
       <stop
-         style="stop-color:#0c0c20;stop-opacity:1;"
+         style="stop-color:#0c0c34;stop-opacity:1;"
          offset="1"
          id="stop3549" />
     </linearGradient>
@@ -116,24 +116,12 @@
          offset="1"
          style="stop-color:#4f0707;stop-opacity:1;" />
     </linearGradient>
-    <filter
-       inkscape:collect="always"
-       id="filter3541"
-       x="-0.019931329"
-       width="1.0398628"
-       y="-0.18576013"
-       height="1.3715202">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.7805108"
-         id="feGaussianBlur3543" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3545"
        id="linearGradient3603"
-       x1="379.09439"
-       y1="697.81158"
+       x1="412.18283"
+       y1="583.54077"
        x2="518.2218"
        y2="1059.2692"
        gradientUnits="userSpaceOnUse"
@@ -164,9 +152,21 @@
        id="linearGradient3646"
        x1="201.43498"
        y1="165.0065"
-       x2="304.27832"
-       y2="264.26105"
+       x2="262.68069"
+       y2="223.53003"
        gradientUnits="userSpaceOnUse" />
+    <filter
+       inkscape:collect="always"
+       id="filter3297"
+       x="-0.026575105"
+       width="1.0531502"
+       y="-0.24768016"
+       height="1.4953603">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.3740144"
+         id="feGaussianBlur3299" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -175,11 +175,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.48555556"
-     inkscape:cx="527.21463"
-     inkscape:cy="157.84518"
+     inkscape:zoom="2.746717"
+     inkscape:cx="89.34645"
+     inkscape:cy="593.15914"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1440"
      inkscape:window-height="855"
@@ -248,7 +248,7 @@
      inkscape:label="t">
     <flowRoot
        transform="matrix(2.9140333,0,0,2.9140333,-197.27955,-394.19926)"
-       style="font-size:36px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#00bfff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter3541);font-family:NotCourierSans;-inkscape-font-specification:NotCourierSans Bold"
+       style="font-size:36px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#00bfff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter3297);font-family:NotCourierSans;-inkscape-font-specification:NotCourierSans Bold"
        id="flowRoot3525"
        xml:space="preserve"><flowRegion
          id="flowRegion3527"><rect
@@ -300,5 +300,17 @@
          x="256.80902"
          y="-118.58059"
          id="tspan3672">to reproduce the very same design</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="m">
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#d4d4d4;stroke-width:1.99399999999999999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3302"
+       width="898.00549"
+       height="598.00555"
+       x="0.99722975"
+       y="0.99720973" />
   </g>
 </svg>

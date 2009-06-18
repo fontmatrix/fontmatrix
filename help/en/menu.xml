@@ -8,6 +8,8 @@
 	</area>
 
 	<area text="Fonts management" file="management.html">
+		<submenuitem text="Importing fonts" file="management_importing.html"/>
+		<submenuitem text="Using tags" file="management_tags.html"/>
 	</area>
 
 	<area text="Search" file="search.html">

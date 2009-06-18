@@ -5,6 +5,8 @@ index.html
 news.html
 interface.html
 management.html
+management_importing.html
+management_tags.html
 search.html
 comparisons.html
 output.html
@@ -20,6 +22,7 @@ font_books.html
 creating_font_books.html
 font_book_templates.html
 setting_up.html
+setting_up_preferences.html
 setting_up_preferences_general.html
 setting_up_preferences_system_tray.html
 setting_up_preferences_display.html

@@ -1,8 +1,8 @@
 
 
-set(SAMPLES_MR
+set(SAMPLES_KN
 sample
 )
 
-install(FILES ${SAMPLES_MR}
-	DESTINATION ${SAMPLE_DIR}/mr)
+install(FILES ${SAMPLES_KN}
+	DESTINATION ${SAMPLE_DIR}/kn)

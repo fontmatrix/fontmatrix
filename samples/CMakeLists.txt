@@ -1,7 +1,36 @@
 # Samples
 SET(SAMPLE_DIR ${RESOURCESDIR}/Samples/)
 
+# Bengali
+ADD_SUBDIRECTORY(bn)
+
 # Français
 ADD_SUBDIRECTORY(fr)
 
+# Gujarati
+ADD_SUBDIRECTORY(gu)
+
+# Hindi
+ADD_SUBDIRECTORY(hi)
+
+# Kannada
+ADD_SUBDIRECTORY(kn)
+
+# Malayalam
+ADD_SUBDIRECTORY(ml)
+
+# Marathi
+ADD_SUBDIRECTORY(mr)
+
+# Oriya
+ADD_SUBDIRECTORY(or)
+
+# Punjabi
+ADD_SUBDIRECTORY(pa)
+
+# Tamil
+ADD_SUBDIRECTORY(ta)
+
+# Telugu
+ADD_SUBDIRECTORY(te)
 

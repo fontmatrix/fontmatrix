@@ -214,7 +214,7 @@
               <item>
                <widget class="QCheckBox" name="activateAllConfirmation" >
                 <property name="text" >
-                 <string>Ask confirmation when activating or deactivating all fonts</string>
+                 <string>Ask for confirmation when activating or deactivating all fonts</string>
                 </property>
                 <property name="checked" >
                  <bool>true</bool>
@@ -227,7 +227,7 @@
            <item>
             <widget class="QCheckBox" name="tagsConfirmation" >
              <property name="text" >
-              <string>Ask confirmation when activating or deactivating fonts by tags</string>
+              <string>Ask for confirmation when activating or deactivating fonts by tags</string>
              </property>
             </widget>
            </item>
@@ -528,7 +528,7 @@
         <item row="1" column="0" >
          <widget class="QGroupBox" name="groupBox_9" >
           <property name="title" >
-           <string>Web Browser</string>
+           <string>Help Browser</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_9" >
            <item row="0" column="0" colspan="2" >

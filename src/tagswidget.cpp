@@ -204,6 +204,8 @@ void TagsWidget::slotContextMenu ( QPoint pos )
 // 	if(theTaggedFonts.isEmpty())
 // 		return;
 
+	if(!tagsListWidget->selectedItems().count())
+		return;
 	currentTag = tagsListWidget->selectedItems().first()->text();
 	if ( currentTag.isEmpty() )
 		return;

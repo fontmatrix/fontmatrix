@@ -267,6 +267,7 @@ void TagsWidget::slotActEditTag()
 	{
 		FMFontDb::DB()->editTag ( currentTag, nt );
 		prepare(theTaggedFonts);
+		ListDockWidget::getInstance()->reloadTagsCombo();
 	}
 	
 }

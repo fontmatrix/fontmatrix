@@ -847,7 +847,7 @@ void typotek::createMenus()
 	scriptMenu->addAction(execLastScriptAct);
 #endif
 		
-	servicesMenu =  menuBar()->addMenu ( tr ( "&Services" ) );
+	servicesMenu =  menuBar()->addMenu ( tr ( "&Service" ) );
 	servicesMenu->addAction(extractFontAction);
 	servicesMenu->addAction(matchRasterAct);
 #ifdef PLATFORM_APPLE

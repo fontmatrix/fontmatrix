@@ -28,6 +28,9 @@ ADD_SUBDIRECTORY(or)
 # Punjabi
 ADD_SUBDIRECTORY(pa)
 
+# Russian
+ADD_SUBDIRECTORY(ru)
+
 # Tamil
 ADD_SUBDIRECTORY(ta)
 

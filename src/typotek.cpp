@@ -827,19 +827,6 @@ void typotek::createMenus()
 	editMenu->addAction ( editPanoseAct );
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
-
-	
-	servicesMenu =  menuBar()->addMenu ( tr ( "&Services" ) );
-	servicesMenu->addAction(extractFontAction);
-	servicesMenu->addAction(matchRasterAct);
-#ifdef PLATFORM_APPLE
-	// TODO
-#elif _WIN32
-	// TODO
-#else
-	servicesMenu->addAction( repairAct );
-#endif
-	servicesMenu->addAction(showTTTAct);
 	editMenu->addSeparator();
 	editMenu->addAction(layOptAct);
 
@@ -859,6 +846,18 @@ void typotek::createMenus()
 	scriptMenu->addAction(scriptConsoleAct);
 	scriptMenu->addAction(execLastScriptAct);
 #endif
+		
+	servicesMenu =  menuBar()->addMenu ( tr ( "&Services" ) );
+	servicesMenu->addAction(extractFontAction);
+	servicesMenu->addAction(matchRasterAct);
+#ifdef PLATFORM_APPLE
+	// TODO
+#elif _WIN32
+	// TODO
+#else
+	servicesMenu->addAction( repairAct );
+#endif
+	servicesMenu->addAction(showTTTAct);
 	
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( helpAct );

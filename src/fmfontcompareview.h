@@ -50,6 +50,7 @@ class FMFontCompareItem
 		FontItem* font;
 		int zindex;
 		uint char_code;
+		double m_offset;
 // 		QColor color;
 		QGraphicsPathItem* path;
 		QList<QGraphicsLineItem*> lines_controls;

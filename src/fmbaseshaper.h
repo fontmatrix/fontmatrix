@@ -53,7 +53,7 @@ class FMShaperFactory
 		~FMShaperFactory();
 
 		GlyphList doShape ( const QString& aString );
-		void resetShaperType ( SHAPER_TYPE st = FONTMATRIX );
+// 		void resetShaperType ( SHAPER_TYPE st = FONTMATRIX );
 
 		// If you ever think to create your own "shaping strategy",
 		// start by adding an entry here, half of the work :-)

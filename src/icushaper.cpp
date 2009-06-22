@@ -160,16 +160,16 @@ GlyphList IcuShaper::doShape ( const QString & s )
 	for ( int i ( 0 ); i< s.count();++i )
 	{
 		ts[i] =  s[i].unicode();
-		cerr << "["<< s[i].unicode() << "]";
+// 		cerr << "["<< s[i].unicode() << "]";
 	}
-	cerr<< std::endl;
+// 	cerr<< std::endl;
 
 	icuLE->reset();
 	int sCount (s.count());
 	glAllocated = icuLE->layoutChars ( ts, 0,sCount , sCount, false, 0, 0, err ) ;
 	IcuError(err);
 	
-	cerr<<"provided "<<s.count()<< " got "<< glAllocated<< std::endl;
+// 	cerr<<"provided "<<s.count()<< " got "<< glAllocated<< std::endl;
 
 	LEGlyphID *glyphs    = new LEGlyphID[glAllocated];
 	le_int32 *indices   = new le_int32[glAllocated];
@@ -195,9 +195,9 @@ GlyphList IcuShaper::doShape ( const QString & s )
 			ret << rg;
 		}
 
-		cerr<< "["<< indices[gIdx] <<"]";
-		cerr<< "["<< glyphs[gIdx] <<"]";
-		cerr<< std::endl;
+// 		cerr<< "["<< indices[gIdx] <<"]";
+// 		cerr<< "["<< glyphs[gIdx] <<"]";
+// 		cerr<< std::endl;
 	}
 	icuLE->reset();
 
@@ -215,7 +215,7 @@ void IcuShaper::IcuError(int err)
 	switch ( err )
 	{
 		case LE_NO_SUBFONT_WARNING  : qDebug()<<"The font does not contain subfonts.";break;
-		case LE_NO_ERROR  : qDebug()<<"No error, no warning.";break;
+// 		case LE_NO_ERROR  : qDebug()<<"No error, no warning.";break;
 		case LE_ILLEGAL_ARGUMENT_ERROR  : qDebug()<<"An illegal argument was detected.";break;
 		case LE_MEMORY_ALLOCATION_ERROR  : qDebug()<<"Memory allocation error.";break;
 		case LE_INDEX_OUT_OF_BOUNDS_ERROR  : qDebug()<<"Trying to access an index that is out of bounds.";break;
@@ -223,7 +223,7 @@ void IcuShaper::IcuError(int err)
 		case LE_INTERNAL_ERROR  : qDebug()<<"An internal error was encountered.";break;
 		case LE_FONT_FILE_NOT_FOUND_ERROR  : qDebug()<<"The requested font file cannot be opened.";break;
 		case LE_MISSING_FONT_TABLE_ERROR  : qDebug()<<"The requested font table does not exist.";break;
-		default:qDebug()<<"NoCode";
+		default:/*qDebug()<<"NoCode"*/;
 	}
 }
 
@@ -250,14 +250,14 @@ IcuFontImpl::~ IcuFontImpl()
 
 const void * IcuFontImpl::getFontTable ( LETag tableTag ) const
 {
-	qDebug()<< "IcuFontImpl::getFontTable" << OTF_tag_name( tableTag );
+// 	qDebug()<< "IcuFontImpl::getFontTable" << OTF_tag_name( tableTag );
 	FT_Face face ( otf->face() );
 	FT_ULong length(0);
 	if ( !FT_Load_Sfnt_Table ( face, tableTag, 0, NULL, &length ) )
 	{
 		if ( length > 0 )
 		{
-			qDebug()<<"Table len"<< length;
+// 			qDebug()<<"Table len"<< length;
 			FT_Byte * bA = new FT_Byte[length];
 			
 			FT_Load_Sfnt_Table ( face, tableTag, 0, bA, &length );
@@ -278,7 +278,7 @@ le_int32 IcuFontImpl::getUnitsPerEM() const
 LEGlyphID IcuFontImpl::mapCharToGlyph ( LEUnicode32 ch ) const
 {
 	int gi(FT_Get_Char_Index ( otf->face(), ch ));
-	cerr << "IcuFontImpl::mapCharToGlyph("<< ch <<") = "<<gi<<std::endl;
+// 	cerr << "IcuFontImpl::mapCharToGlyph("<< ch <<") = "<<gi<<std::endl;
 	return gi;
 }
 
@@ -299,7 +299,7 @@ void IcuFontImpl::getGlyphAdvance ( LEGlyphID glyph, LEPoint & advance ) const
 
 le_bool IcuFontImpl::getGlyphPoint ( LEGlyphID glyph, le_int32 pointNumber, LEPoint & point ) const
 {
-	cerr<< "IcuFontImpl::getGlyphPoint" <<std::endl;
+// 	cerr<< "IcuFontImpl::getGlyphPoint" <<std::endl;
 	return false;
 }
 

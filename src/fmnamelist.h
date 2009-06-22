@@ -30,7 +30,7 @@ class FMNameList : public QTreeWidget
 		void slotPreviousFamily();
 		void slotNextFont();
 		void slotPreviousFont();
-		void slotSetCurrent(const QString& fname);
+		bool slotSetCurrent(const QString& fname);
 		
 	signals:
 		void currentChanged(QTreeWidgetItem*, int);

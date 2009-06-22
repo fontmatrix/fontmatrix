@@ -233,9 +233,14 @@ void typotek::postInit()
 	theMainView->slotViewAll();
 	
 	QSettings st;
-	QString cname(st.value("CurrentFont","").toString());
+	QString cname(st.value("CurrentFont", QString()).toString());
 	if(!cname.isEmpty())
-		ListDockWidget::getInstance()->fontTree->slotSetCurrent(cname);
+	{
+		if(!ListDockWidget::getInstance()->fontTree->slotSetCurrent(cname))
+			theMainView->displayWelcomeMessage();
+	}
+	else
+		theMainView->displayWelcomeMessage();
 }
 
 void typotek::doConnect()
@@ -2077,9 +2082,6 @@ void typotek::printFamily()
 void typotek::showEvent(QShowEvent * event)
 {
 	QMainWindow::showEvent(event);
-
-	if(!theMainView->selectedFont())
-		theMainView->displayWelcomeMessage();
 }
 
 void typotek::slotMainDockAreaChanged(Qt::DockWidgetArea area)

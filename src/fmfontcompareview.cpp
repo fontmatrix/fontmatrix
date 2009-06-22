@@ -129,7 +129,7 @@ QRectF FMFontCompareItem::boundingRect()
 
 void FMFontCompareItem::drawPoint(QPointF point , bool control)
 {
-	double u = control ? 2.0 : 4.0;
+	double u = control ? 1.0 : 2.0;
 
 	QRectF r(point.x()-u,point.y()-u,2*u,2*u);
 	QGraphicsEllipseItem *ri = new QGraphicsEllipseItem(r);
@@ -139,7 +139,7 @@ void FMFontCompareItem::drawPoint(QPointF point , bool control)
 	else
 		ri->setPen(FMFontCompareView::pens["point"]);
 	
-	QString label(toolTipModel.arg(point.x()).arg(-point.y()));
+	QString label(toolTipModel.arg(point.x() - m_offset ).arg(-point.y()));
 	ri->setToolTip(label.replace("-","−"));
 	points << ri;
 }
@@ -155,6 +155,7 @@ void FMFontCompareItem::show(FMFontCompareItem::GElements elems, QColor color, d
 	if(!elems.testFlag(Contour))
 		return;
 	
+	m_offset = offset;
 	double fsize(1000.0);
 	double sf( fsize / font->getUnitPerEm()  );
 	path = font->itemFromChar( char_code, fsize );

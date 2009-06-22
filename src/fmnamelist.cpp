@@ -169,7 +169,7 @@ bool FMNameList::findBelow(QTreeWidgetItem *current, const QString &role)
 		return false;
 }
 
-void FMNameList::slotSetCurrent(const QString & fname)
+bool FMNameList::slotSetCurrent(const QString & fname)
 {
 // 	qDebug()<<"FMNameList::slotSetCurrent"<<fname;
 	int tli(topLevelItemCount());
@@ -185,10 +185,11 @@ void FMNameList::slotSetCurrent(const QString & fname)
 				{
 					setCurrentItem(F);
 					emit currentChanged(F,0);
-					return;
+					return true;
 				}
 			}
 		}
 	}
+	return false;
 }
 

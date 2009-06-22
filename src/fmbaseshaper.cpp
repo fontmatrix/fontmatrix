@@ -66,8 +66,41 @@ QMap<QString, int> FMShaperFactory::types()
 FMShaperFactory::FMShaperFactory ( FMOtf * o, QString s, SHAPER_TYPE st )
 		:otf ( o ), script ( s ), shaperType ( st )
 {
-	qDebug()<<"Creating Shaper FMShaperFactory"<< s ;
-	shaperImpl = 0;
+	switch ( shaperType )
+	{
+		case FONTMATRIX :
+			qDebug() << "NEW FontmatrixShaper";
+			shaperImpl = new FontmatrixShaper ( otf, script );
+			break;
+#ifdef HAVE_HARFBUZZ
+		case HARFBUZZ:
+			qDebug() << "NEW HarfbuzzShaper";
+			shaperImpl = new HarfbuzzShaper ( otf, script );
+			break;
+#endif
+#ifdef HAVE_PANGO
+		case PANGO:
+			qDebug() << "NEW PangoShaper";
+			shaperImpl = new PangoShaper ( otf, script );
+			break;
+#endif
+#ifdef HAVE_ICU
+		case ICU :
+			qDebug() << "NEW IcuShaper";
+			shaperImpl = new IcuShaper ( otf, script );
+			break;
+#endif
+#ifdef HAVE_M17N
+		case M17N :
+			qDebug() << "NEW M17NShaper";
+			shaperImpl = new M17NShaper ( otf, script );
+			break;
+#endif
+// 			case OMEGA : shaperImpl = new OmegaShaper ( otf, script );
+// 				break;
+		default:break;
+	}
+
 }
 
 FMShaperFactory::~ FMShaperFactory()
@@ -77,60 +110,22 @@ FMShaperFactory::~ FMShaperFactory()
 }
 
 
-void FMShaperFactory::resetShaperType ( SHAPER_TYPE st )
-{
-	if ( shaperType == st )
-		return;
-
-	if ( shaperImpl )
-	{
-		delete shaperImpl;
-		shaperImpl = 0;
-	}
-
-	shaperType = st;
-}
+// void FMShaperFactory::resetShaperType ( SHAPER_TYPE st )
+// {
+// 	if ( shaperType == st )
+// 		return;
+// 
+// 	if ( shaperImpl )
+// 	{
+// 		delete shaperImpl;
+// 		shaperImpl = 0;
+// 	}
+// 
+// 	shaperType = st;
+// }
 
 GlyphList FMShaperFactory::doShape ( const QString & aString )
 {
-	if ( !shaperImpl )
-	{
-		switch ( shaperType )
-		{
-			case FONTMATRIX : 
-				qDebug()<< "NEW FontmatrixShaper";
-				shaperImpl = new FontmatrixShaper ( otf, script );
-				break;	
-#ifdef HAVE_HARFBUZZ
-			case HARFBUZZ: 
-				qDebug()<< "NEW HarfbuzzShaper";
-				shaperImpl = new HarfbuzzShaper ( otf, script );
-				break;	
-#endif
-#ifdef HAVE_PANGO
-			case PANGO: 
-				qDebug()<< "NEW PangoShaper";
-				shaperImpl = new PangoShaper ( otf, script );
-				break;	
-#endif
-#ifdef HAVE_ICU
-			case ICU : 
-				qDebug()<< "NEW IcuShaper";
-				shaperImpl = new IcuShaper ( otf, script );
-				break;	
-#endif
-#ifdef HAVE_M17N
-			case M17N : 
-				qDebug()<< "NEW M17NShaper";
-				shaperImpl = new M17NShaper ( otf, script );
-				break;
-#endif
-// 			case OMEGA : shaperImpl = new OmegaShaper ( otf, script );
-// 				break;
-			default:break;
-		}
-	}
-
 	return shaperImpl->doShape ( aString );
 }
 

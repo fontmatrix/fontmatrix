@@ -100,7 +100,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	restoreSplitterState();
 	if(toolPanelWidth == 0)
 	{
-		settingsButton->setChecked(false);
+		sampleButton->setChecked(false);
 		stackedTools->hide();
 		toolPanelWidth = splitter_2->width()/3;
 	}
@@ -2152,7 +2152,7 @@ QWebView * MainViewWidget::info()
 
 void MainViewWidget::slotChangeViewPageSetting ( bool ch )
 {
-	qDebug() <<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
+// 	qDebug() <<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
 	QString butName ( sender()->objectName() );
 	if ( !ch )
 	{
@@ -2170,30 +2170,25 @@ void MainViewWidget::slotChangeViewPageSetting ( bool ch )
 		}
 	}
 
-	QMap<int, QToolButton*> bmap;
-	bmap[VIEW_PAGE_SETTINGS] = settingsButton;
-	bmap[VIEW_PAGE_OPENTYPE] = openTypeButton;
-	bmap[VIEW_PAGE_SAMPLES] = sampleButton;
-	if ( butName == "openTypeButton" )
+	QMap<QString, QToolButton*> bmap;
+	QMap<QString, int> pmap;
+	bmap[ "settingsButton" ] = settingsButton;
+	bmap[ "openTypeButton" ] = openTypeButton;
+	bmap[ "sampleButton" ] = sampleButton;
+	pmap[ "settingsButton" ] = VIEW_PAGE_SETTINGS;
+	pmap[ "openTypeButton" ] = VIEW_PAGE_OPENTYPE;
+	pmap[ "sampleButton" ] = VIEW_PAGE_SAMPLES;
+	
+	foreach(QString pk, bmap.keys())
 	{
-		if ( bmap[VIEW_PAGE_SETTINGS]->isChecked()
-		        || bmap[VIEW_PAGE_SAMPLES]->isChecked() )
-			settingsButton->setChecked ( false );
-		stackedTools->setCurrentIndex ( VIEW_PAGE_OPENTYPE );
-	}
-	else if ( butName == "settingsButton" )
-	{
-		if ( bmap[VIEW_PAGE_OPENTYPE]->isChecked()
-		        || bmap[VIEW_PAGE_SAMPLES]->isChecked() )
-			openTypeButton->setChecked ( false );
-		stackedTools->setCurrentIndex ( VIEW_PAGE_SETTINGS );
-	}
-	else if ( butName == "sampleButton" )
-	{
-		if ( bmap[VIEW_PAGE_SETTINGS]->isChecked()
-		        || bmap[VIEW_PAGE_OPENTYPE]->isChecked() )
-			sampleButton->setChecked ( false );
-		stackedTools->setCurrentIndex ( VIEW_PAGE_SAMPLES );
+		if(butName == pk)
+		{
+			stackedTools->setCurrentIndex(pmap[pk]);
+		}
+		else
+		{
+			bmap[pk]->setChecked ( false );
+		}
 	}
 }
 

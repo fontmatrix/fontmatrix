@@ -718,7 +718,7 @@ void typotek::createActions()
 	if ( systray )
 		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
 
-	tagAll = new QAction(tr("Tag All..."), this);
+	tagAll = new QAction(tr("Tag All Filtered..."), this);
 	tagAll->setStatusTip ( tr ( "Tag all currently visible files" ) );
 	scuts->add(tagAll);
 	connect(tagAll,SIGNAL(triggered()),this,SLOT(slotTagAll()));
@@ -823,22 +823,25 @@ void typotek::createMenus()
 	editMenu->addAction ( activCurAct );
 	editMenu->addAction ( deactivCurAct );
 	editMenu->addSeparator();
-	editMenu->addAction(extractFontAction);
-	editMenu->addAction(matchRasterAct);
-	editMenu->addSeparator();	
 	editMenu->addAction ( fonteditorAct );
 	editMenu->addAction ( editPanoseAct );
-#ifdef PLATFORM_APPLE
-#elif _WIN32
-#else
-	editMenu->addAction( repairAct );
-#endif
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
 
+	
+	servicesMenu =  menuBar()->addMenu ( tr ( "&Services" ) );
+	servicesMenu->addAction(extractFontAction);
+	servicesMenu->addAction(matchRasterAct);
+#ifdef PLATFORM_APPLE
+	// TODO
+#elif _WIN32
+	// TODO
+#else
+	servicesMenu->addAction( repairAct );
+#endif
+	servicesMenu->addAction(showTTTAct);
 	editMenu->addSeparator();
 	editMenu->addAction(layOptAct);
-	editMenu->addAction(showTTTAct);
 
 	browseMenu = menuBar()->addMenu(tr("&Browse"));
 	browseMenu->addAction(nextFamily);

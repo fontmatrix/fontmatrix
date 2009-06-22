@@ -145,6 +145,7 @@ class typotek:public QMainWindow
 		QDockWidget *tagsDock;
 		QMenu *fileMenu;
 		QMenu *editMenu;
+		QMenu *servicesMenu;
 		QMenu *browseMenu;
 		QMenu *viewMenu;
 #ifdef HAVE_PYTHONQT

@@ -1,94 +1,95 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <author>Pierre Marchand</author>
  <class>MainView</class>
- <widget class="QWidget" name="MainView" >
-  <property name="geometry" >
+ <widget class="QWidget" name="MainView">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>664</width>
-    <height>497</height>
+    <width>657</width>
+    <height>526</height>
    </rect>
   </property>
-  <property name="sizePolicy" >
-   <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="acceptDrops" >
+  <property name="acceptDrops">
    <bool>true</bool>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>main view widget</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_8" >
-   <property name="leftMargin" >
+  <layout class="QGridLayout" name="gridLayout_8">
+   <property name="leftMargin">
     <number>2</number>
    </property>
-   <property name="topMargin" >
+   <property name="topMargin">
     <number>12</number>
    </property>
-   <property name="rightMargin" >
+   <property name="rightMargin">
     <number>2</number>
    </property>
-   <property name="bottomMargin" >
+   <property name="bottomMargin">
     <number>2</number>
    </property>
-   <property name="spacing" >
+   <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0" >
-    <widget class="QTabWidget" name="tabWidget" >
-     <property name="enabled" >
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="enabled">
       <bool>true</bool>
      </property>
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="acceptDrops" >
+     <property name="acceptDrops">
       <bool>true</bool>
      </property>
-     <property name="toolTip" >
+     <property name="toolTip">
       <string/>
      </property>
-     <property name="statusTip" >
+     <property name="statusTip">
       <string/>
      </property>
-     <property name="layoutDirection" >
+     <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
      </property>
-     <property name="tabPosition" >
+     <property name="tabPosition">
       <enum>QTabWidget::North</enum>
      </property>
-     <property name="tabShape" >
+     <property name="tabShape">
       <enum>QTabWidget::Rounded</enum>
      </property>
-     <property name="currentIndex" >
+     <property name="currentIndex">
       <number>0</number>
      </property>
-     <property name="elideMode" >
+     <property name="elideMode">
       <enum>Qt::ElideRight</enum>
      </property>
-     <widget class="QWidget" name="tabInfo" >
-      <attribute name="title" >
-       <string>Font Information</string>
-      </attribute>
-      <attribute name="icon" >
-       <iconset resource="application.qrc" >
+     <widget class="QWidget" name="tabInfo">
+      <attribute name="icon">
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_info.png</normaloff>:/fontmatrix_info.png</iconset>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_12" >
-       <property name="margin" >
+      <attribute name="title">
+       <string>Font Information</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_12">
+       <property name="margin">
         <number>0</number>
        </property>
-       <item row="0" column="0" >
-        <widget class="QWebView" native="1" name="fontInfoText" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <item row="0" column="0">
+        <widget class="QWebView" name="fontInfoText" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>5</verstretch>
           </sizepolicy>
@@ -97,104 +98,104 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabSample" >
-      <attribute name="title" >
-       <string>Sample Text</string>
-      </attribute>
-      <attribute name="icon" >
-       <iconset resource="application.qrc" >
+     <widget class="QWidget" name="tabSample">
+      <attribute name="icon">
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_sampletext.png</normaloff>:/fontmatrix_sampletext.png</iconset>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_6" >
-       <property name="horizontalSpacing" >
+      <attribute name="title">
+       <string>Sample Text</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <property name="horizontalSpacing">
         <number>0</number>
        </property>
-       <property name="margin" >
+       <property name="margin">
         <number>0</number>
        </property>
-       <item row="1" column="1" >
-        <widget class="QWidget" native="1" name="viewButtonsGroup" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
+       <item row="1" column="1">
+        <widget class="QWidget" name="viewButtonsGroup" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" >
-          <property name="margin" >
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="margin">
            <number>0</number>
           </property>
-          <item row="1" column="0" >
-           <widget class="FMVerticalButton" name="settingsButton" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Expanding" hsizetype="Fixed" >
+          <item row="1" column="0">
+           <widget class="FMVerticalButton" name="settingsButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="maximumSize" >
+            <property name="maximumSize">
              <size>
               <width>24</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="toolTip" >
+            <property name="toolTip">
              <string>Settings</string>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Display Settings</string>
             </property>
-            <property name="checkable" >
+            <property name="checkable">
              <bool>true</bool>
             </property>
-            <property name="checked" >
-             <bool>true</bool>
-            </property>
-            <property name="autoExclusive" >
+            <property name="checked">
              <bool>false</bool>
             </property>
-            <property name="autoRaise" >
+            <property name="autoExclusive">
+             <bool>false</bool>
+            </property>
+            <property name="autoRaise">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="2" column="0" >
-           <widget class="FMVerticalButton" name="openTypeButton" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Expanding" hsizetype="Fixed" >
+          <item row="2" column="0">
+           <widget class="FMVerticalButton" name="openTypeButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="maximumSize" >
+            <property name="maximumSize">
              <size>
               <width>24</width>
               <height>16777215</height>
              </size>
             </property>
-            <property name="toolTip" >
+            <property name="toolTip">
              <string>OpenType</string>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>OpenType</string>
             </property>
-            <property name="checkable" >
+            <property name="checkable">
              <bool>true</bool>
             </property>
-            <property name="autoExclusive" >
+            <property name="autoExclusive">
              <bool>false</bool>
             </property>
-            <property name="autoRaise" >
+            <property name="autoRaise">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="3" column="0" >
-           <spacer name="verticalSpacer_4" >
-            <property name="orientation" >
+          <item row="3" column="0">
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
               <height>40</height>
@@ -202,61 +203,89 @@
             </property>
            </spacer>
           </item>
+          <item row="0" column="0">
+           <widget class="FMVerticalButton" name="sampleButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Sample</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
-       <item row="1" column="0" >
-        <widget class="QSplitter" name="splitter_2" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+       <item row="1" column="0">
+        <widget class="QSplitter" name="splitter_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>1</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="frameShape" >
+         <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
-         <property name="orientation" >
+         <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <widget class="QStackedWidget" name="stackedViews" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+         <widget class="QStackedWidget" name="stackedViews">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>5</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="currentIndex" >
+          <property name="currentIndex">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="pageFT" >
-           <layout class="QGridLayout" name="gridLayout" >
-            <property name="margin" >
+          <widget class="QWidget" name="pageFT">
+           <layout class="QGridLayout" name="gridLayout">
+            <property name="margin">
              <number>0</number>
             </property>
-            <item row="0" column="0" >
-             <widget class="FMSampleTextView" name="loremView_FT" >
-              <property name="focusPolicy" >
+            <item row="0" column="0">
+             <widget class="FMSampleTextView" name="loremView_FT">
+              <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
               </property>
-              <property name="frameShape" >
+              <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="pageAbs" >
-           <layout class="QGridLayout" name="gridLayout_5" >
-            <property name="margin" >
+          <widget class="QWidget" name="pageAbs">
+           <layout class="QGridLayout" name="gridLayout_5">
+            <property name="margin">
              <number>0</number>
             </property>
-            <item row="0" column="0" colspan="2" >
-             <widget class="FMSampleTextView" name="loremView" >
-              <property name="focusPolicy" >
+            <item row="0" column="0" colspan="2">
+             <widget class="FMSampleTextView" name="loremView">
+              <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
               </property>
-              <property name="frameShape" >
+              <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
               </property>
              </widget>
@@ -264,61 +293,61 @@
            </layout>
           </widget>
          </widget>
-         <widget class="QStackedWidget" name="stackedTools" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+         <widget class="QStackedWidget" name="stackedTools">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>1</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="currentIndex" >
-           <number>1</number>
+          <property name="currentIndex">
+           <number>2</number>
           </property>
-          <widget class="QWidget" name="pageOT" >
-           <layout class="QGridLayout" name="gridLayout_19" >
-            <item row="0" column="0" >
-             <layout class="QGridLayout" name="gridLayout_4" >
-              <item row="0" column="0" colspan="3" >
-               <widget class="QSplitter" name="splitter" >
-                <property name="orientation" >
+          <widget class="QWidget" name="pageOT">
+           <layout class="QGridLayout" name="gridLayout_19">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="0" column="0" colspan="3">
+               <widget class="QSplitter" name="splitter">
+                <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
-                <widget class="QTreeWidget" name="OpenTypeTree" >
-                 <property name="sizePolicy" >
-                  <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+                <widget class="QTreeWidget" name="OpenTypeTree">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="focusPolicy" >
+                 <property name="focusPolicy">
                   <enum>Qt::NoFocus</enum>
                  </property>
-                 <property name="alternatingRowColors" >
+                 <property name="alternatingRowColors">
                   <bool>true</bool>
                  </property>
-                 <property name="columnCount" >
+                 <property name="columnCount">
                   <number>2</number>
                  </property>
                  <column>
-                  <property name="text" >
+                  <property name="text">
                    <string>OpenType Features</string>
                   </property>
                  </column>
                  <column>
-                  <property name="text" >
+                  <property name="text">
                    <string>Friendly Name</string>
                   </property>
                  </column>
                 </widget>
-                <widget class="FMAltSelector" native="1" name="altSelect" />
+                <widget class="FMAltSelector" name="altSelect" native="true"/>
                </widget>
               </item>
-              <item row="1" column="0" >
-               <spacer name="horizontalSpacer" >
-                <property name="orientation" >
+              <item row="1" column="0">
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="sizeHint" stdset="0" >
+                <property name="sizeHint" stdset="0">
                  <size>
                   <width>53</width>
                   <height>20</height>
@@ -326,16 +355,16 @@
                 </property>
                </spacer>
               </item>
-              <item row="1" column="1" >
-               <widget class="QPushButton" name="saveDefOTFBut" >
-                <property name="text" >
+              <item row="1" column="1">
+               <widget class="QPushButton" name="saveDefOTFBut">
+                <property name="text">
                  <string>Save as default</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2" >
-               <widget class="QPushButton" name="resetDefOTFBut" >
-                <property name="text" >
+              <item row="1" column="2">
+               <widget class="QPushButton" name="resetDefOTFBut">
+                <property name="text">
                  <string>Reset Default</string>
                 </property>
                </widget>
@@ -344,186 +373,115 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="pageSettings" >
-           <layout class="QGridLayout" name="gridLayout_3" >
-            <item row="0" column="0" >
-             <widget class="QGroupBox" name="groupBox_2" >
-              <property name="title" >
-               <string>Sample text</string>
+          <widget class="QWidget" name="pageSettings">
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
+             <widget class="QGroupBox" name="groupBox_2">
+              <property name="title">
+               <string>Appearance</string>
               </property>
-              <layout class="QGridLayout" name="gridLayout_9" >
-               <item row="0" column="0" >
-                <layout class="QVBoxLayout" name="verticalLayout_2" >
+              <layout class="QGridLayout" name="gridLayout_9">
+               <item row="0" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <item>
-                  <widget class="QTreeWidget" name="sampleTextTree" >
-                   <property name="editTriggers" >
-                    <set>QAbstractItemView::NoEditTriggers</set>
-                   </property>
-                   <property name="headerHidden" >
-                    <bool>true</bool>
-                   </property>
-                   <column>
-                    <property name="text" >
-                     <string>1</string>
-                    </property>
-                   </column>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_2" >
-                   <item>
-                    <spacer name="horizontalSpacer_3" >
-                     <property name="orientation" >
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0" >
-                      <size>
-                       <width>80</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_4" >
-                     <property name="orientation" >
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0" >
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="sampleTextButton" >
-                     <property name="sizePolicy" >
-                      <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="maximumSize" >
-                      <size>
-                       <width>1000</width>
-                       <height>24</height>
-                      </size>
-                     </property>
-                     <property name="toolTip" >
-                      <string>Edit sample text</string>
-                     </property>
-                     <property name="text" >
-                      <string>Edit</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0" >
-                <layout class="QHBoxLayout" name="horizontalLayout_3" >
-                 <item>
-                  <widget class="QLabel" name="label" >
-                   <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+                  <widget class="QLabel" name="label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>2</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="text" >
+                   <property name="text">
                     <string>Font Size</string>
                    </property>
-                   <property name="buddy" >
+                   <property name="buddy">
                     <cstring>liveFontSizeSpin</cstring>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QDoubleSpinBox" name="liveFontSizeSpin" >
-                   <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                  <widget class="QDoubleSpinBox" name="liveFontSizeSpin">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>1</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="wrapping" >
+                   <property name="wrapping">
                     <bool>false</bool>
                    </property>
-                   <property name="frame" >
+                   <property name="frame">
                     <bool>true</bool>
                    </property>
-                   <property name="specialValueText" >
+                   <property name="specialValueText">
                     <string/>
                    </property>
-                   <property name="suffix" >
+                   <property name="suffix">
                     <string> pt</string>
                    </property>
-                   <property name="minimum" >
+                   <property name="minimum">
                     <double>1.000000000000000</double>
                    </property>
-                   <property name="maximum" >
+                   <property name="maximum">
                     <double>999.990000000000009</double>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </item>
-               <item row="3" column="0" >
-                <layout class="QVBoxLayout" name="verticalLayout" >
-                 <property name="spacing" >
+               <item row="2" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout">
+                 <property name="spacing">
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QRadioButton" name="freetypeRadio" >
-                   <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                  <widget class="QRadioButton" name="freetypeRadio">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="toolTip" >
+                   <property name="toolTip">
                     <string>FreeType based rasterized rendering</string>
                    </property>
-                   <property name="text" >
+                   <property name="text">
                     <string>FreeType</string>
                    </property>
-                   <property name="checked" >
+                   <property name="checked">
                     <bool>true</bool>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QWidget" native="1" name="hintingSelect" >
-                   <layout class="QGridLayout" name="gridLayout_11" >
-                    <property name="topMargin" >
+                  <widget class="QWidget" name="hintingSelect" native="true">
+                   <layout class="QGridLayout" name="gridLayout_11">
+                    <property name="topMargin">
                      <number>0</number>
                     </property>
-                    <property name="bottomMargin" >
+                    <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <item row="1" column="0" >
-                     <widget class="QRadioButton" name="noHinting" >
-                      <property name="text" >
+                    <item row="1" column="0">
+                     <widget class="QRadioButton" name="noHinting">
+                      <property name="text">
                        <string>No hinting</string>
                       </property>
-                      <property name="checked" >
+                      <property name="checked">
                        <bool>true</bool>
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="0" >
-                     <widget class="QRadioButton" name="lightHinting" >
-                      <property name="text" >
+                    <item row="3" column="0">
+                     <widget class="QRadioButton" name="lightHinting">
+                      <property name="text">
                        <string>Light Hinting</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="0" >
-                     <widget class="QRadioButton" name="normalHinting" >
-                      <property name="text" >
+                    <item row="2" column="0">
+                     <widget class="QRadioButton" name="normalHinting">
+                      <property name="text">
                        <string>Normal Hinting</string>
                       </property>
                      </widget>
@@ -532,17 +490,17 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QRadioButton" name="nativeRadio" >
-                   <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                  <widget class="QRadioButton" name="nativeRadio">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="toolTip" >
+                   <property name="toolTip">
                     <string>Vectorized rendering using native toolkit (Qt)</string>
                    </property>
-                   <property name="text" >
+                   <property name="text">
                     <string>Native Qt objects</string>
                    </property>
                   </widget>
@@ -552,89 +510,89 @@
               </layout>
              </widget>
             </item>
-            <item row="1" column="0" >
-             <widget class="QGroupBox" name="groupBox_4" >
-              <property name="title" >
+            <item row="1" column="0">
+             <widget class="QGroupBox" name="groupBox_4">
+              <property name="title">
                <string>World is wide</string>
               </property>
-              <layout class="QGridLayout" name="gLt_2" >
-               <property name="verticalSpacing" >
+              <layout class="QGridLayout" name="gLt_2">
+               <property name="verticalSpacing">
                 <number>2</number>
                </property>
-               <property name="margin" >
+               <property name="margin">
                 <number>3</number>
                </property>
-               <item row="4" column="1" >
-                <widget class="QComboBox" name="langCombo" >
-                 <property name="sizePolicy" >
-                  <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <item row="4" column="1">
+                <widget class="QComboBox" name="langCombo">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>2</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1" >
-                <widget class="QComboBox" name="shaperTypeCombo" >
-                 <property name="sizePolicy" >
-                  <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <item row="3" column="1">
+                <widget class="QComboBox" name="shaperTypeCombo">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>2</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0" >
-                <widget class="QLabel" name="label_4" >
-                 <property name="sizePolicy" >
-                  <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>1</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="text" >
-                  <string comment="Writing system" >Script</string>
+                 <property name="text">
+                  <string comment="Writing system">Script</string>
                  </property>
-                 <property name="buddy" >
+                 <property name="buddy">
                   <cstring>langCombo</cstring>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0" >
-                <widget class="QLabel" name="label_3" >
-                 <property name="sizePolicy" >
-                  <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>1</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="text" >
+                 <property name="text">
                   <string>Shaper type</string>
                  </property>
-                 <property name="buddy" >
+                 <property name="buddy">
                   <cstring>shaperTypeCombo</cstring>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="0" colspan="2" >
-                <widget class="TextProgression" native="1" name="textProgression" />
+               <item row="0" column="0" colspan="2">
+                <widget class="TextProgression" name="textProgression" native="true"/>
                </item>
-               <item row="2" column="0" colspan="2" >
-                <widget class="QCheckBox" name="useShaperCheck" >
-                 <property name="sizePolicy" >
-                  <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+               <item row="2" column="0" colspan="2">
+                <widget class="QCheckBox" name="useShaperCheck">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="text" >
+                 <property name="text">
                   <string>Use shaper</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0" colspan="2" >
-                <widget class="Line" name="line_5" >
-                 <property name="orientation" >
+               <item row="1" column="0" colspan="2">
+                <widget class="Line" name="line_5">
+                 <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
                 </widget>
@@ -642,12 +600,12 @@
               </layout>
              </widget>
             </item>
-            <item row="2" column="0" >
-             <spacer name="verticalSpacer" >
-              <property name="orientation" >
+            <item row="2" column="0">
+             <spacer name="verticalSpacer">
+              <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
                 <height>40</height>
@@ -657,114 +615,185 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="pageSample">
+           <layout class="QGridLayout" name="gridLayout_20">
+            <item row="0" column="0">
+             <widget class="QTreeWidget" name="sampleTextTree">
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="headerHidden">
+               <bool>true</bool>
+              </property>
+              <column>
+               <property name="text">
+                <string>1</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>80</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="sampleTextButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>1000</width>
+                  <height>24</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Edit sample text</string>
+                </property>
+                <property name="text">
+                 <string>Edit</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabGlyphs" >
-      <attribute name="title" >
-       <string>Glyphs</string>
-      </attribute>
-      <attribute name="icon" >
-       <iconset resource="application.qrc" >
+     <widget class="QWidget" name="tabGlyphs">
+      <attribute name="icon">
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_glypg.png</normaloff>:/fontmatrix_glypg.png</iconset>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_18" >
-       <item row="0" column="0" >
-        <widget class="QWidget" native="1" name="widget_2" >
-         <layout class="QGridLayout" name="gridLayout_16" >
-          <property name="margin" >
+      <attribute name="title">
+       <string>Glyphs</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_18">
+       <item row="0" column="0">
+        <widget class="QWidget" name="widget_2" native="true">
+         <layout class="QGridLayout" name="gridLayout_16">
+          <property name="margin">
            <number>0</number>
           </property>
-          <property name="spacing" >
+          <property name="spacing">
            <number>2</number>
           </property>
-          <item row="0" column="0" >
-           <layout class="QHBoxLayout" name="horizontalLayout" >
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
-             <widget class="QLabel" name="unicodeCoverageStat" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+             <widget class="QLabel" name="unicodeCoverageStat">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="toolTip" >
+              <property name="toolTip">
                <string>Coverage of Unicode Interval</string>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Block:</string>
               </property>
-              <property name="margin" >
+              <property name="margin">
                <number>2</number>
               </property>
-              <property name="buddy" >
+              <property name="buddy">
                <cstring>uniPlaneCombo</cstring>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="uniPlaneCombo" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+             <widget class="QComboBox" name="uniPlaneCombo">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="acceptDrops" >
+              <property name="acceptDrops">
                <bool>true</bool>
               </property>
-              <property name="sizeAdjustPolicy" >
+              <property name="sizeAdjustPolicy">
                <enum>QComboBox::AdjustToContents</enum>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="toolButton" >
-              <property name="toolTip" >
+             <widget class="QToolButton" name="toolButton">
+              <property name="toolTip">
                <string>More Options</string>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>...</string>
               </property>
-              <property name="checkable" >
+              <property name="checkable">
                <bool>true</bool>
               </property>
-              <property name="autoRaise" >
+              <property name="autoRaise">
                <bool>true</bool>
               </property>
              </widget>
             </item>
            </layout>
           </item>
-          <item row="1" column="0" >
-           <widget class="QWidget" native="1" name="characterSearchWidget" >
-            <property name="enabled" >
+          <item row="1" column="0">
+           <widget class="QWidget" name="characterSearchWidget" native="true">
+            <property name="enabled">
              <bool>true</bool>
             </property>
-            <layout class="QFormLayout" name="formLayout" >
-             <item row="0" column="0" >
-              <widget class="QLabel" name="label_2" >
-               <property name="text" >
+            <layout class="QFormLayout" name="formLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
                 <string>Search:</string>
                </property>
-               <property name="buddy" >
+               <property name="buddy">
                 <cstring>charSearchLine</cstring>
                </property>
               </widget>
              </item>
-             <item row="0" column="1" >
-              <widget class="QLineEdit" name="charSearchLine" >
-               <property name="toolTip" >
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="charSearchLine">
+               <property name="toolTip">
                 <string>Search a character by its codepoint (expressed in hexadecimal 
-and prefixed with "U+", "u+" or "+") or a glyph by its name.
+and prefixed with &quot;U+&quot;, &quot;u+&quot; or &quot;+&quot;) or a glyph by its name.
 Press enter after editing to run the search.</string>
                </property>
-               <property name="inputMask" >
+               <property name="inputMask">
                 <string/>
                </property>
-               <property name="text" >
+               <property name="text">
                 <string/>
                </property>
               </widget>
@@ -775,47 +804,47 @@ Press enter after editing to run the search.</string>
          </layout>
         </widget>
        </item>
-       <item row="0" column="2" >
-        <widget class="QWidget" native="1" name="widget_3" >
-         <layout class="QGridLayout" name="gridLayout_15" >
-          <item row="0" column="0" >
-           <widget class="QToolButton" name="clipboardCheck" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+       <item row="0" column="2">
+        <widget class="QWidget" name="widget_3" native="true">
+         <layout class="QGridLayout" name="gridLayout_15">
+          <item row="0" column="0">
+           <widget class="QToolButton" name="clipboardCheck">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="toolTip" >
-             <string>Set Mode "Copy Character to Clipboard"</string>
+            <property name="toolTip">
+             <string>Set Mode &quot;Copy Character to Clipboard&quot;</string>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Copy Mode</string>
             </property>
-            <property name="icon" >
-             <iconset resource="application.qrc" >
+            <property name="icon">
+             <iconset resource="application.qrc">
               <normaloff>:/action-copy-char</normaloff>:/action-copy-char</iconset>
             </property>
-            <property name="checkable" >
+            <property name="checkable">
              <bool>true</bool>
             </property>
-            <property name="toolButtonStyle" >
+            <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextOnly</enum>
             </property>
-            <property name="autoRaise" >
+            <property name="autoRaise">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" >
-           <spacer name="verticalSpacer_2" >
-            <property name="orientation" >
+          <item row="1" column="0">
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeType" >
+            <property name="sizeType">
              <enum>QSizePolicy::Minimum</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
               <height>0</height>
@@ -826,37 +855,37 @@ Press enter after editing to run the search.</string>
          </layout>
         </widget>
        </item>
-       <item row="1" column="0" colspan="3" >
-        <widget class="FMGlyphsView" name="abcView" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <item row="1" column="0" colspan="3">
+        <widget class="FMGlyphsView" name="abcView">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>2</verstretch>
           </sizepolicy>
          </property>
-         <property name="focusPolicy" >
+         <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
          </property>
-         <property name="statusTip" >
+         <property name="statusTip">
           <string>Clicking on a glyph will show details about it</string>
          </property>
-         <property name="frameShape" >
+         <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
-         <property name="rubberBandSelectionMode" >
+         <property name="rubberBandSelectionMode">
           <enum>Qt::IntersectsItemBoundingRect</enum>
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="3" >
-        <widget class="QLineEdit" name="uniLine" />
+       <item row="2" column="0" colspan="3">
+        <widget class="QLineEdit" name="uniLine"/>
        </item>
-       <item row="0" column="1" >
-        <spacer name="horizontalSpacer_2" >
-         <property name="orientation" >
+       <item row="0" column="1">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>40</width>
            <height>20</height>
@@ -866,150 +895,150 @@ Press enter after editing to run the search.</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabPlay" >
-      <attribute name="title" >
-       <string>Playground</string>
-      </attribute>
-      <attribute name="icon" >
-       <iconset resource="application.qrc" >
+     <widget class="QWidget" name="tabPlay">
+      <attribute name="icon">
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_playground.png</normaloff>:/fontmatrix_playground.png</iconset>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_10" >
-       <item row="0" column="0" >
-        <layout class="QGridLayout" name="gridLayout_7" >
-         <property name="leftMargin" >
+      <attribute name="title">
+       <string>Playground</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_10">
+       <item row="0" column="0">
+        <layout class="QGridLayout" name="gridLayout_7">
+         <property name="leftMargin">
           <number>0</number>
          </property>
-         <property name="topMargin" >
+         <property name="topMargin">
           <number>3</number>
          </property>
-         <property name="horizontalSpacing" >
+         <property name="horizontalSpacing">
           <number>6</number>
          </property>
-         <property name="verticalSpacing" >
+         <property name="verticalSpacing">
           <number>3</number>
          </property>
-         <item row="0" column="0" >
-          <widget class="QDoubleSpinBox" name="playFontSize" >
-           <property name="suffix" >
+         <item row="0" column="0">
+          <widget class="QDoubleSpinBox" name="playFontSize">
+           <property name="suffix">
             <string> pt</string>
            </property>
-           <property name="minimum" >
+           <property name="minimum">
             <double>1.000000000000000</double>
            </property>
-           <property name="maximum" >
+           <property name="maximum">
             <double>999.990000000000009</double>
            </property>
-           <property name="value" >
+           <property name="value">
             <double>24.000000000000000</double>
            </property>
           </widget>
          </item>
-         <item row="0" column="1" >
-          <widget class="QComboBox" name="playString" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+         <item row="0" column="1">
+          <widget class="QComboBox" name="playString">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>1</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="editable" >
+           <property name="editable">
             <bool>true</bool>
            </property>
-           <property name="maxVisibleItems" >
+           <property name="maxVisibleItems">
             <number>25</number>
            </property>
-           <property name="frame" >
+           <property name="frame">
             <bool>true</bool>
            </property>
           </widget>
          </item>
-         <item row="0" column="2" >
-          <widget class="QPushButton" name="pushToPlayButton" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pushToPlayButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="text" >
+           <property name="text">
             <string>push</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="0" colspan="3" >
-          <widget class="Line" name="line_2" >
-           <property name="frameShadow" >
+         <item row="1" column="0" colspan="3">
+          <widget class="Line" name="line_2">
+           <property name="frameShadow">
             <enum>QFrame::Plain</enum>
            </property>
-           <property name="orientation" >
+           <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item row="1" column="0" >
-        <widget class="FMPlayGround" name="playView" >
-         <property name="frameShape" >
+       <item row="1" column="0">
+        <widget class="FMPlayGround" name="playView">
+         <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabClassification" >
-      <attribute name="title" >
-       <string>Classification</string>
-      </attribute>
-      <attribute name="icon" >
-       <iconset resource="application.qrc" >
+     <widget class="QWidget" name="tabClassification">
+      <attribute name="icon">
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_clasification.png</normaloff>:/fontmatrix_clasification.png</iconset>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_13" >
-       <property name="margin" >
+      <attribute name="title">
+       <string>Classification</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_13">
+       <property name="margin">
         <number>0</number>
        </property>
-       <item row="0" column="0" >
-        <widget class="QSplitter" name="classSplitter" >
-         <property name="orientation" >
+       <item row="0" column="0">
+        <widget class="QSplitter" name="classSplitter">
+         <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="opaqueResize" >
+         <property name="opaqueResize">
           <bool>false</bool>
          </property>
-         <widget class="ParallelCoorView" name="classificationView" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+         <widget class="ParallelCoorView" name="classificationView">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>3</verstretch>
            </sizepolicy>
           </property>
          </widget>
-         <widget class="QWebView" native="1" name="classVariableDescription" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+         <widget class="QWebView" name="classVariableDescription" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>1</verstretch>
            </sizepolicy>
           </property>
-          <layout class="QGridLayout" name="gridLayout_14" />
+          <layout class="QGridLayout" name="gridLayout_14"/>
          </widget>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabCompare" >
-      <attribute name="title" >
-       <string>Compare</string>
-      </attribute>
-      <attribute name="icon" >
-       <iconset resource="application.qrc" >
+     <widget class="QWidget" name="tabCompare">
+      <attribute name="icon">
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_compare.png</normaloff>:/fontmatrix_compare.png</iconset>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_17" >
-       <item row="0" column="0" >
-        <widget class="FontCompareWidget" native="1" name="widget" />
+      <attribute name="title">
+       <string>Compare</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_17">
+       <item row="0" column="0">
+        <widget class="FontCompareWidget" name="widget" native="true"/>
        </item>
       </layout>
      </widget>
@@ -1070,7 +1099,6 @@ Press enter after editing to run the search.</string>
  </customwidgets>
  <tabstops>
   <tabstop>openTypeButton</tabstop>
-  <tabstop>sampleTextButton</tabstop>
   <tabstop>shaperTypeCombo</tabstop>
   <tabstop>langCombo</tabstop>
   <tabstop>pushToPlayButton</tabstop>
@@ -1083,7 +1111,7 @@ Press enter after editing to run the search.</string>
   <tabstop>resetDefOTFBut</tabstop>
  </tabstops>
  <resources>
-  <include location="application.qrc" />
+  <include location="application.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -1092,11 +1120,11 @@ Press enter after editing to run the search.</string>
    <receiver>characterSearchWidget</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>369</x>
      <y>87</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>220</x>
      <y>160</y>
     </hint>

@@ -95,7 +95,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	radioRenderGroup = new QButtonGroup();
 	radioRenderGroup->addButton(freetypeRadio);
 	radioRenderGroup->addButton(nativeRadio);
-	stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
+	stackedTools->setCurrentIndex(VIEW_PAGE_SAMPLES);
 	toolPanelWidth = splitter_2->sizes().at(1);
 	restoreSplitterState();
 	if(toolPanelWidth == 0)
@@ -210,6 +210,7 @@ void MainViewWidget::doConnect()
 	
 	connect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	connect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	connect (sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	
 	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
@@ -277,6 +278,7 @@ void MainViewWidget::disConnect()
 	
 	disconnect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	disconnect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	disconnect (sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	
 	disconnect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	disconnect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
@@ -2148,36 +2150,50 @@ QWebView * MainViewWidget::info()
 	return fontInfoText;
 }
 
-void MainViewWidget::slotChangeViewPageSetting(bool ch)
+void MainViewWidget::slotChangeViewPageSetting ( bool ch )
 {
-// 	qDebug()<<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
-	QString butName( sender()->objectName() );
-	if(!ch)
+	qDebug() <<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
+	QString butName ( sender()->objectName() );
+	if ( !ch )
 	{
-		toolPanelWidth = splitter_2->sizes().at(1) ;
+		toolPanelWidth = splitter_2->sizes().at ( 1 ) ;
 		stackedTools->hide();
 	}
-	else 
+	else
 	{
 		stackedTools->show();
-		if(splitter_2->sizes().at(1) == 0)
+		if ( splitter_2->sizes().at ( 1 ) == 0 )
 		{
 			QList<int> li;
 			li << splitter_2->width() - toolPanelWidth << toolPanelWidth;
-			splitter_2->setSizes(li);
+			splitter_2->setSizes ( li );
 		}
 	}
-	if(butName == "openTypeButton")
+
+	QMap<int, QToolButton*> bmap;
+	bmap[VIEW_PAGE_SETTINGS] = settingsButton;
+	bmap[VIEW_PAGE_OPENTYPE] = openTypeButton;
+	bmap[VIEW_PAGE_SAMPLES] = sampleButton;
+	if ( butName == "openTypeButton" )
 	{
-		if(settingsButton->isChecked())
-			settingsButton->setChecked(false);
-		stackedTools->setCurrentIndex(VIEW_PAGE_OPENTYPE);
+		if ( bmap[VIEW_PAGE_SETTINGS]->isChecked()
+		        || bmap[VIEW_PAGE_SAMPLES]->isChecked() )
+			settingsButton->setChecked ( false );
+		stackedTools->setCurrentIndex ( VIEW_PAGE_OPENTYPE );
 	}
-	else if(butName == "settingsButton")
+	else if ( butName == "settingsButton" )
 	{
-		if(openTypeButton->isChecked())
-			openTypeButton->setChecked(false);
-		stackedTools->setCurrentIndex(VIEW_PAGE_SETTINGS);
+		if ( bmap[VIEW_PAGE_OPENTYPE]->isChecked()
+		        || bmap[VIEW_PAGE_SAMPLES]->isChecked() )
+			openTypeButton->setChecked ( false );
+		stackedTools->setCurrentIndex ( VIEW_PAGE_SETTINGS );
+	}
+	else if ( butName == "sampleButton" )
+	{
+		if ( bmap[VIEW_PAGE_SETTINGS]->isChecked()
+		        || bmap[VIEW_PAGE_OPENTYPE]->isChecked() )
+			sampleButton->setChecked ( false );
+		stackedTools->setCurrentIndex ( VIEW_PAGE_SAMPLES );
 	}
 }
 

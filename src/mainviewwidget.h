@@ -29,6 +29,7 @@
 #define VIEW_PAGE_ABSOLUTE 1
 #define VIEW_PAGE_OPENTYPE 0
 #define VIEW_PAGE_SETTINGS 1
+#define VIEW_PAGE_SAMPLES  2
 
 class QGraphicsScene;
 class typotek;

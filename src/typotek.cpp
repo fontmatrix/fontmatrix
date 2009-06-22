@@ -609,7 +609,7 @@ void typotek::createActions()
 	scuts->add(saveAct);
 	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save()) );
 
-	exportFontSetAct = new QAction(tr("Export &Fonts"),this);
+	exportFontSetAct = new QAction(tr("Export &fonts"),this);
 	exportFontSetAct->setStatusTip(tr("Export a fontset"));
 	scuts->add(exportFontSetAct);
 	connect( exportFontSetAct,SIGNAL(triggered( )),this,SLOT(slotExportFontSet()));
@@ -644,7 +644,7 @@ void typotek::createActions()
 	scuts->add(fontBookAct);
 	connect ( fontBookAct, SIGNAL ( triggered() ), this, SLOT ( fontBook() ) );
 
-	dumpInfoAct = new QAction(tr("Export modelled info..."), this);
+	dumpInfoAct = new QAction(tr("Export font info for packaging..."), this);
 	dumpInfoAct->setStatusTip ( tr ( "Fill a template file with metadata for packaging currently selected font to a Linux distribution" ) );
 	connect(dumpInfoAct, SIGNAL(triggered()), this, SLOT(slotDumpInfo()));
 

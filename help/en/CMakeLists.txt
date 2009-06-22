@@ -7,13 +7,24 @@ interface.html
 management.html
 management_importing.html
 management_tags.html
+viewing.html
+viewing_overview.html
+viewing_sample_text.html
+viewing_glyphs_chart.html
 search.html
+search_in_generic_metadata.html
+search_in_panose.html
+search_using_bitmap_samples.html
 comparisons.html
+comparisons_fonts.html
+comparisons_glyphs.html
 output.html
 additional.html
 additional_db_check.html
 additional_editing_panose.html
 additional_ttf_tables.html
+additional_extracting fonts.html
+additional_export_for_packaging.html
 scripting.html
 resources.html
 export_fonts.html
@@ -22,6 +33,7 @@ font_books.html
 creating_font_books.html
 font_book_templates.html
 setting_up.html
+setting_up_preferences.html
 setting_up_preferences_general.html
 setting_up_preferences_system_tray.html
 setting_up_preferences_display.html

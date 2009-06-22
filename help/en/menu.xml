@@ -12,10 +12,21 @@
 		<submenuitem text="Using tags" file="management_tags.html"/>
 	</area>
 
-	<area text="Search" file="search.html">
+	<area text="Viewing fonts" file="viewing.html">
+		<submenuitem text="Font overview" file="viewing_overview.html"/>
+		<submenuitem text="Sample text" file="viewing_sample_text.html"/>
+		<submenuitem text="Glyphs chart" file="viewing_glyphs_chart.html"/>
+	</area>
+
+	<area text="Searching for fonts" file="search.html">
+		<submenuitem text="Generic metadata fields search" file="search_in_generic_metadata.html"/>
+		<submenuitem text="PANOSE metadata search" file="search_in_panose.html"/>
+		<submenuitem text="Searching using bitmap samples" file="search_using_bitmap_samples.html"/>
 	</area>
 
 	<area text="Comparisons" file="comparisons.html">
+		<submenuitem text="Comparison of fonts" file="comparisons_fonts.html"/>
+		<submenuitem text="Comparison of glyphs" file="comparisons_glyphs.html"/>
 	</area>
 
 	<area text="Exporting and printing" file="output.html">
@@ -32,6 +43,8 @@
 		<submenuitem text="Checking database" file="additional_db_check.html"/>
 		<submenuitem text="Editing PANOSE metadata" file="additional_editing_panose.html"/>
 		<submenuitem text="Viewing TrueType tables" file="additional_ttf_tables.html"/>
+		<submenuitem text="Extracting fonts from documents" file="additional_extracting fonts.html"/>
+		<submenuitem text="Exporting font info for packaging" file="additional_export_for_packaging.html"/>
 	</area>
 
 	<area text="Scripting" file="scripting.html">
@@ -50,7 +63,7 @@
 		<submenuitem text="Text layout engine options" file="setting_up_layout_engine_options.html"/>
 	</area>
 
-	<area text="Various resources" file="resources.html">
+	<area text="Useful online resources" file="resources.html">
 	</area>
 
 </menu>

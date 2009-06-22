@@ -14,5 +14,8 @@ Every directory has a menu.xml file that contains description of contents
 structure which is loaded to the sidebar in help browser to help navigating 
 contents of the documentation.
 
-The plan is to remove all help_LANG.html files along with shifting their 
-content to lang directories. See TODO for details.
+Currently for each language that used to have a translator (before 0.5 was out) 
+menu.xml points to English files, that is: file="../en/some.html"
+
+When we are mostly ready, all you will need to do is copy ../en/*.html to 
+your language directory and start translating.

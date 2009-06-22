@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QLocale>
 
 DataLoader::DataLoader ()
 {
@@ -44,13 +45,16 @@ void DataLoader::load()
 		samplesDir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs) )
 	{
 		QDir lang(samplesDir.absoluteFilePath(ld));
+		QLocale locale(ld);
+		QString loclang(QLocale::languageToString(locale.language()));
+		qDebug()<<ld<<loclang;
 		foreach(QString st,
 			lang.entryList(QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files) )
 		{
 			QFile fp(lang.absoluteFilePath(st));
 			if(fp.open(QIODevice::ReadOnly))
 			{
-				sm[ld][st] = QString::fromUtf8(fp.readAll());
+				sm[loclang][st] = QString::fromUtf8(fp.readAll());
 			}
 		}
 	}

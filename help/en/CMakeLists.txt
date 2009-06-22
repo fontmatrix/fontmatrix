@@ -44,5 +44,12 @@ setting_up_preferences_shortcuts.html
 setting_up_layout_engine_options.html
 )
 
+FILE( GLOB FM_HELP_IMAGES_EN images/*.png )
+
+
 INSTALL(FILES ${FM_HELP_FILES_EN}
 	DESTINATION "${HELPDIR}/en")
+
+INSTALL(FILES ${FM_HELP_IMAGES_EN}
+	DESTINATION "${HELPDIR}/en/images")
+	

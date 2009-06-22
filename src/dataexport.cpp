@@ -50,6 +50,11 @@ int DataExport::copyFiles()
 	{
 		if ( progress.wasCanceled() )
 			break;
+		
+		preview.replace("<name>", fonts[fidx]->fancyName());
+		preview.replace("<family>", fonts[fidx]->family());
+		preview.replace("<variant>", fonts[fidx]->variant());
+		
 		progress.setLabelText ( fonts[fidx]->fancyName() );
 		progress.setValue ( ++progressindex );
 		

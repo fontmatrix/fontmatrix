@@ -23,7 +23,7 @@ additional.html
 additional_db_check.html
 additional_editing_panose.html
 additional_ttf_tables.html
-additional_extracting fonts.html
+additional_extracting_fonts.html
 additional_export_for_packaging.html
 scripting.html
 resources.html

@@ -95,8 +95,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		double sampleInterSize;
 		double sampleRatio;
 		
-		QMap<QString, QPair<int,int> > uniPlanes;
-		void fillUniPlanes();
+// 		QMap<QString, QPair<int,int> > uniPlanes;
+// 		void fillUniPlanes();
 		void fillUniPlanesCombo(FontItem* item);
 		
 		void fillOTTree();
@@ -128,6 +128,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		unsigned int hinting();
 		
 		int toolPanelWidth;
+		
+		QString unMapGlyphName;
+		QString allMappedGlyphName;
 		
 	public slots:
 		void slotOrderingChanged ( QString s );

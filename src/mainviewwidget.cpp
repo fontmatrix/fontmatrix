@@ -29,6 +29,7 @@
 #include "fmotf.h"
 #include "fmpaths.h"
 #include "fmpreviewlist.h"
+#include "fmuniblocks.h"
 #include "fontitem.h"
 #include "listdockwidget.h"
 #include "opentypetags.h"
@@ -38,6 +39,7 @@
 #include "fmfontdb.h"
 #include "fmfontstrings.h"
 #include "tagswidget.h"
+#include "fmutils.h"
 
 #include <cstdlib>
 
@@ -89,7 +91,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	iconPS1 =  QIcon(":/icon-PS1");
 	iconTTF =  QIcon(":/icon-TTF");
 	iconOTF =  QIcon(":/icon-OTF");
-
+	
+	unMapGlyphName = tr("Un-Mapped Glyphs");
+	allMappedGlyphName = tr("View all mapped glyphs");
+	
 	textLayout = FMLayout::getLayout();
 	
 	radioRenderGroup = new QButtonGroup();
@@ -121,7 +126,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	activateByFamilyOnly = settings.value("ActivateOnlyFamily", false).toBool();
 	m_lists->actFacesButton->setChecked(!activateByFamilyOnly);
 
-	fillUniPlanes();
+// 	fillUniPlanes();
 	refillSampleList();
 	uniLine->setVisible(false);
 
@@ -886,26 +891,6 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	theVeryFont->setFTRaster ( wantDeviceDependant );
 	theVeryFont->setShaperType(shaperTypeCombo->itemData(  shaperTypeCombo->currentIndex() ).toInt() );
 
-	QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
-	QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
-	int coverage = theVeryFont->countCoverage ( uniPair.first, uniPair.second );
-	int interval = uniPair.second - uniPair.first;
-	coverage = coverage * 100 / ( interval + 1 );// against /0 exception
-	
-	//: percentage of Unicode block coverage is indicated between parenthesis
-	QString statstring(tr("Block (%1):").arg( QString::number ( coverage ) + "\%"));
-	unicodeCoverageStat->setText ( statstring );
-
-	if ( abcView->isVisible() )
-	{
-		if(uRangeIsNotEmpty)
-			f->renderAll ( abcScene , uniPair.first, uniPair.second );
-		else
-		{
-			// TODO something useful, if possible
-		}
-	}
-
 	if ( loremView->isVisible() || loremView_FT->isVisible() )
 	{
 //		qDebug()<<"lv(ft) is visible";
@@ -982,11 +967,9 @@ void MainViewWidget::slotView ( bool needDeRendering )
 		loremView->sheduleUpdate();
 		loremView_FT->sheduleUpdate();
 	}
-// 	qDebug("VIEW Time elapsed: %d ms", t.elapsed());
-// 	t.restart();
+	
+	slotUpdateGView();
 	slotInfoFont();
-// 	qDebug("INFO Time elapsed: %d ms", t.elapsed());
-// 	renderingLock = false;
 
 }
 
@@ -1339,150 +1322,6 @@ void MainViewWidget::slotViewActivated()
 // 	slotFilterTag ( "Activated_On" );
 }
 
-
-void MainViewWidget::fillUniPlanes()
-{
-// 	uniPlanes[ "Basic Multilingual Plane (BMP)"] = qMakePair(0x0000,0xFFFF) ;
-	// BMP is huge, we split it into langs
-	uniPlanes[ tr( "000Basic Latin" ) ] = qMakePair ( 0x0020,0x007F );
-	uniPlanes[ tr( "001Latin-1 Supplement" ) ] = qMakePair ( 0x0080,0x00FF );
-	uniPlanes[ tr( "002Latin Extended-A" ) ] = qMakePair ( 0x0100,0x017F );
-	uniPlanes[ tr( "003Latin Extended-B" ) ] = qMakePair ( 0x0180,0x024F );
-	uniPlanes[ tr( "004IPA Extensions" ) ] = qMakePair ( 0x0250,0x02AF );
-	uniPlanes[ tr( "005Spacing Modifier Letters" ) ] = qMakePair ( 0x02B0,0x02FF );
-	uniPlanes[ tr( "006Combining Diacritical Marks" ) ] = qMakePair ( 0x0300,0x036F );
-	uniPlanes[ tr( "007Greek and Coptic" ) ] = qMakePair ( 0x0370,0x03FF );
-	uniPlanes[ tr( "008Cyrillic" ) ] = qMakePair ( 0x0400,0x04FF );
-	uniPlanes[ tr( "009Cyrillic Supplement" ) ] = qMakePair ( 0x0500,0x052F );
-	uniPlanes[ tr( "010Armenian" ) ] = qMakePair ( 0x0530,0x058F );
-	uniPlanes[ tr( "011Hebrew" ) ] = qMakePair ( 0x0590,0x05FF );
-	uniPlanes[ tr( "012Arabic" ) ] = qMakePair ( 0x0600,0x06FF );
-	uniPlanes[ tr( "013Syriac" ) ] = qMakePair ( 0x0700,0x074F );
-	uniPlanes[ tr( "014Arabic Supplement" ) ] = qMakePair ( 0x0750,0x077F );
-	uniPlanes[ tr( "015Thaana" ) ] = qMakePair ( 0x0780,0x07BF );
-	uniPlanes[ tr( "016N'Ko" ) ] = qMakePair ( 0x07C0,0x07FF );
-	uniPlanes[ tr( "017Devanagari" ) ] = qMakePair ( 0x0900,0x097F );
-	uniPlanes[ tr( "018Bengali" ) ] = qMakePair ( 0x0980,0x09FF );
-	uniPlanes[ tr( "019Gurmukhi" ) ] = qMakePair ( 0x0A00,0x0A7F );
-	uniPlanes[ tr( "020Gujarati" ) ] = qMakePair ( 0x0A80,0x0AFF );
-	uniPlanes[ tr( "021Oriya" ) ] = qMakePair ( 0x0B00,0x0B7F );
-	uniPlanes[ tr( "022Tamil" ) ] = qMakePair ( 0x0B80,0x0BFF );
-	uniPlanes[ tr( "023Telugu" ) ] = qMakePair ( 0x0C00,0x0C7F );
-	uniPlanes[ tr( "024Kannada" ) ] = qMakePair ( 0x0C80,0x0CFF );
-	uniPlanes[ tr( "025Malayalam" ) ] = qMakePair ( 0x0D00,0x0D7F );
-	uniPlanes[ tr( "026Sinhala" ) ] = qMakePair ( 0x0D80,0x0DFF );
-	uniPlanes[ tr( "027Thai" ) ] = qMakePair ( 0x0E00,0x0E7F );
-	uniPlanes[ tr( "028Lao" ) ] = qMakePair ( 0x0E80,0x0EFF );
-	uniPlanes[ tr( "029Tibetan" ) ] = qMakePair ( 0x0F00,0x0FFF );
-	uniPlanes[ tr( "030Burmese" ) ] = qMakePair ( 0x1000,0x109F );
-	uniPlanes[ tr( "031Georgian" ) ] = qMakePair ( 0x10A0,0x10FF );
-	uniPlanes[ tr( "032Hangul Jamo" ) ] = qMakePair ( 0x1100,0x11FF );
-	uniPlanes[ tr( "033Ethiopic" ) ] = qMakePair ( 0x1200,0x137F );
-	uniPlanes[ tr( "034Ethiopic Supplement" ) ] = qMakePair ( 0x1380,0x139F );
-	uniPlanes[ tr( "035Cherokee" ) ] = qMakePair ( 0x13A0,0x13FF );
-	uniPlanes[ tr( "036Unified Canadian Aboriginal Syllabics" ) ] = qMakePair ( 0x1400,0x167F );
-	uniPlanes[ tr( "037Ogham" ) ] = qMakePair ( 0x1680,0x169F );
-	uniPlanes[ tr( "038Runic" ) ] = qMakePair ( 0x16A0,0x16FF );
-	uniPlanes[ tr( "039Tagalog" ) ] = qMakePair ( 0x1700,0x171F );
-	uniPlanes[ tr( "040Hanunóo" ) ] = qMakePair ( 0x1720,0x173F );
-	uniPlanes[ tr( "041Buhid" ) ] = qMakePair ( 0x1740,0x175F );
-	uniPlanes[ tr( "042Tagbanwa" ) ] = qMakePair ( 0x1760,0x177F );
-	uniPlanes[ tr( "043Khmer" ) ] = qMakePair ( 0x1780,0x17FF );
-	uniPlanes[ tr( "044Mongolian" ) ] = qMakePair ( 0x1800,0x18AF );
-	uniPlanes[ tr( "045Limbu" ) ] = qMakePair ( 0x1900,0x194F );
-	uniPlanes[ tr( "046Tai Le" ) ] = qMakePair ( 0x1950,0x197F );
-	uniPlanes[ tr( "047New Tai Lue" ) ] = qMakePair ( 0x1980,0x19DF );
-	uniPlanes[ tr( "048Khmer Symbols" ) ] = qMakePair ( 0x19E0,0x19FF );
-	uniPlanes[ tr( "049Buginese" ) ] = qMakePair ( 0x1A00,0x1A1F );
-	uniPlanes[ tr( "050Balinese" ) ] = qMakePair ( 0x1B00,0x1B7F );
-	uniPlanes[ tr( "051Lepcha" ) ] =  qMakePair ( 0x1C00,0x1C4F );
-	uniPlanes[ tr( "052Phonetic Extensions" ) ] = qMakePair ( 0x1D00,0x1D7F );
-	uniPlanes[ tr( "053Phonetic Extensions Supplement" ) ] = qMakePair ( 0x1D80,0x1DBF );
-	uniPlanes[ tr( "054Combining Diacritical Marks Supplement" ) ] = qMakePair ( 0x1DC0,0x1DFF );
-	uniPlanes[ tr( "055Latin Extended Additional" ) ] = qMakePair ( 0x1E00,0x1EFF );
-	uniPlanes[ tr( "056Greek Extended" ) ] = qMakePair ( 0x1F00,0x1FFF );
-	uniPlanes[ tr( "057General Punctuation" ) ] = qMakePair ( 0x2000,0x206F );
-	uniPlanes[ tr( "058Superscripts and Subscripts" ) ] = qMakePair ( 0x2070,0x209F );
-	uniPlanes[ tr( "059Currency Symbols" ) ] = qMakePair ( 0x20A0,0x20CF );
-	uniPlanes[ tr( "060Combining Diacritical Marks for Symbols" ) ] = qMakePair ( 0x20D0,0x20FF );
-	uniPlanes[ tr( "061Letterlike Symbols" ) ] = qMakePair ( 0x2100,0x214F );
-	uniPlanes[ tr( "062Number Forms" ) ] = qMakePair ( 0x2150,0x218F );
-	uniPlanes[ tr( "063Arrows" ) ] = qMakePair ( 0x2190,0x21FF );
-	uniPlanes[ tr( "064Mathematical Operators" ) ] = qMakePair ( 0x2200,0x22FF );
-	uniPlanes[ tr( "065Miscellaneous Technical" ) ] = qMakePair ( 0x2300,0x23FF );
-	uniPlanes[ tr( "066Control Pictures" ) ] = qMakePair ( 0x2400,0x243F );
-	uniPlanes[ tr( "067Optical Character Recognition" ) ] = qMakePair ( 0x2440,0x245F );
-	uniPlanes[ tr( "068Enclosed Alphanumerics" ) ] = qMakePair ( 0x2460,0x24FF );
-	uniPlanes[ tr( "069Box Drawing" ) ] = qMakePair ( 0x2500,0x257F );
-	uniPlanes[ tr( "070Block Elements" ) ] = qMakePair ( 0x2580,0x259F );
-	uniPlanes[ tr( "071Geometric Shapes" ) ] = qMakePair ( 0x25A0,0x25FF );
-	uniPlanes[ tr( "072Miscellaneous Symbols" ) ] = qMakePair ( 0x2600,0x26FF );
-	uniPlanes[ tr( "073Dingbats" ) ] = qMakePair ( 0x2700,0x27BF );
-	uniPlanes[ tr( "074Miscellaneous Mathematical Symbols-A" ) ] = qMakePair ( 0x27C0,0x27EF );
-	uniPlanes[ tr( "075Supplemental Arrows-A" ) ] = qMakePair ( 0x27F0,0x27FF );
-	uniPlanes[ tr( "076Braille Patterns" ) ] = qMakePair ( 0x2800,0x28FF );
-	uniPlanes[ tr( "077Supplemental Arrows-B" ) ] = qMakePair ( 0x2900,0x297F );
-	uniPlanes[ tr( "078Miscellaneous Mathematical Symbols-B" ) ] = qMakePair ( 0x2980,0x29FF );
-	uniPlanes[ tr( "079Supplemental Mathematical Operators" ) ] = qMakePair ( 0x2A00,0x2AFF );
-	uniPlanes[ tr( "080Miscellaneous Symbols and Arrows" ) ] = qMakePair ( 0x2B00,0x2BFF );
-	uniPlanes[ tr( "081Glagolitic" ) ] = qMakePair ( 0x2C00,0x2C5F );
-	uniPlanes[ tr( "082Latin Extended-C" ) ] = qMakePair ( 0x2C60,0x2C7F );
-	uniPlanes[ tr( "083Coptic" ) ] = qMakePair ( 0x2C80,0x2CFF );
-	uniPlanes[ tr( "084Georgian Supplement" ) ] = qMakePair ( 0x2D00,0x2D2F );
-	uniPlanes[ tr( "085Tifinagh" ) ] = qMakePair ( 0x2D30,0x2D7F );
-	uniPlanes[ tr( "086Ethiopic Extended" ) ] = qMakePair ( 0x2D80,0x2DDF );
-	uniPlanes[ tr( "087Supplemental Punctuation" ) ] = qMakePair ( 0x2E00,0x2E7F );
-	uniPlanes[ tr( "088CJK Radicals Supplement" ) ] = qMakePair ( 0x2E80,0x2EFF );
-	uniPlanes[ tr( "089Kangxi Radicals" ) ] = qMakePair ( 0x2F00,0x2FDF );
-	uniPlanes[ tr( "090Ideographic Description Characters" ) ] = qMakePair ( 0x2FF0,0x2FFF );
-	uniPlanes[ tr( "091CJK Symbols and Punctuation" ) ] = qMakePair ( 0x3000,0x303F );
-	uniPlanes[ tr( "092Hiragana" ) ] = qMakePair ( 0x3040,0x309F );
-	uniPlanes[ tr( "093Katakana" ) ] = qMakePair ( 0x30A0,0x30FF );
-	uniPlanes[ tr( "094Bopomofo" ) ] = qMakePair ( 0x3100,0x312F );
-	uniPlanes[ tr( "095Hangul Compatibility Jamo" ) ] = qMakePair ( 0x3130,0x318F );
-	uniPlanes[ tr( "096Kanbun" ) ] = qMakePair ( 0x3190,0x319F );
-	uniPlanes[ tr( "097Bopomofo Extended" ) ] = qMakePair ( 0x31A0,0x31BF );
-	uniPlanes[ tr( "098CJK Strokes" ) ] = qMakePair ( 0x31C0,0x31EF );
-	uniPlanes[ tr( "099Katakana Phonetic Extensions" ) ] = qMakePair ( 0x31F0,0x31FF );
-	uniPlanes[ tr( "100Enclosed CJK Letters and Months" ) ] = qMakePair ( 0x3200,0x32FF );
-	uniPlanes[ tr( "101CJK Compatibility" ) ] = qMakePair ( 0x3300,0x33FF );
-	uniPlanes[ tr( "102CJK Unified Ideographs Extension A" ) ] = qMakePair ( 0x3400,0x4DBF );
-	uniPlanes[ tr( "103Yijing Hexagram Symbols" ) ] = qMakePair ( 0x4DC0,0x4DFF );
-	uniPlanes[ tr( "104CJK Unified Ideographs" ) ] = qMakePair ( 0x4E00,0x9FFF );
-	uniPlanes[ tr( "105Yi Syllables" ) ] = qMakePair ( 0xA000,0xA48F );
-	uniPlanes[ tr( "106Yi Radicals" ) ] = qMakePair ( 0xA490,0xA4CF );
-	uniPlanes[ tr( "107Modifier Tone Letters" ) ] = qMakePair ( 0xA700,0xA71F );
-	uniPlanes[ tr( "108Latin Extended-D" ) ] = qMakePair ( 0xA720,0xA7FF );
-	uniPlanes[ tr( "109Syloti Nagri" ) ] = qMakePair ( 0xA800,0xA82F );
-	uniPlanes[ tr( "110Phags-pa" ) ] = qMakePair ( 0xA840,0xA87F );
-	uniPlanes[ tr( "111Hangul Syllables" ) ] = qMakePair ( 0xAC00,0xD7AF );
-	uniPlanes[ tr( "112High Surrogates" ) ] = qMakePair ( 0xD800,0xDB7F );
-	uniPlanes[ tr( "113High Private Use Surrogates" ) ] = qMakePair ( 0xDB80,0xDBFF );
-	uniPlanes[ tr( "114Low Surrogates" ) ] = qMakePair ( 0xDC00,0xDFFF );
-	uniPlanes[ tr( "115Private Use Area" ) ] = qMakePair ( 0xE000,0xF8FF );
-	uniPlanes[ tr( "116CJK Compatibility Ideographs" ) ] = qMakePair ( 0xF900,0xFAFF );
-	uniPlanes[ tr( "117Alphabetic Presentation Forms" ) ] = qMakePair ( 0xFB00,0xFB4F );
-	uniPlanes[ tr( "118Arabic Presentation Forms-A" ) ] = qMakePair ( 0xFB50,0xFDFF );
-	uniPlanes[ tr( "119Variation Selectors" ) ] = qMakePair ( 0xFE00,0xFE0F );
-	uniPlanes[ tr( "120Vertical Forms" ) ] = qMakePair ( 0xFE10,0xFE1F );
-	uniPlanes[ tr( "121Combining Half Marks" ) ] = qMakePair ( 0xFE20,0xFE2F );
-	uniPlanes[ tr( "122CJK Compatibility Forms" ) ] = qMakePair ( 0xFE30,0xFE4F );
-	uniPlanes[ tr( "123Small Form Variants" ) ] = qMakePair ( 0xFE50,0xFE6F );
-	uniPlanes[ tr( "124Arabic Presentation Forms-B" ) ] = qMakePair ( 0xFE70,0xFEFF );
-	uniPlanes[ tr( "125Halfwidth and Fullwidth Forms" ) ] = qMakePair ( 0xFF00,0xFFEF );
-	uniPlanes[ tr( "126Specials" ) ] = qMakePair ( 0xFFF0,0xFFFF );
-	// TODO split planes into at least scripts
-	uniPlanes[ tr( "127Supplementary Multilingual Plane (SMP)" ) ] = qMakePair ( 0x10000,0x1FFFF ) ;
-	uniPlanes[ tr( "128Supplementary Ideographic Plane (SIP)" ) ] = qMakePair ( 0x20000,0x2FFFF ) ;
-	uniPlanes[ tr( "129unassigned" ) ] = qMakePair ( 0x30000,0xDFFFF ) ;
-	uniPlanes[ tr( "130Supplementary Special-purpose Plane (SSP)" ) ] = qMakePair ( 0xE0000,0xEFFFF ) ;
-	uniPlanes[ tr( "131Private Use Area 1 (PUA)" ) ] = qMakePair ( 0xF0000,0xFFFFF ) ;
-	uniPlanes[ tr( "132Private Use Area 2 (PUA)" ) ] = qMakePair ( 0x100000,0x10FFFF ) ;
-	uniPlanes[ tr( "133Un-Mapped Glyphs" ) ] = qMakePair ( -1,100 ) ;
-	uniPlanes[ tr( "134View all mapped glyphs" ) ] = qMakePair ( 0, 0x10FFFF ) ;
-
-}
-
 void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 {
 	QString stickyRange(uniPlaneCombo->currentText());
@@ -1490,20 +1329,25 @@ void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 	int stickyIndex(0);
 
 	uniPlaneCombo->clear();
-	QStringList plist= uniPlanes.keys();
-	for ( int i= 0;i<plist.count();++i )
+	
+	int begin(0);
+	int end(0);
+	QString lastBlock(FMUniBlocks::lastBlock(begin, end));
+	QString block(FMUniBlocks::firstBlock( begin, end ));
+	bool first(true);
+	do
 	{
-		QString p=plist.at ( i );
-		if ( p.isEmpty() )
-			continue;
-		int begin = uniPlanes[p].first;
-		int end = uniPlanes[p].second;
-		int codecount = item->countCoverage ( begin,end );
+		if(first)
+			first = false;
+		else
+			block = FMUniBlocks::nextBlock(begin, end);
+		
+		int codecount ( item->countCoverage ( begin , end ) );
 		if ( codecount > 0 )
 		{
 // 			qDebug() << p << codecount;
-			uniPlaneCombo->addItem ( p.mid ( 3 ), p.mid ( 0,3 ) );
-			if(p.mid ( 3 ) == stickyRange)
+			uniPlaneCombo->addItem ( block );
+			if(block == stickyRange)
 			{
 				stickyIndex = uniPlaneCombo->count() - 1;
 				uRangeIsNotEmpty = true;
@@ -1511,15 +1355,30 @@ void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
 		}
 		else
 		{
-			if(p.mid ( 3 ) == stickyRange)
+			if(block == stickyRange)
 			{
-				// Here we are, there is not
-// 				uniPlaneCombo->addItem ( p.mid ( 3 ), p.mid ( 0,3 ) );
 				stickyIndex = uniPlaneCombo->count() - 1;
 				uRangeIsNotEmpty = true;
 			}
 		}
+		
+	} while(lastBlock != block);
+	if(item->countCoverage ( -1 , 100 ) > 0)
+	{
+		uniPlaneCombo->addItem( unMapGlyphName );
+		if(unMapGlyphName == stickyRange)
+		{
+			stickyIndex = uniPlaneCombo->count() - 1;
+			uRangeIsNotEmpty = true;
+		}
 	}
+	uniPlaneCombo->addItem( allMappedGlyphName );
+	if(allMappedGlyphName == stickyRange)
+	{
+		stickyIndex = uniPlaneCombo->count() - 1;
+		uRangeIsNotEmpty = true;
+	}
+	
 	uniPlaneCombo->setCurrentIndex ( stickyIndex );
 
 }
@@ -1769,11 +1628,15 @@ void MainViewWidget::slotChangeScript()
 
 void MainViewWidget::slotPlaneSelected ( int i )
 {
+	qDebug()<<"slotPlaneSelected"<<i<<uniPlaneCombo->currentIndex();
+	if(i != uniPlaneCombo->currentIndex())
+		uniPlaneCombo->setCurrentIndex(i);
+	
 	bool stickState = uRangeIsNotEmpty;
 	uRangeIsNotEmpty = true;
 	slotShowAllGlyph();
-	slotView ( true );
-	if( stickState == false && theVeryFont)
+	slotUpdateGView();
+	if( (stickState == false) && theVeryFont)
 	{
 		fillUniPlanesCombo(theVeryFont);
 	}
@@ -1786,6 +1649,7 @@ void MainViewWidget::slotSearchCharName()
 		return;
 	QString name(charSearchLine->text());
 	unsigned short cc(0);
+	bool searchCodepoint(false);
 	if(name.startsWith("U+") 
 		  || name.startsWith("u+")
 		  || name.startsWith("+"))
@@ -1795,6 +1659,7 @@ void MainViewWidget::slotSearchCharName()
 		cc = vString.toInt(&ok, 16);
 		if(!ok)
 			cc = 0;
+		searchCodepoint = true;
 	}
 	else
 		cc = theVeryFont->getNamedChar(name);
@@ -1806,27 +1671,29 @@ void MainViewWidget::slotSearchCharName()
 		return;
 	}
 	
-	foreach(const QString& key, uniPlanes.keys())
+	foreach(const QString& key, FMUniBlocks::blocks() )
 	{
-		if((uniPlanes[key].first > 0)
-		   && (cc >= uniPlanes[key].first)
-		  && (cc < uniPlanes[key].second))
+		QPair<int,int> p(FMUniBlocks::interval(key));
+		if((cc >= p.first)
+		  && (cc <= p.second))
 		{
-			QString ks(key.mid(3));
-// 			qDebug()<<"ZONZ"<<cc<<ks<<uniPlanes[key].first<<uniPlanes[key].second;
-			int idx(uniPlaneCombo->findText(ks));
-			uniPlaneCombo->setCurrentIndex(idx);
+			int idx(uniPlaneCombo->findText(key));
 			slotPlaneSelected(idx);
-// 			QString dbgS;
-			bool inFrame(false);
-// 			while(!inFrame)
-			{
+			int sv(0);
+			bool first(true);
+			do{
+				if(first)
+					first = false;
+				else
+				{
+					abcView->verticalScrollBar()->setValue(sv + abcView->height());
+					sv = abcView->verticalScrollBar()->value();
+				}
 				foreach(QGraphicsItem* sit, abcScene->items())
 				{
 					if((sit->data(1).toString() == "select")
 					&& (sit->data(3).toInt() == cc))
 					{
-						inFrame = true;
 						QGraphicsRectItem* ms(reinterpret_cast<QGraphicsRectItem*> (sit));
 						if(ms)
 						{
@@ -1834,21 +1701,51 @@ void MainViewWidget::slotSearchCharName()
 							new FMGlyphHighlight(abcScene, rf, 2000, 160);
 						}
 						else
-						{
 							qDebug()<<"ERROR: An select item not being a QRect?";
-						}
-// 						charSearchLine->clear();
 						return;
 						
 					}
 				}
-				if(inFrame)
+			}while(sv < abcView->verticalScrollBar()->maximum());
+			return;
+		}
+	}
+	
+	// if user was looking for a name and we did not find it in
+	// Unicode blocks, it must be unmapped.
+	if(!searchCodepoint)
+	{
+		int idx(uniPlaneCombo->findText(unMapGlyphName));
+		slotPlaneSelected(idx);
+		int sv(0);
+		bool first(true);
+		do{
+			if(first)
+				first = false;
+			else
+			{
+				abcView->verticalScrollBar()->setValue(sv + abcView->height());
+				sv = abcView->verticalScrollBar()->value();
+			}
+			foreach(QGraphicsItem* sit, abcScene->items())
+			{
+				if((sit->data(1).toString() == "select")
+								&& (sit->data(3).toInt() == cc))
 				{
-					int sv(abcView->verticalScrollBar()->value());
-					abcView->verticalScrollBar()->setValue(sv + abcView->height());
+					QGraphicsRectItem* ms(reinterpret_cast<QGraphicsRectItem*> (sit));
+					if(ms)
+					{
+						QRectF rf(ms->rect());
+						new FMGlyphHighlight(abcScene, rf, 2000, 160);
+					}
+					else
+						qDebug()<<"ERROR: An select item not being a QRect?";
+					return;
+						
 				}
 			}
-		}
+		}while(sv < abcView->verticalScrollBar()->maximum());
+		return;
 	}
 	
 }
@@ -1915,13 +1812,27 @@ void MainViewWidget::slotShowAllGlyph()
 
 void MainViewWidget::slotUpdateGView()
 {
-//        qDebug()<<"slotUpdateGView()";
+// 	qDebug()<<"slotUpdateGView"<<uniPlaneCombo->currentText();
+// 	printBacktrace(32);
 	// If all is how I think it must be, we don’t need to check anything here :)
 	if(theVeryFont && abcView->lock())
 	{
-		theVeryFont->deRenderAll();
-		QString pkey = uniPlaneCombo->itemData ( uniPlaneCombo->currentIndex() ).toString();
-		QPair<int,int> uniPair ( uniPlanes[pkey + uniPlaneCombo->currentText() ] );
+		QPair<int,int> uniPair;
+		QString curBlockText(uniPlaneCombo->currentText());
+		if(curBlockText == unMapGlyphName)
+			uniPair = qMakePair<int,int>(-1,100);
+		else if(curBlockText == allMappedGlyphName)
+			uniPair = qMakePair<int,int>(0, 0x10FFFF);
+		else
+			uniPair = FMUniBlocks::interval( curBlockText );
+		
+		int coverage = theVeryFont->countCoverage ( uniPair.first, uniPair.second );
+		int interval = uniPair.second - uniPair.first;
+		coverage = coverage * 100 / ( interval + 1 );// against /0 exception
+	
+		QString statstring(tr("Block (%1):").arg( QString::number ( coverage ) + "\%"));
+		unicodeCoverageStat->setText ( statstring );
+
 		theVeryFont->renderAll ( abcScene , uniPair.first, uniPair.second );
 		abcView->unlock();
 	}

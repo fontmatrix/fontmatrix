@@ -59,6 +59,7 @@ FMSampleTextView::FMSampleTextView ( QWidget* parent )
 	setAlignment ( Qt::AlignTop | Qt::AlignHCenter );
 	setTransformationAnchor ( QGraphicsView::NoAnchor );
 	setRenderHint ( QPainter::Antialiasing, true );
+	setBackgroundBrush(Qt::white);
 }
 
 

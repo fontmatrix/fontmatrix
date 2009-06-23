@@ -873,7 +873,7 @@ void FMLayout::doDraw()
 				// visual debug
 // 				QColor dbgColor( i * 255 / refGlyph.count() , i * 255 / refGlyph.count() , 0, 125);
 // 				glyph->setBrush(dbgColor);
-// 				if(refGlyph[i].lChar == 32) glyph->setBrush(Qt::blue);
+				if(refGlyph[i].lChar == 32) glyph->setBrush(Qt::blue);
 				//end visual debug
 #endif
 				glyph->setPos ( pen.x() + ( refGlyph[i].xoffset ),

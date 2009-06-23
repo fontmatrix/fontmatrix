@@ -1,0 +1,172 @@
+# Version Française des intervalles Unicode
+0000..007F; Latin de base
+0080..00FF; supplément Latin - 1
+0100..017F; Latin étendu - A
+0180..024F; Latin étendu - B
+0250..02AF; alphabet phonétique international (API)
+02B0..02FF; lettres modificatives avec chasse
+0300..036F; diacritiques
+0370..03FF; Grec et Copte
+0400..04FF; Cyrillique
+0500..052F; suppléments au Cyrillique
+0530..058F; Arménien
+0590..05FF; Hébreu
+0600..06FF; Arabe
+0700..074F; Syriaque
+0750..077F; supplément à l’Arabe
+0780..07BF; Thâna
+07C0..07FF; N’ko
+0900..097F; Dévanâgarî
+0980..09FF; Bengali
+0A00..0A7F; Gourmoukhî
+0A80..0AFF; Goudjerate
+0B00..0B7F; Oriya
+0B80..0BFF; Tamoul
+0C00..0C7F; Télougou
+0C80..0CFF; Kannara
+0D00..0D7F; Malayalam
+0D80..0DFF; Singhalais
+0E00..0E7F; Thaï
+0E80..0EFF; Lao
+0F00..0FFF; Tibétain
+1000..109F; Birman
+10A0..10FF; Géorgien
+1100..11FF; Jamos Hangûl
+1200..137F; Éthiopien
+1380..139F; supplément à l’Éthiopien
+13A0..13FF; Chérokî
+1400..167F; syllabaires autochtones canadiens unifiés
+1680..169F; Ogam
+16A0..16FF; Runes
+1700..171F; Tagalog
+1720..173F; Hanounó
+1740..175F; Bouhide
+1760..177F; Tagbanoua
+1780..17FF; Khmer
+1800..18AF; Mongol
+1900..194F; Limbou
+1950..197F; Taï-le
+1980..19DF; nouveau Taî-le
+19E0..19FF; symboles Khmer 
+1A00..1A1F; Buginese
+1B00..1B7F; Balinais
+1B80..1BBF; Sundanais
+1C00..1C4F; Lepcha
+1C50..1C7F; Santâlî
+1D00..1D7F; extensions phonétiques
+1D80..1DBF; extensions phonétiques supplémentaires
+1DC0..1DFF; signes diacritiques supplémentaires
+1E00..1EFF; additions au Latin étendu
+1F00..1FFF; Grec étendu
+2000..206F; ponctuation générale
+2070..209F; exposants et indices
+20A0..20CF; symboles monétaires
+20D0..20FF; signes combinatoires pour symboles
+2100..214F; symboles de type lettre
+2150..218F; formes numérales
+2190..21FF; flèches
+2200..22FF; opérateurs mathématiques
+2300..23FF; signes techniques divers
+2400..243F; pictogrammes de commande
+2440..245F; reconnaissance optique de caractères
+2460..24FF; alphanumériques cerclés
+2500..257F; filets
+2580..259F; pavés
+25A0..25FF; formes géométriques
+2600..26FF; symboles divers
+2700..27BF; casseau
+27C0..27EF; symboles mathématiques divers - A
+27F0..27FF; flèches supplémentaires - A
+2800..28FF; combinaisons brailles
+2900..297F; flèches supplémentaires - B
+2980..29FF; symboles mathématiques divers - B
+2A00..2AFF; opérateurs mathématiques supplémentaires
+2B00..2BFF; symboles et flèches divers
+2C00..2C5F; Glagolitique
+2C60..2C7F; Latin étendu - C
+2C80..2CFF; Copte
+2D00..2D2F; Supplément au Géorgien
+2D30..2D7F; Tifinagh
+2D80..2DDF; Ethiopien étendu
+2DE0..2DFF; Cyrillique étendu - A
+2E00..2E7F; Supplément de ponctuation
+2E80..2EFF; formes supplémentaires des clés CJC
+2F00..2FDF; clés chinoises (Kangxi)
+2FF0..2FFF; descriptions idéophonographiques
+3000..303F; symboles et ponctuations CJC
+3040..309F; Hiragana
+30A0..30FF; Katakana
+3100..312F; Bopomofo
+3130..318F; Jamos de compatibilité hangûls
+3190..319F; Kanboun
+31A0..31BF; Bopomofo étendu
+31C0..31EF; contours CJC
+31F0..31FF; extensions phonétiques Katakana
+3200..32FF; lettres et mois CJC cerclés
+3300..33FF; compatibilité CJC
+3400..4DBF; supplément A aux idéophonogrammes unifiés
+4DC0..4DFF; Hexagrammes du Classique des mutations ou Yi-king
+4E00..9FFF; idéophonogrammes unifiés CJC
+A000..A48F; syllabes Yi des Monts frais
+A490..A4CF; clés Yi
+A500..A63F; Vaï
+A640..A69F; Cyrillique étendu - B
+A700..A71F; lettres modificatives de la tonalité
+A720..A7FF; Latin étendu - D
+A800..A82F; Sylotî Nagrî
+A840..A87F; Phagspa
+A880..A8DF; Saurashtra
+A900..A92F; Kayah Li 
+A930..A95F; Rejang
+AA00..AA5F; Cham
+AC00..D7AF; syllabes hangûles
+D800..DB7F; demi-zone haute
+DB80..DBFF; partie à usage privé de la demi-zone haute
+DC00..DFFF; demi-zone basse
+E000..F8FF; zone à usage privée
+F900..FAFF; idéogrammes de compatibilité CJC
+FB00..FB4F; formes de présentation alphabétique
+FB50..FDFF; formes de présentation de l’Arabe - A
+FE00..FE0F; sélecteurs de variantes
+FE10..FE1F; formes verticales
+FE20..FE2F; demi-signes combinatoires
+FE30..FE4F; formes de compatibilité CJC
+FE50..FE6F; petites formes 
+FE70..FEFF; formes de présentation de l’Arabe - B
+FF00..FFEF; formes de demi et pleine chasse
+FFF0..FFFF; caractères spéciaux
+10000..1007F; syllabaire linéaire B
+10080..100FF; Idéogrammes du linéaire B
+10100..1013F; nombres Égéens
+10140..1018F; Grec ancien, nombres
+10190..101CF; symboles anciens
+101D0..101FF; disque de Phaistós
+10280..1029F; Lydien
+102A0..102DF; Carien
+10300..1032F; Italien, ancien
+10330..1034F; Gotique
+10380..1039F; Ougaritique
+103A0..103DF; Vieux-perse
+10400..1044F; Déséret
+10450..1047F; Shavien (alphabet de Shaw)
+10480..104AF; Osmanya
+10800..1083F; syllabaire chypriote
+10900..1091F; Phénicien
+10920..1093F; Lydien
+10A00..10A5F; Kharoṣṭhī
+12000..123FF; cunéiforme
+12400..1247F; nombres et ponctuation cunéiformes
+1D000..1D0FF; symboles musicaux byzantins
+1D100..1D1FF; symboles musicaux
+1D200..1D24F; notation musicale du Grec ancien
+1D300..1D35F; symboles du Classique du mystère suprême
+1D360..1D37F; numération à bâtons
+1D400..1D7FF; symboles mathématiques alphanumériques
+1F000..1F02F; tuiles de mahjong
+1F030..1F09F; pièces de domino
+20000..2A6DF; idéogrammes unifiés CJC étendus  B
+2F800..2FA1F; supplément aux idéogrammes de compatibilité CJC
+E0000..E007F; étiquesttes
+E0100..E01EF; sélecteurs de variantes supplémentaires
+F0000..FFFFF; zone à usage privé supplémentaire - A
+100000..10FFFF; zone à usage privé supplémentaire - B

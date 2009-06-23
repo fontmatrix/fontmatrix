@@ -217,6 +217,7 @@ SET(HYPHENATE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/${HYPHENATE_DIR})
 SET(UNICODE_RESOURCES
 ${CMAKE_SOURCE_DIR}/src/langs/unicode/COPYING
 ${CMAKE_SOURCE_DIR}/src/langs/unicode/Blocks.txt
+${CMAKE_SOURCE_DIR}/src/langs/unicode/Blocks-fr.txt
 )
 
 

@@ -34,7 +34,7 @@ void FMUniBlocks::loadBlocks()
 	// First determine the file we want to load
 	QString sep(QDir::separator());
 	QString Unicode("Unicode");
-	QString Blocks("Blocks_%1.txt");
+	QString Blocks("Blocks-%1.txt");
 	QString locBlock(FMPaths::ResourcesDir()+Unicode+sep+Blocks.arg(FMPaths::sysLoc()));
 	
 	if(QFile::exists(locBlock))
@@ -45,7 +45,7 @@ void FMUniBlocks::loadBlocks()
 			while(!bFile.atEnd())
 			{
 				QByteArray ba(bFile.readLine(456));
-				recordLine(QString::fromLocal8Bit(ba.data(),ba.length()));
+				recordLine(QString::fromUtf8(ba.data(),ba.length()));
 			}
 		}
 	}
@@ -77,7 +77,7 @@ void FMUniBlocks::recordLine(const QString& line)
 {
 	if(line.startsWith("#"))
 		return;
-	if(line.isEmpty())
+	if(line.trimmed().isEmpty())
 		return;
 	
 	QString rs(line);

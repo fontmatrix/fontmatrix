@@ -2272,7 +2272,7 @@ QGraphicsPathItem * FontItem::hasCodepointLoaded ( int code )
 }
 
 
-QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int size_w , int size_f )
+QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QColor bg_color, int size_w , int size_f )
 {
 	if ( m_remote )
 		return fixedPixmap;
@@ -2341,7 +2341,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 		if ( pRTL )
 			pen.rx() -= qRound ( m_glyph->linearHoriAdvance / 65536 );
 
-		apainter.drawImage ( pen.x() +  m_glyph->bitmap_left , pen.y() - m_glyph->bitmap_top , glyphImage() );
+		apainter.drawImage ( pen.x() +  m_glyph->bitmap_left , pen.y() - m_glyph->bitmap_top , glyphImage(fg_color) );
 
 		if ( !pRTL )
 			pen.rx() += qRound ( m_glyph->linearHoriAdvance / 65536 );
@@ -2387,7 +2387,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor bg_color, int 
 
 			pen.ry() = ( theSize * pt2px ) - m_glyph->bitmap_top;
 
-			apainter.drawImage ( qRound(pen.x() + leftBearing),qRound( pen.y()), glyphImage() );
+			apainter.drawImage ( qRound(pen.x() + leftBearing),qRound( pen.y()), glyphImage(fg_color) );
 
 			pen.rx() +=  advance;
 
@@ -3322,7 +3322,7 @@ QList< int > FontItem::getAlternates ( int ccode )
 	return ret;
 }
 
-QImage FontItem::glyphImage()
+QImage FontItem::glyphImage(QColor color)
 {
 	QImage img ( m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows, QImage::Format_Indexed8);
 // 	QImage img ( m_face->glyph->bitmap.buffer,
@@ -3336,13 +3336,17 @@ QImage FontItem::glyphImage()
 // 			<< m_face->glyph->bitmap.rows 
 // 			<< m_face->glyph->bitmap.pitch ;
 	
-	if ( m_face->glyph->bitmap.num_grays != 256 )
+	if ( (m_face->glyph->bitmap.num_grays != 256) 
+		     || (color != QColor(Qt::black))  )
 	{
 		QVector<QRgb> palette;
 		palette.clear();
+		int r(color.red());
+		int g(color.green());
+		int b(color.blue());
 		for ( int aa = 0; aa < m_face->glyph->bitmap.num_grays; ++aa )
 		{
-			palette << qRgba ( 0,0,0, aa );
+			palette << qRgba ( r,g,b, aa );
 		}
 		img.setColorTable ( palette );
 	}

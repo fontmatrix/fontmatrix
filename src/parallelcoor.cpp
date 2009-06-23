@@ -103,6 +103,7 @@ ParallelCoorView::ParallelCoorView(QWidget * parent)
 		setRenderHint(QPainter::Antialiasing,false);
 	}
 #endif
+	setBackgroundBrush(Qt::white);
 	initPensAndBrushes();
 	doConnect();
 }
@@ -126,6 +127,7 @@ ParallelCoorView::ParallelCoorView(ParallelCoorDataSet * dataset, QWidget * pare
 		setRenderHint(QPainter::Antialiasing,false);
 	}
 #endif
+	setBackgroundBrush(Qt::white);
 	initPensAndBrushes();
 	doConnect();
 }

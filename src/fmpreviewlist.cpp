@@ -53,7 +53,8 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 	if(!fit)
 		return QVariant();
 	
-	QColor bgColor(255,255,255);
+	QColor bgColor(QApplication::palette().color(QPalette::Base));
+	QColor fgColor(QApplication::palette().color(QPalette::Text));
 // 	int borders( 2*(m_view->frameWidth() + m_view->lineWidth() + m_view->midLineWidth()) ); 
 // 	int scrollbar(m_view->verticalScrollBar()->width());
 // 	int width( m_view->width() - (borders + scrollbar) );
@@ -75,7 +76,7 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 		word.replace("<name>", fit->fancyName());
 		word.replace("<family>", fit->family());
 		word.replace("<variant>", fit->variant());
-		return QIcon( fit->oneLinePreviewPixmap(word, bgColor, width ) );
+		return QIcon( fit->oneLinePreviewPixmap(word,fgColor, bgColor, width ) );
 	}
 	else if(role == Qt::ToolTipRole)
 	{

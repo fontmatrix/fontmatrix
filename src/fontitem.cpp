@@ -86,36 +86,58 @@ struct SizedPath{
 	double s;
 };
 
-static int _moveTo ( const FT_Vector*  to, void*   user )
+// an anticipation of further changes in Freetype
+struct FM_Vector // :)
 {
+	double x;
+	double y;
+	
+	FM_Vector(const FT_Vector* vect)
+	{
+		x = double(vect->x); 
+		y = double(vect->y); 
+		
+// 		qDebug()<<"x26"<<vect26dot6->x<<"y26"<<vect26dot6->y <<"x"<<x<<"y"<<y;
+	};
+};
+
+static int _moveTo ( const FT_Vector*  to26, void*   user )
+{
+	FM_Vector to(to26);
 	SizedPath* sp = reinterpret_cast<SizedPath*> ( user );
 	QPainterPath * p( sp->p );
 	double sf( sp->s );
-	p->moveTo ( to->x * sf , to->y * sf * -1.0 );
+	p->moveTo ( to.x * sf , to.y * sf * -1.0 );
 	return 0;
 }
-static int _lineTo ( const FT_Vector*  to, void*   user )
+static int _lineTo ( const FT_Vector*  to26, void*   user )
 {
+	FM_Vector to(to26);
 	SizedPath* sp = reinterpret_cast<SizedPath*> ( user );
 	QPainterPath * p( sp->p );
 	double sf( sp->s );
-	p->lineTo ( to->x * sf, to->y  * sf * -1.0 );
+	p->lineTo ( to.x * sf, to.y  * sf * -1.0 );
 	return  0;
 }
-static int _conicTo ( const FT_Vector* control, const FT_Vector*  to, void*   user )
+static int _conicTo ( const FT_Vector* control26, const FT_Vector*  to26, void*   user )
 {
+	FM_Vector control(control26);
+	FM_Vector to(to26);
 	SizedPath* sp = reinterpret_cast<SizedPath*> ( user );
 	QPainterPath * p( sp->p );
 	double sf( sp->s );
-	p->quadTo ( control->x * sf,control->y * sf * -1.0,to->x * sf,to->y * sf * -1.0 );
+	p->quadTo ( control.x * sf,control.y * sf * -1.0,to.x * sf,to.y * sf * -1.0 );
 	return 0;
 }
-static int _cubicTo ( const FT_Vector* control1, const FT_Vector* control2, const FT_Vector*  to, void*   user )
+static int _cubicTo ( const FT_Vector* control126, const FT_Vector* control226, const FT_Vector*  to26, void*   user )
 {
+	FM_Vector control1(control126);
+	FM_Vector control2(control226);
+	FM_Vector to(to26);
 	SizedPath* sp = reinterpret_cast<SizedPath*> ( user );
 	QPainterPath * p( sp->p );
 	double sf( sp->s );
-	p->cubicTo ( control1->x * sf,control1->y * sf * -1.0,control2->x * sf,control2->y * sf * -1.0,to->x * sf,to->y  * sf * -1.0);
+	p->cubicTo ( control1.x * sf,control1.y * sf * -1.0,control2.x * sf,control2.y * sf * -1.0,to.x * sf,to.y  * sf * -1.0);
 	return 0;
 }
 
@@ -586,8 +608,9 @@ QGraphicsPathItem * FontItem::itemFromChar ( int charcode, double size )
 	currentChar = charcode;
 	glyphIndex = FT_Get_Char_Index ( m_face, charcode );
 
+	QGraphicsPathItem * ret(itemFromGindex ( glyphIndex,size ));
 	releaseFace();
-	return itemFromGindex ( glyphIndex,size );
+	return ret;
 
 }
 
@@ -1809,7 +1832,7 @@ int FontItem::countCoverage ( int begin_code, int end_code )
 	}
 	else
 	{
-		FT_UInt anIndex = 1;
+		FT_UInt anIndex = 0;
 		count = m_numGlyphs;
 		FT_UInt anyChar =  FT_Get_First_Char ( m_face, &anIndex );
 		while ( anIndex )
@@ -3274,6 +3297,8 @@ QList< int > FontItem::getAlternates ( int ccode )
 	foreach ( OTFSet set, setList )
 	{
 		QList<RenderedGlyph> rendered ( otf->procstring ( spec, set ) );
+		if(rendered.isEmpty())
+			continue;
 		if ( rendered.at ( 0 ).glyph != glyphIndex )
 		{
 			if ( !ret.contains ( rendered.at ( 0 ).glyph ) )
@@ -3497,6 +3522,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 	
 	QGraphicsPathItem *glyph = itemFromChar ( QChar(' ').unicode() , fsize );
 	RenderedGlyph wSpace(glyph->data(GLYPH_DATA_GLYPH).toInt(),0, glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor ,0,0,0,' ',false);
+	wSpace.lChar = 0x20;
 	delete glyph;
 	for(QStringList::const_iterator sIt(stl.constBegin());sIt != stl.constEnd(); ++ sIt)
 	{
@@ -3568,17 +3594,18 @@ GlyphList FontItem::glyphs(QString spec, double fsize, OTFSet set)
 
 GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 {
-	GlyphList ret;
+	FMHyphenator *hyph = typotek::getInstance()->getHyphenator();
+	GlyphList Gret;
 	if ( spec.isEmpty() || fsize <= 0.0 || !m_isOpenType) // enough :-)
-		return ret;
+		return Gret;
 	if(!ensureFace())
-		return ret;
+		return Gret;
 
 	otf = new FMOtf ( m_face, 0x10000 );
 	if ( !otf )
 	{
 		releaseFace();
-		return ret;
+		return Gret;
 	}
 	FMShaperFactory *shaperfactory = 0;
 	switch(m_shaperType)
@@ -3598,25 +3625,88 @@ GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 		default : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
 	}
 	
-	ret = shaperfactory->doShape( spec ) ;
-	delete shaperfactory;
+	
+	
+	/// HYPHENATION 
+	
+	QStringList stl(spec.split(' ',QString::SkipEmptyParts));
 	
 	double scalefactor = fsize / m_face->units_per_EM  ;
-// 	QString dbgS;
-	for(int i(0); i < ret.count(); ++i)
+	QGraphicsPathItem *glyph = itemFromChar ( QChar(' ').unicode() , fsize );
+	RenderedGlyph wSpace(glyph->data(GLYPH_DATA_GLYPH).toInt(),0, glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor ,0,0,0,' ',false);
+	wSpace.lChar = 0x20;
+	delete glyph;
+	
+	QMap<QString, GlyphList> cache;
+	for(QStringList::const_iterator sIt(stl.constBegin());sIt != stl.constEnd(); ++ sIt)
 	{
-		ret[i].xadvance *= scalefactor;
-		ret[i].yadvance *= scalefactor;
-		ret[i].xoffset *= scalefactor;
-		ret[i].yoffset *= scalefactor;
+		if(cache.contains(*sIt))
+		{
+			GlyphList ret( cache.value(*sIt) );
+			ret << wSpace;
+			Gret <<  ret;
+			continue;
+		}
+		if(sIt != stl.constBegin())
+		{
+			Gret << wSpace;
+		}
+		HyphList hl;
+		if(hyph)
+		{
+			hl = hyph->hyphenate(*sIt) ;
+		}
 		
-// 		dbgS += QChar(ret[i].lChar);
+		GlyphList ret( shaperfactory->doShape( *sIt ) );
+		
+		for(int i(0); i < ret.count(); ++i)
+		{
+			ret[i].xadvance *= scalefactor;
+			ret[i].yadvance *= scalefactor;
+			ret[i].xoffset *= scalefactor;
+			ret[i].yoffset *= scalefactor;
+			
+			if(hl.contains( ret[i].log ))
+			{
+				ret[i].isBreak = true;
+				QString addOnFirst;
+				QString addOnSecond;
+				addOnFirst =  hl[i].first.endsWith("-") ? "": "-";
+				
+				ret[i].hyphen.first = shaperfactory->doShape ( hl[ret[i].log].first + addOnFirst );
+				for(int f(0); f < ret[i].hyphen.first.count(); ++f)
+				{
+					ret[i].hyphen.first[f].xadvance *= scalefactor;
+					ret[i].hyphen.first[f].yadvance *= scalefactor;
+					ret[i].hyphen.first[f].xoffset *= scalefactor;
+					ret[i].hyphen.first[f].yoffset *= scalefactor;
+				}
+				
+				ret[i].hyphen.second = shaperfactory->doShape ( hl[ret[i].log].second + addOnSecond );
+				for(int f(0); f < ret[i].hyphen.second.count(); ++f)
+				{
+					ret[i].hyphen.second[f].xadvance *= scalefactor;
+					ret[i].hyphen.second[f].yadvance *= scalefactor;
+					ret[i].hyphen.second[f].xoffset *= scalefactor;
+					ret[i].hyphen.second[f].yoffset *= scalefactor;
+				}
+			}
+		}
+		
+		Gret << ret;
+		cache[*sIt] = ret;
+		
+		
 	}
-// 	qDebug()<<"S"<<dbgS;
+	
+	/// END OF HYPHENATION
+	
+	delete shaperfactory;
 	delete otf;
 	otf = 0;
 	releaseFace();
-	return ret;
+	
+	return Gret;
 }
 
 

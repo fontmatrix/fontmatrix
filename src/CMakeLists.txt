@@ -199,6 +199,11 @@ ${fontmatrix_UIS}
 ${PYTHONQT_SCRIPTER_UIS}
 )
 
+# extra translation files
+SET(FONTMATRIX_TR_EXTRA
+${CMAKE_CURRENT_SOURCE_DIR}/langs/unicode/uniblocks.cxx
+)
+
 
 SET(fontmatrix_RCCS
 application.qrc
@@ -227,7 +232,7 @@ SET ( fontmatrix_TSS
 IF ( TRANSLATOR )
 	MESSAGE(STATUS "We are glad to see you handle the fontmatrix-${TRANSLATOR}.ts file, thank you very much")
 	ADD_CUSTOM_TARGET(translation
-			COMMAND ${QT_LUPDATE_EXECUTABLE}  ${fontmatrix_SRCS} ${fontmatrix_UIS} -ts "fontmatrix-${TRANSLATOR}.ts"
+			COMMAND ${QT_LUPDATE_EXECUTABLE}  ${fontmatrix_SRCS} ${fontmatrix_UIS} ${FONTMATRIX_TR_EXTRA} -ts "fontmatrix-${TRANSLATOR}.ts"
 			DEPENDS ${fontmatrix_SRCS} ${fontmatrix_UIS}
 			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/messages"
 			)
@@ -331,7 +336,6 @@ IF(APPLE)
 	COMMAND mkdir ARGS -p ${BUNDLE_RESOURCES_DIR}
 	COMMAND cp ARGS  "${CMAKE_SOURCE_DIR}/src/graphic-resources/fontmatrix.icns" ${BUNDLE_RESOURCES_DIR}
 	COMMAND cp ARGS ${FM_TEMPLATES_FILES} ${FM_STYLE_FILES} ${FM_WELCOME_FILES} ${FM_HELP_FILES} ${BUNDLE_RESOURCES_DIR}
-	COMMAND cp ARGS ${UNICODE_RESOURCES} ${BUNDLE_RESOURCES_DIR}/Unicode/
 	)
 # bundles QM files
 	ADD_CUSTOM_COMMAND( TARGET translation_release POST_BUILD

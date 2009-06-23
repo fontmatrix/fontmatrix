@@ -15,6 +15,7 @@
 
 #include <QDir>
 #include <QFile>
+#include <QObject>
 
 #include <QDebug>
 
@@ -32,44 +33,45 @@ FMUniBlocks::FMUniBlocks()
 void FMUniBlocks::loadBlocks()
 {
 	// First determine the file we want to load
-	QString sep(QDir::separator());
-	QString Unicode("Unicode");
-	QString Blocks("Blocks-%1.txt");
-	QString locBlock(FMPaths::ResourcesDir()+Unicode+sep+Blocks.arg(FMPaths::sysLoc()));
+// 	QString sep(QDir::separator());
+// 	QString Unicode("Unicode");
+// 	QString Blocks("Blocks-%1.txt");
+// 	QString locBlock(FMPaths::ResourcesDir()+Unicode+sep+Blocks.arg(FMPaths::sysLoc()));
+// 	
+// 	if(QFile::exists(locBlock))
+// 	{
+// 		QFile bFile(locBlock);
+// 		if(bFile.open(QIODevice::ReadOnly))
+// 		{
+// 			while(!bFile.atEnd())
+// 			{
+// 				QByteArray ba(bFile.readLine(456));
+// 				recordLine(QString::fromUtf8(ba.data(),ba.length()));
+// 			}
+// 		}
+// 	}
+// 	else // lets try the vanilla file
+// 	{
+// 		Blocks = "Blocks.txt";
+// 		locBlock = FMPaths::ResourcesDir()+Unicode+sep+Blocks;
+// 		if(QFile::exists(locBlock))
+// 		{
+// 			QFile bFile(locBlock);
+// 			if(bFile.open(QIODevice::ReadOnly))
+// 			{
+// 				while(!bFile.atEnd())
+// 				{
+// 					QByteArray ba(bFile.readLine(456));
+// 					recordLine(QString::fromLocal8Bit(ba.data(),ba.length()));
+// 				}
+// 			}
+// 		}
+// 		else
+// 			qDebug()<<"No blocks file in sight:"<<locBlock;
+// 	}
+// 	
 	
-	if(QFile::exists(locBlock))
-	{
-		QFile bFile(locBlock);
-		if(bFile.open(QIODevice::ReadOnly))
-		{
-			while(!bFile.atEnd())
-			{
-				QByteArray ba(bFile.readLine(456));
-				recordLine(QString::fromUtf8(ba.data(),ba.length()));
-			}
-		}
-	}
-	else // lets try the vanilla file
-	{
-		Blocks = "Blocks.txt";
-		locBlock = FMPaths::ResourcesDir()+Unicode+sep+Blocks;
-		if(QFile::exists(locBlock))
-		{
-			QFile bFile(locBlock);
-			if(bFile.open(QIODevice::ReadOnly))
-			{
-				while(!bFile.atEnd())
-				{
-					QByteArray ba(bFile.readLine(456));
-					recordLine(QString::fromLocal8Bit(ba.data(),ba.length()));
-				}
-			}
-		}
-		else
-			qDebug()<<"No blocks file in sight:"<<locBlock;
-	}
-	
-	
+#include "langs/unicode/uniblocks.cxx"
 }
 
 

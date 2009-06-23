@@ -578,6 +578,7 @@ void ReplaceSequence::SetReplace(const QString& b)
 
 QList< Character > FMOwnShaper::GetShaped()
 {
+	Out.clear();
 	Op();
 	return Out;
 }

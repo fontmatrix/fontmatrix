@@ -3643,8 +3643,7 @@ GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 		if(cache.contains(*sIt))
 		{
 			GlyphList ret( cache.value(*sIt) );
-			ret << wSpace;
-			Gret <<  ret;
+			Gret <<  wSpace << ret;
 			continue;
 		}
 		if(sIt != stl.constBegin())
@@ -3705,7 +3704,10 @@ GlyphList FontItem::glyphs(QString spec, double fsize, QString script)
 	delete otf;
 	otf = 0;
 	releaseFace();
-	
+// 	foreach(RenderedGlyph g, Gret)
+// 	{
+// 		g.dump();
+// 	}
 	return Gret;
 }
 

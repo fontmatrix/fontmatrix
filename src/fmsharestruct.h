@@ -79,6 +79,19 @@ struct RenderedGlyph
 			return false;
 		return true;
 	}
+	
+	void dump() const
+	{
+		QString ds("glyph %1; log %2; xadv %3; yadv %4; xof %5; yof %6; char %7; hyph %8");
+		qDebug(ds.arg(glyph)
+				.arg(log)
+				.arg(xadvance)
+				.arg(yadvance)
+				.arg(xoffset)
+				.arg(yoffset)
+				.arg(QChar(lChar))
+				.arg(hyphen.first.count()).toLocal8Bit());
+	}
 };
 
 typedef QList<RenderedGlyph> GlyphList;

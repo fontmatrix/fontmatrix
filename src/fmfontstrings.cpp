@@ -61,20 +61,12 @@ void FontStrings::fillNamesMeaning()
 
 void FontStrings::fillPanoseMap()
 {
-	QStringList clocpath;
-	QStringList cpath;
-	clocpath << FMPaths::ResourcesDir()<< ("Panose" + FMPaths::sysLoc() + ".xml");
-	cpath    << FMPaths::ResourcesDir()<< "Panose.xml";
-	if(QFile::exists(clocpath.join(QDir::separator())))
-	{
-		panoseFromFile(clocpath.join(QDir::separator()));
-		return;
-	}
-	else if(QFile::exists(cpath.join(QDir::separator())))
-	{
-		panoseFromFile(cpath.join(QDir::separator()));
-		return;
-	}
+// 	QString panofilepath( FMPaths::LocalizedFilePath(FMPaths::ResourcesDir() + "Panose", ".xml" ) );
+// 	if(!panofilepath.isEmpty())
+// 	{
+// 		panoseFromFile(panofilepath);
+// 		return;
+// 	}
 		
 	// http://www.microsoft.com/OpenType/OTSpec/os2ver0.htm#pan
 	// http://www.monotypeimaging.com/ProductsServices/pan2.aspx

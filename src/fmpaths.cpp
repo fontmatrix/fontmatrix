@@ -13,6 +13,7 @@
 #include "typotek.h"
 
 #include <QApplication>
+// #include <QDebug>
 
 FMPaths *FMPaths::instance = 0;
 FMPaths * FMPaths::getThis()
@@ -20,40 +21,6 @@ FMPaths * FMPaths::getThis()
 	if(!instance)
 		instance = new FMPaths;
 	return instance;
-}
-
-QString FMPaths::sysLoc()
-{
-	if(getThis()->FMPathsDB.contains("sysLoc"))
-		return getThis()->FMPathsDB["sysLoc"];
-	QMap<QLocale::Language, QString> la;
-	la[QLocale::Czech] = "cs";
-	la[QLocale::Danish] = "da";
-	la[QLocale::German] = "de";
-	la[QLocale::English] = "en";
-	la[QLocale::Finnish] = "fi";
-	la[QLocale::French] = "fr";
-	la[QLocale::Dutch] = "nl";
-	la[QLocale::Norwegian] = "no";
-	la[QLocale::Russian] = "ru";
-	la[QLocale::Serbian] = "sr";
-	la[QLocale::Swedish] = "sv";
-	la[QLocale::Ukrainian] = "uk";
-	la[QLocale::Chinese] = "zh";
-	
-	QMap<QLocale::Country, QString> co;
-	co[QLocale::China] = "CN";
-	co[QLocale::Taiwan] = "TW";
-	
-	QString sys (la.value(QLocale::system ().language() )) ;
-	if(co.contains( QLocale::system ().country()))
-	{
-		sys += "_";
-		sys += co.value( QLocale::system ().country());
-	}
-	getThis()->FMPathsDB["sysLoc"] = sys;
-	return sys;
-	
 }
 
 QString FMPaths::TranslationsDir()
@@ -75,15 +42,6 @@ QString FMPaths::TranslationsDir()
 	return QMDirPath;
 }
 
-QString FMPaths::TranslationFile()
-{
-	if(getThis()->FMPathsDB.contains("TranslationFile"))
-		return getThis()->FMPathsDB["TranslationFile"];
-	
-	QString QMFilePathComplete("fontmatrix-" + sysLoc() );
-	getThis()->FMPathsDB["TranslationFile"] = QMFilePathComplete;
-	return QMFilePathComplete;
-}
 
 QString FMPaths::HelpDir()
 {
@@ -92,22 +50,11 @@ QString FMPaths::HelpDir()
 	QString hf;
 	QString dirsep(QDir::separator());
 #ifdef PLATFORM_APPLE
-	if(!sysLoc().isEmpty())
-		hf = QApplication::applicationDirPath() + dirsep + "help" + dirsep + sysLoc() + dirsep;
-	if(hf.isEmpty() || !QDir(hf).exists())
-		hf = QApplication::applicationDirPath() + dirsep + "help" + dirsep + "en" + dirsep;
+	hf = LocalizedDirPath( QApplication::applicationDirPath() + dirsep + "help" + dirsep );
 #elif _WIN32
-	
-	if(!sysLoc().isEmpty())
-		hf =  QApplication::applicationDirPath() + dirsep + "help" + dirsep + sysLoc() + dirsep;
-	if(hf.isEmpty() || !QDir(hf).exists())
-		hf =  QApplication::applicationDirPath() + dirsep + "help" + dirsep + "en" + dirsep;
+	hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep );
 #else
-	
-	if(!sysLoc().isEmpty())
-		hf = PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep + sysLoc() + dirsep;
-	if(hf.isEmpty() || !QDir(hf).exists())
-		hf = PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep + "en" + dirsep;
+	hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
 #endif
 	getThis()->FMPathsDB["HelpDir"] = hf;
 	return getThis()->FMPathsDB["HelpDir"];
@@ -142,6 +89,61 @@ QString FMPaths::SamplesDir()
 {
 	QString sep(QDir::separator());
 	return typotek::getInstance()->getOwnDir().absolutePath() + sep + "Samples"+ sep;
+}
+
+QString FMPaths::LocalizedDirPath(const QString & base, const QString& fallback )
+{	
+	QString sep("_");
+	QStringList l_c(QLocale::system().name().split(sep));
+	QString langcode( l_c.first() );
+	QString countrycode(l_c.last());
+
+	QStringList names;
+	if((!langcode.isEmpty()) || (!countrycode.isEmpty()))
+	{
+		names << base + langcode + sep + countrycode ;
+		names << base + langcode  ;
+	}
+	names << base + fallback  ;
+	names << base  ;
+	
+	foreach(QString t, names)
+	{
+		QDir d(t);
+		if( d.exists() )
+		{
+			return d.absolutePath() + QString(QDir::separator()) ;
+		}
+	}
+	
+	return QString();
+}
+
+QString FMPaths::LocalizedFilePath(const QString & base, const QString & ext, const QString& fallback)
+{
+	QString sep("_");
+	QStringList l_c(QLocale::system().name().split(sep));
+	QString langcode( l_c.first() );
+	QString countrycode(l_c.last());
+
+	QStringList names;
+	if((!langcode.isEmpty()) || (!countrycode.isEmpty()))
+	{
+		names << base + langcode + sep + countrycode + ext ;
+		names << base + langcode + ext ;
+	}
+	names << base + fallback + ext ;
+	names << base + ext ;
+	
+	foreach(QString t, names)
+	{
+		if( QFile::exists(t) )
+		{
+			return t;
+		}
+	}
+	
+	return QString();
 }
 
 

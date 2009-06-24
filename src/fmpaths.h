@@ -16,14 +16,12 @@ class FMPaths
 		FMPaths() {}
 		static FMPaths *instance;
 		static FMPaths *getThis();
+		
 	public:
 
-		static QString sysLoc();
 
 		static QString TranslationsDir();
-
-		static QString TranslationFile();
-
+		
 		static QString ResourcesDir();
 		
 		static QString HelpDir();
@@ -31,5 +29,9 @@ class FMPaths
 		static QString ScriptsDir();
 
 		static QString SamplesDir();
+		
+		static QString LocalizedDirPath(const QString& base, const QString& fallback = QString("en"));
+		
+		static QString LocalizedFilePath(const QString& base, const QString& ext, const QString& fallback = QString("en"));
 };
 #endif

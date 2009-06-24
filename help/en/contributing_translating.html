@@ -11,20 +11,25 @@
 
 <h3>Translating user interface</h3>
 
-<p>The very first thing you need to translate Fontmatrix into your native language is to download source code archive. To do this, go to FIXME. Unpack this archive somewhere in your home directory so that you always have access to it.</p>
+<p>The very first thing you need to translate Fontmatrix into your native language is to get source code from the current developpement branch.
+<!-- Translation always happens _before_ we provide source packages -->
+To do this, you need a Subversion client (<span class="code">svn</span> being the regular command line client). Then type 
+<div class="codeblock">svn co http://svn.gna.org/svn/undertype/trunk/tools/typotek fontmatrix</div>
+somewhere in your home directory to fetch source code, so that you always have access to it.</p>
 
 <p>Then you will need to install Qt development package that contains Linguist&nbsp;&mdash; the application to assist you with translating. On Linux start your package manager and look for a package named something like qt4-dev, install it.</p>
 
 <p>The next steps are as follows:</p>
 
 <ol>
-	<li>Go to the directory with source code.</li>
-	<li>Run Cmake command with -DTRANSLATOR:string=LANGUAGE, where LANGUAGE is a two-letter code for your language, lowercase, e.g. <em>fr</em> for French or <em>de</em> for German.</li>
-	<li>Run "make translation" to create a new translation file.</li>
-	<li>Open your fontmatrix-LANGUAGE.ts file in Linguist and start translating.</li>
-	<li>To test your translation use <em>File&nbsp;&gt; Release</em> command in Linguist. This will create a binary file called fontmatrix-LANGUAGE.qm that will be actually used by Fontmatrix.</li>
-	<li>Copy this file to a directory that contains QM files for Fontmatrix. On Linux this typically means <tt>'sudo cp src/messages/fontmatrix-LANGUAGE.qm /usr/share/fontmatrix/qm/'</tt></li>
-	<li>When your work is done, compress this file to a ZIP, GZ or BZ2 archive and submit it via <a href="contributing_testing.html">patches and patches tracker</a> or tell us about it on <a href="resources.html">IRC</a> and we will help you to sort this out.</li>
+	<li>Go to the top level directory of source code.</li>
+	<li>Create the build directory eg: <span class="code">mkdir build</span> and cd into it.</li>
+	<li>Run Cmake command with whatever options you want plus -DTRANSLATOR:string=LOCALE, where LOCALE is a two-letter code for your language (as referenced by <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO-639-1</a>), lowercase, e.g. <em>fr</em> for French or <em>de</em> for German.
+	If necessary, you can specify a country code and thus form a string like <em>fr_FR</em></li>
+	<li>Run "make translation" to create a new translation file in fontmatrix/src/messages/ directory.</li>
+	<li>Open your fontmatrix-LOCALE.ts file in Linguist and start translating.</li>
+	<li>To test your translation, run <span class="code">make install</span> in the build directory. This will create a binary file called fontmatrix-LOCALE.qm (and Fontmatrix itself if you did not run this command before) and install it in the right place. If the LOCALE for which you translate is not the one which is set for your system, run <span class="code">LC_ALL=LOCALE fontmatrix</span> to tell Fontmatrix to load that specific LOCALE.</li>
+	<li>When your work is done, compress this fontmatrix-LOCALE.ts file to a ZIP, GZ or BZ2 archive and submit it via <a href="contributing_testing.html">patches and patches tracker</a> or tell us about it on <a href="resources.html">IRC</a> and we will help you to sort this out.</li>
 </ol>
 
 <p>Here are some tips to help you make translation better.</p>

@@ -57,14 +57,14 @@ int main ( int argc, char *argv[] )
 	app.setWindowIcon ( QIcon ( ":/fontmatrix_icon.png" ) );
 
 	QTranslator translator;
-	if ( translator.load ( FMPaths::TranslationFile(), FMPaths::TranslationsDir() ) )
+	if ( translator.load ( FMPaths::LocalizedFilePath( FMPaths::TranslationsDir() + "fontmatrix-"  , ".qm" ) ) )
 	{
 		app.installTranslator ( &translator );
-		qDebug() << "Translator is installed."<<FMPaths::TranslationsDir() + FMPaths::TranslationFile();
+		qDebug() << "Translator is installed."<<FMPaths::LocalizedFilePath( FMPaths::TranslationsDir() + "fontmatrix-" , ".qm" );
 	}
 	else
 	{
-		qDebug() << "Unable to load"<< FMPaths::TranslationFile() <<"in"<< FMPaths::TranslationsDir();
+		qDebug() << "Unable to load"<< FMPaths::LocalizedFilePath( FMPaths::TranslationsDir() + "fontmatrix-" , ".qm" );
 	}
 
 

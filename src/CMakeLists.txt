@@ -210,25 +210,8 @@ application.qrc
 )
 QT4_ADD_RESOURCES(fontmatrix_RCC_SRCS ${fontmatrix_RCCS})
 
-SET ( fontmatrix_TSS
-      messages/fontmatrix-cs.ts
-      messages/fontmatrix-da.ts
-      messages/fontmatrix-de.ts
-      messages/fontmatrix-en.ts
-      messages/fontmatrix-fi.ts
-      messages/fontmatrix-fr.ts
-      messages/fontmatrix-hi.ts
-      messages/fontmatrix-nb.ts
-      messages/fontmatrix-nl.ts
-      messages/fontmatrix-no.ts
-      messages/fontmatrix-ru.ts
-      messages/fontmatrix-sr.ts
-      messages/fontmatrix-sv.ts
-      messages/fontmatrix-uk.ts
-      messages/fontmatrix-zh_CN.ts
-      messages/fontmatrix-zh_TW.ts
-    )
-
+FILE( GLOB FM_GLOB_TSS ${CMAKE_CURRENT_SOURCE_DIR}/messages/fontmatrix-*.ts )
+# message(STATUS "lang files: ${FM_GLOB_TSS}")
 IF ( TRANSLATOR )
 	MESSAGE(STATUS "We are glad to see you handle the fontmatrix-${TRANSLATOR}.ts file, thank you very much")
 	ADD_CUSTOM_TARGET(translation
@@ -236,7 +219,17 @@ IF ( TRANSLATOR )
 			DEPENDS ${fontmatrix_SRCS} ${fontmatrix_UIS}
 			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/messages"
 			)
+	SET( fontmatrix_TSS 
+		${FM_GLOB_TSS} 
+		"messages/fontmatrix-${TRANSLATOR}.ts" )
+ELSE ( TRANSLATOR )
+	SET( fontmatrix_TSS ${FM_GLOB_TSS} )
 ENDIF( TRANSLATOR )
+
+
+
+
+
 QT4_ADD_TRANSLATION ( fontmatrix_QMS ${fontmatrix_TSS} )
 ADD_CUSTOM_TARGET ( translation_release ALL DEPENDS ${fontmatrix_QMS} )
 

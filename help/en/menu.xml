@@ -43,7 +43,7 @@
 		<submenuitem text="Checking database" file="additional_db_check.html"/>
 		<submenuitem text="Editing PANOSE metadata" file="additional_editing_panose.html"/>
 		<submenuitem text="Viewing TrueType tables" file="additional_ttf_tables.html"/>
-		<submenuitem text="Extracting fonts from documents" file="additional_extracting fonts.html"/>
+		<submenuitem text="Extracting fonts from documents" file="additional_extracting_fonts.html"/>
 		<submenuitem text="Exporting font info for packaging" file="additional_export_for_packaging.html"/>
 	</area>
 
@@ -61,6 +61,12 @@
 			<submenuitem text="Shortcuts" file="setting_up_preferences_shortcuts.html"/>
 		</submenuitem>
 		<submenuitem text="Text layout engine options" file="setting_up_layout_engine_options.html"/>
+	</area>
+
+	<area text="Contributing to this project" file="contributing.html">
+		<submenuitem text="Testing and reporting" file="contributing_testing.html"/>
+		<submenuitem text="Translating" file="contributing_translating.html"/>
+		<submenuitem text="Programming" file="contributing_programming.html"/>
 	</area>
 
 	<area text="Useful online resources" file="resources.html">

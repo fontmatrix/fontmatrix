@@ -9,7 +9,31 @@
 <body>
 <h2>Sample text</h2>
 
-<p>TODO</p>
+<p>Viewing a sample text can be useful for both typesetters, graphic/web designers and type designers. This function is available in the <em>Sample text</em> tab of the main window.</p>
+
+<h3>Sample text collection</h3>
+
+<p>Fontmatrix ships with a set of sample text in various languages and scripts and allows you to add you own sample texts (see <a href="setting_up_preferences_samples_collection.html">Samples collection</a> chapter for details).</p>
+
+<p>To pick a text from collection click the vertical <b>Samples collection</b> button to reveal a sidebar where available sample texts are listed.</p>
+
+<h3>Navigation and rendering</h3>
+
+<p>Sample text is rendered on a very large canvas, but line breaks are applied automatically so that in the end you see text in paragraphs anyway. You can use <b>Ctrl</b>+<b>mouse wheel</b> for zooming in and out and middle mouse button for panning. If you want to zoom to a particular region, click and drag to draw a rectangle around the area of interest. A single click anywhere on canvas will change the view to 1:1 zoom level.</p>
+
+<p>While zooming in with default options you will immediately notice that text gets pixelized. This is because by default Fontmatrix uses Freetype library to render text, so that you can see what the text will <em>really</em> look like when rendered on display. If you aim to use a chosen font for a print job, click the vertical <b>Display</b> button to reveal a sidebar with rendering options and switch to <em>Native Qt objects</em>.</p>
+
+<p>You can also change font size, but note that rendering of sample text in that case will update only when you single click on canvas. While this is somewhat inconvinient for simple and straightforward scripts like Latin or Cyrillic, when it comes to Asian scripts, rendering of every font size change may take quite a while due to complex glyphs composition.</p>
+
+<p>The next group of options called <em>World is wide</em> controls inline and block progression. So if you need to render a text in Hebrew (right to left inline/block progression) or Mongolian (right to left inline, top to bottom block progression), this is where you define script specific options.</p>
+
+<p>Fontmatrix can optionally use its own shaper for FIXME.</p>
+
+<h3>OpenType features</h3>
+
+<p>Fontmatrix has a quite advanced OpenType support and allows to test implementation of OTF features available in a currently loaded font. To do this click the vertical <b>OpenType</b> button to reveal a sidebar where available OTF features are grouped into respective OpenType tables and subtables.</p>
+
+<p>When you enable or disable a feature by clicking on respective checkbox, Fontmatrix automatically rerenders the whole canvas.</p>
 
 </body>
 </html>

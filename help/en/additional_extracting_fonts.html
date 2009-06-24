@@ -2,14 +2,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Fontmatrix User Manual - Additional tools - Extracting fonts from PDF</title>
+<title>Fontmatrix User Manual - Additional tools - Extracting fonts from documents</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h2>Extracting fonts from documents</h2>
 
-<p>TODO</p>
+<p>This somewhat controversial feature, extracting embedded fonts from documents, relies on <a href="http://podofo.sourceforge.net">PoDoFo</a> library and currently works only for PDF documents. Support for XPS and SVG is planned for later versions.</p>
+
+<p>To use it</p>
+
+<ol>
+	<li>Choose <em>Service&nbsp;&gt; Extract fonts...</em>.</li>
+	<li>In the <em>Select PDF</em> section of a newly opened dialog click <b>Browse</b> and pick a PDF document of interest.</li>
+	<li>In the <em>Fonts</em> section enable checkboxes for fonts of interest.</li>
+	<li>Click <b>Select Dir</b> button to define directory to which extracted fonts will be saved.</li>
+	<li>Click <b>Extract</b> button to actually save embedded fonts to the chosen directory.</li>
+	<li>Click <b>Close</b> button to close the dialog when you're done.</li>
+</ol>
+
+<p>If subsequent importing them to Fontmatrix makes sense to you, do so.</p>
+
+<p>Several things should be mentioned with regards to this functionality.</p>
+
+<p>First of all, fonts are rarely embedded fully, so what you typically get is a so called subsetted font, where only glyphs actually used in a document are present. Here is an example:</p>
+
+<p><img src="images/extracted-font-compact-encoding.png" /></p>
+
+<p>Next thing is that Fontmatrix saves these fonts to PFB and stores some useful information like instructions:</p>
+
+<p><img src="images/extracted-font-editing.png" /></p>
+
+<p>Finally, for those copyright concerned people Fontmatrix actually saves this bit of information:</p>
+
+<p><img src="images/extracted-font-copyright-info.png" /></p>
+
+<p>Please note: <b>Fontmatrix team strongly discourages users from infringing copyright</b>. We implemented this feature for fun and education, not for making unlicensed profit from someone else's work. If you want to create a derivative work from a font whose license doesn't explicitely allow that, do contact either designer or vendor beforehand.</p>
 
 </body>
 </html>

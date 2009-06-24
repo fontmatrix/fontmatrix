@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Fontmatrix User Manual - Contributing - Translating</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h2>Translating</h2>
+
+<h3>Translating user interface</h3>
+
+<p>The very first thing you need to translate Fontmatrix into your native language is to download source code archive. To do this, go to FIXME. Unpack this archive somewhere in your home directory so that you always have access to it.</p>
+
+<p>Then you will need to install Qt development package that contains Linguist&nbsp;&mdash; the application to assist you with translating. On Linux start your package manager and look for a package named something like qt4-dev, install it.</p>
+
+<p>The next steps are as follows:</p>
+
+<ol>
+	<li>Go to the directory with source code.</li>
+	<li>Inside src/messages directory create a new empty file named fontmatrix-LANGUAGE.ts, where LANGUAGE is a two-letter code for your language, lowercase, e.g. <em>fr</em> for French or <em>de</em> for German.</li>
+	<li>Go back to the top level source code directory</li>
+	<li>Open it in terminal and run <tt>'qmake-qt4 -project'</tt>. This command will create a file named fontmatrix-VERSION.pro, where VERSION is something like 0.6.0. This file lists all source code files <b>and</b> files containing translation.</li>
+	<li>From terminal run <tt>'lupdate-qt4 -verbose fontmatrix-VERSION.pro'</tt> to update all available translations and fill your newly created translation file with actual data.</li>
+	<li>Open your fontmatrix-LANGUAGE.ts file in Linguist and start translating.</li>
+	<li>To test your translation use <em>File&nbsp;&gt; Release</em> command in Linguist. This will create a binary file called fontmatrix-LANGUAGE.qm that will be actually used by Fontmatrix.</li>
+	<li>Copy this file to a directory that contains QM files for Fontmatrix. On Linux this typically means <tt>'sudo cp src/messages/fontmatrix-LANGUAGE.qm /usr/share/fontmatrix/qm/'</tt></li>
+	<li>When your work is done, compress this file to a ZIP, GZ or BZ2 archive and submit it via <a href="contributing_testing.html">patches and patches tracker</a> or tell us about it on <a href="resources.html">IRC</a> and we will help you to sort this out.</li>
+</ol>
+
+<p>Here are some tips to help you make translation better.</p>
+
+<p>Translating Fontmatrix takes a while, so it's best to translate those parts of user interface that you use most of the time. This will give you a false, but useful feeling of accomplishment and motivation to finish the whole work.</p>
+
+<p>Test your translation as frequently as possible. This is especially important for dialogs that you rarely use.</p>
+
+<p>Make sure you find a good balance between short and easy to understand phrases and words. English language is known to have relatively shorter words, so in most cases your translation will make user interface a bit larger. But if you start using abbreviations or shorter synonyms that don't quite fit the context, users won't appreciate that either.</p>
+
+<p>A lot of translatable messages use variables like <em>%1</em>. Those are substituted by some values. For example, in "Block (%1):" (<em>Glyphs</em> tab) this variable is substituted with percentage of a chosen Unicode block's coverage, e.g.: "Block (74%):". When you type these variables manually, you can make a mistake and the trick with a variable won't work. So it's better to paste original text to translation entry field by pressing <b>Ctrl</b>+<b>B</b> in Linguist and then replace this original text with translation, leaving all present variables intact.</p>
+
+<p>A good part of translatable messages are names of Unicode blocks and OpenType features. Even though these technologies are meant to serve wide world community with all its complex languages and scripts, it is typical to have little to no information on them in a language other than English. This is 21st century to you. So please refer to good solid dictionaries for correct names of languages that are used for most Unicode blocks, to <a href="FIXME">Unicode specification</a> for the rest of the blocks and to <a href="FIXME">OpenType specification</a> for names of OpenType features that you see in the <em>Sample text</em> tab.</p>
+
+<h3>Translating documentation</h3>
+
+<p>The documentation is inside <em>help</em> directory and consists of menu.xml file that defines table of contents, HTML files with text and illustrations in PNG or JPEG files.</p>
+
+<p>Every translation is kept in its own directory named with two-letter language code like <em>ru</em> for Russian or <em>es</em> for Spanish. So download source code, unpack it and start with creating this directory.</p>
+
+<p>Now copy contents of <em>en</em> directory to your language directory. Before you start translating, open help/LANGUAGE/CMakeLists.txt file in your preferred editor and replace all instances of "_EN" with "_LANGUAGE", where LANGUAGE is a two-letter code for your language as well, uppercase. Then open help/CMakeLists.txt and add another line that looks like this:</p>
+
+<p>ADD_SUBDIRECTORY(${FM_HELP_DIR}LANGUAGE)</p>
+
+<p>where LANGUAGE is a two-letter code for your language, lowercase this time.</p>
+
+<p>These two files are used by the build system to find out what files to install.</p>
+
+<p>Start translating. It's best to translate table of contents first and proceed with actual content later. To translate table of contents open menu.xml file in your editor of choice and translate values of every <em>text</em> attribute. E.g. for &lt;area text="Setting up" file="setting_up.html"&gt; translatable text will be "Setting up".</p>
+
+<p>To test your translation open a terminal window, go to the top level directory with source code, rebuild and reinstall Fontmatrix. After you rebuild it for the first time, you will only need to run 'sudo make install' to update files.</p>
+
+<p>If user interface is not localized, you might want to do it before translating documentation. Some users might complain and tell you that user interface in English is a de-facto standard and thus localized documentation should refer only to English UI. But this is just because they have grown up to use unlocalized software, so don't worry, let them play silly buggers and move on.</p>
+
+<p>Some illustrations actually display other applications like FontForge which may be not localized for your language. In that case just use already available screenshots from English version of the documentation.</p>
+
+<p>The English (and Russian) translations have screenshots with <em>Dust</em> theme for both GTK+ and Metacity (and GTK+ engine for Qt), and Droid Sans 9pt font. You don't have to try to reproduce that, but please be visually consistent across your translation.</p>
+
+<p>Please keep all of your illustrations below 800 pixels on the longer side.</p>
+
+<p>When you are done, archive help/LANGUAGE directory with your translation and <a href="contributing_testing.html">send it</a> to us.</p>
+
+</body>
+</html>

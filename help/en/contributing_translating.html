@@ -19,10 +19,8 @@
 
 <ol>
 	<li>Go to the directory with source code.</li>
-	<li>Inside src/messages directory create a new empty file named fontmatrix-LANGUAGE.ts, where LANGUAGE is a two-letter code for your language, lowercase, e.g. <em>fr</em> for French or <em>de</em> for German.</li>
-	<li>Go back to the top level source code directory</li>
-	<li>Open it in terminal and run <tt>'qmake-qt4 -project'</tt>. This command will create a file named fontmatrix-VERSION.pro, where VERSION is something like 0.6.0. This file lists all source code files <b>and</b> files containing translation.</li>
-	<li>From terminal run <tt>'lupdate-qt4 -verbose fontmatrix-VERSION.pro'</tt> to update all available translations and fill your newly created translation file with actual data.</li>
+	<li>Run Cmake command with -DTRANSLATOR:string=LANGUAGE, where LANGUAGE is a two-letter code for your language, lowercase, e.g. <em>fr</em> for French or <em>de</em> for German.</li>
+	<li>Run "make translation" to create a new translation file.</li>
 	<li>Open your fontmatrix-LANGUAGE.ts file in Linguist and start translating.</li>
 	<li>To test your translation use <em>File&nbsp;&gt; Release</em> command in Linguist. This will create a binary file called fontmatrix-LANGUAGE.qm that will be actually used by Fontmatrix.</li>
 	<li>Copy this file to a directory that contains QM files for Fontmatrix. On Linux this typically means <tt>'sudo cp src/messages/fontmatrix-LANGUAGE.qm /usr/share/fontmatrix/qm/'</tt></li>

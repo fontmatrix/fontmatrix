@@ -92,16 +92,21 @@ QString FMPaths::HelpDir()
 	QString hf;
 	QString dirsep(QDir::separator());
 #ifdef PLATFORM_APPLE
-	hf = QApplication::applicationDirPath() + dirsep + "help" + dirsep + sysLoc() + dirsep;
-	if(!QDir(hf).exists())
+	if(!sysLoc().isEmpty())
+		hf = QApplication::applicationDirPath() + dirsep + "help" + dirsep + sysLoc() + dirsep;
+	if(hf.isEmpty() || !QDir(hf).exists())
 		hf = QApplication::applicationDirPath() + dirsep + "help" + dirsep + "en" + dirsep;
 #elif _WIN32
-	hf =  QApplication::applicationDirPath() + dirsep + "help" + dirsep + sysLoc() + dirsep;
-	if(!QDir(hf).exists())
+	
+	if(!sysLoc().isEmpty())
+		hf =  QApplication::applicationDirPath() + dirsep + "help" + dirsep + sysLoc() + dirsep;
+	if(hf.isEmpty() || !QDir(hf).exists())
 		hf =  QApplication::applicationDirPath() + dirsep + "help" + dirsep + "en" + dirsep;
 #else
-	hf = PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep + sysLoc() + dirsep;
-	if(!QDir(hf).exists())
+	
+	if(!sysLoc().isEmpty())
+		hf = PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep + sysLoc() + dirsep;
+	if(hf.isEmpty() || !QDir(hf).exists())
 		hf = PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep + "en" + dirsep;
 #endif
 	getThis()->FMPathsDB["HelpDir"] = hf;

@@ -193,6 +193,14 @@ QStringList FMUniBlocks::blocks()
 	return QStringList(that()->p.values());
 }
 
+QString FMUniBlocks::block(bKey key)
+{
+	QString ret;
+	if(that()->p.contains(key))
+		ret = that()->p[key];
+	return ret;
+}
+
 
 
 

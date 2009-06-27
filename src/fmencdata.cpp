@@ -22,6 +22,7 @@ FMEncData * FMEncData::instance = 0;
 FMEncData::FMEncData()
 {
 	fillLangIdMap();
+	fillOs2URAnges();
 }
 
 FMEncData * FMEncData::that()
@@ -313,8 +314,140 @@ void FMEncData::fillLangIdMap()
 
 }
 
+void FMEncData::fillOs2URAnges()
+{
+	os2URangeMap[ 0 ] = qMakePair<int,int>(0x0000,0x007F) ;
+	os2URangeMap[ 1 ] = qMakePair<int,int>(0x0080,0x00FF) ;
+	os2URangeMap[ 2 ] = qMakePair<int,int>(0x0100,0x017F) ;
+	os2URangeMap[ 3 ] = qMakePair<int,int>(0x0180,0x024F) ;
+	os2URangeMap[ 4 ] = qMakePair<int,int>(0x0250,0x02AF) ;
+	os2URangeMap[ 5 ] = qMakePair<int,int>(0x02B0,0x02FF) ;
+	os2URangeMap[ 6 ] = qMakePair<int,int>(0x0300,0x036F) ;
+	os2URangeMap[ 7 ] = qMakePair<int,int>(0x0370,0x03FF) ;
+	os2URangeMap[ 8 ] = qMakePair<int,int>(0x2C80,0x2CFF) ;
+	os2URangeMap[ 9 ] = qMakePair<int,int>(0x0400,0x04FF) ;
+	os2URangeMap[ 10 ] = qMakePair<int,int>(0x0530,0x058F) ;
+	os2URangeMap[ 11 ] = qMakePair<int,int>(0x0590,0x05FF) ;
+	os2URangeMap[ 12 ] = qMakePair<int,int>(0xA500,0xA63F) ;
+	os2URangeMap[ 13 ] = qMakePair<int,int>(0x0600,0x06FF) ;
+	os2URangeMap[ 14 ] = qMakePair<int,int>(0x07C0,0x07FF) ;
+	os2URangeMap[ 15 ] = qMakePair<int,int>(0x0900,0x097F) ;
+	os2URangeMap[ 16 ] = qMakePair<int,int>(0x0980,0x09FF) ;
+	os2URangeMap[ 17 ] = qMakePair<int,int>(0x0A00,0x0A7F) ;
+	os2URangeMap[ 18 ] = qMakePair<int,int>(0x0A80,0x0AFF) ;
+	os2URangeMap[ 19 ] = qMakePair<int,int>(0x0B00,0x0B7F) ;
+	os2URangeMap[ 20 ] = qMakePair<int,int>(0x0B80,0x0BFF) ;
+	os2URangeMap[ 21 ] = qMakePair<int,int>(0x0C00,0x0C7F) ;
+	os2URangeMap[ 22 ] = qMakePair<int,int>(0x0C80,0x0CFF) ;
+	os2URangeMap[ 23 ] = qMakePair<int,int>(0x0D00,0x0D7F) ;
+	os2URangeMap[ 24 ] = qMakePair<int,int>(0x0E00,0x0E7F) ;
+	os2URangeMap[ 25 ] = qMakePair<int,int>(0x0E80,0x0EFF) ;
+	os2URangeMap[ 26 ] = qMakePair<int,int>(0x10A0,0x10FF) ;
+	os2URangeMap[ 27 ] = qMakePair<int,int>(0x1B00,0x1B7F) ;
+	os2URangeMap[ 28 ] = qMakePair<int,int>(0x1100,0x11FF) ;
+	os2URangeMap[ 29 ] = qMakePair<int,int>(0x1E00,0x1EFF) ;
+	os2URangeMap[ 30 ] = qMakePair<int,int>(0x1F00,0x1FFF) ;
+	os2URangeMap[ 31 ] = qMakePair<int,int>(0x2000,0x206F) ;
+	os2URangeMap[ 32 ] = qMakePair<int,int>(0x2070,0x209F) ;
+	os2URangeMap[ 33 ] = qMakePair<int,int>(0x20A0,0x20CF) ;
+	os2URangeMap[ 34 ] = qMakePair<int,int>(0x20D0,0x20FF) ;
+	os2URangeMap[ 35 ] = qMakePair<int,int>(0x2100,0x214F) ;
+	os2URangeMap[ 36 ] = qMakePair<int,int>(0x2150,0x218F) ;
+	os2URangeMap[ 37 ] = qMakePair<int,int>(0x2190,0x21FF) ;
+	os2URangeMap[ 38 ] = qMakePair<int,int>(0x2200,0x22FF) ;
+	os2URangeMap[ 39 ] = qMakePair<int,int>(0x2300,0x23FF) ;
+	os2URangeMap[ 40 ] = qMakePair<int,int>(0x2400,0x243F) ;
+	os2URangeMap[ 41 ] = qMakePair<int,int>(0x2440,0x245F) ;
+	os2URangeMap[ 42 ] = qMakePair<int,int>(0x2460,0x24FF) ;
+	os2URangeMap[ 43 ] = qMakePair<int,int>(0x2500,0x257F) ;
+	os2URangeMap[ 44 ] = qMakePair<int,int>(0x2580,0x259F) ;
+	os2URangeMap[ 45 ] = qMakePair<int,int>(0x25A0,0x25FF) ;
+	os2URangeMap[ 46 ] = qMakePair<int,int>(0x2600,0x26FF) ;
+	os2URangeMap[ 47 ] = qMakePair<int,int>(0x2700,0x27BF) ;
+	os2URangeMap[ 48 ] = qMakePair<int,int>(0x3000,0x303F) ;
+	os2URangeMap[ 49 ] = qMakePair<int,int>(0x3040,0x309F) ;
+	os2URangeMap[ 50 ] = qMakePair<int,int>(0x30A0,0x30FF) ;
+	os2URangeMap[ 51 ] = qMakePair<int,int>(0x3100,0x312F) ;
+	os2URangeMap[ 52 ] = qMakePair<int,int>(0x3130,0x318F) ;
+	os2URangeMap[ 53 ] = qMakePair<int,int>(0xA840,0xA87F) ;
+	os2URangeMap[ 54 ] = qMakePair<int,int>(0x3200,0x32FF) ;
+	os2URangeMap[ 55 ] = qMakePair<int,int>(0x3300,0x33FF) ;
+	os2URangeMap[ 56 ] = qMakePair<int,int>(0xAC00,0xD7AF) ;
+	os2URangeMap[ 58 ] = qMakePair<int,int>(0x10900,0x1091F) ;
+	os2URangeMap[ 59 ] = qMakePair<int,int>(0x4E00,0x9FFF) ;
+	os2URangeMap[ 60 ] = qMakePair<int,int>(0xE000,0xF8FF) ;
+	os2URangeMap[ 61 ] = qMakePair<int,int>(0x31C0,0x31EF) ;
+	os2URangeMap[ 62 ] = qMakePair<int,int>(0xFB00,0xFB4F) ;
+	os2URangeMap[ 63 ] = qMakePair<int,int>(0xFB50,0xFDFF) ;
+	os2URangeMap[ 64 ] = qMakePair<int,int>(0xFE20,0xFE2F) ;
+	os2URangeMap[ 65 ] = qMakePair<int,int>(0xFE10,0xFE1F) ;
+	os2URangeMap[ 66 ] = qMakePair<int,int>(0xFE50,0xFE6F) ;
+	os2URangeMap[ 67 ] = qMakePair<int,int>(0xFE70,0xFEFF) ;
+	os2URangeMap[ 68 ] = qMakePair<int,int>(0xFF00,0xFFEF) ;
+	os2URangeMap[ 69 ] = qMakePair<int,int>(0xFFF0,0xFFFF) ;
+	os2URangeMap[ 70 ] = qMakePair<int,int>(0x0F00,0x0FFF) ;
+	os2URangeMap[ 71 ] = qMakePair<int,int>(0x0700,0x074F) ;
+	os2URangeMap[ 72 ] = qMakePair<int,int>(0x0780,0x07BF) ;
+	os2URangeMap[ 73 ] = qMakePair<int,int>(0x0D80,0x0DFF) ;
+	os2URangeMap[ 74 ] = qMakePair<int,int>(0x1000,0x109F) ;
+	os2URangeMap[ 75 ] = qMakePair<int,int>(0x1200,0x137F) ;
+	os2URangeMap[ 76 ] = qMakePair<int,int>(0x13A0,0x13FF) ;
+	os2URangeMap[ 77 ] = qMakePair<int,int>(0x1400,0x167F) ;
+	os2URangeMap[ 78 ] = qMakePair<int,int>(0x1680,0x169F) ;
+	os2URangeMap[ 79 ] = qMakePair<int,int>(0x16A0,0x16FF) ;
+	os2URangeMap[ 80 ] = qMakePair<int,int>(0x1780,0x17FF) ;
+	os2URangeMap[ 81 ] = qMakePair<int,int>(0x1800,0x18AF) ;
+	os2URangeMap[ 82 ] = qMakePair<int,int>(0x2800,0x28FF) ;
+	os2URangeMap[ 83 ] = qMakePair<int,int>(0xA000,0xA48F) ;
+	os2URangeMap[ 84 ] = qMakePair<int,int>(0x1700,0x171F) ;
+	os2URangeMap[ 85 ] = qMakePair<int,int>(0x10300,0x1032F) ;
+	os2URangeMap[ 86 ] = qMakePair<int,int>(0x10330,0x1034F) ;
+	os2URangeMap[ 87 ] = qMakePair<int,int>(0x10400,0x1044F) ;
+	os2URangeMap[ 88 ] = qMakePair<int,int>(0x1D000,0x1D0FF) ;
+	os2URangeMap[ 89 ] = qMakePair<int,int>(0x1D400,0x1D7FF) ;
+	os2URangeMap[ 90 ] = qMakePair<int,int>(0xFF000,0xFFFFD) ;
+	os2URangeMap[ 91 ] = qMakePair<int,int>(0xFE00,0xFE0F) ;
+	os2URangeMap[ 92 ] = qMakePair<int,int>(0xE0000,0xE007F) ;
+	os2URangeMap[ 93 ] = qMakePair<int,int>(0x1900,0x194F) ;
+	os2URangeMap[ 94 ] = qMakePair<int,int>(0x1950,0x197F) ;
+	os2URangeMap[ 95 ] = qMakePair<int,int>(0x1980,0x19DF) ;
+	os2URangeMap[ 96 ] = qMakePair<int,int>(0x1A00,0x1A1F) ;
+	os2URangeMap[ 97 ] = qMakePair<int,int>(0x2C00,0x2C5F) ;
+	os2URangeMap[ 98 ] = qMakePair<int,int>(0x2D30,0x2D7F) ;
+	os2URangeMap[ 99 ] = qMakePair<int,int>(0x4DC0,0x4DFF) ;
+	os2URangeMap[ 100 ] = qMakePair<int,int>(0xA800,0xA82F) ;
+	os2URangeMap[ 101 ] = qMakePair<int,int>(0x10000,0x1007F) ;
+	os2URangeMap[ 102 ] = qMakePair<int,int>(0x10140,0x1018F) ;
+	os2URangeMap[ 103 ] = qMakePair<int,int>(0x10380,0x1039F) ;
+	os2URangeMap[ 104 ] = qMakePair<int,int>(0x103A0,0x103DF) ;
+	os2URangeMap[ 105 ] = qMakePair<int,int>(0x10450,0x1047F) ;
+	os2URangeMap[ 106 ] = qMakePair<int,int>(0x10480,0x104AF) ;
+	os2URangeMap[ 107 ] = qMakePair<int,int>(0x10800,0x1083F) ;
+	os2URangeMap[ 108 ] = qMakePair<int,int>(0x10A00,0x10A5F) ;
+	os2URangeMap[ 109 ] = qMakePair<int,int>(0x1D300,0x1D35F) ;
+	os2URangeMap[ 110 ] = qMakePair<int,int>(0x12000,0x123FF) ;
+	os2URangeMap[ 111 ] = qMakePair<int,int>(0x1D360,0x1D37F) ;
+	os2URangeMap[ 112 ] = qMakePair<int,int>(0x1B80,0x1BBF) ;
+	os2URangeMap[ 113 ] = qMakePair<int,int>(0x1C00,0x1C4F) ;
+	os2URangeMap[ 114 ] = qMakePair<int,int>(0x1C50,0x1C7F) ;
+	os2URangeMap[ 115 ] = qMakePair<int,int>(0xA880,0xA8DF) ;
+	os2URangeMap[ 116 ] = qMakePair<int,int>(0xA900,0xA92F) ;
+	os2URangeMap[ 117 ] = qMakePair<int,int>(0xA930,0xA95F) ;
+	os2URangeMap[ 118 ] = qMakePair<int,int>(0xAA00,0xAA5F) ;
+	os2URangeMap[ 119 ] = qMakePair<int,int>(0x10190,0x101CF) ;
+	os2URangeMap[ 120 ] = qMakePair<int,int>(0x101D0,0x101FF) ;
+	os2URangeMap[ 121 ] = qMakePair<int,int>(0x102A0,0x102DF) ;
+	os2URangeMap[ 122 ] = qMakePair<int,int>(0x1F030,0x1F09F) ;
+}
+
 const QMap< int, QString > & FMEncData::LangIdMap()
 {
 	return that()->langIdMap;
 }
+
+const QMap<int, QPair<int,int> > & FMEncData::Os2URanges()
+{
+	return that()->os2URangeMap;
+}
+
 

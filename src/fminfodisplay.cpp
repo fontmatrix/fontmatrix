@@ -24,6 +24,8 @@
 #include <QRegExp>
 #include <QStringList>
 
+#include <QFile>
+
 
 FMInfoDisplay::FMInfoDisplay(FontItem * font)
 {
@@ -56,7 +58,17 @@ FMInfoDisplay::FMInfoDisplay(FontItem * font)
 	html += writeFsType(font);
 	html += "</div>\n"; // general
 	html += writePanose(font);
+	html += writeLangOS2(font);
 	html += "</body>\n </html>\n";
+		
+	if(0)
+	{	
+		QFile df("fontmatrix.xhtml" );
+		if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
+		{
+			df.write(html.toUtf8());
+		}
+	}
 }
 
 
@@ -97,6 +109,28 @@ QString FMInfoDisplay::writeFsType(FontItem * font)
 	return embedFlags;
 
 }
+
+QString FMInfoDisplay::writeLangOS2(FontItem * font)
+{
+	QString ret;
+	QStringList llist(font->supportedLangDeclaration());
+	if(llist.count() > 0)
+	{
+		ret += "<div id=\"langblock\">\n";
+		ret += "\t<div class=\"langblockname\">" + QObject::tr("Unicode Ranges") + "</div>\n";
+		ret += "\t<ul>\n";
+		foreach(QString ln, llist)
+		{
+			ret += QString("\t\t<li>%1</li>\n").arg(ln);
+		}
+		ret += "\t</ul>\n";
+		ret += "</div>\n";
+		
+	}
+	return ret;
+}
+
+
 
 QString FMInfoDisplay::writeSVGPreview(FontItem * font)
 {
@@ -214,6 +248,9 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 
 
 	}
+	
+	
+	QString modelItem ( "<div class=\"infoblock\"><div class=\"infoname\"> %1 </div> %2 </div>\n" );
 
 	/// Times to manually order presentation!
 	
@@ -239,7 +276,6 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 			<< FMFontDb::CompatibleMacintosh
 			<< FMFontDb::UniqueFontIdentifier;
 	
-	QString modelItem ( "<div class=\"infoblock\"><div class=\"infoname\"> %1 </div> %2 </div>\n" );
 	QMap<FMFontDb::InfoItem, QString> tNames(FontStrings::Names());
 	foreach(FMFontDb::InfoItem key, order)
 	{
@@ -313,3 +349,4 @@ QString FMInfoDisplay::xhtmlifies(const QString& value)
 	}
 	return ret;
 }
+

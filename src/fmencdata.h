@@ -15,6 +15,7 @@
 
 #include <QMap>
 #include <QString>
+#include <QPair>
 
 class FMEncData
 {
@@ -25,8 +26,12 @@ class FMEncData
 	QMap<int, QString> langIdMap;
 	void fillLangIdMap();
 	
+	QMap<int, QPair<int,int> > os2URangeMap;
+	void fillOs2URAnges();
+	
 	public:
 		static const QMap<int, QString>& LangIdMap();
+		static const QMap<int, QPair<int,int> >& Os2URanges();
 };
 
 

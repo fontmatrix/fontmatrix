@@ -843,11 +843,6 @@ void MainViewWidget::slotInfoFont()
 	{
 		FMInfoDisplay fid(theVeryFont);
                 fontInfoText->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
-//                 QFile df("fontmatrix.xhtml" );
-//                 if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
-//                 {
-//                     df.write(fid.getHtml().toUtf8());
-//                 }
 	}
 	
 

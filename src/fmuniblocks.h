@@ -40,6 +40,7 @@ class FMUniBlocks
 		static int start(const int& codepoint);
 		static int end(const int& codepoint);
 		
+		static QString block(bKey key);
 		static bKey interval(const QString& blockName);
 		static QStringList blocks();
 		

@@ -280,6 +280,7 @@ class FontItem : public QObject
 		FontInfoMap rawInfo();
 		FontInfoMap moreInfo();
 		FsType getFsType();
+		QStringList supportedLangDeclaration();
 		
 		// Return the length of a TT table
 		int table(const QString& tableName);

@@ -29,6 +29,7 @@
 #include "fmbaseshaper.h"
 #include "hyphenate/fmhyphenator.h"
 #include "fmkernfeat.h"
+#include "fmuniblocks.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -2463,6 +2464,44 @@ QString FontItem::panose()
 	}
 	releaseFace();
 	return pl.join(":");
+}
+
+QStringList FontItem::supportedLangDeclaration()
+{
+	QStringList ret;
+	if ( !ensureFace() )
+		return ret;
+
+	TT_OS2 *os2 = static_cast<TT_OS2*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_os2 ) );
+	if ( os2 )
+	{
+		QList<FT_ULong> uMaskList;
+		uMaskList << os2->ulUnicodeRange1
+		<< os2->ulUnicodeRange2
+		<< os2->ulUnicodeRange3
+		<< os2->ulUnicodeRange4;
+		const QMap<int, QPair<int,int> >& uranges(FMEncData::Os2URanges()); 
+		unsigned int mask(1);
+		for( int i(0); i < uMaskList.count(); ++i )
+		{
+			for(int j(0); j < 32; ++j)
+			{
+				unsigned int set(mask << j);
+				if((set & uMaskList[i]) > 0)
+				{
+					int pos((i * 32) + j);
+					if(uranges.contains(pos))
+					{
+						QString b( FMUniBlocks::block(uranges[pos]) );
+						if(!b.isEmpty())
+							ret << b;
+					}
+				}
+			}
+		}
+	}
+	releaseFace();
+	return ret;
 }
 
 FontItem::FsType FontItem::getFsType()

@@ -709,6 +709,16 @@ void typotek::createActions()
 		fonteditorAct->setStatusTip ( tr ( "You don't seem to have a font editor installed. Path to font editor can be set in Preferences dialog." ) );
 	}
 
+	reloadAct = new QAction( tr ("Reload Filtered"), this );
+	reloadAct->setStatusTip(tr ("Reload informations for filtered fonts from the font files they belong to"));
+	scuts->add(reloadAct);
+	connect(reloadAct, SIGNAL(triggered()), this, SLOT(slotReloadFiltered()));
+
+	reloadSingleAct = new QAction(tr("Reload Selected"), this);
+	reloadSingleAct->setStatusTip(tr ("Reload informations for selected font from the font file"));
+	scuts->add(reloadSingleAct);
+	connect(reloadSingleAct, SIGNAL(triggered()), this, SLOT(slotReloadSingle()));
+
 	prefsAct = new QAction ( tr ( "Preferences" ),this );
 	prefsAct->setStatusTip ( tr ( "Setup Fontmatrix" ) );
         prefsAct->setMenuRole(QAction::PreferencesRole);
@@ -831,9 +841,10 @@ void typotek::createMenus()
 	editMenu->addAction ( fonteditorAct );
 	editMenu->addAction ( editPanoseAct );
 	editMenu->addSeparator();
-	editMenu->addAction ( prefsAct );
+	editMenu->addAction(reloadSingleAct);
+	editMenu->addAction(reloadAct);
 	editMenu->addSeparator();
-	editMenu->addAction(layOptAct);
+	editMenu->addAction ( prefsAct );
 
 	browseMenu = menuBar()->addMenu(tr("&Browse"));
 	browseMenu->addAction(nextFamily);
@@ -863,6 +874,8 @@ void typotek::createMenus()
 	servicesMenu->addAction( repairAct );
 #endif
 	servicesMenu->addAction(showTTTAct);
+	servicesMenu->addSeparator();
+	servicesMenu->addAction(layOptAct);
 	
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( helpAct );
@@ -2288,6 +2301,44 @@ void typotek::slotDumpInfo()
 		}
 	}
 
+}
+
+void typotek::slotReloadFiltered()
+{
+	QStringList toReload;
+	QApplication::changeOverrideCursor(Qt::WaitCursor);
+	QMap<QString, QStringList> tagsRec;
+	FMFontDb *db(FMFontDb::DB());
+	foreach(FontItem* f, theMainView->curFonts())
+	{
+		toReload << f->path();
+		tagsRec[f->path()] = f->tags();
+		db->Remove(f->path());
+	}
+	foreach(QString p, toReload)
+	{
+		FontItem * it(db->Font(p, true));
+		if(it)
+		{
+			it->setTags(tagsRec[p]);
+		}
+	}
+	QApplication::restoreOverrideCursor();
+
+}
+
+void typotek::slotReloadSingle()
+{
+	FontItem * cf(theMainView->selectedFont());
+	if(cf)
+	{
+		QString curName(cf->path());
+		QStringList t(cf->tags());
+		FMFontDb::DB()->Remove(curName);
+		cf = FMFontDb::DB()->Font(curName, true);
+		if(cf)
+			cf->setTags(t);
+	}
 }
 
 void typotek::slotExtractFont()

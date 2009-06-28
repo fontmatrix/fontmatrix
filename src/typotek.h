@@ -91,6 +91,8 @@ class typotek:public QMainWindow
 		void slotShowTTTables();
 		void slotEditPanose();
 		void slotDumpInfo();
+		void slotReloadFiltered();
+		void slotReloadSingle();
 
 		void slotExecScript();
 		void slotExecLastScript();
@@ -176,6 +178,8 @@ class typotek:public QMainWindow
 		QAction *showTTTAct;
 		QAction *editPanoseAct;
 		QAction *dumpInfoAct;
+		QAction *reloadAct;
+		QAction *reloadSingleAct;
 #ifdef HAVE_PYTHONQT
 		QAction *execScriptAct;
 		QAction *execLastScriptAct;

@@ -2788,10 +2788,12 @@ FontInfoMap FontItem::moreInfo_type1()
 		qDebug() <<"FT_Get_PS_Font_Info("<< m_name <<")"<<" failed :" << err;
 		return FontInfoMap();
 	}
-	// full_name version notice
-	moreInfo[0][/*tr ( "Full font name" )*/ 4 ] = sinfo.full_name;
-	moreInfo[0][/*tr ( "Version string" )*/ 5 ] = sinfo.version;
-	moreInfo[0][/*tr ( "Description" )*/    10] = sinfo.notice;
+
+	moreInfo[0][1] = sinfo.family_name;
+	moreInfo[0][2] = sinfo.weight;
+	moreInfo[0][4] = sinfo.full_name;
+	moreInfo[0][5] = sinfo.version;
+	moreInfo[0][10] = sinfo.notice;
 
 	releaseFace();
 	return moreInfo;

@@ -163,7 +163,10 @@ text-align:center;
 	color:#666;
 	padding-left:4pt;
  }
-
+ 
+ #langblock ul li:hover{
+ 	color:#222;
+ }
 
 #fstype {
 	margin-top:24pt;

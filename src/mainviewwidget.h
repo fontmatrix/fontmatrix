@@ -77,7 +77,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		bool fontsetHasChanged;
 		QGraphicsRectItem *curGlyph;
 		bool activateByFamilyOnly;
-		
+		bool m_forceReloadSelection;
+
 		void doConnect();
 		void disConnect();
 		void allActivation(bool act);
@@ -245,6 +246,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		void saveSplitterState();
 		void restoreSplitterState();
+
+		void forceReloadSelection();
 		
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

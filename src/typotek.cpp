@@ -2305,6 +2305,11 @@ void typotek::slotDumpInfo()
 
 void typotek::slotReloadFiltered()
 {
+	FontItem * cf(theMainView->selectedFont());
+	QString cfName;
+	if(cf)
+		cf->path();
+
 	QStringList toReload;
 	QApplication::changeOverrideCursor(Qt::WaitCursor);
 	QMap<QString, QStringList> tagsRec;
@@ -2315,14 +2320,34 @@ void typotek::slotReloadFiltered()
 		tagsRec[f->path()] = f->tags();
 		db->Remove(f->path());
 	}
+	QList<FontItem*> renewedFonts;
 	foreach(QString p, toReload)
 	{
 		FontItem * it(db->Font(p, true));
 		if(it)
 		{
-			it->setTags(tagsRec[p]);
+			renewedFonts << it;
 		}
 	}
+	db->TransactionBegin();
+	foreach(FontItem* it, renewedFonts)
+	{
+		it->setTags(tagsRec[it->path()]);
+	}
+	db->TransactionEnd();
+
+	if(toReload.count() > renewedFonts.count())
+	{
+		//! Number of fonts we failed to reload
+		showStatusMessage(tr("Failed to reload %n fonts", "", toReload.count() - renewedFonts.count()));
+		theMainView->slotReloadFontList();
+	}
+	if(!cfName.isEmpty())
+	{
+			theMainView->forceReloadSelection();
+			theMainView->slotFontSelectedByName(cfName);
+	}
+
 	QApplication::restoreOverrideCursor();
 
 }
@@ -2337,7 +2362,11 @@ void typotek::slotReloadSingle()
 		FMFontDb::DB()->Remove(curName);
 		cf = FMFontDb::DB()->Font(curName, true);
 		if(cf)
+		{
 			cf->setTags(t);
+			theMainView->forceReloadSelection();
+			theMainView->slotFontSelectedByName(curName);
+		}
 	}
 }
 

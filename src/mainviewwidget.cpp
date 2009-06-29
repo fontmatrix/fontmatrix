@@ -79,6 +79,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 {
 	setupUi ( this );
 	
+	m_forceReloadSelection = false;
 	uRangeIsNotEmpty = false;
 	currentFonts.clear();
 
@@ -768,14 +769,15 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 void MainViewWidget::slotFontSelectedByName ( QString fname )
 {
-// 	qDebug() << "MainViewWidget::slotFontSelectedByName("<<fname<<")";
-	if ( fname.isEmpty() || fname ==  faceIndex )
+
+	if ( fname.isEmpty()
+		|| ((fname ==  faceIndex) && (!m_forceReloadSelection)) )
 		return;
+	m_forceReloadSelection = false;
 	lastIndex = faceIndex;
 	faceIndex = fname;
 	curItemName = faceIndex;
 
-	if ( faceIndex.count() && faceIndex != lastIndex )
 	{
 // 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
 		if(abcView->state() == FMGlyphsView::SingleView)
@@ -2313,6 +2315,9 @@ void MainViewWidget::toggleFacesCheckBoxes(bool state)
 	}
 }
 
-
+void MainViewWidget::forceReloadSelection()
+{
+	m_forceReloadSelection = true;
+}
 
 

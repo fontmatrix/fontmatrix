@@ -36,6 +36,7 @@ class QActionGroup;
 class QCompleter;
 class QPoint;
 class FolderViewMenu;
+class QFileSystemWatcher;
 
 #define FILTER_FIELD_SPECIAL_TAG 2000
 #define FILTER_FIELD_SPECIAL_UNICODE 2001
@@ -52,7 +53,6 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 	public:
 		static ListDockWidget* getInstance();
 
-		void refreshTree();
 		void savePosition();
 		void restorePosition();
 
@@ -103,6 +103,9 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 		int maxFieldStringWidth;
 		
 		FMPreviewModel *previewModel;
+
+		 QFileSystemWatcher *dirWatcher;
+		 void initWatcher(QModelIndex parent);
 				
 	public slots:
 		void unlockFilter();
@@ -112,6 +115,10 @@ class ListDockWidget : public QWidget, public Ui::ListDock
 	private slots:
 		void slotFolderItemclicked(QModelIndex mIdx);
 		void slotFolderPressed(QModelIndex mIdx);
+		void slotFolderAddToWatcher(QModelIndex mIdx);
+		void slotFolderRemoveFromWatcher(QModelIndex mIdx);
+		void slotFolderRefresh(const QString& dirPath);
+
 		void slotFieldChanged(QAction * action);
 		void slotFeedTheCompleter();
 		void slotFolderViewContextMenu(const QPoint&);
@@ -146,7 +153,6 @@ public:
 	void exec(const QFileInfo &fi, const QPoint &p);
 
 private:
-	QAction *dirReload;
 	QAction *dirAction;
 	QAction *dirRecursiveAction;
 	QAction *fileAction;
@@ -154,7 +160,6 @@ private:
 	QFileInfo selectedFileOrDir;
 
 private slots:
-	void slotReloadTree();
 	void slotImportDir();
 	void slotImportDirRecursively();
 	void slotImportFile();

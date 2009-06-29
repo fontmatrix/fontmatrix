@@ -34,6 +34,7 @@
 #include <QCompleter>
 #include <QStatusBar>
 #include <QSettings>
+#include <QFileSystemWatcher>
 
 extern QStringList name_meaning;
 extern QMap< QString, QMap<int, QString> > panoseMap;
@@ -87,8 +88,20 @@ ListDockWidget::ListDockWidget()
 	QDir d(lastUsedDir);
 	if (!d.exists())
 		lastUsedDir = QDir::homePath();
+	QModelIndex luIdx(theDirModel->index(lastUsedDir, 0));
+	folderView->setCurrentIndex(luIdx);
+	QModelIndexList hierarchy;
+	while(luIdx.isValid())
+	{
+		hierarchy.prepend(luIdx);
+		luIdx = luIdx.parent();
+	}
+	foreach(QModelIndex idx, hierarchy)
+		folderView->expand(idx);
 
-	folderView->setCurrentIndex(theDirModel->index(lastUsedDir));
+	dirWatcher = new QFileSystemWatcher(this);
+	initWatcher(theDirModel->index(0,0));
+
 
 	theFilterMenu = new QMenu;
 	filterActGroup = new QActionGroup(theFilterMenu);
@@ -187,6 +200,9 @@ ListDockWidget::ListDockWidget()
 	connect(folderView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(folderView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
 	connect(folderView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(slotFolderViewContextMenu(const QPoint &)));
+	connect(folderView, SIGNAL(expanded(QModelIndex)),this, SLOT(slotFolderAddToWatcher(QModelIndex)));
+	connect(folderView, SIGNAL(collapsed(QModelIndex)), this, SLOT(slotFolderRemoveFromWatcher(QModelIndex)));
+	connect(dirWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(slotFolderRefresh(QString)));
 
 	connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(slotTabChanged(int)));
 	
@@ -201,6 +217,24 @@ ListDockWidget::ListDockWidget()
 
 ListDockWidget::~ListDockWidget()
 {
+	delete dirWatcher;
+}
+
+void ListDockWidget::initWatcher(QModelIndex parent)
+{
+//	qDebug()<<"initWatcher"<<theDirModel->filePath(parent);
+	for(int fIdx(0); fIdx < theDirModel->rowCount(parent); ++fIdx)
+	{
+		QModelIndex mIdx(theDirModel->index(fIdx,0, parent));
+//		qDebug()<<"\t"<<theDirModel->filePath(mIdx)<<folderView->isExpanded(mIdx);
+		if(folderView->isExpanded(mIdx))
+		{
+			QString fp(theDirModel->filePath(mIdx));
+			dirWatcher->addPath(fp);
+			qDebug()<<"***Watch"<<fp;
+			initWatcher(mIdx);
+		}
+	}
 }
 
 void ListDockWidget::savePosition()
@@ -236,10 +270,13 @@ void ListDockWidget::unlockFilter()
 void ListDockWidget::slotFolderItemclicked(QModelIndex mIdx)
 {
 	QString path(theDirModel->data(mIdx,QDirModel::FilePathRole).toString());
-	if(FMFontDb::DB()->insertTemporaryFont(path))
+	QFileInfo pf(path);
+	if(!pf.isDir())
 	{
-		QFileInfo pf(path);
-		emit folderSelectFont(pf.absoluteFilePath());
+		if(FMFontDb::DB()->insertTemporaryFont(path))
+		{
+			emit folderSelectFont(pf.absoluteFilePath());
+		}
 	}
 	settingsDir(path);
 }
@@ -247,6 +284,27 @@ void ListDockWidget::slotFolderItemclicked(QModelIndex mIdx)
 void ListDockWidget::slotFolderPressed(QModelIndex mIdx)
 {
 	currentFIndex = mIdx;
+}
+
+void ListDockWidget::slotFolderAddToWatcher(QModelIndex mIdx)
+{
+	qDebug()<<"Add to watcher"<<theDirModel->filePath(mIdx);
+	dirWatcher->addPath(theDirModel->filePath(mIdx));
+}
+
+void ListDockWidget::slotFolderRemoveFromWatcher(QModelIndex mIdx)
+{
+	qDebug()<<"Remove from watcher"<<theDirModel->filePath(mIdx);
+	dirWatcher->removePath(theDirModel->filePath(mIdx));
+}
+
+/**
+ * Reload the file and folder list in the folder tab
+ */
+void ListDockWidget::slotFolderRefresh(const QString& dirPath)
+{
+	qDebug()<<"Refresh"<<dirPath;
+	theDirModel->refresh(theDirModel->index(dirPath, 0 ));
 }
 
 void ListDockWidget::slotFieldChanged(QAction * action)
@@ -313,27 +371,18 @@ void ListDockWidget::slotFolderViewContextMenu(const QPoint& p)
 	folderViewContextMenu->exec(dm->fileInfo(mi), tabWidget->pos() + mapToGlobal(p));
 }
 
-/**
- * Reload the file and folder list in the folder tab
- */
-void ListDockWidget::refreshTree()
-{
-	theDirModel->refresh(currentFIndex);
-}
+
 
 FolderViewMenu::FolderViewMenu() : QMenu()
 {
-	dirReload = new QAction(tr("Reload Tree"), 0);
 	dirAction = new QAction(tr("Import Directory"), 0);
 	dirRecursiveAction = new QAction(tr("Import recursively"), 0);
 	fileAction = new QAction(tr("Import File"), 0);
 
-	addAction(dirReload);
 	addAction(dirAction);
 	addAction(dirRecursiveAction);
 	addAction(fileAction);
 
-	connect(dirReload, SIGNAL(triggered()), this, SLOT(slotReloadTree()));
 	connect(dirAction, SIGNAL(triggered()), this, SLOT(slotImportDir()));
 	connect(dirRecursiveAction, SIGNAL(triggered()), this, SLOT(slotImportDirRecursively()));
 	connect(fileAction, SIGNAL(triggered()), this, SLOT(slotImportFile()));
@@ -357,10 +406,6 @@ void FolderViewMenu::exec(const QFileInfo &fi, const QPoint &p)
 	QMenu::exec(p);
 }
 
-void FolderViewMenu::slotReloadTree()
-{
-	ListDockWidget::getInstance()->refreshTree();
-}
 
 void FolderViewMenu::slotImportDir()
 {

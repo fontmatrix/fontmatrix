@@ -141,14 +141,39 @@ text-align:center;
   }
 
 
+#langblock{
+	margin-left:80%;
+ }
+
+.langblockname {
+	margin-top:8pt;
+	border-top :2pt solid #222;
+	font-weight:bold;
+	font-size:10pt;
+/* 	padding-left:4pt; */
+ }
+ 
+ #langblock ul{
+	list-style-type:none
+ }
+ 
+ #langblock ul li{
+/* 	font-style:italic; */
+	font-size:9pt;
+	color:#666;
+	padding-left:4pt;
+ }
+
+
 #fstype {
+	margin-top:24pt;
 	font-style:monospace;
 }
 
 #fstype > div{
 	margin:4pt 0;
 	padding:2pt 0 2pt 2pt;
-	border-left:2em solid black;
+	border-left:20pt solid black;
 }
 
 .fsname {
@@ -163,21 +188,3 @@ text-align:center;
 	font-style:italic;
 	font-size:8pt;
 }
-
-#langblock{
-	margin-top: 24pt;
-	padding:2pt 0 2pt 2pt;
-	border-left:2em solid gray;
-
-	line-height:9pt;
-	font-style:italic;
-	font-size:8pt;
- }
-
-.langblockname {
-	float:left;
-	padding-right: 1em;
-	font-weight:bold;
-	line-height:9pt;
-	font-size:9pt;
- }

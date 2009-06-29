@@ -281,6 +281,7 @@ class FontItem : public QObject
 		FontInfoMap moreInfo();
 		FsType getFsType();
 		QStringList supportedLangDeclaration();
+		double italicAngle();
 		
 		// Return the length of a TT table
 		int table(const QString& tableName);

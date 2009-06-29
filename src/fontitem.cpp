@@ -31,6 +31,8 @@
 #include "fmkernfeat.h"
 #include "fmuniblocks.h"
 
+#include <cmath>
+
 #include <QDebug>
 #include <QFileInfo>
 #include <QGraphicsPixmapItem>
@@ -2504,6 +2506,29 @@ QStringList FontItem::supportedLangDeclaration()
 	return ret;
 }
 
+double FontItem::italicAngle()
+{
+	double ret(0);
+	if(!ensureFace())
+		return ret;
+	if ( testFlag ( m_face->face_flags, FT_FACE_FLAG_SFNT, "1","0" ) == "1" )
+	{
+		TT_Postscript *post = static_cast<TT_Postscript*> ( FT_Get_Sfnt_Table ( m_face, ft_sfnt_post ) );
+		if ( post )
+			ret = ( double(post->italicAngle) / double (0x10000) ) ;
+	}
+	else
+	{
+		PS_FontInfoRec sinfo ;
+		int err = FT_Get_PS_Font_Info ( m_face,&sinfo );
+		if ( !err )
+			ret = sinfo.italic_angle;
+	}
+
+	releaseFace();
+	return ret;
+}
+
 FontItem::FsType FontItem::getFsType()
 {
 	// After some thinking, it appears that it would be a nonsense to not retrieve it from the actual font file.
@@ -2939,19 +2964,23 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 	painter.drawImage ( gPos, img );
 
 
-	// Draw metrics
+	/// Draw metrics
+	int iAngle(italicAngle());
 	QPoint pPos ( gPos );
 	pPos.rx() -= qRound(m_face->glyph->bitmap_left * scaledBy);
 	pPos.ry() += qRound(m_face->glyph->bitmap_top * scaledBy);
+	double aF(tan((3.14/180.0) * iAngle));
+	double asc(subRect.top() - pPos.y());
+	double desc(pPos.y() - subRect.bottom());
 	//left
-	painter.drawLine ( pPos.x() , 0,
-	                   pPos.x() , allRect.bottom() );
+	painter.drawLine ( pPos.x() + (asc * aF), subRect.top(),
+			   pPos.x() - (desc * aF), subRect.bottom() );
 	//right
-	painter.drawLine (  qRound(pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy ), 0,
-			    qRound( pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy), allRect.bottom() );
+	painter.drawLine (  qRound(pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy ) + (asc * aF), subRect.top(),
+			    qRound( pPos.x() + m_face->glyph->metrics.horiAdvance / 64 * scaledBy) - (desc * aF), subRect.bottom() );
 	//baseline
-	painter.drawLine ( 0, pPos.y() ,
-	                   allRect.right(),  pPos.y() );
+	painter.drawLine ( subRect.left() , pPos.y() ,
+			   subRect.right(),  pPos.y() );
 
 	painter.end();
 

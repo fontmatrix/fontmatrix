@@ -27,7 +27,6 @@
 #include "shortcuts.h"
 
 #include <QDebug>
-#include <QDesktopWidget>
 #include <QScrollBar>
 #include <QDirModel>
 #include <QStringListModel>
@@ -62,7 +61,7 @@ ListDockWidget::ListDockWidget()
 	
 	listPreview->setModelColumn(1);
 	listPreview->setViewMode(QListView::IconMode);
-	listPreview->setIconSize(QSize(listPreview->width(), 1.3 * typotek::getInstance()->getPreviewSize() * QApplication::desktop()->physicalDpiY() / 72.0));
+	listPreview->setIconSize(QSize(listPreview->width(), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 	listPreview->setUniformItemSizes(true);
 	listPreview->setMovement(QListView::Static);
 	
@@ -538,7 +537,7 @@ void ListDockWidget::slotPreviewUpdate()
 
 void ListDockWidget::slotPreviewUpdateSize(int w)
 {
-	listPreview->setIconSize(QSize(w, 1.3 * typotek::getInstance()->getPreviewSize() * QApplication::desktop()->physicalDpiY() / 72.0));
+	listPreview->setIconSize(QSize(w, 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 // 	previewModel->dataChanged();
 }
 

@@ -276,6 +276,9 @@ class typotek:public QMainWindow
 		
 		QString infoStyle;
 
+		double m_dpiX;
+		double m_dpiY;
+
 	public:
 		bool isSysFont(FontItem* f);
 		QList<FontItem*> getCurrentFonts();
@@ -398,7 +401,9 @@ class typotek:public QMainWindow
 	QString getInfoStyle() const{ return infoStyle; }
 
 	QString getSysTagName() const { return m_sysTagName; }
-	
+
+	double getDpiX() const {return m_dpiX;}
+	double getDpiY() const {return m_dpiY;}
 	
 	
 	protected:

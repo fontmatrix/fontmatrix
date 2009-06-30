@@ -66,7 +66,6 @@
 #include <QTimeLine>
 #include <QClipboard>
 #include <QMutex>
-#include <QDesktopWidget>
 #include <QButtonGroup>
 #include <QInputDialog>
 
@@ -143,7 +142,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
 // 	backp->setEnabled ( false );
 	
-	ftScene->setSceneRect ( 0,0, 597.6 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0, 842.4 * ( double ) QApplication::desktop()->physicalDpiX() / 72.0);
+	ftScene->setSceneRect ( 0,0, 597.6 * typotek::getInstance()->getDpiX() / 72.0, 842.4 * typotek::getInstance()->getDpiX() / 72.0);
 	
 
 	abcView->setScene ( abcScene );
@@ -151,8 +150,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	loremView->setScene ( loremScene );
 	loremView->locker = false;
-	double horiScaleT (( double ) QApplication::desktop()->physicalDpiX() / 72.0);
-	double vertScaleT ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0);
+	double horiScaleT (typotek::getInstance()->getDpiX() / 72.0);
+	double vertScaleT ( typotek::getInstance()->getDpiY() / 72.0);
 	QTransform adjustAbsoluteViewT( horiScaleT , 0, 0,vertScaleT, 0, 0 );
 	loremView->setTransform ( adjustAbsoluteViewT , false );
 
@@ -1213,8 +1212,8 @@ void MainViewWidget::slotZoom ( int z )
 		concernedView = loremView;
 		if ( delta == 1.0 )
 		{
-			double horiScaleT (( double ) QApplication::desktop()->physicalDpiX() / 72.0);
-			double vertScaleT ( ( double ) QApplication::desktop()->physicalDpiY() / 72.0);
+			double horiScaleT (typotek::getInstance()->getDpiX() / 72.0);
+			double vertScaleT ( typotek::getInstance()->getDpiY() / 72.0);
 			QTransform adjustAbsoluteViewT( horiScaleT , 0, 0,vertScaleT, 0, 0 );
 			trans =  adjustAbsoluteViewT;
 		}

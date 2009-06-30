@@ -41,7 +41,6 @@
 #include <QGraphicsPathItem>
 #include <QGraphicsRectItem>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QPainter>
 #include <QLocale>
 #include <QTextCodec>
@@ -698,8 +697,8 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	FT_Set_Char_Size ( m_face,
 	                   qRound( size  * 64 ),
 	                   0,
-	                   QApplication::desktop()->physicalDpiX(),
-	                   QApplication::desktop()->physicalDpiY() );
+			   typotek::getInstance()->getDpiX(),
+			   typotek::getInstance()->getDpiY() );
 
 	// Grab metrics in FONT UNIT
 	ft_error = FT_Load_Glyph ( m_face,
@@ -718,9 +717,9 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		return glyph;
 	}
 
-	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( typotek::getInstance()->getDpiX() / 72.0 );
+	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( typotek::getInstance()->getDpiX() / 72.0 );
+	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( typotek::getInstance()->getDpiX() / 72.0 );
 	
 // 	if(m_FTHintMode != FT_LOAD_NO_HINTING)
 	{
@@ -785,7 +784,7 @@ QImage FontItem::charImage(int charcode, double size)
 		return QImage();
 	
 	// Set size
-	FT_Set_Char_Size ( m_face,  qRound( size  * 64 ), 0, QApplication::desktop()->physicalDpiX(),QApplication::desktop()->physicalDpiY() );
+	FT_Set_Char_Size ( m_face,  qRound( size  * 64 ), 0, typotek::getInstance()->getDpiX(),typotek::getInstance()->getDpiY() );
 	if(FT_Load_Char( m_face, charcode , FT_LOAD_DEFAULT))
 	{
 		releaseFace();
@@ -809,7 +808,7 @@ QImage FontItem::glyphImage(int index, double size)
 		return QImage();
 
 	// Set size
-	FT_Set_Char_Size ( m_face,  qRound( size  * 64 ), 0, QApplication::desktop()->physicalDpiX(),QApplication::desktop()->physicalDpiY() );
+	FT_Set_Char_Size ( m_face,  qRound( size  * 64 ), 0, typotek::getInstance()->getDpiX(),typotek::getInstance()->getDpiY() );
 	if(FT_Load_Glyph( m_face, index , FT_LOAD_DEFAULT))
 	{
 		releaseFace();
@@ -1117,8 +1116,8 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 		sceneList.append ( scene );
 	double sizz = fsize;
 	double scalefactor = sizz / m_face->units_per_EM  ;
-	double pixelAdjustX = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-	double pixelAdjustY = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+	double pixelAdjustX = scalefactor * ( typotek::getInstance()->getDpiX() / 72.0 );
+	double pixelAdjustY = scalefactor * ( typotek::getInstance()->getDpiX() / 72.0 );
 	double pWidth = lineWidth ;
 	const double distance = 20;
 	QList<RenderedGlyph> refGlyph = otf->procstring ( spec, set );
@@ -1414,8 +1413,8 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 		sceneList.append ( scene );
 	double sizz = fsize;
 	double scalefactor = sizz / m_face->units_per_EM  ;
-	double pixelAdjustX = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
-	double pixelAdjustY = scalefactor * ( ( double ) QApplication::desktop()->physicalDpiX() / 72.0 );
+	double pixelAdjustX = scalefactor * ( typotek::getInstance()->getDpiX() / 72.0 );
+	double pixelAdjustY = scalefactor * ( typotek::getInstance()->getDpiX() / 72.0 );
 	double pWidth = lineWidth ;
 	const double distance = 20;
 
@@ -2289,7 +2288,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QCol
 	QRectF savedRect = theOneLineScene->sceneRect();
 
 	double theSize = (size_f == 0) ? typotek::getInstance()->getPreviewSize() : size_f;
-	double pt2px = QApplication::desktop()->physicalDpiX() / 72.0;
+	double pt2px = typotek::getInstance()->getDpiX() / 72.0;
 	double theHeight = theSize * 1.3 * pt2px;
 	double theWidth;
 	if ( size_w == 0 )
@@ -2326,8 +2325,8 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QCol
 		FT_Set_Char_Size ( m_face,
 		                   fsize,
 		                   0,
-		                   QApplication::desktop()->physicalDpiX(),
-		                   QApplication::desktop()->physicalDpiY() );
+				   typotek::getInstance()->getDpiX(),
+				   typotek::getInstance()->getDpiY() );
 
 		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING );
 		if ( ft_error )
@@ -2375,8 +2374,8 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QCol
 			FT_Set_Char_Size ( m_face,
 			                   fsize,
 			                   0,
-			                   QApplication::desktop()->physicalDpiX(),
-			                   QApplication::desktop()->physicalDpiY() );
+					   typotek::getInstance()->getDpiX(),
+					   typotek::getInstance()->getDpiY() );
 			ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
 			if ( ft_error )
 			{

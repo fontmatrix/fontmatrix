@@ -51,20 +51,18 @@
 #include "typotek.h"
 #include "winutils.h"
 
+#include <QDesktopWidget>
 #include <QtGui>
 #include <QTextEdit>
 #include <QTextStream>
 #include <QCloseEvent>
 #include <QFileDialog>
 #include <QDir>
-// #include <QDBusConnection>
 #include <QProgressDialog>
 #include <QProgressBar>
 #include <QDomDocument>
 #include <QProcess>
 #include <QDockWidget>
-// #include <QMutex>
-// #include <QWaitCondition>
 
 #ifdef HAVE_FONTCONFIG
 #include <fontconfig/fontconfig.h>
@@ -150,6 +148,9 @@ typotek::typotek()
 	hyphenator = 0;
 	theHelp = 0;
 	dataLoader = 0;
+
+	m_dpiX = ( double ) QApplication::desktop()->physicalDpiX();
+	m_dpiY = ( double ) QApplication::desktop()->physicalDpiY();
 }
 
 void typotek::initMatrix()

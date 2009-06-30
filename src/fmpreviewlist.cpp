@@ -24,7 +24,6 @@
 #include "mainviewwidget.h"
 
 #include <QDebug>
-#include <QDesktopWidget>
 #include <QSettings>
 #include <QScrollBar>
 

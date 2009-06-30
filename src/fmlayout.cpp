@@ -27,7 +27,6 @@
 // #include <QProgressBar>
 #include <QDebug>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QTime>
 #include <QAction>
 #include <QMenu>
@@ -732,8 +731,8 @@ void FMLayout::doLines()
 		if(!deviceIndy)
 		{
 // 			qDebug()<< "R1 A1"<<refW<<actualW;
-			refW =  refW * 72.0  / ( double ) QApplication::desktop()->physicalDpiX() ;
-			actualW = actualW * 72.0 / ( double ) QApplication::desktop()->physicalDpiX();
+			refW =  refW * 72.0  / typotek::getInstance()->getDpiX() ;
+			actualW = actualW * 72.0 / typotek::getInstance()->getDpiX();
 // 			qDebug()<< "R2 A2"<<refW<<actualW;
 			diff = refW - actualW ;
 			
@@ -752,7 +751,7 @@ void FMLayout::doLines()
 			}
 			double shareLost ( diff / qMax ( 1.0 , ( double ) wsIds.count() ) );
 //  			if(!oldIndy)
-// 				shareLost *= ( double ) QApplication::desktop()->physicalDpiX() / 72.0;
+// 				shareLost *= typotek::getInstance()->getDpiX() / 72.0;
 // 			qDebug() << "D N W"<<diff<<wsIds.count() << shareLost ;
 // 			qDebug()<<"R D F"<< refW << actualW << actualW + ((double)wsIds.count() * shareLost);
 			if ( verticalLayout )
@@ -796,8 +795,8 @@ void FMLayout::doDraw()
 	double pageLeft(theRect.left());
 	
 	double scale = fontSize / theFont->getUnitPerEm();
-	double pixelAdjustX = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
-	double pixelAdjustY = ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
+	double pixelAdjustX = typotek::getInstance()->getDpiX() / 72.0 ;
+	double pixelAdjustY = typotek::getInstance()->getDpiX() / 72.0 ;
 
 
 	for ( int lIdx ( 0 ); lIdx < lines.count() ; ++lIdx )
@@ -1243,7 +1242,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 
 // 	qDebug()<<"SID" ;
 	if(!deviceIndy)
-		ret *= ( double ) QApplication::desktop()->physicalDpiX() / 72.0 ;
+		ret *= typotek::getInstance()->getDpiX() / 72.0 ;
 // 	if ( power )
 // 	{
 // 		distCache[storeStart][storeEnd] = ret*ret;
@@ -1391,7 +1390,7 @@ void FMLayout::slotOption ( int v )
 
 void FMLayout::setAdjustedSampleInter(double theValue)
 {
-	adjustedSampleInter = !deviceIndy ? theValue * ( double ) QApplication::desktop()->physicalDpiX() / 72.0 : theValue;
+	adjustedSampleInter = !deviceIndy ? theValue * typotek::getInstance()->getDpiX() / 72.0 : theValue;
 }
 
 void FMLayout::clearCaches()

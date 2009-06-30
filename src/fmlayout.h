@@ -110,7 +110,7 @@ class FMLayout : public QThread
 		QList<int> hyphenList;
 		GlyphList theString;
 		double lineWidth ( int l );
-		QMutex *layoutMutex;
+//		QMutex *layoutMutex;
 		bool stopIt;
 		int drawnLines;
 		

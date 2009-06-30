@@ -310,7 +310,7 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	rules = new QGraphicsRectItem;
 	instance = this;
 	node = 0;
-	layoutMutex = new QMutex;
+//	layoutMutex = new QMutex;
 	optionHasChanged = true;
 	persistentScene = false;
 
@@ -471,7 +471,7 @@ void FMLayout::endOfRun()
 // 		node = 0;
 // 	}
 // 	qDebug()<<"EOR A"<<lines.count();
-	layoutMutex->unlock();
+//	layoutMutex->unlock();
 	if ( stopIt ) // We’re here after a interruption
 	{
 		stopIt = false;

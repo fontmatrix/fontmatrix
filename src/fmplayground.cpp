@@ -135,6 +135,14 @@ void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
 	{
 		closeLine();
 	}
+	else if(e->key() == Qt::Key_Backspace)
+	{
+		if(curString.count() > 0)
+		{
+			curString.chop(1);
+			updateLine();
+		}
+	}
 	else if(!e->text().isEmpty())
 	{
 		curString += e->text();

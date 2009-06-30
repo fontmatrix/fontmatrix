@@ -12,18 +12,43 @@
 
 #include "fmplayground.h"
 #include "fontitem.h"
+#include "fmglyphhighlight.h"
+#include "typotek.h"
+#include "mainviewwidget.h"
 
 #include <QScrollBar>
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QDebug>
 
+#ifdef HAVE_QTOPENGL
+#include <QGLWidget>
+#endif
+
 FMPlayGround::FMPlayGround ( QWidget *parent )
 		:QGraphicsView ( parent )
 {
+
+#ifdef HAVE_QTOPENGL
+	QGLFormat glfmt;
+	glfmt.setSampleBuffers ( true );
+	QGLWidget *glwgt = new QGLWidget ( glfmt );
+	if ( glwgt->format().sampleBuffers() )
+	{
+		setViewport ( glwgt );
+		qDebug() <<"opengl enabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+	}
+	else
+	{
+		qDebug() <<"opengl disabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
+		delete glwgt;
+	}
+#endif
+
 	setInteractive ( true );
 	setDragMode ( RubberBandDrag );
 	setRenderHint ( QPainter::Antialiasing );
+	setBackgroundBrush(Qt::white);
 
 	isPanning = false;
 	CursorPos.rx() = 100;
@@ -38,9 +63,10 @@ FMPlayGround::~ FMPlayGround()
 
 void FMPlayGround::mousePressEvent ( QMouseEvent * e )
 {
+	closeLine();
+	mouseStartPoint =  e->pos() ;
 	if ( e->button() == Qt::MidButton )
 	{
-		mouseStartPoint =  e->pos() ;
 		isPanning = true;
 		return;
 	}
@@ -53,6 +79,13 @@ void FMPlayGround::mouseReleaseEvent ( QMouseEvent * e )
 	{
 		isPanning = false;
 		return;
+	}
+	else if((e->button() == Qt::LeftButton)
+		&& (QRect( mouseStartPoint.x() - 2, mouseStartPoint.y() - 2, 4, 4).contains(e->pos())) )
+	{
+		CursorPos = mapToScene( e->pos() );
+		double h(typotek::getInstance()->getTheMainView()->playgroundFontSize());
+		new FMGlyphHighlight(scene(), QRectF(CursorPos.x() -2, CursorPos.y() - h , 2, h));
 	}
 	QGraphicsView::mouseReleaseEvent ( e );
 }
@@ -87,43 +120,85 @@ void FMPlayGround::wheelEvent ( QWheelEvent * e )
 	}
 }
 
-#define DATA_PLAYGROUND 999999
+
+void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
+{
+	if(e->key() == Qt::Key_Delete)
+		removeLine();
+	else if((e->key() == Qt::Key_Enter)
+		|| (e->key() == Qt::Key_Return)
+		|| (e->key() == Qt::Key_Escape))
+	{
+		closeLine();
+	}
+	else if(!e->text().isEmpty())
+	{
+		curString += e->text();
+		updateLine();
+	}
+}
+
 void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, double fontS )
 {
 
 	ensureVisible ( CursorPos.x(), CursorPos.y(), spec.count(), fontS * 1.5 );
-
 	bool backedR ( fontI->rasterFreetype() );
 	fontI->setFTRaster ( false );
-	fontI->renderLine ( scene() , spec, CursorPos, spec.count() * fontS * 2.0, fontS, 1 ,false );
+	TextProgression *tp = TextProgression::getInstance();
+	QPointF pen(CursorPos);
+
+	foreach(RenderedGlyph g, fontI->glyphs( spec , fontS ) )
+	{
+		QGraphicsPathItem* glyph(fontI->itemFromGindex(g.glyph, fontS));
+		if(!glyph)
+			continue;
+		curLine << glyph;
+		if ( tp->inLine() == TextProgression::INLINE_RTL )
+		{
+			pen.rx() -= g.xadvance ;
+		}
+		else if ( tp->inLine() == TextProgression::INLINE_BTT )
+		{
+			pen.ry() -= g.yadvance ;
+		}
+		glyph->setPen(Qt::NoPen);
+		scene()->addItem(glyph);
+		glyph->setPos ( pen.x() + ( g.xoffset ),
+				pen.y() + ( g.yoffset ) );
+		if ( tp->inLine() == TextProgression::INLINE_LTR )
+			pen.rx() += g.xadvance ;
+		else if ( tp->inLine() == TextProgression::INLINE_TTB )
+			pen.ry() += g.yadvance;
+
+	}
 	fontI->setFTRaster ( backedR );
 
-	QList< QGraphicsItem* > itemList ( scene()->items() );
-	QList< QGraphicsItem* > tmpList;
-	for ( int i ( 0 ); i < itemList.count(); ++i )
+}
+
+void FMPlayGround::updateLine()
+{
+	FontItem * fi(typotek::getInstance()->getTheMainView()->selectedFont());
+	if(fi)
 	{
-		if ( itemList[i]->data( DATA_PLAYGROUND ).toString() == "playitem")
-		{
-			qDebug()<<"Item("<<i<<") is already a playground item";
-		}
-		else
-		{
-			qDebug()<<"Item("<<i<<") added to playground";
-			tmpList << itemList[i];
-			itemList[i]->setData ( DATA_PLAYGROUND, "playitem" );
-		}
+		foreach(QGraphicsItem * item, curLine)
+			delete item;
+		curLine.clear();
+		displayGlyphs(curString, fi, typotek::getInstance()->getTheMainView()->playgroundFontSize());
 	}
+}
 
-	QGraphicsItemGroup *git ( scene()->createItemGroup ( tmpList ) );
-	git->setData ( GLYPH_DATA_FONTNAME , fontI->fancyName() );
-	git->setData ( DATA_PLAYGROUND, "playitem" );
-	git->setToolTip(fontI->fancyName());
-	git->setFlags ( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable );
-	git->setCursor(QCursor(	Qt::OpenHandCursor ) );
-	glyphLines << git;
-	
-	CursorPos.ry() += fontS * 1.5;
-
+void FMPlayGround::closeLine()
+{
+	if(curLine.count() > 0)
+	{
+		QGraphicsItemGroup *git(scene()->createItemGroup(curLine));
+		CursorPos.ry() += typotek::getInstance()->getTheMainView()->playgroundFontSize() * 1.5;
+		curLine.clear();
+		curString.clear();
+		git->setFlags ( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable );
+		git->setCursor(QCursor(	Qt::OpenHandCursor ) );
+		glyphLines << git;
+	}
 }
 
 QStringList FMPlayGround::fontnameList()
@@ -168,4 +243,22 @@ QRectF FMPlayGround::getMaxRect()
 	qDebug()<<"FMPlayGround::getMaxRect = "<< allrect;
 	return allrect;
 }
+
+void FMPlayGround::removeLine()
+{
+	QList<QGraphicsItemGroup*> tmpL(glyphLines);
+	foreach(QGraphicsItemGroup* ig,  tmpL)
+	{
+		if(ig->isSelected())
+		{
+			scene()->removeItem(ig);
+			glyphLines.removeAll( ig );
+			delete ig;
+		}
+	}
+}
+
+
+
+
 

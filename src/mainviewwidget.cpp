@@ -252,8 +252,6 @@ void MainViewWidget::doConnect()
 	
 	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
-
-	connect ( pushToPlayButton, SIGNAL(clicked ( bool ) ), this, SLOT(slotPushOnPlayground()) );
 	
 	connect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
 	connect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
@@ -320,8 +318,6 @@ void MainViewWidget::disConnect()
 	
 	disconnect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	disconnect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
-
-	disconnect ( pushToPlayButton, SIGNAL(clicked ( bool ) ), this, SLOT(slotPushOnPlayground()) );
 	
 	disconnect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
 	disconnect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
@@ -1548,13 +1544,6 @@ void MainViewWidget::slotSampleChanged()
 void MainViewWidget::refillSampleList()
 {
 	sampleTextTree->clear();
-	playString->clear();
-
-//	QString pList( typo->namedSample(typo->defaultSampleName()).split("\n") );
-//	foreach(QString pString, pList)
-//	{
-//		playString->addItem(pString.left( MAX_PALYSTRING_LEN ));
-//	}
 
 	QTreeWidgetItem * curIt = 0;
 	QMap<QString, QList<QString> > sl = typo->namedSamplesNames();
@@ -1928,22 +1917,6 @@ void MainViewWidget::slotRemoteFinished()
 void MainViewWidget::slotProgressionChanged()
 {
 	slotView(true);
-}
-
-void MainViewWidget::slotPushOnPlayground()
-{
-	QString spec(playString->currentText());
-	if(spec.isEmpty())
-		return;
-
-	if(!theVeryFont)
-		return;
-
-	double fSize(playFontSize->value());
-
-	playView->displayGlyphs(spec, theVeryFont, fSize);
-// 	playString->clearEditText();
-
 }
 
 QString MainViewWidget::sampleName()
@@ -2320,4 +2293,7 @@ void MainViewWidget::forceReloadSelection()
 	m_forceReloadSelection = true;
 }
 
-
+double MainViewWidget::playgroundFontSize()
+{
+	return playFontSize->value();
+}

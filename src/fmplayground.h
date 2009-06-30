@@ -24,22 +24,31 @@ class FMPlayGround : public QGraphicsView
 	public:
 		FMPlayGround(QWidget *parent);
 		~FMPlayGround();
-		
-		void displayGlyphs(const QString& spec, FontItem* fontI, double fontS);
+
 		QStringList fontnameList();
 		QList< QGraphicsItemGroup* > getLines();
 		QRectF getMaxRect();
+
+		void updateLine();
+		void closeLine();
 		
 	protected:
 		void mousePressEvent ( QMouseEvent * e ) ;
 		void mouseReleaseEvent ( QMouseEvent * e )  ;
 		void mouseMoveEvent ( QMouseEvent * e ) ;
 		void wheelEvent ( QWheelEvent * e );
+
+		void keyReleaseEvent(QKeyEvent *e);
 		
 	private:
+		void displayGlyphs(const QString& spec, FontItem* fontI, double fontS);
 		QPointF mouseStartPoint;
 		bool isPanning;
 		QList<QGraphicsItemGroup*> glyphLines;
+		QList< QGraphicsItem* > curLine;
+		QString curString;
+
+		void removeLine();
 		
 		QPointF CursorPos;
 		

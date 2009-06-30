@@ -185,10 +185,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotUpdateClassDescription(const QString& ks);
 		void slotPanoseFilter();
 		
-		
-		//playground
-		void slotPushOnPlayground();
-		
 		//lists
 		void slotSelectFromFolders(const QString&);
 		
@@ -248,7 +244,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void restoreSplitterState();
 
 		void forceReloadSelection();
-		
+
+		double playgroundFontSize();
+
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;
 };

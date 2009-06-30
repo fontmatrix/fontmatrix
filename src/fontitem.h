@@ -342,12 +342,14 @@ class FontItem : public QObject
 // 		int debug_size();
 
 		void adjustGlyphsPerRow ( int width );
-		bool isOpenType(){return m_isOpenType;};
+		bool isOpenType(){return m_isOpenType;}
 		FMOtf *takeOTFInstance();
 		void releaseOTFInstance(FMOtf * rotf);
+		// Returns a flat list of OT features
+		QStringList features();
 		
-		void setFTRaster(bool f){m_rasterFreetype = f;};
-		bool rasterFreetype()const{return m_rasterFreetype;};
+		void setFTRaster(bool f){m_rasterFreetype = f;}
+		bool rasterFreetype()const{return m_rasterFreetype;}
 		
 		void setProgression(int p){m_progression = p;}
 		int progression()const{return m_progression;}

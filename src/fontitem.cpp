@@ -2898,6 +2898,36 @@ void FontItem::releaseOTFInstance ( FMOtf * rotf )
 	releaseFace();
 }
 
+QStringList FontItem::features()
+{
+	QStringList ret;
+	if(!takeOTFInstance())
+	{
+		releaseOTFInstance(otf);
+		return ret;
+	}
+	
+	foreach ( QString table, otf->get_tables() )
+	{
+		otf->set_table ( table );
+		foreach ( QString script, otf->get_scripts() )
+		{
+			otf->set_script ( script );
+			foreach ( QString lang, otf->get_langs() )
+			{
+				otf->set_lang ( lang );
+				foreach ( QString feature, otf->get_features() )
+				{
+					if(ret.contains(feature))
+						ret << feature;
+				}
+			}
+		}
+	}
+	releaseOTFInstance(otf);
+	return ret;
+}
+
 int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcodeIsAGlyphIndex )
 {
 	ensureFace();

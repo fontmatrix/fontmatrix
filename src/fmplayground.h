@@ -31,6 +31,7 @@ class FMPlayGround : public QGraphicsView
 
 		void updateLine();
 		void closeLine();
+		void deselectAll();
 		
 	protected:
 		void mousePressEvent ( QMouseEvent * e ) ;

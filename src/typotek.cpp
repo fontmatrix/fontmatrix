@@ -1961,7 +1961,7 @@ void typotek::printPlayground()
 
 	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
 	QRectF sourceR( theMainView->getPlayground()->getMaxRect() );
-
+	theMainView->getPlayground()->deselectAll();
 	theMainView->getPlayground()->scene()->render(&aPainter, targetR ,sourceR, Qt::KeepAspectRatio );
 }
 

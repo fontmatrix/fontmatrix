@@ -125,9 +125,13 @@ void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
 {
 	if(e->key() == Qt::Key_Delete)
 		removeLine();
+	else if(e->key() == Qt::Key_Escape)
+	{
+		deselectAll();
+		closeLine();
+	}
 	else if((e->key() == Qt::Key_Enter)
-		|| (e->key() == Qt::Key_Return)
-		|| (e->key() == Qt::Key_Escape))
+		|| (e->key() == Qt::Key_Return))
 	{
 		closeLine();
 	}
@@ -198,6 +202,15 @@ void FMPlayGround::closeLine()
 		git->setFlags ( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable );
 		git->setCursor(QCursor(	Qt::OpenHandCursor ) );
 		glyphLines << git;
+	}
+}
+
+
+void FMPlayGround::deselectAll()
+{
+	foreach(QGraphicsItemGroup *gi, glyphLines)
+	{
+		gi->setSelected(false);
 	}
 }
 

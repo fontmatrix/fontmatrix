@@ -3626,12 +3626,12 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="38"/>
         <source>Ogham</source>
-        <translation>Огхам</translation>
+        <translation>Огамическое письмо</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="39"/>
         <source>Runic</source>
-        <translation>Рунический</translation>
+        <translation>Руническое письмо</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="40"/>
@@ -3696,7 +3696,7 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="52"/>
         <source>Sundanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Сунданский</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="53"/>
@@ -3706,7 +3706,7 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="54"/>
         <source>Ol Chiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Ол Чики</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="55"/>
@@ -4121,12 +4121,12 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="137"/>
         <source>Linear B Syllabary</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Линейное слоговое письмо А</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="138"/>
         <source>Linear B Ideograms</source>
-        <translation type="unfinished"></translation>
+        <translation>Линейное идеографическое письмо А</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="139"/>
@@ -4146,57 +4146,57 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="142"/>
         <source>Phaistos Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Фестский диск</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="143"/>
         <source>Lycian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ликийский</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="144"/>
         <source>Carian</source>
-        <translation type="unfinished"></translation>
+        <translation>Карийский</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="145"/>
         <source>Old Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>Этрусский</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="146"/>
         <source>Gothic</source>
-        <translation type="unfinished"></translation>
+        <translation>Готское письмо</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="147"/>
         <source>Ugaritic</source>
-        <translation type="unfinished"></translation>
+        <translation>Угаритский</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="148"/>
         <source>Old Persian</source>
-        <translation type="unfinished"></translation>
+        <translation>Древнеперсидский</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="149"/>
         <source>Deseret</source>
-        <translation type="unfinished"></translation>
+        <translation>Дезерет</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="150"/>
         <source>Shavian</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорописный алфавит Бернарда Шоу</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="151"/>
         <source>Osmanya</source>
-        <translation type="unfinished"></translation>
+        <translation>Сомалийское письмо</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="152"/>
         <source>Cypriot Syllabary</source>
-        <translation type="unfinished"></translation>
+        <translation>Кипрское письмо</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="153"/>
@@ -4211,7 +4211,7 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="155"/>
         <source>Kharoshthi</source>
-        <translation type="unfinished"></translation>
+        <translation>Кхароштхи</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="156"/>
@@ -4246,7 +4246,7 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="162"/>
         <source>Counting Rod Numerals</source>
-        <translation type="unfinished"></translation>
+        <translation>Счетные палочки</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="163"/>
@@ -4256,12 +4256,12 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="164"/>
         <source>Mahjong Tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Кости для игры в маджонг</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="165"/>
         <source>Domino Tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Кости для игры в домино</translation>
     </message>
     <message>
         <location filename="../langs/unicode/uniblocks.cxx" line="166"/>

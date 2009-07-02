@@ -15,6 +15,7 @@
 
 #include <QGraphicsView>
 #include <QPointF>
+#include <QTimer>
 
 class FontItem;
 
@@ -40,6 +41,8 @@ class FMPlayGround : public QGraphicsView
 		void wheelEvent ( QWheelEvent * e );
 
 		void keyReleaseEvent(QKeyEvent *e);
+
+		void leaveEvent(QEvent *e);
 		
 	private:
 		void displayGlyphs(const QString& spec, FontItem* fontI, double fontS);
@@ -51,10 +54,17 @@ class FMPlayGround : public QGraphicsView
 
 		void removeLine();
 		
+		// this cursor is at the begining of a line
 		QPointF CursorPos;
+		// this one at the pen position
+		QPointF BlinkPos;
+		QTimer *CursorTimer;
 		
 	signals:
 		void pleaseZoom(int);
+
+	private slots:
+		void blinkCursor();
 };
 
 

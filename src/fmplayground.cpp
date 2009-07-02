@@ -53,6 +53,11 @@ FMPlayGround::FMPlayGround ( QWidget *parent )
 	isPanning = false;
 	CursorPos.rx() = 100;
 	CursorPos.ry() = 100;
+	BlinkPos = CursorPos;
+	CursorTimer = new QTimer(this);
+	CursorTimer->setInterval(1000);
+	CursorTimer->stop();
+	connect(CursorTimer, SIGNAL(timeout()), this, SLOT(blinkCursor()));
 }
 
 FMPlayGround::~ FMPlayGround()
@@ -83,9 +88,9 @@ void FMPlayGround::mouseReleaseEvent ( QMouseEvent * e )
 	else if((e->button() == Qt::LeftButton)
 		&& (QRect( mouseStartPoint.x() - 2, mouseStartPoint.y() - 2, 4, 4).contains(e->pos())) )
 	{
-		CursorPos = mapToScene( e->pos() );
-		double h(typotek::getInstance()->getTheMainView()->playgroundFontSize());
-		new FMGlyphHighlight(scene(), QRectF(CursorPos.x() -2, CursorPos.y() - h , 2, h));
+		BlinkPos = CursorPos = mapToScene( e->pos() );
+		blinkCursor();
+		CursorTimer->start();
 	}
 	QGraphicsView::mouseReleaseEvent ( e );
 }
@@ -134,6 +139,8 @@ void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
 		|| (e->key() == Qt::Key_Return))
 	{
 		closeLine();
+		blinkCursor();
+		CursorTimer->start();
 	}
 	else if(e->key() == Qt::Key_Backspace)
 	{
@@ -148,6 +155,11 @@ void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
 		curString += e->text();
 		updateLine();
 	}
+}
+
+void FMPlayGround::leaveEvent(QEvent *e)
+{
+	closeLine();
 }
 
 void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, double fontS )
@@ -184,6 +196,7 @@ void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, doubl
 
 	}
 	fontI->setFTRaster ( backedR );
+	BlinkPos = pen;
 
 }
 
@@ -201,6 +214,7 @@ void FMPlayGround::updateLine()
 
 void FMPlayGround::closeLine()
 {
+	CursorTimer->stop();
 	if(curLine.count() > 0)
 	{
 		QGraphicsItemGroup *git(scene()->createItemGroup(curLine));
@@ -214,6 +228,7 @@ void FMPlayGround::closeLine()
 			git->setToolTip(QString("<strong>%1</strong><br/><em>%2<em/>").arg(fi->fancyName()).arg(fi->path()));
 		glyphLines << git;
 	}
+	BlinkPos = CursorPos;
 }
 
 
@@ -283,6 +298,10 @@ void FMPlayGround::removeLine()
 }
 
 
-
+void FMPlayGround::blinkCursor()
+{
+	double h(typotek::getInstance()->getTheMainView()->playgroundFontSize());
+	new FMGlyphHighlight(scene(), QRectF(BlinkPos.x() -1, BlinkPos.y() - h , 1, h));
+}
 
 

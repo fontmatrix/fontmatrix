@@ -47,8 +47,8 @@ FMInfoDisplay::FMInfoDisplay(FontItem * font)
 	html += "<head>\n";
 	html += "<title>" + font->fancyName() + "</title>\n";
 	html += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
-	html += "<link rel=\"stylesheet\" href=\"file://" + typotek::getInstance()->getInfoStyle() + "\" type=\"text/css\" />\n";
-	html += "<script type=\"text/javascript\" src=\"file://"+ FMPaths::ResourcesDir() +"fontmatrix.js\" />\n";
+	html += "<link rel=\"stylesheet\" href=\"" + QUrl::fromLocalFile(typotek::getInstance()->getInfoStyle()).toString() + "\" type=\"text/css\" />\n";
+	html += "<script type=\"text/javascript\" src=\""+ QUrl::fromLocalFile(FMPaths::ResourcesDir() + "fontmatrix.js" ).toString() +" \" />\n";
 	html += "</head>\n<body>\n";
 	html += writeSVGPreview(font);
 	html += "<div id=\"file\">" + font->path() + "</div>\n" ;

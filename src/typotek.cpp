@@ -920,7 +920,7 @@ void typotek::readSettings()
 	fonteditorPath = settings.value ( "FontEditor", "/usr/bin/fontforge" ).toString();
 	useInitialTags = settings.value ( "UseInitialTags", false ).toBool();
 	showFontListDialog = settings.value("ShowImportedFonts", true).toBool();
-	previewSize = settings.value("Preview/Size", 15.0).toDouble();
+	previewSize = settings.value("Preview/Size", 28.0).toDouble();
 	previewRTL = settings.value("Preview/RTL", false).toBool();
 	previewSubtitled = settings.value("Preview/Subtitled", false).toBool();
 	m_theWord = settings.value("Preview/Word", "<name>" ).toString();

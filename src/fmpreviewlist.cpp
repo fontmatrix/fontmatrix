@@ -56,6 +56,46 @@ FMPreviewIconEngine::FMPreviewIconEngine()
 	}
 }
 
+QVector<QRgb> FMPreviewIconEngine::actualSelPalette(const QVector<QRgb>& orig)
+{
+	QRgb r(QApplication::palette().color(QPalette::Highlight).rgb());
+	QVector<QRgb> ret;
+	for(int i(0); i<256; ++i)
+		ret << r;
+	QColor bgColor(QApplication::palette().color(QPalette::Base));
+	QColor fgColor(QApplication::palette().color(QPalette::Text));
+
+	// In m_selPalette, background is at the begining of the vector
+
+	bool DarkOnLight(fgColor.rgb() < bgColor.rgb());
+	// order is dark first, light last
+	QMap<QRgb, int> order;
+	for(int i(0); i < orig.count(); ++i)
+		order[orig[i]] = i;
+	QList<int> oIdx(order.values());
+	if(DarkOnLight)
+	{
+		// oIdx has background values at the end
+		int v(0);
+		for(int c(oIdx.count() - 1); c >= 0 ; --c)
+		{
+			ret [oIdx[c]] =  m_selPalette[v];
+			++v;
+		}
+	}
+	else
+	{
+		int v(0);
+		for(int c(0); c < oIdx.count() ; c++)
+		{
+			ret [oIdx[c]] =  m_selPalette[v];
+			++v;
+		}
+	}
+	return ret;
+}
+
+
 FMPreviewIconEngine::~FMPreviewIconEngine()
 {
 //	if(m_p)
@@ -71,7 +111,8 @@ void FMPreviewIconEngine::paint ( QPainter * painter, const QRect & rect, QIcon:
 		QRect r(0 , 0 , rect.width(), rect.height());
 		if(mode == QIcon::Selected)
 		{
-			QImage hm(m_p.toImage().convertToFormat(QImage::Format_Indexed8, m_selPalette));
+			QImage hm(m_p.toImage().convertToFormat(QImage::Format_Indexed8));
+			hm.setColorTable(actualSelPalette(hm.colorTable()));
 			painter->drawPixmap(r, QPixmap::fromImage(hm) , r);
 		}
 		else

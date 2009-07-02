@@ -43,6 +43,7 @@ class FMPreviewIconEngine : public QIconEngineV2
 	private:
 		QPixmap m_p;
 		static QVector<QRgb> m_selPalette;
+		QVector<QRgb> actualSelPalette(const QVector<QRgb>& orig);
 
 };
 

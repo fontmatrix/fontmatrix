@@ -23,17 +23,36 @@
 
 #include <QListView>
 #include <QAbstractListModel>
+#include <QIconEngineV2>
+#include <QPixmap>
 
 class FontItem;
 class MainViewWidget;
 class QListView;
+
+
+// Rather than fighting against Qt to not resize our icons, draw them ourselves.
+class FMPreviewIconEngine : public QIconEngineV2
+{
+	public:
+		FMPreviewIconEngine();
+		~FMPreviewIconEngine();
+		void paint ( QPainter * painter, const QRect & rect, QIcon::Mode mode, QIcon::State state );
+		void addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, QIcon::State state );
+
+	private:
+		QPixmap m_p;
+		static QVector<QRgb> m_selPalette;
+
+};
+
 
 class FMPreviewView : public QListView
 {
 	Q_OBJECT
 	public:
 		FMPreviewView(QWidget * parent = 0);
-		~FMPreviewView(){};
+		~FMPreviewView(){}
 		int getUsedWidth() const{return usedWidth;}
 	protected:
 		void resizeEvent ( QResizeEvent * event );

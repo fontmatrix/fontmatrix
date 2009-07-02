@@ -209,6 +209,9 @@ void FMPlayGround::closeLine()
 		curString.clear();
 		git->setFlags ( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable );
 		git->setCursor(QCursor(	Qt::OpenHandCursor ) );
+		FontItem * fi(typotek::getInstance()->getTheMainView()->selectedFont());
+		if(fi)
+			git->setToolTip(QString("<strong>%1</strong><br/><em>%2<em/>").arg(fi->fancyName()).arg(fi->path()));
 		glyphLines << git;
 	}
 }

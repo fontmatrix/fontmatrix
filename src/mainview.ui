@@ -140,10 +140,10 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Settings</string>
+             <string>Sample text rendering options</string>
             </property>
             <property name="text">
-             <string>Display Settings</string>
+             <string>Display settings</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -174,10 +174,10 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>OpenType</string>
+             <string>Enable and disable OpenType features implemented in the font</string>
             </property>
             <property name="text">
-             <string>OpenType</string>
+             <string>OpenType features</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -217,8 +217,11 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="toolTip">
+             <string>Choose a sample text from your collection</string>
+            </property>
             <property name="text">
-             <string>Sample</string>
+             <string>Samples collection</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -446,7 +449,7 @@
                     <string>FreeType based rasterized rendering</string>
                    </property>
                    <property name="text">
-                    <string>FreeType</string>
+                    <string>Rasterized</string>
                    </property>
                    <property name="checked">
                     <bool>true</bool>
@@ -498,10 +501,10 @@
                     </sizepolicy>
                    </property>
                    <property name="toolTip">
-                    <string>Vectorized rendering using native toolkit (Qt)</string>
+                    <string>Freely scalable vector rendering using native toolkit (Qt)</string>
                    </property>
                    <property name="text">
-                    <string>Native Qt objects</string>
+                    <string>Vector</string>
                    </property>
                   </widget>
                  </item>

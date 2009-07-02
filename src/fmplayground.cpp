@@ -202,6 +202,7 @@ void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, doubl
 
 void FMPlayGround::updateLine()
 {
+	CursorTimer->stop();
 	FontItem * fi(typotek::getInstance()->getTheMainView()->selectedFont());
 	if(fi)
 	{
@@ -209,7 +210,9 @@ void FMPlayGround::updateLine()
 			delete item;
 		curLine.clear();
 		displayGlyphs(curString, fi, typotek::getInstance()->getTheMainView()->playgroundFontSize());
+		blinkCursor();
 	}
+	CursorTimer->start();
 }
 
 void FMPlayGround::closeLine()

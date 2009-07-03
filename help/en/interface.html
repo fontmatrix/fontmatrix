@@ -2,72 +2,147 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Fontmatrix User Manual - Understanding and using Fontmatrix</title>
+<title>Fontmatrix User Manual - User interface</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="helpbase.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 
-<h2>Understanding and using Fontmatrix</h2>
+<h2>User interface</h2>
 
-<h3>Intro</h3>
+<p>Fontmatrix has both traditionally and not quite traditionally implemented 
+functionality.</p>
 
-<p>In the main view, each font is drawn with its own typeface. 
-You can customize the text to be drawn in this view for every 
-font face. Custom text can include Unicode symbols.</p>
+<p>Most important user interface parts you will see are:</p>
+
+<ul>
+<li>Menu bar, on top of the window</li>
+<li>Main area, with tabs representing one or another mode</li>
+<li><em>Browse Fonts</em> sidebar</li>
+<li><em>Tags</em> sidebar</li>
+<li>Status bar</li>
+<li>System tray icon</li>
+</ul>
+
+<h3>Menu bar</h3>
+
+<p>There is nothing special about menu bar in Fontmatrix. Menu items are 
+logically divided into 7 top level menus:</p>
+
+<ul>
+<li><em>File</em> menu collects everything related to input and output</li>
+<li><em>Edit</em> menu collects everything related to items currently selected or filtered in search fonts sidebar</li>
+<li><em>Browse</em> menu has command for navigating inside fonts sidebar</li>
+<li><em>View</em> menu controls visibility of sidebars</li>
+<li><em>Scripts</em> menu collects everything related to internal scripting</li>
+<li><em>Service</em> menu groups various additional tools that you don't usually use on daily basis</li>
+<li><em>Help</em> menu allows to open this help system and an About dialog</li>
+</ul>
+
+<h3>Main area</h3>
+
+<p>Main area of the window is using tabbed interface to split different 
+functionality. First three tabs (<em>Font Information</em>, <em>Sample Text</em> 
+and <em>Glyphs</em>) are related to viewing fonts. The other three tabs 
+(<em>Playground</em>, <em>Classification</em> and <em>Compare</em>) are related 
+to refining selection of fonts and selecting exactly the ones you need by means 
+of comparison.</p>
+
+<p>Main area and <em>Browse Fonts</em> sidebar have mostly one-way connection: changes in the <em>Browse Fonts</em> sidebar affect content of the main area and not the other way round:</p>
+
+<ul>
+<li><a href="viewing_overview.html"><em>Font Information</em></a> tab displays a summary on a currently selected font.</li>
+<li><a href="viewing_sample_text.html"><em>Sample Text</em></a> tab renders a text using a currently selected font.</li>
+<li><a href="viewing_glyphs_chart.html"><em>Glyphs</em></a> tab displays a chart of glyphs present in a currently selected font and grouped by Unicode blocks.</li>
+<li><a href="comparisons_fonts.html"><em>Playground</em></a> tab allows previeing and comparing single lines of custom text rendered using a currently selected font.</li>
+<li><a href="comparisons_glyphs.html"><em>Compare</em></a> tab allows comparing glyphs of fonts selected in the <em>Browse Fonts</em> sidebar.</li>
+</ul>
+
+<p>The only exception is <a href="search_in_panose.html"><em>Classification</em></a> 
+tab which has two-way connection with the sidebar: it both updates list of 
+fonts in the sidebar to filter fonts that have particular PANOSE defined 
+characteristics and reacts to changes in the sidebar.</p>
+
+<h3>Browse Fonts sidebar</h3>
+
+<p>This sidebar is the gateway to your fonts collection. What it does apart 
+from letting you search for fonts using metadata queries (discussed in a 
+<a href="search_in_generic_metadata.html">dedicated chapter</a>) is 
+a) listing fonts already added to the database and b) listing fonts available 
+in the local system and mounted remote systems. This functionality is divided 
+into three tabs.</p>
+
+<h4>Names</h4>
+
+<p>Fonts that are already added to the database are listed here 
+and sorted alphabetically by the first letter of a font's typeface. They are 
+also grouped in several levels: the first level in initial letter of a name, 
+the second level is name of the typeface and the last level is name of the 
+variant (style). Activation and deactivation of fonts is explained 
+<a href="management_activation.html">separately</a>.</p>
+
+<p><img src="images/browse-fonts-names-tab.png" /></p>
+
+<p>Clicking <em>Collapse or expand</em> opens a drop-down menu with items 
+controlling view of the hierarchy described before: you can either collapse or 
+expand items up to the first letter group (upper level).</p>
+
+<p><em>Show face boxes</em> button toggles visibility of checkboxes in front of 
+font family faces allowing or forbidding you to selectively activate or 
+deactivate them in the system.</p>
+
+<h4>Previews</h4>
+
+<p>In this tab Fontmatrix renders samples of a short text with every filtered 
+font sorted alpahabetically.</p>
+
+<p><img src="images/browse-fonts-previews-tab.png" /></p>
+
+<p>The text and font size of previews can be changed below previews. If you use 
+some custom text, you might like turning on subtitles for every preview telling 
+you what font is used. This can be done in <em>Display</em> tab of 
+<em>Preferences</em> dialog along with choosing font and font size used for 
+those subtitles.</p>
+
+<p>By default however previews render names of fonts themselves. This is done 
+using special commands with self-explanatory names: &lt;name&gt;, &lt;family&gt; 
+and &lt;variant&gt;.</p>
+
+<h4>Folders</h4>
+
+<p><img src="images/browse-fonts-folders-tab.png" /></p>
 
 <p>You can preview typefaces of installed fonts listed in the 
 Windows Fonts view, typefaces of fonts listed in the List 
 view, or you can select any folder in the Folders view preview 
 all typefaces located in the selected folder.</p>
 
-		<h3><strong>User Interface</strong></h3>
-		<div class="par">
-		Main window is divided in two major parts. On the left side there are <strong>Font listing</strong>
-		and <strong>Preview </strong> tabs, while right hand side displays various info about each font, logically
-		separated into <strong>Info</strong>, <strong>Sample Text</strong>, <strong>Glyphs</strong> and <strong>Tags
-		</strong> tabs.</div>
+<h3>Tags sidebar</h3>
 
-		<h4><strong>Browsing The Font List</strong></h4>
-		<div class="par">Navigating through the list is simplified by multiple levels of depth:<br />Fonts are sorted by
-		the first letter of font typeface, full typeface name and the deepest level&nbsp;&mdash; the variant. On the last two levels
-		fonts can be activated. Enabling typefaces is done by clicking on the checkbox in front of the name. You can
-		selectively enable just singular variants at the lowest level.<br />The chosen font is automatically synchronized
-		with the preview tab, framing the preview in the opposite direction. You can use Ctrl+Space to switch between the
-		tabs on the top.<br />There are additional helpers below: 'View all' and 'View activated' which are pretty self
-		explanatory.<br clear="all" />
-		When you finally get familiar with your collection of fonts you can use the search mechanism to narrow a selection
-		of fonts. Searching is optionally case sensitive. <br>The main reason this program is called a font manager is  its
-		most powerful features are tagging fonts and organizing tags into collections for specific use. More info on that is
-		to come later.</div>
+<p>FIXME</p>
 
-		<h3>Displaying Fonts</h3>
-		<div class="par">Fontmatrix offers you detailed information about your fonts. There are three types of information
-		this font manager can provide:
-		<ul>
-			<li><strong>Font Info Tab</strong>&nbsp;&mdash; The font info shows the the internal text fields which display copyright
-				information, number of glyphs, character map coverage, the Postscript name, which may be different to the
-				displayed name in some applications and sometimes a version string. On occassion, there will be descriptive
-				text and other information. </li>
-			<li><strong>Sample Text Tab</strong> By default this panel shows a sample of text and numbers from basic Latin-1,
-				but you can add your own Unicode text samples in a number of languages and scripts to display the most important
-				glyphs contained in a font. For example you can add a snippet of Arabic for use with fonts containing Arabic
-				glyphs or add other non-Latin text for non-Latin fonts. Even most non-Latin fonts do have a basic range of
-				Latin glyphs, even if the font is not used primarily for Latin texts. <br>When you open an Open Type Font,
-				below there will be an additional panel which displays the advanced Open Type features available within the
-				font. With <strong>Absolute Mode</strong> Fontmatrix uses the basic Qt library to display the glyphs. When it
-				renders onto the screen, Qt does not know that’s a glyph and does not optimize the rendering. It’s the reason
-				why its display is not optimal at a small size. Quality and precision increases with larger sizes. With
-				<strong>Freetype View</strong> is the well-known glyph rendering specialist. So we ask Freetype
-				to <em>rasterize</em> a path or otherwise create a bitmap (with antialiasing) and get the result in a simple bitmap
-				display. Thus the display has good quality even at small size (try a 4/5 pt to get the actual idea of the
-				Freetype team's skill! It’s amazing). But as it is a raster, quality will decrease when you zoom in.</li>
-			<li><strong>Glyph </strong>FIXME</li>
-		</ul></div>
-		<br clear="all" />
-</div>
+<h3>Status bar</h3>
 
+<p>Status bar in Fontmatrix isn't really used as extensively as e.g. in Inkscape. 
+The left part displays hints for menu items. The right side names the currently 
+selected font and lists amount of currently filtered fonts.</p>
+
+<h3>System tray</h3>
+
+<p>System tray, also known as <em>notification area</em>, is usually located 
+somewhere on desktop environment panel (or one of the existing panels). Its 
+function is to hide windows of applications that you don't want to see all the 
+time.</p>
+
+<p>Because you still might want to control some of these applications (even 
+frequently sometimes), clicking on icons in the notification area usually either 
+toggles visibility of the main window of an application or display a menu with 
+various items. This is exactly how it works for Fontmatrix: right mouse button 
+click toggles visibility of the main window, and left mouse button click reveals 
+a menu. Since this is a highly optional feature, you can enable or disable it 
+from <em>Preferences</em> dialog. Detailed information about this functionality 
+is provided in a <a href="setting_up_preferences_system_tray.html">dedicated chapter</a>.</p>
 
 
 </body>

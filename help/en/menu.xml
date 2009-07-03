@@ -4,11 +4,18 @@
 		<submenuitem text="What's new" file="news.html"/>
 	</area>
 
+	<area text="The very basics" file="basics.html">
+		<submenuitem text="Why using a font manager" file="why_management.html" />
+		<submenuitem text="Why Fontmatrix" file="why_fontmatrix.html" />
+		<submenuitem text="What exactly fonts are" file="what_fonts_are.html" />
+	</area>
+
 	<area text="User interface" file="interface.html">
 	</area>
 
 	<area text="Fonts management" file="management.html">
 		<submenuitem text="Importing fonts" file="management_importing.html"/>
+		<submenuitem text="Activating and deactivating fonts" file="management_activation.html"/>
 		<submenuitem text="Using tags" file="management_tags.html"/>
 	</area>
 
@@ -70,6 +77,9 @@
 	</area>
 
 	<area text="Useful online resources" file="resources.html">
+	</area>
+
+	<area text="External tools" file="external_tools.html">
 	</area>
 
 </menu>

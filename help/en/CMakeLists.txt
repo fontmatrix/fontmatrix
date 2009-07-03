@@ -5,6 +5,7 @@ additional_export_for_packaging.html
 additional_extracting_fonts.html
 additional.html
 additional_ttf_tables.html
+basics.html
 comparisons_fonts.html
 comparisons_glyphs.html
 comparisons.html
@@ -14,11 +15,13 @@ contributing_testing.html
 contributing_translating.html
 creating_font_books.html
 export_fonts.html
+external_tools.html
 font_books.html
 font_book_templates.html
 index.html
 interface.html
 management.html
+management_activation.html
 management_importing.html
 management_tags.html
 menu.xml
@@ -42,6 +45,9 @@ setting_up_preferences_service.html
 setting_up_preferences_shortcuts.html
 setting_up_preferences_system_tray.html
 style.css
+what_fonts_are.html
+why_fontmatrix.html
+why_management.html
 viewing_glyphs_chart.html
 viewing.html
 viewing_overview.html

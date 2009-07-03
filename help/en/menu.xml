@@ -49,9 +49,9 @@
 	<area text="Additional tools" file="additional.html">
 		<submenuitem text="Checking database" file="additional_db_check.html"/>
 		<submenuitem text="Editing PANOSE metadata" file="additional_editing_panose.html"/>
-		<submenuitem text="Viewing TrueType tables" file="additional_ttf_tables.html"/>
+<!--		<submenuitem text="Viewing TrueType tables" file="additional_ttf_tables.html"/> -->
 		<submenuitem text="Extracting fonts from documents" file="additional_extracting_fonts.html"/>
-		<submenuitem text="Exporting font info for packaging" file="additional_export_for_packaging.html"/>
+<!--		<submenuitem text="Exporting font info for packaging" file="additional_export_for_packaging.html"/> -->
 	</area>
 
 	<area text="Scripting" file="scripting.html">

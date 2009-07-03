@@ -7,7 +7,7 @@
 	<area text="The very basics" file="basics.html">
 		<submenuitem text="Why using a font manager" file="why_management.html" />
 		<submenuitem text="Why Fontmatrix" file="why_fontmatrix.html" />
-		<submenuitem text="What exactly fonts are" file="what_fonts_are.html" />
+<!--		<submenuitem text="What exactly fonts are" file="what_fonts_are.html" /> -->
 	</area>
 
 	<area text="User interface" file="interface.html">

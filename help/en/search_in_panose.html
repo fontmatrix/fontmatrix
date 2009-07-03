@@ -9,7 +9,11 @@
 <body>
 <h2>PANOSE metadata search</h2>
 
-<p>TODO</p>
+<p>The current implementation of searching by PANOSE metadata is rather experimental. We just wanted to have something to play with, whether it looks good or not, so we will continue working on that (and definitely write better documentation on using PANOSE in Fontmatrix). In the mean time here is how you use what you have so far.</p>
+
+<p>In the <em>Classification</em> tab you can see a chart that displays a kind of PANOSE map for the currently available fonts. That map consists of several aces, each of them representing a particular PANOSE variable. If you choose a font in the sidebar, you will see a thin black line going from one axis to another.</p>
+
+<p>To find fonts matching some PANOSE variable values first hover your mouse pointer on the axis/variable. Then click on a value and look at the sidebar to see that only fonts that match this value are filtered. You can press <b>Shift</b> and click on another value of same axis/variable to extend the search. If amount of filtered fonts is too large, you can further narrow down the search by hovering your mouse pointer on some other axis and picking a value of interest. Note that Fonmagrix will construct a query for you in the upper part of the <em>Browse Fonts</em> sidebar.</p>
 
 <p>Sometimes PANOSE information provided by font vendors is incorrect which results in providing incorrect results for your queries. You can solve this by editing PANOSE metadata for a particular font without saving changes to an actual font file. Learn <a href="additional_editing_panose.html">how to do it</a>.</p>
 

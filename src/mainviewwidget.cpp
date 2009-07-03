@@ -128,7 +128,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 // 	fillUniPlanes();
 	refillSampleList();
-	uniLine->setVisible(false);
+	uniLine->setEnabled(false);
 
 	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 
@@ -174,9 +174,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	classSplitter->restoreState(settings.value("WState/ClassificationSplitter").toByteArray());
 	slotShowClassification();
 	currentOrdering = "family" ;
-	
-	characterSearchWidget->setVisible(false);
-	
+
 	QStringListModel* cslModel(new QStringListModel);
 	QCompleter* cslCompleter(new QCompleter(charSearchLine));
 	cslCompleter->setModel(cslModel);
@@ -2180,11 +2178,11 @@ void MainViewWidget::slotShowULine(bool checked)
 	if(checked)
 	{
 		uniLine->setText("");
-		uniLine->setVisible(true);
+		uniLine->setEnabled(true);
 	}
 	else
 	{
-		uniLine->setVisible(false);
+		uniLine->setEnabled(false);
 	}
 }
 

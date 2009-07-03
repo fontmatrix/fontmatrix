@@ -2623,10 +2623,9 @@ p, li { white-space: pre-wrap; }
         <source>Search a character by its codepoint (expressed in hexadecimal 
 and prefixed with &quot;U+&quot;, &quot;u+&quot; or &quot;+&quot;) or a glyph by its name.
 Press enter after editing to run the search.</source>
-        <translation>Recherche d’un caractère par son point de code (exprimé en hexadécimal
-et préfixé d’un &lt;em&gt;U+&lt;/em&gt;,&lt;em&gt;u+&lt;/em&gt; ou juste &lt;em&gt;+&lt;/em&gt;) ou d’un
-glyphe par son nom.
-Saisissez &lt;em&gt;Entrée&lt;/em&gt; après avoir éditer le champs pour lancer la recherche.</translation>
+        <translation>&lt;p&gt;Recherche d’un caractère par son point de code (exprimé en hexadécimal et préfixé d’un «U+», «u+» ou juste «+»)&lt;/p&gt;
+&lt;p&gt;Recherche d’un glyphe par son nom. Profitez du complétement automatique pour les noms de glyphes.&lt;/p&gt;
+&lt;p&gt;Saisissez &lt;em&gt;Entrée&lt;/em&gt; après avoir éditer le champs pour lancer la recherche.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>

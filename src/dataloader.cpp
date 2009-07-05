@@ -105,6 +105,10 @@ bool DataLoader::remove(const QString& name)
 	if(fp.exists())
 	{
 		if(fp.remove())
+		{
 			pm.remove(name);
+			return true;
+		}
 	}
+	return false;
 }

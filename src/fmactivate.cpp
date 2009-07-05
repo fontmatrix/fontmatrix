@@ -155,7 +155,14 @@ void FMActivate::activate(QList<FontItem*> fitList, bool act)
 		}
 	}
 
-	emit activationEvent ( fit->path() );
+	FMFontDb::DB()->TransactionBegin();
+	foreach(FontItem* f, stack.keys())
+	{
+		f->setActivated(stack[f]);
+	}
+	FMFontDb::DB()->TransactionEnd();
+
+	emit activationEvent ( "" );
 }
 
 #elif _WIN32

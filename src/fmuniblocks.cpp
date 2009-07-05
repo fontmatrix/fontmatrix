@@ -144,7 +144,7 @@ QString FMUniBlocks::nextBlock(int & start, int & end)
 		if(k == that()->c)
 			current = true;
 	}
-	
+	return QString();
 }
 
 QString FMUniBlocks::currentBlock(int & start, int & end)

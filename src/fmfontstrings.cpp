@@ -392,6 +392,8 @@ QString FontStrings::FsType(int fstype_part, bool shortString)
 		else if(FontItem::BITMAP_ONLY == fstype_part)
 			return tr("Bitmap Only");
 	}
+
+	return QString();
 }
 
 FontStrings::PanoseKey FontStrings::firstPanoseKey()

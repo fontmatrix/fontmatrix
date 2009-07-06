@@ -93,9 +93,14 @@ bool DataLoader::update(const QString& name, const QString& sample)
 	QFile fp(uDir.absoluteFilePath(name));
 	if(fp.open(QIODevice::WriteOnly | QIODevice::Truncate))
 	{
-		fp.write(sample.toUtf8());
+		if(fp.write(sample.toUtf8()) == sample.toUtf8().count())
+		{
+			pm[name] = sample;
+			return true;
+		}
 	}
-	pm[name] = sample;
+	return false;
+
 }
 
 bool DataLoader::remove(const QString& name)

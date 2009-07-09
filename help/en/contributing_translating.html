@@ -9,13 +9,29 @@
 <body>
 <h2>Translating</h2>
 
+<h3>Translating desktop entry</h3>
+
+<p>On Linux systems .desktop files are used to build system menus that lists applications available to users. Fontmatrix ships with such a file as well. It is located in root directory with source code and gets installed to /usr/share/applications or /usr/local/share/applications, depending on your preferences.</p>
+
+<p>To get localized menu entry you need to do a very simple thing:</p>
+
+<ol>
+<li>Open this file in your preferred text editor and make sure you opened it as a UTF-8 encoded text file.</li>
+<li>Create a new entry which looks like "Comment[LANG]=A font manager", where LANG is a two-letter code for your language (as referenced by <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO-639-1</a>) and everything after "=" is translated.</li>
+<li>Create a new entry which looks like "GenericName[LANG]=A font manager".</li>
+<li>Save.</li>
+<li>Test by running 'sudo make install' (if Fontmatrix is already installed or just 'sudo cp fontmatrix.desktop /usr/share/applications/' and look in the menu.</li>
+</ol>
+
+<p><a href="contributing_testing.html">Send</a> the updated file to us.</p>
+
 <h3>Translating user interface</h3>
 
-<p>The very first thing you need to translate Fontmatrix into your native language is to get source code from the current developpement branch.
-<!-- Translation always happens _before_ we provide source packages -->
-To do this, you need a Subversion client (<span class="code">svn</span> being the regular command line client). Then type 
-<div class="codeblock">svn co http://svn.gna.org/svn/undertype/trunk/tools/typotek fontmatrix</div>
-somewhere in your home directory to fetch source code, so that you always have access to it.</p>
+<p>The very first thing you need to translate Fontmatrix into your native language is to get source code from the current developpement branch. To do this, you need a Subversion client (<span class="code">svn</span> being the regular command line client). Then type 
+
+<p><tt>svn co http://svn.gna.org/svn/undertype/trunk/tools/typotek fontmatrix</tt></p>
+
+<p>somewhere in your home directory to fetch source code, so that you always have access to it.</p>
 
 <p>Then you will need to install Qt development package that contains Linguist&nbsp;&mdash; the application to assist you with translating. On Linux start your package manager and look for a package named something like qt4-dev, install it.</p>
 

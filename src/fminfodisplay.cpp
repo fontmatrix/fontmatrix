@@ -45,13 +45,13 @@ FMInfoDisplay::FMInfoDisplay(FontItem * font)
 	html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
 	html += "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
 	html += "<head>\n";
-	html += "<title>" + font->fancyName() + "</title>\n";
+	html += "<title>" + xhtmlifies( font->fancyName() ) + "</title>\n";
 	html += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
 	html += "<link rel=\"stylesheet\" href=\"" + QUrl::fromLocalFile(typotek::getInstance()->getInfoStyle()).toString() + "\" type=\"text/css\" />\n";
 	html += "<script type=\"text/javascript\" src=\""+ QUrl::fromLocalFile(FMPaths::ResourcesDir() + "fontmatrix.js" ).toString() +" \" />\n";
 	html += "</head>\n<body>\n";
 	html += writeSVGPreview(font);
-	html += "<div id=\"file\">" + font->path() + "</div>\n" ;
+	html += "<div id=\"file\">" + xhtmlifies( font->path() ) + "</div>\n" ;
 // 	ret += "<div id=\"search\"><a href=\"http://www.myfonts.com/search?search[text]="+ m_family +"\">On myfonts</a>";
 	html += "<div id=\"general\">\n";
 	html += writeOrderedInfo(font);
@@ -60,15 +60,14 @@ FMInfoDisplay::FMInfoDisplay(FontItem * font)
 	html += writePanose(font);
 	html += writeLangOS2(font);
 	html += "</body>\n </html>\n";
-		
-	if(0)
-	{	
+
+#ifdef BUILD_TYPE_DEBUG
 		QFile df("fontmatrix.xhtml" );
 		if(df.open(QIODevice::WriteOnly | QIODevice::Truncate))
 		{
 			df.write(html.toUtf8());
 		}
-	}
+#endif
 }
 
 

@@ -155,14 +155,16 @@ void FMActivate::activate(QList<FontItem*> fitList, bool act)
 		}
 	}
 
+	QStringList aList;
 	FMFontDb::DB()->TransactionBegin();
 	foreach(FontItem* f, stack.keys())
 	{
 		f->setActivated(stack[f]);
+		aList << f->path();
 	}
 	FMFontDb::DB()->TransactionEnd();
 
-	emit activationEvent ( "" );
+	emit activationEvent ( aList );
 }
 
 #elif _WIN32
@@ -266,14 +268,16 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 		}
 	}
 	
+	QStringList aList;
 	FMFontDb::DB()->TransactionBegin();
 	foreach(FontItem* f, stack.keys())
 	{
 		f->setActivated(stack[f]);
+		aList << f->path();
 	}
 	FMFontDb::DB()->TransactionEnd();
-	
-	emit activationEvent ( "" );
+
+	emit activationEvent(aList);
 }
 
 #endif

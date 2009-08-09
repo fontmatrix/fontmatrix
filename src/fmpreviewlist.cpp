@@ -22,11 +22,17 @@
 #include "typotek.h"
 #include "fontitem.h"
 #include "mainviewwidget.h"
+#include "fmfloatingpreview.h"
+#include "fmfontdb.h"
 
 #include <QImage>
 #include <QDebug>
 #include <QSettings>
 #include <QScrollBar>
+//#include <QDrag>
+//#include <QMimeData>
+#include <QApplication>
+#include <QLabel>
 
 QVector<QRgb> FMPreviewIconEngine::m_selPalette;
 
@@ -168,10 +174,7 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 	}
 	else if(role == Qt::DecorationRole)
 	{
-		QString word(typotek::getInstance()->word());
-		word.replace("<name>", fit->fancyName());
-		word.replace("<family>", fit->family());
-		word.replace("<variant>", fit->variant());
+		QString word(typotek::getInstance()->word(fit));
 		QPixmap im(fit->oneLinePreviewPixmap(word,fgColor, bgColor, width ) );
 		QIcon ic( new FMPreviewIconEngine  );
 		ic.addPixmap(im);
@@ -193,6 +196,10 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 			complete += "<div style=\"" + styleTooltipPath + "\">" + fit->path() + "</div>";
 			return complete;
 		}
+	}
+	else if(role == PathRole)
+	{
+		return fit->path();
 	}
 	
 	// fall back
@@ -222,6 +229,9 @@ void FMPreviewModel::dataChanged()
 FMPreviewView::FMPreviewView(QWidget * parent)
 	:QListView(parent)
 {
+	dragFlag = false;
+	setDragEnabled(true);
+	setDragDropMode(QAbstractItemView::DragDrop);
 }
 
 void FMPreviewView::resizeEvent(QResizeEvent * event)
@@ -232,6 +242,44 @@ void FMPreviewView::resizeEvent(QResizeEvent * event)
 	
 	emit widthChanged(usedWidth);
 }
+
+void FMPreviewView::mousePressEvent(QMouseEvent * event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		startDragPoint = event->pos();
+		dragFlag = false;
+//		const QModelIndex idx ( indexAt(startDragPoint) );
+//		if(idx.isValid())
+//			emit pressed(idx);
+	}
+	QListView::mousePressEvent(event);
+}
+
+void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
+{
+	if (!(event->buttons() & Qt::LeftButton))
+		return;
+	if ((event->pos() - startDragPoint).manhattanLength() < QApplication::startDragDistance())
+		return;
+
+	// Create a window with the current preview
+	if(currentIndex().isValid() && (!dragFlag))
+	{
+		dragFlag = true;
+//		FontItem * sf(typotek::getInstance()->getSelectedFont());
+		QModelIndex idx = indexAt(startDragPoint);
+		QString fname = idx.data(FMPreviewModel::PathRole).toString();
+		if(!fname.isEmpty())
+		{
+			FontItem * sf(FMFontDb::DB()->Font(fname));
+			if(sf)
+				FMFloatingPreview::create(sf, QRect(event->globalPos(), QSize(width() ,1) ));
+		}
+	}
+
+}
+
 
 void FMPreviewView::updateLayout()
 {

@@ -338,18 +338,21 @@ void Systray::requireTagsConfirmation(bool doRequire)
 	settings->setValue("Systray/TagsConfirmation", doRequire);
 }
 
-void Systray::updateTagMenu(QString nameOfFontWhichCausedThisUpdate)
+void Systray::updateTagMenu(const QStringList& nameOfFontWhichCausedThisUpdate)
 {
 	QStringList tags(tagActions.keys());
 	bool lazy = true;
 	foreach(QString tag, tags)
 	{
 		QList<FontItem*> taggedFonts = FMFontDb::DB()->Fonts( tag , FMFontDb::Tags );
-		ttek->resetFilter();
+//		ttek->resetFilter();
 		foreach(FontItem* fit, taggedFonts)
 		{
-			if(fit->path() == nameOfFontWhichCausedThisUpdate)// we’re concerned
+			if( nameOfFontWhichCausedThisUpdate.contains(fit->path()))
+			{	// we’re concerned
 				lazy = false;
+				break;
+			}
 		}
 	}
 	if(lazy)

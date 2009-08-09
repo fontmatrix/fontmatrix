@@ -247,7 +247,7 @@ void typotek::postInit()
 void typotek::doConnect()
 {
 	if(getSystray())
-		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( QString ) ), getSystray(),SLOT ( updateTagMenu ( QString ) ) );
+		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( const QStringList& ) ), getSystray(),SLOT ( updateTagMenu ( const QStringList& ) ) );
 
 	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
 	connect(tagsDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotTagsDockAreaChanged(Qt::DockWidgetArea )));
@@ -2500,4 +2500,16 @@ void typotek::setInfoStyle ( const QString& theValue )
 	infoStyle = theValue;
 }
 
+QString typotek::word(FontItem * item)
+{
+	if(item)
+	{
+		QString word = m_theWord;
+		word.replace("<name>", item->fancyName());
+		word.replace("<family>", item->family());
+		word.replace("<variant>", item->variant());
+		return word;
+	}
 
+	return m_theWord;
+}

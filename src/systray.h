@@ -49,7 +49,7 @@ public slots:
 	void slotSetActivateAll(bool isVisible);
 	void newTag(QString);
 	void deleteTag(const QString &name);
-	void updateTagMenu(QString nameOfFontWhichCausedThisUpdate);
+	void updateTagMenu(const QStringList& nameOfFontWhichCausedThisUpdate);
 	void requireAllConfirmation(bool doRequire);
 	void requireTagsConfirmation(bool doRequire);
 

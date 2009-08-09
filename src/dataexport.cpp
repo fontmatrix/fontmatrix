@@ -41,8 +41,7 @@ int DataExport::copyFiles()
 	QProgressDialog progress ( QObject::tr ( "Copying files" ), QObject::tr ( "cancel" ), 0, fonts.count(), typotek::getInstance() );
 	progress.setWindowModality ( Qt::WindowModal );
 	int progressindex(0);
-	
-	QString preview(typotek::getInstance()->word());
+
 	
 	int copyCounter(0);
 	QList<int> toRemove;
@@ -50,10 +49,8 @@ int DataExport::copyFiles()
 	{
 		if ( progress.wasCanceled() )
 			break;
-		
-		preview.replace("<name>", fonts[fidx]->fancyName());
-		preview.replace("<family>", fonts[fidx]->family());
-		preview.replace("<variant>", fonts[fidx]->variant());
+
+		QString preview(typotek::getInstance()->word(fonts[fidx]));
 		
 		progress.setLabelText ( fonts[fidx]->fancyName() );
 		progress.setValue ( ++progressindex );

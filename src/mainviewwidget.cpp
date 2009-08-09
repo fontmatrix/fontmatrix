@@ -191,6 +191,8 @@ MainViewWidget::~MainViewWidget()
 
 void MainViewWidget::doConnect()
 {
+	connect(FMActivate::getInstance(), SIGNAL(activationEvent(const QStringList&)), this, SLOT(refreshActStatus(const QStringList&)));
+
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
@@ -257,6 +259,8 @@ void MainViewWidget::doConnect()
 
 void MainViewWidget::disConnect()
 {
+	disconnect(FMActivate::getInstance(), SIGNAL(activationEvent(const QStringList&)), this, SLOT(refreshActStatus(const QStringList&)));
+
 	disconnect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	disconnect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	disconnect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
@@ -589,8 +593,7 @@ void MainViewWidget::updateTree ( bool checkFontActive )
 
 						QString s ( varItem->toolTip ( 0 ) );
 						FontItem* f ( FMFontDb::DB()->Font ( s ) );
-						bool isActive ( f->isActivated() );
-						if ( isActive )
+						if ( f && f->isActivated())
 						{
 							if( !activateByFamilyOnly )
 								varItem->setCheckState ( 0,Qt::Checked );
@@ -622,6 +625,46 @@ void MainViewWidget::updateTree ( bool checkFontActive )
 		m_lists->fontTree->scrollToItem ( curItem, QAbstractItemView::PositionAtCenter );
 	}
 	fontsetHasChanged = false;
+}
+
+void MainViewWidget::refreshActStatus(const QStringList& flist)
+{
+	if(flist.isEmpty())
+		return;
+	QStringList l_flist(flist);
+	int topCount ( m_lists->fontTree->topLevelItemCount() );
+	for ( int topIdx ( 0 ) ; topIdx < topCount; ++topIdx )
+	{
+		QTreeWidgetItem *topItem ( m_lists->fontTree->topLevelItem ( topIdx ) );
+		int famCount ( topItem->childCount() );
+		for ( int famIdx ( 0 ); famIdx < famCount; ++ famIdx )
+		{
+			QTreeWidgetItem *famItem ( topItem->child ( famIdx ) );
+			int varCount ( famItem->childCount() );
+			if ( famItem->isExpanded() )
+			{
+				for ( int varIdx ( 0 ); varIdx < varCount; ++ varIdx )
+				{
+					QTreeWidgetItem *varItem ( famItem->child ( varIdx ) );
+					// Check if active
+
+					QString s ( varItem->toolTip ( 0 ) );
+					if(l_flist.contains(s))
+					{
+						FontItem* f ( FMFontDb::DB()->Font ( s ) );
+						if ( f && f->isActivated())
+							varItem->setCheckState ( 0, Qt::Checked );
+						else
+							varItem->setCheckState ( 0, Qt::Unchecked );
+
+						l_flist.removeAll(s);
+						if(l_flist.isEmpty())
+							return;
+					}
+				}
+			}
+		}
+	}
 }
 
 void MainViewWidget::slotItemOpened ( QTreeWidgetItem * item )
@@ -1253,7 +1296,7 @@ void MainViewWidget::activation(QList< FontItem * > fit, bool act)
 		ar.exec();
 	}
 
-	updateTree(true);
+//	updateTree(true);
 }
 
 void MainViewWidget::slotDesactivateAll()

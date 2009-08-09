@@ -48,7 +48,7 @@ class FMActivate : public QObject
 		QMap<QString,QString> errors();
 		
 	signals:
-		void activationEvent(QString);
+		void activationEvent(const QStringList&);
 		
 	private:
 		/*

@@ -211,6 +211,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotSaveClassSplitter();
 		
 		void toggleFacesCheckBoxes(bool);
+
+		void refreshActStatus(const QStringList& flist);
 		
 	signals:
 		void faceChanged();

@@ -25,6 +25,7 @@
 #include <QAbstractListModel>
 #include <QIconEngineV2>
 #include <QPixmap>
+#include <QPoint>
 
 class FontItem;
 class MainViewWidget;
@@ -34,16 +35,16 @@ class QListView;
 // Rather than fighting against Qt to not resize our icons, draw them ourselves.
 class FMPreviewIconEngine : public QIconEngineV2
 {
-	public:
-		FMPreviewIconEngine();
-		~FMPreviewIconEngine();
-		void paint ( QPainter * painter, const QRect & rect, QIcon::Mode mode, QIcon::State state );
-		void addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, QIcon::State state );
+public:
+	FMPreviewIconEngine();
+	~FMPreviewIconEngine();
+	void paint ( QPainter * painter, const QRect & rect, QIcon::Mode mode, QIcon::State state );
+	void addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, QIcon::State state );
 
-	private:
-		QPixmap m_p;
-		static QVector<QRgb> m_selPalette;
-		QVector<QRgb> actualSelPalette(const QVector<QRgb>& orig);
+private:
+	QPixmap m_p;
+	static QVector<QRgb> m_selPalette;
+	QVector<QRgb> actualSelPalette(const QVector<QRgb>& orig);
 
 };
 
@@ -51,43 +52,52 @@ class FMPreviewIconEngine : public QIconEngineV2
 class FMPreviewView : public QListView
 {
 	Q_OBJECT
-	public:
-		FMPreviewView(QWidget * parent = 0);
-		~FMPreviewView(){}
-		int getUsedWidth() const{return usedWidth;}
-	protected:
-		void resizeEvent ( QResizeEvent * event );
-	private:
-		int usedWidth;
-		
-	public slots:
-		void updateLayout();
-		void setCurrentFont(const QString& name);
-				
-	signals:
-		void widthChanged(int);
-		
+public:
+	FMPreviewView(QWidget * parent = 0);
+	~FMPreviewView(){}
+	int getUsedWidth() const{return usedWidth;}
+protected:
+	void resizeEvent ( QResizeEvent * event );
+	QPoint startDragPoint;
+	bool dragFlag;
+	virtual void mousePressEvent(QMouseEvent *event);
+	virtual void mouseMoveEvent(QMouseEvent *event);
+
+private:
+	int usedWidth;
+
+public slots:
+	void updateLayout();
+	void setCurrentFont(const QString& name);
+
+signals:
+	void widthChanged(int);
+
 };
 
 class FMPreviewModel : public QAbstractListModel
 {
-	public:
-		FMPreviewModel ( QObject * pa , FMPreviewView * wPa);
-		//returns a preview
-		QVariant data ( const QModelIndex &index, int role = Qt::DisplayRole ) const;
-		//returns flags for items
-		Qt::ItemFlags flags ( const QModelIndex &index ) const;
-		//returns the number of items
-		int rowCount ( const QModelIndex &parent ) const;
-		
-		void dataChanged();
-		
-		
-	private:
-		FMPreviewView *m_view;
-		
-		QString styleTooltipName;
-		QString styleTooltipPath;
+public:
+	enum PreviewItemRole{
+		PathRole = Qt::UserRole + 1
+		   };
+
+	FMPreviewModel ( QObject * pa , FMPreviewView * wPa);
+	//returns a preview
+	QVariant data ( const QModelIndex &index, int role = Qt::DisplayRole ) const;
+	//returns flags for items
+	Qt::ItemFlags flags ( const QModelIndex &index ) const;
+	//returns the number of items
+	int rowCount ( const QModelIndex &parent ) const;
+
+	void dataChanged();
+
+
+private:
+	FMPreviewView *m_view;
+
+	QString styleTooltipName;
+	QString styleTooltipPath;
 };
 
 

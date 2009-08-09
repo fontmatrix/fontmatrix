@@ -209,6 +209,7 @@ ListDockWidget::ListDockWidget()
 	connect(listPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
 	connect(listPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(listPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+	connect(listPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(previewText, SIGNAL(textChanged( const QString& )), this, SLOT(slotPreviewText( const QString&)));
 	connect(previewSize, SIGNAL(valueChanged( double )), this, SLOT(slotPreviewSize(double)));
 }
@@ -543,7 +544,7 @@ void ListDockWidget::slotPreviewUpdateSize(int w)
 
 void ListDockWidget::slotPreviewSelected(const QModelIndex & index)
 {
-// 	qDebug()<<"slotPreviewSelected("<<index<<")";
+	qDebug()<<"slotPreviewSelected("<<index<<")";
 	FontItem * fItem(typotek::getInstance()->getCurrentFonts().at(index.row()));
 	if(!fItem)
 	{

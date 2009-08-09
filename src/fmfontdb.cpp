@@ -523,7 +523,7 @@ void FMFontDb::initFMDb()
 	{
 		// We want to create the tables then!
 		QString fId	( QString ( "%1 CHAR(255) " ).arg ( fieldName[FontId] ) );
-		QString fNumId	( QString ( "%1 INTEGER  " ).arg ( fieldName[Id] ) );
+		QString fNumId	( QString ( "%1 INTEGER" ).arg ( fieldName[Id] ) );
 
 		QString fFamily	( QString ( "%1 CHAR(255) " ).arg ( fieldName[Family] ) );
 		QString fVariant ( QString ( "%1 CHAR(255) " ).arg ( fieldName[Variant] ) );
@@ -550,6 +550,7 @@ void FMFontDb::initFMDb()
 		                .arg ( fPanose )
 		                .arg ( fFsType )
 		                .arg ( fActivation ) );
+		QString iData(QString("CREATE INDEX iData ON %1(%2)").arg ( tableName[Data] ).arg(fieldName[Id] ));
 
 		QString cInfo ( QString ( "CREATE TABLE %1 (%2,%3,%4,%5)" )
 		                .arg ( tableName[Info] )
@@ -557,27 +558,38 @@ void FMFontDb::initFMDb()
 		                .arg ( fLang )
 		                .arg ( fInfoKey )
 		                .arg ( fInfoValue ) );
+		QString iInfo(QString("CREATE INDEX iInfo ON %1(%2)").arg ( tableName[Info] ).arg(fieldName[Id] ));
 
 		QString cTag ( QString ( "CREATE TABLE %1 (%2,%3)" )
 		               .arg ( tableName[Tag] )
 		               .arg ( fNumId )
 		               .arg ( fTags ) );
+		QString iTag(QString("CREATE INDEX iTag ON %1(%2)").arg ( tableName[Tag] ).arg(fieldName[Id]));
 
 		QString cId ( QString ( "CREATE TABLE %1 (%2,%3)" )
 		              .arg ( tableName[InternalId] )
 		              .arg ( fId )
 		              .arg ( fNumId )
 		            );
+		QString iId(QString("CREATE INDEX iId ON %1(%2)").arg ( tableName[InternalId] ).arg(fieldName[FontId] ));
 
 		QSqlQuery query ( *this );
 		if ( !query.exec ( cData ) )
 			qDebug() <<"ERROR:"<<cData<<"\n---------------------------------\n"<<query.lastError().databaseText();
+		if ( !query.exec ( iData ) )
+			qDebug() <<"ERROR:"<<iData<<"\n---------------------------------\n"<<query.lastError().databaseText();
 		if ( !query.exec ( cInfo ) )
 			qDebug() <<"ERROR:"<<cInfo<<"\n---------------------------------\n"<<query.lastError().databaseText();
+		if ( !query.exec ( iInfo ) )
+			qDebug() <<"ERROR:"<<iInfo<<"\n---------------------------------\n"<<query.lastError().databaseText();
 		if ( !query.exec ( cTag ) )
 			qDebug() <<"ERROR:"<<cTag<<"\n---------------------------------\n"<<query.lastError().databaseText();
+		if ( !query.exec ( iTag ) )
+			qDebug() <<"ERROR:"<<iTag<<"\n---------------------------------\n"<<query.lastError().databaseText();
 		if ( !query.exec ( cId ) )
 			qDebug() <<"ERROR:"<<cId<<"\n---------------------------------\n"<<query.lastError().databaseText();
+		if ( !query.exec ( iId ) )
+			qDebug() <<"ERROR:"<<iId<<"\n---------------------------------\n"<<query.lastError().databaseText();
 
 		internalCounter = 0;
 	}

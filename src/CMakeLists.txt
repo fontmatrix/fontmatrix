@@ -12,6 +12,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmaltselector.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmbaseshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmdumpinfo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmencdata.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmfloatingpreview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontcompareview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontdb.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontextract.cpp
@@ -127,6 +128,7 @@ dumpdialog.h
 fmactivate.h
 fmaltcontext.h
 fmaltselector.h
+fmfloatingpreview.h
 fmfontcompareview.h
 fmfontdb.h
 fmfontextract.h

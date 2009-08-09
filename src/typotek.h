@@ -320,7 +320,7 @@ class typotek:public QMainWindow
 		QString getTemplatesDir() {return templatesDir;};
 
 		void setWord(QString s, bool updateView);
-		QString word(){return m_theWord;};
+		QString word(FontItem * item = 0);
 		void setPreviewSize(double d);
 		double getPreviewSize(){ return previewSize; }
 		void setPreviewRTL(bool d);

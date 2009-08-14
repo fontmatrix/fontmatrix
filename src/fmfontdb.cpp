@@ -264,8 +264,12 @@ QVariant FMFontDb::getValue ( const QString & id, Field field, bool useCache )
 	}
 }
 
-QList< FontDBResult > FMFontDb::getValues (const QList< FontItem * > & fonts, Field field)
+QList< FontDBResult > FMFontDb::getValues ( Field field, const QList< FontItem * > & fonts)
 {
+	QList< FontItem * > lF(fonts);
+	if(fonts.isEmpty())
+		lF = AllFonts();
+// TODO really filter out results according to the font list given in argument
 	QList<FontDBResult> ret;
 	QString qs ( QString ( "SELECT %1,%2 FROM %3" )
 			.arg ( fieldName[Id])

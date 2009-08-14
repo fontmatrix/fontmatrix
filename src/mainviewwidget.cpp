@@ -40,6 +40,7 @@
 #include "fmfontstrings.h"
 #include "tagswidget.h"
 #include "fmutils.h"
+#include "panosewidget.h"
 
 #include <cstdlib>
 
@@ -171,8 +172,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 		shaperTypeCombo->addItem(sIt.key(), sIt.value());
 	}
 	
-	classSplitter->restoreState(settings.value("WState/ClassificationSplitter").toByteArray());
-	slotShowClassification();
+
 	currentOrdering = "family" ;
 
 	QStringListModel* cslModel(new QStringListModel);
@@ -251,10 +251,9 @@ void MainViewWidget::doConnect()
 	
 	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
-	
-	connect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
-	connect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
-	connect ( classSplitter, SIGNAL(splitterMoved(int,int)), this, SLOT(slotSaveClassSplitter()));
+
+
+	connect( PanoseWidget::getInstance(), SIGNAL(filterChanged(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
 }
 
 void MainViewWidget::disConnect()
@@ -320,9 +319,7 @@ void MainViewWidget::disConnect()
 	disconnect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	disconnect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	
-	disconnect ( classificationView, SIGNAL(selectedField(const QString&)), this, SLOT(slotUpdateClassDescription(const QString&)) );
-	disconnect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
-	disconnect ( classSplitter, SIGNAL(splitterMoved(int,int)), this, SLOT(slotSaveClassSplitter()));
+	disconnect( PanoseWidget::getInstance(), SIGNAL(filterChanged(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
 }
 
 void MainViewWidget::fillTree()
@@ -850,25 +847,6 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		updateTree();
 		m_lists->listPreview->setCurrentFont(theVeryFont->path());
 		abcView->verticalScrollBar()->setValue ( 0 );
-		
-		// Update panose widget
-		QStringList plist(FMFontDb::DB()->getValue(theVeryFont->path(), FMFontDb::Panose).toString().split(":"));
-		if(plist.count() == 10)
-		{
-			QMap<QString,QStringList> filter;
-			FontStrings::PanoseKey pk(FontStrings::firstPanoseKey());
-			do
-			{
-				QString v(FontStrings::Panose().value(pk).value(plist[pk].toInt()));
-				filter[FontStrings::PanoseKeyName(pk)] << v;
-// 				qDebug()<<"F"<<FontStrings::PanoseKeyName(pk)<<v;
-				pk = FontStrings::nextPanoseKey(pk);
-			}
-			while(pk != FontStrings::InvalidPK);
-			disconnect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
-			classificationView->setFilter(filter);
-			connect ( classificationView, SIGNAL(filterChanged()), this, SLOT(slotPanoseFilter()));
-		}
 	}
 
 
@@ -2229,95 +2207,32 @@ void MainViewWidget::slotShowULine(bool checked)
 	}
 }
 
-void MainViewWidget::slotShowClassification()
+void MainViewWidget::slotPanoseFilter(const QMap<int,QList<int> >& filter)
 {
-// 	qDebug()<<"MainViewWidget::slotShowClassification";
-	// Rather testing for now
-	classVariableDescription->setHtml(FontStrings::PanoseKeyInfo(FontStrings::firstPanoseKey()));
-	ParallelCoorDataType pcdata;
-	QList<FontDBResult> dbresult( FMFontDb::DB()->getValues(currentFonts, FMFontDb::Panose) );
-	for(int i(0); i < dbresult.count() ; ++i)
-	{
-		QList<int> list;
-		QString p(dbresult[i].second);
-		QStringList pl(p.split(":"));
-		if(pl.count() == 10)
-		{
-			for(int a(0);a < 10 ;++a)
-			{
-				list << pl[a].toInt();
-			}
-			pcdata << list;
-		}
-	}
-	
-	ParallelCoorDataSet* pcs(new ParallelCoorDataSet);
-	QMap< FontStrings::PanoseKey, QMap<int, QString> > pan(FontStrings::Panose());
-	FontStrings::PanoseKey k(FontStrings::firstPanoseKey());
-	while(k != FontStrings::InvalidPK)
-	{
-		QString key( FontStrings::PanoseKeyName(k) );
-// 		qDebug()<<key;
-		QList<QString> list;
-		for(QMap<int, QString>::iterator i( pan[k].begin() ); i != pan[k].end(); ++i)
-		{
-// 			qDebug()<<i.value() ;
-			list << i.value() ;
-		}
-		pcs->append( qMakePair(key, list) );
-		k = FontStrings::nextPanoseKey(k);
-	}
-	
-	
-	pcs->setData(pcdata);
-	classificationView->setDataSet(pcs);
-// 	classificationView->updateGraphic();
-	
-}
-
-void MainViewWidget::slotUpdateClassDescription(const QString & ks)
-{
-	FontStrings::PanoseKey pk(FontStrings::firstPanoseKey());
-	do
-	{
-		if(FontStrings::PanoseKeyName(pk) == ks)
-			break;
-		pk = FontStrings::nextPanoseKey(pk);
-	}
-	while(pk != FontStrings::InvalidPK);
-	
-	classVariableDescription->setHtml(FontStrings::PanoseKeyInfo(pk));
-}
-
-void MainViewWidget::slotPanoseFilter()
-{
-	QList<FontDBResult> dbresult( FMFontDb::DB()->getValues(currentFonts, FMFontDb::Panose) );
+	QList<FontDBResult> dbresult( FMFontDb::DB()->getValues( FMFontDb::Panose ) );
 	QList<FontItem*> fil;
 	for(int i(0); i < dbresult.count() ; ++i)
 	{
 		QList<int> list;
 		QString p(dbresult[i].second);
 		QStringList pl(p.split(":"));
-		if(pl.count() == 10)
+		bool match(true);
+		foreach(const int& k , filter.keys())
 		{
-			for(int a(0);a < 10 ;++a)
+			if(!filter[k].contains(pl[k].toInt()))
 			{
-				list << pl[a].toInt();
+				match = false;
+				break;
 			}
-			if(classificationView->matchFilter(list))
-				fil << dbresult[i].first;
 		}
+		if(match)
+			fil << dbresult[i].first;
 	}
 	currentFonts = fil;
-	setCrumb(classificationView->filterAsString());
+//	setCrumb(classificationView->filterAsString());
 	fillTree();
 }
 
-void MainViewWidget::slotSaveClassSplitter()
-{
-	QSettings settings;
-	settings.setValue("WState/ClassificationSplitter", classSplitter->saveState());
-}
 
 void MainViewWidget::toggleFacesCheckBoxes(bool state)
 {

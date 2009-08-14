@@ -106,7 +106,7 @@ class FMFontDb : public QObject, public QSqlDatabase
 		void setInfoMap ( const QString& id, const FontInfoMap& info );
 
 		QVariant getValue ( const QString& id, Field field, bool useCache = true );
-		QList<FontDBResult> getValues ( const QList<FontItem*>& fonts, Field field );
+		QList<FontDBResult> getValues ( Field field , const QList<FontItem*>& fonts = QList<FontItem*>());
 		FontInfoMap getInfoMap ( const QString& id );
 		QList<FontDBResult> getInfo ( const QList<FontItem*>& fonts, InfoItem info, int codeLang = 0 );
 		

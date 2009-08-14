@@ -181,9 +181,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotEditSampleText();
 		void slotRemoveCurrentItem();
 		
-		void slotShowClassification();
-		void slotUpdateClassDescription(const QString& ks);
-		void slotPanoseFilter();
+		void slotPanoseFilter(const QMap<int,QList<int> >& filter);
 		
 		//lists
 		void slotSelectFromFolders(const QString&);
@@ -207,8 +205,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotWebStart();
 		void slotWebLoad(int i);
 		void slotWebFinished(bool);
-		
-		void slotSaveClassSplitter();
+
 		
 		void toggleFacesCheckBoxes(bool);
 

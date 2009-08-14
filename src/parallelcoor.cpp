@@ -33,7 +33,6 @@
 const QString ParallelCoorDataSet::FieldSep = ":";
 
 ParallelCoorDataSet::ParallelCoorDataSet()
-	:QList< QPair<QString, QList<QString> > >()
 {
 }
 
@@ -165,6 +164,8 @@ ParallelCoorDataSet* ParallelCoorView::getDataSet() const
 
 void ParallelCoorView::setDataSet ( ParallelCoorDataSet* theValue )
 {
+	if(m_dataSet && (m_dataSet != theValue))
+		delete m_dataSet;
 	m_dataSet = theValue;
 }
 

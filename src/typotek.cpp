@@ -41,6 +41,7 @@
 #include "listdockwidget.h"
 #include "mainviewwidget.h"
 #include "panosedialog.h"
+#include "panosewidget.h"
 #include "prefspaneldialog.h"
 #include "remotedir.h"
 //#include "savedata.h"
@@ -174,28 +175,25 @@ void typotek::initMatrix()
 		systray = 0;
 
 	setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::ForceTabbedDocks);
-	
-	mainDock = new QDockWidget ( tr ( "Browse Fonts" ) );
-	mainDock->setWidget ( ListDockWidget::getInstance() );
-	mainDock->setStatusTip ( tr ( "Show/hide fonts browsing sidebar" ) );
-	addDockWidget ( fontmatrix::DockPosition[mainDockArea], mainDock );
-	if(mainDockArea == QString("Float"))
-		mainDock->setFloating(true);
-	if(!mainDockGeometry.isNull())
-		mainDock->setGeometry(mainDockGeometry);
-	
-	tagsDock = new QDockWidget ( tr("Tags") );
-	tagsDock->setWidget( TagsWidget::getInstance() );
-	tagsDock->setStatusTip ( tr ( "Show/hide tags list sidebar" ) );
-	addDockWidget(fontmatrix::DockPosition[tagsDockArea], tagsDock);
-	if(tagsDockArea == QString("Float"))
-		tagsDock->setFloating(true);
-	if(!tagsDockGeometry.isNull())
-		tagsDock->setGeometry(tagsDockGeometry);
-	
-	if((mainDockArea != QString("Float")) 
-		   && (tagsDockArea == mainDockArea))
-		tabifyDockWidget(tagsDock, mainDock);
+
+	installDock("Main", tr ( "Browse Fonts" ), ListDockWidget::getInstance() , tr ( "Show/hide fonts browsing sidebar" ));
+	installDock("Tags", tr ( "Tags" ), TagsWidget::getInstance() ,  tr ( "Show/hide tags list sidebar" ) );
+	installDock("Panose", tr ( "Panose"), PanoseWidget::getInstance(), tr ( "Browse fonts by means of Panose attributes" ) );
+
+	// force tabifyication
+	QStringList dl;
+	dl << "Tags" << "Panose" << "Main";
+	for(int i(1); i < dl.count(); ++i)
+	{
+		if(dockArea[dl[i]] != "Float")
+		{
+			for(int j(i-1); j >=0 ; --j)
+			{
+				if(dockArea[dl[j]] == dockArea[dl[i]])
+					tabifyDockWidget(dockWidget[dl[j]], dockWidget[dl[i]]);
+			}
+		}
+	}
 
 	createActions();
 	createMenus();
@@ -228,6 +226,24 @@ void typotek::initMatrix()
 	}
 }
 
+void typotek::installDock(const QString& id, const QString& name, QWidget * w, const QString& tip)
+{
+	QDockWidget * dw = new QDockWidget(name);
+	dw->setObjectName(id);
+	dockWidget[id] = dw;
+	dw->setWidget( w );
+	dw->setStatusTip ( tip );
+	addDockWidget(fontmatrix::DockPosition[dockArea[id]], dw);
+	qDebug()<<"I"<<id<<dockArea[id]<<dockVisible[id];
+	if(dockArea[id] == QString("Float"))
+		dw->setFloating(true);
+	if(!dockGeometry[id].isNull())
+		dw->setGeometry(dockGeometry[id]);
+
+	connect(dw , SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),
+		this, SLOT(slotDockAreaChanged(Qt::DockWidgetArea )));
+}
+
 void typotek::postInit()
 {
 	// TODO restore last filter
@@ -249,8 +265,6 @@ void typotek::doConnect()
 	if(getSystray())
 		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( const QStringList& ) ), getSystray(),SLOT ( updateTagMenu ( const QStringList& ) ) );
 
-	connect(mainDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotMainDockAreaChanged(Qt::DockWidgetArea )));
-	connect(tagsDock,SIGNAL(dockLocationChanged( Qt::DockWidgetArea )),this,SLOT(slotTagsDockAreaChanged(Qt::DockWidgetArea )));
 	connect(FMLayout::getLayout()->optionDialog,SIGNAL(finished( int )),this,SLOT(slotUpdateLayOptStatus()));
 #ifdef HAVE_PYTHONQT
 	connect(FMScriptConsole::getInstance(),SIGNAL(finished()), this, SLOT(slotUpdateScriptConsoleStatus()));
@@ -925,12 +939,15 @@ void typotek::readSettings()
 	previewSubtitled = settings.value("Preview/Subtitled", false).toBool();
 	m_theWord = settings.value("Preview/Word", "<name>" ).toString();
 
-	mainDockArea = settings.value("Docks/ToolPos", "Left").toString();
-	tagsDockArea = settings.value("Docks/TagsPos", "Left").toString();
-	mainDockVisible  = settings.value("Docks/ToolVisible", true).toBool();
-	tagsDockVisible = settings.value("Docks/TagsVisible", true).toBool();
-	mainDockGeometry = settings.value("Docks/ToolGeometry", QRect()).toRect();
-	tagsDockGeometry = settings.value("Docks/TagsGeometry", QRect()).toRect();
+	QStringList dl;
+	dl << "Main" << "Tags" << "Panose";
+	foreach(const QString & ds, dl)
+	{
+		dockArea[ds] =  settings.value("Docks/"+ds+"Pos", "Left").toString();
+		dockVisible[ds] = settings.value("Docks/"+ds+"Visible", true).toBool();
+		dockGeometry[ds] = settings.value("Docks/"+ds+"Geometry", QRect()).toRect();
+		qDebug()<<ds<< dockArea[ds] << dockVisible[ds] <<dockGeometry[ds];
+	}
 
 	panoseMatchTreshold = settings.value("Panose/MatchTreshold" , 1000 ).toInt();
 
@@ -971,18 +988,19 @@ void typotek::writeSettings()
 	settings.setValue( "WState/size", size() );
 	theMainView->saveSplitterState();
 
-	if(mainDock->isFloating())
-		mainDockArea = "Float";
-	if(tagsDock->isFloating())
-		tagsDockArea = "Float";
-	mainDockGeometry = mainDock->geometry();
-	tagsDockGeometry = tagsDock->geometry();
-	settings.setValue( "Docks/ToolPos", mainDockArea );
-	settings.setValue( "Docks/TagsPos", tagsDockArea );
-	settings.setValue( "Docks/ToolVisible", mainDock->isVisible() );
-	settings.setValue( "Docks/TagsVisible", tagsDock->isVisible() );
-	settings.setValue( "Docks/ToolGeometry", mainDockGeometry);
-	settings.setValue( "Docks/TagsGeometry", tagsDockGeometry);
+	QStringList dl;
+	dl << "Main" << "Tags" << "Panose";
+	foreach(const QString & ds, dl)
+	{
+		if(dockWidget[ds]->isFloating())
+		{
+			dockArea[ds] = "Float";
+		}
+		settings.setValue( "Docks/"+ds+"Pos", dockArea[ds] );
+		settings.setValue( "Docks/"+ds+"Visible", dockWidget[ds]->isVisible());
+		settings.setValue( "Docks/"+ds+"Geometry", dockWidget[ds]->geometry());
+	}
+
 
 	settings.setValue("Info/PreviewSize", previewInfoFontSize );
 	settings.setValue("Info/Style", infoStyle );
@@ -2098,29 +2116,24 @@ void typotek::showEvent(QShowEvent * event)
 	QMainWindow::showEvent(event);
 }
 
-void typotek::slotMainDockAreaChanged(Qt::DockWidgetArea area)
+void typotek::slotDockAreaChanged(Qt::DockWidgetArea area)
 {
-	if(area == Qt::LeftDockWidgetArea)
-		mainDockArea = "Left";
-	else if(area ==Qt::RightDockWidgetArea)
-		mainDockArea ="Right";
-	else if(area == Qt::TopDockWidgetArea)
-		mainDockArea ="Top";
-	else if(area == Qt::BottomDockWidgetArea)
-		mainDockArea = "Bottom";
+	QDockWidget * dw(reinterpret_cast<QDockWidget*>(sender()));
+
+	if(dw)
+	{
+		QString wId(dw->objectName());
+		if(area == Qt::LeftDockWidgetArea)
+			dockArea[wId] = "Left";
+		else if(area ==Qt::RightDockWidgetArea)
+			dockArea[wId] ="Right";
+		else if(area == Qt::TopDockWidgetArea)
+			dockArea[wId] ="Top";
+		else if(area == Qt::BottomDockWidgetArea)
+			dockArea[wId] = "Bottom";
+	}
 }
 
-void typotek::slotTagsDockAreaChanged(Qt::DockWidgetArea area)
-{
-	if(area == Qt::LeftDockWidgetArea)
-		tagsDockArea = "Left";
-	else if(area ==Qt::RightDockWidgetArea)
-		tagsDockArea ="Right";
-	else if(area == Qt::TopDockWidgetArea)
-		tagsDockArea ="Top";
-	else if(area == Qt::BottomDockWidgetArea)
-		tagsDockArea = "Bottom";
-}
 
 FMHyphenator* typotek::getHyphenator() const
 {
@@ -2481,17 +2494,20 @@ void typotek::setWebBrowserOptions ( const QString& theValue )
 
 void typotek::hide()
 {
-	mainDockVisible = mainDock->isVisible();
-	tagsDockVisible = tagsDock->isVisible();
-	mainDock->hide();
-	tagsDock->hide();
+	foreach(const QString& k, dockWidget.keys())
+	{
+		dockVisible[k] = dockWidget[k]->isVisible();
+		dockWidget[k]->hide();
+	}
 	QMainWindow::hide();
 }
 
 void typotek::show()
 {
-	mainDock->setVisible(mainDockVisible);
-	tagsDock->setVisible(tagsDockVisible);
+	foreach(const QString& k, dockWidget.keys())
+	{
+		dockWidget[k]->setVisible(dockVisible[k]);
+	}
 	QMainWindow::show();
 }
 

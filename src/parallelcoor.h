@@ -33,8 +33,7 @@
 	TODO describe _precisely_ how datas are stored
 */
 typedef QList< QList<int> > ParallelCoorDataType;
-typedef QList< QPair<QString, QList<QString> > > ParallelCoorDataScheme;
-class ParallelCoorDataSet : public QObject, public ParallelCoorDataScheme
+class ParallelCoorDataSet : public QMap<QString, QList<QString> > 
 {
 	public:
 		static const QString FieldSep;
@@ -64,6 +63,17 @@ class ParallelCoorDataSet : public QObject, public ParallelCoorDataScheme
 		QMap< QString , QString> getValueDescriptions() const;
 		void setData ( const ParallelCoorDataType& theValue );
 		ParallelCoorDataType getData() const;
+
+		/// compatibility layer :)
+		QPair<QString, QList<QString> > at(int idx)
+		{
+			if(idx < count())
+			{
+				const QString k(keys().at(idx));
+				return QPair<QString, QList<QString> >(k, value(k));
+			}
+			return QPair<QString, QList<QString> >();
+		}
 
 };
 

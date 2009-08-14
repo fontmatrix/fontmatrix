@@ -266,8 +266,7 @@ QList< FontItem * > PanoseMatchFont::similar ( FontItem * ref, int treshold )
 	PanoseMatchFont * pm ( new PanoseMatchFont );
 	pm->setAttributes ( panose );
 
-	QList<FontItem*> all ( FMFontDb::DB()->AllFonts() );
-	QList<FontDBResult> dbresult ( FMFontDb::DB()->getValues ( all, FMFontDb::Panose ) );
+	QList<FontDBResult> dbresult ( FMFontDb::DB()->getValues ( FMFontDb::Panose ) );
 	QList<FontItem*> fil;
 	int dr(0);
 // 	int selectMin(999999);

@@ -51,292 +51,287 @@ class DataLoader;
 
 class typotek:public QMainWindow
 {
-		Q_OBJECT
+	Q_OBJECT
 
-		static typotek* instance;
-		static bool matrix;
-		typotek();
-		~typotek();
-	public:
-		static typotek* getInstance();
-		void initMatrix();
-		void postInit();
+	static typotek* instance;
+	static bool matrix;
+	typotek();
+	~typotek();
+public:
+	static typotek* getInstance();
+	void initMatrix();
+	void postInit();
 
-	protected:
-		void closeEvent ( QCloseEvent *event );
-		void keyPressEvent ( QKeyEvent * event ) ;
+protected:
+	void closeEvent ( QCloseEvent *event );
+	void keyPressEvent ( QKeyEvent * event ) ;
 
-	private slots:
-		void printInfo();
-		void printSample();
-		void printChart();
-		void printPlayground();
-		void printFamily();
+private slots:
+	void printInfo();
+	void printSample();
+	void printChart();
+	void printPlayground();
+	void printFamily();
 
-		void fontBook();
-		void slotActivateCurrents();
-		void slotDeactivateCurrents();
-		void slotEditFont();
-		void about();
-		void helpBegin();
-		void helpEnd();
-		void slotExportFontSet();
-		void slotRemoteIsReady();
-		void slotRepair();
-		void slotTagAll();
-		void slotMainDockAreaChanged(Qt::DockWidgetArea area);
-		void slotTagsDockAreaChanged(Qt::DockWidgetArea area);
-		void slotSwitchLayOptVisible();
-		void slotUpdateLayOptStatus();
-		void slotShowTTTables();
-		void slotEditPanose();
-		void slotDumpInfo();
-		void slotReloadFiltered();
-		void slotReloadSingle();
+	void fontBook();
+	void slotActivateCurrents();
+	void slotDeactivateCurrents();
+	void slotEditFont();
+	void about();
+	void helpBegin();
+	void helpEnd();
+	void slotExportFontSet();
+	void slotRemoteIsReady();
+	void slotRepair();
+	void slotTagAll();
+	void slotDockAreaChanged(Qt::DockWidgetArea area);
+	void slotSwitchLayOptVisible();
+	void slotUpdateLayOptStatus();
+	void slotShowTTTables();
+	void slotEditPanose();
+	void slotDumpInfo();
+	void slotReloadFiltered();
+	void slotReloadSingle();
 
-		void slotExecScript();
-		void slotExecLastScript();
-		void slotExecRecentScript();
-		void slotSwitchScriptConsole();
-		void slotUpdateScriptConsoleStatus();
+	void slotExecScript();
+	void slotExecLastScript();
+	void slotExecRecentScript();
+	void slotSwitchScriptConsole();
+	void slotUpdateScriptConsoleStatus();
 
-		void slotExtractFont();
-		void slotMatchRaster();
+	void slotExtractFont();
+	void slotMatchRaster();
 
-	public slots:
-		void open( QString path = QString(), bool announce = true, bool collect = false );
-		void openList( QStringList files );
-		bool save();
-		void slotCloseToSystray(bool isEnabled);
-		void slotSystrayStart(bool isEnabled);
-		void slotUseInitialTags(bool isEnabled);
-		void showImportedFonts(int show);
-		bool showImportedFonts();
-		void slotPrefsPanelDefault();
-		void slotPrefsPanel(PrefsPanelDialog::PAGE page);
-		void relayStartingStepIn(QString s);
-		void showToltalFilteredFonts();
+public slots:
+	void open( QString path = QString(), bool announce = true, bool collect = false );
+	void openList( QStringList files );
+	bool save();
+	void slotCloseToSystray(bool isEnabled);
+	void slotSystrayStart(bool isEnabled);
+	void slotUseInitialTags(bool isEnabled);
+	void showImportedFonts(int show);
+	bool showImportedFonts();
+	void slotPrefsPanelDefault();
+	void slotPrefsPanel(PrefsPanelDialog::PAGE page);
+	void relayStartingStepIn(QString s);
+	void showToltalFilteredFonts();
 
-		void hide();
-		void show();
+	void hide();
+	void show();
 
-	signals:
-		void tagAdded(QString);
-		void relayStartingStepOut(QString, int, QColor);
-		void previewHasChanged();
+signals:
+	void tagAdded(QString);
+	void relayStartingStepOut(QString, int, QColor);
+	void previewHasChanged();
 
-	private:
-		void createActions();
-		void createMenus();
-		void createToolBars();
-		void createStatusBar();
-		void readSettings();
-		void writeSettings();
-		bool maybeSave();
-		void initDir();
-		void doConnect();
-		void setupDrop();
+private:
+	void installDock(const QString& id, const QString& name, QWidget *w, const QString& tip=QString() );
+	void createActions();
+	void createMenus();
+	void createToolBars();
+	void createStatusBar();
+	void readSettings();
+	void writeSettings();
+	bool maybeSave();
+	void initDir();
+	void doConnect();
+	void setupDrop();
 
-		void checkOwnDir();
-		void fillTagsList();
+	void checkOwnDir();
+	void fillTagsList();
 
-		QTextEdit *textEdit;
-		QString curFile;
+	QTextEdit *textEdit;
+	QString curFile;
 
-		QDockWidget *mainDock;
-		QDockWidget *tagsDock;
-		QMenu *fileMenu;
-		QMenu *editMenu;
-		QMenu *servicesMenu;
-		QMenu *browseMenu;
-		QMenu *viewMenu;
+	QMenu *fileMenu;
+	QMenu *editMenu;
+	QMenu *servicesMenu;
+	QMenu *browseMenu;
+	QMenu *viewMenu;
 #ifdef HAVE_PYTHONQT
-		QMenu *scriptMenu;
+	QMenu *scriptMenu;
 #endif
-		QMenu *helpMenu;
-		QToolBar *fileToolBar;
-		QToolBar *editToolBar;
-		QAction *newAct;
-		QAction *openAct;
-		QAction *saveAct;
-		QAction *saveAsAct;
-		QAction *exitAct;
-		QAction *cutAct;
-		QAction *copyAct;
-		QAction *pasteAct;
-		QAction *aboutAct;
-		QAction *aboutQtAct;
-		QAction *fontBookAct;
-		QAction *activCurAct;
-		QAction *deactivCurAct;
-		QAction *helpAct;
-		QAction *fonteditorAct;
-		QAction *prefsAct;
-		QAction *exportFontSetAct;
-		QAction *repairAct;
-		QAction *tagAll;
-		QAction *showTTTAct;
-		QAction *editPanoseAct;
-		QAction *dumpInfoAct;
-		QAction *reloadAct;
-		QAction *reloadSingleAct;
+	QMenu *helpMenu;
+	QToolBar *fileToolBar;
+	QToolBar *editToolBar;
+	QAction *newAct;
+	QAction *openAct;
+	QAction *saveAct;
+	QAction *saveAsAct;
+	QAction *exitAct;
+	QAction *cutAct;
+	QAction *copyAct;
+	QAction *pasteAct;
+	QAction *aboutAct;
+	QAction *aboutQtAct;
+	QAction *fontBookAct;
+	QAction *activCurAct;
+	QAction *deactivCurAct;
+	QAction *helpAct;
+	QAction *fonteditorAct;
+	QAction *prefsAct;
+	QAction *exportFontSetAct;
+	QAction *repairAct;
+	QAction *tagAll;
+	QAction *showTTTAct;
+	QAction *editPanoseAct;
+	QAction *dumpInfoAct;
+	QAction *reloadAct;
+	QAction *reloadSingleAct;
 #ifdef HAVE_PYTHONQT
-		QAction *execScriptAct;
-		QAction *execLastScriptAct;
-		QString lastScript;
-		QMap<QAction*, QString> recentScripts;
-		QAction *scriptConsoleAct;
+	QAction *execScriptAct;
+	QAction *execLastScriptAct;
+	QString lastScript;
+	QMap<QAction*, QString> recentScripts;
+	QAction *scriptConsoleAct;
 #endif
 
-		QAction *extractFontAction;
-		QAction *matchRasterAct;
-		
-		QAction *nextFamily;
-		QAction *previousFamily;
-		QAction *nextFont;
-		QAction *previousFont;
+	QAction *extractFontAction;
+	QAction *matchRasterAct;
 
-		QMenu *printMenu;
-		QAction *printInfoAct;
-		QAction *printSampleAct;
-		QAction *printChartAct;
-		QAction *printPlaygroundAct;
-		QAction *printFamilyAct;
+	QAction *nextFamily;
+	QAction *previousFamily;
+	QAction *nextFont;
+	QAction *previousFont;
 
-// 		HelpWidget *theHelp;
-		HelpBrowser *theHelp;
+	QMenu *printMenu;
+	QAction *printInfoAct;
+	QAction *printSampleAct;
+	QAction *printChartAct;
+	QAction *printPlaygroundAct;
+	QAction *printFamilyAct;
 
-		QAction *layOptAct;
+	// 		HelpWidget *theHelp;
+	HelpBrowser *theHelp;
 
-		QProgressBar *statusProgressBar;
+	QAction *layOptAct;
 
-		MainViewWidget *theMainView;
+	QProgressBar *statusProgressBar;
 
-		QFile ResourceFile;
-		QDir ownDir;
-		QDir managedDir;
+	MainViewWidget *theMainView;
 
-		DataLoader * dataLoader;
-//		QMap<QString,QString> m_namedSamples;
-		QString m_theWord;
+	QFile ResourceFile;
+	QDir ownDir;
+	QDir managedDir;
 
-		QLabel *curFontPresentation;
-		QLabel *countFilteredFonts;
+	DataLoader * dataLoader;
+	//		QMap<QString,QString> m_namedSamples;
+	QString m_theWord;
 
-		Systray *systray;
+	QLabel *curFontPresentation;
+	QLabel *countFilteredFonts;
 
-		bool useInitialTags;
-		bool showFontListDialog;
-		static QString fonteditorPath;
-		QString templatesDir;
-		double previewSize;
-		bool previewRTL;
-		bool previewSubtitled;
-		bool m_familySchemeFreetype;
-		QString m_welcomeURL;
-		QString m_sysTagName;
+	Systray *systray;
 
-		void addFcDirItem(const QString &dirPath);
-		QStringList getSystemFontDirs();
-		QStringList sysFontList;
+	bool useInitialTags;
+	bool showFontListDialog;
+	static QString fonteditorPath;
+	QString templatesDir;
+	double previewSize;
+	bool previewRTL;
+	bool previewSubtitled;
+	bool m_familySchemeFreetype;
+	QString m_welcomeURL;
+	QString m_sysTagName;
 
-		RemoteDir *remoteDir;
-		QString m_remoteTmpDir;
+	void addFcDirItem(const QString &dirPath);
+	QStringList getSystemFontDirs();
+	QStringList sysFontList;
 
+	RemoteDir *remoteDir;
+	QString m_remoteTmpDir;
 
-		QString mainDockArea;
-		QString tagsDockArea;
-		bool mainDockVisible;
-		bool tagsDockVisible;
-		QRect mainDockGeometry;
-		QRect tagsDockGeometry;
+	QMap<QString, QDockWidget*>  dockWidget;
+	QMap<QString, QString> dockArea;
+	QMap<QString, bool> dockVisible;
+	QMap<QString, QRect> dockGeometry;
 
-		FMHyphenator *hyphenator;
+	FMHyphenator *hyphenator;
 
-		QString defaultOTFScript;
-		QString defaultOTFLang;
-		QStringList defaultOTFGPOS;
-		QStringList defaultOTFGSUB;
+	QString defaultOTFScript;
+	QString defaultOTFLang;
+	QStringList defaultOTFGPOS;
+	QStringList defaultOTFGSUB;
 
-		int chartInfoFontSize;
-		QString chartInfoFontName;
+	int chartInfoFontSize;
+	QString chartInfoFontName;
 
-		double previewInfoFontSize;
+	double previewInfoFontSize;
 
-		QString databaseDriver;
-		QString databaseHostname;
-		QString databaseDbName;
-		QString databaseUser;
-		QString databasePassword;
+	QString databaseDriver;
+	QString databaseHostname;
+	QString databaseDbName;
+	QString databaseUser;
+	QString databasePassword;
 
-		int panoseMatchTreshold;
+	int panoseMatchTreshold;
 
-		QString webBrowser;
-		QString webBrowserOptions;
-		
-		QString infoStyle;
+	QString webBrowser;
+	QString webBrowserOptions;
 
-		double m_dpiX;
-		double m_dpiY;
+	QString infoStyle;
 
-	public:
-		bool isSysFont(FontItem* f);
-		QList<FontItem*> getCurrentFonts();
-		FontItem* getSelectedFont();
-		void resetFilter();
+	double m_dpiX;
+	double m_dpiY;
 
-		QString getManagedDir(){return managedDir.absolutePath();};
+public:
+	bool isSysFont(FontItem* f);
+	QList<FontItem*> getCurrentFonts();
+	FontItem* getSelectedFont();
+	void resetFilter();
 
-		QFile* getResourceFile(){ return &ResourceFile; }
+	QString getManagedDir(){return managedDir.absolutePath();}
 
-		void setSampleText(QString s);
+	QFile* getResourceFile(){ return &ResourceFile; }
 
-		void presentFontName(QString s);
+	void setSampleText(QString s);
 
-		void forwardUpdateView();
+	void presentFontName(QString s);
 
-		// TODO there is a lot of things here which MUST go to an independent PrefsManager class
+	void forwardUpdateView();
 
-		Systray *getSystray() const {return systray;}
-		void setSystrayVisible(bool);
-		void showActivateAllSystray(bool);
-		void systrayAllConfirmation(bool);
-		void systrayTagsConfirmation(bool);
+	// TODO there is a lot of things here which MUST go to an independent PrefsManager class
 
-		// Samples
-		QString namedSample(QString name);
-		QMap<QString,QList<QString> > namedSamplesNames();
-		void addNamedSample(QString name, QString sample);
-		void removeNamedSample(const QString& key);
-		void changeSample(QString name, QString text);
-		QString defaultSampleName();
+	Systray *getSystray() const {return systray;}
+	void setSystrayVisible(bool);
+	void showActivateAllSystray(bool);
+	void systrayAllConfirmation(bool);
+	void systrayTagsConfirmation(bool);
 
-		void setFontEditorPath(const QString &path);
-		QString fontEditorPath() {return fonteditorPath;};
+	// Samples
+	QString namedSample(QString name);
+	QMap<QString,QList<QString> > namedSamplesNames();
+	void addNamedSample(QString name, QString sample);
+	void removeNamedSample(const QString& key);
+	void changeSample(QString name, QString text);
+	QString defaultSampleName();
 
-		bool initialTags() { return useInitialTags;};
+	void setFontEditorPath(const QString &path);
+	QString fontEditorPath() {return fonteditorPath;}
 
-		void setTemplatesDir(const QString &dir);
-		QString getTemplatesDir() {return templatesDir;};
+	bool initialTags() { return useInitialTags;}
 
-		void setWord(QString s, bool updateView);
-		QString word(FontItem * item = 0);
-		void setPreviewSize(double d);
-		double getPreviewSize(){ return previewSize; }
-		void setPreviewRTL(bool d);
-		bool getPreviewRTL(){ return previewRTL; }
-		void setPreviewSubtitled(bool d);
-		bool getPreviewSubtitled(){ return previewSubtitled; }
+	void setTemplatesDir(const QString &dir);
+	QString getTemplatesDir() {return templatesDir;}
 
-		void removeFontItem(QString key);
-		void removeFontItem(QStringList keyList);
+	void setWord(QString s, bool updateView);
+	QString word(FontItem * item = 0);
+	void setPreviewSize(double d);
+	double getPreviewSize(){ return previewSize; }
+	void setPreviewRTL(bool d);
+	bool getPreviewRTL(){ return previewRTL; }
+	void setPreviewSubtitled(bool d);
+	bool getPreviewSubtitled(){ return previewSubtitled; }
 
-		void changeFontSizeSettings(double fSize, double lSize);
+	void removeFontItem(QString key);
+	void removeFontItem(QStringList keyList);
 
-		void showStatusMessage(const QString &message);
+	void changeFontSizeSettings(double fSize, double lSize);
 
-		QString remoteTmpDir() const {return m_remoteTmpDir;}
-		void setRemoteTmpDir(const QString &s);
+	void showStatusMessage(const QString &message);
+
+	QString remoteTmpDir() const {return m_remoteTmpDir;}
+	void setRemoteTmpDir(const QString &s);
 
 
 
@@ -406,10 +401,10 @@ class typotek:public QMainWindow
 	double getDpiY() const {return m_dpiY;}
 	
 	
-	protected:
-		void dragEnterEvent(QDragEnterEvent *event);
-		void dropEvent ( QDropEvent * event );
-		void showEvent ( QShowEvent * event );
+protected:
+	void dragEnterEvent(QDragEnterEvent *event);
+	void dropEvent ( QDropEvent * event );
+	void showEvent ( QShowEvent * event );
 
 
 
@@ -419,10 +414,10 @@ class typotek:public QMainWindow
 class LazyInit : public QThread
 {
 	Q_OBJECT
-	public:
-		void run();
-	signals:
-		void endOfRun();
+public:
+	void run();
+signals:
+	void endOfRun();
 };
 
 

@@ -76,7 +76,7 @@
      </property>
      <widget class="QWidget" name="tabInfo">
       <attribute name="icon">
-       <iconset resource="application.qrc">
+       <iconset>
         <normaloff>:/fontmatrix_info.png</normaloff>:/fontmatrix_info.png</iconset>
       </attribute>
       <attribute name="title">
@@ -87,7 +87,7 @@
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <widget class="QWebView" name="fontInfoText" native="true">
+        <widget class="QWebView" name="fontInfoText">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -100,7 +100,7 @@
      </widget>
      <widget class="QWidget" name="tabSample">
       <attribute name="icon">
-       <iconset resource="application.qrc">
+       <iconset>
         <normaloff>:/fontmatrix_sampletext.png</normaloff>:/fontmatrix_sampletext.png</iconset>
       </attribute>
       <attribute name="title">
@@ -696,7 +696,7 @@
      </widget>
      <widget class="QWidget" name="tabGlyphs">
       <attribute name="icon">
-       <iconset resource="application.qrc">
+       <iconset>
         <normaloff>:/fontmatrix_glypg.png</normaloff>:/fontmatrix_glypg.png</iconset>
       </attribute>
       <attribute name="title">
@@ -822,7 +822,7 @@ Press enter after editing to run the search.</string>
             <string>Copy Mode</string>
            </property>
            <property name="icon">
-            <iconset resource="application.qrc">
+            <iconset>
              <normaloff>:/action-copy-char</normaloff>:/action-copy-char</iconset>
            </property>
            <property name="checkable">
@@ -845,7 +845,7 @@ Press enter after editing to run the search.</string>
      </widget>
      <widget class="QWidget" name="tabPlay">
       <attribute name="icon">
-       <iconset resource="application.qrc">
+       <iconset>
         <normaloff>:/fontmatrix_playground.png</normaloff>:/fontmatrix_playground.png</iconset>
       </attribute>
       <attribute name="title">
@@ -900,50 +900,9 @@ Press enter after editing to run the search.</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabClassification">
-      <attribute name="icon">
-       <iconset resource="application.qrc">
-        <normaloff>:/fontmatrix_clasification.png</normaloff>:/fontmatrix_clasification.png</iconset>
-      </attribute>
-      <attribute name="title">
-       <string>Classification</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_13">
-       <property name="margin">
-        <number>0</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QSplitter" name="classSplitter">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="opaqueResize">
-          <bool>false</bool>
-         </property>
-         <widget class="ParallelCoorView" name="classificationView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>3</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-         <widget class="QWebView" name="classVariableDescription" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>1</verstretch>
-           </sizepolicy>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_14"/>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="tabCompare">
       <attribute name="icon">
-       <iconset resource="application.qrc">
+       <iconset>
         <normaloff>:/fontmatrix_compare.png</normaloff>:/fontmatrix_compare.png</iconset>
       </attribute>
       <attribute name="title">
@@ -993,11 +952,6 @@ Press enter after editing to run the search.</string>
    <header>fmverticalbutton.h</header>
   </customwidget>
   <customwidget>
-   <class>ParallelCoorView</class>
-   <extends>QGraphicsView</extends>
-   <header>parallelcoor.h</header>
-  </customwidget>
-  <customwidget>
    <class>FontCompareWidget</class>
    <extends>QWidget</extends>
    <header>fontcomparewidget.h</header>
@@ -1020,8 +974,6 @@ Press enter after editing to run the search.</string>
   <tabstop>saveDefOTFBut</tabstop>
   <tabstop>resetDefOTFBut</tabstop>
  </tabstops>
- <resources>
-  <include location="application.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

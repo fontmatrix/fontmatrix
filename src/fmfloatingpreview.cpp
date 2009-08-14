@@ -119,9 +119,11 @@ FMFloatingPreview::FMFloatingPreview(QWidget * parent, FontItem * item)
 {
 	hasMouseGrab = false;
 	setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+#if QT_VERSION >= 0x040500
 	if(canTransparent())
 		setAttribute(Qt::WA_TranslucentBackground, true);
 	setAttribute(Qt::WA_DeleteOnClose, true);
+#endif
 
 
 	mainLayout = new QVBoxLayout(this);

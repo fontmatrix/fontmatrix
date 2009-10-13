@@ -76,6 +76,19 @@ void FMPlayGround::mousePressEvent ( QMouseEvent * e )
 		return;
 	}
 	QGraphicsView::mousePressEvent ( e );
+	QList<QGraphicsItem*> sel(scene()->selectedItems());
+	if(sel.isEmpty())
+	{
+		curSelRect = QRectF();
+	}
+	else
+	{
+		foreach(const QGraphicsItem *i, sel)
+		{
+			curSelRect = curSelRect.united( i->boundingRect() );
+		}
+		curSelRect = mapFromScene(curSelRect).boundingRect();
+	}
 }
 
 void FMPlayGround::mouseReleaseEvent ( QMouseEvent * e )
@@ -85,12 +98,19 @@ void FMPlayGround::mouseReleaseEvent ( QMouseEvent * e )
 		isPanning = false;
 		return;
 	}
-	else if((e->button() == Qt::LeftButton)
-		&& (QRect( mouseStartPoint.x() - 2, mouseStartPoint.y() - 2, 4, 4).contains(e->pos())) )
+	else if((e->button() == Qt::LeftButton))
 	{
-		BlinkPos = CursorPos = mapToScene( e->pos() );
-		blinkCursor();
-		CursorTimer->start();
+		QRect cursorArea(mouseStartPoint.x() - 2, mouseStartPoint.y() - 2, 4, 4);
+
+		if(!curSelRect.contains(e->pos()))
+		{
+			if(cursorArea.contains(e->pos()))
+			{
+				BlinkPos = CursorPos = mapToScene( e->pos() );
+				blinkCursor();
+				CursorTimer->start();
+			}
+		}
 	}
 	QGraphicsView::mouseReleaseEvent ( e );
 }

@@ -15,6 +15,7 @@
 
 #include <QGraphicsView>
 #include <QPointF>
+#include <QRectF>
 #include <QTimer>
 
 class FontItem;
@@ -51,6 +52,7 @@ class FMPlayGround : public QGraphicsView
 		QList<QGraphicsItemGroup*> glyphLines;
 		QList< QGraphicsItem* > curLine;
 		QString curString;
+		QRectF curSelRect;
 
 		void removeLine();
 		

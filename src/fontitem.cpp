@@ -3506,12 +3506,38 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 	if( !ensureFace() )
 		return ret;
 	double scalefactor = fsize / m_face->units_per_EM  ;
+
+	QChar spaceChar(' ');
+	int startSpaceCount(0);
+	int endSpaceCount(0);
+	int specCount(spec.count());
+	for(int s(0); s < specCount; ++s)
+	{
+		if(spec.at(s) == spaceChar)
+			++startSpaceCount;
+		else
+			break;
+	}
+	if(startSpaceCount != specCount)
+	{
+		for(int s(specCount-1); s >= 0; --s)
+		{
+			if(spec.at(s) == spaceChar)
+				++endSpaceCount;
+			else
+				break;
+		}
+	}
 	
-	QStringList stl(spec.split(' ', QString::SkipEmptyParts));
+	QStringList stl(spec.split(spaceChar, QString::SkipEmptyParts));
 	
-	QGraphicsPathItem *glyph = itemFromChar ( QChar(' ').unicode() , fsize );
+	QGraphicsPathItem *glyph = itemFromChar ( spaceChar.unicode() , fsize );
 	RenderedGlyph wSpace(glyph->data(GLYPH_DATA_GLYPH).toInt(),0, glyph->data(GLYPH_DATA_HADVANCE).toDouble() * scalefactor ,0,0,0,' ',false);
 	delete glyph;
+	for(int s(0); s < startSpaceCount; ++s)
+	{
+		ret << wSpace;
+	}
 	for(QStringList::const_iterator sIt(stl.constBegin());sIt != stl.constEnd(); ++ sIt)
 	{
 		if(sIt != stl.constBegin())
@@ -3594,6 +3620,11 @@ GlyphList FontItem::glyphs ( QString spec, double fsize )
 			}
 			ret << rg;
 		}
+	}
+
+	for(int s(0); s < endSpaceCount; ++s)
+	{
+		ret << wSpace;
 	}
 	releaseFace();
 // 	qDebug()<<"EndOfGlyphs";

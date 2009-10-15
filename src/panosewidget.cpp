@@ -83,7 +83,7 @@ void PanoseWidget::slotUpdateFilter(const QItemSelection & selected, const QItem
 	QList<int> ns;
 	foreach(const QModelIndex& i, m_ui->valueView->selectionModel()->selectedIndexes())
 	{
-		ns << i.row();
+		ns << i.row() + 2; // since "0" and "1" has been removed from the list
 	}
 	if(ns.count())
 		m_filter[m_filterKey] = ns;

@@ -88,12 +88,15 @@ PanoseValueModel::PanoseValueModel( QObject * parent)
 	{
 		foreach(const int& v, p[k].keys())
 		{
-			QString fn(pDir + QString::number(k) + QDir::separator() + QString::number(v) +".png");
-			if(QFile::exists(fn))
-				m_icons[k] << QIcon(fn);
-			else
-				m_icons[k] << QIcon();
-			m_names[k] << p[k][v];
+			if(v > 1) // We do not want "Any" and "No Fit"
+			{
+				QString fn(pDir + QString::number(k) + QDir::separator() + QString::number(v) +".png");
+				if(QFile::exists(fn))
+					m_icons[k] << QIcon(fn);
+				else
+					m_icons[k] << QIcon();
+				m_names[k] << p[k][v];
+			}
 		}
 	}
 	m_cat = FontStrings::firstPanoseKey();
@@ -123,7 +126,7 @@ QVariant PanoseValueModel::data(const QModelIndex& index, int role) const
 	{
 		if(m_icons[m_cat].at(index.row()).isNull())
 			return m_names[m_cat].at(index.row());
-		return QVariant();
+		return QString();
 	}
 	else if(Qt::DecorationRole == role)
 	{

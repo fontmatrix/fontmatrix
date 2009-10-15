@@ -59,6 +59,7 @@ private:
 private slots:
 	void slotChangeAtrr(const QModelIndex& idx);
 	void slotUpdateFilter(const QItemSelection & selected, const QItemSelection & deselected);
+	void slotSelectAttr(const QModelIndex& idx);
 
 signals:
 	void filterChanged(const QMap<int, QList<int> >&);

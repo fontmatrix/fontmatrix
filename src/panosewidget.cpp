@@ -41,6 +41,7 @@ PanoseWidget::PanoseWidget(QWidget *parent) :
 	m_filterKey = 0;
 	connect(m_ui->attributeView, SIGNAL(activated (const QModelIndex&)), this, SLOT(slotChangeAtrr(const QModelIndex&)));
 	connect(m_ui->valueView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotUpdateFilter(const QItemSelection & , const QItemSelection &)));
+	connect(m_ui->pTree, SIGNAL(activated(QModelIndex)), this, SLOT(slotSelectAttr(QModelIndex)));
 }
 
 PanoseWidget::~PanoseWidget()
@@ -106,6 +107,26 @@ void PanoseWidget::slotUpdateFilter(const QItemSelection & selected, const QItem
 
 
 	emit filterChanged(m_filter);
+}
+
+void PanoseWidget::slotSelectAttr(const QModelIndex& idx)
+{
+	QModelIndex tmpIdx(idx);
+	while(tmpIdx.parent().isValid())
+		tmpIdx = tmpIdx.parent();
+
+	const QString cs(tmpIdx.data(Qt::DisplayRole).toString());
+	for(int i(0); i < m_ui->attributeView->model()->rowCount(); ++i)
+	{
+		const QModelIndex &cIdx(m_ui->attributeView->model()->index(i,0));
+		if(cs == cIdx.data(Qt::DisplayRole).toString())
+		{
+			m_ui->attributeView->setCurrentIndex(cIdx);
+			slotChangeAtrr(cIdx);
+			return;
+		}
+	}
+
 }
 
 void PanoseWidget::setFilter(const QMap<int, QList<int> >& filter)

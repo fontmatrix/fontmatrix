@@ -26,6 +26,7 @@
 #include "fmglyphsview.h"
 #include "fminfodisplay.h"
 #include "fmlayout.h"
+#include "fmmissingfonthelper.h"
 #include "fmotf.h"
 #include "fmpaths.h"
 #include "fmpreviewlist.h"
@@ -688,7 +689,7 @@ void MainViewWidget::slotOrderingChanged ( QString s )
 /// Should be renamed in slotNameItemSelected
 void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 {
-// 	qDebug() << "font select";
+        qDebug() << "font select"<<item;
 	if ( item->data ( 0,100 ).toString() == "alpha" )
 	{
 // 		qDebug() << "Item is an alpha";
@@ -696,7 +697,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 // 		fillTree();
 	}
 
-	if ( item->data ( 0,100 ).toString() == "family" )
+        else if ( item->data ( 0,100 ).toString() == "family" )
 	{
 // 		qDebug() << "Item is a family";
 		item->setExpanded(true);
@@ -712,7 +713,11 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			names << item->child( i )->toolTip( 0 ) ;
 			variantMap[item->child ( i )->text ( 0 ) ] = item->child ( i )->toolTip(0) ;
 		}
-		slotFontActionByNames ( names );
+                if(!slotFontActionByNames ( names ))
+                {
+                    delete(new FMMissingFontHelper(names));
+                    return;
+                }
 		int oldc = item->data ( 0,200 ).toInt();
 		if ( oldc == item->checkState ( 0 ) ) // filters when checkbox has not been hit
 		{
@@ -768,12 +773,16 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 		return;
 	}
 
-	if ( item->data ( 0,100 ).toString() == "fontfile" )
+        else if ( item->data ( 0,100 ).toString() == "fontfile" )
 	{
 		QString fontname(item->toolTip(0));
 		bool wantActivate = (item->checkState(0) == Qt::Checked) ? true : false;
 // 		m_lists->previewList->slotSelect(fontname);
-		slotFontSelectedByName(fontname);
+                if(!slotFontSelectedByName(fontname))
+                {
+                    delete(new FMMissingFontHelper(fontname));
+                    return;
+                }
 // 		if ( !theVeryFont->isLocked() )
 		{
 			if(theVeryFont->isActivated())
@@ -800,12 +809,12 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 }
 
-void MainViewWidget::slotFontSelectedByName ( QString fname )
+bool MainViewWidget::slotFontSelectedByName ( QString fname )
 {
 
 	if ( fname.isEmpty()
 		|| ((fname ==  faceIndex) && (!m_forceReloadSelection)) )
-		return;
+                return false;
 	m_forceReloadSelection = false;
 	lastIndex = faceIndex;
 	faceIndex = fname;
@@ -816,24 +825,26 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		if(abcView->state() == FMGlyphsView::SingleView)
 			slotShowAllGlyph();
 		theVeryFont = FMFontDb::DB()->Font( faceIndex );
+                if(!theVeryFont)
+                    return false;
 // 		theVeryFont->updateItem();
 		slotFontActionByName ( fname );
-		if(theVeryFont->isRemote())
-		{
-			qDebug() << faceIndex <<" is remote";
-			if(!theVeryFont->isCached())
-			{
-				connect(theVeryFont,SIGNAL(dowloadFinished()), this, SLOT(slotRemoteFinished()));
-				theVeryFont->getFromNetwork();
-				currentDownload = faceIndex ;
-				faceIndex = lastIndex;
-				return;
-			}
-			else
-			{
-				currentDownload = "";
-			}
-		}
+//		if(theVeryFont->isRemote())
+//		{
+//			qDebug() << faceIndex <<" is remote";
+//			if(!theVeryFont->isCached())
+//			{
+//				connect(theVeryFont,SIGNAL(dowloadFinished()), this, SLOT(slotRemoteFinished()));
+//				theVeryFont->getFromNetwork();
+//				currentDownload = faceIndex ;
+//				faceIndex = lastIndex;
+//				return false;
+//			}
+//			else
+//			{
+//				currentDownload = "";
+//			}
+//		}
 		fillOTTree();
 		fillUniPlanesCombo ( theVeryFont );
 		QStringListModel *m = reinterpret_cast<QStringListModel*>(charSearchLine->completer()->model());
@@ -849,7 +860,7 @@ void MainViewWidget::slotFontSelectedByName ( QString fname )
 		abcView->verticalScrollBar()->setValue ( 0 );
 	}
 
-
+        return true;
 }
 
 
@@ -1178,7 +1189,7 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 	}
 }
 
-void MainViewWidget::slotFontActionByName (const QString &fname )
+bool MainViewWidget::slotFontActionByName (const QString &fname )
 {
 // 	qDebug()<<"MainViewWidget::slotFontActionByName ("<< fname <<")";
 	FontItem * FoIt = FMFontDb::DB()->Font( fname );
@@ -1188,18 +1199,28 @@ void MainViewWidget::slotFontActionByName (const QString &fname )
 		fl.append ( FoIt );
 		TagsWidget::getInstance()->prepare ( fl );
 	}
+        else
+            return false;
+        return true;
 }
 
-void MainViewWidget::slotFontActionByNames ( QStringList fnames )
+bool MainViewWidget::slotFontActionByNames ( QStringList fnames )
 {
 // 	qDebug()<<"MainViewWidget::slotFontActionByNames ("<< fnames.join(";") <<")";
 	QList<FontItem*> FoIt;
 	for ( int i= 0; i < fnames.count() ; ++i )
 	{
-		FoIt.append ( FMFontDb::DB()->Font( fnames[i] ) );
+                FontItem* ti(FMFontDb::DB()->Font( fnames[i] ));
+                if(ti)
+                    FoIt.append ( ti );
+                else
+                {
+                    return false;
+                }
 	}
 	if ( FoIt.count() )
 		TagsWidget::getInstance()->prepare ( FoIt );
+        return true;
 }
 
 

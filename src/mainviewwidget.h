@@ -136,7 +136,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 	public slots:
 		void slotOrderingChanged ( QString s );
 		void slotFontSelected ( QTreeWidgetItem * item, int column );
-		void slotFontSelectedByName(QString fname);
+                bool slotFontSelectedByName(QString fname);
 		void slotInfoFont();
 		void slotView(bool needDeRendering = false);
 		void slotShowOneGlyph();
@@ -144,8 +144,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotSearch();
 		
 		void slotFontAction(QTreeWidgetItem * item, int column );
-		void slotFontActionByName(const QString &fname);
-		void slotFontActionByNames(QStringList fnames);
+                bool slotFontActionByName(const QString &fname);
+                bool slotFontActionByNames(QStringList fnames);
 		void slotEditAll();
 		void slotZoom(int z);
 		void slotAppendTag(QString tag);

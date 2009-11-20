@@ -24,6 +24,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmkernfeat.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayoptwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmlayout.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmmatchraster.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmmissingfonthelper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmnamelist.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmotf.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmpaths.cpp

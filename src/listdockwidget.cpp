@@ -303,8 +303,11 @@ void ListDockWidget::slotFolderRemoveFromWatcher(QModelIndex mIdx)
  */
 void ListDockWidget::slotFolderRefresh(const QString& dirPath)
 {
-	qDebug()<<"Refresh"<<dirPath;
-	theDirModel->refresh(theDirModel->index(dirPath, 0 ));
+	if(folderView->isVisible())
+	{
+		qDebug()<<"Refresh"<<dirPath;
+		theDirModel->refresh(theDirModel->index(dirPath, 0 ));
+	}
 }
 
 void ListDockWidget::slotFieldChanged(QAction * action)
@@ -493,7 +496,7 @@ void ListDockWidget::slotTabChanged(int i)
 		QDir d(lastUsedDir);
 		if (!d.exists())
 			lastUsedDir = QDir::homePath();
-
+		theDirModel->refresh();
 		folderView->setCurrentIndex(theDirModel->index(lastUsedDir));
 	}
 }

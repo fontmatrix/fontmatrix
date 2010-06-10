@@ -21,6 +21,7 @@
 #include "fontitem.h"
 #include "typotek.h"
 #include "fmpaths.h"
+#include "fmfontdb.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -113,7 +114,7 @@ void FontBookDialog::slotFileDialog()
 
 void FontBookDialog::fillFontsList()
 {
-	QList<FontItem*>localFontMap = typotek::getInstance()->getCurrentFonts();
+	QList<FontItem*>localFontMap = FMFontDb::DB()->getFilteredFonts();
 	foreach(FontItem* fit, localFontMap)
 	{
 		selectedFontsList->addItem(fit->fancyName());

@@ -151,7 +151,7 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 
 	int row = index.row();
 // 	qDebug()<<"D"<<row;
-	FontItem *fit(typotek::getInstance()->getCurrentFonts().at(row));
+	FontItem *fit(FMFontDb::DB()->getFilteredFonts().at(row));
 	if(!fit)
 		return QVariant();
 	
@@ -216,7 +216,7 @@ int FMPreviewModel::rowCount(const QModelIndex & parent) const
 {
 	if(parent.isValid() || !typotek::getInstance()->getTheMainView())
 		return 0;
-	QList< FontItem * > cl(typotek::getInstance()->getCurrentFonts());
+	QList< FontItem * > cl(FMFontDb::DB()->getFilteredFonts());
 	return cl.count();
 }
 
@@ -238,7 +238,7 @@ void FMPreviewView::resizeEvent(QResizeEvent * event)
 {
 	int borders( 2*(frameWidth() + lineWidth() + midLineWidth()) ); 
 	int scrollbar(verticalScrollBar()->width());
-	usedWidth = this->width() - (borders + scrollbar);
+	usedWidth = qRound((this->width() - (borders + scrollbar)));
 	
 	emit widthChanged(usedWidth);
 }
@@ -288,7 +288,7 @@ void FMPreviewView::updateLayout()
 
 void FMPreviewView::setCurrentFont(const QString & name)
 {
-	QList<FontItem*> fl( typotek::getInstance()->getCurrentFonts() );
+	QList<FontItem*> fl( FMFontDb::DB()->getFilteredFonts() );
 	const int fl_count(fl.count());
 	int rFont(fl_count);
 	for(int i(0); i < fl_count ; ++i)

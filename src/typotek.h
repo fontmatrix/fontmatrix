@@ -276,7 +276,6 @@ private:
 
 public:
 	bool isSysFont(FontItem* f);
-	QList<FontItem*> getCurrentFonts();
 	FontItem* getSelectedFont();
 	void resetFilter();
 

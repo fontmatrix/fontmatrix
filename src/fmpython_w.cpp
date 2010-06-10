@@ -159,7 +159,7 @@ QStringList FMPythonW::currentFontNames()
 	if ( !tk->getSelectedFont() )
 		return ret;
 	
-	foreach(FontItem* fi, tk->getCurrentFonts())
+	foreach(FontItem* fi, FMFontDb::DB()->getFilteredFonts())
 	{
 		ret << fi->path();
 	}
@@ -170,7 +170,7 @@ QList<FontItem*> FMPythonW::currentFonts()
 {
 	if ( !tk->getSelectedFont() )
 		return QList<FontItem*>();
-	return tk->getCurrentFonts();
+	return FMFontDb::DB()->getFilteredFonts();
 }
 
 

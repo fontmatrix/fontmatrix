@@ -16,6 +16,7 @@
 #include "typotek.h"
 #include "mainviewwidget.h"
 #include "fontitem.h"
+#include "fmfontdb.h"
 
 #include <QDesktopWidget>
 #include <QFileDialog>
@@ -119,7 +120,7 @@ void FMMatchRaster::search()
 	buttonBox->setEnabled ( false );
 	if ( !m_waitingForButton )
 	{
-		remainFonts = compFonts = typotek::getInstance()->getCurrentFonts() ;
+		remainFonts = compFonts =  FMFontDb::DB()->getFilteredFonts();
 		progressBar->setRange ( 0, compFonts.count() );
 		stackedWidget->setCurrentIndex ( 1 );
 

@@ -14,6 +14,7 @@
 #include "typotek.h"
 #include "fontitem.h"
 #include "fmlayout.h"
+#include "fmfontdb.h"
 
 #include <QDebug>
 #include <QObject>
@@ -197,7 +198,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 
 
 
-	QList<FontItem*> localFontMap = typotek::getInstance()->getCurrentFonts();
+	QList<FontItem*> localFontMap = FMFontDb::DB()->getFilteredFonts();
 	QMap<QString, QList<FontItem*> > keyList;
 	for ( int i=0; i < localFontMap.count();++i )
 	{

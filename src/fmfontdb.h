@@ -135,6 +135,16 @@ class FMFontDb : public QObject, public QSqlDatabase
 		bool Remove ( const QString& id );
 		bool insertTemporaryFont ( const QString& path );
 
+		void clearFilteredFonts();
+		void filterAllFonts();
+		QList<FontItem*> getFilteredFonts(bool familyOnly = false) const;
+		void setFilterdFonts(const QList<FontItem*>& flist);
+		int countFilteredFonts() const;
+		void insertFilteredFont(FontItem* item);
+		void removeFilteredFont(FontItem* item);
+		bool isFiltered(FontItem* item) const;
+
+
 	private:
 		// ensure tables are created
 		void initFMDb();
@@ -153,6 +163,9 @@ class FMFontDb : public QObject, public QSqlDatabase
 		QMap<int,FontItem*>::iterator fontCursor;
 // 		void clearFontMap();
 		QMap<QString , FontItem*> temporaryFont;
+
+		// Not sure it's that good idea but still, go to put current filtered fonts here
+		QList<FontItem*> currentFonts;
 
 		QList<QSqlError> transactionError;
 		QMap<QString, QMap<Field, QVariant> > rValueCache;

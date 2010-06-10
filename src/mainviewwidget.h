@@ -68,7 +68,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		ListDockWidget *m_lists;
 		QString faceIndex;
 		QString lastIndex;
-		QList<FontItem*> currentFonts;
+//		QList<FontItem*> currentFonts; *moved to FMFontDB*
 		QList<FontItem*> orderedCurrentFonts;
 		QString sampleText;
 		QGridLayout *tagLayout;

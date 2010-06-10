@@ -82,7 +82,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	
 	m_forceReloadSelection = false;
 	uRangeIsNotEmpty = false;
-	currentFonts.clear();
+	FMFontDb::DB()->clearFilteredFonts();
 
 	QSettings settings;
 	sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
@@ -120,7 +120,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	typo = typotek::getInstance();
 	m_lists = ListDockWidget::getInstance();
 // 	currentFonts = typo->getAllFonts();
-	currentFonts = FMFontDb::DB()->AllFonts();
+	FMFontDb::DB()->filterAllFonts();
 	fontsetHasChanged = true;
 	curGlyph = 0;
 	fancyGlyphInUse = -1;
@@ -349,7 +349,9 @@ void MainViewWidget::fillTree()
 	QMap< QChar,QMap< QString,QMap< QString,FontItem*> > > keyList;
 	QMap< QString,QString > realFamilyName;
 	orderedCurrentFonts.clear();
-	for ( int i=0; i < currentFonts.count();++i )
+	QList<FontItem*> currentFonts(FMFontDb::DB()->getFilteredFonts());
+	int cfi(currentFonts.count());
+	for ( int i=0; i < cfi;++i )
 	{
 		QString family = currentFonts[i]->family();
 		QString ordFamily = family.toUpper();
@@ -1028,7 +1030,7 @@ void MainViewWidget::slotSearch()
 		// FontItem->countCoverage is very costly, so we take some code from operateFilter
 		// to avoid calling it too much, if possible.
 		bool queue(m_lists->getOperation().contains("AND"));
-		allList = queue ? currentFonts : FMFontDb::DB()->AllFonts();
+		allList = queue ? FMFontDb::DB()->getFilteredFonts() : FMFontDb::DB()->AllFonts();
 		int superSetCount(allList.count()); 
 		for ( int i =0; i < superSetCount; ++i )
 		{
@@ -1119,10 +1121,12 @@ void MainViewWidget::operateFilter(QList< FontItem * > allFiltered, const QStrin
 	bool queue(ops.contains("AND"));
 	m_lists->clearOperation();
 	
+	FMFontDb* fmdb(FMFontDb::DB());
+
 	if(queue)
 	{
 		addFilterToCrumb((negate?"!":"") +filterName);
-		queList = currentFonts;
+		queList = fmdb->getFilteredFonts();
 	}
 	else
 	{
@@ -1130,9 +1134,9 @@ void MainViewWidget::operateFilter(QList< FontItem * > allFiltered, const QStrin
 		addFilterToCrumb((negate?"!":"") +filterName);
 	}
 	if(negate)
-		negList = FMFontDb::DB()->AllFonts();
+		negList = fmdb->AllFonts();
 		
-	currentFonts.clear();
+	fmdb->clearFilteredFonts();
 	
 	if(negate)
 	{
@@ -1140,16 +1144,16 @@ void MainViewWidget::operateFilter(QList< FontItem * > allFiltered, const QStrin
 		{
 			foreach(FontItem* f, negList)
 			{
-				if(!currentFonts.contains(f) && !tmpList.contains(f) && queList.contains(f))
-					currentFonts.append(f);
+				if(!fmdb->isFiltered(f) && !tmpList.contains(f) && queList.contains(f))
+					fmdb->insertFilteredFont(f);
 			}
 		}
 		else // not queue
 		{
 			foreach(FontItem* f, negList)
 			{
-				if(!currentFonts.contains(f) && !tmpList.contains(f))
-					currentFonts.append(f);
+				if(!fmdb->isFiltered(f) && !tmpList.contains(f))
+					fmdb->insertFilteredFont(f);
 			}
 		}
 	}
@@ -1159,16 +1163,16 @@ void MainViewWidget::operateFilter(QList< FontItem * > allFiltered, const QStrin
 		{
 			foreach(FontItem* f, tmpList)
 			{
-				if(!currentFonts.contains(f) && queList.contains(f))
-					currentFonts.append(f);
+				if(!fmdb->isFiltered(f) && queList.contains(f))
+					fmdb->insertFilteredFont(f);
 			}
 		}
 		else // not queue
 		{
 			foreach(FontItem* f, tmpList)
 			{
-				if(!currentFonts.contains(f))
-					currentFonts.append(f);
+				if(!fmdb->isFiltered(f))
+					fmdb->insertFilteredFont(f);
 			}
 		}
 	}	
@@ -1226,15 +1230,15 @@ bool MainViewWidget::slotFontActionByNames ( QStringList fnames )
 
 void MainViewWidget::slotEditAll()
 {
-	QList<FontItem*> fl;
-	for ( int i =0; i< currentFonts.count(); ++i )
-	{
-		fl.append ( currentFonts[i] );
-	}
-	if ( fl.isEmpty() )
+//	QList<FontItem*> fl;
+//	for ( int i =0; i< currentFonts.count(); ++i )
+//	{
+//		fl.append ( currentFonts[i] );
+//	}
+	if ( FMFontDb::DB()->countFilteredFonts() == 0 )
 		return;
 
-	TagsWidget::getInstance()->prepare ( fl );
+	TagsWidget::getInstance()->prepare ( FMFontDb::DB()->getFilteredFonts() );
 }
 
 
@@ -1300,12 +1304,12 @@ void MainViewWidget::activation(QList< FontItem * > fit, bool act)
 
 void MainViewWidget::slotDesactivateAll()
 {
-	activation(currentFonts, false);
+	activation(FMFontDb::DB()->getFilteredFonts(), false);
 }
 
 void MainViewWidget::slotActivateAll()
 {
-	activation(currentFonts, true);
+	activation(FMFontDb::DB()->getFilteredFonts(), true);
 }
 
 void MainViewWidget::slotSetSampleText ( QString s )
@@ -1329,8 +1333,7 @@ void MainViewWidget::slotActivate ( bool act, QTreeWidgetItem * item, int column
 
 void MainViewWidget::slotReloadFontList()
 {
-	currentFonts.clear();
-	currentFonts = FMFontDb::DB()->AllFonts();
+	 FMFontDb::DB()->filterAllFonts();
 	fontsetHasChanged = true;
 	fillTree();
 }
@@ -1343,8 +1346,8 @@ void MainViewWidget::slotSwitchAntiAlias ( bool aa )
 
 void MainViewWidget::slotViewAll()
 {
+	FMFontDb::DB()->filterAllFonts();
 	fontsetHasChanged = true;
-	currentFonts = FMFontDb::DB()->AllFonts();
 	fillTree();
 	setCrumb();
 }
@@ -1925,7 +1928,7 @@ void MainViewWidget::slotRemoveCurrentItem()
 	if( QMessageBox::question ( this, tr("Fontmatrix safe"), tr("You are about to remove a font from Fontmatrix database") +"\n"+curItemName+"\n" + tr("Do you want to continue?"),QMessageBox::Yes |  QMessageBox::No, QMessageBox::No) == QMessageBox::Yes )
 	{
 		theVeryFont->deRenderAll();
-		currentFonts.removeAll(theVeryFont);
+		FMFontDb::DB()->removeFilteredFont(theVeryFont);
 		TagsWidget::getInstance()->removeFromTagged(theVeryFont);
 		theVeryFont  = 0 ;
 		typo->removeFontItem(curItemName);
@@ -2209,7 +2212,7 @@ QList<FontItem*> MainViewWidget::curFonts()
 
 void MainViewWidget::setCurFonts(QList< FontItem * > flist)
 {
-	currentFonts = flist;
+	FMFontDb::DB()->setFilterdFonts(flist);
 	fillTree();
 	
 }
@@ -2249,7 +2252,7 @@ void MainViewWidget::slotPanoseFilter(const QMap<int,QList<int> >& filter)
 		if(match)
 			fil << dbresult[i].first;
 	}
-	currentFonts = fil;
+	FMFontDb::DB()->setFilterdFonts( fil );
 //	setCrumb(classificationView->filterAsString());
 	fillTree();
 }

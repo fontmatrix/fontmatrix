@@ -61,7 +61,7 @@ ListDockWidget::ListDockWidget()
 	
 	listPreview->setModelColumn(1);
 	listPreview->setViewMode(QListView::IconMode);
-	listPreview->setIconSize(QSize(listPreview->width(), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	listPreview->setIconSize(QSize(qRound(listPreview->width() ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 	listPreview->setUniformItemSizes(true);
 	listPreview->setMovement(QListView::Static);
 	
@@ -541,14 +541,14 @@ void ListDockWidget::slotPreviewUpdate()
 
 void ListDockWidget::slotPreviewUpdateSize(int w)
 {
-	listPreview->setIconSize(QSize(w, 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	listPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 // 	previewModel->dataChanged();
 }
 
 void ListDockWidget::slotPreviewSelected(const QModelIndex & index)
 {
 	qDebug()<<"slotPreviewSelected("<<index<<")";
-	FontItem * fItem(typotek::getInstance()->getCurrentFonts().at(index.row()));
+	FontItem * fItem(FMFontDb::DB()->getFilteredFonts().at(index.row()));
 	if(!fItem)
 	{
 		qDebug()<<"\t-FontItme invalid";

@@ -1334,10 +1334,7 @@ void typotek::fontBook()
 	fontbook.doBook();
 }
 
-QList<FontItem*> typotek::getCurrentFonts()
-{
-	return theMainView->curFonts();
-}
+
 
 FontItem * typotek::getSelectedFont()
 {

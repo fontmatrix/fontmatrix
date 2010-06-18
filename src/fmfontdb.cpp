@@ -637,7 +637,7 @@ void FMFontDb::initFMDb()
 		// file DB and act as a proxy for most of requests.
 		QString qs2 ( "SELECT %1,%2,%3,%4,%5 FROM %6" );
 		rq = query.exec ( qs2.arg ( fieldName[Id] )
-		                  .arg ( fieldName[Family] )
+				  .arg ( fieldName[Family] )
 		                  .arg ( fieldName[Variant] )
 		                  .arg ( fieldName[Type] )
 		                  .arg ( fieldName[Activation] )
@@ -744,6 +744,17 @@ QList< FontItem * > FMFontDb::AllFonts()
 QStringList FMFontDb::AllFontNames()
 {
 	return cacheId.keys();
+}
+
+QList< FontItem * > FMFontDb::FamilySet(const QString& family)
+{
+	QList< FontItem * > ret;
+	foreach(FontItem * f, fontMap.values())
+	{
+		if(f->family() == family)
+			ret << f;
+	}
+	return ret;
 }
 
 void FMFontDb::TransactionBegin()
@@ -974,48 +985,53 @@ bool FMFontDb::insertTemporaryFont ( const QString & path )
 void FMFontDb::clearFilteredFonts()
 {
 	currentFonts.clear();
+	currentFamiliesCache.clear();
 }
 
-QList<FontItem*> FMFontDb::getFilteredFonts(bool familyOnly) const
+QList<FontItem*> FMFontDb::getFilteredFonts(bool familyOnly)
 {
 	if(!familyOnly)
 		return currentFonts;
 
-	QMap<QString, QList< FontItem* > > pools;
-	QList<FontItem*> ret;
-	foreach(FontItem* it, currentFonts)
+	if(currentFamiliesCache.isEmpty() && (!currentFonts.isEmpty()))
 	{
-		if(pools.contains(it->family()))
-			pools[it->family()].append(it);
-		else
+		QMap<QString, QList< FontItem* > > pools;
+		foreach(FontItem* it, currentFonts)
 		{
-			QList< FontItem* > tl;
-			tl.append(it);
-			pools[it->family()] = tl;
-		}
-	}
-	QStringList priorList;
-	priorList << "Regular" << "Roman" << "Medium" << "Book";
-	foreach(const QString& k, pools.keys())
-	{
-		FontItem* sel = pools[k].first();
-		foreach(FontItem* it, pools[k])
-		{
-			if(priorList.contains(it->variant()))
+			if(pools.contains(it->family()))
+				pools[it->family()].append(it);
+			else
 			{
-				sel = it;
-				break;
+				QList< FontItem* > tl;
+				tl.append(it);
+				pools[it->family()] = tl;
 			}
 		}
-		ret << sel;
+
+		QStringList priorList;
+		priorList << "Regular" << "Roman" << "Medium" << "Book";
+		foreach(const QString& k, pools.keys())
+		{
+			FontItem* sel = pools[k].first();
+			foreach(FontItem* it, pools[k])
+			{
+				if(priorList.contains(it->variant()))
+				{
+					sel = it;
+					break;
+				}
+			}
+			currentFamiliesCache << sel;
+		}
 	}
-	return ret;
+	return currentFamiliesCache;
 
 }
 
 void FMFontDb::setFilterdFonts(const QList<FontItem *> &flist)
 {
 	currentFonts.clear();
+	currentFamiliesCache.clear();
 	currentFonts = flist;
 }
 
@@ -1027,13 +1043,19 @@ int FMFontDb::countFilteredFonts() const
 void FMFontDb::insertFilteredFont(FontItem *item)
 {
 	if(item != 0)
+	{
 		currentFonts.append(item);
+		currentFamiliesCache.clear();
+	}
 }
 
 void FMFontDb::removeFilteredFont(FontItem *item)
 {
 	if(item != 0)
+	{
 		currentFonts.removeAll(item);
+		currentFamiliesCache.clear();
+	}
 }
 
 bool FMFontDb::isFiltered(FontItem *item) const
@@ -1044,6 +1066,7 @@ bool FMFontDb::isFiltered(FontItem *item) const
 void FMFontDb::filterAllFonts()
 {
 	currentFonts.clear();
+	currentFamiliesCache.clear();
 	currentFonts = fontMap.values();
 }
 

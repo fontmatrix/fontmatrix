@@ -5,6 +5,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/aboutwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/familywidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/filterbar.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivationreport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmaltcontext.cpp
@@ -128,6 +130,8 @@ ENDIF(WANT_PYTHONQT)
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
 dumpdialog.h
+familywidget.h
+filterbar.h
 fmactivate.h
 fmaltcontext.h
 fmaltselector.h
@@ -183,6 +187,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/altselectorwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui
+${CMAKE_CURRENT_SOURCE_DIR}/familywidget.ui
+${CMAKE_CURRENT_SOURCE_DIR}/filterbar.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/fontextractordialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfonts.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importtags.ui

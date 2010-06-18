@@ -177,8 +177,8 @@ void typotek::initMatrix()
 	setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::ForceTabbedDocks);
 
 	installDock("Main", tr ( "Browse Fonts" ), ListDockWidget::getInstance() , tr ( "Show/hide fonts browsing sidebar" ));
-	installDock("Tags", tr ( "Tags" ), TagsWidget::getInstance() ,  tr ( "Show/hide tags list sidebar" ) );
-	installDock("Panose", tr ( "Panose"), PanoseWidget::getInstance(), tr ( "Browse fonts by means of Panose attributes" ) );
+//	installDock("Tags", tr ( "Tags" ), TagsWidget::getInstance() ,  tr ( "Show/hide tags list sidebar" ) );
+//	installDock("Panose", tr ( "Panose"), PanoseWidget::getInstance(), tr ( "Browse fonts by means of Panose attributes" ) );
 
 	// force tabifyication
 	QStringList dl;
@@ -1841,7 +1841,7 @@ void typotek::slotTagAll()
 
 	}
 	FMFontDb::DB()->TransactionEnd();
-	TagsWidget::getInstance()->newTag();
+//	TagsWidget::getInstance()->newTag();
 }
 
 void typotek::printInfo()
@@ -2513,11 +2513,13 @@ void typotek::setInfoStyle ( const QString& theValue )
 	infoStyle = theValue;
 }
 
-QString typotek::word(FontItem * item)
+QString typotek::word(FontItem * item, const QString& alt)
 {
 	if(item)
 	{
-		QString word = m_theWord;
+		QString word(m_theWord);
+		if(!alt.isEmpty())
+			word = alt;
 		word.replace("<name>", item->fancyName());
 		word.replace("<family>", item->family());
 		word.replace("<variant>", item->variant());

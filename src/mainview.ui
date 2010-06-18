@@ -74,9 +74,57 @@
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
      </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Page</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_15">
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QStackedWidget" name="previewStack">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="pageList">
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="FilterBar" name="filterBar" native="true"/>
+             </item>
+             <item>
+              <widget class="FMPreviewView" name="listView">
+               <property name="resizeMode">
+                <enum>QListView::Adjust</enum>
+               </property>
+               <property name="uniformItemSizes">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pageFamily">
+          <layout class="QGridLayout" name="gridLayout_14">
+           <property name="margin">
+            <number>2</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="FamilyWidget" name="familyWidget" native="true"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tabInfo">
       <attribute name="icon">
-       <iconset>
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_info.png</normaloff>:/fontmatrix_info.png</iconset>
       </attribute>
       <attribute name="title">
@@ -100,7 +148,7 @@
      </widget>
      <widget class="QWidget" name="tabSample">
       <attribute name="icon">
-       <iconset>
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_sampletext.png</normaloff>:/fontmatrix_sampletext.png</iconset>
       </attribute>
       <attribute name="title">
@@ -696,7 +744,7 @@
      </widget>
      <widget class="QWidget" name="tabGlyphs">
       <attribute name="icon">
-       <iconset>
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_glypg.png</normaloff>:/fontmatrix_glypg.png</iconset>
       </attribute>
       <attribute name="title">
@@ -822,7 +870,7 @@ Press enter after editing to run the search.</string>
             <string>Copy Mode</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="application.qrc">
              <normaloff>:/action-copy-char</normaloff>:/action-copy-char</iconset>
            </property>
            <property name="checkable">
@@ -845,7 +893,7 @@ Press enter after editing to run the search.</string>
      </widget>
      <widget class="QWidget" name="tabPlay">
       <attribute name="icon">
-       <iconset>
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_playground.png</normaloff>:/fontmatrix_playground.png</iconset>
       </attribute>
       <attribute name="title">
@@ -902,7 +950,7 @@ Press enter after editing to run the search.</string>
      </widget>
      <widget class="QWidget" name="tabCompare">
       <attribute name="icon">
-       <iconset>
+       <iconset resource="application.qrc">
         <normaloff>:/fontmatrix_compare.png</normaloff>:/fontmatrix_compare.png</iconset>
       </attribute>
       <attribute name="title">
@@ -924,6 +972,11 @@ Press enter after editing to run the search.</string>
    <extends>QWidget</extends>
    <header>QtWebKit/QWebView</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FMPreviewView</class>
+   <extends>QListView</extends>
+   <header>fmpreviewlist.h</header>
   </customwidget>
   <customwidget>
    <class>FMSampleTextView</class>
@@ -963,6 +1016,18 @@ Press enter after editing to run the search.</string>
    <header>fmaltselector.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>FamilyWidget</class>
+   <extends>QWidget</extends>
+   <header>familywidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FilterBar</class>
+   <extends>QWidget</extends>
+   <header>filterbar.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>openTypeButton</tabstop>
@@ -974,6 +1039,8 @@ Press enter after editing to run the search.</string>
   <tabstop>saveDefOTFBut</tabstop>
   <tabstop>resetDefOTFBut</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="application.qrc"/>
+ </resources>
  <connections/>
 </ui>

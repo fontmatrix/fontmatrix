@@ -314,7 +314,7 @@ public:
 	QString getTemplatesDir() {return templatesDir;}
 
 	void setWord(QString s, bool updateView);
-	QString word(FontItem * item = 0);
+	QString word(FontItem * item = 0, const QString& alt = QString());
 	void setPreviewSize(double d);
 	double getPreviewSize(){ return previewSize; }
 	void setPreviewRTL(bool d);

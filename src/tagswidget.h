@@ -20,9 +20,7 @@ class FontItem;
 class TagsWidget : public QWidget , private Ui::tagsWidget
 {
 	Q_OBJECT
-		TagsWidget(QWidget * parent);
-		~TagsWidget();
-		static TagsWidget * instance;
+//		static TagsWidget * instance;
 		
 		QList<FontItem*> theTaggedFonts;
 		
@@ -31,7 +29,9 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 		QString currentTag;
 		
 	public:
-		static TagsWidget *getInstance();
+		TagsWidget(QWidget * parent);
+		~TagsWidget();
+//		static TagsWidget *getInstance();
 		void prepare(QList<FontItem*> fonts);
 		void newTag();
 		void removeFromTagged(FontItem* f){theTaggedFonts.removeAll(f);}

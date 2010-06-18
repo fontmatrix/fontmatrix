@@ -25,6 +25,7 @@
 #include <QStringList>
 #include <QIcon>
 
+
 #define VIEW_PAGE_FREETYPE 0
 #define VIEW_PAGE_ABSOLUTE 1
 #define VIEW_PAGE_OPENTYPE 0
@@ -42,6 +43,7 @@ class QButtonGroup;
 class ListDockWidget;
 struct OTFSet;
 class FMLayout;
+class FMPreviewModel;
 
 /**
 MainViewWidget inherits from an ui designed.
@@ -133,15 +135,19 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString unMapGlyphName;
 		QString allMappedGlyphName;
 		
+		FMPreviewModel * previewModel;
+
 	public slots:
 		void slotOrderingChanged ( QString s );
 		void slotFontSelected ( QTreeWidgetItem * item, int column );
-                bool slotFontSelectedByName(QString fname);
+		bool slotFontSelectedByName(const QString& fname);
 		void slotInfoFont();
 		void slotView(bool needDeRendering = false);
 		void slotShowOneGlyph();
 		void slotShowAllGlyph();
 		void slotSearch();
+		void slotShowFamily(const QModelIndex& familyIdx);
+		void slotQuitFamily();
 		
 		void slotFontAction(QTreeWidgetItem * item, int column );
                 bool slotFontActionByName(const QString &fname);
@@ -190,6 +196,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotShowULine(bool);
 		
 	private slots:
+		void slotPreviewUpdateSize(int);
+
 		void slotLiveFontSize();
 		void slotRemoteFinished();
 
@@ -210,6 +218,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void toggleFacesCheckBoxes(bool);
 
 		void refreshActStatus(const QStringList& flist);
+
 		
 	signals:
 		void faceChanged();

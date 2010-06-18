@@ -133,8 +133,8 @@ void FMPreviewIconEngine::addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, 
 }
 
 
-FMPreviewModel::FMPreviewModel( QObject * pa , FMPreviewView * wPa )
-	: QAbstractListModel(pa) , m_view(wPa)
+FMPreviewModel::FMPreviewModel( QObject * pa , FMPreviewView * wPa,  QList<FontItem*> db )
+	: QAbstractListModel(pa) , m_view(wPa), base(db)
 {
 	QSettings settings;
 	styleTooltipName = settings.value("Preview/StyleTooltipName","font-weight:bold;").toString();
@@ -151,9 +151,15 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 
 	int row = index.row();
 // 	qDebug()<<"D"<<row;
-	FontItem *fit(FMFontDb::DB()->getFilteredFonts().at(row));
+	FontItem *fit;
+	if(base.isEmpty())
+		fit = FMFontDb::DB()->getFilteredFonts(true).at(row);
+	else
+		fit = base.at(row);
 	if(!fit)
 		return QVariant();
+
+	qDebug()<<"Data"<< fit->fancyName();
 	
 	QColor bgColor(QApplication::palette().color(QPalette::Base));
 	QColor fgColor(QApplication::palette().color(QPalette::Text));
@@ -174,7 +180,11 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 	}
 	else if(role == Qt::DecorationRole)
 	{
-		QString word(typotek::getInstance()->word(fit));
+		QString word;
+		if(specString.isEmpty())
+			word = typotek::getInstance()->word(fit);
+		else
+			word = typotek::getInstance()->word(fit, specString);
 		QPixmap im(fit->oneLinePreviewPixmap(word,fgColor, bgColor, width ) );
 		QIcon ic( new FMPreviewIconEngine  );
 		ic.addPixmap(im);
@@ -216,18 +226,38 @@ int FMPreviewModel::rowCount(const QModelIndex & parent) const
 {
 	if(parent.isValid() || !typotek::getInstance()->getTheMainView())
 		return 0;
-	QList< FontItem * > cl(FMFontDb::DB()->getFilteredFonts());
-	return cl.count();
+	int cl(0);
+	if(base.isEmpty())
+		cl = FMFontDb::DB()->getFilteredFonts(true).count();
+	else
+		cl = base.count();
+	return cl;
 }
 
 void FMPreviewModel::dataChanged()
 {
+	QAbstractItemModel::dataChanged(index(0),index(rowCount(QModelIndex()) - 1));
 	m_view->updateLayout();
 	emit layoutChanged ();
 }
 
+void FMPreviewModel::resetBase(QList<FontItem *>db)
+{
+	base = db;
+	dataChanged();
+}
+
+QList<FontItem *> FMPreviewModel::getBase()
+{
+	if(base.isEmpty())
+		return FMFontDb::DB()->getFilteredFonts(true);
+	else
+		return base;
+}
+
+
 FMPreviewView::FMPreviewView(QWidget * parent)
-	:QListView(parent)
+	:QListView(parent), columns(1)
 {
 	dragFlag = false;
 	setDragEnabled(true);
@@ -238,9 +268,10 @@ void FMPreviewView::resizeEvent(QResizeEvent * event)
 {
 	int borders( 2*(frameWidth() + lineWidth() + midLineWidth()) ); 
 	int scrollbar(verticalScrollBar()->width());
-	usedWidth = qRound((this->width() - (borders + scrollbar)));
-	
-	emit widthChanged(usedWidth);
+//	usedWidth = qRound((this->width() - (borders + scrollbar)) / columns);
+	usedWidth = qRound(double(this->width())  / columns);
+//	emit widthChanged(usedWidth);
+	setIconSize(QSize(qRound(usedWidth), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
 
 void FMPreviewView::mousePressEvent(QMouseEvent * event)
@@ -283,12 +314,13 @@ void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
 
 void FMPreviewView::updateLayout()
 {
-	emit widthChanged(usedWidth);
+	// Nothing wants to work! ###
 }
 
 void FMPreviewView::setCurrentFont(const QString & name)
 {
-	QList<FontItem*> fl( FMFontDb::DB()->getFilteredFonts() );
+	QList<FontItem*> fl(reinterpret_cast<FMPreviewModel*>(model())->getBase());
+
 	const int fl_count(fl.count());
 	int rFont(fl_count);
 	for(int i(0); i < fl_count ; ++i)

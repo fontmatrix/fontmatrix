@@ -21,7 +21,7 @@
 #include "listdockwidget.h"
 
 
-TagsWidget * TagsWidget::instance = 0;
+//TagsWidget * TagsWidget::instance = 0;
 TagsWidget::TagsWidget ( QWidget * parent )
 		:QWidget ( parent )
 {
@@ -40,15 +40,15 @@ TagsWidget::~ TagsWidget()
 {
 }
 
-TagsWidget * TagsWidget::getInstance()
-{
-	if ( !instance )
-	{
-		instance = new TagsWidget ( 0 );
-		Q_ASSERT ( instance );
-	}
-	return instance;
-}
+//TagsWidget * TagsWidget::getInstance()
+//{
+//	if ( !instance )
+//	{
+//		instance = new TagsWidget ( 0 );
+//		Q_ASSERT ( instance );
+//	}
+//	return instance;
+//}
 
 void TagsWidget::slotSwitchCheckState ( QListWidgetItem * item )
 {

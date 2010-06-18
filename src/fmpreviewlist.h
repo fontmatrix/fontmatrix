@@ -56,6 +56,7 @@ public:
 	FMPreviewView(QWidget * parent = 0);
 	~FMPreviewView(){}
 	int getUsedWidth() const{return usedWidth;}
+	void setNumCol(int n){columns = n;}
 protected:
 	void resizeEvent ( QResizeEvent * event );
 	QPoint startDragPoint;
@@ -65,6 +66,7 @@ protected:
 
 private:
 	int usedWidth;
+	int columns;
 
 public slots:
 	void updateLayout();
@@ -82,7 +84,7 @@ public:
 		PathRole = Qt::UserRole + 1
 		   };
 
-	FMPreviewModel ( QObject * pa , FMPreviewView * wPa);
+	FMPreviewModel ( QObject * pa , FMPreviewView * wPa, QList<FontItem*> db = QList<FontItem*>());
 	//returns a preview
 	QVariant data ( const QModelIndex &index, int role = Qt::DisplayRole ) const;
 	//returns flags for items
@@ -91,11 +93,15 @@ public:
 	int rowCount ( const QModelIndex &parent ) const;
 
 	void dataChanged();
+	void resetBase(QList<FontItem*> db);
+	QList<FontItem*> getBase();
 
+	void setSpecString(const QString& s){specString = s;}
 
 private:
 	FMPreviewView *m_view;
-
+	QList<FontItem*> base;
+	QString specString;
 	QString styleTooltipName;
 	QString styleTooltipPath;
 };

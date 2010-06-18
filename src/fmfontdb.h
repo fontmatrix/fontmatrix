@@ -115,6 +115,7 @@ class FMFontDb : public QObject, public QSqlDatabase
 
 		QList<FontItem*> AllFonts();
 		QStringList AllFontNames();
+		QList<FontItem*> FamilySet(const QString& family);
 // 		FontItem* FirstFont();
 // 		FontItem* NextFont();
 
@@ -137,7 +138,7 @@ class FMFontDb : public QObject, public QSqlDatabase
 
 		void clearFilteredFonts();
 		void filterAllFonts();
-		QList<FontItem*> getFilteredFonts(bool familyOnly = false) const;
+		QList<FontItem*> getFilteredFonts(bool familyOnly = false);
 		void setFilterdFonts(const QList<FontItem*>& flist);
 		int countFilteredFonts() const;
 		void insertFilteredFont(FontItem* item);
@@ -166,6 +167,7 @@ class FMFontDb : public QObject, public QSqlDatabase
 
 		// Not sure it's that good idea but still, go to put current filtered fonts here
 		QList<FontItem*> currentFonts;
+		QList<FontItem*> currentFamiliesCache;
 
 		QList<QSqlError> transactionError;
 		QMap<QString, QMap<Field, QVariant> > rValueCache;

@@ -23,7 +23,7 @@
    <string>Form</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="application.qrc">
     <normaloff>:/fontmatrix_icon.png</normaloff>:/fontmatrix_icon.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
@@ -449,16 +449,18 @@ p, li { white-space: pre-wrap; }
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FMNameList</class>
-   <extends>QTreeWidget</extends>
-   <header>fmnamelist.h</header>
-  </customwidget>
-  <customwidget>
    <class>FMPreviewView</class>
    <extends>QListView</extends>
    <header>fmpreviewlist.h</header>
   </customwidget>
+  <customwidget>
+   <class>FMNameList</class>
+   <extends>QTreeWidget</extends>
+   <header>fmnamelist.h</header>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="application.qrc"/>
+ </resources>
  <connections/>
 </ui>

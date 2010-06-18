@@ -84,6 +84,17 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	uRangeIsNotEmpty = false;
 	FMFontDb::DB()->clearFilteredFonts();
 
+	listView->setNumCol(4);
+	listView->setModelColumn(1);
+	listView->setViewMode(QListView::IconMode);
+	listView->setIconSize(QSize(qRound(listView->width() ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	listView->setUniformItemSizes(true);
+	listView->setMovement(QListView::Static);
+
+	previewModel = new FMPreviewModel( this, listView );
+	previewModel->setSpecString("<family>");
+	listView->setModel(previewModel);
+
 	QSettings settings;
 	sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
 	sampleInterSize = settings.value("Sample/Interline", 18.0).toDouble();
@@ -199,9 +210,9 @@ void MainViewWidget::doConnect()
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
-	connect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
+	connect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
-	connect ( this, SIGNAL(listChanged()), m_lists, SLOT(slotPreviewUpdate()));
+	connect ( this, SIGNAL(listChanged()), familyWidget, SLOT(slotPreviewUpdate()));
 	connect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 	
 	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
@@ -255,6 +266,11 @@ void MainViewWidget::doConnect()
 
 
 	connect( PanoseWidget::getInstance(), SIGNAL(filterChanged(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
+
+	connect(listView, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
+	connect(listView, SIGNAL(activated(const QModelIndex&)), this, SLOT(slotShowFamily(const QModelIndex&)));
+	connect(familyWidget, SIGNAL(backToList()), this, SLOT(slotQuitFamily()));
+	connect(familyWidget, SIGNAL(fontSelected(const QString&)), this, SLOT(slotFontSelectedByName(const QString&)));
 }
 
 void MainViewWidget::disConnect()
@@ -266,9 +282,9 @@ void MainViewWidget::disConnect()
 	disconnect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 	disconnect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
 	disconnect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
-	disconnect ( m_lists->tagsCombo,SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
+	disconnect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	disconnect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
-	disconnect ( this, SIGNAL(listChanged()), m_lists, SLOT(slotPreviewUpdate()));
+	disconnect ( this, SIGNAL(listChanged()), familyWidget, SLOT(slotPreviewUpdate()));
 	disconnect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 	
 	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
@@ -321,6 +337,11 @@ void MainViewWidget::disConnect()
 	disconnect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	
 	disconnect( PanoseWidget::getInstance(), SIGNAL(filterChanged(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
+
+	disconnect(listView, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
+	disconnect(listView, SIGNAL(activated(const QModelIndex&)), this, SLOT(slotShowFamily(const QModelIndex&)));
+	disconnect(familyWidget, SIGNAL(backToList()), this, SLOT(slotQuitFamily()));
+	disconnect(familyWidget, SIGNAL(fontSelected(const QString&)), this, SLOT(slotFontSelectedByName(const QString&)));
 }
 
 void MainViewWidget::fillTree()
@@ -811,7 +832,7 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 
 }
 
-bool MainViewWidget::slotFontSelectedByName ( QString fname )
+bool MainViewWidget::slotFontSelectedByName (const QString& fname )
 {
 
 	if ( fname.isEmpty()
@@ -1073,14 +1094,35 @@ void MainViewWidget::slotSearch()
 	QApplication::restoreOverrideCursor();
 }
 
+void MainViewWidget::slotShowFamily(const QModelIndex& familyIdx)
+{
+	FontItem * fItem(FMFontDb::DB()->getFilteredFonts(true).at(familyIdx.row()));
+	if(!fItem)
+	{
+		qDebug()<<"\t-FontItme invalid";
+		return;
+	}
+	QList<FontItem*> fl(FMFontDb::DB()->FamilySet(fItem->family()));
+	foreach(FontItem* f,fl)
+	{
+		qDebug() <<"F"<< f->fancyName();
+	}
+	familyWidget->setFamily(fItem->family());
+	previewStack->setCurrentIndex(1);
+}
+
+void MainViewWidget::slotQuitFamily()
+{
+	previewStack->setCurrentIndex(0);
+}
 
 void MainViewWidget::slotFilterTag ( QString tag )
 {
-	int tIdx(m_lists->tagsCombo->currentIndex());
+	int tIdx(filterBar->tagsCombo()->currentIndex());
 	if(tIdx < 0)
 		return;
 
-	QString key(m_lists->tagsCombo->itemData(tIdx).toString());
+	QString key(filterBar->tagsCombo()->itemData(tIdx).toString());
 	
 	if(key == "TAG") // regular tag
 	{
@@ -1189,7 +1231,7 @@ void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
 	{
 		QList<FontItem*> fl;
 		fl.append ( FoIt );
-		TagsWidget::getInstance()->prepare ( fl );
+		familyWidget->tagWidget()->prepare ( fl );
 	}
 }
 
@@ -1201,7 +1243,7 @@ bool MainViewWidget::slotFontActionByName (const QString &fname )
 	{
 		QList<FontItem*> fl;
 		fl.append ( FoIt );
-		TagsWidget::getInstance()->prepare ( fl );
+		familyWidget->tagWidget()->prepare ( fl );
 	}
         else
             return false;
@@ -1223,7 +1265,7 @@ bool MainViewWidget::slotFontActionByNames ( QStringList fnames )
                 }
 	}
 	if ( FoIt.count() )
-		TagsWidget::getInstance()->prepare ( FoIt );
+		familyWidget->tagWidget()->prepare ( FoIt );
         return true;
 }
 
@@ -1238,7 +1280,7 @@ void MainViewWidget::slotEditAll()
 	if ( FMFontDb::DB()->countFilteredFonts() == 0 )
 		return;
 
-	TagsWidget::getInstance()->prepare ( FMFontDb::DB()->getFilteredFonts() );
+	familyWidget->tagWidget()->prepare ( FMFontDb::DB()->getFilteredFonts() );
 }
 
 
@@ -1929,7 +1971,7 @@ void MainViewWidget::slotRemoveCurrentItem()
 	{
 		theVeryFont->deRenderAll();
 		FMFontDb::DB()->removeFilteredFont(theVeryFont);
-		TagsWidget::getInstance()->removeFromTagged(theVeryFont);
+		familyWidget->tagWidget()->removeFromTagged(theVeryFont);
 		theVeryFont  = 0 ;
 		typo->removeFontItem(curItemName);
 		curItemName = lastIndex = faceIndex = "";
@@ -2275,4 +2317,9 @@ void MainViewWidget::forceReloadSelection()
 double MainViewWidget::playgroundFontSize()
 {
 	return playFontSize->value();
+}
+
+void MainViewWidget::slotPreviewUpdateSize(int w)
+{
+		listView->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }

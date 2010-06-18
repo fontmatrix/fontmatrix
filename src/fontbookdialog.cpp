@@ -114,7 +114,7 @@ void FontBookDialog::slotFileDialog()
 
 void FontBookDialog::fillFontsList()
 {
-	QList<FontItem*>localFontMap = FMFontDb::DB()->getFilteredFonts();
+	QList<FontItem*> localFontMap = FMFontDb::DB()->getFilteredFonts();
 	foreach(FontItem* fit, localFontMap)
 	{
 		selectedFontsList->addItem(fit->fancyName());

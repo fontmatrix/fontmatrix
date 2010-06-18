@@ -548,7 +548,7 @@ void ListDockWidget::slotPreviewUpdateSize(int w)
 void ListDockWidget::slotPreviewSelected(const QModelIndex & index)
 {
 	qDebug()<<"slotPreviewSelected("<<index<<")";
-	FontItem * fItem(FMFontDb::DB()->getFilteredFonts().at(index.row()));
+	FontItem * fItem(FMFontDb::DB()->getFilteredFonts(true).at(index.row()));
 	if(!fItem)
 	{
 		qDebug()<<"\t-FontItme invalid";
@@ -557,7 +557,9 @@ void ListDockWidget::slotPreviewSelected(const QModelIndex & index)
 	QString fName(fItem->path());
 	qDebug()<<"\t+"<< fName;
 	if(!fName.isEmpty())
+	{
 		typotek::getInstance()->getTheMainView()->slotFontSelectedByName(fName);
+	}
 }
 
 

@@ -33,6 +33,7 @@
 //#include <QMimeData>
 #include <QApplication>
 #include <QLabel>
+#include <QPainterPath>
 
 QVector<QRgb> FMPreviewIconEngine::m_selPalette;
 
@@ -60,6 +61,9 @@ FMPreviewIconEngine::FMPreviewIconEngine()
 					      ((sb*sn) + (tb*tn)) /cpal );
 		}
 	}
+
+	pen.setColor(QColor(m_selPalette.at(128)));
+	pen.setWidth(1);
 }
 
 QVector<QRgb> FMPreviewIconEngine::actualSelPalette(const QVector<QRgb>& orig)
@@ -113,16 +117,26 @@ void FMPreviewIconEngine::paint ( QPainter * painter, const QRect & rect, QIcon:
 	if(!m_p.isNull())
 	{
 		painter->save();
+		painter->setRenderHint(QPainter::Antialiasing, true);
+		painter->setPen(pen);
 		painter->translate(rect.x(),rect.y());
 		QRect r(0 , 0 , rect.width(), rect.height());
+		QPainterPath pp;
+		double rr(double(r.height()) / 5.0);
+		pp.addRoundedRect(r,rr,rr);
 		if(mode == QIcon::Selected)
 		{
 			QImage hm(m_p.toImage().convertToFormat(QImage::Format_Indexed8));
 			hm.setColorTable(actualSelPalette(hm.colorTable()));
+			painter->setClipPath(pp);
 			painter->drawPixmap(r, QPixmap::fromImage(hm) , r);
+			painter->drawPath(pp);
 		}
 		else
+		{
 			painter->drawPixmap(r, m_p , r);
+			painter->drawPath(pp);
+		}
 		painter->restore();
 	}
 }
@@ -269,7 +283,7 @@ void FMPreviewView::resizeEvent(QResizeEvent * event)
 	int borders( 2*(frameWidth() + lineWidth() + midLineWidth()) ); 
 	int scrollbar(verticalScrollBar()->width());
 //	usedWidth = qRound((this->width() - (borders + scrollbar)) / columns);
-	usedWidth = qRound(double(this->width())  / columns);
+	usedWidth = qRound((double(this->width())  / columns) * 0.95);
 //	emit widthChanged(usedWidth);
 	setIconSize(QSize(qRound(usedWidth), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }

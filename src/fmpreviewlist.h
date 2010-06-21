@@ -26,6 +26,7 @@
 #include <QIconEngineV2>
 #include <QPixmap>
 #include <QPoint>
+#include <QPen>
 
 class FontItem;
 class MainViewWidget;
@@ -43,6 +44,7 @@ public:
 
 private:
 	QPixmap m_p;
+	QPen pen;
 	static QVector<QRgb> m_selPalette;
 	QVector<QRgb> actualSelPalette(const QVector<QRgb>& orig);
 

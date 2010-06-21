@@ -181,19 +181,19 @@ void typotek::initMatrix()
 //	installDock("Panose", tr ( "Panose"), PanoseWidget::getInstance(), tr ( "Browse fonts by means of Panose attributes" ) );
 
 	// force tabifyication
-	QStringList dl;
-	dl << "Tags" << "Panose" << "Main";
-	for(int i(1); i < dl.count(); ++i)
-	{
-		if(dockArea[dl[i]] != "Float")
-		{
-			for(int j(i-1); j >=0 ; --j)
-			{
-				if(dockArea[dl[j]] == dockArea[dl[i]])
-					tabifyDockWidget(dockWidget[dl[j]], dockWidget[dl[i]]);
-			}
-		}
-	}
+//	QStringList dl;
+//	dl << "Tags" << "Panose" << "Main";
+//	for(int i(1); i < dl.count(); ++i)
+//	{
+//		if(dockArea[dl[i]] != "Float")
+//		{
+//			for(int j(i-1); j >=0 ; --j)
+//			{
+//				if(dockArea[dl[j]] == dockArea[dl[i]])
+//					tabifyDockWidget(dockWidget[dl[j]], dockWidget[dl[i]]);
+//			}
+//		}
+//	}
 
 	createActions();
 	createMenus();
@@ -868,8 +868,11 @@ void typotek::createMenus()
 	browseMenu->addAction(previousFont);
 
 	viewMenu = createPopupMenu();
-	viewMenu->setTitle(tr("&View"));
-	menuBar()->addMenu(viewMenu);
+	if(viewMenu != 0)
+	{
+		viewMenu->setTitle(tr("&View"));
+		menuBar()->addMenu(viewMenu);
+	}
 
 #ifdef HAVE_PYTHONQT
 	scriptMenu = menuBar()->addMenu ( tr ( "&Scripts" ) );;
@@ -939,15 +942,15 @@ void typotek::readSettings()
 	previewSubtitled = settings.value("Preview/Subtitled", false).toBool();
 	m_theWord = settings.value("Preview/Word", "<name>" ).toString();
 
-	QStringList dl;
-	dl << "Main" << "Tags" << "Panose";
-	foreach(const QString & ds, dl)
-	{
-		dockArea[ds] =  settings.value("Docks/"+ds+"Pos", "Left").toString();
-		dockVisible[ds] = settings.value("Docks/"+ds+"Visible", true).toBool();
-		dockGeometry[ds] = settings.value("Docks/"+ds+"Geometry", QRect()).toRect();
-		qDebug()<<ds<< dockArea[ds] << dockVisible[ds] <<dockGeometry[ds];
-	}
+//	QStringList dl;
+//	dl << "Main" << "Tags" << "Panose";
+//	foreach(const QString & ds, dl)
+//	{
+//		dockArea[ds] =  settings.value("Docks/"+ds+"Pos", "Left").toString();
+//		dockVisible[ds] = settings.value("Docks/"+ds+"Visible", true).toBool();
+//		dockGeometry[ds] = settings.value("Docks/"+ds+"Geometry", QRect()).toRect();
+//		qDebug()<<ds<< dockArea[ds] << dockVisible[ds] <<dockGeometry[ds];
+//	}
 
 	panoseMatchTreshold = settings.value("Panose/MatchTreshold" , 1000 ).toInt();
 
@@ -988,18 +991,18 @@ void typotek::writeSettings()
 	settings.setValue( "WState/size", size() );
 	theMainView->saveSplitterState();
 
-	QStringList dl;
-	dl << "Main" << "Tags" << "Panose";
-	foreach(const QString & ds, dl)
-	{
-		if(dockWidget[ds]->isFloating())
-		{
-			dockArea[ds] = "Float";
-		}
-		settings.setValue( "Docks/"+ds+"Pos", dockArea[ds] );
-		settings.setValue( "Docks/"+ds+"Visible", dockWidget[ds]->isVisible());
-		settings.setValue( "Docks/"+ds+"Geometry", dockWidget[ds]->geometry());
-	}
+//	QStringList dl;
+//	dl << "Main" << "Tags" << "Panose";
+//	foreach(const QString & ds, dl)
+//	{
+//		if(dockWidget[ds]->isFloating())
+//		{
+//			dockArea[ds] = "Float";
+//		}
+//		settings.setValue( "Docks/"+ds+"Pos", dockArea[ds] );
+//		settings.setValue( "Docks/"+ds+"Visible", dockWidget[ds]->isVisible());
+//		settings.setValue( "Docks/"+ds+"Geometry", dockWidget[ds]->geometry());
+//	}
 
 
 	settings.setValue("Info/PreviewSize", previewInfoFontSize );

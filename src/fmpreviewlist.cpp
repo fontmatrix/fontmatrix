@@ -274,14 +274,21 @@ FMPreviewView::FMPreviewView(QWidget * parent)
 	dragFlag = false;
 	setDragEnabled(true);
 	setDragDropMode(QAbstractItemView::DragDrop);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 void FMPreviewView::resizeEvent(QResizeEvent * event)
 {
-	int borders( 2*(frameWidth() + lineWidth() + midLineWidth()) ); 
-	int scrollbar(verticalScrollBar()->width());
-//	usedWidth = qRound((this->width() - (borders + scrollbar)) / columns);
-	usedWidth = qRound((double(this->width())  / columns) * 0.95);
+	int extraSpace((verticalScrollBar()->isVisible() ? verticalScrollBar()->width() : 0)
+		       + frameWidth()
+		       + lineWidth()
+		       + midLineWidth());
+	int actualWidth(this->width() - extraSpace);
+//	qDebug()<<"W"<<this->width()<<"AW"<<actualWidth<<verticalScrollBar()->width()<<verticalScrollBar()->isVisible();
+//	qDebug()<<frameWidth() << lineWidth() << midLineWidth();
+	if(spacing() == 0)
+		setSpacing(3);
+	usedWidth = qRound((double(actualWidth)  / columns) - (columns * 2.0 * double(spacing())));
 //	emit widthChanged(usedWidth);
 	setIconSize(QSize(qRound(usedWidth), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }

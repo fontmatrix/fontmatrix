@@ -40,6 +40,7 @@ class QGridLayout;
 class QTreeWidgetItem;
 class QGraphicsRectItem;
 class QButtonGroup;
+class QWebView;
 class ListDockWidget;
 struct OTFSet;
 class FMLayout;
@@ -123,7 +124,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		QString currentDownload;
 		
-		QUrl infoCSSUrl;
+//		QUrl infoCSSUrl;
 		
 		QButtonGroup *radioRenderGroup;
 		QButtonGroup *radioFTHintingGroup;
@@ -141,7 +142,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotOrderingChanged ( QString s );
 		void slotFontSelected ( QTreeWidgetItem * item, int column );
 		bool slotFontSelectedByName(const QString& fname);
-		void slotInfoFont();
+//		void slotInfoFont();
 		void slotView(bool needDeRendering = false);
 		void slotShowOneGlyph();
 		void slotShowAllGlyph();
@@ -209,10 +210,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotHintChanged(int);
 		
 		
-		void slotWebLink(const QUrl & url );
-		void slotWebStart();
-		void slotWebLoad(int i);
-		void slotWebFinished(bool);
+//		void slotWebLink(const QUrl & url );
+//		void slotWebStart();
+//		void slotWebLoad(int i);
+//		void slotWebFinished(bool);
 
 		
 		void toggleFacesCheckBoxes(bool);
@@ -239,7 +240,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void refillSampleList();
 		
 		QString sampleName();
-		void displayWelcomeMessage();
+//		void displayWelcomeMessage();
 		
 		QWebView *info();
 		QGraphicsScene *currentSampleScene();

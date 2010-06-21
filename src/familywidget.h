@@ -28,6 +28,7 @@
 class FMPreviewModel;
 class FontItem;
 class TagsWidget;
+class QWebView;
 
 namespace Ui {
     class FamilyWidget;
@@ -43,6 +44,7 @@ public:
 
     void setFamily(const QString& family);
     TagsWidget* tagWidget();
+    QWebView * info();
 
 protected:
     void changeEvent(QEvent *e);

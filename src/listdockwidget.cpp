@@ -59,17 +59,17 @@ ListDockWidget::ListDockWidget()
 	saveFilterButton->setVisible(false);
 
 	
-	listPreview->setModelColumn(1);
-	listPreview->setViewMode(QListView::IconMode);
-	listPreview->setIconSize(QSize(qRound(listPreview->width() ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
-	listPreview->setUniformItemSizes(true);
-	listPreview->setMovement(QListView::Static);
+//	listPreview->setModelColumn(1);
+//	listPreview->setViewMode(QListView::IconMode);
+//	listPreview->setIconSize(QSize(qRound(listPreview->width() ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+//	listPreview->setUniformItemSizes(true);
+//	listPreview->setMovement(QListView::Static);
 	
-	previewModel = new FMPreviewModel( this, listPreview );
-	listPreview->setModel(previewModel);
-	previewText->setText(typotek::getInstance()->word());
-	previewText->setToolTip(tr("You can use the following keywords to be replaced by data from fonts: <strong>&#60;name&#62;</strong> ; <strong>&#60;family&#62;</strong> ; <strong>&#60;variant&#62;</strong>"));
-	previewSize->setValue(typotek::getInstance()->getPreviewSize());
+//	previewModel = new FMPreviewModel( this, listPreview );
+//	listPreview->setModel(previewModel);
+//	previewText->setText(typotek::getInstance()->word());
+//	previewText->setToolTip(tr("You can use the following keywords to be replaced by data from fonts: <strong>&#60;name&#62;</strong> ; <strong>&#60;family&#62;</strong> ; <strong>&#60;variant&#62;</strong>"));
+//	previewSize->setValue(typotek::getInstance()->getPreviewSize());
 
 	// Folders tree
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
@@ -206,12 +206,12 @@ ListDockWidget::ListDockWidget()
 	connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(slotTabChanged(int)));
 	
 	connect(typotek::getInstance(),SIGNAL(previewHasChanged()),this,SLOT(slotPreviewUpdate()));
-	connect(listPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
-	connect(listPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
-	connect(listPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
-	connect(listPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
-	connect(previewText, SIGNAL(textChanged( const QString& )), this, SLOT(slotPreviewText( const QString&)));
-	connect(previewSize, SIGNAL(valueChanged( double )), this, SLOT(slotPreviewSize(double)));
+//	connect(listPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
+//	connect(listPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+//	connect(listPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+//	connect(listPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+//	connect(previewText, SIGNAL(textChanged( const QString& )), this, SLOT(slotPreviewText( const QString&)));
+//	connect(previewSize, SIGNAL(valueChanged( double )), this, SLOT(slotPreviewSize(double)));
 }
 
 
@@ -541,7 +541,7 @@ void ListDockWidget::slotPreviewUpdate()
 
 void ListDockWidget::slotPreviewUpdateSize(int w)
 {
-	listPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+//	listPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 // 	previewModel->dataChanged();
 }
 

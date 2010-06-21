@@ -77,6 +77,11 @@ QComboBox* FilterBar::tagsCombo()
 	return ui->tagsCombo;
 }
 
+QPushButton* FilterBar::clearButton()
+{
+	return ui->clearButton;
+}
+
 void FilterBar::panoseDialog()
 {
 	PanoseWidget* pw(PanoseWidget::getInstance());

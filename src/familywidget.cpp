@@ -32,10 +32,10 @@
 
 
 FamilyWidget::FamilyWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FamilyWidget)
+		QWidget(parent),
+		ui(new Ui::FamilyWidget)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 
 
 	ui->familyPreview->setNumCol(1);
@@ -49,17 +49,17 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	previewModel->setSpecString("<variant>");
 	ui->familyPreview->setModel(previewModel);
 
-    connect(ui->returnListButton, SIGNAL(clicked()), this, SIGNAL(backToList()));
-    connect(ui->familyPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
-    connect(ui->familyPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
-    connect(ui->familyPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
-    connect(ui->familyPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+	connect(ui->returnListButton, SIGNAL(clicked()), this, SIGNAL(backToList()));
+	connect(ui->familyPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
+	connect(ui->familyPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+	connect(ui->familyPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+	connect(ui->familyPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 
 }
 
 FamilyWidget::~FamilyWidget()
 {
-    delete ui;
+	delete ui;
 }
 
 TagsWidget* FamilyWidget::tagWidget()
@@ -67,16 +67,21 @@ TagsWidget* FamilyWidget::tagWidget()
 	return ui->tagsWidget;
 }
 
+QWebView* FamilyWidget::info()
+{
+	return ui->webView;
+}
+
 void FamilyWidget::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui->retranslateUi(this);
+		break;
+	default:
+		break;
+	}
 }
 
 void FamilyWidget::slotPreviewUpdateSize(int w)
@@ -105,18 +110,18 @@ void FamilyWidget::slotPreviewUpdate()
 
 void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 {
-//	FontItem * fItem(FMFontDb::DB()->Font(index.data(FMPreviewModel::PathRole)));
-//	if(!fItem)
-//	{
-//		qDebug()<<"\t-FontItme invalid";
-//		return;
-//	}
-//	QString fName(fItem->path());
-//	qDebug()<<"\t+"<< fName;
-//	if(!fName.isEmpty())
-//	{
-//		typotek::getInstance()->getTheMainView()->slotFontSelectedByName(index.data(FMPreviewModel::PathRole));
-//	}
+	//	FontItem * fItem(FMFontDb::DB()->Font(index.data(FMPreviewModel::PathRole)));
+	//	if(!fItem)
+	//	{
+	//		qDebug()<<"\t-FontItme invalid";
+	//		return;
+	//	}
+	//	QString fName(fItem->path());
+	//	qDebug()<<"\t+"<< fName;
+	//	if(!fName.isEmpty())
+	//	{
+	//		typotek::getInstance()->getTheMainView()->slotFontSelectedByName(index.data(FMPreviewModel::PathRole));
+	//	}
 	FontItem * fItem(FMFontDb::DB()->Font(index.data(FMPreviewModel::PathRole).toString()));
 	FMInfoDisplay fid(fItem);
 	ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");

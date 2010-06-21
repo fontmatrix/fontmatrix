@@ -143,7 +143,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	refillSampleList();
 	uniLine->setEnabled(false);
 
-	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
+//	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 
 	abcScene = new QGraphicsScene;
 	loremScene = new QGraphicsScene;
@@ -208,7 +208,7 @@ void MainViewWidget::doConnect()
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
-	connect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
+	connect ( filterBar->clearButton(),SIGNAL ( clicked() ),this,SLOT ( slotViewAll() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
@@ -217,10 +217,10 @@ void MainViewWidget::doConnect()
 	
 	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	
-	connect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
-	connect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
-	connect( fontInfoText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
-	connect( fontInfoText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
+//	connect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
+//	connect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
+//	connect( fontInfoText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
+//	connect( fontInfoText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
 
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
 	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
@@ -280,7 +280,7 @@ void MainViewWidget::disConnect()
 	disconnect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	disconnect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	disconnect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
-	disconnect ( m_lists->viewAllButton,SIGNAL ( released() ),this,SLOT ( slotViewAll() ) );
+	disconnect ( filterBar->clearButton(),SIGNAL ( clicked() ),this,SLOT ( slotViewAll() ) );
 	disconnect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	disconnect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	disconnect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
@@ -289,10 +289,10 @@ void MainViewWidget::disConnect()
 	
 	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	
-	disconnect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
-	disconnect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
-	disconnect( fontInfoText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
-	disconnect( fontInfoText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
+//	disconnect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
+//	disconnect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
+//	disconnect( fontInfoText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
+//	disconnect( fontInfoText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
 
 	disconnect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
 	disconnect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
@@ -879,7 +879,7 @@ bool MainViewWidget::slotFontSelectedByName (const QString& fname )
 		typo->presentFontName ( theVeryFont->fancyName() );
 // 		fillTree();
 		updateTree();
-		m_lists->listPreview->setCurrentFont(theVeryFont->path());
+//		m_lists->listPreview->setCurrentFont(theVeryFont->path());
 		abcView->verticalScrollBar()->setValue ( 0 );
 	}
 
@@ -887,16 +887,16 @@ bool MainViewWidget::slotFontSelectedByName (const QString& fname )
 }
 
 
-void MainViewWidget::slotInfoFont()
-{
-	if(theVeryFont)
-	{
-		FMInfoDisplay fid(theVeryFont);
-                fontInfoText->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
-	}
+//void MainViewWidget::slotInfoFont()
+//{
+//	if(theVeryFont)
+//	{
+//		FMInfoDisplay fid(theVeryFont);
+//                fontInfoText->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
+//	}
 	
 
-}
+//}
 
 void MainViewWidget::slotView ( bool needDeRendering )
 {
@@ -1014,7 +1014,7 @@ void MainViewWidget::slotView ( bool needDeRendering )
 	}
 	
 	slotUpdateGView();
-	slotInfoFont();
+//	slotInfoFont();
 
 }
 
@@ -1991,7 +1991,7 @@ void MainViewWidget::slotRemoteFinished()
 {
 	qDebug()<<"slotRemoteFinished : "<<currentDownload;
 	slotFontSelectedByName(currentDownload);
-	slotInfoFont();
+//	slotInfoFont();
 	slotUpdateGView();
 	slotUpdateRView();
 	slotUpdateSView();
@@ -2011,63 +2011,63 @@ QString MainViewWidget::sampleName()
 	return ret;
 }
 
-void MainViewWidget::displayWelcomeMessage()
-{
-	if(!typotek::getInstance()->welcomeURL().isEmpty())
-	{
-		fontInfoText->load(QUrl(typotek::getInstance()->welcomeURL()));
-		return;
-	}
+//void MainViewWidget::displayWelcomeMessage()
+//{
+//	if(!typotek::getInstance()->welcomeURL().isEmpty())
+//	{
+//		fontInfoText->load(QUrl(typotek::getInstance()->welcomeURL()));
+//		return;
+//	}
 	
-	QString welcomeFontName;
-	QString welcomeSVG;
-	if(FMFontDb::DB()->FontCount() > 0)
-	{
-			QList<FontItem*> fl(FMFontDb::DB()->AllFonts());
-			QString welcomeString(tr("Welcome to Fontmatrix") );
-			if(fl.count() > 0)
-			{
-				int flcount(fl.count());
-				int rIdx( std::rand() % flcount );
-				QList<int> triedFont;
-				while(triedFont.count() < flcount)
-				{
-					while(triedFont.contains(rIdx))
-						rIdx = std::rand() %  flcount;
-					triedFont << rIdx;
-					FontItem * f(fl[rIdx]);
-					if(f->hasChars(welcomeString))
-					{
-						QStringList wList(welcomeString.split(" "));
-						foreach(const QString& wPart, wList)
-						{
-							welcomeSVG += "<div>";
-							welcomeSVG += f->renderSVG( wPart , QString(QSettings().value("General/WelcomeSize", tr("122.0", "Size of the welcome message" )).toString()).toDouble());
-							welcomeSVG += "</div>";
-						}
-						welcomeFontName = f->fancyName();
-						break;
-					}	
-				}
-			}
-	}
-// 	QString ResPat(FMPaths::ResourcesDir());
-// 	QFile wFile( ResPat + "welcome_"+ FMPaths::sysLoc() + ".html");
-// 	wFile.open(QIODevice::ReadOnly | QIODevice::Text);
-// 	QByteArray wArray(wFile.readAll());
-// 	QString wString(QString::fromUtf8(wArray.data(),wArray.length()));
-// 	wString.replace("##RECOURCES_DIR##", QUrl::fromLocalFile(ResPat).toString() );
-// 	wString.replace("##WELCOME_MESSAGE##", welcomeSVG);
-// 	wString.replace("##WELCOME_FONT##", welcomeFontName);
-	QString wString;
-	wString += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ;
-	wString += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" ;
-	wString += "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body style=\"background-color:#eee;\">" ;
-	wString += welcomeSVG ;
-	wString +="<div style=\"font-family:sans-serif;text-align:right;\">"+welcomeFontName+"</div>";
-	wString += "</body></html>" ;
-	fontInfoText->setContent(wString.toUtf8(), "application/xhtml+xml");
-}
+//	QString welcomeFontName;
+//	QString welcomeSVG;
+//	if(FMFontDb::DB()->FontCount() > 0)
+//	{
+//			QList<FontItem*> fl(FMFontDb::DB()->AllFonts());
+//			QString welcomeString(tr("Welcome to Fontmatrix") );
+//			if(fl.count() > 0)
+//			{
+//				int flcount(fl.count());
+//				int rIdx( std::rand() % flcount );
+//				QList<int> triedFont;
+//				while(triedFont.count() < flcount)
+//				{
+//					while(triedFont.contains(rIdx))
+//						rIdx = std::rand() %  flcount;
+//					triedFont << rIdx;
+//					FontItem * f(fl[rIdx]);
+//					if(f->hasChars(welcomeString))
+//					{
+//						QStringList wList(welcomeString.split(" "));
+//						foreach(const QString& wPart, wList)
+//						{
+//							welcomeSVG += "<div>";
+//							welcomeSVG += f->renderSVG( wPart , QString(QSettings().value("General/WelcomeSize", tr("122.0", "Size of the welcome message" )).toString()).toDouble());
+//							welcomeSVG += "</div>";
+//						}
+//						welcomeFontName = f->fancyName();
+//						break;
+//					}
+//				}
+//			}
+//	}
+//// 	QString ResPat(FMPaths::ResourcesDir());
+//// 	QFile wFile( ResPat + "welcome_"+ FMPaths::sysLoc() + ".html");
+//// 	wFile.open(QIODevice::ReadOnly | QIODevice::Text);
+//// 	QByteArray wArray(wFile.readAll());
+//// 	QString wString(QString::fromUtf8(wArray.data(),wArray.length()));
+//// 	wString.replace("##RECOURCES_DIR##", QUrl::fromLocalFile(ResPat).toString() );
+//// 	wString.replace("##WELCOME_MESSAGE##", welcomeSVG);
+//// 	wString.replace("##WELCOME_FONT##", welcomeFontName);
+//	QString wString;
+//	wString += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ;
+//	wString += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" ;
+//	wString += "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body style=\"background-color:#eee;\">" ;
+//	wString += welcomeSVG ;
+//	wString +="<div style=\"font-family:sans-serif;text-align:right;\">"+welcomeFontName+"</div>";
+//	wString += "</body></html>" ;
+//	fontInfoText->setContent(wString.toUtf8(), "application/xhtml+xml");
+//}
 
 // QTextDocument * MainViewWidget::infoDocument()
 // {
@@ -2112,7 +2112,7 @@ void MainViewWidget::slotSelectFromFolders(const QString &f)
 
 QWebView * MainViewWidget::info()
 {
-	return fontInfoText;
+	return familyWidget->info();
 }
 
 void MainViewWidget::slotChangeViewPageSetting ( bool ch )
@@ -2206,43 +2206,43 @@ void MainViewWidget::slotHintChanged(int )
 	slotView(true);
 }
 
-void MainViewWidget::slotWebStart()
-{
-// 	qDebug()<<"slotWebStart";
-	typo->startProgressJob(100);
-}
+//void MainViewWidget::slotWebStart()
+//{
+//// 	qDebug()<<"slotWebStart";
+//	typo->startProgressJob(100);
+//}
 
-void MainViewWidget::slotWebFinished(bool status)
-{
-// 	qDebug()<<"slotWebinished"<<status;
-	typo->endProgressJob();
-}
+//void MainViewWidget::slotWebFinished(bool status)
+//{
+//// 	qDebug()<<"slotWebinished"<<status;
+//	typo->endProgressJob();
+//}
 
-void MainViewWidget::slotWebLoad(int i)
-{
-// 	qDebug()<<"slotWebLoad("<<i<<")";
-	typo->runProgressJob(i);
-}
+//void MainViewWidget::slotWebLoad(int i)
+//{
+//// 	qDebug()<<"slotWebLoad("<<i<<")";
+//	typo->runProgressJob(i);
+//}
 
-void MainViewWidget::slotWebLink(const QUrl & url)
-{
-	if(typo->getWebBrowser() == QString( "Fontmatrix" ))
-	{
-		typo->showStatusMessage(tr("Load") + " " + url.toString());
-		fontInfoText->load(url);
-	}
-	else
-	{
-		QStringList arguments(typo->getWebBrowserOptions().split(" ", QString::SkipEmptyParts));
-		arguments << url.toString();
+//void MainViewWidget::slotWebLink(const QUrl & url)
+//{
+//	if(typo->getWebBrowser() == QString( "Fontmatrix" ))
+//	{
+//		typo->showStatusMessage(tr("Load") + " " + url.toString());
+//		fontInfoText->load(url);
+//	}
+//	else
+//	{
+//		QStringList arguments(typo->getWebBrowserOptions().split(" ", QString::SkipEmptyParts));
+//		arguments << url.toString();
 
-		if(!QProcess::startDetached(typo->getWebBrowser(), arguments))
-		{
-			arguments.removeLast();
-			QMessageBox::warning(this,"Fontmatrix", QString(tr("An error occured when tried to load %1\nwith command: %2", "%1 is an url and %2 a program")).arg(url.toString()).arg( typo->getWebBrowser() + " " + arguments.join(" ")));
-		}
-	}
-}
+//		if(!QProcess::startDetached(typo->getWebBrowser(), arguments))
+//		{
+//			arguments.removeLast();
+//			QMessageBox::warning(this,"Fontmatrix", QString(tr("An error occured when tried to load %1\nwith command: %2", "%1 is an url and %2 a program")).arg(url.toString()).arg( typo->getWebBrowser() + " " + arguments.join(" ")));
+//		}
+//	}
+//}
 
 QList<FontItem*> MainViewWidget::curFonts()
 {

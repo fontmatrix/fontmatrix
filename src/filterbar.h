@@ -24,6 +24,7 @@
 #include <QWidget>
 
 class QComboBox;
+class QPushButton;
 
 namespace Ui {
     class FilterBar;
@@ -38,6 +39,7 @@ public:
     ~FilterBar();
 
     QComboBox * tagsCombo();
+    QPushButton * clearButton();
 
 protected:
     void changeEvent(QEvent *e);

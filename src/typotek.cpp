@@ -251,13 +251,13 @@ void typotek::postInit()
 	
 	QSettings st;
 	QString cname(st.value("CurrentFont", QString()).toString());
-	if(!cname.isEmpty())
-	{
-		if(!ListDockWidget::getInstance()->fontTree->slotSetCurrent(cname))
-			theMainView->displayWelcomeMessage();
-	}
-	else
-		theMainView->displayWelcomeMessage();
+//	if(!cname.isEmpty())
+//	{
+//		if(!ListDockWidget::getInstance()->fontTree->slotSetCurrent(cname))
+//			theMainView->displayWelcomeMessage();
+//	}
+//	else
+//		theMainView->displayWelcomeMessage();
 }
 
 void typotek::doConnect()
@@ -1677,9 +1677,9 @@ void typotek::setPreviewSize(double d)
 	if(previewSize == d)
 		return;
 
-	previewSize = d;
-	if(previewSize != ListDockWidget::getInstance()->previewSize->value())
-		ListDockWidget::getInstance()->previewSize->setValue(previewSize);
+//	previewSize = d;
+//	if(previewSize != ListDockWidget::getInstance()->previewSize->value())
+//		ListDockWidget::getInstance()->previewSize->setValue(previewSize);
 	QList<FontItem*> fontMap(FMFontDb::DB()->AllFonts());
 	for(int i(0); i < fontMap.count(); ++i)
 		fontMap[i]->clearPreview() ;
@@ -2296,7 +2296,7 @@ void typotek::slotEditPanose()
 		{
 // 			qDebug()<< "Update Panose"<<theMainView->selectedFont()->path();
 			FMFontDb::DB()->setValue(theMainView->selectedFont()->path(), FMFontDb::Panose, dia.getTargetPanose());
-			theMainView->slotInfoFont();
+//			theMainView->slotInfoFont();
 		}
 	}
 }

@@ -172,8 +172,6 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 		fit = base.at(row);
 	if(!fit)
 		return QVariant();
-
-	qDebug()<<"Data"<< fit->fancyName();
 	
 	QColor bgColor(QApplication::palette().color(QPalette::Base));
 	QColor fgColor(QApplication::palette().color(QPalette::Text));

@@ -45,6 +45,7 @@ public:
     void setFamily(const QString& family);
     TagsWidget* tagWidget();
     QWebView * info();
+    QString curVariant;
 
 protected:
     void changeEvent(QEvent *e);
@@ -63,6 +64,7 @@ private slots:
     void slotPreviewUpdate();
     void slotPreviewUpdateSize(int);
     void slotPreviewSelected(const QModelIndex & index);
+    void slotShowSample();
 };
 
 #endif // FAMILYWIDGET_H

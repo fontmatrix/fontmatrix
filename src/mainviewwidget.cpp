@@ -124,22 +124,14 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 //	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 
 	abcScene = new QGraphicsScene;
-
-	
-
 	abcView->setScene ( abcScene );
 	abcView->setRenderHint ( QPainter::Antialiasing, true );
 
-
-
+	playScene = new QGraphicsScene;
 	playScene->setSceneRect ( 0,0,10000,10000 );
 	playView->setScene( playScene );
 
 	sampleText= typo->namedSample (typo->defaultSampleName());
-	
-	
-
-
 	currentOrdering = "family" ;
 
 	QStringListModel* cslModel(new QStringListModel);

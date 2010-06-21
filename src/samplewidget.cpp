@@ -38,7 +38,8 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
     fontIdentifier(fid)
 {
     ui->setupUi(this);
-
+refillSampleList();
+fillOTTree();
     textLayout = FMLayout::getLayout();
 
     radioRenderGroup = new QButtonGroup();
@@ -119,6 +120,8 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 
     connect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
     connect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
+
+    slotView(true);
 }
 
 SampleWidget::~SampleWidget()
@@ -150,16 +153,10 @@ void SampleWidget::slotView ( bool needDeRendering )
 	FontItem *f(FMFontDb::DB()->Font( fontIdentifier ));
 	if ( !f )
 		return;
-//	if ( needDeRendering )
-//	{
-//		if ( l )
-//		{
-//			l->deRenderAll();
-//		}
-//		f->deRenderAll();
-
-//		curGlyph = 0;
-//	}
+	if ( needDeRendering )
+	{
+		f->deRenderAll();
+	}
 
 	bool wantDeviceDependant = ui->loremView_FT->isVisible();
 //	unsigned int storedHinting(f->getFTHintMode());

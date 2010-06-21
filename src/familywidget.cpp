@@ -25,6 +25,7 @@
 #include "fmfontdb.h"
 #include "fontitem.h"
 #include "fminfodisplay.h"
+#include "samplewidget.h"
 
 #include <QColor>
 #include <QListWidgetItem>
@@ -54,6 +55,7 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	connect(ui->familyPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(ui->familyPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(ui->familyPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
 
 }
 
@@ -99,7 +101,8 @@ void FamilyWidget::setFamily(const QString &family)
 		FMInfoDisplay fid(fl.first());
 		ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
 		ui->familyPreview->setCurrentIndex( previewModel->index(0) );
-		emit fontSelected(fl.first()->path());
+		curVariant = fl.first()->path();
+		emit fontSelected(curVariant);
 	}
 }
 
@@ -122,8 +125,16 @@ void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 	//	{
 	//		typotek::getInstance()->getTheMainView()->slotFontSelectedByName(index.data(FMPreviewModel::PathRole));
 	//	}
-	FontItem * fItem(FMFontDb::DB()->Font(index.data(FMPreviewModel::PathRole).toString()));
+	curVariant = index.data(FMPreviewModel::PathRole).toString();
+	FontItem * fItem(FMFontDb::DB()->Font(curVariant));
 	FMInfoDisplay fid(fItem);
 	ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
-	emit fontSelected(fItem->path());
+	emit fontSelected(curVariant);
+}
+
+
+void FamilyWidget::slotShowSample()
+{
+	SampleWidget* sw(new SampleWidget(curVariant));
+	sw->show();
 }

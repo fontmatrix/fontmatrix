@@ -1518,7 +1518,7 @@ void typotek::slotPrefsPanelDefault()
 
 void typotek::forwardUpdateView()
 {
-	theMainView->slotView ( true );
+//	theMainView->slotView ( true );
 }
 
 void typotek::setSystrayVisible ( bool isVisible )
@@ -1611,7 +1611,7 @@ void typotek::addNamedSample ( QString name, QString sample )
 		dataLoader = new DataLoader();
 
 	dataLoader->update(name, sample);
-	theMainView->refillSampleList();
+//	theMainView->refillSampleList();
 }
 
 void typotek::removeNamedSample(const QString& key)
@@ -1620,7 +1620,7 @@ void typotek::removeNamedSample(const QString& key)
 		dataLoader = new DataLoader();
 
 	dataLoader->remove(key);
-	theMainView->refillSampleList();
+//	theMainView->refillSampleList();
 }
 
 void typotek::changeSample ( QString name, QString text )
@@ -1629,7 +1629,7 @@ void typotek::changeSample ( QString name, QString text )
 		dataLoader = new DataLoader();
 
 	dataLoader->update(name, text);
-	theMainView->refillSampleList();
+//	theMainView->refillSampleList();
 }
 
 QString typotek::defaultSampleName()
@@ -1760,7 +1760,7 @@ void typotek::changeFontSizeSettings(double fSize, double lSize)
 	QSettings settings;
 	settings.setValue("Sample/FontSize", fSize);
 	settings.setValue("Sample/Interline", lSize);
-	theMainView->reSize(fSize,lSize);
+//	theMainView->reSize(fSize,lSize);
 }
 
 void typotek::relayStartingStepIn(QString s)
@@ -1863,32 +1863,32 @@ void typotek::printInfo()
 
 void typotek::printSample()
 {
-	FontItem * font(theMainView->selectedFont());
-	if(!font)
-		return;
-	QGraphicsScene *ls (theMainView->currentSampleScene());
-	if( FMLayout::getLayout()->isRunning() )
-	{
-		connect(FMLayout::getLayout(), SIGNAL(paintFinished()), this,SLOT(printSample()));
-// 		waitLayoutForPrint = false;
-		return;
-	}
-	else
-	{
-		disconnect(FMLayout::getLayout(), SIGNAL(paintFinished()), this,SLOT(printSample()));
-// 		waitLayoutForPrint = true;
-	}
+//	FontItem * font(theMainView->selectedFont());
+//	if(!font)
+//		return;
+//	QGraphicsScene *ls (theMainView->currentSampleScene());
+//	if( FMLayout::getLayout()->isRunning() )
+//	{
+//		connect(FMLayout::getLayout(), SIGNAL(paintFinished()), this,SLOT(printSample()));
+//// 		waitLayoutForPrint = false;
+//		return;
+//	}
+//	else
+//	{
+//		disconnect(FMLayout::getLayout(), SIGNAL(paintFinished()), this,SLOT(printSample()));
+//// 		waitLayoutForPrint = true;
+//	}
 
-	QPrinter thePrinter ( QPrinter::HighResolution );
-	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Sample") +" - " + font->fancyName() );
+//	QPrinter thePrinter ( QPrinter::HighResolution );
+//	QPrintDialog dialog(&thePrinter, this);
+//	dialog.setWindowTitle("Fontmatrix - " + tr("Print Sample") +" - " + font->fancyName() );
 
-	if ( dialog.exec() != QDialog::Accepted )
-		return;
-	thePrinter.setFullPage ( true );
-	QPainter aPainter ( &thePrinter );
+//	if ( dialog.exec() != QDialog::Accepted )
+//		return;
+//	thePrinter.setFullPage ( true );
+//	QPainter aPainter ( &thePrinter );
 
-	ls->render(&aPainter);
+//	ls->render(&aPainter);
 
 }
 

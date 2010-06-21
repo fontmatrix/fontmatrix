@@ -188,7 +188,8 @@ void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, doubl
 	ensureVisible ( CursorPos.x(), CursorPos.y(), spec.count(), fontS * 1.5 );
 	bool backedR ( fontI->rasterFreetype() );
 	fontI->setFTRaster ( false );
-	TextProgression *tp = TextProgression::getInstance();
+	// We deactivate "non-latin" layout atm
+//	TextProgression *tp = TextProgression::getInstance();
 	QPointF pen(CursorPos);
 
 	foreach(RenderedGlyph g, fontI->glyphs( spec , fontS ) )
@@ -197,22 +198,22 @@ void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, doubl
 		if(!glyph)
 			continue;
 		curLine << glyph;
-		if ( tp->inLine() == TextProgression::INLINE_RTL )
-		{
-			pen.rx() -= g.xadvance ;
-		}
-		else if ( tp->inLine() == TextProgression::INLINE_BTT )
-		{
-			pen.ry() -= g.yadvance ;
-		}
+//		if ( tp->inLine() == TextProgression::INLINE_RTL )
+//		{
+//			pen.rx() -= g.xadvance ;
+//		}
+//		else if ( tp->inLine() == TextProgression::INLINE_BTT )
+//		{
+//			pen.ry() -= g.yadvance ;
+//		}
 		glyph->setPen(Qt::NoPen);
 		scene()->addItem(glyph);
 		glyph->setPos ( pen.x() + ( g.xoffset ),
 				pen.y() + ( g.yoffset ) );
-		if ( tp->inLine() == TextProgression::INLINE_LTR )
+//		if ( tp->inLine() == TextProgression::INLINE_LTR )
 			pen.rx() += g.xadvance ;
-		else if ( tp->inLine() == TextProgression::INLINE_TTB )
-			pen.ry() += g.yadvance;
+//		else if ( tp->inLine() == TextProgression::INLINE_TTB )
+//			pen.ry() += g.yadvance;
 
 	}
 	fontI->setFTRaster ( backedR );

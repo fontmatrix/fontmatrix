@@ -26,11 +26,6 @@
 #include <QIcon>
 
 
-#define VIEW_PAGE_FREETYPE 0
-#define VIEW_PAGE_ABSOLUTE 1
-#define VIEW_PAGE_OPENTYPE 0
-#define VIEW_PAGE_SETTINGS 1
-#define VIEW_PAGE_SAMPLES  2
 
 class QGraphicsScene;
 class typotek;
@@ -60,11 +55,8 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 
 		~MainViewWidget();
 	private:
-		QGraphicsScene *abcScene;
-		QGraphicsScene *loremScene;
-		QGraphicsScene *ftScene;
 		QGraphicsScene *playScene;
-		FMLayout *textLayout;
+		QGraphicsScene *abcScene;
 		QStringList ord;
 		QStringList fields;
 		typotek *typo;
@@ -95,16 +87,14 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QStringList openKeys;
 		QString curItemName;
 		
-		double sampleFontSize;
-		double sampleInterSize;
-		double sampleRatio;
+
 		
 // 		QMap<QString, QPair<int,int> > uniPlanes;
 // 		void fillUniPlanes();
 		void fillUniPlanesCombo(FontItem* item);
 		
-		void fillOTTree();
-		OTFSet deFillOTTree();
+//		void fillOTTree();
+//		OTFSet deFillOTTree();
 		
 		bool renderingLock;
 		int fancyGlyphInUse;
@@ -126,13 +116,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 //		QUrl infoCSSUrl;
 		
-		QButtonGroup *radioRenderGroup;
-		QButtonGroup *radioFTHintingGroup;
-		
-		unsigned int hinting();
-		
-		int toolPanelWidth;
-		
 		QString unMapGlyphName;
 		QString allMappedGlyphName;
 		
@@ -143,7 +126,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotFontSelected ( QTreeWidgetItem * item, int column );
 		bool slotFontSelectedByName(const QString& fname);
 //		void slotInfoFont();
-		void slotView(bool needDeRendering = false);
+//		void slotView(bool needDeRendering = false);
 		void slotShowOneGlyph();
 		void slotShowAllGlyph();
 		void slotSearch();
@@ -160,32 +143,21 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		void slotDesactivateAll();
 		void slotActivateAll();
-		void slotSetSampleText(QString);
 		void slotActivate(bool act, QTreeWidgetItem * item, int column);
 		void slotReloadFontList();
-		
-		void slotSwitchAntiAlias(bool aa);
-		
+
 		void slotItemOpened(QTreeWidgetItem * item);
 		void slotViewAll();
 		void slotViewActivated();
 		void slotPlaneSelected(int);
 		void slotSearchCharName();
 		void slotAdjustGlyphView(int width);
-		void slotFeatureChanged();
-		void slotSampleChanged();
 		void slotFTRasterChanged();
-		void slotWantShape();
-		void slotChangeScript();
 		
-		
-		void slotProgressionChanged();
+
 		void slotUpdateGView();
 		void slotUpdateGViewSingle();
-		void slotUpdateSView();
-		void slotUpdateRView();
 		void slotUpdateTree();
-		void slotEditSampleText();
 		void slotRemoveCurrentItem();
 		
 		void slotPanoseFilter(const QMap<int,QList<int> >& filter);
@@ -199,15 +171,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 	private slots:
 		void slotPreviewUpdateSize(int);
 
-		void slotLiveFontSize();
 		void slotRemoteFinished();
 
-		void slotDefaultOTF();
-		void slotResetOTF();
-		
-		void slotChangeViewPageSetting(bool);
-		void slotChangeViewPage(QAbstractButton* );
-		void slotHintChanged(int);
+
 		
 		
 //		void slotWebLink(const QUrl & url );
@@ -225,25 +191,20 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void faceChanged();
 		void newTag(QString);
 		void tagAdded(QString);
-		void stopLayout();
 		void listChanged();
 
 	public:
 		QString defaultOrd() {return ord[0];}
 		QGraphicsScene* glyphsScene()const{return abcScene;}
-		QGraphicsScene* textScene()const{return loremScene;}
 		QList<FontItem*> curFonts();
 		void setCurFonts(QList<FontItem*> flist);
 		FontItem* selectedFont(){return theVeryFont;}
-		
-		void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
-		void refillSampleList();
+
 		
 		QString sampleName();
 //		void displayWelcomeMessage();
 		
 		QWebView *info();
-		QGraphicsScene *currentSampleScene();
 		FMPlayGround *getPlayground();
 		
 		void addFilterToCrumb(QString filter);

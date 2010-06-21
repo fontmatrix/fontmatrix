@@ -65,6 +65,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pangoshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/prefspaneldialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/remotedir.cpp
 #${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/samplewidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/schelptreemodel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/sctextbrowser.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/shortcuts.cpp
@@ -166,6 +167,7 @@ panosewidget.h
 parallelcoor.h
 prefspaneldialog.h
 remotedir.h
+samplewidget.h
 sctextbrowser.h
 shortcuts.h
 systray.h
@@ -202,6 +204,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/panosewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/prefs_panel.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/repair.ui
+${CMAKE_CURRENT_SOURCE_DIR}/samplewidget.ui
 # ${CMAKE_CURRENT_SOURCE_DIR}/tagset.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.ui

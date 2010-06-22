@@ -23,122 +23,54 @@
   <property name="windowTitle">
    <string>main view widget</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_8">
-   <property name="leftMargin">
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
     <number>2</number>
-   </property>
-   <property name="topMargin">
-    <number>12</number>
-   </property>
-   <property name="rightMargin">
-    <number>2</number>
-   </property>
-   <property name="bottomMargin">
-    <number>2</number>
-   </property>
-   <property name="spacing">
-    <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>1</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="acceptDrops">
-      <bool>true</bool>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="statusTip">
-      <string/>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="tabPosition">
-      <enum>QTabWidget::North</enum>
-     </property>
-     <property name="tabShape">
-      <enum>QTabWidget::Rounded</enum>
-     </property>
+    <widget class="QStackedWidget" name="previewStack">
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <property name="elideMode">
-      <enum>Qt::ElideRight</enum>
-     </property>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>Page</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_15">
+     <widget class="QWidget" name="pageList">
+      <layout class="QGridLayout" name="gridLayout_2">
        <property name="margin">
-        <number>0</number>
+        <number>2</number>
        </property>
        <item row="0" column="0">
-        <widget class="QStackedWidget" name="previewStack">
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="pageList">
-          <layout class="QGridLayout" name="gridLayout_13">
-           <item row="0" column="0">
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <widget class="FilterBar" name="filterBar" native="true"/>
-             </item>
-             <item>
-              <widget class="FMPreviewView" name="listView">
-               <property name="resizeMode">
-                <enum>QListView::Adjust</enum>
-               </property>
-               <property name="uniformItemSizes">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="pageFamily">
-          <layout class="QGridLayout" name="gridLayout_14">
-           <property name="margin">
-            <number>2</number>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="FilterBar" name="filterBar" native="true"/>
+         </item>
+         <item>
+          <widget class="FMPreviewView" name="listView">
+           <property name="resizeMode">
+            <enum>QListView::Adjust</enum>
            </property>
-           <item row="0" column="0">
-            <widget class="FamilyWidget" name="familyWidget" native="true"/>
-           </item>
-          </layout>
-         </widget>
-        </widget>
+           <property name="uniformItemSizes">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabCompare">
-      <attribute name="icon">
-       <iconset resource="application.qrc">
-        <normaloff>:/fontmatrix_compare.png</normaloff>:/fontmatrix_compare.png</iconset>
-      </attribute>
-      <attribute name="title">
-       <string>Compare</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_17">
+     <widget class="QWidget" name="pageFamily">
+      <layout class="QGridLayout" name="gridLayout_14">
+       <property name="margin">
+        <number>2</number>
+       </property>
        <item row="0" column="0">
-        <widget class="FontCompareWidget" name="widget" native="true"/>
+        <widget class="FamilyWidget" name="familyWidget" native="true"/>
        </item>
       </layout>
      </widget>
     </widget>
    </item>
   </layout>
+  <zorder></zorder>
+  <zorder>previewStack</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -158,15 +90,7 @@
    <header>filterbar.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>FontCompareWidget</class>
-   <extends>QWidget</extends>
-   <header>fontcomparewidget.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
- <resources>
-  <include location="application.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

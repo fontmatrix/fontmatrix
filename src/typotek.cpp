@@ -42,6 +42,7 @@
 #include "mainviewwidget.h"
 #include "panosedialog.h"
 #include "panosewidget.h"
+#include "playwidget.h"
 #include "prefspaneldialog.h"
 #include "remotedir.h"
 //#include "savedata.h"
@@ -265,7 +266,7 @@ void typotek::doConnect()
 	if(getSystray())
 		connect ( FMActivate::getInstance() ,SIGNAL ( activationEvent ( const QStringList& ) ), getSystray(),SLOT ( updateTagMenu ( const QStringList& ) ) );
 
-	connect(FMLayout::getLayout()->optionDialog,SIGNAL(finished( int )),this,SLOT(slotUpdateLayOptStatus()));
+//	connect(FMLayout::getLayout()->optionDialog,SIGNAL(finished( int )),this,SLOT(slotUpdateLayOptStatus()));
 #ifdef HAVE_PYTHONQT
 	connect(FMScriptConsole::getInstance(),SIGNAL(finished()), this, SLOT(slotUpdateScriptConsoleStatus()));
 #endif
@@ -788,11 +789,11 @@ void typotek::createActions()
 	scuts->add(previousFont);
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
-	layOptAct = new QAction(tr("Text layout engine options"),this);
-	layOptAct->setStatusTip ( tr ( "View and edit text layout engine variables" ) );
-	layOptAct->setCheckable(true);
-	scuts->add(layOptAct);
-	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
+//	layOptAct = new QAction(tr("Text layout engine options"),this);
+//	layOptAct->setStatusTip ( tr ( "View and edit text layout engine variables" ) );
+//	layOptAct->setCheckable(true);
+//	scuts->add(layOptAct);
+//	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
 	
 	extractFontAction = new QAction(tr("Extract fonts..."),this);
 	extractFontAction->setStatusTip ( tr ( "Extract fonts from documents like PDF to PFM file format" ) );
@@ -893,7 +894,7 @@ void typotek::createMenus()
 #endif
 	servicesMenu->addAction(showTTTAct);
 	servicesMenu->addSeparator();
-	servicesMenu->addAction(layOptAct);
+//	servicesMenu->addAction(layOptAct);
 	
 	helpMenu = menuBar()->addMenu ( tr ( "&Help" ) );
 	helpMenu->addAction ( helpAct );
@@ -1979,9 +1980,9 @@ void typotek::printPlayground()
 	double pHeight(thePrinter.paperRect().height());
 
 	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
-	QRectF sourceR( theMainView->getPlayground()->getMaxRect() );
-	theMainView->getPlayground()->deselectAll();
-	theMainView->getPlayground()->scene()->render(&aPainter, targetR ,sourceR, Qt::KeepAspectRatio );
+	QRectF sourceR( PlayWidget::getInstance()->getMaxRect());
+	PlayWidget::getInstance()->clearSelection();
+	PlayWidget::getInstance()->getPlayScene()->render(&aPainter, targetR ,sourceR, Qt::KeepAspectRatio );
 }
 
 void typotek::printFamily()
@@ -2047,7 +2048,7 @@ void typotek::printFamily()
 		bool rasterState(sampleFont[fidx]->rasterFreetype());
 		sampleFont[fidx]->setFTRaster(false);
 		sampleFont[fidx]->setRenderReturnWidth(true);
-		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, sampleString[fidx], QPointF(0.0, 1000.0) , 999999.0, 1000.0, 1, false) ;
+		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, sampleString[fidx], QPointF(0.0, 1000.0) , 999999.0, 1000.0, 1) ;
 		sampleFont[fidx]->setRenderReturnWidth(false);
 		sampleFont[fidx]->setFTRaster(rasterState);
 		logAscend[fidx] = 1000.0 - tmpScene.itemsBoundingRect().top();
@@ -2096,7 +2097,7 @@ void typotek::printFamily()
 
 		bool rasterState(sampleFont[fidx]->rasterFreetype());
 		sampleFont[fidx]->setFTRaster(false);
-		sampleFont[fidx]->renderLine(&pScene, sampleString[fidx], origine, pScene.width(), fSize, 100, false);
+		sampleFont[fidx]->renderLine(&pScene, sampleString[fidx], origine, pScene.width(), fSize, 100);
 		pScene.addLine(QLineF(origine, QPointF(xOff + defWidth, yPos)));
 		sampleFont[fidx]->setFTRaster(rasterState);
 
@@ -2140,22 +2141,22 @@ FMHyphenator* typotek::getHyphenator() const
 	return hyphenator;
 }
 
-void typotek::slotSwitchLayOptVisible()
-{
-	if(FMLayout::getLayout()->optionDialog->isVisible())
-		FMLayout::getLayout()->optionDialog->setVisible(false);
-	else
-		FMLayout::getLayout()->optionDialog->setVisible(true);
-	slotUpdateLayOptStatus();
-}
+//void typotek::slotSwitchLayOptVisible()
+//{
+//	if(FMLayout::getLayout()->optionDialog->isVisible())
+//		FMLayout::getLayout()->optionDialog->setVisible(false);
+//	else
+//		FMLayout::getLayout()->optionDialog->setVisible(true);
+//	slotUpdateLayOptStatus();
+//}
 
-void typotek::slotUpdateLayOptStatus()
-{
-	if(FMLayout::getLayout()->optionDialog->isVisible())
-		layOptAct->setChecked(true);
-	else
-		layOptAct->setChecked(false);
-}
+//void typotek::slotUpdateLayOptStatus()
+//{
+//	if(FMLayout::getLayout()->optionDialog->isVisible())
+//		layOptAct->setChecked(true);
+//	else
+//		layOptAct->setChecked(false);
+//}
 
 #ifdef HAVE_PYTHONQT
 void typotek::slotSwitchScriptConsole()

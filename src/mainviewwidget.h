@@ -55,7 +55,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 
 		~MainViewWidget();
 	private:
-		QGraphicsScene *playScene;
 		QStringList ord;
 		QStringList fields;
 		typotek *typo;
@@ -127,7 +126,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
                 bool slotFontActionByName(const QString &fname);
                 bool slotFontActionByNames(QStringList fnames);
 		void slotEditAll();
-		void slotZoom(int z);
 		void slotAppendTag(QString tag);
 		void slotFilterTag(QString tag);
 		
@@ -187,7 +185,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 //		void displayWelcomeMessage();
 		
 		QWebView *info();
-		FMPlayGround *getPlayground();
 		
 		void addFilterToCrumb(QString filter);
 		void setCrumb(QString text = QString());
@@ -197,7 +194,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 
 		void forceReloadSelection();
 
-		double playgroundFontSize();
 
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;

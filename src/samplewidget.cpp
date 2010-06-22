@@ -43,7 +43,6 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	ui->setupUi(this);
 	refillSampleList();
 	fillOTTree();
-	textLayout = FMLayout::getLayout();
 
 	radioRenderGroup = new QButtonGroup();
 	radioRenderGroup->addButton(ui->freetypeRadio);
@@ -94,6 +93,10 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	ui->liveFontSizeSpin->setValue(sampleFontSize);
 
 
+	FontItem * cf(FMFontDb::DB()->Font(fid));
+	textLayoutVect = new FMLayout(loremScene, cf);
+	textLayoutFT =  new FMLayout(ftScene, cf);
+
 	// connections
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
 	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
@@ -108,8 +111,10 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	connect ( ui->loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 	connect ( ui->loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
 
-	connect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
-	connect ( this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
+	connect ( textLayoutVect, SIGNAL(updateLayout()),this, SLOT(slotView()));
+	connect ( this, SIGNAL(stopLayout()), textLayoutVect,SLOT(stopLayout()));
+	connect ( textLayoutFT, SIGNAL(updateLayout()),this, SLOT(slotView()));
+	connect ( this, SIGNAL(stopLayout()), textLayoutFT,SLOT(stopLayout()));
 
 	connect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
 	connect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
@@ -125,6 +130,7 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	connect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
 	connect(ui->printButton, SIGNAL(clicked()), this, SLOT(slotPrint()));
+	connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
 	slotView(true);
 }
@@ -132,6 +138,10 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 SampleWidget::~SampleWidget()
 {
 	delete ui;
+	delete loremScene;
+	delete ftScene;
+	delete textLayoutFT;
+	delete textLayoutVect;
 }
 
 void SampleWidget::changeEvent(QEvent *e)
@@ -185,33 +195,30 @@ void SampleWidget::slotView ( bool needDeRendering )
 	if ( ui->loremView->isVisible() || ui->loremView_FT->isVisible() || layoutForPrint)
 	{
 		//		qDebug()<<"lv(ft) is visible";
-		if(textLayout->isRunning())
-		{
-			//			qDebug()<<"tl is running";
-			textLayout->stopLayout();
-		}
+		if(textLayoutFT->isRunning())
+			textLayoutFT->stopLayout();
+		else if(textLayoutVect->isRunning())
+			textLayoutVect->stopLayout();
 		else
 		{
 			//			qDebug()<<"tl is NOT running";
 			QGraphicsScene *targetScene;
 			ui->loremView_FT->unSheduleUpdate();
 			ui->loremView->unSheduleUpdate();
+			FMLayout * textLayout;
 			if(ui->loremView->isVisible() || layoutForPrint)
 			{
-				targetScene = loremScene;
+				textLayout = textLayoutVect;
 			}
 			else if(ui->loremView_FT->isVisible())
 			{
-				targetScene = ftScene;
+				textLayout = textLayoutFT;
 			}
 
 			bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
 			QString script = ui->langCombo->currentText();
 			bool processScript =  f->isOpenType() && ( ui->useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
-
-			textLayout->setTheFont(f);
 			textLayout->setDeviceIndy(!wantDeviceDependant);
-			textLayout->setTheScene(targetScene);
 			textLayout->setAdjustedSampleInter( sampleInterSize );
 
 			double fSize(sampleFontSize);
@@ -250,7 +257,10 @@ void SampleWidget::slotView ( bool needDeRendering )
 			// 			{
 			// 				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
 			// 			}
-			textLayout->start(QThread::LowestPriority);
+			if(!layoutForPrint)
+				textLayout->start(QThread::LowestPriority);
+			else
+				textLayout->run();
 		}
 	}
 	else if(!ui->loremView->isVisible() && !ui->loremView_FT->isVisible())
@@ -614,15 +624,15 @@ void SampleWidget::slotPrint()
 		return;
 	layoutForPrint = true;
 	slotView(false);
-	if( textLayout->isRunning() )
-	{
-		connect(textLayout, SIGNAL(paintFinished()), this,SLOT(slotPrint()));
-		return;
-	}
-	else
-	{
-		disconnect(textLayout, SIGNAL(paintFinished()), this,SLOT(slotPrint()));
-	}
+//	if( textLayoutVect->isRunning() )
+//	{
+//		connect(textLayoutVect, SIGNAL(paintFinished()), this,SLOT(slotPrint()));
+//		return;
+//	}
+//	else
+//	{
+//		disconnect(textLayoutVect, SIGNAL(paintFinished()), this,SLOT(slotPrint()));
+//	}
 
 	QPrinter thePrinter ( QPrinter::HighResolution );
 	QPrintDialog dialog(&thePrinter, this);

@@ -69,6 +69,8 @@ ChartWidget::ChartWidget(const QString& fid, QWidget *parent) :
 ChartWidget::~ChartWidget()
 {
     delete ui;
+    delete abcScene;
+    delete curGlyph;
 }
 
 void ChartWidget::changeEvent(QEvent *e)

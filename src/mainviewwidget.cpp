@@ -119,10 +119,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 
 
-	playScene = new QGraphicsScene;
-	playScene->setSceneRect ( 0,0,10000,10000 );
-	playView->setScene( playScene );
-
 	sampleText= typo->namedSample (typo->defaultSampleName());
 	currentOrdering = "family" ;
 
@@ -184,7 +180,6 @@ void MainViewWidget::doConnect()
 //	connect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
 //	connect ( this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
 
-	connect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 
 	
 //	connect ( sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
@@ -1215,16 +1210,6 @@ void MainViewWidget::slotEditAll()
 }
 
 
-void MainViewWidget::slotZoom ( int z )
-{
-	double delta =  1.0 + ( z/1000.0 ) ;
-	QTransform trans;
-	trans.scale ( delta,delta );
-
-if ( playView->isVisible() )
-		playView->setTransform ( trans, ( z == 0 ) ? false : true );
-
-}
 
 void MainViewWidget::slotAppendTag ( QString tag )
 {
@@ -1558,13 +1543,6 @@ QString MainViewWidget::sampleName()
 // 	return fontInfoText->document();
 // }
 
-
-
-FMPlayGround * MainViewWidget::getPlayground()
-{
-	return playView;
-}
-
 void MainViewWidget::addFilterToCrumb(QString filter)
 {
 	QString t(m_lists->filtersCrumb->text());
@@ -1706,10 +1684,6 @@ void MainViewWidget::forceReloadSelection()
 	m_forceReloadSelection = true;
 }
 
-double MainViewWidget::playgroundFontSize()
-{
-	return playFontSize->value();
-}
 
 void MainViewWidget::slotPreviewUpdateSize(int w)
 {

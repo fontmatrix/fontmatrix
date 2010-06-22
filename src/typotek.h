@@ -85,8 +85,8 @@ private slots:
 	void slotRepair();
 	void slotTagAll();
 	void slotDockAreaChanged(Qt::DockWidgetArea area);
-	void slotSwitchLayOptVisible();
-	void slotUpdateLayOptStatus();
+//	void slotSwitchLayOptVisible();
+//	void slotUpdateLayOptStatus();
 	void slotShowTTTables();
 	void slotEditPanose();
 	void slotDumpInfo();
@@ -204,7 +204,7 @@ private:
 	// 		HelpWidget *theHelp;
 	HelpBrowser *theHelp;
 
-	QAction *layOptAct;
+//	QAction *layOptAct;
 
 	QProgressBar *statusProgressBar;
 

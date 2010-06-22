@@ -187,7 +187,6 @@ class FontItem : public QObject
 		QList<QGraphicsPathItem*> glyphList;
 		QList<QGraphicsTextItem*> labList;
 		QList<QGraphicsRectItem*> selList;
-		QList<QGraphicsScene *> sceneList;
 		QMap<int, QGraphicsPixmapItem*> fancyGlyphs;
 		QMap<int, QGraphicsTextItem*> fancyTexts;
 		QMap<int, QList<QGraphicsPixmapItem*> > fancyAlternates;
@@ -290,9 +289,9 @@ class FontItem : public QObject
 // 		QString value ( QString k );
 // 		QString panose( QString k );
 
-		double renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth, double fsize, double zindex = 100.0 ,bool record = true );
-		double renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
-		double renderLine ( QString script, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize, bool record = true );
+		double renderLine ( QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth, double fsize, double zindex = 100.0);
+		double renderLine ( OTFSet set, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize);
+		double renderLine ( QString script, QGraphicsScene *scene, QString spec,  QPointF origine, double lineWidth,double fsize);
 		QGraphicsPathItem* itemFromChar ( int charcode, double size );
 		QGraphicsPathItem* itemFromGindex ( int index, double size );
 		

@@ -45,7 +45,7 @@ class QGridLayout;
 
 #define INFINITE 99999999L
 
-
+class FMLayout;
 
 
 struct Node
@@ -63,13 +63,12 @@ struct Node
 // 		ListItem (const ListItem& v);
 	};
 
-	QList<ListItem*> nodes;
-	int index;
-
-	
-	Node() {}
-	Node ( int i ) ;
+	Node (FMLayout * layoutEngine,  int i ) ;
 	~Node();
+
+	QList<ListItem*> nodes;
+	FMLayout *lyt;
+	int index;
 
 	bool hasNode ( int idx ) ;
 	void nodes_clear();
@@ -77,6 +76,9 @@ struct Node
 
 	void sPath ( double dist, QList< int > curList, QList<int>& theList, double& theScore );
 	int deepCount();
+
+private:
+	Node() {}
 	
 };
 
@@ -85,12 +87,12 @@ struct Node
 class FMLayout : public QThread
 {
 	Q_OBJECT
-		// Just think that the font must be set
-		FMLayout ( /*QGraphicsScene* scene, FontItem* font*/ );
-		~FMLayout();
+
 	public:
+		explicit FMLayout ( QGraphicsScene* scene, FontItem* font, QRectF rect = QRectF());
+		~FMLayout();
 		void doLayout(const QList<GlyphList>& spec , double fs);
-		static FMLayout *getLayout();
+//		static FMLayout *getLayout();
 		void run();
 		
 	private://methods
@@ -119,7 +121,7 @@ class FMLayout : public QThread
 
 	private:// data
 		// Argued
-		static FMLayout *instance;
+//		static FMLayout *instance;
 		QGraphicsScene* theScene;
 		FontItem*	theFont;
 		QList<GlyphList> paragraphs;
@@ -155,6 +157,7 @@ class FMLayout : public QThread
 
 	public: //accessors
 		QRectF getRect()const{return theRect;}
+		void setRect(const QRectF& r){theRect = r;}
 		void setProcessFeatures ( bool theValue ){processFeatures = theValue;}
 		void setScript ( const QString& theValue ){script = theValue;}
 		void setProcessScript ( bool theValue )	{processScript = theValue;}
@@ -164,8 +167,8 @@ class FMLayout : public QThread
 		void setOrigine ( const QPoint& theValue ){origine = theValue;}
 		void setFontSize ( bool theValue ){fontSize = theValue;}
 		void setDeviceIndy( bool theValue ){deviceIndy = theValue;}
-		void setTheScene ( QGraphicsScene* theValue , QRectF rect = QRectF());
-		void setTheFont ( FontItem* theValue );
+//		void setTheScene ( QGraphicsScene* theValue , QRectF rect = QRectF());
+//		void setTheFont ( FontItem* theValue );
 		void setPersistentScene(bool p){persistentScene = p;}
 
 
@@ -183,7 +186,7 @@ class FMLayout : public QThread
 		void paragraphFinished();
 		void paintFinished();
 	public:
-		QDialog *optionDialog;
+		QWidget *optionDialog;
 		
 		double FM_LAYOUT_NODE_SOON_F;
 		double FM_LAYOUT_NODE_FIT_F;

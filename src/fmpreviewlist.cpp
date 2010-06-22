@@ -34,6 +34,7 @@
 #include <QApplication>
 #include <QLabel>
 #include <QPainterPath>
+#include <QPainter>
 
 QVector<QRgb> FMPreviewIconEngine::m_selPalette;
 

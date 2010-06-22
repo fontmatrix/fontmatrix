@@ -42,17 +42,17 @@ int fm_layout_total_leaves_dbg;
 
 Node::ListItem::ListItem() :n ( 0 ), distance ( 0.0 )
 {
-// 	qDebug()<<"CV empty";
+	// 	qDebug()<<"CV empty";
 }
 
 Node::ListItem::ListItem ( Node * N, double D ) :n ( N ),distance ( D )
 {
-// 	qDebug()<<"CV n d"<<n->index<<distance;
+	// 	qDebug()<<"CV n d"<<n->index<<distance;
 }
 
 Node::ListItem::~ListItem()
 {
-// 	qDebug()<<"~ListItem"<< n<<n->index;
+	// 	qDebug()<<"~ListItem"<< n<<n->index;
 	if(n)
 	{
 		delete n;
@@ -60,10 +60,12 @@ Node::ListItem::~ListItem()
 	}
 }
 
-Node::Node ( int i ) :index ( i )
+Node::Node (FMLayout * layoutEngine,  int i )
+	:lyt(layoutEngine),
+	index ( i )
 {
-// 	if(index == 0)
-// 		qDebug()<<"+N"<< this<<index << ++fm_layout_total_nod_dbg;
+	// 	if(index == 0)
+	// 		qDebug()<<"+N"<< this<<index << ++fm_layout_total_nod_dbg;
 }
 
 bool Node::hasNode ( int idx )
@@ -78,8 +80,8 @@ bool Node::hasNode ( int idx )
 
 void Node::nodes_clear()
 {
-// 	if(index == 0)
-// 		qDebug()<<"-C"<<this<< nodes.count();
+	// 	if(index == 0)
+	// 		qDebug()<<"-C"<<this<< nodes.count();
 	while (!nodes.isEmpty())
 		delete nodes.takeFirst();
 }
@@ -107,13 +109,13 @@ void Node::nodes_insert(ListItem * v)
 		if(!ist)
 			nodes.append(v);
 	}
-// 	qDebug()<<"+I"<<this <<v->n->index<<nodes.count();
+	// 	qDebug()<<"+I"<<this <<v->n->index<<nodes.count();
 }
 
 Node::~Node()
 {
 	
-// 	qDebug()<<"~N"<<this<< deepCount() << --fm_layout_total_nod_dbg;
+	// 	qDebug()<<"~N"<<this<< deepCount() << --fm_layout_total_nod_dbg;
 	nodes_clear();
 }
 
@@ -129,12 +131,12 @@ int Node::deepCount()
 
 void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, double & theScore )
 {
-// 	QList<int> debugL;
-// 	foreach(ListItem v, nodes)
-// 	{debugL << v.n->index;}
-// 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
+	// 	QList<int> debugL;
+	// 	foreach(ListItem v, nodes)
+	// 	{debugL << v.n->index;}
+	// 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
 	int deep ( curList.count() + 1 );
-	FMLayout* lyt ( FMLayout::getLayout() );
+//	FMLayout* lyt ( FMLayout::getLayout() );
 	if ( lyt->stopIt )
 	{
 		theScore = 0;
@@ -164,17 +166,17 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					double disN = needWidth - lyt->lineWidth ( deep ) ;
 					
 					double compressValue( disN * 100.0 / spaceWidth  );
-// 					qDebug()<<"PRE spaceWidth("<<spaceWidth<<") disN("<<disN<<") compressValue("<<compressValue<<")";
+					// 					qDebug()<<"PRE spaceWidth("<<spaceWidth<<") disN("<<disN<<") compressValue("<<compressValue<<")";
 					if(compressValue > lyt->FM_LAYOUT_MAX_COMPRESSION)
 					{
 						break;
 					}
-// 					else
-// 						qDebug()<<"["<<cIdx<<","<<soon<<"]spaceWidth("<<spaceWidth<<") disN("<<disN<<") compressValue("<<compressValue<<")";
+					// 					else
+					// 						qDebug()<<"["<<cIdx<<","<<soon<<"]spaceWidth("<<spaceWidth<<") disN("<<disN<<") compressValue("<<compressValue<<")";
 					
 					
 					Node* sN = 0;
-					sN = new Node ( soon );
+					sN = new Node (lyt, soon );
 					if ( lyt->hyphenList.contains ( soon ) )
 						disN *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
 
@@ -196,15 +198,15 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					double compressValue( disF * 100.0 / spaceWidth  );
 					if(compressValue <= lyt->FM_LAYOUT_MAX_COMPRESSION)
 					{
-// 						qDebug()<<"["<<cIdx<<","<<fit<<"]("<< lyt->sepCount(cIdx, fit ,lyt->theString) <<") spaceWidth("<<spaceWidth<<") disF("<<disF<<") compressValue("<<compressValue<<")";
+						// 						qDebug()<<"["<<cIdx<<","<<fit<<"]("<< lyt->sepCount(cIdx, fit ,lyt->theString) <<") spaceWidth("<<spaceWidth<<") disF("<<disF<<") compressValue("<<compressValue<<")";
 
 						Node* sF = 0;
-						sF = new Node ( fit );
+						sF = new Node (lyt,  fit );
 						if ( lyt->hyphenList.contains ( fit ) )
 							disF *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
-		
+
 						Node::ListItem* vF = new Node::ListItem ( sF,qAbs ( disF * lyt->FM_LAYOUT_NODE_FIT_F ) );
-		// 				curNode->nodes << vF;
+						// 				curNode->nodes << vF;
 						nodes_insert ( vF );
 						
 					}
@@ -222,20 +224,20 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 					double compressValue(  disL * 100.0 / spaceWidth  );
 					if(compressValue > lyt->FM_LAYOUT_MAX_COMPRESSION)
 					{
-// 						qDebug()<<"break_ cV ="<<compressValue;
+						// 						qDebug()<<"break_ cV ="<<compressValue;
 						break;
 					}
-// 					else
-// 						qDebug()<<"["<<cIdx<<","<<late<<"]spaceWidth("<<spaceWidth<<") disL("<<disL<<") compressValue("<<compressValue<<")";
+					// 					else
+					// 						qDebug()<<"["<<cIdx<<","<<late<<"]spaceWidth("<<spaceWidth<<") disL("<<disL<<") compressValue("<<compressValue<<")";
 					
 					Node* sL = 0;
-					sL = new Node ( late );
+					sL = new Node (lyt,  late );
 					if ( lyt->hyphenList.contains ( late ) )
 						disL *= lyt->FM_LAYOUT_HYPHEN_PENALTY;
 
 					Node::ListItem* vL = new Node::ListItem ( sL, qAbs ( disL * lyt->FM_LAYOUT_NODE_LATE_F ) );
 					nodes_insert ( vL );
-				
+
 					if ( late < lyt->theString.count() && QChar ( lyt->theString[late].lChar ).category() == QChar::Separator_Space )
 						break;
 				}
@@ -250,17 +252,17 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		}
 		else // end of breaks list
 		{
-// 			qDebug()<<"END OF BREAKS";
+			// 			qDebug()<<"END OF BREAKS";
 			int soon ( lyt->breakList[bIndex - 1] );
 			if ( soon != cIdx && !hasNode ( soon ) )
 			{
 
 				Node* sN = 0;
-				sN = new Node ( soon );
+				sN = new Node (lyt,  soon );
 				double disN = lyt->lineWidth ( deep ) - lyt->distance ( cIdx, soon,lyt->theString );
 
 				Node::ListItem* vN = new Node::ListItem ( sN, qAbs ( disN * lyt->FM_LAYOUT_NODE_END_F ) );
-// 				curNode->nodes << vN;
+				// 				curNode->nodes << vN;
 				nodes_insert ( vN );
 			}
 
@@ -268,16 +270,16 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		}
 	}
 
-// 	qDebug()<<"N"<<nodes.count();
+	// 	qDebug()<<"N"<<nodes.count();
 	bool isLeaf ( nodes.isEmpty() );
 	curList << index ;//(isLeaf ? index-1 : index);
 
-// 	double dCorrection ( ( double ) theList.count() / ( double ) curList.count() );
-// 	dCorrection = 1.0;
-// 	qDebug()<<"COR tl.c cl.c"<<dCorrection<<theList.count()<<curList.count();
+	// 	double dCorrection ( ( double ) theList.count() / ( double ) curList.count() );
+	// 	dCorrection = 1.0;
+	// 	qDebug()<<"COR tl.c cl.c"<<dCorrection<<theList.count()<<curList.count();
 	while ( !nodes.isEmpty() )
 	{
-// 		ListItem v = nodes.first() ;
+		// 		ListItem v = nodes.first() ;
 		double d1 ( dist + nodes[0]->distance / curList.count() /** dCorrection*/ );
 		double d2 ( theScore / qMax ( 1.0, ( double ) theList.count() ) );
 		if ( d1  <  d2 )
@@ -287,14 +289,14 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 		else
 			++fm_layout_total_skip_nod_dbg;
 		delete nodes.takeFirst();
-// 		nodes.removeFirst();
+		// 		nodes.removeFirst();
 	}
 
 	if ( isLeaf )
 	{
 		double mDist ( dist / deep );
 		double mScore ( theScore / theList.count() );
-// 		qDebug() <<"D S N"<< mDist << mScore << curList;
+		// 		qDebug() <<"D S N"<< mDist << mScore << curList;
 		if ( mDist < mScore )
 		{
 			theScore = dist;
@@ -304,20 +306,34 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	}
 }
 
-FMLayout *FMLayout::instance = 0;
-FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
+//FMLayout *FMLayout::instance = 0;
+FMLayout::FMLayout ( QGraphicsScene * scene, FontItem * font , QRectF rect )
+	:theScene(scene),
+	theFont(font)
 {
+	if(rect.isNull())
+	{
+		QRectF tmpRect = theScene->sceneRect();
+		double sUnitW ( tmpRect.width() * .1 );
+		double sUnitH ( tmpRect.height() * .1 );
+
+		theRect.setX ( 2.0 * sUnitW );
+		theRect.setY ( 1.0 * sUnitH );
+		theRect.setWidth ( 6.0 * sUnitW );
+		theRect.setHeight ( 8.0 * sUnitH );
+	}
+	else
+		theRect = rect;
 	rules = new QGraphicsRectItem;
-	instance = this;
 	node = 0;
-//	layoutMutex = new QMutex;
+	//	layoutMutex = new QMutex;
 	optionHasChanged = true;
 	persistentScene = false;
 
-// 	progressBar = new QProgressBar ;
-// 	onSceneProgressBar = new QGraphicsProxyWidget ;
-// 	onSceneProgressBar->setWidget ( progressBar );
-// 	onSceneProgressBar->setZValue ( 1000 );
+	// 	progressBar = new QProgressBar ;
+	// 	onSceneProgressBar = new QGraphicsProxyWidget ;
+	// 	onSceneProgressBar->setWidget ( progressBar );
+	// 	onSceneProgressBar->setZValue ( 1000 );
 
 	connect ( this, SIGNAL ( paragraphFinished() ), this, SLOT( endOfParagraph() ) );
 	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
@@ -330,8 +346,8 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 	FM_LAYOUT_HYPHEN_PENALTY = 1.5;
 	FM_LAYOUT_MAX_COMPRESSION = 50.0; // 50%
 
-	optionDialog = new QDialog ( typotek::getInstance() );
-	optionDialog->setWindowTitle ( tr ( "Text engine options" ) );
+	optionDialog = new QWidget;
+//	optionDialog->setWindowTitle ( tr ( "Text engine options" ) );
 	optionLayout =  new QGridLayout(optionDialog) ;
 	
 	optionsWidget = new FMLayOptWidget;
@@ -357,17 +373,19 @@ FMLayout::FMLayout ( /*QGraphicsScene * scene, FontItem * font */ )
 
 FMLayout::~ FMLayout()
 {
+	if(optionDialog)
+		delete optionDialog;
 }
 
-FMLayout * FMLayout::getLayout()
-{
-	if(!instance)
-	{
-		instance = new FMLayout;
-		Q_ASSERT(instance);
-	}
-	return instance;
-}
+//FMLayout * FMLayout::getLayout()
+//{
+//	if(!instance)
+//	{
+//		instance = new FMLayout;
+//		Q_ASSERT(instance);
+//	}
+//	return instance;
+//}
 
 void FMLayout::run()
 {
@@ -377,13 +395,13 @@ void FMLayout::run()
 	{
 		for ( int i ( 0 ); i < paragraphs.count() ; ++ i )
 		{
-	// 		qDebug()<<"Oy Rb"<<origine.y()<<theRect.bottom();
+			// 		qDebug()<<"Oy Rb"<<origine.y()<<theRect.bottom();
 			if ( origine.y() > theRect.bottom() )
 				break;
 			theString = paragraphs[i];
 			if ( theString.isEmpty() )
 				continue;
-// 			node = new Node ( 0 );
+			// 			node = new Node ( 0 );
 			doGraph();
 			clearCaches();
 			{
@@ -392,21 +410,21 @@ void FMLayout::run()
 				fm_layout_total_nod_dbg = 0;
 				fm_layout_total_skip_nod_dbg = 0;
 			}
-	
+
 			doLines();
-	
-// 			qDebug() <<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
-// 			if ( node )
-// 			{
-// 				delete node;
-// 				node = 0;
-// 			}
+
+			// 			qDebug() <<"NODES LEAVES SKIP"<<fm_layout_total_nod_dbg<<fm_layout_total_leaves_dbg<<fm_layout_total_skip_nod_dbg;
+			// 			if ( node )
+			// 			{
+			// 				delete node;
+			// 				node = 0;
+			// 			}
 			clearCaches();
 			breakList.clear();
 			hyphenList.clear();
-// 			emit paragraphFinished ( i + 1 );
+			// 			emit paragraphFinished ( i + 1 );
 			emit paragraphFinished();
-	
+
 		}
 		emit layoutFinished();
 	}
@@ -434,54 +452,54 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 		origine.rx() = theRect.left();
 
-// 	qDebug()<<"LO"<<lastOrigine<<"O"<<origine<<"options"<<optionHasChanged;
+	// 	qDebug()<<"LO"<<lastOrigine<<"O"<<origine<<"options"<<optionHasChanged;
 	if( !optionHasChanged && origine == lastOrigine && fontSize == fs && paragraphs == spec )
 	{
 		justRedraw = true;
-		typotek::getInstance()->startProgressJob( lines.count() );
-// 		qDebug()<<"LAYOUT O : lines "<<lines.count();
+//		typotek::getInstance()->startProgressJob( lines.count() );
+		// 		qDebug()<<"LAYOUT O : lines "<<lines.count();
 	}
 	else
 	{
-// 		qDebug()<<"LAYOUT 1";
+		// 		qDebug()<<"LAYOUT 1";
 		justRedraw = false;
 		lines.clear();
-		typotek::getInstance()->startProgressJob( paragraphs.count() + ( theRect.height() / fs*1.20 ) );// layout AND draw
+//		typotek::getInstance()->startProgressJob( paragraphs.count() + ( theRect.height() / fs*1.20 ) );// layout AND draw
 	}
 	lastOrigine = origine;
 	fontSize = fs;
 	paragraphs = spec;
 	optionHasChanged = false;
 
-// 	if ( node )
-// 	{
-// 		delete node;
-// 		node = 0;
-// 	}
+	// 	if ( node )
+	// 	{
+	// 		delete node;
+	// 		node = 0;
+	// 	}
 }
 
 void FMLayout::endOfRun()
 {
-// 	qDebug() <<"FMLayout::endOfRun()";
-// 	theScene->removeItem ( onSceneProgressBar );
-// 	disconnect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
-// 	if ( node )
-// 	{
-// 		delete node;
-// 		node = 0;
-// 	}
-// 	qDebug()<<"EOR A"<<lines.count();
-//	layoutMutex->unlock();
+	// 	qDebug() <<"FMLayout::endOfRun()";
+	// 	theScene->removeItem ( onSceneProgressBar );
+	// 	disconnect ( this,SIGNAL ( paragraphFinished ( int ) ),progressBar,SLOT ( setValue ( int ) ) );
+	// 	if ( node )
+	// 	{
+	// 		delete node;
+	// 		node = 0;
+	// 	}
+	// 	qDebug()<<"EOR A"<<lines.count();
+	//	layoutMutex->unlock();
 	if ( stopIt ) // We’re here after a interruption
 	{
 		stopIt = false;
-		typotek::getInstance()->endProgressJob();
+//		typotek::getInstance()->endProgressJob();
 		emit updateLayout();
 	}
-	else
-		typotek::getInstance()->endProgressJob();
+//	else
+//		typotek::getInstance()->endProgressJob();
 	
-// 	qDebug()<<"EOR B"<<lines.count();
+	// 	qDebug()<<"EOR B"<<lines.count();
 }
 
 void FMLayout::stopLayout()
@@ -491,7 +509,7 @@ void FMLayout::stopLayout()
 
 void FMLayout::doGraph() // Has became doBreaks
 {
-// 	qDebug() <<"FMLayout::doGraph()";
+	// 	qDebug() <<"FMLayout::doGraph()";
 	QTime t;
 	t.start();
 	/**
@@ -516,34 +534,34 @@ void FMLayout::doGraph() // Has became doBreaks
 		}
 	}
 	breakList << theString.count();
-// 	qDebug() <<"BREAKS"<<breakList.count();
-// 	qDebug() <<"HYPHENS"<<hyphenList.count();
-// 	qDebug() <<"doGraph T(ms)"<<t.elapsed();
+	// 	qDebug() <<"BREAKS"<<breakList.count();
+	// 	qDebug() <<"HYPHENS"<<hyphenList.count();
+	// 	qDebug() <<"doGraph T(ms)"<<t.elapsed();
 }
 
 void FMLayout::doLines()
 {
-// 	qDebug() <<"FMLayout::doLines()";
+	// 	qDebug() <<"FMLayout::doLines()";
 	QTime t;
 	t.start();
 	// Run through the graph and find the shortest path
 	indices.clear();
 	double score ( INFINITE );
-	Node locNode(0);
+	Node locNode(this, 0);
 	locNode.sPath ( 0,QList<int>(),indices,score );
-// 	qDebug()<<"================================";
-// 	qDebug()<< &locNode << locNode.nodes.count() << locNode.deepCount();
-// 	qDebug()<<"================================";
+	// 	qDebug()<<"================================";
+	// 	qDebug()<< &locNode << locNode.nodes.count() << locNode.deepCount();
+	// 	qDebug()<<"================================";
 	
 	
 	clearCaches();
 	// la messe est dite ! :-)
-// 	qDebug() <<"S I"<<score<<indices;
+	// 	qDebug() <<"S I"<<score<<indices;
 
 	int startLine ( lines.count() );
 
 	int maxIndex ( indices.count() - 1 );
-// 	qDebug()<<"SC IC"<<theString.count()<<indices.count();
+	// 	qDebug()<<"SC IC"<<theString.count()<<indices.count();
 	bool hasHyph ( false );
 	GlyphList curHyph;
 
@@ -582,22 +600,22 @@ void FMLayout::doLines()
 			dStr += QChar ( rg.lChar );
 			dBk += rg.isBreak ? "#" : "_";
 		}
-// 		qDebug() << "S"<<dStr;
-// 		qDebug() << "H"<<dBk;
+		// 		qDebug() << "S"<<dStr;
+		// 		qDebug() << "H"<<dBk;
 
-// 		qDebug()<<"S E Sib Eib"<<start<<end<<theString.at(start).isBreak<<theString.at(end).isBreak;
+		// 		qDebug()<<"S E Sib Eib"<<start<<end<<theString.at(start).isBreak<<theString.at(end).isBreak;
 
 		GlyphList lg;
 		/// * *
 		if ( !hasHyph && !inList.last().isBreak )
 		{
-// 			qDebug() <<"/// * *";
+			// 			qDebug() <<"/// * *";
 			lg = inList;
 		}
 		/// = *
 		else if ( hasHyph && !inList.last().isBreak )
 		{
-// 			qDebug() <<"/// = *";
+			// 			qDebug() <<"/// = *";
 
 			GlyphList hr ( curHyph );
 			hasHyph = false;
@@ -623,7 +641,7 @@ void FMLayout::doLines()
 		/// * =
 		else if ( !hasHyph && inList.last().isBreak )
 		{
-// 			qDebug() <<"/// * =";
+			// 			qDebug() <<"/// * =";
 			GlyphList hr ( inList.last().hyphen.first );
 			hasHyph = true;
 			curHyph = inList.last().hyphen.second;
@@ -648,14 +666,14 @@ void FMLayout::doLines()
 				dgS +="("+ QString ( QChar ( lg.last().lChar ) ) +")";
 			}
 			QString dbh;for ( int h ( 0 );h<curHyph.count();++h ) {dbh+="["+ QString ( QChar ( curHyph[h].lChar ) ) +"]";}
-// 			qDebug() <<dgS<<"="<<dbh;
+			// 			qDebug() <<dgS<<"="<<dbh;
 
 		}
 		/// = =
 		else if ( hasHyph && inList.last().isBreak )
 		{
 
-// 			qDebug() <<"/// = =";
+			// 			qDebug() <<"/// = =";
 			GlyphList hr ( curHyph );
 			GlyphList hr2 ( inList.last().hyphen.first );
 
@@ -695,7 +713,7 @@ void FMLayout::doLines()
 			}
 			
 			QString dbh;for ( int h ( 0 );h<curHyph.count();++h ) {dbh+="["+ QString ( QChar ( curHyph[h].lChar ) ) +"]";}
-// 			qDebug() <<dgS<<"="<<dbh;
+			// 			qDebug() <<dgS<<"="<<dbh;
 
 		}
 
@@ -705,7 +723,7 @@ void FMLayout::doLines()
 	TextProgression *tp = TextProgression::getInstance();
 	bool verticalLayout ( tp->inBlock() == TextProgression::INLINE_BTT || tp->inBlock() == TextProgression::INLINE_TTB );
 	
-// 	qDebug()<<"lines finished";
+	// 	qDebug()<<"lines finished";
 	for ( int lI ( startLine ); lI<lines.count(); ++lI )
 	{
 		if ( stopIt )
@@ -730,10 +748,10 @@ void FMLayout::doLines()
 		double diff ( refW - actualW );
 		if(!deviceIndy)
 		{
-// 			qDebug()<< "R1 A1"<<refW<<actualW;
+			// 			qDebug()<< "R1 A1"<<refW<<actualW;
 			refW =  refW * 72.0  / typotek::getInstance()->getDpiX() ;
 			actualW = actualW * 72.0 / typotek::getInstance()->getDpiX();
-// 			qDebug()<< "R2 A2"<<refW<<actualW;
+			// 			qDebug()<< "R2 A2"<<refW<<actualW;
 			diff = refW - actualW ;
 			
 		}
@@ -741,7 +759,7 @@ void FMLayout::doLines()
 		if ( lI != lines.count() - 1 || actualW > refW ) // not last line or last line is too long
 		{
 			QList<int> wsIds;
-// 			qDebug()<< "Ref Dis"<< refW << distance ( 0, lg.count(), lg );
+			// 			qDebug()<< "Ref Dis"<< refW << distance ( 0, lg.count(), lg );
 			for ( int ri ( 0 ); ri < lg.count() ; ++ri )
 			{
 				if ( lg.at ( ri ).glyph &&  QChar ( lg.at ( ri ).lChar ).category() == QChar::Separator_Space )
@@ -750,10 +768,10 @@ void FMLayout::doLines()
 				}
 			}
 			double shareLost ( diff / qMax ( 1.0 , ( double ) wsIds.count() ) );
-//  			if(!oldIndy)
-// 				shareLost *= typotek::getInstance()->getDpiX() / 72.0;
-// 			qDebug() << "D N W"<<diff<<wsIds.count() << shareLost ;
-// 			qDebug()<<"R D F"<< refW << actualW << actualW + ((double)wsIds.count() * shareLost);
+			//  			if(!oldIndy)
+			// 				shareLost *= typotek::getInstance()->getDpiX() / 72.0;
+			// 			qDebug() << "D N W"<<diff<<wsIds.count() << shareLost ;
+			// 			qDebug()<<"R D F"<< refW << actualW << actualW + ((double)wsIds.count() * shareLost);
 			if ( verticalLayout )
 			{
 				for ( int wi ( 0 ); wi < wsIds.count(); ++wi )
@@ -770,14 +788,14 @@ void FMLayout::doLines()
 			}
 		}
 	}
-// 	qDebug() <<"doneLines:"<< lines.count() ;
+	// 	qDebug() <<"doneLines:"<< lines.count() ;
 
 }
 
 void FMLayout::doDraw()
 {
 	// Ask paths or pixmaps to theFont for each glyph and draw it on theScene
-// 	qDebug() <<"FMLayout::doDraw()";
+	// 	qDebug() <<"FMLayout::doDraw()";
 	resetScene();
 	QTime t;
 	t.start();
@@ -870,8 +888,8 @@ void FMLayout::doDraw()
 				glyph->setPen(Qt::NoPen);
 #ifdef BUILD_TYPE_DEBUG 
 				// visual debug
-// 				QColor dbgColor( i * 255 / refGlyph.count() , i * 255 / refGlyph.count() , 0, 125);
-// 				glyph->setBrush(dbgColor);
+				// 				QColor dbgColor( i * 255 / refGlyph.count() , i * 255 / refGlyph.count() , 0, 125);
+				// 				glyph->setBrush(dbgColor);
 				if(refGlyph[i].lChar == 32) glyph->setBrush(Qt::blue);
 				//end visual debug
 #endif
@@ -910,11 +928,11 @@ void FMLayout::doDraw()
 			pen.rx() += adjustedSampleInter;
 		}
 		
-		typotek::getInstance()->runProgressJob();
-// 		qDebug() <<"P"<<pen;
+//		typotek::getInstance()->runProgressJob();
+		// 		qDebug() <<"P"<<pen;
 	}
-// 
-// 	qDebug() <<"doDraw T(ms)"<<t.elapsed();
+	//
+	// 	qDebug() <<"doDraw T(ms)"<<t.elapsed();
 	emit paintFinished();
 	theScene->update(theRect);
 }
@@ -957,7 +975,7 @@ int FMLayout::sepCount(int start, int end, const GlyphList & gl)
 // please move this method to GlyphList itself
 double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip )
 {
-// 	qDebug()<<"distance(start ="<<start<<",end"<<end<<",strip"<<strip<<" )";
+	// 	qDebug()<<"distance(start ="<<start<<",end"<<end<<",strip"<<strip<<" )";
 	if(!strip)
 	{
 		if ( distCache.contains ( start ) )
@@ -984,36 +1002,36 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 		hyphList = gl[start - 1].hyphen.second;
 	}
 	GlyphList gList = gl;
-// 	if ( QChar ( gList.first().lChar ).category() == QChar::Separator_Space )
-// 	{
-// 		while ( QChar ( gList.first().lChar ).category() == QChar::Separator_Space && start < end )
-// 		{
-// 			++start;
-// 		}
-// 	}
-// 	if ( QChar ( gList.last().lChar ).category() == QChar::Separator_Space )
-// 	{
-// 		while ( QChar ( gList.last().lChar ).category() == QChar::Separator_Space && end > start )
-// 		{
-// 			--end;
-// 		}
-// 	}
-// 	
+	// 	if ( QChar ( gList.first().lChar ).category() == QChar::Separator_Space )
+	// 	{
+	// 		while ( QChar ( gList.first().lChar ).category() == QChar::Separator_Space && start < end )
+	// 		{
+	// 			++start;
+	// 		}
+	// 	}
+	// 	if ( QChar ( gList.last().lChar ).category() == QChar::Separator_Space )
+	// 	{
+	// 		while ( QChar ( gList.last().lChar ).category() == QChar::Separator_Space && end > start )
+	// 		{
+	// 			--end;
+	// 		}
+	// 	}
+	//
 	TextProgression *tp = TextProgression::getInstance();
 	bool verticalLayout ( tp->inLine() == TextProgression::INLINE_BTT || tp->inLine() == TextProgression::INLINE_TTB );
-// 	qDebug()<<"IB VL"<<tp->inLine()<<verticalLayout;
-// 	QString dStr;
-// 	for(int di(start); di < end; ++di )
-// 	{
-// 		dStr += QChar(gl[di].lChar);
-// 	}
-// 	qDebug()<< "SD"<<dStr;
+	// 	qDebug()<<"IB VL"<<tp->inLine()<<verticalLayout;
+	// 	QString dStr;
+	// 	for(int di(start); di < end; ++di )
+	// 	{
+	// 		dStr += QChar(gl[di].lChar);
+	// 	}
+	// 	qDebug()<< "SD"<<dStr;
 
-// 	qDebug()<<"DIS C S E"<<gList.count()<< start<< end;
+	// 	qDebug()<<"DIS C S E"<<gList.count()<< start<< end;
 	double ret ( 0.0 );
 	if ( end <= start )
 	{
-// 		qDebug()<<"ERR_LOGIC! S E"<< start<< end;
+		// 		qDebug()<<"ERR_LOGIC! S E"<< start<< end;
 		return ret;
 	}
 	int EXend ( end -1 );
@@ -1023,7 +1041,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 		{
 			for ( int i ( start ); i < end ;++i )
 			{
-// 				qDebug()<<"Ya"<< gList.at ( i ).yadvance;
+				// 				qDebug()<<"Ya"<< gList.at ( i ).yadvance;
 				if(strip)
 				{
 					if( QChar ( gList.last().lChar ).category() != QChar::Separator_Space)
@@ -1124,7 +1142,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 	{
 		if ( !hasHyph && !gList.at ( EXend ).isBreak )
 		{
-// 					qDebug()<<". ." ;
+			// 					qDebug()<<". ." ;
 			for ( int i ( start ); i < end ;++i )
 			{
 				if(strip)
@@ -1138,7 +1156,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 		}
 		else if ( hasHyph && !gList.at ( EXend ).isBreak )
 		{
-// 					qDebug()<<"- ." ;
+			// 					qDebug()<<"- ." ;
 			GlyphList hr ( hyphList );
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
@@ -1171,7 +1189,7 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 		}
 		else if ( !hasHyph && gList.at ( EXend ).isBreak )
 		{
-// 					qDebug()<<". -" ;
+			// 					qDebug()<<". -" ;
 			int bp ( end );
 			while ( QChar ( gList.at ( bp ).lChar ).category() != QChar::Separator_Space &&  bp > start ) --bp ;
 			++bp;
@@ -1195,12 +1213,12 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 		}
 		else if ( hasHyph && gList.at ( EXend ).isBreak )
 		{
-// 					qDebug()<<"- -" ;
-// 			QString debStr;
+			// 					qDebug()<<"- -" ;
+			// 			QString debStr;
 			GlyphList hr ( hyphList);
 			for ( int ih ( 0 ); ih < hr.count(); ++ih )
 			{
-// 				debStr += QChar(hr[ih].lChar);
+				// 				debStr += QChar(hr[ih].lChar);
 				ret += hr[ih].xadvance;
 			}
 			
@@ -1226,28 +1244,28 @@ double FMLayout::distance ( int start, int end, const GlyphList& gl, bool strip 
 				}
 				else
 				{
-// 					debStr += QChar(gList.at( i ).lChar);
+					// 					debStr += QChar(gList.at( i ).lChar);
 					ret += gList.at ( i ).xadvance /*+ gList.at ( i ).xoffset*/;
 				}
 			}
 			GlyphList hr2 ( gList.at ( EXend ).hyphen.first );
 			for ( int ih ( 0 ); ih < hr2.count(); ++ih )
 			{
-// 				debStr += QChar(hr2[ih].lChar);
+				// 				debStr += QChar(hr2[ih].lChar);
 				ret += hr2[ih].xadvance;
 			}
-// 			qDebug()<<"D(= =)"<<debStr;
+			// 			qDebug()<<"D(= =)"<<debStr;
 		}
 	}
 
-// 	qDebug()<<"SID" ;
+	// 	qDebug()<<"SID" ;
 	if(!deviceIndy)
 		ret *= typotek::getInstance()->getDpiX() / 72.0 ;
-// 	if ( power )
-// 	{
-// 		distCache[storeStart][storeEnd] = ret*ret;
-// 		return ret*ret;
-// 	}
+	// 	if ( power )
+	// 	{
+	// 		distCache[storeStart][storeEnd] = ret*ret;
+	// 		return ret*ret;
+	// 	}
 	distCache[start][end] = ret;
 	return ret;
 }
@@ -1270,10 +1288,10 @@ void FMLayout::resetScene()
 	pixList.removeAll(0);
 	
 	int gCount ( glyphList.count() );
-// 	QMap<QGraphicsScene*,int> ss;
+	// 	QMap<QGraphicsScene*,int> ss;
 	for ( int i = 0; i < gCount; ++i )
 	{
-// 		ss[glyphList[i]->scene()]++;
+		// 		ss[glyphList[i]->scene()]++;
 		if ( glyphList[i]->scene() && (glyphList[i]->scene() == theScene) )
 		{
 			glyphList[i]->scene()->removeItem ( glyphList[i] );
@@ -1282,43 +1300,43 @@ void FMLayout::resetScene()
 		}
 	}
 	glyphList.removeAll(0);
-// 	QString dbs;
-// 	foreach(QGraphicsScene* qgs, ss)
-// 	{
-// 		dbs += "["+ QString::number(reinterpret_cast<unsigned int>(qgs)) +"]";
-// 	}
-// 	qDebug()<<"GC"<< ss <<gCount<< r <<glyphList.count() ;
+	// 	QString dbs;
+	// 	foreach(QGraphicsScene* qgs, ss)
+	// 	{
+	// 		dbs += "["+ QString::number(reinterpret_cast<unsigned int>(qgs)) +"]";
+	// 	}
+	// 	qDebug()<<"GC"<< ss <<gCount<< r <<glyphList.count() ;
 }
 
-void FMLayout::setTheScene ( QGraphicsScene* theValue , QRectF rect)
-{
-	theScene = theValue;
-	if(rect.isNull())
-	{
-		QRectF tmpRect = theScene->sceneRect();
-		double sUnitW ( tmpRect.width() * .1 );
-		double sUnitH ( tmpRect.height() * .1 );
-	
-		theRect.setX ( 2.0 * sUnitW );
-		theRect.setY ( 1.0 * sUnitH );
-		theRect.setWidth ( 6.0 * sUnitW );
-		theRect.setHeight ( 8.0 * sUnitH );
-	}
-	else
-	{
-		theRect = rect;
-	}
-// 	rules->setRect(theRect);
-// 	rules->setZValue(9.9);
-// 	if(rules->scene() != theScene)
-// 		theScene->addItem(rules);
-}
+//void FMLayout::setTheScene ( QGraphicsScene* theValue , QRectF rect)
+//{
+//	theScene = theValue;
+//	if(rect.isNull())
+//	{
+//		QRectF tmpRect = theScene->sceneRect();
+//		double sUnitW ( tmpRect.width() * .1 );
+//		double sUnitH ( tmpRect.height() * .1 );
 
-void FMLayout::setTheFont ( FontItem* theValue )
-{
-	theFont = theValue;
-	optionHasChanged = true;
-}
+//		theRect.setX ( 2.0 * sUnitW );
+//		theRect.setY ( 1.0 * sUnitH );
+//		theRect.setWidth ( 6.0 * sUnitW );
+//		theRect.setHeight ( 8.0 * sUnitH );
+//	}
+//	else
+//	{
+//		theRect = rect;
+//	}
+//// 	rules->setRect(theRect);
+//// 	rules->setZValue(9.9);
+//// 	if(rules->scene() != theScene)
+//// 		theScene->addItem(rules);
+//}
+
+//void FMLayout::setTheFont ( FontItem* theValue )
+//{
+//	theFont = theValue;
+//	optionHasChanged = true;
+//}
 
 double FMLayout::lineWidth ( int l )
 {
@@ -1326,26 +1344,26 @@ double FMLayout::lineWidth ( int l )
 	double offset ( ( double ) l * adjustedSampleInter ) ;
 	if ( tp->inBlock() == TextProgression::BLOCK_TTB )
 	{
-// 		if ( theRect.top() + offset >  theRect.bottom() ) 
-// 		{
-// 			return OUT_OF_RECT;
-// 		}
+		// 		if ( theRect.top() + offset >  theRect.bottom() )
+		// 		{
+		// 			return OUT_OF_RECT;
+		// 		}
 		return theRect.width();
 	}
 	else if ( tp->inBlock() == TextProgression::BLOCK_RTL )
 	{
-// 		if ( theRect.right() - offset <  theRect.left() ) 
-// 		{
-// 			return OUT_OF_RECT;
-// 		}
+		// 		if ( theRect.right() - offset <  theRect.left() )
+		// 		{
+		// 			return OUT_OF_RECT;
+		// 		}
 		return theRect.height() - adjustedSampleInter;
 	}
 	else if ( tp->inBlock() == TextProgression::BLOCK_LTR )
 	{
-// 		if ( theRect.left() + offset >  theRect.right() ) 
-// 		{
-// 			return OUT_OF_RECT;
-// 		}
+		// 		if ( theRect.left() + offset >  theRect.right() )
+		// 		{
+		// 			return OUT_OF_RECT;
+		// 		}
 		return theRect.height() - adjustedSampleInter;
 	}
 
@@ -1402,7 +1420,7 @@ void FMLayout::clearCaches()
 
 void FMLayout::endOfParagraph()
 {
-	typotek::getInstance()->runProgressJob();
+//	typotek::getInstance()->runProgressJob();
 }
 
 

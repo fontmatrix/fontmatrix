@@ -15,6 +15,7 @@
 #include "fmglyphhighlight.h"
 #include "typotek.h"
 #include "mainviewwidget.h"
+#include "playwidget.h"
 
 #include <QScrollBar>
 #include <QMouseEvent>
@@ -230,7 +231,7 @@ void FMPlayGround::updateLine()
 		foreach(QGraphicsItem * item, curLine)
 			delete item;
 		curLine.clear();
-		displayGlyphs(curString, fi, typotek::getInstance()->getTheMainView()->playgroundFontSize());
+		displayGlyphs(curString, fi, PlayWidget::getInstance()->playFontSize());
 		blinkCursor();
 	}
 	CursorTimer->start();
@@ -242,7 +243,7 @@ void FMPlayGround::closeLine()
 	if(curLine.count() > 0)
 	{
 		QGraphicsItemGroup *git(scene()->createItemGroup(curLine));
-		CursorPos.ry() += typotek::getInstance()->getTheMainView()->playgroundFontSize() * 1.5;
+		CursorPos.ry() += PlayWidget::getInstance()->playFontSize() * 1.5;
 		curLine.clear();
 		curString.clear();
 		git->setFlags ( QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable );
@@ -324,7 +325,7 @@ void FMPlayGround::removeLine()
 
 void FMPlayGround::blinkCursor()
 {
-	double h(typotek::getInstance()->getTheMainView()->playgroundFontSize());
+	double h(PlayWidget::getInstance()->playFontSize());
 	new FMGlyphHighlight(scene(), QRectF(BlinkPos.x() -1, BlinkPos.y() - h , 1, h));
 }
 

@@ -62,7 +62,8 @@ private:
     const QString fontIdentifier;
     QGraphicsScene *loremScene;
     QGraphicsScene *ftScene;
-    FMLayout *textLayout;
+    FMLayout *textLayoutVect;
+    FMLayout *textLayoutFT;
     QButtonGroup *radioRenderGroup;
     QButtonGroup *radioFTHintingGroup;
     double sampleFontSize;
@@ -78,7 +79,7 @@ private:
     void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 
 private slots:
-    void slotView(bool needDeRendering);
+    void slotView(bool needDeRendering = false);
     void slotChangeViewPage(QAbstractButton* );
     void slotHintChanged(int);
     void slotChangeViewPageSetting(bool);

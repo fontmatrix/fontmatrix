@@ -326,7 +326,6 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 
 // 	m_lock = false;
 	pixList.clear();
-	sceneList.clear();
 
 	if ( m_family.isEmpty() )
 		return;
@@ -831,8 +830,7 @@ double FontItem::renderLine ( QGraphicsScene * scene,
                               QPointF origine,
                               double lineWidth,
                               double fsize ,
-                              double zindex ,
-                              bool record )
+			      double zindex )
 {
 // 	qDebug() <<fancyName() <<"::"<<"renderLine("<<scene<<spec<<lineWidth<<fsize<<zindex<<record<<")";
 	double retValue ( 0.0 );
@@ -841,8 +839,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 
 	ensureFace();
 
-	if ( record )
-		sceneList.append ( scene );
 	double sizz = fsize;
 	double scalefactor = sizz / m_face->units_per_EM;
 	double pWidth = lineWidth ;
@@ -874,8 +870,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -894,8 +888,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -913,8 +905,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -932,8 +922,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -944,8 +932,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 				retValue += glyph->data ( GLYPH_DATA_HADVANCE ).toDouble() * scalefactor;
 
 			/************************************/
-			if ( record )
-				pixList.append ( glyph );
 			
 			mayBeRemoved.append(glyph);
 			
@@ -975,8 +961,8 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 		QList<QGraphicsPathItem*> mayBeRemoved;
 		for ( int i=0; i < spec.length(); ++i )
 		{
-			if ( !scene->sceneRect().contains ( pen ) && record )
-				break;
+//			if ( !scene->sceneRect().contains ( pen ) && record )
+//				break;
 			QGraphicsPathItem *glyph = itemFromChar ( spec.at ( i ).unicode(), sizz );
 			if ( !glyph )
 				continue;
@@ -997,8 +983,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1017,8 +1001,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1036,8 +1018,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1055,8 +1035,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1065,8 +1043,6 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 			}
 
 			/*********************************/
-			if ( record )
-				glyphList.append ( glyph );
 			scene->addItem ( glyph );
 			glyph->setPen(Qt::NoPen);
 			
@@ -1099,7 +1075,7 @@ double FontItem::renderLine ( QGraphicsScene * scene,
 }
 
 /// Featured line
-double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
+double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize)
 {
 // 	qDebug()<<"Featured("<< spec <<")";
 	double retValue ( 0.0 );
@@ -1112,8 +1088,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 	otf = new FMOtf ( m_face, 0x10000 );// You think "What’s this 0x10000?", so am I! Just accept Harfbuzz black magic :)
 	if ( !otf )
 		return retValue;
-	if ( record )
-		sceneList.append ( scene );
 	double sizz = fsize;
 	double scalefactor = sizz / m_face->units_per_EM  ;
 	double pixelAdjustX = scalefactor * ( typotek::getInstance()->getDpiX() / 72.0 );
@@ -1157,8 +1131,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1177,8 +1149,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1196,8 +1166,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1215,8 +1183,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1225,8 +1191,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 			}
 
 			/*************************************************/
-			if ( record )
-				pixList.append ( glyph );
 			
 			mayBeRemoved.append(glyph);
 						
@@ -1274,8 +1238,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1294,8 +1256,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1313,8 +1273,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1332,8 +1290,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1342,9 +1298,6 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 			}
 
 			/**********************************************/
-			if ( record )
-				glyphList.append ( glyph );
-			
 			mayBeRemoved.append(glyph);
 			
 			if(renderReturnWidth)
@@ -1374,7 +1327,7 @@ double FontItem::renderLine ( OTFSet set, QGraphicsScene * scene, QString spec, 
 }
 
 /// Shaped line
-double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize, bool record )
+double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString spec, QPointF origine,double lineWidth, double fsize)
 {
 	qDebug()<<"Shaped("<< spec <<")";
 	double retValue(0.0);
@@ -1408,9 +1361,7 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 	
 	GlyphList refGlyph ( shaperfactory->doShape( spec ) );
 	delete shaperfactory;
-			
-	if ( record )
-		sceneList.append ( scene );
+
 	double sizz = fsize;
 	double scalefactor = sizz / m_face->units_per_EM  ;
 	double pixelAdjustX = scalefactor * ( typotek::getInstance()->getDpiX() / 72.0 );
@@ -1454,8 +1405,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1474,8 +1423,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1493,8 +1440,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1512,8 +1457,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 					foreach(QGraphicsPixmapItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							pixList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1522,8 +1465,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 			}
 
 			/*************************************************/
-			if ( record )
-				pixList.append ( glyph );
 			
 			mayBeRemoved.append(glyph);
 			
@@ -1571,8 +1512,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1591,8 +1530,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1610,8 +1547,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1629,8 +1564,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 					foreach(QGraphicsPathItem *rm, mayBeRemoved)
 					{
 						scene->removeItem( rm );
-						if(record)
-							glyphList.removeAll(rm);
 						delete rm;
 					}
 					
@@ -1639,9 +1572,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 			}
 
 			/**********************************************/
-			if ( record )
-				glyphList.append ( glyph );
-			
 			mayBeRemoved.append(glyph);
 			
 			if(renderReturnWidth)

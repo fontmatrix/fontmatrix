@@ -56,7 +56,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		~MainViewWidget();
 	private:
 		QGraphicsScene *playScene;
-		QGraphicsScene *abcScene;
 		QStringList ord;
 		QStringList fields;
 		typotek *typo;
@@ -70,7 +69,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString currentOrdering;
 		FontItem *theVeryFont; 
 		bool fontsetHasChanged;
-		QGraphicsRectItem *curGlyph;
 		bool activateByFamilyOnly;
 		bool m_forceReloadSelection;
 
@@ -91,16 +89,12 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 // 		QMap<QString, QPair<int,int> > uniPlanes;
 // 		void fillUniPlanes();
-		void fillUniPlanesCombo(FontItem* item);
 		
 //		void fillOTTree();
 //		OTFSet deFillOTTree();
 		
 		bool renderingLock;
-		int fancyGlyphInUse;
-		int fancyGlyphData;
-		
-		bool uRangeIsNotEmpty;
+
 		
 		
 // 		void prepare(QList<FontItem*> fonts);
@@ -115,9 +109,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString currentDownload;
 		
 //		QUrl infoCSSUrl;
-		
-		QString unMapGlyphName;
-		QString allMappedGlyphName;
+
 		
 		FMPreviewModel * previewModel;
 
@@ -127,8 +119,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		bool slotFontSelectedByName(const QString& fname);
 //		void slotInfoFont();
 //		void slotView(bool needDeRendering = false);
-		void slotShowOneGlyph();
-		void slotShowAllGlyph();
 		void slotSearch();
 		void slotShowFamily(const QModelIndex& familyIdx);
 		void slotQuitFamily();
@@ -149,14 +139,9 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotItemOpened(QTreeWidgetItem * item);
 		void slotViewAll();
 		void slotViewActivated();
-		void slotPlaneSelected(int);
-		void slotSearchCharName();
-		void slotAdjustGlyphView(int width);
 		void slotFTRasterChanged();
 		
 
-		void slotUpdateGView();
-		void slotUpdateGViewSingle();
 		void slotUpdateTree();
 		void slotRemoveCurrentItem();
 		
@@ -164,9 +149,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 		//lists
 		void slotSelectFromFolders(const QString&);
-		
-		//glyphs view
-		void slotShowULine(bool);
+
 		
 	private slots:
 		void slotPreviewUpdateSize(int);
@@ -195,7 +178,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 
 	public:
 		QString defaultOrd() {return ord[0];}
-		QGraphicsScene* glyphsScene()const{return abcScene;}
 		QList<FontItem*> curFonts();
 		void setCurFonts(QList<FontItem*> flist);
 		FontItem* selectedFont(){return theVeryFont;}

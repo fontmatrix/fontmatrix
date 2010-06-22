@@ -81,7 +81,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	setupUi ( this );
 	
 	m_forceReloadSelection = false;
-	uRangeIsNotEmpty = false;
 	FMFontDb::DB()->clearFilteredFonts();
 
 	listView->setNumCol(4);
@@ -100,9 +99,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	iconPS1 =  QIcon(":/icon-PS1");
 	iconTTF =  QIcon(":/icon-TTF");
 	iconOTF =  QIcon(":/icon-OTF");
-	
-	unMapGlyphName = tr("Un-Mapped Glyphs");
-	allMappedGlyphName = tr("View all mapped glyphs");
+
 	
 	theVeryFont = 0;
 	typo = typotek::getInstance();
@@ -110,8 +107,6 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 // 	currentFonts = typo->getAllFonts();
 	FMFontDb::DB()->filterAllFonts();
 	fontsetHasChanged = true;
-	curGlyph = 0;
-	fancyGlyphInUse = -1;
 
 	QSettings settings;
 	activateByFamilyOnly = settings.value("ActivateOnlyFamily", false).toBool();
@@ -119,13 +114,10 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 // 	fillUniPlanes();
 //	refillSampleList();
-	uniLine->setEnabled(false);
 
 //	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 
-	abcScene = new QGraphicsScene;
-	abcView->setScene ( abcScene );
-	abcView->setRenderHint ( QPainter::Antialiasing, true );
+
 
 	playScene = new QGraphicsScene;
 	playScene->setSceneRect ( 0,0,10000,10000 );
@@ -134,10 +126,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	sampleText= typo->namedSample (typo->defaultSampleName());
 	currentOrdering = "family" ;
 
-	QStringListModel* cslModel(new QStringListModel);
-	QCompleter* cslCompleter(new QCompleter(charSearchLine));
-	cslCompleter->setModel(cslModel);
-	charSearchLine->setCompleter(cslCompleter);
+
 	
 	doConnect();
 }
@@ -176,14 +165,14 @@ void MainViewWidget::doConnect()
 //	connect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 //	connect (sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	
-	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
-	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
-	connect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
-	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
-	connect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
-	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
-	connect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
-	connect ( charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
+//	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
+//	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
+//	connect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
+//	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
+//	connect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
+//	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
+//	connect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
+//	connect ( charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
 
 //	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 //	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -248,14 +237,14 @@ void MainViewWidget::disConnect()
 //	disconnect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 //	disconnect (sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 	
-	disconnect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
-	disconnect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
-	disconnect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
-	disconnect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
-	disconnect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
-	disconnect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
-	disconnect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
-	disconnect ( charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
+//	disconnect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
+//	disconnect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
+//	disconnect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
+//	disconnect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
+//	disconnect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
+//	disconnect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
+//	disconnect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
+//	disconnect ( charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
 
 //	disconnect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 //	disconnect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -792,8 +781,7 @@ bool MainViewWidget::slotFontSelectedByName (const QString& fname )
 
 	{
 // 		qDebug() << "Font has changed \n\tOLD : "<<lastIndex<<"\n\tNEW : " << faceIndex ;
-		if(abcView->state() == FMGlyphsView::SingleView)
-			slotShowAllGlyph();
+
 		theVeryFont = FMFontDb::DB()->Font( faceIndex );
                 if(!theVeryFont)
                     return false;
@@ -816,10 +804,7 @@ bool MainViewWidget::slotFontSelectedByName (const QString& fname )
 //			}
 //		}
 //		fillOTTree();
-		fillUniPlanesCombo ( theVeryFont );
-		QStringListModel *m = reinterpret_cast<QStringListModel*>(charSearchLine->completer()->model());
-		if(m) 
-			m->setStringList(theVeryFont->getNames());
+
 //		slotView ( true );
 		typo->setWindowTitle ( theVeryFont->fancyName() + " - Fontmatrix" );
 		m_lists->fontTree->headerItem()->setText(0, tr("Names")+" ("+theVeryFont->family()+")");
@@ -827,7 +812,6 @@ bool MainViewWidget::slotFontSelectedByName (const QString& fname )
 // 		fillTree();
 		updateTree();
 //		m_lists->listPreview->setCurrentFont(theVeryFont->path());
-		abcView->verticalScrollBar()->setValue ( 0 );
 	}
 
         return true;
@@ -1320,67 +1304,6 @@ void MainViewWidget::slotViewActivated()
 // 	slotFilterTag ( "Activated_On" );
 }
 
-void MainViewWidget::fillUniPlanesCombo ( FontItem* item )
-{
-	QString stickyRange(uniPlaneCombo->currentText());
-// 	qDebug()<<"STiCKyRaNGe :: "<<stickyRange;
-	int stickyIndex(0);
-
-	uniPlaneCombo->clear();
-	
-	int begin(0);
-	int end(0);
-	QString lastBlock(FMUniBlocks::lastBlock(begin, end));
-	QString block(FMUniBlocks::firstBlock( begin, end ));
-	bool first(true);
-	do
-	{
-		if(first)
-			first = false;
-		else
-			block = FMUniBlocks::nextBlock(begin, end);
-		
-		int codecount ( item->countCoverage ( begin , end ) );
-		if ( codecount > 0 )
-		{
-// 			qDebug() << p << codecount;
-			uniPlaneCombo->addItem ( block );
-			if(block == stickyRange)
-			{
-				stickyIndex = uniPlaneCombo->count() - 1;
-				uRangeIsNotEmpty = true;
-			}
-		}
-		else
-		{
-			if(block == stickyRange)
-			{
-				stickyIndex = uniPlaneCombo->count() - 1;
-				uRangeIsNotEmpty = true;
-			}
-		}
-		
-	} while(lastBlock != block);
-	if(item->countCoverage ( -1 , 100 ) > 0)
-	{
-		uniPlaneCombo->addItem( unMapGlyphName );
-		if(unMapGlyphName == stickyRange)
-		{
-			stickyIndex = uniPlaneCombo->count() - 1;
-			uRangeIsNotEmpty = true;
-		}
-	}
-	uniPlaneCombo->addItem( allMappedGlyphName );
-	if(allMappedGlyphName == stickyRange)
-	{
-		stickyIndex = uniPlaneCombo->count() - 1;
-		uRangeIsNotEmpty = true;
-	}
-	
-	uniPlaneCombo->setCurrentIndex ( stickyIndex );
-
-}
-
 void MainViewWidget::keyPressEvent ( QKeyEvent * event )
 {
 // 	qDebug() << " MainViewWidget::keyPressEvent(QKeyEvent * "<<event<<")";
@@ -1394,14 +1317,7 @@ void MainViewWidget::keyPressEvent ( QKeyEvent * event )
 // 	}
 }
 
-void MainViewWidget::slotAdjustGlyphView ( int width )
-{
-	if ( !theVeryFont )
-		return;
 
-// 	theVeryFont->adjustGlyphsPerRow ( width );
-//	slotView ( true );
-}
 
 //void MainViewWidget::fillOTTree()
 //{
@@ -1527,245 +1443,6 @@ void MainViewWidget::slotFTRasterChanged()
 
 
 
-void MainViewWidget::slotPlaneSelected ( int i )
-{
-	qDebug()<<"slotPlaneSelected"<<i<<uniPlaneCombo->currentIndex();
-	if(i != uniPlaneCombo->currentIndex())
-		uniPlaneCombo->setCurrentIndex(i);
-	
-	bool stickState = uRangeIsNotEmpty;
-	uRangeIsNotEmpty = true;
-	slotShowAllGlyph();
-	slotUpdateGView();
-	if( (stickState == false) && theVeryFont)
-	{
-		fillUniPlanesCombo(theVeryFont);
-	}
-	abcView->verticalScrollBar()->setValue ( 0 );
-}
-
-void MainViewWidget::slotSearchCharName()
-{	
-	if(!theVeryFont)
-		return;
-	QString name(charSearchLine->text());
-	unsigned short cc(0);
-	bool searchCodepoint(false);
-	if(name.startsWith("U+") 
-		  || name.startsWith("u+")
-		  || name.startsWith("+"))
-	{
-		QString vString(name.mid(name.indexOf("+")));
-		bool ok(false);
-		cc = vString.toInt(&ok, 16);
-		if(!ok)
-			cc = 0;
-		searchCodepoint = true;
-	}
-	else
-		cc = theVeryFont->getNamedChar(name);
-// 	qDebug()<<"CS"<<name<<cc;
-	if(!cc)
-	{
-		// TODO display a usefull message
-// 		charSearchLine->clear();
-		return;
-	}
-	
-	foreach(const QString& key, FMUniBlocks::blocks() )
-	{
-		QPair<int,int> p(FMUniBlocks::interval(key));
-		if((cc >= p.first)
-		  && (cc <= p.second))
-		{
-			int idx(uniPlaneCombo->findText(key));
-			slotPlaneSelected(idx);
-			int sv(0);
-			bool first(true);
-			do{
-				if(first)
-					first = false;
-				else
-				{
-					abcView->verticalScrollBar()->setValue(sv + abcView->height());
-					sv = abcView->verticalScrollBar()->value();
-				}
-				foreach(QGraphicsItem* sit, abcScene->items())
-				{
-					if((sit->data(1).toString() == "select")
-					&& (sit->data(3).toInt() == cc))
-					{
-						QGraphicsRectItem* ms(reinterpret_cast<QGraphicsRectItem*> (sit));
-						if(ms)
-						{
-							QRectF rf(ms->rect());
-							new FMGlyphHighlight(abcScene, rf, 2000, 160);
-						}
-						else
-							qDebug()<<"ERROR: An select item not being a QRect?";
-						return;
-						
-					}
-				}
-			}while(sv < abcView->verticalScrollBar()->maximum());
-			return;
-		}
-	}
-	
-	// if user was looking for a name and we did not find it in
-	// Unicode blocks, it must be unmapped.
-	if(!searchCodepoint)
-	{
-		int idx(uniPlaneCombo->findText(unMapGlyphName));
-		slotPlaneSelected(idx);
-		int sv(0);
-		bool first(true);
-		do{
-			if(first)
-				first = false;
-			else
-			{
-				abcView->verticalScrollBar()->setValue(sv + abcView->height());
-				sv = abcView->verticalScrollBar()->value();
-			}
-			foreach(QGraphicsItem* sit, abcScene->items())
-			{
-				if((sit->data(1).toString() == "select")
-								&& (sit->data(3).toInt() == cc))
-				{
-					QGraphicsRectItem* ms(reinterpret_cast<QGraphicsRectItem*> (sit));
-					if(ms)
-					{
-						QRectF rf(ms->rect());
-						new FMGlyphHighlight(abcScene, rf, 2000, 160);
-					}
-					else
-						qDebug()<<"ERROR: An select item not being a QRect?";
-					return;
-						
-				}
-			}
-		}while(sv < abcView->verticalScrollBar()->maximum());
-		return;
-	}
-	
-}
-
-void MainViewWidget::slotShowOneGlyph()
-{
-	qDebug() <<"slotShowOneGlyph()"<<abcScene->selectedItems().count();
-	if ( abcScene->selectedItems().isEmpty() )
-		return;
-	if ( abcView->lock() )
-	{
-		curGlyph = reinterpret_cast<QGraphicsRectItem*> ( abcScene->selectedItems().first() );
-		curGlyph->setSelected ( false );
-		if ( fancyGlyphInUse < 0 )
-		{
-			if ( curGlyph->data ( 3 ).toInt() > 0 ) // Is a codepoint
-			{
-				fancyGlyphData = curGlyph->data ( 3 ).toInt();
-				if(clipboardCheck->isChecked())
-				{
-					new FMGlyphHighlight(abcScene, curGlyph->rect());
-					QString simpleC;
-					simpleC += QChar(fancyGlyphData);
-					QApplication::clipboard()->setText(simpleC, QClipboard::Clipboard);
-					uniLine->setText(uniLine->text() + simpleC);
-				}
-				else
-					fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData );
-			}
-			else // Is a glyph index
-			{
-				fancyGlyphData = curGlyph->data ( 2 ).toInt();
-				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData , true );
-			}
-			if ( fancyGlyphInUse < 0 )
-			{
-				abcView->unlock();
-				return;
-			}
-			abcView->setState ( FMGlyphsView::SingleView );
-		}
-		abcView->unlock();
-	}
-	else
-		qDebug()<<"cannot lock ABCview";
-}
-
-void MainViewWidget::slotShowAllGlyph()
-{
-// 	qDebug() <<"slotShowAllGlyph()";
-	if ( fancyGlyphInUse < 0 )
-		return;
-	if ( abcView->lock() )
-	{
-// 		qDebug()<<"View Locked";
-		theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
-		fancyGlyphInUse = -1;
-		abcView->setState ( FMGlyphsView::AllView );
-
-		abcView->unlock();
-	}
-// 	qDebug() <<"ENDOF slotShowAllGlyph()";
-}
-
-void MainViewWidget::slotUpdateGView()
-{
-// 	qDebug()<<"slotUpdateGView"<<uniPlaneCombo->currentText();
-// 	printBacktrace(32);
-	// If all is how I think it must be, we don’t need to check anything here :)
-	if(theVeryFont && abcView->lock())
-	{
-		QPair<int,int> uniPair;
-		QString curBlockText(uniPlaneCombo->currentText());
-		if(curBlockText == unMapGlyphName)
-			uniPair = qMakePair<int,int>(-1,100);
-		else if(curBlockText == allMappedGlyphName)
-			uniPair = qMakePair<int,int>(0, 0x10FFFF);
-		else
-			uniPair = FMUniBlocks::interval( curBlockText );
-		
-		int coverage = theVeryFont->countCoverage ( uniPair.first, uniPair.second );
-		int interval = uniPair.second - uniPair.first;
-		coverage = coverage * 100 / ( interval + 1 );// against /0 exception
-	
-		QString statstring(tr("Block (%1):").arg( QString::number ( coverage ) + "\%"));
-		unicodeCoverageStat->setText ( statstring );
-
-		theVeryFont->renderAll ( abcScene , uniPair.first, uniPair.second );
-		abcView->unlock();
-	}
-}
-
-
-void MainViewWidget::slotUpdateGViewSingle()
-{
-// 	qDebug()<<"slotUpdateGViewSingle";
-	if ( theVeryFont && abcView->lock())
-	{
-// 			qDebug() <<"1.FGI"<<fancyGlyphInUse;
-			theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
-			if ( fancyGlyphData > 0 ) // Is a codepoint
-			{
-				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData );
-// 				qDebug() <<"2.FGI"<<fancyGlyphInUse;
-			}
-			else // Is a glyph index
-			{
-				fancyGlyphInUse = theVeryFont->showFancyGlyph ( abcView, fancyGlyphData , true );
-// 				qDebug() <<"3.FGI"<<fancyGlyphInUse;
-			}
-			abcView->unlock();
-
-	}
-
-}
-
-
-
-
 
 
 void MainViewWidget::slotUpdateTree()
@@ -1802,7 +1479,7 @@ void MainViewWidget::slotRemoteFinished()
 	qDebug()<<"slotRemoteFinished : "<<currentDownload;
 	slotFontSelectedByName(currentDownload);
 //	slotInfoFont();
-	slotUpdateGView();
+//	slotUpdateGView();
 //	slotUpdateRView();
 //	slotUpdateSView();
 
@@ -1987,19 +1664,6 @@ void MainViewWidget::setCurFonts(QList< FontItem * > flist)
 	
 }
 
-
-void MainViewWidget::slotShowULine(bool checked)
-{
-	if(checked)
-	{
-		uniLine->setText("");
-		uniLine->setEnabled(true);
-	}
-	else
-	{
-		uniLine->setEnabled(false);
-	}
-}
 
 void MainViewWidget::slotPanoseFilter(const QMap<int,QList<int> >& filter)
 {

@@ -2,6 +2,7 @@
 
 set(fontmatrix_SRCS
 ${CMAKE_CURRENT_SOURCE_DIR}/aboutwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/chartwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
@@ -130,6 +131,7 @@ ENDIF(WANT_PYTHONQT)
 
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
+chartwidget.h
 dumpdialog.h
 familywidget.h
 filterbar.h
@@ -187,6 +189,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/activationreportdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/altselectorwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
+${CMAKE_CURRENT_SOURCE_DIR}/chartwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.ui

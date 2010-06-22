@@ -31,114 +31,119 @@
 #include <QMap>
 #include <QTreeWidgetItem>
 #include <QSettings>
+#include <QPrintDialog>
+#include <QPrinter>
 
 SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::SampleWidget),
-    fontIdentifier(fid)
+		QWidget(parent),
+		ui(new Ui::SampleWidget),
+		fontIdentifier(fid)
 {
-    ui->setupUi(this);
-refillSampleList();
-fillOTTree();
-    textLayout = FMLayout::getLayout();
+	layoutForPrint = false;
+	ui->setupUi(this);
+	refillSampleList();
+	fillOTTree();
+	textLayout = FMLayout::getLayout();
 
-    radioRenderGroup = new QButtonGroup();
-    radioRenderGroup->addButton(ui->freetypeRadio);
-    radioRenderGroup->addButton(ui->nativeRadio);
-    ui->stackedTools->setCurrentIndex(VIEW_PAGE_SAMPLES);
-    toolPanelWidth = ui->splitter_2->sizes().at(1);
-    if(toolPanelWidth == 0)
-    {
-	    ui->sampleButton->setChecked(false);
-	    ui->stackedTools->hide();
-	    toolPanelWidth = ui->splitter_2->width()/3;
-    }
-    radioFTHintingGroup = new QButtonGroup(ui->freetypeRadio);
-    radioFTHintingGroup->addButton(ui->noHinting);
-    radioFTHintingGroup->addButton(ui->lightHinting);
-    radioFTHintingGroup->addButton(ui->normalHinting);
+	radioRenderGroup = new QButtonGroup();
+	radioRenderGroup->addButton(ui->freetypeRadio);
+	radioRenderGroup->addButton(ui->nativeRadio);
+	ui->stackedTools->setCurrentIndex(VIEW_PAGE_SAMPLES);
+	toolPanelWidth = ui->splitter_2->sizes().at(1);
+	if(toolPanelWidth == 0)
+	{
+		ui->sampleButton->setChecked(false);
+		ui->stackedTools->hide();
+		toolPanelWidth = ui->splitter_2->width()/3;
+	}
+	radioFTHintingGroup = new QButtonGroup(ui->freetypeRadio);
+	radioFTHintingGroup->addButton(ui->noHinting);
+	radioFTHintingGroup->addButton(ui->lightHinting);
+	radioFTHintingGroup->addButton(ui->normalHinting);
 
-    loremScene = new QGraphicsScene;
-    ftScene =  new QGraphicsScene;
-    QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
+	loremScene = new QGraphicsScene;
+	ftScene =  new QGraphicsScene;
+	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
 
-    loremScene->setSceneRect ( pageRect );
-// 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
-// 	backp->setEnabled ( false );
+	loremScene->setSceneRect ( pageRect );
+	// 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
+	// 	backp->setEnabled ( false );
 
-    ftScene->setSceneRect ( 0,0, 597.6 * typotek::getInstance()->getDpiX() / 72.0, 842.4 * typotek::getInstance()->getDpiX() / 72.0);
-    ui->loremView->setScene ( loremScene );
-    ui->loremView->locker = false;
-    double horiScaleT (typotek::getInstance()->getDpiX() / 72.0);
-    double vertScaleT ( typotek::getInstance()->getDpiY() / 72.0);
-    QTransform adjustAbsoluteViewT( horiScaleT , 0, 0,vertScaleT, 0, 0 );
-    ui->loremView->setTransform ( adjustAbsoluteViewT , false );
+	ftScene->setSceneRect ( 0,0, 597.6 * typotek::getInstance()->getDpiX() / 72.0, 842.4 * typotek::getInstance()->getDpiX() / 72.0);
+	ui->loremView->setScene ( loremScene );
+	ui->loremView->locker = false;
+	double horiScaleT (typotek::getInstance()->getDpiX() / 72.0);
+	double vertScaleT ( typotek::getInstance()->getDpiY() / 72.0);
+	QTransform adjustAbsoluteViewT( horiScaleT , 0, 0,vertScaleT, 0, 0 );
+	ui->loremView->setTransform ( adjustAbsoluteViewT , false );
 
-    ui->loremView_FT->setScene ( ftScene );
-    ui->loremView_FT->locker = false;
-    ui->loremView_FT->fakePage();
+	ui->loremView_FT->setScene ( ftScene );
+	ui->loremView_FT->locker = false;
+	ui->loremView_FT->fakePage();
 
-    QMap<QString, int> sTypes(FMShaperFactory::types());
-    for(QMap<QString, int>::iterator sIt = sTypes.begin(); sIt != sTypes.end() ; ++sIt)
-    {
-	    ui->shaperTypeCombo->addItem(sIt.key(), sIt.value());
-    }
+	QMap<QString, int> sTypes(FMShaperFactory::types());
+	for(QMap<QString, int>::iterator sIt = sTypes.begin(); sIt != sTypes.end() ; ++sIt)
+	{
+		ui->shaperTypeCombo->addItem(sIt.key(), sIt.value());
+	}
 
-    QSettings settings;
-    sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
-    sampleInterSize = settings.value("Sample/Interline", 18.0).toDouble();
-    sampleRatio = sampleInterSize / sampleFontSize  ;
-    ui->liveFontSizeSpin->setValue(sampleFontSize);
+	QSettings settings;
+	sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
+	sampleInterSize = settings.value("Sample/Interline", 18.0).toDouble();
+	sampleRatio = sampleInterSize / sampleFontSize  ;
+	ui->liveFontSizeSpin->setValue(sampleFontSize);
 
 
-    // connections
-    connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
-    connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
+	// connections
+	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
+	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
 
-    connect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-    connect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-    connect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	connect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	connect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	connect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 
-    connect ( ui->loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
-    connect ( ui->loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	connect ( ui->loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
+	connect ( ui->loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
 
-    connect ( ui->loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-    connect ( ui->loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
+	connect ( ui->loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	connect ( ui->loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
 
-    connect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
-    connect ( this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
+	connect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
+	connect ( this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
 
-    connect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
-    connect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
-    connect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
+	connect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
+	connect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
+	connect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
 
-    connect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
-    connect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
-    connect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
-    connect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-    connect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+	connect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
+	connect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
+	connect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
+	connect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+	connect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
 
-    connect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
-    connect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
+	connect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
+	connect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
-    slotView(true);
+	connect(ui->printButton, SIGNAL(clicked()), this, SLOT(slotPrint()));
+
+	slotView(true);
 }
 
 SampleWidget::~SampleWidget()
 {
-    delete ui;
+	delete ui;
 }
 
 void SampleWidget::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui->retranslateUi(this);
+		break;
+	default:
+		break;
+	}
 }
 
 QGraphicsScene * SampleWidget::textScene() const
@@ -158,8 +163,8 @@ void SampleWidget::slotView ( bool needDeRendering )
 		f->deRenderAll();
 	}
 
-	bool wantDeviceDependant = ui->loremView_FT->isVisible();
-//	unsigned int storedHinting(f->getFTHintMode());
+	bool wantDeviceDependant = (!layoutForPrint) ? ui->loremView_FT->isVisible() : false;
+	//	unsigned int storedHinting(f->getFTHintMode());
 	if(wantDeviceDependant)
 	{
 		f->setFTHintMode(hinting());
@@ -177,21 +182,21 @@ void SampleWidget::slotView ( bool needDeRendering )
 	f->setFTRaster ( wantDeviceDependant );
 	f->setShaperType(ui->shaperTypeCombo->itemData( ui->shaperTypeCombo->currentIndex() ).toInt() );
 
-	if ( ui->loremView->isVisible() || ui->loremView_FT->isVisible() )
+	if ( ui->loremView->isVisible() || ui->loremView_FT->isVisible() || layoutForPrint)
 	{
-//		qDebug()<<"lv(ft) is visible";
+		//		qDebug()<<"lv(ft) is visible";
 		if(textLayout->isRunning())
 		{
-//			qDebug()<<"tl is running";
+			//			qDebug()<<"tl is running";
 			textLayout->stopLayout();
 		}
 		else
 		{
-//			qDebug()<<"tl is NOT running";
+			//			qDebug()<<"tl is NOT running";
 			QGraphicsScene *targetScene;
 			ui->loremView_FT->unSheduleUpdate();
 			ui->loremView->unSheduleUpdate();
-			if(ui->loremView->isVisible())
+			if(ui->loremView->isVisible() || layoutForPrint)
 			{
 				targetScene = loremScene;
 			}
@@ -224,16 +229,16 @@ void SampleWidget::slotView ( bool needDeRendering )
 			{
 				// Experimental code to handle alternate is commented out
 				// Do not uncomment
-//				FMAltContext * actx ( FMAltContextLib::SetCurrentContext(sampleTextTree->currentText(), f->path()));
-//				int rs(0);
-//				actx->setPar(rs);
+				//				FMAltContext * actx ( FMAltContextLib::SetCurrentContext(sampleTextTree->currentText(), f->path()));
+				//				int rs(0);
+				//				actx->setPar(rs);
 				for(int p(0);p<stl.count();++p)
 				{
 					list << f->glyphs( stl[p] , fSize, deFillOTTree());
-//					actx->setPar(++rs);
+					//					actx->setPar(++rs);
 				}
-//				actx->cleanup();
-//				FMAltContextLib::SetCurrentContext(sampleTextTree->currentText(), f->path());
+				//				actx->cleanup();
+				//				FMAltContextLib::SetCurrentContext(sampleTextTree->currentText(), f->path());
 			}
 			else
 			{
@@ -241,10 +246,10 @@ void SampleWidget::slotView ( bool needDeRendering )
 					list << f->glyphs( stl[p] , fSize  );
 			}
 			textLayout->doLayout(list, fSize);
-// 			if (loremView->isVisible() /*&& fitViewCheck->isChecked()*/ )
-// 			{
-// 				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
-// 			}
+			// 			if (loremView->isVisible() /*&& fitViewCheck->isChecked()*/ )
+			// 			{
+			// 				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
+			// 			}
 			textLayout->start(QThread::LowestPriority);
 		}
 	}
@@ -254,8 +259,8 @@ void SampleWidget::slotView ( bool needDeRendering )
 		ui->loremView_FT->sheduleUpdate();
 	}
 
-//	slotUpdateGView();
-//	slotInfoFont();
+	//	slotUpdateGView();
+	//	slotInfoFont();
 
 }
 
@@ -317,7 +322,7 @@ void SampleWidget::fillOTTree()
 		theVeryFont->releaseOTFInstance ( otf );
 	}
 	scripts = scripts.toSet().toList();
-// 	scripts.removeAll ( "latn" );
+	// 	scripts.removeAll ( "latn" );
 	if ( !scripts.isEmpty() )
 	{
 		ui->langCombo->setEnabled ( true );
@@ -328,27 +333,27 @@ void SampleWidget::fillOTTree()
 
 OTFSet SampleWidget::deFillOTTree()
 {
-// 	qDebug() << "MainViewWidget::deFillOTTree()";
+	// 	qDebug() << "MainViewWidget::deFillOTTree()";
 	OTFSet ret;
-// 	qDebug() << ui->OpenTypeTree->topLevelItemCount();
+	// 	qDebug() << ui->OpenTypeTree->topLevelItemCount();
 	for ( int table_index = 0; table_index < ui->OpenTypeTree->topLevelItemCount(); ++table_index ) //tables
 	{
-// 		qDebug() << "table_index = " << table_index;
+		// 		qDebug() << "table_index = " << table_index;
 		QTreeWidgetItem * table_item = ui->OpenTypeTree->topLevelItem ( table_index ) ;
-// 		qDebug() <<  table_item->text(0);
+		// 		qDebug() <<  table_item->text(0);
 		for ( int script_index = 0; script_index < table_item->childCount();++script_index ) //scripts
 		{
 			QTreeWidgetItem * script_item = table_item->child ( script_index );
-// 			qDebug() << "\tscript_index = " <<  script_index << script_item->text(0);
+			// 			qDebug() << "\tscript_index = " <<  script_index << script_item->text(0);
 			for ( int lang_index = 0; lang_index < script_item->childCount(); ++lang_index ) //langs
 			{
 				QTreeWidgetItem * lang_item = script_item->child ( lang_index );
-// 				qDebug() << "\t\tlang_index = "<< lang_index << lang_item->text(0);
+				// 				qDebug() << "\t\tlang_index = "<< lang_index << lang_item->text(0);
 				for ( int feature_index = 0; feature_index < lang_item->childCount(); ++feature_index ) //features
 				{
-// 					qDebug() << lang_item->childCount() <<" / "<<  feature_index;
+					// 					qDebug() << lang_item->childCount() <<" / "<<  feature_index;
 					QTreeWidgetItem * feature_item = lang_item->child ( feature_index );
-// 					qDebug() << "\t\t\tfeature_item -> "<< feature_item->text(0);
+					// 					qDebug() << "\t\t\tfeature_item -> "<< feature_item->text(0);
 					if ( feature_item->checkState ( 0 ) == Qt::Checked )
 					{
 						if ( table_item->text ( 0 ) == "GPOS" )
@@ -368,7 +373,7 @@ OTFSet SampleWidget::deFillOTTree()
 			}
 		}
 	}
-// 	qDebug() << "endOf";
+	// 	qDebug() << "endOf";
 	return ret;
 
 }
@@ -399,7 +404,7 @@ void SampleWidget::slotHintChanged(int )
 
 void SampleWidget::slotChangeViewPageSetting ( bool ch )
 {
-// 	qDebug() <<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
+	// 	qDebug() <<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
 	QString butName ( sender()->objectName() );
 	if ( !ch )
 	{
@@ -497,7 +502,7 @@ void SampleWidget::slotLiveFontSize()
 
 void SampleWidget::slotFeatureChanged()
 {
-// 	OTFSet ret = deFillOTTree();
+	// 	OTFSet ret = deFillOTTree();
 	slotView ( true );
 }
 
@@ -599,4 +604,36 @@ unsigned int SampleWidget::hinting()
 		return FT_LOAD_TARGET_NORMAL;
 
 	return FT_LOAD_NO_HINTING ;
+}
+
+
+void SampleWidget::slotPrint()
+{
+	FontItem * font(FMFontDb::DB()->Font( fontIdentifier ));
+	if(!font)
+		return;
+	layoutForPrint = true;
+	slotView(false);
+	if( textLayout->isRunning() )
+	{
+		connect(textLayout, SIGNAL(paintFinished()), this,SLOT(slotPrint()));
+		return;
+	}
+	else
+	{
+		disconnect(textLayout, SIGNAL(paintFinished()), this,SLOT(slotPrint()));
+	}
+
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	QPrintDialog dialog(&thePrinter, this);
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Sample") +" - " + font->fancyName() );
+
+	if ( dialog.exec() != QDialog::Accepted )
+		return;
+	thePrinter.setFullPage ( true );
+	QPainter aPainter ( &thePrinter );
+
+	loremScene->render(&aPainter);
+	layoutForPrint = false;
+
 }

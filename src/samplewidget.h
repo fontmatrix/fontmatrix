@@ -73,6 +73,8 @@ private:
     void fillOTTree();
     OTFSet deFillOTTree();
 
+    bool layoutForPrint;
+
     void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 
 private slots:
@@ -92,6 +94,8 @@ private slots:
     void slotChangeScript();
     void slotProgressionChanged();
     void slotWantShape();
+
+    void slotPrint();
 
 
 signals:

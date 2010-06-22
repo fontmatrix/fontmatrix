@@ -65,6 +65,7 @@ private slots:
     void slotPreviewUpdateSize(int);
     void slotPreviewSelected(const QModelIndex & index);
     void slotShowSample();
+    void slotShowChart();
 };
 
 #endif // FAMILYWIDGET_H

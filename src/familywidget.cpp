@@ -26,6 +26,7 @@
 #include "fontitem.h"
 #include "fminfodisplay.h"
 #include "samplewidget.h"
+#include "chartwidget.h"
 
 #include <QColor>
 #include <QListWidgetItem>
@@ -56,6 +57,7 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	connect(ui->familyPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(ui->familyPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
+	connect(ui->chartButton, SIGNAL(clicked()), this, SLOT(slotShowChart()));
 
 }
 
@@ -139,4 +141,12 @@ void FamilyWidget::slotShowSample()
 	FontItem * fItem(FMFontDb::DB()->Font(curVariant));
 	sw->setWindowTitle(QString("%1 - Fontmatrix").arg(fItem->fancyName()));
 	sw->show();
+}
+
+void FamilyWidget::slotShowChart()
+{
+	ChartWidget* cw(new ChartWidget(curVariant));
+	FontItem * fItem(FMFontDb::DB()->Font(curVariant));
+	cw->setWindowTitle(QString("%1 - Fontmatrix").arg(fItem->fancyName()));
+	cw->show();
 }

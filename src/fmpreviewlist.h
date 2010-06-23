@@ -27,6 +27,7 @@
 #include <QPixmap>
 #include <QPoint>
 #include <QPen>
+#include <QPainterPath>
 
 class FontItem;
 class MainViewWidget;
@@ -41,11 +42,17 @@ public:
 	~FMPreviewIconEngine();
 	void paint ( QPainter * painter, const QRect & rect, QIcon::Mode mode, QIcon::State state );
 	void addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, QIcon::State state );
+	void setActivation(bool a){activatedFont = a;}
 
 private:
 	QPixmap m_p;
-	QPen pen;
+	bool activatedFont;
+	static bool initState;
+	static QPen pen;
 	static QVector<QRgb> m_selPalette;
+	static QRgb activatedColor;
+	static QRgb deactivatedColor;
+
 	QVector<QRgb> actualSelPalette(const QVector<QRgb>& orig);
 
 };

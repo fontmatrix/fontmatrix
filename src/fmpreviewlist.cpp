@@ -33,16 +33,23 @@
 //#include <QMimeData>
 #include <QApplication>
 #include <QLabel>
-#include <QPainterPath>
 #include <QPainter>
+#include <QBrush>
 
+bool FMPreviewIconEngine::initState = false;
+QPen FMPreviewIconEngine::pen = QPen();
 QVector<QRgb> FMPreviewIconEngine::m_selPalette;
+QRgb FMPreviewIconEngine::activatedColor =  qRgb (9,223,11);
+QRgb FMPreviewIconEngine::deactivatedColor =  qRgb (190,190,190);
+
 
 FMPreviewIconEngine::FMPreviewIconEngine()
-		:QIconEngineV2()
+	:QIconEngineV2(),
+	activatedFont(false)
 {
-	if(m_selPalette.isEmpty())
+	if(!initState)
 	{
+		// setup palette
 		QColor sColor( QApplication::palette().color(QPalette::Highlight) );
 		QColor tColor( QApplication::palette().color(QPalette::HighlightedText) );
 		m_selPalette.clear();
@@ -61,10 +68,14 @@ FMPreviewIconEngine::FMPreviewIconEngine()
 					      ((sg*sn) + (tg*tn)) /cpal,
 					      ((sb*sn) + (tb*tn)) /cpal );
 		}
+
+		// setup "writing" pen
+		pen.setColor(QColor(m_selPalette.at(128)));
+		pen.setWidth(1);
+
+		initState = true;
 	}
 
-	pen.setColor(QColor(m_selPalette.at(128)));
-	pen.setWidth(1);
 }
 
 QVector<QRgb> FMPreviewIconEngine::actualSelPalette(const QVector<QRgb>& orig)
@@ -109,8 +120,8 @@ QVector<QRgb> FMPreviewIconEngine::actualSelPalette(const QVector<QRgb>& orig)
 
 FMPreviewIconEngine::~FMPreviewIconEngine()
 {
-//	if(m_p)
-//		delete m_p;
+	//	if(m_p)
+	//		delete m_p;
 }
 
 void FMPreviewIconEngine::paint ( QPainter * painter, const QRect & rect, QIcon::Mode mode, QIcon::State state )
@@ -137,6 +148,24 @@ void FMPreviewIconEngine::paint ( QPainter * painter, const QRect & rect, QIcon:
 		{
 			painter->drawPixmap(r, m_p , r);
 			painter->drawPath(pp);
+
+		}
+		if(activatedFont)
+		{
+			painter->setPen(Qt::NoPen);
+			QPainterPath activationPath;
+			double rr2(rr/2.0);
+			activationPath.moveTo(rr, 0);
+			activationPath.cubicTo(rr2,0,
+					       0,rr2,
+					       0,rr);
+			activationPath.lineTo(0,rect.height() - rr);
+			activationPath.cubicTo(0,rect.height() -rr2,
+					       rr2,rect.height(),
+					       rr,rect.height());
+			activationPath.closeSubpath();
+			painter->setBrush(QBrush(activatedColor));
+			painter->drawPath(activationPath);
 		}
 		painter->restore();
 	}
@@ -165,7 +194,7 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 		return QVariant();
 
 	int row = index.row();
-// 	qDebug()<<"D"<<row;
+	// 	qDebug()<<"D"<<row;
 	FontItem *fit;
 	if(base.isEmpty())
 		fit = FMFontDb::DB()->getFilteredFonts(true).at(row);
@@ -176,12 +205,12 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 	
 	QColor bgColor(QApplication::palette().color(QPalette::Base));
 	QColor fgColor(QApplication::palette().color(QPalette::Text));
-// 	int borders( 2*(m_view->frameWidth() + m_view->lineWidth() + m_view->midLineWidth()) ); 
-// 	int scrollbar(m_view->verticalScrollBar()->width());
-// 	int width( m_view->width() - (borders + scrollbar) );
-// 	qDebug()<<"W"<<width<<borders<<scrollbar;
+	// 	int borders( 2*(m_view->frameWidth() + m_view->lineWidth() + m_view->midLineWidth()) );
+	// 	int scrollbar(m_view->verticalScrollBar()->width());
+	// 	int width( m_view->width() - (borders + scrollbar) );
+	// 	qDebug()<<"W"<<width<<borders<<scrollbar;
 	// quite strange but I cannot determine accuratly the size of the visible part of the inner frame :/
-// 	int width( qRound(m_view->width() * 0.92) );
+	// 	int width( qRound(m_view->width() * 0.92) );
 	int width(m_view->getUsedWidth());
 	
 	if(role == Qt::DisplayRole)
@@ -199,10 +228,13 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 		else
 			word = typotek::getInstance()->word(fit, specString);
 		QPixmap im(fit->oneLinePreviewPixmap(word,fgColor, bgColor, width ) );
-		QIcon ic( new FMPreviewIconEngine  );
+		FMPreviewIconEngine * pie(new FMPreviewIconEngine);
+		pie->setActivation(fit->isActivated());
+		QIcon ic( pie );
 		ic.addPixmap(im);
-//		if(fit->path() == QString("/home/pierre/fontes/ttf/A028-Ext.ttf"))
-//			im.save("im.png");
+
+		//		if(fit->path() == QString("/home/pierre/fontes/ttf/A028-Ext.ttf"))
+		//			im.save("im.png");
 		return ic;
 	}
 	else if(role == Qt::ToolTipRole)
@@ -285,12 +317,12 @@ void FMPreviewView::resizeEvent(QResizeEvent * event)
 		       + lineWidth()
 		       + midLineWidth());
 	int actualWidth(this->width() - extraSpace);
-//	qDebug()<<"W"<<this->width()<<"AW"<<actualWidth<<verticalScrollBar()->width()<<verticalScrollBar()->isVisible();
-//	qDebug()<<frameWidth() << lineWidth() << midLineWidth();
+	//	qDebug()<<"W"<<this->width()<<"AW"<<actualWidth<<verticalScrollBar()->width()<<verticalScrollBar()->isVisible();
+	//	qDebug()<<frameWidth() << lineWidth() << midLineWidth();
 	if(spacing() == 0)
 		setSpacing(3);
 	usedWidth = qRound((double(actualWidth)  / columns) - (columns * 2.0 * double(spacing())));
-//	emit widthChanged(usedWidth);
+	//	emit widthChanged(usedWidth);
 	setIconSize(QSize(qRound(usedWidth), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
 
@@ -300,9 +332,9 @@ void FMPreviewView::mousePressEvent(QMouseEvent * event)
 	{
 		startDragPoint = event->pos();
 		dragFlag = false;
-//		const QModelIndex idx ( indexAt(startDragPoint) );
-//		if(idx.isValid())
-//			emit pressed(idx);
+		//		const QModelIndex idx ( indexAt(startDragPoint) );
+		//		if(idx.isValid())
+		//			emit pressed(idx);
 	}
 	QListView::mousePressEvent(event);
 }
@@ -318,7 +350,7 @@ void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
 	if(currentIndex().isValid() && (!dragFlag))
 	{
 		dragFlag = true;
-//		FontItem * sf(typotek::getInstance()->getSelectedFont());
+		//		FontItem * sf(typotek::getInstance()->getSelectedFont());
 		QModelIndex idx = indexAt(startDragPoint);
 		QString fname = idx.data(FMPreviewModel::PathRole).toString();
 		if(!fname.isEmpty())

@@ -57,6 +57,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/puzzleviewimp.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/metawidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/modeltext.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/panosematch.cpp
@@ -164,6 +165,7 @@ iview.h
 QHexView.h
 listdockwidget.h
 mainviewwidget.h
+metawidget.h
 modeltext.h
 panosedialog.h
 panosewidget.h
@@ -204,6 +206,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/helpbrowser.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/layoutoptions.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/listsdock.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/mainview.ui
+${CMAKE_CURRENT_SOURCE_DIR}/metawidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/matchraster.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/panosewidget.ui

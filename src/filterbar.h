@@ -50,6 +50,7 @@ private:
 private slots:
     void loadTags();
     void panoseDialog();
+    void metaDialog();
 };
 
 #endif // FILTERBAR_H

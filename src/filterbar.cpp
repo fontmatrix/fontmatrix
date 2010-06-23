@@ -22,6 +22,7 @@
 #include "ui_filterbar.h"
 #include "fmfontdb.h"
 #include "panosewidget.h"
+#include "metawidget.h"
 
 #include <QDialog>
 #include <QGridLayout>
@@ -35,6 +36,7 @@ FilterBar::FilterBar(QWidget *parent) :
     loadTags();
 
     connect(ui->classButton, SIGNAL(clicked()), this, SLOT(panoseDialog()));
+    connect(ui->metaButton, SIGNAL(clicked()), this, SLOT(metaDialog()));
 }
 
 FilterBar::~FilterBar()
@@ -90,6 +92,18 @@ void FilterBar::panoseDialog()
 	l->addWidget(pw,0,0,0,0);
 	d->exec();
 	pw->setParent(0);
+	delete l;
+	delete d;
+
+}
+
+void FilterBar::metaDialog()
+{
+	MetaWidget * mw(new MetaWidget);
+	QDialog *d = new QDialog(this);
+	QGridLayout *l = new QGridLayout(d);
+	l->addWidget(mw,0,0,0,0);
+	d->exec();
 	delete l;
 	delete d;
 

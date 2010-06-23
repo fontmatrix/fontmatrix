@@ -22,6 +22,14 @@
 #define METAWIDGET_H
 
 #include <QWidget>
+#include <QMap>
+#include <QString>
+
+#include "fmfontstrings.h"
+
+class QStringListModel;
+class QPushButton;
+class QLineEdit;
 
 namespace Ui {
     class MetaWidget;
@@ -40,6 +48,13 @@ protected:
 
 private:
     Ui::MetaWidget *ui;
+
+    static QStringListModel *mModel;
+    QMap<QPushButton*, FMFontDb::InfoItem> formFieldButton;
+    QMap<FMFontDb::InfoItem, QLineEdit*> formFieldLine;
+
+private slots:
+    void addFilter();
 };
 
 #endif // METAWIDGET_H

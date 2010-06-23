@@ -21,26 +21,75 @@
 #include "metawidget.h"
 #include "ui_metawidget.h"
 
+
+#include <QStringListModel>
+#include <QCompleter>
+#include <QGridLayout>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QDebug>
+
+QStringListModel * MetaWidget::mModel = 0;
+
 MetaWidget::MetaWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::MetaWidget)
+		QWidget(parent),
+		ui(new Ui::MetaWidget)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
+	if(mModel = 0)
+	{
+		mModel = new QStringListModel;
+	}
+
+	QGridLayout * grid(new QGridLayout(this));
+	QCompleter * completer(new QCompleter(mModel));
+//	ui->setLayout(grid);
+
+	for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
+	{
+		FMFontDb::InfoItem k(FontStrings::Names().keys()[gIdx]);
+		if((k !=  FMFontDb::AllInfo))
+		{
+			QLabel *label(new QLabel(FontStrings::Names().value(k),this));
+			QLineEdit *line(new QLineEdit(this));
+			line->setCompleter(completer);
+			QPushButton * button(new QPushButton(tr("Add"), this));
+			formFieldButton[button] = k;
+			formFieldLine[k] = line;
+			label->setBuddy(line);
+			grid->addWidget(label,gIdx,0);
+			grid->addWidget(line,gIdx,1);
+			grid->addWidget(button, gIdx, 2);
+			connect(button,SIGNAL(clicked()), this, SLOT(addFilter()));
+		}
+	}
+
 }
 
 MetaWidget::~MetaWidget()
 {
-    delete ui;
+	delete ui;
 }
 
 void MetaWidget::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui->retranslateUi(this);
+		break;
+	default:
+		break;
+	}
+}
+
+void MetaWidget::addFilter()
+{
+	if(QString(sender()->metaObject()->className()) == QString("QPushButton"))
+	{
+		QPushButton *b(reinterpret_cast<QPushButton*>(sender()));
+		FMFontDb::InfoItem it(formFieldButton[b]);
+		qDebug()<<"Meta:"<<FontStrings::Names()[it]<< formFieldLine[it]->text();
+	}
 }

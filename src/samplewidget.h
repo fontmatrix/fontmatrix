@@ -29,6 +29,8 @@ class QGraphicsScene;
 class FMLayout;
 class QButtonGroup;
 class QAbstractButton;
+class QFileSystemWatcher;
+class QTimer;
 
 namespace Ui {
     class SampleWidget;
@@ -70,6 +72,8 @@ private:
     double sampleInterSize;
     double sampleRatio;
     int toolPanelWidth;
+    QFileSystemWatcher *sysWatcher;
+    QTimer *reloadTimer;
 
     void fillOTTree();
     OTFSet deFillOTTree();
@@ -95,6 +99,8 @@ private slots:
     void slotChangeScript();
     void slotProgressionChanged();
     void slotWantShape();
+    void slotFileChanged(const QString&);
+    void slotReload();
 
     void slotPrint();
 

@@ -33,6 +33,9 @@
 #include <QSettings>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QFileSystemWatcher>
+#include <QDebug>
+#include <QTimer>
 
 SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 		QWidget(parent),
@@ -43,6 +46,10 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	ui->setupUi(this);
 	refillSampleList();
 	fillOTTree();
+	sysWatcher = new QFileSystemWatcher(this);
+	sysWatcher->addPath(fid);
+	reloadTimer = new QTimer(this);
+	reloadTimer->setInterval(1000);
 
 	radioRenderGroup = new QButtonGroup();
 	radioRenderGroup->addButton(ui->freetypeRadio);
@@ -131,6 +138,9 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 
 	connect(ui->printButton, SIGNAL(clicked()), this, SLOT(slotPrint()));
 	connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
+
+	connect(sysWatcher, SIGNAL(fileChanged(QString)),this, SLOT(slotFileChanged(QString)));
+	connect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));
 
 	slotView(true);
 }
@@ -646,4 +656,20 @@ void SampleWidget::slotPrint()
 	loremScene->render(&aPainter);
 	layoutForPrint = false;
 
+}
+
+void SampleWidget::slotFileChanged(const QString &)
+{
+	if(reloadTimer->isActive())
+		reloadTimer->start();
+	else
+	{
+		reloadTimer->start();
+	}
+}
+
+void SampleWidget::slotReload()
+{
+//	reloadTimer->stop();
+	slotView();
 }

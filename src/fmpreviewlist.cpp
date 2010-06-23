@@ -180,6 +180,7 @@ void FMPreviewIconEngine::addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, 
 FMPreviewModel::FMPreviewModel( QObject * pa , FMPreviewView * wPa,  QList<FontItem*> db )
 	: QAbstractListModel(pa) , m_view(wPa), base(db)
 {
+	familyMode = false;
 	QSettings settings;
 	styleTooltipName = settings.value("Preview/StyleTooltipName","font-weight:bold;").toString();
 	styleTooltipPath = settings.value("Preview/StyleTooltipPath","font-weight:normal;font-size:small;").toString();
@@ -239,6 +240,17 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 	}
 	else if(role == Qt::ToolTipRole)
 	{
+		if(familyMode)
+		{
+			QList<FontItem*> fam(FMFontDb::DB()->FamilySet(fit->family()));
+			QString sRet;
+			sRet+= "<div style=\"" + styleTooltipName + "\">" + fit->family() + " ("+QString::number(fam.count())+")</div>";
+			foreach(FontItem* ffi, fam)
+			{
+				sRet += "<div style=\"" + styleTooltipPath + "\">" + ffi->variant() + "</div>";
+			}
+			return sRet;
+		}
 		if(typotek::getInstance()->getPreviewSubtitled())
 		{
 			return QString("<div style=\"" + styleTooltipPath + "\">" + fit->path() + "</div>");

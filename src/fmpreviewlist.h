@@ -105,6 +105,7 @@ public:
 	void resetBase(QList<FontItem*> db);
 	QList<FontItem*> getBase();
 
+	void setFamilyMode(bool f){familyMode =f;}
 	void setSpecString(const QString& s){specString = s;}
 
 private:
@@ -113,6 +114,7 @@ private:
 	QString specString;
 	QString styleTooltipName;
 	QString styleTooltipPath;
+	bool familyMode;
 };
 
 

@@ -92,6 +92,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	previewModel = new FMPreviewModel( this, listView );
 	previewModel->setSpecString("<family>");
+	previewModel->setFamilyMode(true);
 	listView->setModel(previewModel);
 
 

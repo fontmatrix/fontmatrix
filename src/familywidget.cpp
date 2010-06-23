@@ -97,6 +97,7 @@ void FamilyWidget::setFamily(const QString &family)
 {
 	ui->familyLabel->setText(family);
 	QList<FontItem*> fl(FMFontDb::DB()->FamilySet(family));
+	ui->tagsWidget->prepare(fl);
 	previewModel->resetBase(fl);
 	if(!fl.isEmpty())
 	{

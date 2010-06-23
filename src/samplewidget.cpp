@@ -170,7 +170,7 @@ void SampleWidget::slotView ( bool needDeRendering )
 		return;
 	if ( needDeRendering )
 	{
-		f->deRenderAll();
+//		f->deRenderAll();
 	}
 
 	bool wantDeviceDependant = (!layoutForPrint) ? ui->loremView_FT->isVisible() : false;

@@ -667,11 +667,11 @@ void MainViewWidget::slotFontSelected ( QTreeWidgetItem * item, int column )
 			names << item->child( i )->toolTip( 0 ) ;
 			variantMap[item->child ( i )->text ( 0 ) ] = item->child ( i )->toolTip(0) ;
 		}
-                if(!slotFontActionByNames ( names ))
-                {
-                    delete(new FMMissingFontHelper(names));
-                    return;
-                }
+//                if(!slotFontActionByNames ( names ))
+//                {
+//                    delete(new FMMissingFontHelper(names));
+//                    return;
+//                }
 		int oldc = item->data ( 0,200 ).toInt();
 		if ( oldc == item->checkState ( 0 ) ) // filters when checkbox has not been hit
 		{
@@ -781,7 +781,7 @@ bool MainViewWidget::slotFontSelectedByName (const QString& fname )
                 if(!theVeryFont)
                     return false;
 // 		theVeryFont->updateItem();
-		slotFontActionByName ( fname );
+//		slotFontActionByName ( fname );
 //		if(theVeryFont->isRemote())
 //		{
 //			qDebug() << faceIndex <<" is remote";
@@ -1147,67 +1147,67 @@ void MainViewWidget::operateFilter(QList< FontItem * > allFiltered, const QStrin
 }
 
 
-void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
-{
-// 	qDebug()<<"MainViewWidget::slotFontAction";
-	if ( column >2 ) return;
+//void MainViewWidget::slotFontAction ( QTreeWidgetItem * item, int column )
+//{
+//// 	qDebug()<<"MainViewWidget::slotFontAction";
+//	if ( column >2 ) return;
 
-	FontItem * FoIt = FMFontDb::DB()->Font( item->text ( 1 ) );
-	if ( FoIt/* && (!FoIt->isLocked())*/ )
-	{
-		QList<FontItem*> fl;
-		fl.append ( FoIt );
-		familyWidget->tagWidget()->prepare ( fl );
-	}
-}
-
-bool MainViewWidget::slotFontActionByName (const QString &fname )
-{
-// 	qDebug()<<"MainViewWidget::slotFontActionByName ("<< fname <<")";
-	FontItem * FoIt = FMFontDb::DB()->Font( fname );
-	if ( FoIt/* && (!FoIt->isLocked())*/ )
-	{
-		QList<FontItem*> fl;
-		fl.append ( FoIt );
-		familyWidget->tagWidget()->prepare ( fl );
-	}
-        else
-            return false;
-        return true;
-}
-
-bool MainViewWidget::slotFontActionByNames ( QStringList fnames )
-{
-// 	qDebug()<<"MainViewWidget::slotFontActionByNames ("<< fnames.join(";") <<")";
-	QList<FontItem*> FoIt;
-	for ( int i= 0; i < fnames.count() ; ++i )
-	{
-                FontItem* ti(FMFontDb::DB()->Font( fnames[i] ));
-                if(ti)
-                    FoIt.append ( ti );
-                else
-                {
-                    return false;
-                }
-	}
-	if ( FoIt.count() )
-		familyWidget->tagWidget()->prepare ( FoIt );
-        return true;
-}
-
-
-void MainViewWidget::slotEditAll()
-{
-//	QList<FontItem*> fl;
-//	for ( int i =0; i< currentFonts.count(); ++i )
+//	FontItem * FoIt = FMFontDb::DB()->Font( item->text ( 1 ) );
+//	if ( FoIt/* && (!FoIt->isLocked())*/ )
 //	{
-//		fl.append ( currentFonts[i] );
+//		QList<FontItem*> fl;
+//		fl.append ( FoIt );
+//		familyWidget->tagWidget()->prepare ( fl );
 //	}
-	if ( FMFontDb::DB()->countFilteredFonts() == 0 )
-		return;
+//}
 
-	familyWidget->tagWidget()->prepare ( FMFontDb::DB()->getFilteredFonts() );
-}
+//bool MainViewWidget::slotFontActionByName (const QString &fname )
+//{
+//// 	qDebug()<<"MainViewWidget::slotFontActionByName ("<< fname <<")";
+//	FontItem * FoIt = FMFontDb::DB()->Font( fname );
+//	if ( FoIt/* && (!FoIt->isLocked())*/ )
+//	{
+//		QList<FontItem*> fl;
+//		fl.append ( FoIt );
+//		familyWidget->tagWidget()->prepare ( fl );
+//	}
+//        else
+//            return false;
+//        return true;
+//}
+
+//bool MainViewWidget::slotFontActionByNames ( QStringList fnames )
+//{
+//// 	qDebug()<<"MainViewWidget::slotFontActionByNames ("<< fnames.join(";") <<")";
+//	QList<FontItem*> FoIt;
+//	for ( int i= 0; i < fnames.count() ; ++i )
+//	{
+//                FontItem* ti(FMFontDb::DB()->Font( fnames[i] ));
+//                if(ti)
+//                    FoIt.append ( ti );
+//                else
+//                {
+//                    return false;
+//                }
+//	}
+//	if ( FoIt.count() )
+//		familyWidget->tagWidget()->prepare ( FoIt );
+//        return true;
+//}
+
+
+//void MainViewWidget::slotEditAll()
+//{
+////	QList<FontItem*> fl;
+////	for ( int i =0; i< currentFonts.count(); ++i )
+////	{
+////		fl.append ( currentFonts[i] );
+////	}
+//	if ( FMFontDb::DB()->countFilteredFonts() == 0 )
+//		return;
+
+//	familyWidget->tagWidget()->prepare ( FMFontDb::DB()->getFilteredFonts() );
+//}
 
 
 

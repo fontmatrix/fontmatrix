@@ -122,10 +122,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotShowFamily(const QModelIndex& familyIdx);
 		void slotQuitFamily();
 		
-		void slotFontAction(QTreeWidgetItem * item, int column );
-                bool slotFontActionByName(const QString &fname);
-                bool slotFontActionByNames(QStringList fnames);
-		void slotEditAll();
+//		void slotFontAction(QTreeWidgetItem * item, int column );
+//                bool slotFontActionByName(const QString &fname);
+//                bool slotFontActionByNames(QStringList fnames);
+//		void slotEditAll();
 		void slotAppendTag(QString tag);
 		void slotFilterTag(QString tag);
 		

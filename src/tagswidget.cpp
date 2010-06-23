@@ -139,20 +139,20 @@ void TagsWidget::prepare ( QList< FontItem * > fonts )
 // 		}
 // 	}
 	tagsListWidget->clear();
-	QString tot;
-	for ( int i=0;i<theTaggedFonts.count();++i )
-	{
-		tot.append ( theTaggedFonts[i]->fancyName() +  "\n" );
-	}
-	if ( theTaggedFonts.count() > 1 )
-	{
-		titleLabel->setText ( theTaggedFonts[0]->family() + " (family)" );
-	}
-	else
-	{
-		titleLabel->setText ( theTaggedFonts[0]->fancyName() );
-	}
-	titleLabel->setToolTip ( tot );
+//	QString tot;
+//	for ( int i=0;i<theTaggedFonts.count();++i )
+//	{
+//		tot.append ( theTaggedFonts[i]->fancyName() +  "\n" );
+//	}
+//	if ( theTaggedFonts.count() > 1 )
+//	{
+//		titleLabel->setText ( theTaggedFonts[0]->family() + " (family)" );
+//	}
+//	else
+//	{
+//		titleLabel->setText ( theTaggedFonts[0]->fancyName() );
+//	}
+//	titleLabel->setToolTip ( tot );
 	QStringList tagsList ( FMFontDb::DB()->getTags() );
 	
 	QString sysTag(typotek::getInstance()->getSysTagName());

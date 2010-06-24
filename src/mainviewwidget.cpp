@@ -1188,6 +1188,7 @@ void MainViewWidget::slotReloadFontList()
 void MainViewWidget::slotViewAll()
 {
 	FMFontDb::DB()->filterAllFonts();
+	filterBar->tagsCombo()->setCurrentIndex(0);
 	fontsetHasChanged = true;
 	fillTree();
 	setCrumb();

@@ -145,56 +145,10 @@ void MainViewWidget::doConnect()
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
-	connect ( this, SIGNAL(listChanged()), familyWidget, SLOT(slotPreviewUpdate()));
+//	connect ( this, SIGNAL(listChanged()), listView, SLOT(slotPreviewUpdate()));
 	connect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 	
 	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
-	
-//	connect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
-//	connect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
-//	connect( fontInfoText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
-//	connect( fontInfoText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
-
-//	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
-//	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
-	
-//	connect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-//	connect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-//	connect (sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-	
-//	connect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
-//	connect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
-//	connect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
-//	connect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
-//	connect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
-//	connect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
-//	connect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
-//	connect ( charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
-
-//	connect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
-//	connect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-	
-
-//	connect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-//	connect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
-	
-//	connect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
-//	connect ( this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
-
-
-	
-//	connect ( sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
-//	connect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
-//	connect ( liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
-
-//	connect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
-//	connect ( saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
-//	connect ( resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
-//	connect ( shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-//	connect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-	
-//	connect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
-//	connect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
 
 	connect( PanoseWidget::getInstance(), SIGNAL(filterChanged(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
@@ -216,57 +170,10 @@ void MainViewWidget::disConnect()
 	disconnect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	disconnect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	disconnect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
-	disconnect ( this, SIGNAL(listChanged()), familyWidget, SLOT(slotPreviewUpdate()));
+//	disconnect ( this, SIGNAL(listChanged()), listView, SLOT(slotPreviewUpdate()));
 	disconnect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 	
 	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
-	
-//	disconnect( fontInfoText, SIGNAL(linkClicked ( const QUrl& )), this, SLOT(slotWebLink(const QUrl&)));
-//	disconnect( fontInfoText, SIGNAL(loadStarted () ),this,SLOT(slotWebStart()));
-//	disconnect( fontInfoText, SIGNAL(loadProgress ( int )  ),this, SLOT(slotWebLoad(int)));
-//	disconnect( fontInfoText, SIGNAL(loadFinished ( bool ) ),this,SLOT(slotWebFinished(bool)));
-
-//	disconnect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
-//	disconnect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
-	
-//	disconnect (openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-//	disconnect (settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-//	disconnect (sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-	
-//	disconnect ( abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
-//	disconnect ( abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
-//	disconnect ( abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
-//	disconnect ( abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
-//	disconnect ( abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
-//	disconnect ( uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
-//	disconnect ( clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
-//	disconnect ( charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
-
-//	disconnect ( loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
-//	disconnect ( loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-	
-
-//	disconnect ( loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-//	disconnect ( loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
-	
-//	disconnect ( textLayout, SIGNAL(updateLayout()),this, SLOT(slotView()));
-//	disconnect ( this, SIGNAL(stopLayout()), textLayout,SLOT(stopLayout()));
-
-//	disconnect ( playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
-
-	
-//	disconnect ( sampleTextTree,SIGNAL ( itemSelectionChanged() ),this,SLOT ( slotSampleChanged() ) );
-//	disconnect ( sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
-//	disconnect ( liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
-
-//	disconnect ( OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
-//	disconnect ( saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
-//	disconnect ( resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
-//	disconnect ( shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-//	disconnect ( langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-	
-//	disconnect ( textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
-//	disconnect ( useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 	
 	disconnect( PanoseWidget::getInstance(), SIGNAL(filterChanged(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
 
@@ -488,6 +395,7 @@ void MainViewWidget::fillTree()
 
 	fontsetHasChanged = false;
 	listChanged();
+	previewModel->dataChanged();
 // 	m_lists->slotPreviewUpdate();
 // 	qDebug("END Time elapsed: %d ms", fillTime.elapsed());
 }

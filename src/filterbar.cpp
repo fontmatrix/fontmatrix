@@ -61,8 +61,9 @@ void FilterBar::loadTags()
 	ui->tagsCombo->clear();
 //	tagsetIcon = QIcon(":/fontmatrix_tagseteditor.png");
 
+	ui->tagsCombo->addItem(tr("Tags"),"NO_KEY");
 	ui->tagsCombo->addItem(tr("All activated"),"ALL_ACTIVATED");
-	ui->tagsCombo->addItem(tr("Similar to current"),"SIMILAR");
+//	ui->tagsCombo->addItem(tr("Similar to current"),"SIMILAR");
 
 	QStringList tl_tmp = FMFontDb::DB()->getTags();
 	tl_tmp.sort();

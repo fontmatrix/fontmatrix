@@ -378,7 +378,7 @@ void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
 
 void FMPreviewView::updateLayout()
 {
-	// Nothing wants to work! ###
+	update();
 }
 
 void FMPreviewView::setCurrentFont(const QString & name)

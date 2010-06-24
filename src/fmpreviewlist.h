@@ -88,6 +88,7 @@ signals:
 
 class FMPreviewModel : public QAbstractListModel
 {
+	Q_OBJECT
 public:
 	enum PreviewItemRole{
 		PathRole = Qt::UserRole + 1
@@ -101,7 +102,6 @@ public:
 	//returns the number of items
 	int rowCount ( const QModelIndex &parent ) const;
 
-	void dataChanged();
 	void resetBase(QList<FontItem*> db);
 	QList<FontItem*> getBase();
 
@@ -115,6 +115,10 @@ private:
 	QString styleTooltipName;
 	QString styleTooltipPath;
 	bool familyMode;
+
+public slots:
+	void dataChanged();
+
 };
 
 

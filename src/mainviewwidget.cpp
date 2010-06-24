@@ -145,7 +145,8 @@ void MainViewWidget::doConnect()
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
-//	connect ( this, SIGNAL(listChanged()), listView, SLOT(slotPreviewUpdate()));
+	connect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
+	connect(familyWidget, SIGNAL(familyStateChanged()), previewModel, SLOT(dataChanged()));
 	connect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 	
 	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
@@ -170,7 +171,8 @@ void MainViewWidget::disConnect()
 	disconnect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	disconnect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	disconnect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
-//	disconnect ( this, SIGNAL(listChanged()), listView, SLOT(slotPreviewUpdate()));
+	disconnect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
+	disconnect(familyWidget, SIGNAL(familyStateChanged()), previewModel, SLOT(dataChanged()));
 	disconnect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 	
 	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
@@ -395,7 +397,6 @@ void MainViewWidget::fillTree()
 
 	fontsetHasChanged = false;
 	listChanged();
-	previewModel->dataChanged();
 // 	m_lists->slotPreviewUpdate();
 // 	qDebug("END Time elapsed: %d ms", fillTime.elapsed());
 }

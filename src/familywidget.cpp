@@ -27,6 +27,8 @@
 #include "fminfodisplay.h"
 #include "samplewidget.h"
 #include "chartwidget.h"
+#include "fmactivate.h"
+#include "fmactivationreport.h"
 
 #include <QColor>
 #include <QListWidgetItem>
@@ -58,6 +60,9 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	connect(ui->familyPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
 	connect(ui->chartButton, SIGNAL(clicked()), this, SLOT(slotShowChart()));
+
+	connect(ui->activateButton, SIGNAL(clicked(bool)), this, SLOT(slotActivate(bool)));
+	connect(ui->deactivateButton, SIGNAL(clicked(bool)), this, SLOT(slotDeactivate(bool)));
 
 }
 
@@ -93,8 +98,9 @@ void FamilyWidget::slotPreviewUpdateSize(int w)
 	ui->familyPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
 
-void FamilyWidget::setFamily(const QString &family)
+void FamilyWidget::setFamily(const QString &f)
 {
+	family = f;
 	ui->familyLabel->setText(family);
 	QList<FontItem*> fl(FMFontDb::DB()->FamilySet(family));
 	ui->tagsWidget->prepare(fl);
@@ -105,6 +111,10 @@ void FamilyWidget::setFamily(const QString &family)
 		ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
 		ui->familyPreview->setCurrentIndex( previewModel->index(0) );
 		curVariant = fl.first()->path();
+		ui->activateButton->setChecked(fl.first()->isActivated());
+		ui->activateButton->setEnabled(!fl.first()->isActivated());
+		ui->deactivateButton->setChecked(!fl.first()->isActivated());
+		ui->deactivateButton->setEnabled(fl.first()->isActivated());
 		emit fontSelected(curVariant);
 	}
 }
@@ -151,3 +161,48 @@ void FamilyWidget::slotShowChart()
 	cw->setWindowTitle(QString("%1 - Fontmatrix").arg(fItem->fancyName()));
 	cw->show();
 }
+
+void FamilyWidget::slotActivate(bool c)
+{
+	if(c)
+	{
+//		ui->activateButton->setChecked(true);
+//		ui->activateButton->setEnabled(false);
+//		ui->deactivateButton->setChecked(false);
+//		ui->deactivateButton->setEnabled(true);
+
+		FMActivate::getInstance()->errors();
+		FMActivate::getInstance()->activate(FMFontDb::DB()->FamilySet(family), true);
+		QMap<QString,QString> actErr(FMActivate::getInstance()->errors());
+		if(actErr.count() > 0)
+		{
+			FMActivationReport ar(this, actErr);
+			ar.exec();
+		}
+		setFamily(family);
+		emit familyStateChanged();
+	}
+}
+
+void FamilyWidget::slotDeactivate(bool c)
+{
+	if(c)
+	{
+//		ui->activateButton->setChecked(false);
+//		ui->activateButton->setEnabled(true);
+//		ui->deactivateButton->setChecked(true);
+//		ui->deactivateButton->setEnabled(false);
+
+		FMActivate::getInstance()->errors();
+		FMActivate::getInstance()->activate(FMFontDb::DB()->FamilySet(family), false);
+		QMap<QString,QString> actErr(FMActivate::getInstance()->errors());
+		if(actErr.count() > 0)
+		{
+			FMActivationReport ar(this, actErr);
+			ar.exec();
+		}
+		setFamily(family);
+		emit familyStateChanged();
+	}
+}
+

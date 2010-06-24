@@ -42,9 +42,10 @@ public:
     explicit FamilyWidget(QWidget *parent = 0);
     ~FamilyWidget();
 
-    void setFamily(const QString& family);
+    void setFamily(const QString& f);
     TagsWidget* tagWidget();
     QWebView * info();
+    QString family;
     QString curVariant;
 
 protected:
@@ -59,6 +60,7 @@ private:
 signals:
     void backToList();
     void fontSelected(const QString& path);
+    void familyStateChanged();
 
 private slots:
     void slotPreviewUpdate();
@@ -66,6 +68,8 @@ private slots:
     void slotPreviewSelected(const QModelIndex & index);
     void slotShowSample();
     void slotShowChart();
+    void slotActivate(bool c);
+    void slotDeactivate(bool c);
 };
 
 #endif // FAMILYWIDGET_H

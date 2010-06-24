@@ -33,6 +33,8 @@
 #include <QClipboard>
 #include <QScrollBar>
 #include <QDebug>
+#include <QPrinter>
+#include <QPrintDialog>
 
 ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
     FloatingWidget(parent),
@@ -69,6 +71,7 @@ ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
 
     connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
     connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
+    connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 }
 
 ChartWidget::~ChartWidget()
@@ -416,4 +419,68 @@ void ChartWidget::fillUniPlanesCombo ( FontItem* item )
 
 }
 
+void ChartWidget::slotPrint()
+{
+	FontItem *font(theVeryFont);
+	if(font == 0)
+		return;
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	QPrintDialog dialog(&thePrinter, this);
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Chart") +" - " + font->fancyName() );
 
+	if ( dialog.exec() != QDialog::Accepted )
+		return;
+	thePrinter.setFullPage ( true );
+	QPainter aPainter ( &thePrinter );
+
+
+	double pWidth(thePrinter.paperRect().width());
+	double pHeight(thePrinter.paperRect().height());
+	double pFactor( thePrinter.resolution() );
+
+	qDebug()<<"Paper :"<<pWidth<<pHeight;
+	qDebug()<<"Resolution :"<<pFactor;
+	qDebug()<<"P/R*72:"<<pWidth / pFactor * 72.0<< pHeight / pFactor * 72.0;
+
+	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
+
+
+	QRectF sourceR( 0, 0, pWidth / pFactor * 72.0, pHeight / pFactor * 72.0);
+	QGraphicsScene pScene(sourceR);
+
+	int maxCharcode(0x10FFFF);
+	int beginCharcode(0);
+	int numP(0);
+	bool first(true);
+	while(beginCharcode < maxCharcode)
+	{
+		qDebug() << "Chart("<< ++numP <<") ->"<<beginCharcode<<maxCharcode;
+		QList<QGraphicsItem*> lgit(pScene.items());
+		foreach(QGraphicsItem* git, lgit)
+		{
+			pScene.removeItem(git);
+			delete git;
+		}
+
+		int controlN(maxCharcode - beginCharcode);
+		int stopAtCode( font->renderChart(&pScene, beginCharcode, maxCharcode, sourceR.width(),sourceR.height() ) );
+		qDebug()<< "Control"<<beginCharcode<<stopAtCode;
+
+		if(stopAtCode == beginCharcode)
+			break;
+
+		if(first)
+		{
+			first = false;
+		}
+		else
+		{
+			thePrinter.newPage();
+		}
+		aPainter.drawText(targetR.bottomLeft(), font->fancyName()+"[U"+QString::number(beginCharcode  ,16).toUpper()+", U"+QString::number(stopAtCode ,16).toUpper()+"]");
+		pScene.render(&aPainter,targetR, sourceR, Qt::KeepAspectRatio);
+
+		beginCharcode = stopAtCode;
+	}
+
+}

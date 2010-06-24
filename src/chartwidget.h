@@ -67,6 +67,8 @@ private slots:
     void slotShowULine(bool);
     void slotSearchCharName();
 
+    void slotPrint();
+
 };
 
 #endif // CHARTWIDGET_H

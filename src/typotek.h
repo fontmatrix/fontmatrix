@@ -48,6 +48,7 @@ class QProgressBar;
 // class HelpWidget;
 class HelpBrowser;
 class DataLoader;
+class FloatingWidget;
 
 class typotek:public QMainWindow
 {
@@ -115,6 +116,7 @@ public slots:
 	void slotPrefsPanel(PrefsPanelDialog::PAGE page);
 	void relayStartingStepIn(QString s);
 	void showToltalFilteredFonts();
+	void updateFloatingStatus();
 
 	void hide();
 	void show();
@@ -274,10 +276,15 @@ private:
 	double m_dpiX;
 	double m_dpiY;
 
+	QMap<FloatingWidget*, QAction*> floatingWidgets;
+	QMap<FloatingWidget*, bool> visibleFloatingWidgets;
+
 public:
 	bool isSysFont(FontItem* f);
 	FontItem* getSelectedFont();
 	void resetFilter();
+
+	void registerFloatingWidget(FloatingWidget* w, bool insert);
 
 	QString getManagedDir(){return managedDir.absolutePath();}
 

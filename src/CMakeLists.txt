@@ -8,6 +8,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filterbar.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/floatingwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivationreport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmaltcontext.cpp
@@ -137,6 +138,7 @@ chartwidget.h
 dumpdialog.h
 familywidget.h
 filterbar.h
+floatingwidget.h
 fmactivate.h
 fmaltcontext.h
 fmaltselector.h

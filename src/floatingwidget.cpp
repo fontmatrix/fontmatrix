@@ -18,55 +18,45 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef CHARTWIDGET_H
-#define CHARTWIDGET_H
-
 #include "floatingwidget.h"
+#include "typotek.h"
 
-class QGraphicsScene;
-class FontItem;
-class QGraphicsRectItem;
-
-namespace Ui {
-    class ChartWidget;
+FloatingWidget::FloatingWidget(QWidget *parent) :
+		QWidget(parent)
+{
+	setAttribute(Qt::WA_DeleteOnClose);
+	typotek::getInstance()->registerFloatingWidget(this, true);
 }
 
-class ChartWidget : public FloatingWidget
+FloatingWidget::~FloatingWidget()
 {
-    Q_OBJECT
-
-public:
-    explicit ChartWidget(const QString& fid, FloatingWidget *parent = 0);
-    ~ChartWidget();
-
-protected:
-    void changeEvent(QEvent *e);
-
-private:
-    Ui::ChartWidget *ui;
-
-    QGraphicsScene *abcScene;
-    FontItem *theVeryFont;
-    int fancyGlyphInUse;
-    int fancyGlyphData;
-    QString unMapGlyphName;
-    QString allMappedGlyphName;
-    bool uRangeIsNotEmpty;
-    QGraphicsRectItem *curGlyph;
+	typotek::getInstance()->registerFloatingWidget(this, false);
+}
 
 
-    void fillUniPlanesCombo(FontItem* item);
+void FloatingWidget::setWindowTitleAndType(const QString &t, const QString& type)
+{
+	actionName =  QString("[%1]").arg(type)+QString(" ")+t;
+	setWindowTitle(t + QString(" - Fontmatrix"));
+}
 
-private slots:
-    void slotShowOneGlyph();
-    void slotShowAllGlyph();
-    void slotAdjustGlyphView(int width);
-    void slotUpdateGView();
-    void slotUpdateGViewSingle();
-    void slotPlaneSelected(int);
-    void slotShowULine(bool);
-    void slotSearchCharName();
+bool FloatingWidget::event(QEvent *e)
+{
+	if((e->type() == QEvent::Show) || (e->type() == QEvent::Hide))
+		emit visibilityChange();
 
-};
+	return QWidget::event(e);
+}
 
-#endif // CHARTWIDGET_H
+void FloatingWidget::activate(bool a)
+{
+	if(a)
+	{
+		if(!isVisible())
+			setVisible(true);
+		raise();
+	}
+	else
+		hide();
+}
+

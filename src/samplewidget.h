@@ -21,7 +21,7 @@
 #ifndef SAMPLEWIDGET_H
 #define SAMPLEWIDGET_H
 
-#include <QWidget>
+#include "floatingwidget.h"
 #include <QString>
 #include "fmotf.h"
 
@@ -42,12 +42,12 @@ namespace Ui {
 #define VIEW_PAGE_SETTINGS 1
 #define VIEW_PAGE_SAMPLES  2
 
-class SampleWidget : public QWidget
+class SampleWidget : public FloatingWidget
 {
     Q_OBJECT
 
 public:
-    explicit SampleWidget(const QString& fid, QWidget *parent = 0);
+    explicit SampleWidget(const QString& fid, FloatingWidget *parent = 0);
     ~SampleWidget();
 
     QGraphicsScene* textScene()const;

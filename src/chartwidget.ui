@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>ChartWidget</class>
- <widget class="QWidget" name="ChartWidget">
+ <widget class="FloatingWidget" name="ChartWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,9 +15,40 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="margin">
-    <number>3</number>
+    <number>2</number>
    </property>
    <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="closeButton">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="printButton">
+       <property name="text">
+        <string>Print</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="unicodeCoverageStat">
@@ -97,7 +128,7 @@ Press enter after editing to run the search.</string>
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="FMGlyphsView" name="abcView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -119,7 +150,7 @@ Press enter after editing to run the search.</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="QToolButton" name="clipboardCheck">
@@ -162,6 +193,11 @@ Press enter after editing to run the search.</string>
    <class>FMGlyphsView</class>
    <extends>QGraphicsView</extends>
    <header>fmglyphsview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FloatingWidget</class>
+   <extends>QWidget</extends>
+   <header>floatingwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>

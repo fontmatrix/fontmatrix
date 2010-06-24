@@ -151,16 +151,12 @@ void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 void FamilyWidget::slotShowSample()
 {
 	SampleWidget* sw(new SampleWidget(curVariant));
-	FontItem * fItem(FMFontDb::DB()->Font(curVariant));
-	sw->setWindowTitle(QString("%1 - Fontmatrix").arg(fItem->fancyName()));
 	sw->show();
 }
 
 void FamilyWidget::slotShowChart()
 {
 	ChartWidget* cw(new ChartWidget(curVariant));
-	FontItem * fItem(FMFontDb::DB()->Font(curVariant));
-	cw->setWindowTitle(QString("%1 - Fontmatrix").arg(fItem->fancyName()));
 	cw->show();
 }
 

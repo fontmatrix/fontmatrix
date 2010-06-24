@@ -34,8 +34,8 @@
 #include <QScrollBar>
 #include <QDebug>
 
-ChartWidget::ChartWidget(const QString& fid, QWidget *parent) :
-    QWidget(parent),
+ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
+    FloatingWidget(parent),
     ui(new Ui::ChartWidget),
     theVeryFont(FMFontDb::DB()->Font(fid))
 {
@@ -56,6 +56,8 @@ ChartWidget::ChartWidget(const QString& fid, QWidget *parent) :
     curGlyph = 0;
     fancyGlyphInUse = -1;
 
+    setWindowTitleAndType(theVeryFont->fancyName(), tr("Chart"));
+
     connect ( ui->abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
     connect ( ui->abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
     connect ( ui->abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
@@ -64,6 +66,8 @@ ChartWidget::ChartWidget(const QString& fid, QWidget *parent) :
     connect ( ui->uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
     connect ( ui->clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
     connect ( ui->charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
+
+    connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 ChartWidget::~ChartWidget()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>SampleWidget</class>
- <widget class="QWidget" name="SampleWidget">
+ <widget class="FloatingWidget" name="SampleWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -630,6 +630,11 @@
   </layout>
  </widget>
  <customwidgets>
+   <customwidget>
+   <class>FloatingWidget</class>
+   <extends>QWidget</extends>
+   <header>floatingwidget.h</header>
+  </customwidget>
   <customwidget>
    <class>FMSampleTextView</class>
    <extends>QGraphicsView</extends>

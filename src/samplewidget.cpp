@@ -37,8 +37,8 @@
 #include <QDebug>
 #include <QTimer>
 
-SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
-		QWidget(parent),
+SampleWidget::SampleWidget(const QString& fid, FloatingWidget *parent) :
+		FloatingWidget(parent),
 		ui(new Ui::SampleWidget),
 		fontIdentifier(fid)
 {
@@ -103,6 +103,9 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	FontItem * cf(FMFontDb::DB()->Font(fid));
 	textLayoutVect = new FMLayout(loremScene, cf);
 	textLayoutFT =  new FMLayout(ftScene, cf);
+
+
+	setWindowTitleAndType(cf->fancyName(), tr("Sample"));
 
 	// connections
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));

@@ -24,6 +24,7 @@
 #include "dataexport.h"
 #include "dataloader.h"
 #include "dumpdialog.h"
+#include "floatingwidget.h"
 #include "fmactivate.h"
 #include "fmfontdb.h"
 #include "fmfontextract.h"
@@ -297,7 +298,11 @@ void typotek::closeEvent ( QCloseEvent *event )
 		}
 	}
 
-// 	save();
+	foreach(FloatingWidget *f, floatingWidgets.keys())
+	{
+		f->close();
+	}
+
 	writeSettings();
 	event->accept();
 
@@ -868,12 +873,12 @@ void typotek::createMenus()
 	browseMenu->addAction(nextFont);
 	browseMenu->addAction(previousFont);
 
-	viewMenu = createPopupMenu();
-	if(viewMenu != 0)
-	{
-		viewMenu->setTitle(tr("&View"));
-		menuBar()->addMenu(viewMenu);
-	}
+	viewMenu = menuBar()->addMenu(tr("&View"));
+//	if(viewMenu != 0)
+//	{
+//		viewMenu->setTitle(tr("&View"));
+//		menuBar()->addMenu(viewMenu);
+//	}
 
 #ifdef HAVE_PYTHONQT
 	scriptMenu = menuBar()->addMenu ( tr ( "&Scripts" ) );;
@@ -957,7 +962,7 @@ void typotek::readSettings()
 
 	webBrowser = settings.value("Info/Browser", "Fontmatrix").toString();
 	webBrowserOptions = settings.value("Info/BrowserOptions", "").toString();
-	previewInfoFontSize = settings.value("Info/PreviewSize", 32.0).toDouble();
+	previewInfoFontSize = settings.value("Info/PreviewSize", 20.0).toDouble();
 	
 	infoStyle = settings.value("Info/Style", FMPaths::ResourcesDir() + "info.css").toString();
 
@@ -2500,6 +2505,13 @@ void typotek::hide()
 		dockVisible[k] = dockWidget[k]->isVisible();
 		dockWidget[k]->hide();
 	}
+	visibleFloatingWidgets.clear();
+	foreach(FloatingWidget* f, floatingWidgets.keys())
+	{
+		visibleFloatingWidgets[f] = f->isVisible();
+		f->setVisible(false);
+	}
+
 	QMainWindow::hide();
 }
 
@@ -2509,6 +2521,11 @@ void typotek::show()
 	{
 		dockWidget[k]->setVisible(dockVisible[k]);
 	}
+	foreach(FloatingWidget *f, visibleFloatingWidgets.keys())
+	{
+		f->setVisible(visibleFloatingWidgets[f]);
+	}
+
 	QMainWindow::show();
 }
 
@@ -2531,4 +2548,31 @@ QString typotek::word(FontItem * item, const QString& alt)
 	}
 
 	return m_theWord;
+}
+
+void typotek::registerFloatingWidget(FloatingWidget *w, bool insert)
+{
+	if(insert)
+	{
+		QAction *wa(new QAction(w->windowTitle(),this));
+		wa->setCheckable(true);
+		connect(w, SIGNAL(visibilityChange()), this, SLOT(updateFloatingStatus()));
+		connect(wa, SIGNAL(triggered(bool)), w, SLOT(activate(bool)));
+		floatingWidgets.insert(w, wa);
+		viewMenu->addAction(wa);
+	}
+	else
+	{
+		viewMenu->removeAction(floatingWidgets[w]);
+		floatingWidgets.remove(w);
+	}
+}
+
+void typotek::updateFloatingStatus()
+{
+	foreach(FloatingWidget* f, floatingWidgets.keys())
+	{
+		floatingWidgets[f]->setText(f->getActionName());
+		floatingWidgets[f]->setChecked(f->isVisible());
+	}
 }

@@ -18,55 +18,35 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef CHARTWIDGET_H
-#define CHARTWIDGET_H
+#ifndef FLOATINGWIDGET_H
+#define FLOATINGWIDGET_H
 
-#include "floatingwidget.h"
+#include <QWidget>
+#include <QString>
 
-class QGraphicsScene;
-class FontItem;
-class QGraphicsRectItem;
-
-namespace Ui {
-    class ChartWidget;
-}
-
-class ChartWidget : public FloatingWidget
+class FloatingWidget : public QWidget
 {
-    Q_OBJECT
-
+	Q_OBJECT
 public:
-    explicit ChartWidget(const QString& fid, FloatingWidget *parent = 0);
-    ~ChartWidget();
+	explicit FloatingWidget(QWidget *parent = 0);
+	~FloatingWidget();
 
-protected:
-    void changeEvent(QEvent *e);
+	void setWindowTitleAndType(const QString &t, const QString& type);
+
+	QString getActionName()const{return actionName;}
 
 private:
-    Ui::ChartWidget *ui;
+	QString actionName;
 
-    QGraphicsScene *abcScene;
-    FontItem *theVeryFont;
-    int fancyGlyphInUse;
-    int fancyGlyphData;
-    QString unMapGlyphName;
-    QString allMappedGlyphName;
-    bool uRangeIsNotEmpty;
-    QGraphicsRectItem *curGlyph;
+protected:
+	virtual bool event( QEvent * e );
 
+signals:
+	void visibilityChange();
 
-    void fillUniPlanesCombo(FontItem* item);
-
-private slots:
-    void slotShowOneGlyph();
-    void slotShowAllGlyph();
-    void slotAdjustGlyphView(int width);
-    void slotUpdateGView();
-    void slotUpdateGViewSingle();
-    void slotPlaneSelected(int);
-    void slotShowULine(bool);
-    void slotSearchCharName();
+public slots:
+	void activate(bool a);
 
 };
 
-#endif // CHARTWIDGET_H
+#endif // FLOATINGWIDGET_H

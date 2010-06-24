@@ -98,7 +98,7 @@ void FamilyWidget::slotPreviewUpdateSize(int w)
 	ui->familyPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
 
-void FamilyWidget::setFamily(const QString &f)
+void FamilyWidget::setFamily(const QString &f, unsigned int curIdx )
 {
 	family = f;
 	ui->familyLabel->setText(family);
@@ -107,14 +107,16 @@ void FamilyWidget::setFamily(const QString &f)
 	previewModel->resetBase(fl);
 	if(!fl.isEmpty())
 	{
-		FMInfoDisplay fid(fl.first());
+		FMInfoDisplay fid(fl.at(curIdx));
 		ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
-		ui->familyPreview->setCurrentIndex( previewModel->index(0) );
-		curVariant = fl.first()->path();
-		ui->activateButton->setChecked(fl.first()->isActivated());
-		ui->activateButton->setEnabled(!fl.first()->isActivated());
-		ui->deactivateButton->setChecked(!fl.first()->isActivated());
-		ui->deactivateButton->setEnabled(fl.first()->isActivated());
+		ui->familyPreview->setCurrentIndex( previewModel->index(curIdx) );
+		curVariant = fl.at(curIdx)->path();
+
+		ui->activateButton->setChecked(fl.at(curIdx)->isActivated());
+		ui->activateButton->setEnabled(!fl.at(curIdx)->isActivated());
+		ui->deactivateButton->setChecked(!fl.at(curIdx)->isActivated());
+		ui->deactivateButton->setEnabled(fl.at(curIdx)->isActivated());
+
 		emit fontSelected(curVariant);
 	}
 }
@@ -179,7 +181,7 @@ void FamilyWidget::slotActivate(bool c)
 			FMActivationReport ar(this, actErr);
 			ar.exec();
 		}
-		setFamily(family);
+		setFamily(family, ui->familyPreview->currentIndex().row());
 		emit familyStateChanged();
 	}
 }
@@ -201,7 +203,7 @@ void FamilyWidget::slotDeactivate(bool c)
 			FMActivationReport ar(this, actErr);
 			ar.exec();
 		}
-		setFamily(family);
+		setFamily(family, ui->familyPreview->currentIndex().row());
 		emit familyStateChanged();
 	}
 }

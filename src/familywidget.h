@@ -42,7 +42,7 @@ public:
     explicit FamilyWidget(QWidget *parent = 0);
     ~FamilyWidget();
 
-    void setFamily(const QString& f);
+    void setFamily(const QString& f, unsigned int curIdx = 0);
     TagsWidget* tagWidget();
     QWebView * info();
     QString family;

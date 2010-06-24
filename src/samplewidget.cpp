@@ -139,8 +139,9 @@ SampleWidget::SampleWidget(const QString& fid, FloatingWidget *parent) :
 	connect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 	connect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
-	connect(ui->printButton, SIGNAL(clicked()), this, SLOT(slotPrint()));
-	connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
+	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
+	connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
+	connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
 
 	connect(sysWatcher, SIGNAL(fileChanged(QString)),this, SLOT(slotFileChanged(QString)));
 	connect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));

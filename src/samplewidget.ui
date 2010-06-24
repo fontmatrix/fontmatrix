@@ -596,44 +596,17 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="closeButton">
-       <property name="text">
-        <string>Close</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="printButton">
-       <property name="text">
-        <string>Print</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item row="0" column="0">
+    <widget class="FloatingWidgetToolBar" name="toolbar" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
-   <customwidget>
+  <customwidget>
    <class>FloatingWidget</class>
    <extends>QWidget</extends>
    <header>floatingwidget.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>FMSampleTextView</class>
@@ -655,6 +628,12 @@
    <class>FMAltSelector</class>
    <extends>QWidget</extends>
    <header>fmaltselector.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FloatingWidgetToolBar</class>
+   <extends>QWidget</extends>
+   <header>floatingwidgettoolbar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -17,37 +17,6 @@
    <property name="margin">
     <number>2</number>
    </property>
-   <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QPushButton" name="closeButton">
-       <property name="text">
-        <string>Close</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="printButton">
-       <property name="text">
-        <string>Print</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -186,18 +155,28 @@ Press enter after editing to run the search.</string>
      </item>
     </layout>
    </item>
+   <item row="0" column="0">
+    <widget class="FloatingWidgetToolBar" name="toolbar" native="true"/>
+   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FMGlyphsView</class>
-   <extends>QGraphicsView</extends>
-   <header>fmglyphsview.h</header>
-  </customwidget>
-  <customwidget>
    <class>FloatingWidget</class>
    <extends>QWidget</extends>
    <header>floatingwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FloatingWidgetToolBar</class>
+   <extends>QWidget</extends>
+   <header>floatingwidgettoolbar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FMGlyphsView</class>
+   <extends>QGraphicsView</extends>
+   <header>fmglyphsview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

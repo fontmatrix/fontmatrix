@@ -67,7 +67,8 @@ ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
     connect ( ui->clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
     connect ( ui->charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
 
-    connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
+    connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
 }
 
 ChartWidget::~ChartWidget()

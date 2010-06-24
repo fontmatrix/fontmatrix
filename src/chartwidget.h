@@ -44,9 +44,9 @@ protected:
 
 private:
     Ui::ChartWidget *ui;
+    const QString fontIdentifier;
 
     QGraphicsScene *abcScene;
-    FontItem *theVeryFont;
     int fancyGlyphInUse;
     int fancyGlyphData;
     QString unMapGlyphName;

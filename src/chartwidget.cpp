@@ -37,66 +37,67 @@
 #include <QPrintDialog>
 
 ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
-    FloatingWidget(parent),
-    ui(new Ui::ChartWidget),
-    theVeryFont(FMFontDb::DB()->Font(fid))
+		FloatingWidget(parent),
+		ui(new Ui::ChartWidget),
+		fontIdentifier(fid)
 {
-    ui->setupUi(this);
-    ui->uniLine->setEnabled(false);
-    abcScene = new QGraphicsScene;
-    ui->abcView->setScene ( abcScene );
-    ui->abcView->setRenderHint ( QPainter::Antialiasing, true );
-    QStringListModel* cslModel(new QStringListModel);
-    cslModel->setStringList(theVeryFont->getNames());
-    QCompleter* cslCompleter(new QCompleter(ui->charSearchLine));
-    cslCompleter->setModel(cslModel);
-    ui->charSearchLine->setCompleter(cslCompleter);
-    unMapGlyphName = tr("Un-Mapped Glyphs");
-    allMappedGlyphName = tr("View all mapped glyphs");
-    uRangeIsNotEmpty = false;
-    fillUniPlanesCombo(theVeryFont);
-    curGlyph = 0;
-    fancyGlyphInUse = -1;
+	FontItem * theVeryFont(FMFontDb::DB()->Font(fontIdentifier));
+	ui->setupUi(this);
+	ui->uniLine->setEnabled(false);
+	abcScene = new QGraphicsScene;
+	ui->abcView->setScene ( abcScene );
+	ui->abcView->setRenderHint ( QPainter::Antialiasing, true );
+	QStringListModel* cslModel(new QStringListModel);
+	cslModel->setStringList(theVeryFont->getNames());
+	QCompleter* cslCompleter(new QCompleter(ui->charSearchLine));
+	cslCompleter->setModel(cslModel);
+	ui->charSearchLine->setCompleter(cslCompleter);
+	unMapGlyphName = tr("Un-Mapped Glyphs");
+	allMappedGlyphName = tr("View all mapped glyphs");
+	uRangeIsNotEmpty = false;
+	fillUniPlanesCombo(theVeryFont);
+	curGlyph = 0;
+	fancyGlyphInUse = -1;
 
-    setWindowTitleAndType(theVeryFont->fancyName(), tr("Chart"));
+	setWindowTitleAndType(theVeryFont->fancyName(), tr("Chart"));
 
-    connect ( ui->abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
-    connect ( ui->abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
-    connect ( ui->abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
-    connect ( ui->abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
-    connect ( ui->abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
-    connect ( ui->uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
-    connect ( ui->clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
-    connect ( ui->charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
+	connect ( ui->abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
+	connect ( ui->abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
+	connect ( ui->abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
+	connect ( ui->abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
+	connect ( ui->abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
+	connect ( ui->uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
+	connect ( ui->clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
+	connect ( ui->charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
 
-    connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
-    connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
-    connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
+	connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
+	connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
+	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 }
 
 ChartWidget::~ChartWidget()
 {
-    delete ui;
-    delete abcScene;
-    delete curGlyph;
+	delete ui;
+	delete abcScene;
+	delete curGlyph;
 }
 
 void ChartWidget::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui->retranslateUi(this);
+		break;
+	default:
+		break;
+	}
 }
 
 
 void ChartWidget::slotShowOneGlyph()
 {
-//	qDebug() <<"slotShowOneGlyph()"<<abcScene->selectedItems().count();
+	//	qDebug() <<"slotShowOneGlyph()"<<abcScene->selectedItems().count();
 	if ( abcScene->selectedItems().isEmpty() )
 		return;
 	if ( ui->abcView->lock() )
@@ -117,12 +118,12 @@ void ChartWidget::slotShowOneGlyph()
 					ui->uniLine->setText(ui->uniLine->text() + simpleC);
 				}
 				else
-					fancyGlyphInUse = theVeryFont->showFancyGlyph ( ui->abcView, fancyGlyphData );
+					fancyGlyphInUse = FMFontDb::DB()->Font(fontIdentifier)->showFancyGlyph ( ui->abcView, fancyGlyphData );
 			}
 			else // Is a glyph index
 			{
 				fancyGlyphData = curGlyph->data ( 2 ).toInt();
-				fancyGlyphInUse = theVeryFont->showFancyGlyph ( ui->abcView, fancyGlyphData , true );
+				fancyGlyphInUse = FMFontDb::DB()->Font(fontIdentifier)->showFancyGlyph ( ui->abcView, fancyGlyphData , true );
 			}
 			if ( fancyGlyphInUse < 0 )
 			{
@@ -140,26 +141,24 @@ void ChartWidget::slotShowOneGlyph()
 
 void ChartWidget::slotShowAllGlyph()
 {
-// 	qDebug() <<"slotShowAllGlyph()";
+	// 	qDebug() <<"slotShowAllGlyph()";
 	if ( fancyGlyphInUse < 0 )
 		return;
 	if ( ui->abcView->lock() )
 	{
-// 		qDebug()<<"View Locked";
-		theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
+		// 		qDebug()<<"View Locked";
+		FMFontDb::DB()->Font(fontIdentifier)->hideFancyGlyph ( fancyGlyphInUse );
 		fancyGlyphInUse = -1;
 		ui->abcView->setState ( FMGlyphsView::AllView );
 
 		ui->abcView->unlock();
 	}
-// 	qDebug() <<"ENDOF slotShowAllGlyph()";
+	// 	qDebug() <<"ENDOF slotShowAllGlyph()";
 }
 
 void ChartWidget::slotUpdateGView()
 {
-// 	qDebug()<<"slotUpdateGView"<<uniPlaneCombo->currentText();
-// 	printBacktrace(32);
-	// If all is how I think it must be, we don’t need to check anything here :)
+	FontItem * theVeryFont(FMFontDb::DB()->Font(fontIdentifier));
 	if(theVeryFont && ui->abcView->lock())
 	{
 		QPair<int,int> uniPair;
@@ -186,11 +185,11 @@ void ChartWidget::slotUpdateGView()
 
 void ChartWidget::slotAdjustGlyphView ( int width )
 {
-	if ( !theVeryFont )
-		return;
+//	if ( !theVeryFont )
+//		return;
 
-// 	theVeryFont->adjustGlyphsPerRow ( width );
-//	slotView ( true );
+	// 	theVeryFont->adjustGlyphsPerRow ( width );
+	//	slotView ( true );
 }
 
 
@@ -198,22 +197,22 @@ void ChartWidget::slotAdjustGlyphView ( int width )
 
 void ChartWidget::slotUpdateGViewSingle()
 {
-// 	qDebug()<<"slotUpdateGViewSingle";
+	FontItem * theVeryFont(FMFontDb::DB()->Font(fontIdentifier));
 	if ( theVeryFont && ui->abcView->lock())
 	{
-// 			qDebug() <<"1.FGI"<<fancyGlyphInUse;
-			theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
-			if ( fancyGlyphData > 0 ) // Is a codepoint
-			{
-				fancyGlyphInUse = theVeryFont->showFancyGlyph ( ui->abcView, fancyGlyphData );
-// 				qDebug() <<"2.FGI"<<fancyGlyphInUse;
-			}
-			else // Is a glyph index
-			{
-				fancyGlyphInUse = theVeryFont->showFancyGlyph ( ui->abcView, fancyGlyphData , true );
-// 				qDebug() <<"3.FGI"<<fancyGlyphInUse;
-			}
-			ui->abcView->unlock();
+		// 			qDebug() <<"1.FGI"<<fancyGlyphInUse;
+		theVeryFont->hideFancyGlyph ( fancyGlyphInUse );
+		if ( fancyGlyphData > 0 ) // Is a codepoint
+		{
+			fancyGlyphInUse = theVeryFont->showFancyGlyph ( ui->abcView, fancyGlyphData );
+			// 				qDebug() <<"2.FGI"<<fancyGlyphInUse;
+		}
+		else // Is a glyph index
+		{
+			fancyGlyphInUse = theVeryFont->showFancyGlyph ( ui->abcView, fancyGlyphData , true );
+			// 				qDebug() <<"3.FGI"<<fancyGlyphInUse;
+		}
+		ui->abcView->unlock();
 
 	}
 
@@ -222,7 +221,8 @@ void ChartWidget::slotUpdateGViewSingle()
 
 void ChartWidget::slotPlaneSelected ( int i )
 {
-//	qDebug()<<"slotPlaneSelected"<<i<<uniPlaneCombo->currentIndex();
+	//	qDebug()<<"slotPlaneSelected"<<i<<uniPlaneCombo->currentIndex();
+	FontItem * theVeryFont(FMFontDb::DB()->Font(fontIdentifier));
 	if(i != ui->uniPlaneCombo->currentIndex())
 		ui->uniPlaneCombo->setCurrentIndex(i);
 
@@ -252,15 +252,16 @@ void ChartWidget::slotShowULine(bool checked)
 
 void ChartWidget::slotSearchCharName()
 {
+	FontItem * theVeryFont(FMFontDb::DB()->Font(fontIdentifier));
 	if(!theVeryFont)
 		return;
 	QString name(ui->charSearchLine->text());
 	unsigned short cc(0);
 	bool searchCodepoint(false);
 	if(name.startsWith("U+")
-		  || name.startsWith("u+")
-		  || name.startsWith("+"))
-	{
+		|| name.startsWith("u+")
+		|| name.startsWith("+"))
+		{
 		QString vString(name.mid(name.indexOf("+")));
 		bool ok(false);
 		cc = vString.toInt(&ok, 16);
@@ -270,11 +271,11 @@ void ChartWidget::slotSearchCharName()
 	}
 	else
 		cc = theVeryFont->getNamedChar(name);
-// 	qDebug()<<"CS"<<name<<cc;
+	// 	qDebug()<<"CS"<<name<<cc;
 	if(!cc)
 	{
 		// TODO display a usefull message
-// 		charSearchLine->clear();
+		// 		charSearchLine->clear();
 		return;
 	}
 
@@ -282,8 +283,8 @@ void ChartWidget::slotSearchCharName()
 	{
 		QPair<int,int> p(FMUniBlocks::interval(key));
 		if((cc >= p.first)
-		  && (cc <= p.second))
-		{
+			&& (cc <= p.second))
+			{
 			int idx(ui->uniPlaneCombo->findText(key));
 			slotPlaneSelected(idx);
 			int sv(0);
@@ -299,8 +300,8 @@ void ChartWidget::slotSearchCharName()
 				foreach(QGraphicsItem* sit, abcScene->items())
 				{
 					if((sit->data(1).toString() == "select")
-					&& (sit->data(3).toInt() == cc))
-					{
+						&& (sit->data(3).toInt() == cc))
+						{
 						QGraphicsRectItem* ms(reinterpret_cast<QGraphicsRectItem*> (sit));
 						if(ms)
 						{
@@ -337,8 +338,8 @@ void ChartWidget::slotSearchCharName()
 			foreach(QGraphicsItem* sit, abcScene->items())
 			{
 				if((sit->data(1).toString() == "select")
-								&& (sit->data(3).toInt() == cc))
-				{
+					&& (sit->data(3).toInt() == cc))
+					{
 					QGraphicsRectItem* ms(reinterpret_cast<QGraphicsRectItem*> (sit));
 					if(ms)
 					{
@@ -361,7 +362,7 @@ void ChartWidget::slotSearchCharName()
 void ChartWidget::fillUniPlanesCombo ( FontItem* item )
 {
 	QString stickyRange(ui->uniPlaneCombo->currentText());
-// 	qDebug()<<"STiCKyRaNGe :: "<<stickyRange;
+	// 	qDebug()<<"STiCKyRaNGe :: "<<stickyRange;
 	int stickyIndex(0);
 
 	ui->uniPlaneCombo->clear();
@@ -381,7 +382,7 @@ void ChartWidget::fillUniPlanesCombo ( FontItem* item )
 		int codecount ( item->countCoverage ( begin , end ) );
 		if ( codecount > 0 )
 		{
-// 			qDebug() << p << codecount;
+			// 			qDebug() << p << codecount;
 			ui->uniPlaneCombo->addItem ( block );
 			if(block == stickyRange)
 			{
@@ -421,7 +422,7 @@ void ChartWidget::fillUniPlanesCombo ( FontItem* item )
 
 void ChartWidget::slotPrint()
 {
-	FontItem *font(theVeryFont);
+	FontItem *font(FMFontDb::DB()->Font(fontIdentifier));
 	if(font == 0)
 		return;
 	QPrinter thePrinter ( QPrinter::HighResolution );

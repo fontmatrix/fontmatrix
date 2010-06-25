@@ -60,7 +60,20 @@ ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
 	fancyGlyphInUse = -1;
 
 	setWindowTitleAndType(theVeryFont->fancyName(), tr("Chart"));
+	createConnections();
 
+}
+
+ChartWidget::~ChartWidget()
+{
+	removeConnections();
+	delete ui;
+	delete abcScene;
+	delete curGlyph;
+}
+
+void ChartWidget::createConnections()
+{
 	connect ( ui->abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
 	connect ( ui->abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
 	connect ( ui->abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
@@ -75,11 +88,20 @@ ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
 	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 }
 
-ChartWidget::~ChartWidget()
+void ChartWidget::removeConnections()
 {
-	delete ui;
-	delete abcScene;
-	delete curGlyph;
+	disconnect ( ui->abcView,SIGNAL ( pleaseShowSelected() ),this,SLOT ( slotShowOneGlyph() ) );
+	disconnect ( ui->abcView,SIGNAL ( pleaseShowAll() ),this,SLOT ( slotShowAllGlyph() ) );
+	disconnect ( ui->abcView,SIGNAL ( refit ( int ) ),this,SLOT ( slotAdjustGlyphView ( int ) ) );
+	disconnect ( ui->abcView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateGView()));
+	disconnect ( ui->abcView, SIGNAL(pleaseUpdateSingle()), this, SLOT(slotUpdateGViewSingle()));
+	disconnect ( ui->uniPlaneCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotPlaneSelected ( int ) ) );
+	disconnect ( ui->clipboardCheck, SIGNAL (toggled ( bool )),this,SLOT(slotShowULine(bool)));
+	disconnect ( ui->charSearchLine, SIGNAL(returnPressed()), this, SLOT(slotSearchCharName()));
+
+	disconnect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
+	disconnect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
+	disconnect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 }
 
 void ChartWidget::changeEvent(QEvent *e)

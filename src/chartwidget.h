@@ -55,6 +55,8 @@ private:
     QGraphicsRectItem *curGlyph;
 
 
+    void createConnections();
+    void removeConnections();
     void fillUniPlanesCombo(FontItem* item);
 
 private slots:

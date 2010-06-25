@@ -75,6 +75,9 @@ private:
     QFileSystemWatcher *sysWatcher;
     QTimer *reloadTimer;
 
+    void createConnections();
+    void removeConnections();
+
     void fillOTTree();
     OTFSet deFillOTTree();
 

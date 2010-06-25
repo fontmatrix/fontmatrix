@@ -106,7 +106,22 @@ SampleWidget::SampleWidget(const QString& fid, FloatingWidget *parent) :
 
 
 	setWindowTitleAndType(cf->fancyName(), tr("Sample"));
+	createConnections();
+	slotView(true);
+}
 
+SampleWidget::~SampleWidget()
+{
+	removeConnections();
+	delete ui;
+	delete loremScene;
+	delete ftScene;
+	delete textLayoutFT;
+	delete textLayoutVect;
+}
+
+void SampleWidget::createConnections()
+{
 	// connections
 	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
 	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
@@ -145,17 +160,48 @@ SampleWidget::SampleWidget(const QString& fid, FloatingWidget *parent) :
 
 	connect(sysWatcher, SIGNAL(fileChanged(QString)),this, SLOT(slotFileChanged(QString)));
 	connect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));
-
-	slotView(true);
 }
 
-SampleWidget::~SampleWidget()
+
+void SampleWidget::removeConnections()
 {
-	delete ui;
-	delete loremScene;
-	delete ftScene;
-	delete textLayoutFT;
-	delete textLayoutVect;
+	disconnect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
+	disconnect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
+
+	disconnect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	disconnect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+	disconnect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+
+	disconnect ( ui->loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
+	disconnect ( ui->loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+
+	disconnect ( ui->loremView_FT, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+	disconnect ( ui->loremView_FT, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateRView()));
+
+	disconnect ( textLayoutVect, SIGNAL(updateLayout()),this, SLOT(slotView()));
+	disconnect ( this, SIGNAL(stopLayout()), textLayoutVect,SLOT(stopLayout()));
+	disconnect ( textLayoutFT, SIGNAL(updateLayout()),this, SLOT(slotView()));
+	disconnect ( this, SIGNAL(stopLayout()), textLayoutFT,SLOT(stopLayout()));
+
+	disconnect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
+	disconnect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
+	disconnect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
+
+	disconnect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
+	disconnect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
+	disconnect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
+	disconnect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+	disconnect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+
+	disconnect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
+	disconnect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
+
+	disconnect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
+	disconnect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
+	disconnect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
+
+	disconnect(sysWatcher, SIGNAL(fileChanged(QString)),this, SLOT(slotFileChanged(QString)));
+	disconnect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));
 }
 
 void SampleWidget::changeEvent(QEvent *e)

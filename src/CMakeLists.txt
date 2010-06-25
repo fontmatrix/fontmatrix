@@ -9,6 +9,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filterbar.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/floatingwidgetsregister.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidgettoolbar.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivate.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmactivationreport.cpp

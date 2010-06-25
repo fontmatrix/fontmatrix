@@ -25,6 +25,7 @@
 #include "fmfontdb.h"
 #include "fontitem.h"
 #include "fminfodisplay.h"
+#include "floatingwidgetsregister.h"
 #include "samplewidget.h"
 #include "chartwidget.h"
 #include "fmactivate.h"
@@ -153,14 +154,30 @@ void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 
 void FamilyWidget::slotShowSample()
 {
-	SampleWidget* sw(new SampleWidget(curVariant));
-	sw->show();
+	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, QString("Sample")));
+	if(fw == 0)
+	{
+		SampleWidget *sw(new SampleWidget(curVariant));
+		sw->show();
+	}
+	else
+	{
+		fw->show();
+	}
 }
 
 void FamilyWidget::slotShowChart()
 {
-	ChartWidget* cw(new ChartWidget(curVariant));
-	cw->show();
+	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, QString("Sample")));
+	if(fw == 0)
+	{
+		ChartWidget *cw(new ChartWidget(curVariant));
+		cw->show();
+	}
+	else
+	{
+		fw->show();
+	}
 }
 
 void FamilyWidget::slotActivate(bool c)

@@ -27,16 +27,17 @@
 class FloatingWidget : public QWidget
 {
 	Q_OBJECT
-public:
-	explicit FloatingWidget(QWidget *parent = 0);
-	~FloatingWidget();
 
-	void setWindowTitleAndType(const QString &t, const QString& type);
+	explicit FloatingWidget(QWidget *parent = 0){}
+public:
+	explicit FloatingWidget(const QString &f, const QString& typ, QWidget *parent = 0);
+	~FloatingWidget();
 
 	QString getActionName()const{return actionName;}
 
 private:
 	QString actionName;
+	QString wTitle;
 
 protected:
 	virtual bool event( QEvent * e );

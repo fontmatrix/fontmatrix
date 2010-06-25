@@ -18,61 +18,32 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FAMILYWIDGET_H
-#define FAMILYWIDGET_H
+#ifndef FLOATINGWIDGETSREGISTER_H
+#define FLOATINGWIDGETSREGISTER_H
 
-#include <QWidget>
+//#include <QObject>
+#include <QMap>
+#include <QPointer>
+#include <QString>
 #include <QList>
-#include <QModelIndex>
 
-class FMPreviewModel;
-class FontItem;
-class TagsWidget;
-class QWebView;
-class SampleWidget;
-class ChartWidget;
+class FloatingWidget;
 
-namespace Ui {
-    class FamilyWidget;
-}
-
-class FamilyWidget : public QWidget
+class FloatingWidgetsRegister
 {
-    Q_OBJECT
-
+	static FloatingWidgetsRegister * instance;
+	FloatingWidgetsRegister();
+	~FloatingWidgetsRegister(){}
+	static FloatingWidgetsRegister* that();
 public:
-    explicit FamilyWidget(QWidget *parent = 0);
-    ~FamilyWidget();
-
-    void setFamily(const QString& f, unsigned int curIdx = 0);
-    TagsWidget* tagWidget();
-    QWebView * info();
-    QString family;
-    QString curVariant;
-
-protected:
-    void changeEvent(QEvent *e);
-
-    void buildList(const QList<FontItem*>& fl);
+	static void Register(FloatingWidget* f, const QString& fid, const QString& typ);
+	static FloatingWidget* Widget(const QString& fid, const QString& typ);
+	static QList<FloatingWidget*> AllWidgets();
 
 private:
-    Ui::FamilyWidget *ui;
-    FMPreviewModel * previewModel;
+	QMap< QString, QMap < QString, QPointer<FloatingWidget> > > fwMap; // map[ type , [ fontID , pointer ] ]
 
-signals:
-    void backToList();
-    void fontSelected(const QString& path);
-    void familyStateChanged();
-
-private slots:
-    void slotPreviewUpdate();
-    void slotPreviewUpdateSize(int);
-    void slotPreviewSelected(const QModelIndex & index);
-    void slotShowSample();
-    void slotShowChart();
-    void slotActivate(bool c);
-    void slotDeactivate(bool c);
 
 };
 
-#endif // FAMILYWIDGET_H
+#endif // FLOATINGWIDGETSREGISTER_H

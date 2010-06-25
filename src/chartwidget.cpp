@@ -37,7 +37,7 @@
 #include <QPrintDialog>
 
 ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
-		FloatingWidget(parent),
+		FloatingWidget(fid, QString("Chart"), parent),
 		ui(new Ui::ChartWidget),
 		fontIdentifier(fid)
 {
@@ -59,13 +59,14 @@ ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
 	curGlyph = 0;
 	fancyGlyphInUse = -1;
 
-	setWindowTitleAndType(theVeryFont->fancyName(), tr("Chart"));
 	createConnections();
 
 }
 
 ChartWidget::~ChartWidget()
 {
+	// As we're about to delete the scene, we must tell FontItem to clear its cache
+	FMFontDb::DB()->Font(fontIdentifier)->deRenderAll();
 	removeConnections();
 	delete ui;
 	delete abcScene;

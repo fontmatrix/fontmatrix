@@ -25,6 +25,7 @@
 #include "dataloader.h"
 #include "dumpdialog.h"
 #include "floatingwidget.h"
+#include "floatingwidgetsregister.h"
 #include "fmactivate.h"
 #include "fmfontdb.h"
 #include "fmfontextract.h"
@@ -298,7 +299,7 @@ void typotek::closeEvent ( QCloseEvent *event )
 		}
 	}
 
-	foreach(FloatingWidget *f, floatingWidgets.keys())
+	foreach(FloatingWidget *f, FloatingWidgetsRegister::AllWidgets())
 	{
 		f->close();
 	}
@@ -874,6 +875,7 @@ void typotek::createMenus()
 	browseMenu->addAction(previousFont);
 
 	viewMenu = menuBar()->addMenu(tr("&View"));
+	connect(viewMenu, SIGNAL(aboutToShow()), this,SLOT(updateFloatingStatus()));
 //	if(viewMenu != 0)
 //	{
 //		viewMenu->setTitle(tr("&View"));
@@ -2506,7 +2508,7 @@ void typotek::hide()
 		dockWidget[k]->hide();
 	}
 	visibleFloatingWidgets.clear();
-	foreach(FloatingWidget* f, floatingWidgets.keys())
+	foreach(FloatingWidget* f, FloatingWidgetsRegister::AllWidgets())
 	{
 		visibleFloatingWidgets[f] = f->isVisible();
 		f->setVisible(false);
@@ -2550,29 +2552,34 @@ QString typotek::word(FontItem * item, const QString& alt)
 	return m_theWord;
 }
 
-void typotek::registerFloatingWidget(FloatingWidget *w, bool insert)
-{
-	if(insert)
-	{
-		QAction *wa(new QAction(w->windowTitle(),this));
-		wa->setCheckable(true);
-		connect(w, SIGNAL(visibilityChange()), this, SLOT(updateFloatingStatus()));
-		connect(wa, SIGNAL(triggered(bool)), w, SLOT(activate(bool)));
-		floatingWidgets.insert(w, wa);
-		viewMenu->addAction(wa);
-	}
-	else
-	{
-		viewMenu->removeAction(floatingWidgets[w]);
-		floatingWidgets.remove(w);
-	}
-}
 
 void typotek::updateFloatingStatus()
 {
+	QList<FloatingWidget*> fwl(FloatingWidgetsRegister::AllWidgets());
 	foreach(FloatingWidget* f, floatingWidgets.keys())
 	{
-		floatingWidgets[f]->setText(f->getActionName());
-		floatingWidgets[f]->setChecked(f->isVisible());
+		if(!fwl.contains(f))
+		{
+			viewMenu->removeAction(floatingWidgets[f]);
+			floatingWidgets.remove(f);
+		}
+	}
+
+	foreach(FloatingWidget* f, fwl)
+	{
+		if(floatingWidgets.contains(f))
+		{
+			floatingWidgets[f]->setChecked(f->isVisible());
+		}
+		else
+		{
+			QAction *wa(new QAction(f->getActionName(),this));
+			wa->setCheckable(true);
+			connect(f, SIGNAL(visibilityChange()), this, SLOT(updateFloatingStatus()));
+			connect(wa, SIGNAL(triggered(bool)), f, SLOT(activate(bool)));
+			floatingWidgets.insert(f,  wa);
+			floatingWidgets[f]->setChecked(f->isVisible());
+			viewMenu->addAction(wa);
+		}
 	}
 }

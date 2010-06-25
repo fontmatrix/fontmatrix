@@ -38,7 +38,7 @@
 #include <QTimer>
 
 SampleWidget::SampleWidget(const QString& fid, FloatingWidget *parent) :
-		FloatingWidget(parent),
+		FloatingWidget(fid, QString("Sample"), parent),
 		ui(new Ui::SampleWidget),
 		fontIdentifier(fid)
 {
@@ -105,7 +105,6 @@ SampleWidget::SampleWidget(const QString& fid, FloatingWidget *parent) :
 	textLayoutFT =  new FMLayout(ftScene, cf);
 
 
-	setWindowTitleAndType(cf->fancyName(), tr("Sample"));
 	createConnections();
 	slotView(true);
 }

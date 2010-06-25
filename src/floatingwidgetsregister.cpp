@@ -18,61 +18,61 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FAMILYWIDGET_H
-#define FAMILYWIDGET_H
+#include "floatingwidgetsregister.h"
 
-#include <QWidget>
-#include <QList>
-#include <QModelIndex>
+#include "floatingwidget.h"
 
-class FMPreviewModel;
-class FontItem;
-class TagsWidget;
-class QWebView;
-class SampleWidget;
-class ChartWidget;
+FloatingWidgetsRegister * FloatingWidgetsRegister::instance = 0;
 
-namespace Ui {
-    class FamilyWidget;
+FloatingWidgetsRegister::FloatingWidgetsRegister()
+{
 }
 
-class FamilyWidget : public QWidget
+FloatingWidgetsRegister * FloatingWidgetsRegister::that()
 {
-    Q_OBJECT
+	if(instance == 0)
+		instance = new FloatingWidgetsRegister;
+	return instance;
+}
 
-public:
-    explicit FamilyWidget(QWidget *parent = 0);
-    ~FamilyWidget();
 
-    void setFamily(const QString& f, unsigned int curIdx = 0);
-    TagsWidget* tagWidget();
-    QWebView * info();
-    QString family;
-    QString curVariant;
+void FloatingWidgetsRegister::Register(FloatingWidget * f, const QString &fid, const QString &typ)
+{
+	FloatingWidgetsRegister *fwr(that());
+	fwr->fwMap[typ][fid] = f;
+}
 
-protected:
-    void changeEvent(QEvent *e);
+FloatingWidget * FloatingWidgetsRegister::Widget(const QString &fid, const QString &typ)
+{
+	FloatingWidgetsRegister *fwr(that());
+	if(fwr->fwMap.contains(typ))
+	{
+		if(fwr->fwMap[typ].contains(fid))
+		{
+			if(fwr->fwMap[typ][fid].isNull())
+				fwr->fwMap[typ].remove(fid);
+			else
+				return fwr->fwMap[typ][fid];
+		}
+	}
+	return 0;
+}
 
-    void buildList(const QList<FontItem*>& fl);
+QList<FloatingWidget*> FloatingWidgetsRegister::AllWidgets()
+{
+	QList<FloatingWidget*> ret;
+	FloatingWidgetsRegister *fwr(that());
+	ret.clear();
+	foreach(QString t, fwr->fwMap.keys())
+	{
+		foreach(QString f, fwr->fwMap[t].keys())
+		{
+			if(fwr->fwMap[t][f].isNull())
+				fwr->fwMap[t].remove(f);
+			else
+				ret << fwr->fwMap[t][f].data();
+		}
+	}
+	return ret;
+}
 
-private:
-    Ui::FamilyWidget *ui;
-    FMPreviewModel * previewModel;
-
-signals:
-    void backToList();
-    void fontSelected(const QString& path);
-    void familyStateChanged();
-
-private slots:
-    void slotPreviewUpdate();
-    void slotPreviewUpdateSize(int);
-    void slotPreviewSelected(const QModelIndex & index);
-    void slotShowSample();
-    void slotShowChart();
-    void slotActivate(bool c);
-    void slotDeactivate(bool c);
-
-};
-
-#endif // FAMILYWIDGET_H

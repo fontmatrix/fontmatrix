@@ -1599,22 +1599,6 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 	return retValue + 1;
 }
 
-//deprecated
-void FontItem::deRender ( QGraphicsScene *scene )
-{
-	QList<int> rem;
-	for ( int i = 0; i < pixList.count(); ++i )
-	{
-		if ( pixList[i]->scene() == scene )
-		{
-			scene->removeItem ( pixList[i] );
-			rem.append ( i );
-		}
-	}
-	for ( int i = rem.count() - 1; i >= 0; --i )
-		pixList.removeAt ( rem[i] );
-
-}
 
 void FontItem::deRenderAll()
 {
@@ -1801,11 +1785,16 @@ void FontItem::renderAll ( QGraphicsScene * scene , int begin_code, int end_code
 {
 
 	ensureFace();
-// 	if ( allIsRendered )
-// 		return;
-//        scene->blockSignals(true);
-	FMGlyphsView *allView = reinterpret_cast<FMGlyphsView*> ( scene->views() [0] );
-//        qDebug() <<"renderAll("<< begin_code<<","<<end_code <<")";
+
+	FMGlyphsView *allView(0);
+	if(scene->views().count() > 0)
+		allView = reinterpret_cast<FMGlyphsView*> ( scene->views() [0] );
+	else
+	{
+		releaseFace();
+		return;
+	}
+
 	deRenderAll();
 	if ( !allView->isVisible() )
 	{

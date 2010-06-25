@@ -284,7 +284,6 @@ public:
 	FontItem* getSelectedFont();
 	void resetFilter();
 
-	void registerFloatingWidget(FloatingWidget* w, bool insert);
 
 	QString getManagedDir(){return managedDir.absolutePath();}
 

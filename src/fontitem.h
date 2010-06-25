@@ -307,8 +307,7 @@ class FontItem : public QObject
 		void renderAll ( QGraphicsScene *scene, int begin_code, int end_code );
 		//return count codes that remain
 		int renderChart(QGraphicsScene *scene, int begin_code, int end_code ,double pwidth, double pheight);
-		
-		void deRender ( QGraphicsScene *scene );
+
 		void deRenderAll();
 		
 		//Return a ref that will be asked for destroy the element. -1 if failed

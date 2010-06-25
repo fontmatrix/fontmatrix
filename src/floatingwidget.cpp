@@ -19,29 +19,33 @@
  ***************************************************************************/
 
 #include "floatingwidget.h"
+#include "floatingwidgetsregister.h"
 #include "typotek.h"
+#include "fmfontdb.h"
+#include "fontitem.h"
 
-FloatingWidget::FloatingWidget(QWidget *parent) :
+FloatingWidget::FloatingWidget(const QString &f, const QString& typ, QWidget *parent) :
 		QWidget(parent)
 {
 	setAttribute(Qt::WA_DeleteOnClose);
-	typotek::getInstance()->registerFloatingWidget(this, true);
+	QString fn(FMFontDb::DB()->Font(f)->fancyName());
+	actionName =  QString("[%1]").arg(typ) + QString(" ") + fn;
+	wTitle =  fn + QString(" - Fontmatrix");
+	setProperty("windowTitle", wTitle);
+	FloatingWidgetsRegister::Register(this, f, typ);
 }
 
 FloatingWidget::~FloatingWidget()
 {
-	typotek::getInstance()->registerFloatingWidget(this, false);
 }
 
-
-void FloatingWidget::setWindowTitleAndType(const QString &t, const QString& type)
-{
-	actionName =  QString("[%1]").arg(type)+QString(" ")+t;
-	setWindowTitle(t + QString(" - Fontmatrix"));
-}
 
 bool FloatingWidget::event(QEvent *e)
 {
+//	if(windowTitle().isEmpty())
+//	{
+//		QWidget::setWindowTitle(wTitle);
+//	}
 	if((e->type() == QEvent::Show) || (e->type() == QEvent::Hide))
 		emit visibilityChange();
 

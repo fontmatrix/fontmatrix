@@ -184,9 +184,11 @@ FMPreviewModel::FMPreviewModel( QObject * pa , FMPreviewView * wPa,  QList<FontI
 	QSettings settings;
 	styleTooltipName = settings.value("Preview/StyleTooltipName","font-weight:bold;").toString();
 	styleTooltipPath = settings.value("Preview/StyleTooltipPath","font-weight:normal;font-size:small;").toString();
+	styleTooltipTags = settings.value("Preview/StyleTooltipTags","text-align:right;font-weight:normal;font-size:small;font-style:italic;").toString();
 	
 	settings.setValue("Preview/StyleTooltipName", styleTooltipName);
 	settings.setValue("Preview/StyleTooltipPath", styleTooltipPath);
+	settings.setValue("Preview/StyleTooltipTags", styleTooltipTags);
 }
 
 QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
@@ -245,6 +247,8 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 			QList<FontItem*> fam(FMFontDb::DB()->FamilySet(fit->family()));
 			QString sRet;
 			sRet+= "<div style=\"" + styleTooltipName + "\">" + fit->family() + " ("+QString::number(fam.count())+")</div>";
+			sRet+= "<div style=\"" + styleTooltipTags + "\">" + fit->tags().join(QString(", ")) + "</div>";
+
 			foreach(FontItem* ffi, fam)
 			{
 				sRet += "<div style=\"" + styleTooltipPath + "\">" + ffi->variant() + "</div>";

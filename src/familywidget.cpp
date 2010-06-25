@@ -53,6 +53,9 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	previewModel->setSpecString("<variant>");
 	ui->familyPreview->setModel(previewModel);
 
+	ui->activateButton->setCheckable(true);
+	ui->deactivateButton->setCheckable(true);
+
 	connect(ui->returnListButton, SIGNAL(clicked()), this, SIGNAL(backToList()));
 	connect(ui->familyPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
 	connect(ui->familyPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));

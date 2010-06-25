@@ -113,6 +113,7 @@ private:
 	QList<FontItem*> base;
 	QString specString;
 	QString styleTooltipName;
+	QString styleTooltipTags;
 	QString styleTooltipPath;
 	bool familyMode;
 

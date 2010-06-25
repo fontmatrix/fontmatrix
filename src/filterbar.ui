@@ -7,13 +7,16 @@
     <x>0</x>
     <y>0</y>
     <width>594</width>
-    <height>47</height>
+    <height>33</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>2</number>
+   </property>
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="sizeConstraint">

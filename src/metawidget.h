@@ -31,6 +31,8 @@
 class QStringListModel;
 class QPushButton;
 class QLineEdit;
+class QComboBox;
+class QHBoxLayout;
 
 namespace Ui {
     class MetaWidget;
@@ -44,6 +46,9 @@ public:
     explicit MetaWidget(QWidget *parent = 0);
     ~MetaWidget();
 
+    int resultField;
+    QString resultText;
+
 protected:
     void changeEvent(QEvent *e);
 
@@ -52,8 +57,15 @@ private:
 
     static QStringListModel *mModel;
     static QStringList mList;
+    QWidget *filterWidget;
+    QComboBox *filterCombo;
+    QLineEdit *filterLine;
+    QPushButton *filterButton;
     QMap<QPushButton*, FMFontDb::InfoItem> formFieldButton;
     QMap<FMFontDb::InfoItem, QLineEdit*> formFieldLine;
+
+signals:
+    void filterAdded();
 
 private slots:
     void addFilter();

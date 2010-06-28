@@ -140,7 +140,8 @@ void MainViewWidget::doConnect()
 
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
-	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+//	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+	connect(filterBar, SIGNAL(initSearch(int,QString)), this, SLOT(slotSearch(int,QString)));
 	connect ( filterBar->clearButton(),SIGNAL ( clicked() ),this,SLOT ( slotViewAll() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	connect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
@@ -166,7 +167,8 @@ void MainViewWidget::disConnect()
 
 	disconnect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	disconnect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
-	disconnect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+//	disconnect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
+	disconnect(filterBar, SIGNAL(initSearch(int,QString)), this, SLOT(slotSearch(int,QString)));
 	disconnect ( filterBar->clearButton(),SIGNAL ( clicked() ),this,SLOT ( slotViewAll() ) );
 	disconnect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
 	disconnect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
@@ -855,7 +857,7 @@ bool MainViewWidget::slotFontSelectedByName (const QString& fname )
 //}
 
 
-void MainViewWidget::slotSearch()
+void MainViewWidget::slotSearch(int field, QString text)
 {
 // 	qDebug()<<"slotSearch";
 	m_lists->fontTree->clear();
@@ -863,9 +865,8 @@ void MainViewWidget::slotSearch()
 	fontsetHasChanged = true;
 
 	QApplication::setOverrideCursor ( Qt::WaitCursor );
-	QString fs ( m_lists->searchString->text() );
+	QString fs ( text );
 
-	int field(  m_lists->getCurrentFieldAction()->data().toInt() );
 	QList<FontItem*> tmpList;
 	
 	if(field == FILTER_FIELD_SPECIAL_UNICODE)  //Unicode

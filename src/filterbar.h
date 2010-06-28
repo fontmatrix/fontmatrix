@@ -47,6 +47,9 @@ protected:
 private:
     Ui::FilterBar *ui;
 
+signals:
+    void initSearch(int, QString);
+
 private slots:
     void loadTags();
     void panoseDialog();

@@ -118,7 +118,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		bool slotFontSelectedByName(const QString& fname);
 //		void slotInfoFont();
 //		void slotView(bool needDeRendering = false);
-		void slotSearch();
+		void slotSearch(int, QString);
 		void slotShowFamily(const QModelIndex& familyIdx);
 		void slotQuitFamily();
 		

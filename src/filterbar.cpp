@@ -104,7 +104,12 @@ void FilterBar::metaDialog()
 	QDialog *d = new QDialog(this);
 	QGridLayout *l = new QGridLayout(d);
 	l->addWidget(mw,0,0,0,0);
+
+	connect(mw,SIGNAL(filterAdded()), d, SLOT(close()));
+
 	d->exec();
+	if((mw->resultField != -1) && (!mw->resultText.isEmpty()))
+		emit initSearch(mw->resultField, mw->resultText);
 	delete l;
 	delete d;
 

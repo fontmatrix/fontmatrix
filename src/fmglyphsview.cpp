@@ -127,8 +127,8 @@ void FMGlyphsView::setState ( ViewState s )
 
 void FMGlyphsView::hideEvent ( QHideEvent * event )
 {
-	if ( m_state == SingleView )
-		emit pleaseShowAll();
+//	if ( m_state == SingleView )
+//		emit pleaseShowAll();
 }
 
 void FMGlyphsView::wheelEvent ( QWheelEvent * e )

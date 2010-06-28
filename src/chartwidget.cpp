@@ -36,8 +36,10 @@
 #include <QPrinter>
 #include <QPrintDialog>
 
+const QString ChartWidget::Name = QObject::tr("Chart");
+
 ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
-		FloatingWidget(fid, QString("Chart"), parent),
+		FloatingWidget(fid, Name, parent),
 		ui(new Ui::ChartWidget),
 		fontIdentifier(fid)
 {

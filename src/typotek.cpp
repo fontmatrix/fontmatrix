@@ -804,6 +804,25 @@ void typotek::createActions()
 	playAction->setChecked(false);
 	scuts->add(playAction);
 	connect(playAction, SIGNAL(triggered(bool)), PlayWidget::getInstance(), SLOT(setVisible(bool)));
+
+	closeAllFloat = new QAction(tr("Close All"), this);
+	closeAllFloat->setToolTip(tr("Close all floating windows"));
+	scuts->add(closeAllFloat);
+	connect(closeAllFloat, SIGNAL(triggered()), this, SLOT(closeAllFloatings()));
+
+	showAllFloat = new QAction(tr("Show All"), this);
+	showAllFloat->setToolTip(tr("Show all floating windows"));
+	scuts->add(showAllFloat);
+	connect(showAllFloat, SIGNAL(triggered()), this, SLOT(showAllFloatings()));
+
+	hideAllFloat = new QAction(tr("Hide All"), this);
+	hideAllFloat->setToolTip(tr("Hide all floating windows"));
+	scuts->add(hideAllFloat);
+	connect(hideAllFloat, SIGNAL(triggered()), this, SLOT(hideAllFloatings()));
+
+	floatSep = new QAction(this);
+	floatSep->setSeparator(true);
+
 	
 	extractFontAction = new QAction(tr("Extract fonts..."),this);
 	extractFontAction->setStatusTip ( tr ( "Extract fonts from documents like PDF to PFM file format" ) );
@@ -2562,6 +2581,11 @@ void typotek::updateFloatingStatus()
 {
 	playAction->setChecked( PlayWidget::getInstance()->isVisible() );
 
+	viewMenu->removeAction(closeAllFloat);
+	viewMenu->removeAction(showAllFloat);
+	viewMenu->removeAction(hideAllFloat);
+	viewMenu->removeAction(floatSep);
+
 	QList<FloatingWidget*> fwl(FloatingWidgetsRegister::AllWidgets());
 	foreach(FloatingWidget* f, floatingWidgets.keys())
 	{
@@ -2589,4 +2613,42 @@ void typotek::updateFloatingStatus()
 			viewMenu->addAction(wa);
 		}
 	}
+	if(floatingWidgets.count() > 0)
+	{
+		viewMenu->addAction(floatSep);
+		viewMenu->addAction(closeAllFloat);
+	}
+	if(floatingWidgets.count() > 1)
+	{
+		viewMenu->addAction(showAllFloat);
+		viewMenu->addAction(hideAllFloat);
+	}
 }
+
+
+void typotek::closeAllFloatings()
+{
+	foreach(FloatingWidget* f, floatingWidgets.keys())
+	{
+		f->close();
+	}
+}
+
+void typotek::showAllFloatings()
+{
+	foreach(FloatingWidget* f, floatingWidgets.keys())
+	{
+		f->setVisible(true);
+	}
+}
+
+void typotek::hideAllFloatings()
+{
+	foreach(FloatingWidget* f, floatingWidgets.keys())
+	{
+		f->setVisible(false);
+	}
+}
+
+
+

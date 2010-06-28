@@ -37,8 +37,10 @@
 #include <QDebug>
 #include <QTimer>
 
+const QString SampleWidget::Name = QObject::tr("Sample");
+
 SampleWidget::SampleWidget(const QString& fid, FloatingWidget *parent) :
-		FloatingWidget(fid, QString("Sample"), parent),
+		FloatingWidget(fid, Name, parent),
 		ui(new Ui::SampleWidget),
 		fontIdentifier(fid)
 {

@@ -31,15 +31,17 @@
 #include <QDebug>
 
 QStringListModel * MetaWidget::mModel = 0;
+QStringList MetaWidget::mList = QStringList();
 
 MetaWidget::MetaWidget(QWidget *parent) :
 		QWidget(parent),
 		ui(new Ui::MetaWidget)
 {
 	ui->setupUi(this);
-	if(mModel = 0)
+	if(mModel == 0)
 	{
 		mModel = new QStringListModel;
+		mModel->setStringList(mList);
 	}
 
 	QGridLayout * grid(new QGridLayout(this));
@@ -91,5 +93,11 @@ void MetaWidget::addFilter()
 		QPushButton *b(reinterpret_cast<QPushButton*>(sender()));
 		FMFontDb::InfoItem it(formFieldButton[b]);
 		qDebug()<<"Meta:"<<FontStrings::Names()[it]<< formFieldLine[it]->text();
+		QString t(formFieldLine[it]->text());
+		if(!mList.contains(t))
+		{
+			mList.append(t);
+			mModel->setStringList(mList);
+		}
 	}
 }

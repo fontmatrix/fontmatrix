@@ -154,7 +154,7 @@ void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 
 void FamilyWidget::slotShowSample()
 {
-	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, QString("Sample")));
+	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, SampleWidget::Name));
 	if(fw == 0)
 	{
 		SampleWidget *sw(new SampleWidget(curVariant));
@@ -168,7 +168,7 @@ void FamilyWidget::slotShowSample()
 
 void FamilyWidget::slotShowChart()
 {
-	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, QString("Sample")));
+	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, ChartWidget::Name));
 	if(fw == 0)
 	{
 		ChartWidget *cw(new ChartWidget(curVariant));

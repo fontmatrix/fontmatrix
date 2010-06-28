@@ -117,6 +117,9 @@ public slots:
 	void relayStartingStepIn(QString s);
 	void showToltalFilteredFonts();
 	void updateFloatingStatus();
+	void closeAllFloatings();
+	void showAllFloatings();
+	void hideAllFloatings();
 
 	void hide();
 	void show();
@@ -197,6 +200,10 @@ private:
 	QAction *previousFont;
 
 	QAction *playAction;
+	QAction *closeAllFloat;
+	QAction *showAllFloat;
+	QAction *hideAllFloat;
+	QAction *floatSep;
 
 	QMenu *printMenu;
 	QAction *printInfoAct;

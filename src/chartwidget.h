@@ -36,6 +36,7 @@ class ChartWidget : public FloatingWidget
     Q_OBJECT
 
 public:
+	static const QString Name;
     explicit ChartWidget(const QString& fid, FloatingWidget *parent = 0);
     ~ChartWidget();
 

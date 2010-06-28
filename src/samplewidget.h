@@ -47,6 +47,7 @@ class SampleWidget : public FloatingWidget
     Q_OBJECT
 
 public:
+	static const QString Name;
     explicit SampleWidget(const QString& fid, FloatingWidget *parent = 0);
     ~SampleWidget();
 

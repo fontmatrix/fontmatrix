@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <QMap>
 #include <QString>
+#include <QStringList>
 
 #include "fmfontstrings.h"
 
@@ -50,6 +51,7 @@ private:
     Ui::MetaWidget *ui;
 
     static QStringListModel *mModel;
+    static QStringList mList;
     QMap<QPushButton*, FMFontDb::InfoItem> formFieldButton;
     QMap<FMFontDb::InfoItem, QLineEdit*> formFieldLine;
 

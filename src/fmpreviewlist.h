@@ -72,14 +72,10 @@ protected:
 	bool dragFlag;
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual void mouseMoveEvent(QMouseEvent *event);
-	virtual void keyPressEvent(QKeyEvent *event);
-	virtual void keyReleaseEvent(QKeyEvent *event);
 
 private:
 	int usedWidth;
 	int columns;
-
-	bool controlKey;
 
 public slots:
 	void updateLayout();

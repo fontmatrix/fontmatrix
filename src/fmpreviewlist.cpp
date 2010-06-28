@@ -319,8 +319,7 @@ QList<FontItem *> FMPreviewModel::getBase()
 
 FMPreviewView::FMPreviewView(QWidget * parent):
 		QListView(parent),
-		columns(1),
-		controlKey(false)
+		columns(1)
 {
 	dragFlag = false;
 	setDragEnabled(true);
@@ -359,7 +358,7 @@ void FMPreviewView::mousePressEvent(QMouseEvent * event)
 
 void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
 {
-	if(!controlKey)
+	if(!(event->modifiers().testFlag( Qt::ControlModifier )))
 		return;
 	if (!(event->buttons() & Qt::LeftButton))
 		return;
@@ -384,17 +383,6 @@ void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
 		}
 	}
 
-}
-
-void FMPreviewView::keyPressEvent(QKeyEvent *event)
-{
-	controlKey = (event->key() == Qt::Key_Control);
-}
-
-void FMPreviewView::keyReleaseEvent(QKeyEvent * event)
-{
-	// a bit simpleminded, but it should work
-	controlKey = false;
 }
 
 void FMPreviewView::updateLayout()

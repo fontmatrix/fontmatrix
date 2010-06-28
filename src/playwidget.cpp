@@ -21,16 +21,26 @@
 #include "playwidget.h"
 #include "ui_playwidget.h"
 
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QDialog>
+#include <QRectF>
+#include <QPainter>
+
 PlayWidget* PlayWidget::instance = 0;
 PlayWidget::PlayWidget() :
     ui(new Ui::PlayWidget)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("Playground"));
+    ui->toolbar->setNoClose(true);
     playScene = new QGraphicsScene;
     playScene->setSceneRect ( 0,0,10000,10000 );
     ui->playView->setScene( playScene );
 
     connect ( ui->playView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
+    connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
+    connect(ui->toolbar, SIGNAL(Print()), this, SLOT(print()));
 }
 
 PlayWidget::~PlayWidget()
@@ -59,6 +69,13 @@ void PlayWidget::changeEvent(QEvent *e)
         break;
     }
 }
+
+void PlayWidget::closeEvent(QCloseEvent *)
+{
+	hide();
+}
+
+
 void PlayWidget::slotZoom ( int z )
 {
 	double delta =  1.0 + ( z/1000.0 ) ;
@@ -80,4 +97,24 @@ QRectF PlayWidget::getMaxRect()
 void PlayWidget::clearSelection()
 {
 	ui->playView->deselectAll();
+}
+
+void PlayWidget::print()
+{
+	QPrinter thePrinter ( QPrinter::HighResolution );
+	QPrintDialog dialog(&thePrinter, this);
+	dialog.setWindowTitle("Fontmatrix - " + tr("Print Playground")  );
+
+	if ( dialog.exec() != QDialog::Accepted )
+		return;
+	thePrinter.setFullPage ( true );
+	QPainter aPainter ( &thePrinter );
+
+	double pWidth(thePrinter.paperRect().width());
+	double pHeight(thePrinter.paperRect().height());
+
+	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
+	QRectF sourceR( PlayWidget::getInstance()->getMaxRect());
+	PlayWidget::getInstance()->clearSelection();
+	PlayWidget::getInstance()->getPlayScene()->render(&aPainter, targetR ,sourceR, Qt::KeepAspectRatio );
 }

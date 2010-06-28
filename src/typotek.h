@@ -196,6 +196,8 @@ private:
 	QAction *nextFont;
 	QAction *previousFont;
 
+	QAction *playAction;
+
 	QMenu *printMenu;
 	QAction *printInfoAct;
 	QAction *printSampleAct;
@@ -278,6 +280,7 @@ private:
 
 	QMap<FloatingWidget*, QAction*> floatingWidgets;
 	QMap<FloatingWidget*, bool> visibleFloatingWidgets;
+	bool playVisible;
 
 public:
 	bool isSysFont(FontItem* f);

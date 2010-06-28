@@ -23,7 +23,8 @@
 
 FloatingWidgetToolBar::FloatingWidgetToolBar(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FloatingWidgetToolBar)
+    ui(new Ui::FloatingWidgetToolBar),
+    noClose(false)
 {
     ui->setupUi(this);
     connect(ui->closeButton, SIGNAL(clicked()), this, SIGNAL(Close()));
@@ -46,4 +47,14 @@ void FloatingWidgetToolBar::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+
+void FloatingWidgetToolBar::setNoClose(bool c)
+{
+	noClose = c;
+	if(noClose)
+		ui->closeButton->hide();
+	else
+		ui->closeButton->show();
 }

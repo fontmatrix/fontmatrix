@@ -152,6 +152,7 @@ typotek::typotek()
 	hyphenator = 0;
 	theHelp = 0;
 	dataLoader = 0;
+	playVisible = false;
 
 	m_dpiX = ( double ) QApplication::desktop()->physicalDpiX();
 	m_dpiY = ( double ) QApplication::desktop()->physicalDpiY();
@@ -303,6 +304,7 @@ void typotek::closeEvent ( QCloseEvent *event )
 	{
 		f->close();
 	}
+	delete PlayWidget::getInstance();
 
 	writeSettings();
 	event->accept();
@@ -795,11 +797,13 @@ void typotek::createActions()
 	scuts->add(previousFont);
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
-//	layOptAct = new QAction(tr("Text layout engine options"),this);
-//	layOptAct->setStatusTip ( tr ( "View and edit text layout engine variables" ) );
-//	layOptAct->setCheckable(true);
-//	scuts->add(layOptAct);
-//	connect(layOptAct,SIGNAL(triggered()),this,SLOT(slotSwitchLayOptVisible()));
+	playAction = new QAction(tr("Playground"), this);
+	playAction->setShortcut(Qt::Key_G);
+	playAction->setToolTip(tr("Show/Hide Playground"));
+	playAction->setCheckable(true);
+	playAction->setChecked(false);
+	scuts->add(playAction);
+	connect(playAction, SIGNAL(triggered(bool)), PlayWidget::getInstance(), SLOT(setVisible(bool)));
 	
 	extractFontAction = new QAction(tr("Extract fonts..."),this);
 	extractFontAction->setStatusTip ( tr ( "Extract fonts from documents like PDF to PFM file format" ) );
@@ -875,12 +879,9 @@ void typotek::createMenus()
 	browseMenu->addAction(previousFont);
 
 	viewMenu = menuBar()->addMenu(tr("&View"));
+	viewMenu->addAction(playAction);
+	viewMenu->addSeparator();
 	connect(viewMenu, SIGNAL(aboutToShow()), this,SLOT(updateFloatingStatus()));
-//	if(viewMenu != 0)
-//	{
-//		viewMenu->setTitle(tr("&View"));
-//		menuBar()->addMenu(viewMenu);
-//	}
 
 #ifdef HAVE_PYTHONQT
 	scriptMenu = menuBar()->addMenu ( tr ( "&Scripts" ) );;
@@ -2514,6 +2515,8 @@ void typotek::hide()
 		f->setVisible(false);
 	}
 
+	playVisible = PlayWidget::getInstance()->isVisible();
+
 	QMainWindow::hide();
 }
 
@@ -2527,6 +2530,8 @@ void typotek::show()
 	{
 		f->setVisible(visibleFloatingWidgets[f]);
 	}
+
+	PlayWidget::getInstance()->setVisible(playVisible);
 
 	QMainWindow::show();
 }
@@ -2555,6 +2560,8 @@ QString typotek::word(FontItem * item, const QString& alt)
 
 void typotek::updateFloatingStatus()
 {
+	playAction->setChecked( PlayWidget::getInstance()->isVisible() );
+
 	QList<FloatingWidget*> fwl(FloatingWidgetsRegister::AllWidgets());
 	foreach(FloatingWidget* f, floatingWidgets.keys())
 	{

@@ -267,7 +267,7 @@ class FontItem : public QObject
 		QString family() const {return m_family;}
 		QString variant() const {return m_variant;}
 		QStringList tags() const  ;
-		int glyphsCount() const {return m_numGlyphs;}
+		int glyphsCount() const;
 		QString type(){return m_type;}
 		QStringList charmaps();
 		void setTags ( QStringList l );

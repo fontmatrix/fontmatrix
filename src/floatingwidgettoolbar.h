@@ -35,11 +35,15 @@ public:
     explicit FloatingWidgetToolBar(QWidget *parent = 0);
     ~FloatingWidgetToolBar();
 
+    void setNoClose(bool c);
+
 protected:
     void changeEvent(QEvent *e);
 
 private:
     Ui::FloatingWidgetToolBar *ui;
+
+    bool noClose;
 
 signals:
     void Close();

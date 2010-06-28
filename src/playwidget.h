@@ -36,8 +36,8 @@ class PlayWidget : public QWidget
 
 	static PlayWidget* instance;
 	explicit PlayWidget();
-	~PlayWidget();
 public:
+	~PlayWidget();
 	static PlayWidget* getInstance();
 	double playFontSize();
 	QRectF getMaxRect();
@@ -46,6 +46,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *e);
+	void closeEvent(QCloseEvent *);
 
 private:
 	Ui::PlayWidget *ui;
@@ -53,6 +54,7 @@ private:
 
 private slots:
 	void slotZoom ( int z );
+	void print();
 };
 
 #endif // PLAYWIDGET_H

@@ -558,6 +558,18 @@ void FontItem::releaseFace()
 	}
 }
 
+int FontItem::glyphsCount() const
+{
+	if(m_numGlyphs > 0) // this is normal case
+	{
+		return m_numGlyphs;
+	}
+	FontItem * that(const_cast<FontItem*>(this));
+	that->ensureFace();
+	that->m_numGlyphs = m_face->num_glyphs;
+	that->releaseFace();
+	return m_numGlyphs;
+}
 
 QString FontItem::testFlag ( long flag, long against, QString yes, QString no )
 {

@@ -317,8 +317,10 @@ QList<FontItem *> FMPreviewModel::getBase()
 }
 
 
-FMPreviewView::FMPreviewView(QWidget * parent)
-	:QListView(parent), columns(1)
+FMPreviewView::FMPreviewView(QWidget * parent):
+		QListView(parent),
+		columns(1),
+		controlKey(false)
 {
 	dragFlag = false;
 	setDragEnabled(true);
@@ -357,11 +359,16 @@ void FMPreviewView::mousePressEvent(QMouseEvent * event)
 
 void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
 {
+	if(!controlKey)
+		return;
 	if (!(event->buttons() & Qt::LeftButton))
 		return;
 	if ((event->pos() - startDragPoint).manhattanLength() < QApplication::startDragDistance())
 		return;
 
+	FMPreviewModel * m(reinterpret_cast<FMPreviewModel*>(model()));
+	if(m && m->getFamilyMode())
+		return;
 	// Create a window with the current preview
 	if(currentIndex().isValid() && (!dragFlag))
 	{
@@ -379,6 +386,16 @@ void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
 
 }
 
+void FMPreviewView::keyPressEvent(QKeyEvent *event)
+{
+	controlKey = (event->key() == Qt::Key_Control);
+}
+
+void FMPreviewView::keyReleaseEvent(QKeyEvent * event)
+{
+	// a bit simpleminded, but it should work
+	controlKey = false;
+}
 
 void FMPreviewView::updateLayout()
 {

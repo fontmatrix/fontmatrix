@@ -72,10 +72,14 @@ protected:
 	bool dragFlag;
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual void mouseMoveEvent(QMouseEvent *event);
+	virtual void keyPressEvent(QKeyEvent *event);
+	virtual void keyReleaseEvent(QKeyEvent *event);
 
 private:
 	int usedWidth;
 	int columns;
+
+	bool controlKey;
 
 public slots:
 	void updateLayout();
@@ -107,6 +111,8 @@ public:
 
 	void setFamilyMode(bool f){familyMode =f;}
 	void setSpecString(const QString& s){specString = s;}
+
+	bool getFamilyMode() const{return familyMode;}
 
 private:
 	FMPreviewView *m_view;

@@ -100,7 +100,7 @@
            <bool>true</bool>
           </property>
           <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonFollowStyle</enum>
+           <enum>Qt::ToolButtonTextOnly</enum>
           </property>
           <property name="autoRaise">
            <bool>false</bool>
@@ -121,7 +121,7 @@
            <bool>true</bool>
           </property>
           <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonFollowStyle</enum>
+           <enum>Qt::ToolButtonTextOnly</enum>
           </property>
          </widget>
         </item>

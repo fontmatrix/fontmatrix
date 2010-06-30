@@ -38,7 +38,9 @@
 
 FamilyWidget::FamilyWidget(QWidget *parent) :
 		QWidget(parent),
-		ui(new Ui::FamilyWidget)
+		ui(new Ui::FamilyWidget),
+		sample(0),
+		chart(0)
 {
 	ui->setupUi(this);
 
@@ -62,6 +64,7 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	connect(ui->familyPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(ui->familyPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 	connect(ui->familyPreview,SIGNAL(pressed( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
+	connect(ui->infoButton, SIGNAL(clicked()), this, SLOT(slotShowInfo()));
 	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
 	connect(ui->chartButton, SIGNAL(clicked()), this, SLOT(slotShowChart()));
 
@@ -104,24 +107,31 @@ void FamilyWidget::slotPreviewUpdateSize(int w)
 
 void FamilyWidget::setFamily(const QString &f, unsigned int curIdx )
 {
-	family = f;
-	ui->familyLabel->setText(family);
-	QList<FontItem*> fl(FMFontDb::DB()->FamilySet(family));
-	ui->tagsWidget->prepare(fl);
-	previewModel->resetBase(fl);
-	if(!fl.isEmpty())
+	if(f != family)
 	{
-		FMInfoDisplay fid(fl.at(curIdx));
-		ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
-		ui->familyPreview->setCurrentIndex( previewModel->index(curIdx) );
-		curVariant = fl.at(curIdx)->path();
+		family = f;
+		ui->familyLabel->setText(family);
+		QList<FontItem*> fl(FMFontDb::DB()->FamilySet(family));
+		ui->tagsWidget->prepare(fl);
+		previewModel->resetBase(fl);
+		if(!fl.isEmpty())
+		{
+			FMInfoDisplay fid(fl.at(curIdx));
+			ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
+			ui->familyPreview->setCurrentIndex( previewModel->index(curIdx) );
+			curVariant = fl.at(curIdx)->path();
 
-		ui->activateButton->setChecked(fl.at(curIdx)->isActivated());
-		ui->activateButton->setEnabled(!fl.at(curIdx)->isActivated());
-		ui->deactivateButton->setChecked(!fl.at(curIdx)->isActivated());
-		ui->deactivateButton->setEnabled(fl.at(curIdx)->isActivated());
+			ui->activateButton->setChecked(fl.at(curIdx)->isActivated());
+			ui->activateButton->setEnabled(!fl.at(curIdx)->isActivated());
+			ui->deactivateButton->setChecked(!fl.at(curIdx)->isActivated());
+			ui->deactivateButton->setEnabled(fl.at(curIdx)->isActivated());
 
-		emit fontSelected(curVariant);
+			emit fontSelected(curVariant);
+		}
+		slotShowInfo();
+		delete sample;
+		delete chart;
+		sample = chart = 0;
 	}
 }
 
@@ -144,11 +154,19 @@ void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 	//	{
 	//		typotek::getInstance()->getTheMainView()->slotFontSelectedByName(index.data(FMPreviewModel::PathRole));
 	//	}
-	curVariant = index.data(FMPreviewModel::PathRole).toString();
-	FontItem * fItem(FMFontDb::DB()->Font(curVariant));
-	FMInfoDisplay fid(fItem);
-	ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
-	emit fontSelected(curVariant);
+	QString fid(index.data(FMPreviewModel::PathRole).toString());
+	if(fid != curVariant)
+	{
+		slotShowInfo();
+		delete sample;
+		delete chart;
+		sample = chart = 0;
+		curVariant = fid;
+		FontItem * fItem(FMFontDb::DB()->Font(curVariant));
+		FMInfoDisplay fid(fItem);
+		ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
+		emit fontSelected(curVariant);
+	}
 }
 
 
@@ -157,13 +175,24 @@ void FamilyWidget::slotShowSample()
 	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, SampleWidget::Name));
 	if(fw == 0)
 	{
-		SampleWidget *sw(new SampleWidget(curVariant));
-		sw->show();
+		if(0 == sample)
+		{
+			SampleWidget *sw(new SampleWidget(curVariant, ui->pageSample));
+			ui->displayStack->insertWidget(1, sw);
+			sample = sw;
+			connect(sample, SIGNAL(detached()), this, SLOT(slotDetachSample()));
+		}
+		ui->displayStack->setCurrentWidget(sample);
 	}
 	else
 	{
 		fw->show();
 	}
+}
+
+void FamilyWidget::slotShowInfo()
+{
+	ui->displayStack->setCurrentIndex(0);
 }
 
 void FamilyWidget::slotShowChart()
@@ -171,8 +200,14 @@ void FamilyWidget::slotShowChart()
 	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, ChartWidget::Name));
 	if(fw == 0)
 	{
-		ChartWidget *cw(new ChartWidget(curVariant));
-		cw->show();
+		if(0 == chart)
+		{
+			ChartWidget *cw(new ChartWidget(curVariant, ui->pageChart));
+			ui->displayStack->insertWidget(2, cw);
+			chart = cw;
+			connect(chart, SIGNAL(detached()), this, SLOT(slotDetachChart()));
+		}
+		ui->displayStack->setCurrentWidget(chart);
 	}
 	else
 	{
@@ -180,14 +215,28 @@ void FamilyWidget::slotShowChart()
 	}
 }
 
+void FamilyWidget::slotDetachSample()
+{
+	disconnect(sample, SIGNAL(detached()), this, SLOT(slotDetachSample()));
+	sample = 0;
+	slotShowInfo();
+}
+
+void FamilyWidget::slotDetachChart()
+{
+	disconnect(chart, SIGNAL(detached()), this, SLOT(slotDetachChart()));
+	chart = 0;
+	slotShowInfo();
+}
+
 void FamilyWidget::slotActivate(bool c)
 {
 	if(c)
 	{
-//		ui->activateButton->setChecked(true);
-//		ui->activateButton->setEnabled(false);
-//		ui->deactivateButton->setChecked(false);
-//		ui->deactivateButton->setEnabled(true);
+		//		ui->activateButton->setChecked(true);
+		//		ui->activateButton->setEnabled(false);
+		//		ui->deactivateButton->setChecked(false);
+		//		ui->deactivateButton->setEnabled(true);
 
 		FMActivate::getInstance()->errors();
 		FMActivate::getInstance()->activate(FMFontDb::DB()->FamilySet(family), true);
@@ -206,10 +255,10 @@ void FamilyWidget::slotDeactivate(bool c)
 {
 	if(c)
 	{
-//		ui->activateButton->setChecked(false);
-//		ui->activateButton->setEnabled(true);
-//		ui->deactivateButton->setChecked(true);
-//		ui->deactivateButton->setEnabled(false);
+		//		ui->activateButton->setChecked(false);
+		//		ui->activateButton->setEnabled(true);
+		//		ui->deactivateButton->setChecked(true);
+		//		ui->deactivateButton->setEnabled(false);
 
 		FMActivate::getInstance()->errors();
 		FMActivate::getInstance()->activate(FMFontDb::DB()->FamilySet(family), false);

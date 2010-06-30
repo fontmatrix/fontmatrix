@@ -48,7 +48,7 @@ class SampleWidget : public FloatingWidget
 
 public:
 	static const QString Name;
-    explicit SampleWidget(const QString& fid, FloatingWidget *parent = 0);
+    explicit SampleWidget(const QString& fid, QWidget *parent = 0);
     ~SampleWidget();
 
     QGraphicsScene* textScene()const;

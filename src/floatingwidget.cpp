@@ -25,14 +25,18 @@
 #include "fontitem.h"
 
 FloatingWidget::FloatingWidget(const QString &f, const QString& typ, QWidget *parent) :
-		QWidget(parent)
+		QWidget(parent),
+		fName(f),
+		fType(typ)
 {
 	setAttribute(Qt::WA_DeleteOnClose);
-	QString fn(FMFontDb::DB()->Font(f)->fancyName());
-	actionName =  QString("[%1]").arg(typ) + QString(" ") + fn;
+	QString fn(FMFontDb::DB()->Font(fName)->fancyName());
+	actionName =  QString("[%1]").arg(fType) + QString(" ") + fn;
 	wTitle =  fn + QString(" - Fontmatrix");
-	setProperty("windowTitle", wTitle);
-	FloatingWidgetsRegister::Register(this, f, typ);
+	if(0 == parent)
+	{
+		detach();
+	}
 }
 
 FloatingWidget::~FloatingWidget()
@@ -42,10 +46,10 @@ FloatingWidget::~FloatingWidget()
 
 bool FloatingWidget::event(QEvent *e)
 {
-//	if(windowTitle().isEmpty())
-//	{
-//		QWidget::setWindowTitle(wTitle);
-//	}
+	//	if(windowTitle().isEmpty())
+	//	{
+	//		QWidget::setWindowTitle(wTitle);
+	//	}
 	if((e->type() == QEvent::Show) || (e->type() == QEvent::Hide))
 		emit visibilityChange();
 
@@ -64,3 +68,13 @@ void FloatingWidget::activate(bool a)
 		hide();
 }
 
+
+void FloatingWidget::detach()
+{
+	if(0 != parent())
+		setParent(0, Qt::Window);
+	setWindowTitle(wTitle);
+	FloatingWidgetsRegister::Register(this, fName, fType);
+	show();
+	emit detached();
+}

@@ -36,6 +36,8 @@ public:
 	QString getActionName()const{return actionName;}
 
 private:
+	QString fName;
+	QString fType;
 	QString actionName;
 	QString wTitle;
 
@@ -44,9 +46,11 @@ protected:
 
 signals:
 	void visibilityChange();
+	void detached();
 
 public slots:
 	void activate(bool a);
+	void detach();
 
 };
 

@@ -38,7 +38,7 @@
 
 const QString ChartWidget::Name = QObject::tr("Chart");
 
-ChartWidget::ChartWidget(const QString& fid, FloatingWidget *parent) :
+ChartWidget::ChartWidget(const QString& fid, QWidget *parent) :
 		FloatingWidget(fid, Name, parent),
 		ui(new Ui::ChartWidget),
 		fontIdentifier(fid)
@@ -89,6 +89,7 @@ void ChartWidget::createConnections()
 	connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
 	connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
 	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
+	connect(ui->toolbar, SIGNAL(Detach()), this, SLOT(detach()));
 }
 
 void ChartWidget::removeConnections()

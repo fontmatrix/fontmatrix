@@ -29,8 +29,9 @@ class FMPreviewModel;
 class FontItem;
 class TagsWidget;
 class QWebView;
-class SampleWidget;
-class ChartWidget;
+//class SampleWidget;
+//class ChartWidget;
+class FloatingWidget;
 
 namespace Ui {
     class FamilyWidget;
@@ -58,6 +59,8 @@ protected:
 private:
     Ui::FamilyWidget *ui;
     FMPreviewModel * previewModel;
+    FloatingWidget *sample;
+    FloatingWidget *chart;
 
 signals:
     void backToList();
@@ -68,8 +71,11 @@ private slots:
     void slotPreviewUpdate();
     void slotPreviewUpdateSize(int);
     void slotPreviewSelected(const QModelIndex & index);
+    void slotShowInfo();
     void slotShowSample();
     void slotShowChart();
+    void slotDetachSample();
+    void slotDetachChart();
     void slotActivate(bool c);
     void slotDeactivate(bool c);
 

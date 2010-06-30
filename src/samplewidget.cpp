@@ -39,7 +39,7 @@
 
 const QString SampleWidget::Name = QObject::tr("Sample");
 
-SampleWidget::SampleWidget(const QString& fid, FloatingWidget *parent) :
+SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 		FloatingWidget(fid, Name, parent),
 		ui(new Ui::SampleWidget),
 		fontIdentifier(fid)
@@ -158,6 +158,7 @@ void SampleWidget::createConnections()
 	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 	connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
 	connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
+	connect(ui->toolbar, SIGNAL(Detach()), this, SLOT(detach()));
 
 	connect(sysWatcher, SIGNAL(fileChanged(QString)),this, SLOT(slotFileChanged(QString)));
 	connect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));
@@ -200,6 +201,7 @@ void SampleWidget::removeConnections()
 	disconnect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 	disconnect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
 	disconnect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
+	disconnect(ui->toolbar, SIGNAL(Detach()), this, SLOT(detach()));
 
 	disconnect(sysWatcher, SIGNAL(fileChanged(QString)),this, SLOT(slotFileChanged(QString)));
 	disconnect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));

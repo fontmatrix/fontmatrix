@@ -21,15 +21,20 @@
 #include "floatingwidgettoolbar.h"
 #include "ui_floatingwidgettoolbar.h"
 
+#include "floatingwidget.h"
+
 FloatingWidgetToolBar::FloatingWidgetToolBar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FloatingWidgetToolBar),
     noClose(false)
 {
     ui->setupUi(this);
+    ui->closeButton->hide();
+    ui->hideButton->hide();
     connect(ui->closeButton, SIGNAL(clicked()), this, SIGNAL(Close()));
     connect(ui->hideButton, SIGNAL(clicked()), this, SIGNAL(Hide()));
     connect(ui->printButton, SIGNAL(clicked()), this, SIGNAL(Print()));
+    connect(ui->detachButton, SIGNAL(clicked()), this, SLOT(setDetached()));
 }
 
 FloatingWidgetToolBar::~FloatingWidgetToolBar()
@@ -49,6 +54,26 @@ void FloatingWidgetToolBar::changeEvent(QEvent *e)
     }
 }
 
+void FloatingWidgetToolBar::setDetached()
+{
+	ui->closeButton->show();
+	ui->hideButton->show();
+	ui->detachButton->hide();
+
+//	QWidget *p(parent());
+//	while(0 != p)
+//	{
+//		if(QString(p->metaObject()->className()) == QString("FloatingWidget"))
+//		{
+//			FloatingWidget * fw(reinterpret_cast<FloatingWidget*>(p));
+//			fw->detach();
+//			break;
+//		}
+//		p = parent();
+//	}
+
+	emit Detach();
+}
 
 void FloatingWidgetToolBar::setNoClose(bool c)
 {

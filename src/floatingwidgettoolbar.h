@@ -45,10 +45,14 @@ private:
 
     bool noClose;
 
+public slots:
+    void setDetached();
+
 signals:
     void Close();
     void Hide();
     void Print();
+    void Detach();
 };
 
 #endif // FLOATINGWIDGETTOOLBAR_H

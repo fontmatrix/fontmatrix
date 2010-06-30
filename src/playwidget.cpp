@@ -33,6 +33,7 @@ PlayWidget::PlayWidget() :
 {
     ui->setupUi(this);
     setWindowTitle(tr("Playground"));
+    ui->toolbar->setDetached();
     ui->toolbar->setNoClose(true);
     playScene = new QGraphicsScene;
     playScene->setSceneRect ( 0,0,10000,10000 );

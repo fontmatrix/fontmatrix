@@ -18,49 +18,36 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FILTERBAR_H
-#define FILTERBAR_H
+#ifndef FILTERITEM_H
+#define FILTERITEM_H
 
 #include <QWidget>
-#include <QList>
-#include <QMap>
-
-class QComboBox;
-class QPushButton;
-class FilterItem;
 
 namespace Ui {
-    class FilterBar;
+	class FilterItem;
 }
 
-class FilterBar : public QWidget
+class FilterItem : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
+	QString text;
 public:
-    explicit FilterBar(QWidget *parent = 0);
-    ~FilterBar();
+	explicit FilterItem(QWidget *parent = 0);
+	~FilterItem();
 
-    QComboBox * tagsCombo();
-    QPushButton * clearButton();
+	void setText(const QString& t);
+	QString getText() const{return text;}
 
 protected:
-    void changeEvent(QEvent *e);
+	void changeEvent(QEvent *e);
 
 private:
-    Ui::FilterBar *ui;
-
-    QList<FilterItem*> filterItems;
+	Ui::FilterItem *ui;
 
 signals:
-    void initSearch(int, QString);
-    void panoseFilter(QMap<int,QList<int> >);
+	void remove();
 
-private slots:
-    void slotPanoFilter();
-    void loadTags();
-    void panoseDialog();
-    void metaDialog();
 };
 
-#endif // FILTERBAR_H
+#endif // FILTERITEM_H

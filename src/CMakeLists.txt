@@ -8,6 +8,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filterbar.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/filteritem.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidgetsregister.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidgettoolbar.cpp
@@ -140,6 +141,7 @@ chartwidget.h
 dumpdialog.h
 familywidget.h
 filterbar.h
+filteritem.h
 floatingwidget.h
 floatingwidgettoolbar.h
 fmactivate.h
@@ -203,6 +205,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/filterbar.ui
+${CMAKE_CURRENT_SOURCE_DIR}/filteritem.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidgettoolbar.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/fontextractordialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/importedfonts.ui

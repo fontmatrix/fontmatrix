@@ -18,49 +18,31 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FILTERBAR_H
-#define FILTERBAR_H
+#include "filteritem.h"
+#include "ui_filteritem.h"
 
-#include <QWidget>
-#include <QList>
-#include <QMap>
+FilterItem::FilterItem(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::FilterItem)
+{
+    ui->setupUi(this);
 
-class QComboBox;
-class QPushButton;
-class FilterItem;
-
-namespace Ui {
-    class FilterBar;
+    connect(ui->removeButton, SIGNAL(clicked()), this, SIGNAL(remove()));
 }
 
-class FilterBar : public QWidget
+FilterItem::~FilterItem()
 {
-    Q_OBJECT
+    delete ui;
+}
 
-public:
-    explicit FilterBar(QWidget *parent = 0);
-    ~FilterBar();
-
-    QComboBox * tagsCombo();
-    QPushButton * clearButton();
-
-protected:
-    void changeEvent(QEvent *e);
-
-private:
-    Ui::FilterBar *ui;
-
-    QList<FilterItem*> filterItems;
-
-signals:
-    void initSearch(int, QString);
-    void panoseFilter(QMap<int,QList<int> >);
-
-private slots:
-    void slotPanoFilter();
-    void loadTags();
-    void panoseDialog();
-    void metaDialog();
-};
-
-#endif // FILTERBAR_H
+void FilterItem::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}

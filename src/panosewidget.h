@@ -44,9 +44,11 @@ public:
 	~PanoseWidget();
 
 	void setFilter(const QMap<int, QList<int> >& filter);
+	QMap<int, QList<int> > getFilter() const{return m_filter;}
 
 protected:
 	//    void changeEvent(QEvent *e);
+	void closeEvent(QCloseEvent *);
 
 private:
 	Ui::PanoseWidget *m_ui;
@@ -56,13 +58,15 @@ private:
 	int m_filterKey;
 	QMap<int, QList<int> > m_filter;
 
+	void doConnect(const bool& c);
+
 private slots:
 	void slotChangeAtrr(const QModelIndex& idx);
 	void slotUpdateFilter(const QItemSelection & selected, const QItemSelection & deselected);
 	void slotSelectAttr(const QModelIndex& idx);
 
 signals:
-	void filterChanged(const QMap<int, QList<int> >&);
+	void filterChanged();
 
 };
 

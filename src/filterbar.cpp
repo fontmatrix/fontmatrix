@@ -37,6 +37,7 @@ FilterBar::FilterBar(QWidget *parent) :
 
     connect(ui->classButton, SIGNAL(clicked()), this, SLOT(panoseDialog()));
     connect(ui->metaButton, SIGNAL(clicked()), this, SLOT(metaDialog()));
+    connect(PanoseWidget::getInstance(), SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
 }
 
 FilterBar::~FilterBar()
@@ -85,16 +86,22 @@ QPushButton* FilterBar::clearButton()
 	return ui->clearButton;
 }
 
+void FilterBar::slotPanoFilter()
+{
+	emit panoseFilter(PanoseWidget::getInstance()->getFilter());
+}
+
 void FilterBar::panoseDialog()
 {
 	PanoseWidget* pw(PanoseWidget::getInstance());
-	QDialog *d = new QDialog(this);
-	QGridLayout *l = new QGridLayout(d);
-	l->addWidget(pw,0,0,0,0);
-	d->exec();
-	pw->setParent(0);
-	delete l;
-	delete d;
+	pw->show();
+//	QDialog *d = new QDialog(this);
+//	QGridLayout *l = new QGridLayout(d);
+//	l->addWidget(pw,0,0,0,0);
+//	d->exec();
+//	pw->setParent(0);
+//	delete l;
+//	delete d;
 
 }
 

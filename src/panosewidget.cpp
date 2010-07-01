@@ -37,11 +37,11 @@ PanoseWidget::PanoseWidget(QWidget *parent) :
 	m_ui->attributeView->setModel(attributeModel);
 	m_ui->valueView->setModel(valueModel);
 
+	m_ui->pTree->hide();
 	m_filter.clear();
 	m_filterKey = 0;
-	connect(m_ui->attributeView, SIGNAL(activated (const QModelIndex&)), this, SLOT(slotChangeAtrr(const QModelIndex&)));
-	connect(m_ui->valueView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotUpdateFilter(const QItemSelection & , const QItemSelection &)));
-	connect(m_ui->pTree, SIGNAL(activated(QModelIndex)), this, SLOT(slotSelectAttr(QModelIndex)));
+
+	doConnect(true);
 }
 
 PanoseWidget::~PanoseWidget()
@@ -59,6 +59,22 @@ PanoseWidget * PanoseWidget::getInstance()
 	return instance;
 }
 
+
+void PanoseWidget::doConnect(const bool &c)
+{
+	if(c)
+	{
+		connect(m_ui->attributeView, SIGNAL(activated (const QModelIndex&)), this, SLOT(slotChangeAtrr(const QModelIndex&)));
+		connect(m_ui->valueView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotUpdateFilter(const QItemSelection & , const QItemSelection &)));
+		connect(m_ui->pTree, SIGNAL(activated(QModelIndex)), this, SLOT(slotSelectAttr(QModelIndex)));
+	}
+	else
+	{
+		disconnect(m_ui->attributeView, SIGNAL(activated (const QModelIndex&)), this, SLOT(slotChangeAtrr(const QModelIndex&)));
+		disconnect(m_ui->valueView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotUpdateFilter(const QItemSelection & , const QItemSelection &)));
+		disconnect(m_ui->pTree, SIGNAL(activated(QModelIndex)), this, SLOT(slotSelectAttr(QModelIndex)));
+	}
+}
 
 void PanoseWidget::slotChangeAtrr(const QModelIndex& index)
 {
@@ -81,6 +97,7 @@ void PanoseWidget::slotChangeAtrr(const QModelIndex& index)
 
 void PanoseWidget::slotUpdateFilter(const QItemSelection & selected, const QItemSelection & deselected)
 {
+	m_filter.clear();
 	QList<int> ns;
 	foreach(const QModelIndex& i, m_ui->valueView->selectionModel()->selectedIndexes())
 	{
@@ -106,7 +123,12 @@ void PanoseWidget::slotUpdateFilter(const QItemSelection & selected, const QItem
 
 
 
-	emit filterChanged(m_filter);
+	emit filterChanged();
+	doConnect(false);
+	m_ui->attributeView->clearSelection();
+	m_ui->valueView->clearSelection();
+	doConnect(true);
+	hide();
 }
 
 void PanoseWidget::slotSelectAttr(const QModelIndex& idx)
@@ -145,3 +167,8 @@ void PanoseWidget::setFilter(const QMap<int, QList<int> >& filter)
 //        break;
 //    }
 //}
+
+void PanoseWidget::closeEvent(QCloseEvent *)
+{
+	hide();
+}

@@ -137,11 +137,12 @@ void FilterBar::slotRemoveFilter(bool process)
 		filters.removeAll(fi);
 		if(filters.count() == 0)
 		{
-			FMFontDb::DB()->filterAllFonts();
 			ui->filterListBar->hide();
+			FMFontDb::DB()->filterAllFonts();
+			emit filterChanged();
 		}
 		fi->deleteLater();
-		if(process)
+		if(process && (filters.count() > 0) )
 			processFilters();
 	}
 }

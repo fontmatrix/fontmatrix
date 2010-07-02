@@ -20,29 +20,32 @@
 
 #include "filteritem.h"
 #include "ui_filteritem.h"
+#include "filterdata.h"
 
-FilterItem::FilterItem(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FilterItem)
+FilterItem::FilterItem(FilterData *filter, QWidget *parent) :
+		QWidget(parent),
+		d(filter),
+		ui(new Ui::FilterItem)
 {
-    ui->setupUi(this);
-
-    connect(ui->removeButton, SIGNAL(clicked()), this, SIGNAL(remove()));
+	ui->setupUi(this);
+	ui->filterLabel->setText(d->getText());
+	connect(ui->removeButton, SIGNAL(clicked()), this, SIGNAL(remove()));
 }
 
 FilterItem::~FilterItem()
 {
-    delete ui;
+	delete ui;
 }
+
 
 void FilterItem::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui->retranslateUi(this);
+		break;
+	default:
+		break;
+	}
 }

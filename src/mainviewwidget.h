@@ -127,7 +127,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 //                bool slotFontActionByNames(QStringList fnames);
 //		void slotEditAll();
 		void slotAppendTag(QString tag);
-		void slotFilterTag(QString tag);
+//		void slotFilterTag(QString tag);
 		
 		void slotDesactivateAll();
 		void slotActivateAll();

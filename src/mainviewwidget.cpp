@@ -140,17 +140,15 @@ void MainViewWidget::doConnect()
 
 	connect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	connect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
-//	connect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 	connect(filterBar, SIGNAL(initSearch(int,QString)), this, SLOT(slotSearch(int,QString)));
-	connect ( filterBar->clearButton(),SIGNAL ( clicked() ),this,SLOT ( slotViewAll() ) );
 	connect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
-	connect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	connect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
-	connect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
 	connect(familyWidget, SIGNAL(familyStateChanged()), previewModel, SLOT(dataChanged()));
 	connect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
-	
+
+	connect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
 	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
+	connect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
 
 
 	connect( filterBar , SIGNAL(panoseFilter(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
@@ -167,17 +165,15 @@ void MainViewWidget::disConnect()
 
 	disconnect ( m_lists->fontTree,SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ),this,SLOT ( slotFontSelected ( QTreeWidgetItem*, int ) ) );
 	disconnect ( m_lists->fontTree,SIGNAL ( currentChanged (QTreeWidgetItem*, int ) ), this,SLOT (slotFontSelected ( QTreeWidgetItem*, int ) ) );
-//	disconnect ( m_lists->searchString,SIGNAL ( returnPressed() ),this,SLOT ( slotSearch() ) );
 	disconnect(filterBar, SIGNAL(initSearch(int,QString)), this, SLOT(slotSearch(int,QString)));
-	disconnect ( filterBar->clearButton(),SIGNAL ( clicked() ),this,SLOT ( slotViewAll() ) );
 	disconnect ( m_lists->fontTree,SIGNAL ( itemExpanded ( QTreeWidgetItem* ) ),this,SLOT ( slotItemOpened ( QTreeWidgetItem* ) ) );
-	disconnect ( filterBar->tagsCombo(),SIGNAL ( activated ( const QString& ) ),this,SLOT ( slotFilterTag ( QString ) ) );
 	disconnect ( m_lists, SIGNAL(folderSelectFont(const QString&)), this, SLOT(slotSelectFromFolders(const QString&)));
-	disconnect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
 	disconnect(familyWidget, SIGNAL(familyStateChanged()), previewModel, SLOT(dataChanged()));
 	disconnect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
-	
+
+	disconnect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
 	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
+	disconnect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
 	
 	disconnect( filterBar , SIGNAL(panoseFilter(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
 
@@ -953,41 +949,41 @@ void MainViewWidget::slotQuitFamily()
 	previewStack->setCurrentIndex(0);
 }
 
-void MainViewWidget::slotFilterTag ( QString tag )
-{
-	int tIdx(filterBar->tagsCombo()->currentIndex());
-	if(tIdx < 0)
-		return;
+//void MainViewWidget::slotFilterTag ( QString tag )
+//{
+//	int tIdx(filterBar->tagsCombo()->currentIndex());
+//	if(tIdx < 0)
+//		return;
 
-	QString key(filterBar->tagsCombo()->itemData(tIdx).toString());
+//	QString key(filterBar->tagsCombo()->itemData(tIdx).toString());
 	
-	if(key == "TAG") // regular tag
-	{
-		m_lists->fontTree->clear();
-		fontsetHasChanged = true;
-		operateFilter( FMFontDb::DB()->Fonts(tag, FMFontDb::Tags ), tag);
-		currentOrdering = "family";
-		fillTree();
-	}
-	else if(key == "ALL_ACTIVATED")
-	{
-		m_lists->fontTree->clear();
-		fontsetHasChanged = true;
-		operateFilter( FMFontDb::DB()->Fonts(1, FMFontDb::Activation ), tr("Activated"));
-		currentOrdering = "family";
-		fillTree();
-	}
-	else if(key == "SIMILAR")
-	{
-		if(theVeryFont)
-		{
-			m_lists->fontTree->clear();
-			fontsetHasChanged = true;
-			operateFilter( PanoseMatchFont::similar(theVeryFont, typo->getPanoseMatchTreshold() ), "S://"+ theVeryFont->family());
-			fillTree();
-		}
-	}
-}
+//	if(key == "TAG") // regular tag
+//	{
+//		m_lists->fontTree->clear();
+//		fontsetHasChanged = true;
+//		operateFilter( FMFontDb::DB()->Fonts(tag, FMFontDb::Tags ), tag);
+//		currentOrdering = "family";
+//		fillTree();
+//	}
+//	else if(key == "ALL_ACTIVATED")
+//	{
+//		m_lists->fontTree->clear();
+//		fontsetHasChanged = true;
+//		operateFilter( FMFontDb::DB()->Fonts(1, FMFontDb::Activation ), tr("Activated"));
+//		currentOrdering = "family";
+//		fillTree();
+//	}
+//	else if(key == "SIMILAR")
+//	{
+//		if(theVeryFont)
+//		{
+//			m_lists->fontTree->clear();
+//			fontsetHasChanged = true;
+//			operateFilter( PanoseMatchFont::similar(theVeryFont, typo->getPanoseMatchTreshold() ), "S://"+ theVeryFont->family());
+//			fillTree();
+//		}
+//	}
+//}
 
 void MainViewWidget::operateFilter(QList< FontItem * > allFiltered, const QString filterName)
 {
@@ -1190,7 +1186,7 @@ void MainViewWidget::slotReloadFontList()
 void MainViewWidget::slotViewAll()
 {
 	FMFontDb::DB()->filterAllFonts();
-	filterBar->tagsCombo()->setCurrentIndex(0);
+//	filterBar->tagsCombo()->setCurrentIndex(0);
 	fontsetHasChanged = true;
 	fillTree();
 	setCrumb();

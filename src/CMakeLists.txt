@@ -8,7 +8,9 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filterbar.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/filterdata.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filteritem.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/filtertag.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidgetsregister.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidgettoolbar.cpp
@@ -141,6 +143,7 @@ chartwidget.h
 dumpdialog.h
 familywidget.h
 filterbar.h
+filterdata.h
 filteritem.h
 floatingwidget.h
 floatingwidgettoolbar.h

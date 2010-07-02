@@ -18,54 +18,27 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FILTERBAR_H
-#define FILTERBAR_H
+#ifndef FILTERTAG_H
+#define FILTERTAG_H
 
-#include <QWidget>
-#include <QList>
-#include <QMap>
+#include "filterdata.h"
 
-class FilterItem;
-class FilterData;
 
-namespace Ui {
-    class FilterBar;
-}
 
-class FilterBar : public QWidget
+class FilterTag : public FilterData
 {
-    Q_OBJECT
-
 public:
-    explicit FilterBar(QWidget *parent = 0);
-    ~FilterBar();
+	FilterTag();
 
-protected:
-    void changeEvent(QEvent *e);
+	enum TagIndex{
+		Key = FilterData::UserIndex,
+		Tag
+	};
 
-private:
-    Ui::FilterBar *ui;
-
-    QList<FilterItem*> filters;
-    void addFilter(FilterData*);
-    void removeAllFilters();
-    void processFilters();
-
-signals:
-    void initSearch(int, QString);
-    void panoseFilter(QMap<int,QList<int> >);
-    void filterChanged();
-
-private slots:
-    void slotPanoFilter();
-    void loadTags();
-    void panoseDialog();
-    void metaDialog();
-
-    void slotRemoveFilter(bool process = true);
-
-    void slotTagSelect(const QString& t);
-    void slotClearFilter();
+	void setData(int index, QVariant data);
+	QString type() const;
+	void operate();
+	QString toString();
 };
 
-#endif // FILTERBAR_H
+#endif // FILTERTAG_H

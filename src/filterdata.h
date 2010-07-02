@@ -18,54 +18,53 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FILTERBAR_H
-#define FILTERBAR_H
+#ifndef FILTERDATA_H
+#define FILTERDATA_H
 
-#include <QWidget>
+#include <QObject>
 #include <QList>
 #include <QMap>
+#include <QVariant>
+#include <QString>
+#include <QPointer>
 
 class FilterItem;
-class FilterData;
+class FontItem;
 
-namespace Ui {
-    class FilterBar;
-}
-
-class FilterBar : public QWidget
+class FilterData : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit FilterBar(QWidget *parent = 0);
-    ~FilterBar();
+	FilterData();
+
+	enum Index{
+		Replace = 0,
+		Or,
+		And,
+		Not,
+		Text,
+		UserIndex = 16
+	};
+
+	virtual void setData(int index, QVariant data);
+	virtual QVariant data(int index) const;
+	virtual QString getText() const;
+	virtual FilterItem* item();
+
+	virtual QString type() const = 0;
+	virtual void operate() = 0;
+	virtual QString toString() = 0;
 
 protected:
-    void changeEvent(QEvent *e);
+	QMap<int, QVariant> vData;
+	virtual void operateFilter(QList<FontItem*> fl);
 
 private:
-    Ui::FilterBar *ui;
-
-    QList<FilterItem*> filters;
-    void addFilter(FilterData*);
-    void removeAllFilters();
-    void processFilters();
+	QPointer<FilterItem> f;
 
 signals:
-    void initSearch(int, QString);
-    void panoseFilter(QMap<int,QList<int> >);
-    void filterChanged();
-
-private slots:
-    void slotPanoFilter();
-    void loadTags();
-    void panoseDialog();
-    void metaDialog();
-
-    void slotRemoveFilter(bool process = true);
-
-    void slotTagSelect(const QString& t);
-    void slotClearFilter();
+	void Operated();
 };
 
-#endif // FILTERBAR_H
+#endif // FILTERDATA_H

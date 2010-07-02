@@ -18,54 +18,46 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FILTERBAR_H
-#define FILTERBAR_H
+#include "filtertag.h"
+#include "filteritem.h"
+#include "fmfontdb.h"
 
-#include <QWidget>
-#include <QList>
-#include <QMap>
-
-class FilterItem;
-class FilterData;
-
-namespace Ui {
-    class FilterBar;
+FilterTag::FilterTag():
+		FilterData()
+{
 }
 
-class FilterBar : public QWidget
+void FilterTag::setData(int index, QVariant data)
 {
-    Q_OBJECT
+	if(index == Tag)
+	{
+		vData.insert(Text, data);
+	}
+	FilterData::setData(index, data);
+}
 
-public:
-    explicit FilterBar(QWidget *parent = 0);
-    ~FilterBar();
+QString FilterTag::type() const
+{
+	return QString("Tag");
+}
 
-protected:
-    void changeEvent(QEvent *e);
+void FilterTag::operate()
+{
+	QString key(vData.value(Key).toString());
+	QString tag(vData.value(Tag).toString());
 
-private:
-    Ui::FilterBar *ui;
+	if(key == "TAG") // regular tag
+	{
+		operateFilter( FMFontDb::DB()->Fonts(tag, FMFontDb::Tags ) );
+	}
+	else if(key == "ALL_ACTIVATED")
+	{
+		operateFilter( FMFontDb::DB()->Fonts(1, FMFontDb::Activation ) );
+	}
+}
 
-    QList<FilterItem*> filters;
-    void addFilter(FilterData*);
-    void removeAllFilters();
-    void processFilters();
 
-signals:
-    void initSearch(int, QString);
-    void panoseFilter(QMap<int,QList<int> >);
-    void filterChanged();
-
-private slots:
-    void slotPanoFilter();
-    void loadTags();
-    void panoseDialog();
-    void metaDialog();
-
-    void slotRemoveFilter(bool process = true);
-
-    void slotTagSelect(const QString& t);
-    void slotClearFilter();
-};
-
-#endif // FILTERBAR_H
+QString FilterTag::toString()
+{
+	return vData.value(Key).toString() + QString(";") + vData.value(Tag).toString();
+}

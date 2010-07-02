@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>104</width>
-    <height>24</height>
+    <width>85</width>
+    <height>28</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,38 +18,65 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QLabel" name="filterLabel">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>24</height>
-      </size>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="text">
-      <string>TextLabel</string>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QToolButton" name="removeButton">
-     <property name="maximumSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>X</string>
-     </property>
-     <property name="autoRaise">
-      <bool>true</bool>
-     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="horizontalSpacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="filterLabel">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QToolButton" name="removeButton">
+        <property name="maximumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

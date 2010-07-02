@@ -23,6 +23,8 @@
 
 #include <QWidget>
 
+class FilterData;
+
 namespace Ui {
 	class FilterItem;
 }
@@ -31,13 +33,13 @@ class FilterItem : public QWidget
 {
 	Q_OBJECT
 
+	FilterData* d;
 	QString text;
 public:
-	explicit FilterItem(QWidget *parent = 0);
+	explicit FilterItem(FilterData *filter, QWidget *parent = 0);
 	~FilterItem();
 
-	void setText(const QString& t);
-	QString getText() const{return text;}
+	FilterData* filter(){return d;}
 
 protected:
 	void changeEvent(QEvent *e);

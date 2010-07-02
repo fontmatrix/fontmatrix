@@ -151,34 +151,36 @@ void Systray::slotDeactivateAll()
 
 void Systray::slotTagMenuClicked(QAction *action)
 {
-	action->setIcon(QIcon ());
-	QString name = action->text();
-	if (name.isEmpty())
-		return;
 
-	if (!action->isChecked()) { // deactivate based on the tag name
-		ttek->theMainView->slotFilterTag(name);
-		if (showTagsConfirmation) {
-			bool wasVisible = ttek->isVisible();
-			if (!wasVisible)
-				ttek->show();
-			ttek->slotDeactivateCurrents();
-			if (!wasVisible)
-				ttek->hide();
-		} else
-			ttek->theMainView->slotDesactivateAll();
-	} else { // activate based on the tag name
-		ttek->theMainView->slotFilterTag(name);
-		if (showTagsConfirmation) {
-			bool wasVisible = ttek->isVisible();
-			if (!wasVisible)
-				ttek->show();
-			ttek->slotActivateCurrents();
-			if (!wasVisible)
-				ttek->hide();
-		} else
-			ttek->theMainView->slotActivateAll();
-	}
+	// Deactivate the feature atm
+//	action->setIcon(QIcon ());
+//	QString name = action->text();
+//	if (name.isEmpty())
+//		return;
+
+//	if (!action->isChecked()) { // deactivate based on the tag name
+//		ttek->theMainView->slotFilterTag(name);
+//		if (showTagsConfirmation) {
+//			bool wasVisible = ttek->isVisible();
+//			if (!wasVisible)
+//				ttek->show();
+//			ttek->slotDeactivateCurrents();
+//			if (!wasVisible)
+//				ttek->hide();
+//		} else
+//			ttek->theMainView->slotDesactivateAll();
+//	} else { // activate based on the tag name
+//		ttek->theMainView->slotFilterTag(name);
+//		if (showTagsConfirmation) {
+//			bool wasVisible = ttek->isVisible();
+//			if (!wasVisible)
+//				ttek->show();
+//			ttek->slotActivateCurrents();
+//			if (!wasVisible)
+//				ttek->hide();
+//		} else
+//			ttek->theMainView->slotActivateAll();
+//	}
 }
 
 void Systray::slotQuit()

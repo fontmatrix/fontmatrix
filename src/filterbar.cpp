@@ -23,48 +23,53 @@
 #include "fmfontdb.h"
 #include "panosewidget.h"
 #include "metawidget.h"
+#include "filteritem.h"
+#include "filtertag.h"
 
 #include <QDialog>
 #include <QGridLayout>
 #include <QStringList>
 
 FilterBar::FilterBar(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FilterBar)
+		QWidget(parent),
+		ui(new Ui::FilterBar)
 {
-    ui->setupUi(this);
-    loadTags();
+	ui->setupUi(this);
+	ui->filterListBar->hide();
+	loadTags();
 
-    connect(ui->classButton, SIGNAL(clicked()), this, SLOT(panoseDialog()));
-    connect(ui->metaButton, SIGNAL(clicked()), this, SLOT(metaDialog()));
-    connect(PanoseWidget::getInstance(), SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
+	connect(ui->classButton, SIGNAL(clicked()), this, SLOT(panoseDialog()));
+	connect(ui->metaButton, SIGNAL(clicked()), this, SLOT(metaDialog()));
+	connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(slotClearFilter()));
+	connect(PanoseWidget::getInstance(), SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
+	connect(ui->tagsCombo, SIGNAL(activated(const QString&)), this, SLOT(slotTagSelect(const QString&)));
 }
 
 FilterBar::~FilterBar()
 {
-    delete ui;
+	delete ui;
 }
 
 void FilterBar::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui->retranslateUi(this);
+		break;
+	default:
+		break;
+	}
 }
 
 void FilterBar::loadTags()
 {
 	ui->tagsCombo->clear();
-//	tagsetIcon = QIcon(":/fontmatrix_tagseteditor.png");
+	//	tagsetIcon = QIcon(":/fontmatrix_tagseteditor.png");
 
 	ui->tagsCombo->addItem(tr("Tags"),"NO_KEY");
 	ui->tagsCombo->addItem(tr("All activated"),"ALL_ACTIVATED");
-//	ui->tagsCombo->addItem(tr("Similar to current"),"SIMILAR");
+	//	ui->tagsCombo->addItem(tr("Similar to current"),"SIMILAR");
 
 	QStringList tl_tmp = FMFontDb::DB()->getTags();
 	tl_tmp.sort();
@@ -76,15 +81,6 @@ void FilterBar::loadTags()
 }
 
 
-QComboBox* FilterBar::tagsCombo()
-{
-	return ui->tagsCombo;
-}
-
-QPushButton* FilterBar::clearButton()
-{
-	return ui->clearButton;
-}
 
 void FilterBar::slotPanoFilter()
 {
@@ -95,13 +91,13 @@ void FilterBar::panoseDialog()
 {
 	PanoseWidget* pw(PanoseWidget::getInstance());
 	pw->show();
-//	QDialog *d = new QDialog(this);
-//	QGridLayout *l = new QGridLayout(d);
-//	l->addWidget(pw,0,0,0,0);
-//	d->exec();
-//	pw->setParent(0);
-//	delete l;
-//	delete d;
+	//	QDialog *d = new QDialog(this);
+	//	QGridLayout *l = new QGridLayout(d);
+	//	l->addWidget(pw,0,0,0,0);
+	//	d->exec();
+	//	pw->setParent(0);
+	//	delete l;
+	//	delete d;
 
 }
 
@@ -120,4 +116,79 @@ void FilterBar::metaDialog()
 	delete l;
 	delete d;
 
+}
+
+void FilterBar::processFilters()
+{
+	FMFontDb::DB()->clearFilteredFonts();
+	foreach(FilterItem* d, filters)
+	{
+		d->filter()->operate();
+	}
+	emit filterChanged();
+}
+
+void FilterBar::slotRemoveFilter(bool process)
+{
+	FilterItem * fi(reinterpret_cast<FilterItem*>(sender()));
+	if(fi != 0)
+	{
+		delete fi->filter();
+		filters.removeAll(fi);
+		if(filters.count() == 0)
+		{
+			FMFontDb::DB()->filterAllFonts();
+			ui->filterListBar->hide();
+		}
+		fi->deleteLater();
+		if(process)
+			processFilters();
+	}
+}
+
+void FilterBar::removeAllFilters()
+{
+	FMFontDb::DB()->filterAllFonts();
+	foreach(FilterItem* d, filters)
+	{
+		d->deleteLater();
+	}
+	filters.clear();
+	ui->filterListBar->hide();
+}
+
+void FilterBar::addFilter(FilterData *f)
+{
+	if(f != 0)
+	{
+		FilterItem * it(f->item());
+		if(!filters.contains(it))
+		{
+			if(f->data(FilterData::Replace).toBool())
+				removeAllFilters();
+			connect(it, SIGNAL(remove()), this, SLOT(slotRemoveFilter()));
+			filters.append(it);
+			ui->filterListLayout->addWidget(it);
+			if(!(ui->filterListBar->isVisible()))
+				ui->filterListBar->show();
+
+			processFilters();
+		}
+	}
+}
+
+void FilterBar::slotTagSelect(const QString& t)
+{
+	QString key(ui->tagsCombo->itemData(ui->tagsCombo->currentIndex()).toString());
+	ui->tagsCombo->setCurrentIndex(0);
+	FilterTag * ft(new FilterTag);
+	ft->setData(FilterTag::Key, key);
+	ft->setData(FilterTag::Tag, t);
+	addFilter(ft);
+}
+
+void FilterBar::slotClearFilter()
+{
+	removeAllFilters();
+	emit filterChanged();
 }

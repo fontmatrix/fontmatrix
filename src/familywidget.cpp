@@ -75,6 +75,7 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 			<<	QString("Plain")
 			<<	QString("Medium")
 			<<	QString()
+			<<	QString("Demi")
 			<<	QString("DemiBold")
 			<<	QString("SemiBold")
 			<<	QString("Bold")

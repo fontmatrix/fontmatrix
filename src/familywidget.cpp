@@ -98,6 +98,7 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 			<<	QString("Compressed")
 			<<	QString("UltraCondensed")
 			<<	QString("Condensed")
+			<<	QString("SemiCondensed")
 			<<	QString("Narrow")
 			<<	QString("SemiExtended")
 			<<	QString("SemiExpanded")

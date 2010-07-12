@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <QList>
 #include <QModelIndex>
+#include <QStringList>
 
 class FMPreviewModel;
 class FontItem;
@@ -61,6 +62,11 @@ private:
     FMPreviewModel * previewModel;
     FloatingWidget *sample;
     FloatingWidget *chart;
+
+    QList<QStringList> variants;
+    void appendVariants(const QString& w, const QString& s, const QString& wi, const QString& o);
+    QList<FontItem*> orderVariants(QList<FontItem*> ul);
+    inline bool compareVariants(const QStringList& a, const QStringList& b);
 
 signals:
     void backToList();

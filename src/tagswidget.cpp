@@ -70,7 +70,8 @@ void TagsWidget::slotNewTag()
 	tagsListWidget->addItem ( lit );
 	slotFinalize();
 
-	ListDockWidget::getInstance()->reloadTagsCombo();
+	emit tagAdded();
+//	ListDockWidget::getInstance()->reloadTagsCombo();
 }
 
 void TagsWidget::slotFinalize()

@@ -44,6 +44,9 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 		void slotContextMenu( QPoint  pos );
 		void slotActRemovetag();
 		void slotActEditTag();
+
+	signals:
+		void tagAdded();
 };
 
 #endif //TAGSWIDGET_H

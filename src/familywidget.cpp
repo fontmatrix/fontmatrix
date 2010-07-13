@@ -129,8 +129,8 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 			}
 		}
 	}
-	foreach(const QStringList& v, variants)
-		qDebug()<<v.join(" ");
+//	foreach(const QStringList& v, variants)
+//		qDebug()<<v.join(" ");
 
 	connect(ui->returnListButton, SIGNAL(clicked()), this, SIGNAL(backToList()));
 	connect(ui->familyPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
@@ -140,6 +140,7 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	connect(ui->infoButton, SIGNAL(clicked()), this, SLOT(slotShowInfo()));
 	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
 	connect(ui->chartButton, SIGNAL(clicked()), this, SLOT(slotShowChart()));
+	connect(ui->tagsWidget, SIGNAL(tagAdded()), this, SIGNAL(tagAdded()));
 
 	connect(ui->activateButton, SIGNAL(clicked(bool)), this, SLOT(slotActivate(bool)));
 	connect(ui->deactivateButton, SIGNAL(clicked(bool)), this, SLOT(slotDeactivate(bool)));

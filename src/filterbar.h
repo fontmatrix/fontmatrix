@@ -62,7 +62,7 @@ private slots:
     void metaDialog();
 
     void slotSaveFilter();
-    void slotLoadFilter(const QString& f);
+    void slotLoadFilter(const QString& fname);
 
     void slotRemoveFilter(bool process = true);
 

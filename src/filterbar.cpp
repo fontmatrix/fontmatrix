@@ -106,7 +106,7 @@ void FilterBar::metaDialog()
 	d->exec();
 	if((mw->resultField != -1) && (!mw->resultText.isEmpty()))
 	{
-//		emit initSearch(mw->resultField, mw->resultText);
+		//		emit initSearch(mw->resultField, mw->resultText);
 		FilterMeta *fm(new FilterMeta);
 		fm->setData(FilterData::Text, mw->resultText);
 		fm->setData(FilterMeta::Field, mw->resultField);
@@ -238,8 +238,37 @@ void FilterBar::slotSaveFilter()
 	}
 }
 
-void FilterBar::slotLoadFilter(const QString &f)
+void FilterBar::slotLoadFilter(const QString &fname)
 {
-
+	removeAllFilters();
+	QDir fdir(FMPaths::FiltersDir() + fname);
+	fdir.setSorting(QDir::Name);
+	foreach(QString fn, fdir.entryList())
+	{
+		QStringList l(fn.split(QString("-")));
+		if(l.count() == 2)
+		{
+			QString type(l.at(1));
+			QFile file(fdir.absoluteFilePath(fn));
+			if(file.open(QIODevice::ReadOnly))
+			{
+				FilterData *f;
+				if(type == QString("Meta"))
+				{
+					f = new FilterMeta;
+				}
+				else if(type == QString("Panose"))
+				{
+					f = new FilterPanose;
+				}
+				else if(type == QString("Tag"))
+				{
+					f = new FilterTag;
+				}
+				f->fromByteArray(file.readAll());
+				addFilter(f);
+			}
+		}
+	}
 }
 

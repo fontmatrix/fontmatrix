@@ -29,6 +29,8 @@ class FMPaths
 		static QString ScriptsDir();
 
 		static QString SamplesDir();
+
+		static QString FiltersDir();
 		
 		static QString LocalizedDirPath(const QString& base, const QString& fallback = QString("en"));
 		

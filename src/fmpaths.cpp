@@ -91,6 +91,15 @@ QString FMPaths::SamplesDir()
 	return typotek::getInstance()->getOwnDir().absolutePath() + sep + "Samples"+ sep;
 }
 
+QString FMPaths::FiltersDir()
+{
+	QString sep(QDir::separator());
+	QDir bdir(typotek::getInstance()->getOwnDir().absolutePath());
+	if (!bdir.exists(QString("Filters")))
+		bdir.mkdir(QString("Filters"));
+	return typotek::getInstance()->getOwnDir().absolutePath() + sep + "Filters"+ sep;
+}
+
 QString FMPaths::LocalizedDirPath(const QString & base, const QString& fallback )
 {	
 	QString sep("_");

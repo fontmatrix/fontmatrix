@@ -27,10 +27,14 @@
 #include "filtertag.h"
 #include "filterpanose.h"
 #include "filtermeta.h"
+#include "fmpaths.h"
 
 #include <QDialog>
 #include <QGridLayout>
 #include <QStringList>
+#include <QInputDialog>
+#include <QDir>
+#include <QFile>
 
 FilterBar::FilterBar(QWidget *parent) :
 		QWidget(parent),
@@ -45,6 +49,7 @@ FilterBar::FilterBar(QWidget *parent) :
 	connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(slotClearFilter()));
 	connect(PanoseWidget::getInstance(), SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
 	connect(ui->tagsCombo, SIGNAL(activated(const QString&)), this, SLOT(slotTagSelect(const QString&)));
+	connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(slotSaveFilter()));
 }
 
 FilterBar::~FilterBar()
@@ -77,7 +82,8 @@ void FilterBar::loadTags()
 	tl_tmp.sort();
 	foreach(QString tag, tl_tmp )
 	{
-		ui->tagsCombo->addItem(tag, "TAG");
+		if(!FMFontDb::DB()->Fonts(tag, FMFontDb::Tags ).isEmpty())
+			ui->tagsCombo->addItem(tag, "TAG");
 	}
 
 }
@@ -208,3 +214,32 @@ void FilterBar::slotClearFilter()
 	removeAllFilters();
 	emit filterChanged();
 }
+
+void FilterBar::slotSaveFilter()
+{
+	if(filters.isEmpty())
+		return;
+	// Get a name for the filter
+	QString fname(QInputDialog::getText(this, tr("Filter Name"), tr("Filter Name: ")));
+	if(fname.isEmpty())
+		return;
+	QDir fdir(FMPaths::FiltersDir());
+	if(!fdir.exists(fname))
+		fdir.mkdir(fname);
+	fdir.cd(fname);
+	for(int i(0); i < filters.count(); ++i)
+	{
+		QFile f(fdir.absoluteFilePath( QString("%1-%2").arg(i, 3, 10, QChar('0')).arg(filters[i]->filter()->type()) ));
+		if(f.open(QIODevice::WriteOnly))
+		{
+			f.write(filters[i]->filter()->toByteArray());
+			f.close();
+		}
+	}
+}
+
+void FilterBar::slotLoadFilter(const QString &f)
+{
+
+}
+

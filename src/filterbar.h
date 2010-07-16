@@ -61,6 +61,9 @@ private slots:
     void panoseDialog();
     void metaDialog();
 
+    void slotSaveFilter();
+    void slotLoadFilter(const QString& f);
+
     void slotRemoveFilter(bool process = true);
 
     void slotTagSelect(const QString& t);

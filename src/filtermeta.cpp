@@ -21,6 +21,7 @@
 #include "filtermeta.h"
 #include "fmfontdb.h"
 #include "fontitem.h"
+#include "fmfontstrings.h"
 
 FilterMeta::FilterMeta():
 		FilterData()
@@ -66,23 +67,23 @@ void FilterMeta::operate()
 
 		operateFilter(tl);
 	}
-//	else if(ff == FMFontDb::AllInfo)
-//	{
-//		FMFontDb::InfoItem k;
+	else if(ff == FMFontDb::AllInfo)
+	{
+		FMFontDb::InfoItem k;
+		QList<FontItem*> tmpList;
+		tmpList.clear();
+		for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
+		{
+			k = FontStrings::Names().keys()[gIdx];
+			if(k !=  FMFontDb::AllInfo)
+			{
+				tmpList +=  FMFontDb::DB()->Fonts(fs,k);
+			}
+		}
 
-//		tmpList.clear();
-//		for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
-//		{
-//			k = FontStrings::Names().keys()[gIdx];
-//			if(k !=  FMFontDb::AllInfo)
-//			{
-//				tmpList +=  FMFontDb::DB()->Fonts(fs,k);
-//			}
-//		}
+		operateFilter(tmpList);
 
-//		operateFilter(tmpList, fs);
-
-//	}
+	}
 	else
 	{
 		operateFilter(FMFontDb::DB()->Fonts(fs, FMFontDb::InfoItem(ff)));

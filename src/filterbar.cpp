@@ -25,6 +25,7 @@
 #include "metawidget.h"
 #include "filteritem.h"
 #include "filtertag.h"
+#include "filterpanose.h"
 
 #include <QDialog>
 #include <QGridLayout>
@@ -80,25 +81,10 @@ void FilterBar::loadTags()
 
 }
 
-
-
-void FilterBar::slotPanoFilter()
-{
-	emit panoseFilter(PanoseWidget::getInstance()->getFilter());
-}
-
 void FilterBar::panoseDialog()
 {
 	PanoseWidget* pw(PanoseWidget::getInstance());
 	pw->show();
-	//	QDialog *d = new QDialog(this);
-	//	QGridLayout *l = new QGridLayout(d);
-	//	l->addWidget(pw,0,0,0,0);
-	//	d->exec();
-	//	pw->setParent(0);
-	//	delete l;
-	//	delete d;
-
 }
 
 void FilterBar::metaDialog()
@@ -183,9 +169,29 @@ void FilterBar::slotTagSelect(const QString& t)
 	QString key(ui->tagsCombo->itemData(ui->tagsCombo->currentIndex()).toString());
 	ui->tagsCombo->setCurrentIndex(0);
 	FilterTag * ft(new FilterTag);
+	ft->setData(FilterData::Text, t);
 	ft->setData(FilterTag::Key, key);
 	ft->setData(FilterTag::Tag, t);
 	addFilter(ft);
+}
+
+void FilterBar::slotPanoFilter()
+{
+	QMap<int,QList<int> > pv(PanoseWidget::getInstance()->getFilter());
+	const QMap< FontStrings::PanoseKey, QMap<int, QString> >& ps(FontStrings::Panose());
+	foreach(int k, pv.keys())
+	{
+		foreach(int v, pv[k])
+		{
+			QString text(ps.value(static_cast<FontStrings::PanoseKey>(k)).value(v));
+			FilterPanose *fp(new FilterPanose);
+			fp->setData(FilterData::Text, text);
+			fp->setData(FilterPanose::Param, k);
+			fp->setData(FilterPanose::Value, v);
+			addFilter(fp);
+		}
+	}
+
 }
 
 void FilterBar::slotClearFilter()

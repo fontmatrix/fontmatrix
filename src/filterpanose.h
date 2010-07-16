@@ -18,55 +18,23 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FILTERDATA_H
-#define FILTERDATA_H
+#ifndef FILTERPANOSE_H
+#define FILTERPANOSE_H
 
-#include <QObject>
-#include <QList>
-#include <QMap>
-#include <QVariant>
-#include <QString>
-#include <QPointer>
-#include <QByteArray>
+#include "filterdata.h"
 
-class FilterItem;
-class FontItem;
-
-class FilterData : public QObject
+class FilterPanose : public FilterData
 {
-	Q_OBJECT
-
 public:
-	FilterData();
+    FilterPanose();
 
-	enum Index{
-		Replace = 1,
-		Or,
-		And,
-		Not,
-		Text,
-		UserIndex = 16
-	};
+    enum TagIndex{
+	    Param = FilterData::UserIndex,
+	    Value
+    };
 
-	virtual void setData(int index, QVariant data);
-	virtual QVariant data(int index) const;
-	virtual QString getText() const;
-	virtual QByteArray toByteArray() const;
-	virtual void fromByteArray(const QByteArray& ba);
-	virtual FilterItem* item();
-
-	virtual QString type() const = 0;
-	virtual void operate() = 0;
-
-protected:
-	QMap<int, QVariant> vData;
-	virtual void operateFilter(QList<FontItem*> fl);
-
-private:
-	QPointer<FilterItem> f;
-
-signals:
-	void Operated();
+    QString type() const;
+    void operate();
 };
 
-#endif // FILTERDATA_H
+#endif // FILTERPANOSE_H

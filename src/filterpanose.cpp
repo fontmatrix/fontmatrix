@@ -18,55 +18,33 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FILTERDATA_H
-#define FILTERDATA_H
+#include "filterpanose.h"
+#include "fmfontdb.h"
 
-#include <QObject>
-#include <QList>
-#include <QMap>
-#include <QVariant>
-#include <QString>
-#include <QPointer>
-#include <QByteArray>
-
-class FilterItem;
-class FontItem;
-
-class FilterData : public QObject
+FilterPanose::FilterPanose():
+		FilterData()
 {
-	Q_OBJECT
+}
 
-public:
-	FilterData();
+QString FilterPanose::type() const
+{
+	return QString("Panose");
+}
 
-	enum Index{
-		Replace = 1,
-		Or,
-		And,
-		Not,
-		Text,
-		UserIndex = 16
-	};
 
-	virtual void setData(int index, QVariant data);
-	virtual QVariant data(int index) const;
-	virtual QString getText() const;
-	virtual QByteArray toByteArray() const;
-	virtual void fromByteArray(const QByteArray& ba);
-	virtual FilterItem* item();
-
-	virtual QString type() const = 0;
-	virtual void operate() = 0;
-
-protected:
-	QMap<int, QVariant> vData;
-	virtual void operateFilter(QList<FontItem*> fl);
-
-private:
-	QPointer<FilterItem> f;
-
-signals:
-	void Operated();
-};
-
-#endif // FILTERDATA_H
+void FilterPanose::operate()
+{
+	QList<FontDBResult> dbresult( FMFontDb::DB()->getValues( FMFontDb::Panose ) );
+	QList<FontItem*> fil;
+	int paramIdx(vData[Param].toInt());
+	int val(vData[Value].toInt());
+	int fv(0);
+	for(int i(0); i < dbresult.count() ; ++i)
+	{
+		QStringList pl(dbresult[i].second.split(":"));
+		fv = pl[paramIdx].toInt();
+		if(fv == val)
+			fil << dbresult[i].first;
+	}
+	operateFilter(fil);
+}

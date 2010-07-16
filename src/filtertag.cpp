@@ -27,15 +27,6 @@ FilterTag::FilterTag():
 {
 }
 
-void FilterTag::setData(int index, QVariant data)
-{
-	if(index == Tag)
-	{
-		vData.insert(Text, data);
-	}
-	FilterData::setData(index, data);
-}
-
 QString FilterTag::type() const
 {
 	return QString("Tag");
@@ -54,10 +45,4 @@ void FilterTag::operate()
 	{
 		operateFilter( FMFontDb::DB()->Fonts(1, FMFontDb::Activation ) );
 	}
-}
-
-
-QString FilterTag::toString()
-{
-	return vData.value(Key).toString() + QString(";") + vData.value(Tag).toString();
 }

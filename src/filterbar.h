@@ -53,7 +53,6 @@ private:
 
 signals:
     void initSearch(int, QString);
-    void panoseFilter(QMap<int,QList<int> >);
     void filterChanged();
 
 private slots:

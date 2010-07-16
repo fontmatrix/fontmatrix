@@ -35,10 +35,8 @@ public:
 		Tag
 	};
 
-	void setData(int index, QVariant data);
 	QString type() const;
 	void operate();
-	QString toString();
 };
 
 #endif // FILTERTAG_H

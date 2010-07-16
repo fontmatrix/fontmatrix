@@ -50,65 +50,49 @@ MetaWidget::MetaWidget(QWidget *parent) :
 	QGridLayout * grid(new QGridLayout(this));
 	QCompleter * completer(new QCompleter(mModel));
 
-//	filterWidget= new QWidget(this);
-//	QGridLayout * filterGrid(new QGridLayout(filterWidget));
-//	filterCombo = new QComboBox(filterWidget);
-//	filterLine = new QLineEdit(filterWidget);
-//	filterButton = new QPushButton(tr("Add"), filterWidget);
-//	filterGrid->addWidget(filterCombo, 0 ,0);
-//	filterGrid->addWidget(filterLine, 0 ,1);
-//	filterGrid->addWidget(filterButton, 0 ,2);
-//	grid->addWidget(filterWidget, 0, 0, 0, 2);
-//	filterLine->setCompleter(completer);
-//	for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
-//	{
-//		FMFontDb::InfoItem k(FontStrings::Names().keys()[gIdx]);
-//		if((k !=  FMFontDb::AllInfo))
-//		{
-//			filterCombo->addItem(FontStrings::Names()[k], QVariant(k));
-////			actn = new QAction(FontStrings::Names()[k], filterActGroup);
-////			actn->setData( k );
-////			actn->setCheckable(true);
+	//	dont know why but it doesn't want to be placed in the grid ###
+//	QLabel *lab(new QLabel(tr("<div style=\"font-weight:bold;\">Fill-in a text field and press enter.</div>"), this));
+//	grid->addWidget(lab,0,0,0,-1);
 
-////			theFilterMenu->addAction(actn);
-////			lModel = new QStringListModel;
-////			completers[FontStrings::Names()[k]] = new QCompleter(this);
-////			completers[FontStrings::Names()[k]]->setModel(lModel);
-//		}
-//	}
+	QList<FMFontDb::InfoItem> ln;
+	ln << FMFontDb::FontFamily
+			<< FMFontDb::FontSubfamily
+			<< FMFontDb::Designer
+			<< FMFontDb::Description
+			<< FMFontDb::Copyright
+			<< FMFontDb::Trademark
+			<< FMFontDb::ManufacturerName
+			<< FMFontDb::LicenseDescription
+			<< FMFontDb::AllInfo;
 
-//	ui->setLayout(grid);
+	int limit(qRound((ln.count() + 1) / 2) - 1);
 
-	int limit(qRound((FontStrings::Names().keys().count() + 1) / 2) - 1);
-
-	for(int gIdx(0); gIdx < FontStrings::Names().keys().count() ; ++gIdx)
+	for(int gIdx(1); gIdx < ln.count() ; ++gIdx)
 	{
-		FMFontDb::InfoItem k(FontStrings::Names().keys()[gIdx]);
-		if((k !=  FMFontDb::AllInfo))
+		FMFontDb::InfoItem k(ln[gIdx]);
+//		if((k !=  FMFontDb::AllInfo))
 		{
 			QLabel *label(new QLabel(FontStrings::Names().value(k),this));
 			QLineEdit *line(new QLineEdit(this));
+			metFields[line] = k;
 			line->setCompleter(completer);
-			QPushButton * button(new QPushButton(tr("Add"), this));
-			formFieldButton[button] = k;
-			formFieldLine[k] = line;
 			label->setBuddy(line);
-			connect(button,SIGNAL(clicked()), this, SLOT(addFilter()));
-			if(gIdx < limit)
+			connect(line,SIGNAL(returnPressed()), this, SLOT(addFilter()));
+			if((gIdx - 1) < limit)
 			{
 				grid->addWidget(label,gIdx,0);
 				grid->addWidget(line,gIdx ,1);
-				grid->addWidget(button, gIdx , 2);
 			}
 			else
 			{
 				int row(gIdx - limit);
 				grid->addWidget(label, row, 3);
 				grid->addWidget(line, row , 4);
-				grid->addWidget(button, row , 5);
 			}
 		}
 	}
+
+
 
 }
 
@@ -131,12 +115,11 @@ void MetaWidget::changeEvent(QEvent *e)
 
 void MetaWidget::addFilter()
 {
-	if(QString(sender()->metaObject()->className()) == QString("QPushButton"))
+	if(QString(sender()->metaObject()->className()) == QString("QLineEdit"))
 	{
-		QPushButton *b(reinterpret_cast<QPushButton*>(sender()));
-		FMFontDb::InfoItem it(formFieldButton[b]);
-		qDebug()<<"Meta:"<<FontStrings::Names()[it]<< formFieldLine[it]->text();
-		QString t(formFieldLine[it]->text());
+		QLineEdit *l(reinterpret_cast<QLineEdit*>(sender()));
+		FMFontDb::InfoItem it(metFields[l]);
+		QString t(l->text());
 		if(!mList.contains(t))
 		{
 			mList.append(t);

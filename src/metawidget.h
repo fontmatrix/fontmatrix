@@ -61,8 +61,7 @@ private:
     QComboBox *filterCombo;
     QLineEdit *filterLine;
     QPushButton *filterButton;
-    QMap<QPushButton*, FMFontDb::InfoItem> formFieldButton;
-    QMap<FMFontDb::InfoItem, QLineEdit*> formFieldLine;
+    QMap<QLineEdit*, FMFontDb::InfoItem> metFields;
 
 signals:
     void filterAdded();

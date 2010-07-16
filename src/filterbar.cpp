@@ -26,6 +26,7 @@
 #include "filteritem.h"
 #include "filtertag.h"
 #include "filterpanose.h"
+#include "filtermeta.h"
 
 #include <QDialog>
 #include <QGridLayout>
@@ -98,7 +99,14 @@ void FilterBar::metaDialog()
 
 	d->exec();
 	if((mw->resultField != -1) && (!mw->resultText.isEmpty()))
-		emit initSearch(mw->resultField, mw->resultText);
+	{
+//		emit initSearch(mw->resultField, mw->resultText);
+		FilterMeta *fm(new FilterMeta);
+		fm->setData(FilterData::Text, mw->resultText);
+		fm->setData(FilterMeta::Field, mw->resultField);
+		fm->setData(FilterMeta::Value, mw->resultText);
+		addFilter(fm);
+	}
 	delete l;
 	delete d;
 
@@ -183,7 +191,8 @@ void FilterBar::slotPanoFilter()
 	{
 		foreach(int v, pv[k])
 		{
-			QString text(ps.value(static_cast<FontStrings::PanoseKey>(k)).value(v));
+			FontStrings::PanoseKey pk (static_cast<FontStrings::PanoseKey>(k));
+			QString text(FontStrings::PanoseKeyName(pk) + QString(" : ") + ps.value(pk).value(v));
 			FilterPanose *fp(new FilterPanose);
 			fp->setData(FilterData::Text, text);
 			fp->setData(FilterPanose::Param, k);

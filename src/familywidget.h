@@ -73,6 +73,7 @@ signals:
     void fontSelected(const QString& path);
     void familyStateChanged();
     void tagAdded();
+    void tagChanged();
 
 private slots:
     void slotPreviewUpdate();

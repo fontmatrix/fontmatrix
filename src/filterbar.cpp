@@ -35,6 +35,7 @@
 #include <QInputDialog>
 #include <QDir>
 #include <QFile>
+#include <QAction>
 
 FilterBar::FilterBar(QWidget *parent) :
 		QWidget(parent),
@@ -42,6 +43,7 @@ FilterBar::FilterBar(QWidget *parent) :
 {
 	ui->setupUi(this);
 	ui->filterListBar->hide();
+
 	loadTags();
 
 	connect(ui->classButton, SIGNAL(clicked()), this, SLOT(panoseDialog()));
@@ -84,6 +86,15 @@ void FilterBar::loadTags()
 	{
 		if(!FMFontDb::DB()->Fonts(tag, FMFontDb::Tags ).isEmpty())
 			ui->tagsCombo->addItem(tag, "TAG");
+	}
+
+	QDir fdir(FMPaths::FiltersDir());
+	QStringList flist(fdir.entryList(QDir::NoDotAndDotDot|QDir::Dirs,QDir::Name));
+	if(!flist.isEmpty())
+		ui->tagsCombo->insertSeparator(ui->tagsCombo->count());
+	foreach(QString f, flist)
+	{
+		ui->tagsCombo->addItem(f, "FILTER");
 	}
 
 }
@@ -181,6 +192,13 @@ void FilterBar::addFilter(FilterData *f)
 void FilterBar::slotTagSelect(const QString& t)
 {
 	QString key(ui->tagsCombo->itemData(ui->tagsCombo->currentIndex()).toString());
+	if((key == QString("SEPARATOR")) || (ui->tagsCombo->currentIndex() == 0))
+		return;
+	else if(key == QString("FILTER"))
+	{
+		slotLoadFilter(t);
+		return;
+	}
 	ui->tagsCombo->setCurrentIndex(0);
 	FilterTag * ft(new FilterTag);
 	ft->setData(FilterData::Text, t);
@@ -236,14 +254,15 @@ void FilterBar::slotSaveFilter()
 			f.close();
 		}
 	}
+	loadTags();
 }
 
 void FilterBar::slotLoadFilter(const QString &fname)
 {
 	removeAllFilters();
 	QDir fdir(FMPaths::FiltersDir() + fname);
-	fdir.setSorting(QDir::Name);
-	foreach(QString fn, fdir.entryList())
+	QStringList flist(fdir.entryList(QDir::NoDotAndDotDot|QDir::Files, QDir::Name));
+	foreach(QString fn, flist)
 	{
 		QStringList l(fn.split(QString("-")));
 		if(l.count() == 2)

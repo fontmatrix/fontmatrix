@@ -89,7 +89,7 @@ void ChartWidget::createConnections()
 	connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
 	connect(ui->toolbar, SIGNAL(Hide()), this, SLOT(hide()));
 	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
-	connect(ui->toolbar, SIGNAL(Detach()), this, SLOT(detach()));
+	connect(ui->toolbar, SIGNAL(Detach()), this, SLOT(ddetach()));
 }
 
 void ChartWidget::removeConnections()

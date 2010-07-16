@@ -150,6 +150,7 @@ void MainViewWidget::doConnect()
 	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	connect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
 	connect(familyWidget, SIGNAL(tagAdded()), filterBar, SLOT(loadTags()));
+	connect(familyWidget, SIGNAL(tagChanged()), filterBar, SLOT(loadTags()));
 
 
 //	connect( filterBar , SIGNAL(panoseFilter(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
@@ -175,6 +176,8 @@ void MainViewWidget::disConnect()
 	disconnect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
 	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	disconnect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
+	disconnect(familyWidget, SIGNAL(tagAdded()), filterBar, SLOT(loadTags()));
+	disconnect(familyWidget, SIGNAL(tagChanged()), filterBar, SLOT(loadTags()));
 	
 //	disconnect( filterBar , SIGNAL(panoseFilter(QMap<int,QList<int> >)), this, SLOT(slotPanoseFilter(QMap<int,QList<int> >)));
 

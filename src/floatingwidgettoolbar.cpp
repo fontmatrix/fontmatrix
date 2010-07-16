@@ -66,7 +66,7 @@ void FloatingWidgetToolBar::setDetached()
 //		if(QString(p->metaObject()->className()) == QString("FloatingWidget"))
 //		{
 //			FloatingWidget * fw(reinterpret_cast<FloatingWidget*>(p));
-//			fw->detach();
+//			fw->ddetach();
 //			break;
 //		}
 //		p = parent();

@@ -235,6 +235,8 @@ void FilterData::fromByteArray(const QByteArray &ba)
 
 		}
 		vData.insert(idx, v);
+
+		ds >> idx;
 	}
 
 }

@@ -47,6 +47,7 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 
 	signals:
 		void tagAdded();
+		void tagChanged();
 };
 
 #endif //TAGSWIDGET_H

@@ -50,7 +50,7 @@ signals:
 
 public slots:
 	void activate(bool a);
-	void detach();
+	void ddetach(); // seems there's naming conflict with Qt4.7
 
 };
 

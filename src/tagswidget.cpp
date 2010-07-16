@@ -249,6 +249,7 @@ void TagsWidget::slotActRemovetag()
 	{
 		FMFontDb::DB()->removeTagFromDB ( currentTag );
 		prepare(theTaggedFonts);
+		emit tagChanged();
 	}
 
 }
@@ -269,6 +270,7 @@ void TagsWidget::slotActEditTag()
 		FMFontDb::DB()->editTag ( currentTag, nt );
 		prepare(theTaggedFonts);
 		ListDockWidget::getInstance()->reloadTagsCombo();
+		emit tagChanged();
 	}
 	
 }

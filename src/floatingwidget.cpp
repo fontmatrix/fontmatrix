@@ -35,7 +35,7 @@ FloatingWidget::FloatingWidget(const QString &f, const QString& typ, QWidget *pa
 	wTitle =  fn + QString(" - Fontmatrix");
 	if(0 == parent)
 	{
-		detach();
+		ddetach();
 	}
 }
 
@@ -69,7 +69,7 @@ void FloatingWidget::activate(bool a)
 }
 
 
-void FloatingWidget::detach()
+void FloatingWidget::ddetach()
 {
 	if(0 != parent())
 		setParent(0, Qt::Window);

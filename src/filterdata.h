@@ -48,7 +48,7 @@ public:
 		UserIndex = 16
 	};
 
-	virtual void setData(int index, QVariant data);
+	virtual void setData(int index, QVariant data, bool signalChange = false);
 	virtual QVariant data(int index) const;
 	virtual QString getText() const;
 	virtual QByteArray toByteArray() const;
@@ -67,6 +67,7 @@ private:
 
 signals:
 	void Operated();
+	void Changed();
 };
 
 #endif // FILTERDATA_H

@@ -54,9 +54,11 @@ FilterData::FilterData()
 }
 
 
-void FilterData::setData(int index, QVariant data)
+void FilterData::setData(int index, QVariant data, bool signalChange)
 {
 	vData.insert(index, data);
+	if(signalChange)
+		emit Changed();
 }
 
 QVariant FilterData::data(int index) const

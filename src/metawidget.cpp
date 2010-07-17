@@ -72,7 +72,10 @@ MetaWidget::MetaWidget(QWidget *parent) :
 		FMFontDb::InfoItem k(ln[gIdx]);
 //		if((k !=  FMFontDb::AllInfo))
 		{
-			QLabel *label(new QLabel(FontStrings::Names().value(k),this));
+			QString fieldname(FontStrings::Names().value(k));
+			if(k == FMFontDb::AllInfo)
+				fieldname = QString("<div style=\"font-weight:bold\">%1</div>").arg(fieldname);
+			QLabel *label(new QLabel(fieldname,this));
 			QLineEdit *line(new QLineEdit(this));
 			metFields[line] = k;
 			line->setCompleter(completer);

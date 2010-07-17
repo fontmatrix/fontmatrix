@@ -29,6 +29,9 @@ FilterItem::FilterItem(FilterData *filter, QWidget *parent) :
 {
 	ui->setupUi(this);
 	ui->filterLabel->setText(d->getText());
+	ui->andButton->setChecked(d->data(FilterData::And).toBool());
+
+	connect(ui->andButton, SIGNAL(clicked(bool)), this, SLOT(setAndMode(bool)));
 	connect(ui->removeButton, SIGNAL(clicked()), this, SIGNAL(remove()));
 }
 
@@ -48,4 +51,10 @@ void FilterItem::changeEvent(QEvent *e)
 	default:
 		break;
 	}
+}
+
+
+void FilterItem::setAndMode(bool c)
+{
+	d->setData(FilterData::And, c, true);
 }

@@ -119,7 +119,7 @@ void FilterBar::metaDialog()
 	{
 		//		emit initSearch(mw->resultField, mw->resultText);
 		FilterMeta *fm(new FilterMeta);
-		fm->setData(FilterData::Text, mw->resultText);
+		fm->setData(FilterData::Text, FontStrings::Names().value(static_cast<FMFontDb::InfoItem>(mw->resultField)) + QString(" : ") + mw->resultText);
 		fm->setData(FilterMeta::Field, mw->resultField);
 		fm->setData(FilterMeta::Value, mw->resultText);
 		addFilter(fm);
@@ -179,6 +179,7 @@ void FilterBar::addFilter(FilterData *f)
 			if(f->data(FilterData::Replace).toBool())
 				removeAllFilters();
 			connect(it, SIGNAL(remove()), this, SLOT(slotRemoveFilter()));
+			connect(f, SIGNAL(Changed()), this, SLOT(processFilters()));
 			filters.append(it);
 			ui->filterListLayout->addWidget(it);
 			if(!(ui->filterListBar->isVisible()))

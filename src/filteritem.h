@@ -50,6 +50,9 @@ private:
 signals:
 	void remove();
 
+private slots:
+	void setAndMode(bool c);
+
 };
 
 #endif // FILTERITEM_H

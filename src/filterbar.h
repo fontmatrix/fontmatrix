@@ -49,13 +49,13 @@ private:
     QList<FilterItem*> filters;
     void addFilter(FilterData*);
     void removeAllFilters();
-    void processFilters();
 
 signals:
     void initSearch(int, QString);
     void filterChanged();
 
 private slots:
+    void processFilters();
     void slotPanoFilter();
     void loadTags();
     void panoseDialog();

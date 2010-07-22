@@ -47,12 +47,12 @@ MetaWidget::MetaWidget(QWidget *parent) :
 		mModel = new QStringListModel;
 		mModel->setStringList(mList);
 	}
-	QGridLayout * grid(new QGridLayout(this));
+//	QGridLayout * ui->grid(new QGridLayout(this));
 	QCompleter * completer(new QCompleter(mModel));
 
-	//	dont know why but it doesn't want to be placed in the grid ###
+	//	dont know why but it doesn't want to be placed in the ui->grid ###
 //	QLabel *lab(new QLabel(tr("<div style=\"font-weight:bold;\">Fill-in a text field and press enter.</div>"), this));
-//	grid->addWidget(lab,0,0,0,-1);
+//	ui->grid->addWidget(lab,0,0,0,-1);
 
 	QList<FMFontDb::InfoItem> ln;
 	ln << FMFontDb::FontFamily
@@ -83,14 +83,14 @@ MetaWidget::MetaWidget(QWidget *parent) :
 			connect(line,SIGNAL(returnPressed()), this, SLOT(addFilter()));
 			if((gIdx - 1) < limit)
 			{
-				grid->addWidget(label,gIdx,0);
-				grid->addWidget(line,gIdx ,1);
+				ui->grid->addWidget(label,gIdx,0);
+				ui->grid->addWidget(line,gIdx ,1);
 			}
 			else
 			{
 				int row(gIdx - limit);
-				grid->addWidget(label, row, 3);
-				grid->addWidget(line, row , 4);
+				ui->grid->addWidget(label, row, 3);
+				ui->grid->addWidget(line, row , 4);
 			}
 		}
 	}

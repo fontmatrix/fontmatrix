@@ -18,58 +18,25 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FILTERBAR_H
-#define FILTERBAR_H
+#ifndef FILTERSDIALOG_H
+#define FILTERSDIALOG_H
 
-#include <QWidget>
-#include <QList>
-#include <QMap>
-
-class FilterItem;
-class FilterData;
+#include <QDialog>
 
 namespace Ui {
-    class FilterBar;
+    class FiltersDialog;
 }
 
-class FilterBar : public QWidget
+class FiltersDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit FilterBar(QWidget *parent = 0);
-    ~FilterBar();
-
-protected:
-    void changeEvent(QEvent *e);
+    explicit FiltersDialog(QWidget *parent = 0);
+    ~FiltersDialog();
 
 private:
-    Ui::FilterBar *ui;
-
-    QList<FilterItem*> filters;
-    void addFilter(FilterData*);
-    void removeAllFilters();
-
-signals:
-    void initSearch(int, QString);
-    void filterChanged();
-
-private slots:
-    void processFilters();
-    void slotPanoFilter();
-    void loadTags();
-    void panoseDialog();
-    void metaDialog();
-
-    void filtersDialog();
-
-    void slotSaveFilter();
-    void slotLoadFilter(const QString& fname);
-
-    void slotRemoveFilter(bool process = true);
-
-    void slotTagSelect(const QString& t);
-    void slotClearFilter();
+    Ui::FiltersDialog *ui;
 };
 
-#endif // FILTERBAR_H
+#endif // FILTERSDIALOG_H

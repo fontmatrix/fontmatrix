@@ -22,21 +22,38 @@
 #define FILTERSDIALOG_H
 
 #include <QDialog>
+#include <QString>
+#include <QList>
 
 namespace Ui {
     class FiltersDialog;
 }
+
+class FiltersDialogItem;
+class FilterItem;
 
 class FiltersDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit FiltersDialog(QWidget *parent = 0);
+    explicit FiltersDialog(const QList<FilterItem*>& currentFilter, QWidget *parent = 0);
     ~FiltersDialog();
 
 private:
     Ui::FiltersDialog *ui;
+
+    void loadFilters();
+    QList<FiltersDialogItem*> items;
+
+signals:
+    void Filter(QString);
+    void AddFilter(QString);
+    void RemoveFilter(QString);
+
+private slots:
+    void slotAddFilter();
+    void showAdd(bool);
 };
 
 #endif // FILTERSDIALOG_H

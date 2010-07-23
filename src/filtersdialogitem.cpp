@@ -21,14 +21,50 @@
 #include "filtersdialogitem.h"
 #include "ui_filtersdialogitem.h"
 
-FiltersDialogItem::FiltersDialogItem(QWidget *parent) :
+FiltersDialogItem::FiltersDialogItem(const QString& name, const QString& f, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FiltersDialogItem)
+    ui(new Ui::FiltersDialogItem),
+    filterName(name)
 {
     ui->setupUi(this);
+    setButtonsVisible(false);
+    ui->filterName->setText(filterName);
+    ui->filters->setText(f);
+
+    connect(ui->filterButton, SIGNAL(clicked()), this, SLOT(slotFilter()));
+    connect(ui->removeButton, SIGNAL(clicked()), this, SLOT(slotRemove()));
 }
 
 FiltersDialogItem::~FiltersDialogItem()
 {
     delete ui;
+}
+
+
+void FiltersDialogItem::slotFilter()
+{
+	emit Filter(filterName);
+}
+
+
+void FiltersDialogItem::slotRemove()
+{
+	emit Remove(filterName);
+}
+
+void FiltersDialogItem::setButtonsVisible(bool v)
+{
+	ui->filterButton->setVisible(v);
+	ui->removeButton->setVisible(v);
+
+}
+
+void FiltersDialogItem::enterEvent(QEvent *)
+{
+	setButtonsVisible(true);
+}
+
+void FiltersDialogItem::leaveEvent(QEvent *)
+{
+	setButtonsVisible(false);
 }

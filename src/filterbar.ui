@@ -35,10 +35,23 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="tagsCombo"/>
+        <widget class="QComboBox" name="tagsCombo">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="metaButton">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="text">
           <string>meta</string>
          </property>
@@ -46,6 +59,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="classButton">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="text">
           <string>Panose</string>
          </property>
@@ -70,20 +89,25 @@
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QPushButton" name="clearButton">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="text">
           <string>Clear</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="saveButton">
-         <property name="text">
-          <string>Save</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="filtersButton">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="text">
           <string>Filters</string>
          </property>

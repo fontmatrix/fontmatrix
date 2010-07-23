@@ -22,6 +22,7 @@
 #define FILTERSDIALOGITEM_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
     class FiltersDialogItem;
@@ -32,11 +33,26 @@ class FiltersDialogItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit FiltersDialogItem(QWidget *parent = 0);
+    explicit FiltersDialogItem(const QString& name, const QString& f, QWidget *parent = 0);
     ~FiltersDialogItem();
+
+protected:
+    void enterEvent(QEvent *);
+    void leaveEvent(QEvent *);
 
 private:
     Ui::FiltersDialogItem *ui;
+
+    void setButtonsVisible(bool v);
+    QString filterName;
+
+private slots:
+    void slotFilter();
+    void slotRemove();
+
+signals:
+    void Filter(QString);
+    void Remove(QString);
 };
 
 #endif // FILTERSDIALOGITEM_H

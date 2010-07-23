@@ -9,6 +9,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filterbar.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filterdata.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/filtersdialog.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/filtersdialogitem.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filteritem.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filtermeta.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/filterpanose.cpp
@@ -146,6 +148,8 @@ dumpdialog.h
 familywidget.h
 filterbar.h
 filterdata.h
+filtersdialog.h
+filtersdialogitem.h
 filteritem.h
 floatingwidget.h
 floatingwidgettoolbar.h
@@ -210,6 +214,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/filterbar.ui
+${CMAKE_CURRENT_SOURCE_DIR}/filtersdialog.ui
+${CMAKE_CURRENT_SOURCE_DIR}/filtersdialogitem.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/filteritem.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/floatingwidgettoolbar.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/fontextractordialog.ui

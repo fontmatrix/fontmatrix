@@ -28,6 +28,7 @@
 #include "filterpanose.h"
 #include "filtermeta.h"
 #include "fmpaths.h"
+#include "filtersdialog.h"
 
 #include <QDialog>
 #include <QGridLayout>
@@ -51,7 +52,8 @@ FilterBar::FilterBar(QWidget *parent) :
 	connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(slotClearFilter()));
 	connect(PanoseWidget::getInstance(), SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
 	connect(ui->tagsCombo, SIGNAL(activated(const QString&)), this, SLOT(slotTagSelect(const QString&)));
-	connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(slotSaveFilter()));
+//	connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(slotSaveFilter()));
+	connect(ui->filtersButton, SIGNAL(clicked()), this, SLOT(filtersDialog()));
 }
 
 FilterBar::~FilterBar()
@@ -88,14 +90,14 @@ void FilterBar::loadTags()
 			ui->tagsCombo->addItem(tag, "TAG");
 	}
 
-	QDir fdir(FMPaths::FiltersDir());
-	QStringList flist(fdir.entryList(QDir::NoDotAndDotDot|QDir::Dirs,QDir::Name));
-	if(!flist.isEmpty())
-		ui->tagsCombo->insertSeparator(ui->tagsCombo->count());
-	foreach(QString f, flist)
-	{
-		ui->tagsCombo->addItem(f, "FILTER");
-	}
+//	QDir fdir(FMPaths::FiltersDir());
+//	QStringList flist(fdir.entryList(QDir::NoDotAndDotDot|QDir::Dirs,QDir::Name));
+//	if(!flist.isEmpty())
+//		ui->tagsCombo->insertSeparator(ui->tagsCombo->count());
+//	foreach(QString f, flist)
+//	{
+//		ui->tagsCombo->addItem(f, "FILTER");
+//	}
 
 }
 
@@ -195,11 +197,7 @@ void FilterBar::slotTagSelect(const QString& t)
 	QString key(ui->tagsCombo->itemData(ui->tagsCombo->currentIndex()).toString());
 	if((key == QString("SEPARATOR")) || (ui->tagsCombo->currentIndex() == 0))
 		return;
-	else if(key == QString("FILTER"))
-	{
-		slotLoadFilter(t);
-		return;
-	}
+
 	ui->tagsCombo->setCurrentIndex(0);
 	FilterTag * ft(new FilterTag);
 	ft->setData(FilterData::Text, t);
@@ -234,14 +232,11 @@ void FilterBar::slotClearFilter()
 	emit filterChanged();
 }
 
-void FilterBar::slotSaveFilter()
+void FilterBar::slotSaveFilter(const QString& fname)
 {
-	if(filters.isEmpty())
+	if(filters.isEmpty() || fname.isEmpty())
 		return;
-	// Get a name for the filter
-	QString fname(QInputDialog::getText(this, tr("Filter Name"), tr("Filter Name: ")));
-	if(fname.isEmpty())
-		return;
+
 	QDir fdir(FMPaths::FiltersDir());
 	if(!fdir.exists(fname))
 		fdir.mkdir(fname);
@@ -255,7 +250,7 @@ void FilterBar::slotSaveFilter()
 			f.close();
 		}
 	}
-	loadTags();
+//	loadTags();
 }
 
 void FilterBar::slotLoadFilter(const QString &fname)
@@ -290,5 +285,14 @@ void FilterBar::slotLoadFilter(const QString &fname)
 			}
 		}
 	}
+	processFilters();
 }
 
+
+void FilterBar::filtersDialog()
+{
+	FiltersDialog *fd(new FiltersDialog(filters, this));
+	connect(fd, SIGNAL(Filter(QString)), this, SLOT(slotLoadFilter(QString)));
+	connect(fd, SIGNAL(AddFilter(QString)), this, SLOT(slotSaveFilter(QString)));
+	fd->exec();
+}

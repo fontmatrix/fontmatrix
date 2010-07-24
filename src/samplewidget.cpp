@@ -287,7 +287,7 @@ void SampleWidget::slotView ( bool needDeRendering )
 			double fSize(sampleFontSize);
 
 			QList<GlyphList> list;
-			QStringList stl( typotek::getInstance()->namedSample(ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString() ).split("\n"));
+			QStringList stl( typotek::getInstance()->namedSample().split("\n"));
 			if ( processScript )
 			{
 				for(int p(0);p<stl.count();++p)
@@ -324,6 +324,17 @@ void SampleWidget::slotView ( bool needDeRendering )
 				textLayout->start(QThread::LowestPriority);
 			else
 				textLayout->run();
+
+			if(ui->loremView->isVisible())
+			{
+				QPointF texttopLeft(ui->loremView->mapFromScene(textLayout->getRect().topLeft()));
+				ui->loremView->translate(10 -texttopLeft.x(), 10 -texttopLeft.y());
+			}
+			else if(ui->loremView_FT->isVisible())
+			{
+				QPointF texttopLeft(ui->loremView_FT->mapFromScene(textLayout->getRect().topLeft()));
+				ui->loremView_FT->translate( 10 -texttopLeft.x(), 10 -texttopLeft.y());
+			}
 		}
 	}
 	else if(!ui->loremView->isVisible() && !ui->loremView_FT->isVisible())
@@ -331,6 +342,7 @@ void SampleWidget::slotView ( bool needDeRendering )
 		ui->loremView->sheduleUpdate();
 		ui->loremView_FT->sheduleUpdate();
 	}
+
 
 	//	slotUpdateGView();
 	//	slotInfoFont();
@@ -558,6 +570,7 @@ void SampleWidget::slotUpdateRView()
 
 void SampleWidget::slotSampleChanged()
 {
+	typotek::getInstance()->namedSample( ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString() );
 	slotView ( true );
 }
 

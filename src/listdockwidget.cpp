@@ -205,7 +205,7 @@ ListDockWidget::ListDockWidget()
 
 	connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(slotTabChanged(int)));
 	
-	connect(typotek::getInstance(),SIGNAL(previewHasChanged()),this,SLOT(slotPreviewUpdate()));
+//	connect(typotek::getInstance(),SIGNAL(previewHasChanged()),this,SLOT(slotPreviewUpdate()));
 //	connect(listPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
 //	connect(listPreview,SIGNAL(activated ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));
 //	connect(listPreview,SIGNAL(clicked ( const QModelIndex&)),this,SLOT( slotPreviewSelected(const QModelIndex& )));

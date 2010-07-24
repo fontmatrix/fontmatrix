@@ -120,7 +120,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 
 
-	sampleText= typo->namedSample (typo->defaultSampleName());
+	sampleText= typo->namedSample();
 	currentOrdering = "family" ;
 
 

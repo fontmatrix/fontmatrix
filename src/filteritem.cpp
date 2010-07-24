@@ -38,6 +38,7 @@ FilterItem::FilterItem(FilterData *filter, QWidget *parent) :
 FilterItem::~FilterItem()
 {
 	delete ui;
+	delete d;
 }
 
 

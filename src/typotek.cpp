@@ -1588,6 +1588,12 @@ void typotek::slotSystrayStart( bool isEnabled )
 
 QString typotek::namedSample ( QString name )
 {
+	QString cn(name);
+	if(cn.isEmpty())
+		cn = currentNamedSample;
+	else
+		currentNamedSample = cn;
+
 	if(!dataLoader)
 		dataLoader = new DataLoader();
 
@@ -1598,7 +1604,7 @@ QString typotek::namedSample ( QString name )
 	{
 		QString id(QString("User::") + k);
 //		qDebug()<<"\t"<<id;
-		if(id == name)
+		if(id == cn)
 		{
 			return us[k];
 		}
@@ -1611,13 +1617,13 @@ QString typotek::namedSample ( QString name )
 		{
 			QString id(pk + QString("::") + sk);
 //			qDebug()<<"\t"<<id;
-			if(id == name)
+			if(id == cn)
 			{
 				return ss[pk][sk];
 			}
 		}
 	}
-	return QString();
+	return namedSample(defaultSampleName());
 }
 
 QMap<QString,QList<QString> > typotek::namedSamplesNames()
@@ -1672,19 +1678,19 @@ QString typotek::defaultSampleName()
 	if(us.contains(tr("default")))
 		return QString("User::") + QString("default");
 	else if(us.count() > 0)
-		return us[us.keys().first()];
+		return QString("User::") + us.keys().first();
 	else
 	{
 		const QMap<QString, QMap<QString,QString> >& ss(dataLoader->systemSamples());
 		QString l(QLocale::system().language());
 		if((ss.contains(l)) && (ss[l].count() > 0))
-			return ss[l][ss[l].keys().first()];
+			return l + QString("::") + ss[l].keys().first();
 		else
 		{
 			foreach(QString k, ss.keys())
 			{
 				if(ss[k].count() > 0)
-					return ss[k][ss[k].keys().first()];
+					return k +  QString("::") +ss[k].keys().first();
 			}
 		}
 	}

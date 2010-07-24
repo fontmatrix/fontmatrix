@@ -209,8 +209,8 @@ class FontItem : public QObject
 		
 		QMap<int,double> advanceCache;
 
-		QIcon theOneLinePreviewIcon;
-		QPixmap theOneLinePreviewPixmap;
+//		QIcon theOneLinePreviewIcon;
+//		QPixmap theOneLinePreviewPixmap;
 
 		static QGraphicsScene *theOneLineScene;
 		

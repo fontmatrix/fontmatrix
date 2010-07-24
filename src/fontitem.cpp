@@ -2207,13 +2207,13 @@ QGraphicsPathItem * FontItem::hasCodepointLoaded ( int code )
 
 QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QColor bg_color, int size_w , int size_f )
 {
-	if ( m_remote )
-		return fixedPixmap;
-	if ( !theOneLinePreviewPixmap.isNull() )
-	{
-		if ( theOneLinePreviewPixmap.width() == size_w )
-			return theOneLinePreviewPixmap;
-	}
+//	if ( m_remote )
+//		return fixedPixmap;
+//	if ( !theOneLinePreviewPixmap.isNull() )
+//	{
+//		if ( theOneLinePreviewPixmap.width() == size_w )
+//			return theOneLinePreviewPixmap;
+//	}
 	if ( !ensureFace() )
 		return QPixmap();
 	QRectF savedRect = theOneLineScene->sceneRect();
@@ -2331,23 +2331,24 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QCol
 	apainter.end();
 	releaseFace();
 
-	theOneLinePreviewPixmap = linePixmap;
+	return linePixmap;
+//	theOneLinePreviewPixmap = linePixmap;
 
 
-	if ( !theOneLinePreviewPixmap.isNull() )
-		return theOneLinePreviewPixmap;
+//	if ( !theOneLinePreviewPixmap.isNull() )
+//		return theOneLinePreviewPixmap;
 
-	theOneLinePreviewPixmap = QPixmap ( qRound(theWidth), qRound(theHeight) );
-	theOneLinePreviewPixmap.fill ( Qt::lightGray );
-	return theOneLinePreviewPixmap;
+//	theOneLinePreviewPixmap = QPixmap ( qRound(theWidth), qRound(theHeight) );
+//	theOneLinePreviewPixmap.fill ( Qt::lightGray );
+//	return theOneLinePreviewPixmap;
 }
 
 void FontItem::clearPreview()
 {
-	if ( m_remote )
-		return;
-	if ( !theOneLinePreviewPixmap.isNull() )
-		theOneLinePreviewPixmap = QPixmap();
+//	if ( m_remote )
+//		return;
+//	if ( !theOneLinePreviewPixmap.isNull() )
+//		theOneLinePreviewPixmap = QPixmap();
 }
 
 

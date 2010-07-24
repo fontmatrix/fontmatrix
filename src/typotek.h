@@ -289,6 +289,8 @@ private:
 	QMap<FloatingWidget*, bool> visibleFloatingWidgets;
 	bool playVisible;
 
+	QString currentNamedSample;
+
 public:
 	bool isSysFont(FontItem* f);
 	FontItem* getSelectedFont();
@@ -314,7 +316,7 @@ public:
 	void systrayTagsConfirmation(bool);
 
 	// Samples
-	QString namedSample(QString name);
+	QString namedSample(QString name = QString());
 	QMap<QString,QList<QString> > namedSamplesNames();
 	void addNamedSample(QString name, QString sample);
 	void removeNamedSample(const QString& key);

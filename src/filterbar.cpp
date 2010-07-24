@@ -146,7 +146,6 @@ void FilterBar::slotRemoveFilter(bool process)
 	FilterItem * fi(reinterpret_cast<FilterItem*>(sender()));
 	if(fi != 0)
 	{
-		delete fi->filter();
 		filters.removeAll(fi);
 		if(filters.count() == 0)
 		{

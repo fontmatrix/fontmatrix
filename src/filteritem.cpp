@@ -30,6 +30,7 @@ FilterItem::FilterItem(FilterData *filter, QWidget *parent) :
 	ui->setupUi(this);
 	ui->filterLabel->setText(d->getText());
 	ui->andButton->setChecked(d->data(FilterData::And).toBool());
+	ui->noButton->setChecked(d->data(FilterData::Not).toBool());
 
 	connect(ui->andButton, SIGNAL(clicked(bool)), this, SLOT(setAndMode(bool)));
 	connect(ui->noButton, SIGNAL(clicked(bool)), this, SLOT(setNoMode(bool)));

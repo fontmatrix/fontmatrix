@@ -1042,7 +1042,7 @@ int FMFontDb::countFilteredFonts() const
 
 void FMFontDb::insertFilteredFont(FontItem *item)
 {
-	if(item != 0)
+	if((item != 0) && (!currentFonts.contains(item)))
 	{
 		currentFonts.append(item);
 		currentFamiliesCache.clear();

@@ -81,74 +81,58 @@ FilterItem* FilterData::item()
 
 void FilterData::operateFilter(QList<FontItem *>fl)
 {
-	QList<FontItem*> tmpList = fl;
-	QList<FontItem*> negList;
-	QList<FontItem*> queList;
+	QList<FontItem*> sourceList = fl;
+	QList<FontItem*> notList;
+	QList<FontItem*> andList;
 
-	bool negate(vData[Not].toBool());
-	bool queue(vData[And].toBool());
-	bool append(vData[Or].toBool());
+	bool notOp(vData[Not].toBool());
+	bool andOp(vData[And].toBool());
+	bool orOp(vData[Or].toBool());
 
 	FMFontDb* fmdb(FMFontDb::DB());
 
-	if(queue)
+	if(andOp)
 	{
-		queList = fmdb->getFilteredFonts();
+		andList = fmdb->getFilteredFonts();
 	}
-	if(negate)
-		negList = fmdb->AllFonts();
+	if(notOp)
+		notList = fmdb->AllFonts();
 
-	if(!append)
+	if(!orOp)
 		fmdb->clearFilteredFonts();
 
-	if(negate)
+	if(notOp)
 	{
-		if(queue)
+		if(andOp)
 		{
-			foreach(FontItem* f, negList)
+			foreach(FontItem* f, notList)
 			{
-				if(!tmpList.contains(f) && queList.contains(f))
+				if(!sourceList.contains(f) && andList.contains(f))
 					fmdb->insertFilteredFont(f);
 			}
 		}
-		else if(append)
+		else
 		{
-			foreach(FontItem* f, tmpList)
+			foreach(FontItem* f, notList)
 			{
-				if(!fmdb->isFiltered(f) && !tmpList.contains(f))
-					fmdb->insertFilteredFont(f);
-			}
-		}
-		else // not queue
-		{
-			foreach(FontItem* f, negList)
-			{
-				if(!tmpList.contains(f))
+				if(!sourceList.contains(f))
 					fmdb->insertFilteredFont(f);
 			}
 		}
 	}
-	else // not negate
+	else // not notOp
 	{
-		if(queue)
+		if(andOp)
 		{
-			foreach(FontItem* f, tmpList)
+			foreach(FontItem* f, sourceList)
 			{
-				if(queList.contains(f))
+				if(andList.contains(f))
 					fmdb->insertFilteredFont(f);
 			}
 		}
-		else if(append)
+		else
 		{
-			foreach(FontItem* f, tmpList)
-			{
-				if(!fmdb->isFiltered(f))
-					fmdb->insertFilteredFont(f);
-			}
-		}
-		else // not queue
-		{
-			foreach(FontItem* f, tmpList)
+			foreach(FontItem* f, sourceList)
 			{
 				fmdb->insertFilteredFont(f);
 			}

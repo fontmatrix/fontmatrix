@@ -59,6 +59,7 @@ signals:
 
 private slots:
 	void setAndMode(bool c);
+	void setNoMode(bool c);
 
 };
 

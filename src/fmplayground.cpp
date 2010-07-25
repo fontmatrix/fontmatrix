@@ -29,7 +29,7 @@
 #endif
 
 FMPlayGround::FMPlayGround ( QWidget *parent )
-		:QGraphicsView ( parent )
+	:QGraphicsView ( parent )
 {
 
 #ifdef HAVE_QTOPENGL
@@ -160,7 +160,7 @@ void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
 	}
 	else if((e->key() == Qt::Key_Enter)
 		|| (e->key() == Qt::Key_Return))
-	{
+		{
 		closeLine();
 		blinkCursor();
 		CursorTimer->start();
@@ -172,32 +172,46 @@ void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
 			curString.chop(1);
 			updateLine();
 		}
+		else
+			removeLine();
 	}
-	else if(e->modifiers().testFlag(Qt::ControlModifier) && (Qt::Key_A == e->key()))
+	else if(e->modifiers().testFlag(Qt::ControlModifier))
 	{
-		foreach(QGraphicsItemGroup *gi, glyphLines)
+		if(Qt::Key_A == e->key())
 		{
-			gi->setSelected(true);
+			closeLine();
+			foreach(QGraphicsItemGroup *gi, glyphLines)
+			{
+				gi->setSelected(true);
+			}
 		}
-	}
-	else if(!e->text().isEmpty())
-	{
-		if(e->modifiers().testFlag(Qt::ControlModifier) && (Qt::Key_V == e->key()))
+		else if(Qt::Key_V == e->key())
 		{
 			QString subtype("plain");
 			QString clipText( QApplication::clipboard()->text(subtype, QClipboard::Clipboard) );
 			if(!clipText.isEmpty())
 			{
 				QStringList cs(clipText.split(QString("\n")));
+				bool first(true);
 				foreach(QString s, cs)
 				{
-					curString = s;
+					if(first)
+					{
+						first = false;
+						curString += s;
+					}
+					else
+						curString = s;
 					updateLine();
 					closeLine();
 				}
 			}
 		}
-		else
+
+	}
+	else
+	{
+		if(!e->text().isEmpty())
 		{
 			curString += e->text();
 			updateLine();
@@ -217,7 +231,7 @@ void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, doubl
 	bool backedR ( fontI->rasterFreetype() );
 	fontI->setFTRaster ( false );
 	// We deactivate "non-latin" layout atm
-//	TextProgression *tp = TextProgression::getInstance();
+	//	TextProgression *tp = TextProgression::getInstance();
 	QPointF pen(CursorPos);
 
 	foreach(RenderedGlyph g, fontI->glyphs( spec , fontS ) )
@@ -226,22 +240,22 @@ void FMPlayGround::displayGlyphs ( const QString & spec, FontItem * fontI, doubl
 		if(!glyph)
 			continue;
 		curLine << glyph;
-//		if ( tp->inLine() == TextProgression::INLINE_RTL )
-//		{
-//			pen.rx() -= g.xadvance ;
-//		}
-//		else if ( tp->inLine() == TextProgression::INLINE_BTT )
-//		{
-//			pen.ry() -= g.yadvance ;
-//		}
+		//		if ( tp->inLine() == TextProgression::INLINE_RTL )
+		//		{
+		//			pen.rx() -= g.xadvance ;
+		//		}
+		//		else if ( tp->inLine() == TextProgression::INLINE_BTT )
+		//		{
+		//			pen.ry() -= g.yadvance ;
+		//		}
 		glyph->setPen(Qt::NoPen);
 		scene()->addItem(glyph);
 		glyph->setPos ( pen.x() + ( g.xoffset ),
 				pen.y() + ( g.yoffset ) );
-//		if ( tp->inLine() == TextProgression::INLINE_LTR )
-			pen.rx() += g.xadvance ;
-//		else if ( tp->inLine() == TextProgression::INLINE_TTB )
-//			pen.ry() += g.yadvance;
+		//		if ( tp->inLine() == TextProgression::INLINE_LTR )
+		pen.rx() += g.xadvance ;
+		//		else if ( tp->inLine() == TextProgression::INLINE_TTB )
+		//			pen.ry() += g.yadvance;
 
 	}
 	fontI->setFTRaster ( backedR );
@@ -320,14 +334,14 @@ QRectF FMPlayGround::getMaxRect()
 	QList<QGraphicsItemGroup*> lit = glyphLines;
 	for ( int i = 0 ; i <lit.count() ; ++i )
 	{
-// 		qDebug()<< lit.at(i)->data(GLYPH_DATA_FONTNAME).toString();
-// 		
-// 			if ( lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y()
-// 						  || lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x()
-// 						  || lit[i]->sceneBoundingRect().topLeft().y() > allrect.topLeft().y()
-// 						  || lit[i]->sceneBoundingRect().topRight().y() > allrect.topRight().y() 
-// 			   )
-				allrect = allrect.united ( lit[i]->sceneBoundingRect() );
+		// 		qDebug()<< lit.at(i)->data(GLYPH_DATA_FONTNAME).toString();
+		//
+		// 			if ( lit[i]->sceneBoundingRect().bottomRight().y() > allrect.bottomRight().y()
+		// 						  || lit[i]->sceneBoundingRect().bottomRight().x() > allrect.bottomRight().x()
+		// 						  || lit[i]->sceneBoundingRect().topLeft().y() > allrect.topLeft().y()
+		// 						  || lit[i]->sceneBoundingRect().topRight().y() > allrect.topRight().y()
+		// 			   )
+		allrect = allrect.united ( lit[i]->sceneBoundingRect() );
 		
 
 	}

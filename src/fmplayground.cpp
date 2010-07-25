@@ -173,6 +173,13 @@ void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
 			updateLine();
 		}
 	}
+	else if(e->modifiers().testFlag(Qt::ControlModifier) && (Qt::Key_A == e->key()))
+	{
+		foreach(QGraphicsItemGroup *gi, glyphLines)
+		{
+			gi->setSelected(true);
+		}
+	}
 	else if(!e->text().isEmpty())
 	{
 		if(e->modifiers().testFlag(Qt::ControlModifier) && (Qt::Key_V == e->key()))

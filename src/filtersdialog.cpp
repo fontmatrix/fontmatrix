@@ -31,6 +31,11 @@
 #include <QDir>
 #include <QFile>
 
+QString FiltersDialog::andOpString = FiltersDialog::tr("And");
+QString FiltersDialog::notOpString = FiltersDialog::tr("Not");
+QString FiltersDialog::orOpString = FiltersDialog::tr("Or");
+
+
 FiltersDialog::FiltersDialog(const QList<FilterItem*>& currentFilters, QWidget *parent) :
 		QDialog(parent),
 		ui(new Ui::FiltersDialog)
@@ -47,9 +52,18 @@ FiltersDialog::FiltersDialog(const QList<FilterItem*>& currentFilters, QWidget *
 	if(!currentFilters.isEmpty())
 	{
 		QString fs;
+		bool first(true);
 		foreach(FilterItem *f, currentFilters)
 		{
-			fs += QString("[%1]").arg(f->filter()->getText());
+			FilterData *d(f->filter());
+			if(first)
+			{
+				first = false;
+				fs += filterString(d, true);
+			}
+			else
+				fs += filterString(d);
+
 		}
 		ui->curFilter->setText(fs);
 	}
@@ -65,6 +79,31 @@ FiltersDialog::~FiltersDialog()
 }
 
 
+QString FiltersDialog::filterString(FilterData *d, bool first)
+{
+	QString fs;
+	if(first)
+	{
+		first = false;
+		if(d->data(FilterData::Not).toBool())
+			fs += notOpString + QString(" [%1] ").arg(d->getText());
+		else
+			fs += QString("[%1] ").arg(d->getText());
+	}
+	else
+	{
+		if(d->data(FilterData::Or).toBool())
+			fs += orOpString;
+		else
+			fs += andOpString;
+
+		if(d->data(FilterData::Not).toBool())
+			fs += QString(" %1").arg(notOpString);
+		fs += QString(" [%1] ").arg(d->getText());
+	}
+	return fs;
+}
+
 void FiltersDialog::loadFilters()
 {
 	foreach(FiltersDialogItem* i, items)
@@ -78,6 +117,7 @@ void FiltersDialog::loadFilters()
 		QDir fdir(FMPaths::FiltersDir() + fname);
 		QStringList flist(fdir.entryList(QDir::NoDotAndDotDot|QDir::Files, QDir::Name));
 		QString fString;
+		bool first(true);
 		foreach(QString fn, flist)
 		{
 			QStringList l(fn.split(QString("-")));
@@ -101,7 +141,13 @@ void FiltersDialog::loadFilters()
 						f = new FilterTag;
 					}
 					f->fromByteArray(file.readAll());
-					fString += QString("[%1]").arg(f->getText());
+					if(first)
+					{
+						first = false;
+						fString += filterString(f, true);
+					}
+					else
+						fString += filterString(f);
 					delete f;
 				}
 			}

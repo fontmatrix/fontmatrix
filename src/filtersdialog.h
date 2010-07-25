@@ -31,6 +31,7 @@ namespace Ui {
 
 class FiltersDialogItem;
 class FilterItem;
+class FilterData;
 
 class FiltersDialog : public QDialog
 {
@@ -44,7 +45,12 @@ private:
     Ui::FiltersDialog *ui;
 
     void loadFilters();
+    QString filterString(FilterData *d, bool first = false);
     QList<FiltersDialogItem*> items;
+
+    static QString andOpString;
+    static QString notOpString;
+    static QString orOpString;
 
 signals:
     void Filter(QString);

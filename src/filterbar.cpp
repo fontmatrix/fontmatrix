@@ -134,8 +134,14 @@ void FilterBar::metaDialog()
 void FilterBar::processFilters()
 {
 	FMFontDb::DB()->clearFilteredFonts();
+	bool first(true);
 	foreach(FilterItem* d, filters)
 	{
+		if(first)
+		{
+			d->hideOperation(FilterItem::AND);
+			first = false;
+		}
 		d->filter()->operate();
 	}
 	emit filterChanged();

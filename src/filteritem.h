@@ -36,10 +36,17 @@ class FilterItem : public QWidget
 	FilterData* d;
 	QString text;
 public:
+	enum Operation{
+		AND,
+		OR,
+		NOT
+	};
+
 	explicit FilterItem(FilterData *filter, QWidget *parent = 0);
 	~FilterItem();
 
 	FilterData* filter(){return d;}
+	void hideOperation(Operation op);
 
 protected:
 	void changeEvent(QEvent *e);

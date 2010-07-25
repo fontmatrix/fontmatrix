@@ -67,7 +67,7 @@ MetaWidget::MetaWidget(QWidget *parent) :
 
 	int limit(qRound((ln.count() + 1) / 2) - 1);
 
-	for(int gIdx(1); gIdx < ln.count() ; ++gIdx)
+	for(int gIdx(0); gIdx < ln.count() ; ++gIdx)
 	{
 		FMFontDb::InfoItem k(ln[gIdx]);
 //		if((k !=  FMFontDb::AllInfo))
@@ -81,7 +81,7 @@ MetaWidget::MetaWidget(QWidget *parent) :
 			line->setCompleter(completer);
 			label->setBuddy(line);
 			connect(line,SIGNAL(returnPressed()), this, SLOT(addFilter()));
-			if((gIdx - 1) < limit)
+			if((gIdx) < limit)
 			{
 				ui->grid->addWidget(label,gIdx,0);
 				ui->grid->addWidget(line,gIdx ,1);

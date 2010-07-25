@@ -57,5 +57,20 @@ void FilterItem::changeEvent(QEvent *e)
 
 void FilterItem::setAndMode(bool c)
 {
+	d->setData(FilterData::Or, !c, true);
 	d->setData(FilterData::And, c, true);
+}
+
+
+void FilterItem::hideOperation(Operation op)
+{
+	if(op == AND)
+	{
+		if(d->data(FilterData::And).toBool())
+		{
+			d->setData(FilterData::Or, true);
+			d->setData(FilterData::And, false);
+		}
+		ui->andButton->hide();
+	}
 }

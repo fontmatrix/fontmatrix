@@ -59,6 +59,7 @@ signals:
 
 private slots:
     void slotAddFilter();
+    void slotRemoveFilter(QString fs);
     void showAdd(bool);
 };
 

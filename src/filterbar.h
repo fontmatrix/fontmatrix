@@ -47,7 +47,7 @@ private:
     Ui::FilterBar *ui;
 
     QList<FilterItem*> filters;
-    void addFilter(FilterData*);
+    void addFilterItem(FilterData*);
     void removeAllFilters();
 
 signals:
@@ -65,8 +65,9 @@ private slots:
 
     void slotSaveFilter(const QString& fname);
     void slotLoadFilter(const QString& fname);
+    void slotRemoveFilter(const QString& fname);
 
-    void slotRemoveFilter(bool process = true);
+    void slotRemoveFilterItem(bool process = true);
 
     void slotTagSelect(const QString& t);
     void slotClearFilter();

@@ -156,7 +156,7 @@ void FiltersDialog::loadFilters()
 		items.append(fdi);
 		ui->filtersLayout->addWidget(fdi);
 		connect(fdi, SIGNAL(Filter(QString)), this, SIGNAL(Filter(QString)));
-		connect(fdi, SIGNAL(Remove(QString)), this, SIGNAL(RemoveFilter(QString)));
+		connect(fdi, SIGNAL(Remove(QString)), this, SLOT(slotRemoveFilter(QString)));
 	}
 }
 
@@ -171,6 +171,13 @@ void FiltersDialog::slotAddFilter()
 	showAdd(false);
 	ui->moreButton->setChecked(false);
 }
+
+void FiltersDialog::slotRemoveFilter(QString fs)
+{
+	emit RemoveFilter(fs);
+	loadFilters();
+}
+
 
 void FiltersDialog::showAdd(bool v)
 {

@@ -37,6 +37,7 @@
 #include <QDir>
 #include <QFile>
 #include <QAction>
+#include <QDebug>
 
 FilterBar::FilterBar(QWidget *parent) :
 		QWidget(parent),
@@ -124,7 +125,7 @@ void FilterBar::metaDialog()
 		fm->setData(FilterData::Text, FontStrings::Names().value(static_cast<FMFontDb::InfoItem>(mw->resultField)) + QString(" : ") + mw->resultText);
 		fm->setData(FilterMeta::Field, mw->resultField);
 		fm->setData(FilterMeta::Value, mw->resultText);
-		addFilter(fm);
+		addFilterItem(fm);
 	}
 	delete l;
 	delete d;
@@ -147,7 +148,7 @@ void FilterBar::processFilters()
 	emit filterChanged();
 }
 
-void FilterBar::slotRemoveFilter(bool process)
+void FilterBar::slotRemoveFilterItem(bool process)
 {
 	FilterItem * fi(reinterpret_cast<FilterItem*>(sender()));
 	if(fi != 0)
@@ -176,7 +177,7 @@ void FilterBar::removeAllFilters()
 	ui->filterListBar->hide();
 }
 
-void FilterBar::addFilter(FilterData *f)
+void FilterBar::addFilterItem(FilterData *f)
 {
 	if(f != 0)
 	{
@@ -185,7 +186,7 @@ void FilterBar::addFilter(FilterData *f)
 		{
 			if(f->data(FilterData::Replace).toBool())
 				removeAllFilters();
-			connect(it, SIGNAL(remove()), this, SLOT(slotRemoveFilter()));
+			connect(it, SIGNAL(remove()), this, SLOT(slotRemoveFilterItem()));
 			connect(f, SIGNAL(Changed()), this, SLOT(processFilters()));
 			filters.append(it);
 			ui->filterListLayout->addWidget(it);
@@ -208,7 +209,7 @@ void FilterBar::slotTagSelect(const QString& t)
 	ft->setData(FilterData::Text, t);
 	ft->setData(FilterTag::Key, key);
 	ft->setData(FilterTag::Tag, t);
-	addFilter(ft);
+	addFilterItem(ft);
 }
 
 void FilterBar::slotPanoFilter()
@@ -225,7 +226,7 @@ void FilterBar::slotPanoFilter()
 			fp->setData(FilterData::Text, text);
 			fp->setData(FilterPanose::Param, k);
 			fp->setData(FilterPanose::Value, v);
-			addFilter(fp);
+			addFilterItem(fp);
 		}
 	}
 
@@ -286,18 +287,42 @@ void FilterBar::slotLoadFilter(const QString &fname)
 					f = new FilterTag;
 				}
 				f->fromByteArray(file.readAll());
-				addFilter(f);
+				addFilterItem(f);
 			}
 		}
 	}
 	processFilters();
 }
 
+void FilterBar::slotRemoveFilter(const QString &fname)
+{
+
+	if(fname.isEmpty())
+		return;
+
+	QDir fdir(FMPaths::FiltersDir());
+	if(fdir.exists(fname))
+	{
+		fdir.cd(fname);
+		QStringList flist(fdir.entryList(QDir::NoDotAndDotDot|QDir::Files));
+		foreach(QString fn, flist)
+		{
+			fdir.remove(fn);
+		}
+		fdir.cd(FMPaths::FiltersDir());
+		fdir.rmdir(fname);
+	}
+	else
+	{
+		qDebug()<< "Directory does not exist:"<<fdir.absolutePath()<<fname;
+	}
+}
 
 void FilterBar::filtersDialog()
 {
 	FiltersDialog *fd(new FiltersDialog(filters, this));
 	connect(fd, SIGNAL(Filter(QString)), this, SLOT(slotLoadFilter(QString)));
 	connect(fd, SIGNAL(AddFilter(QString)), this, SLOT(slotSaveFilter(QString)));
+	connect(fd, SIGNAL(RemoveFilter(QString)), this, SLOT(slotRemoveFilter(QString)));
 	fd->exec();
 }

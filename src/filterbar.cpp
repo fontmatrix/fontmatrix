@@ -53,7 +53,7 @@ FilterBar::FilterBar(QWidget *parent) :
 	connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(slotClearFilter()));
 	connect(PanoseWidget::getInstance(), SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
 	connect(ui->tagsCombo, SIGNAL(activated(const QString&)), this, SLOT(slotTagSelect(const QString&)));
-//	connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(slotSaveFilter()));
+	//	connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(slotSaveFilter()));
 	connect(ui->filtersButton, SIGNAL(clicked()), this, SLOT(filtersDialog()));
 }
 
@@ -91,14 +91,14 @@ void FilterBar::loadTags()
 			ui->tagsCombo->addItem(tag, "TAG");
 	}
 
-//	QDir fdir(FMPaths::FiltersDir());
-//	QStringList flist(fdir.entryList(QDir::NoDotAndDotDot|QDir::Dirs,QDir::Name));
-//	if(!flist.isEmpty())
-//		ui->tagsCombo->insertSeparator(ui->tagsCombo->count());
-//	foreach(QString f, flist)
-//	{
-//		ui->tagsCombo->addItem(f, "FILTER");
-//	}
+	//	QDir fdir(FMPaths::FiltersDir());
+	//	QStringList flist(fdir.entryList(QDir::NoDotAndDotDot|QDir::Dirs,QDir::Name));
+	//	if(!flist.isEmpty())
+	//		ui->tagsCombo->insertSeparator(ui->tagsCombo->count());
+	//	foreach(QString f, flist)
+	//	{
+	//		ui->tagsCombo->addItem(f, "FILTER");
+	//	}
 
 }
 
@@ -118,15 +118,29 @@ void FilterBar::metaDialog()
 	connect(mw,SIGNAL(filterAdded()), d, SLOT(close()));
 
 	d->exec();
-	if((mw->resultField != -1) && (!mw->resultText.isEmpty()))
+
+	bool first(true);
+	foreach(int resultField, mw->resultMap.keys())
 	{
-		//		emit initSearch(mw->resultField, mw->resultText);
-		FilterMeta *fm(new FilterMeta);
-		fm->setData(FilterData::Text, FontStrings::Names().value(static_cast<FMFontDb::InfoItem>(mw->resultField)) + QString(" : ") + mw->resultText);
-		fm->setData(FilterMeta::Field, mw->resultField);
-		fm->setData(FilterMeta::Value, mw->resultText);
-		addFilterItem(fm);
+		if((resultField != -1) && (!mw->resultMap[resultField].isEmpty()))
+		{
+			QString resulText(mw->resultMap[resultField]);
+
+			FilterMeta *fm(new FilterMeta);
+			fm->setData(FilterData::Text, FontStrings::Names().value(static_cast<FMFontDb::InfoItem>(resultField)) + QString(" : ") + resulText);
+			fm->setData(FilterMeta::Field, resultField);
+			fm->setData(FilterMeta::Value, resulText);
+			if(first)
+				first=false;
+			else
+			{
+				fm->setData(FilterData::Or, false);
+				fm->setData(FilterData::And, true);
+			}
+			addFilterItem(fm, false);
+		}
 	}
+	processFilters();
 	delete l;
 	delete d;
 
@@ -177,7 +191,7 @@ void FilterBar::removeAllFilters()
 	ui->filterListBar->hide();
 }
 
-void FilterBar::addFilterItem(FilterData *f)
+void FilterBar::addFilterItem(FilterData *f, bool process)
 {
 	if(f != 0)
 	{
@@ -193,7 +207,8 @@ void FilterBar::addFilterItem(FilterData *f)
 			if(!(ui->filterListBar->isVisible()))
 				ui->filterListBar->show();
 
-			processFilters();
+			if(process)
+				processFilters();
 		}
 	}
 }
@@ -256,7 +271,7 @@ void FilterBar::slotSaveFilter(const QString& fname)
 			f.close();
 		}
 	}
-//	loadTags();
+	//	loadTags();
 }
 
 void FilterBar::slotLoadFilter(const QString &fname)

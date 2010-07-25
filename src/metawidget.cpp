@@ -38,8 +38,7 @@ QStringList MetaWidget::mList = QStringList();
 
 MetaWidget::MetaWidget(QWidget *parent) :
 		QWidget(parent),
-		ui(new Ui::MetaWidget),
-		resultField(-1)
+		ui(new Ui::MetaWidget)
 {
 	ui->setupUi(this);
 	if(mModel == 0)
@@ -95,8 +94,7 @@ MetaWidget::MetaWidget(QWidget *parent) :
 		}
 	}
 
-
-
+	connect(ui->filterButton, SIGNAL(clicked()), this, SLOT(addFilter()));
 }
 
 MetaWidget::~MetaWidget()
@@ -128,9 +126,24 @@ void MetaWidget::addFilter()
 			mList.append(t);
 			mModel->setStringList(mList);
 		}
-		resultField = it;
-		resultText = t;
-
-		emit filterAdded();
+		resultMap[it] = t;
 	}
+	else
+	{
+		foreach(QLineEdit *l, metFields.keys())
+		{
+			QString t(l->text());
+			FMFontDb::InfoItem it(metFields[l]);
+			if(!t.isEmpty())
+			{
+				if(!mList.contains(t))
+				{
+					mList.append(t);
+					mModel->setStringList(mList);
+				}
+				resultMap[it] = t;
+			}
+		}
+	}
+	emit filterAdded();
 }

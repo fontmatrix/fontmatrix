@@ -46,8 +46,7 @@ public:
     explicit MetaWidget(QWidget *parent = 0);
     ~MetaWidget();
 
-    int resultField;
-    QString resultText;
+    QMap<int, QString> resultMap;
 
 protected:
     void changeEvent(QEvent *e);

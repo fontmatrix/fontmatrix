@@ -47,7 +47,7 @@ private:
     Ui::FilterBar *ui;
 
     QList<FilterItem*> filters;
-    void addFilterItem(FilterData*);
+    void addFilterItem(FilterData* f, bool process = true);
     void removeAllFilters();
 
 signals:

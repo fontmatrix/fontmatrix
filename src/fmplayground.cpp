@@ -17,6 +17,8 @@
 #include "mainviewwidget.h"
 #include "playwidget.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QScrollBar>
 #include <QMouseEvent>
 #include <QWheelEvent>
@@ -173,8 +175,26 @@ void FMPlayGround::keyReleaseEvent(QKeyEvent * e)
 	}
 	else if(!e->text().isEmpty())
 	{
-		curString += e->text();
-		updateLine();
+		if(e->modifiers().testFlag(Qt::ControlModifier) && (Qt::Key_V == e->key()))
+		{
+			QString subtype("plain");
+			QString clipText( QApplication::clipboard()->text(subtype, QClipboard::Clipboard) );
+			if(!clipText.isEmpty())
+			{
+				QStringList cs(clipText.split(QString("\n")));
+				foreach(QString s, cs)
+				{
+					curString = s;
+					updateLine();
+					closeLine();
+				}
+			}
+		}
+		else
+		{
+			curString += e->text();
+			updateLine();
+		}
 	}
 }
 

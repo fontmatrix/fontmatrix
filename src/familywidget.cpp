@@ -407,7 +407,9 @@ void FamilyWidget::slotActivate(bool c)
 			FMActivationReport ar(this, actErr);
 			ar.exec();
 		}
-		setFamily(family, ui->familyPreview->currentIndex().row());
+		QString rf(family);
+		family = QString();
+		setFamily(rf, ui->familyPreview->currentIndex().row());
 		emit familyStateChanged();
 	}
 }
@@ -429,7 +431,9 @@ void FamilyWidget::slotDeactivate(bool c)
 			FMActivationReport ar(this, actErr);
 			ar.exec();
 		}
-		setFamily(family, ui->familyPreview->currentIndex().row());
+		QString rf(family);
+		family = QString();
+		setFamily(rf, ui->familyPreview->currentIndex().row());
 		emit familyStateChanged();
 	}
 }

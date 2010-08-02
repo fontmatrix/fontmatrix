@@ -2233,7 +2233,7 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QCol
 // 	qDebug() << theSize << theHeight << theWidth;
 	theOneLineScene->setSceneRect ( 0,0,theWidth, theHeight );
 	bool pRTL = typotek::getInstance()->getPreviewRTL();
-	QPointF pen ( pRTL ? theWidth - 10 : 10 , theSize *  pt2px );
+	QPointF pen ( pRTL ? theWidth - 16 : 16 , theSize *  pt2px );
 
 	int fsize = qRound(theSize) * 64  ;
 	double scalefactor = theSize / m_face->units_per_EM;

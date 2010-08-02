@@ -70,7 +70,8 @@ FMPreviewIconEngine::FMPreviewIconEngine()
 		}
 
 		// setup "writing" pen
-		pen.setColor(QColor(m_selPalette.at(128)));
+//		pen.setColor(QColor(m_selPalette.at(128)));
+		pen.setColor(QColor(220,220,220));
 		pen.setWidth(1);
 
 		initState = true;
@@ -129,24 +130,36 @@ void FMPreviewIconEngine::paint ( QPainter * painter, const QRect & rect, QIcon:
 	if(!m_p.isNull())
 	{
 		painter->save();
-		painter->setRenderHint(QPainter::Antialiasing, true);
-		painter->setPen(pen);
 		painter->translate(rect.x(),rect.y());
 		QRect r(0 , 0 , rect.width(), rect.height());
 		QPainterPath pp;
 		double rr(double(r.height()) / 5.0);
 		pp.addRoundedRect(r,rr,rr);
+		painter->setRenderHint(QPainter::Antialiasing, true);
+		// draw background
+		painter->save();
+		painter->setPen(Qt::NoPen);
+		if(mode == QIcon::Selected)
+			painter->setBrush(QApplication::palette().color(QPalette::Highlight));
+		else
+			painter->setBrush(QApplication::palette().color(QPalette::Base));
+		painter->drawPath(pp);
+		painter->restore();
+		// end of bg
+		painter->setPen(pen);
+		QRect tr(r);
+		tr.translate(0, (r.height() - m_p.height()) / 2);
 		if(mode == QIcon::Selected)
 		{
 			QImage hm(m_p.toImage().convertToFormat(QImage::Format_Indexed8));
 			hm.setColorTable(actualSelPalette(hm.colorTable()));
 			painter->setClipPath(pp);
-			painter->drawPixmap(r, QPixmap::fromImage(hm) , r);
+			painter->drawPixmap(tr, QPixmap::fromImage(hm) , r);
 			painter->drawPath(pp);
 		}
 		else
 		{
-			painter->drawPixmap(r, m_p , r);
+			painter->drawPixmap(tr, m_p , r);
 			painter->drawPath(pp);
 
 		}
@@ -340,7 +353,8 @@ void FMPreviewView::resizeEvent(QResizeEvent * event)
 		setSpacing(3);
 	usedWidth = qRound((double(actualWidth)  / columns) - (columns * 2.0 * double(spacing())));
 	//	emit widthChanged(usedWidth);
-	setIconSize(QSize(qRound(usedWidth), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	setIconSize(QSize(qRound(usedWidth),
+			  2.0 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
 
 void FMPreviewView::mousePressEvent(QMouseEvent * event)

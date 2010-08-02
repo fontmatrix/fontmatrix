@@ -24,6 +24,7 @@
 
 #include <QStringList>
 #include <QIcon>
+#include <QTime>
 
 
 
@@ -40,6 +41,7 @@ class ListDockWidget;
 struct OTFSet;
 class FMLayout;
 class FMPreviewModel;
+class QTimer;
 
 /**
 MainViewWidget inherits from an ui designed.
@@ -70,6 +72,10 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		bool fontsetHasChanged;
 		bool activateByFamilyOnly;
 		bool m_forceReloadSelection;
+		QString quickSearchString;
+		QTime quickSearchTime;
+		QTimer *quickSearchTimer;
+		int quickSearchWait;
 
 		void doConnect();
 		void disConnect();
@@ -151,21 +157,11 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 	private slots:
 		void slotPreviewUpdateSize(int);
-
 		void slotRemoteFinished();
-
-
-		
-		
-//		void slotWebLink(const QUrl & url );
-//		void slotWebStart();
-//		void slotWebLoad(int i);
-//		void slotWebFinished(bool);
-
-		
 		void toggleFacesCheckBoxes(bool);
-
 		void refreshActStatus(const QStringList& flist);
+		void slotQuickSearch(const QString& text);
+		void slotEndQuickSearch();
 
 		
 	signals:

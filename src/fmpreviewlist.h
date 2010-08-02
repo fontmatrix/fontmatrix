@@ -66,6 +66,8 @@ public:
 	~FMPreviewView(){}
 	int getUsedWidth() const{return usedWidth;}
 	void setNumCol(int n){columns = n;}
+	bool moveTo(const QString& fname); // fname can be the begining of a fancy name
+
 protected:
 	void resizeEvent ( QResizeEvent * event );
 	QPoint startDragPoint;

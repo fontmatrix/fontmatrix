@@ -340,6 +340,39 @@ FMPreviewView::FMPreviewView(QWidget * parent):
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
+bool FMPreviewView::moveTo(const QString &fname)
+{
+	QList<FontItem*> fl(reinterpret_cast<FMPreviewModel*>(model())->getBase());
+
+	QString uname(fname.toUpper());
+	const int fl_count(fl.count());
+	int rFont(fl_count);
+	for(int i(0); i < fl_count ; ++i)
+	{
+		QString pname(fl[i]->fancyName().toUpper());
+		pname.truncate(uname.count());
+		if(uname == pname)
+		{
+			rFont = i;
+			break;
+		}
+	}
+
+	if(rFont != fl_count)
+	{
+		QAbstractListModel *mod(reinterpret_cast<QAbstractListModel*>(model()));
+		QModelIndex mi(mod->index(rFont));
+		if(mi.isValid())
+		{
+			selectionModel()->setCurrentIndex(mi, QItemSelectionModel::ClearAndSelect);
+			// scrollTo ( mi );
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void FMPreviewView::resizeEvent(QResizeEvent * event)
 {
 	int extraSpace((verticalScrollBar()->isVisible() ? verticalScrollBar()->width() : 0)

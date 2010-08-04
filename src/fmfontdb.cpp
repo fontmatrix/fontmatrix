@@ -50,6 +50,13 @@ FMFontDb::FMFontDb()
 	getIdStringFast = "SELECT %1 FROM %2 WHERE %3='%4'";
 
 	transactionDeep = 0;
+
+	priorList <<	QString("Book")
+			<<	QString("Normal")
+			<<	QString("Regular")
+			<<	QString("Roman")
+			<<	QString("Plain")
+			<<	QString("Medium");
 }
 
 FMFontDb * FMFontDb::DB()
@@ -1008,14 +1015,12 @@ QList<FontItem*> FMFontDb::getFilteredFonts(bool familyOnly)
 			}
 		}
 
-		QStringList priorList;
-		priorList << "Regular" << "Roman" << "Medium" << "Book";
 		foreach(const QString& k, pools.keys())
 		{
 			FontItem* sel = pools[k].first();
 			foreach(FontItem* it, pools[k])
 			{
-				if(priorList.contains(it->variant()))
+				if(priorList.contains(it->variant(), Qt::CaseInsensitive))
 				{
 					sel = it;
 					break;

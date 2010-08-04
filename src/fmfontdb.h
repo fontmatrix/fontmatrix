@@ -150,6 +150,7 @@ class FMFontDb : public QObject, public QSqlDatabase
 		// ensure tables are created
 		void initFMDb();
 
+		QStringList priorList;
 		QMap<Field, QString> fieldName;
 		QMap<Table, QString> tableName;
 		QMap<QString,int> cacheId;

@@ -41,11 +41,12 @@ QPen FMPreviewIconEngine::pen = QPen();
 QVector<QRgb> FMPreviewIconEngine::m_selPalette;
 QRgb FMPreviewIconEngine::activatedColor =  qRgb (9,223,11);
 QRgb FMPreviewIconEngine::deactivatedColor =  qRgb (190,190,190);
+QRgb FMPreviewIconEngine::partlyActivatedColor =  qRgb (166,220,220);
 
 
 FMPreviewIconEngine::FMPreviewIconEngine()
 	:QIconEngineV2(),
-	activatedFont(false)
+	activatedFont(NotActivated)
 {
 	if(!initState)
 	{
@@ -163,7 +164,7 @@ void FMPreviewIconEngine::paint ( QPainter * painter, const QRect & rect, QIcon:
 			painter->drawPath(pp);
 
 		}
-		if(activatedFont)
+		if(activatedFont != NotActivated)
 		{
 			painter->setPen(Qt::NoPen);
 			QPainterPath activationPath;
@@ -177,7 +178,10 @@ void FMPreviewIconEngine::paint ( QPainter * painter, const QRect & rect, QIcon:
 					       rr2,rect.height(),
 					       rr,rect.height());
 			activationPath.closeSubpath();
-			painter->setBrush(QBrush(activatedColor));
+			if(activatedFont == Activated)
+				painter->setBrush(QBrush(activatedColor));
+			else if(activatedFont == PartlyActivated)
+				painter->setBrush(QBrush(partlyActivatedColor));
 			painter->drawPath(activationPath);
 		}
 		painter->restore();
@@ -221,12 +225,7 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 	
 	QColor bgColor(QApplication::palette().color(QPalette::Base));
 	QColor fgColor(QApplication::palette().color(QPalette::Text));
-	// 	int borders( 2*(m_view->frameWidth() + m_view->lineWidth() + m_view->midLineWidth()) );
-	// 	int scrollbar(m_view->verticalScrollBar()->width());
-	// 	int width( m_view->width() - (borders + scrollbar) );
-	// 	qDebug()<<"W"<<width<<borders<<scrollbar;
-	// quite strange but I cannot determine accuratly the size of the visible part of the inner frame :/
-	// 	int width( qRound(m_view->width() * 0.92) );
+
 	int width(m_view->getUsedWidth());
 	
 	if(role == Qt::DisplayRole)
@@ -245,12 +244,31 @@ QVariant FMPreviewModel::data(const QModelIndex & index, int role) const
 			word = typotek::getInstance()->word(fit, specString);
 		QPixmap im(fit->oneLinePreviewPixmap(word,fgColor, bgColor, width ) );
 		FMPreviewIconEngine * pie(new FMPreviewIconEngine);
-		pie->setActivation(fit->isActivated());
+		if(!familyMode)
+			pie->setActivation(fit->isActivated() ? FMPreviewIconEngine::Activated : FMPreviewIconEngine::NotActivated);
+		else
+		{
+			bool hasActive(false);
+			bool hasNotActive(false);
+			foreach(FontItem * f, FMFontDb::DB()->FamilySet(fit->family()))
+			{
+				if(f->isActivated())
+					hasActive = true;
+				else
+					hasNotActive = true;
+				if(hasActive && hasNotActive)
+					break;
+			}
+			if(hasNotActive && hasActive)
+				pie->setActivation(FMPreviewIconEngine::PartlyActivated);
+			else
+			{
+				pie->setActivation(hasActive ? FMPreviewIconEngine::Activated : FMPreviewIconEngine::NotActivated);
+			}
+		}
 		QIcon ic( pie );
 		ic.addPixmap(im);
 
-		//		if(fit->path() == QString("/home/pierre/fontes/ttf/A028-Ext.ttf"))
-		//			im.save("im.png");
 		return ic;
 	}
 	else if(role == Qt::ToolTipRole)

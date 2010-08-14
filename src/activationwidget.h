@@ -18,72 +18,42 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FAMILYWIDGET_H
-#define FAMILYWIDGET_H
+#ifndef ACTIVATIONWIDGET_H
+#define ACTIVATIONWIDGET_H
 
-#include <QWidget>
-#include <QList>
-#include <QModelIndex>
-#include <QStringList>
-
-class FMPreviewModel;
-class FontItem;
-class TagsWidget;
-class QWebView;
-class FloatingWidget;
+#include "floatingwidget.h"
 
 namespace Ui {
-    class FamilyWidget;
+	class ActivationWidget;
 }
 
-class FamilyWidget : public QWidget
+class ActivationWidgetItem;
+
+class ActivationWidget : public FloatingWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit FamilyWidget(QWidget *parent = 0);
-    ~FamilyWidget();
-
-    void setFamily(const QString& f, unsigned int curIdx = 0);
-    TagsWidget* tagWidget();
-    QWebView * info();
-    QString family;
-    QString curVariant;
+	static const QString Name;
+	explicit ActivationWidget(const QString& familyName, QWidget *parent = 0);
+	~ActivationWidget();
 
 protected:
-    void changeEvent(QEvent *e);
-
-    void buildList(const QList<FontItem*>& fl);
+	void changeEvent(QEvent *e);
 
 private:
-    Ui::FamilyWidget *ui;
-    FMPreviewModel * previewModel;
-    FloatingWidget *sample;
-    FloatingWidget *chart;
-    FloatingWidget *activation;
+	const QString family;
+	Ui::ActivationWidget *ui;
 
-    bool forceReset;
-
-
-signals:
-    void backToList();
-    void fontSelected(const QString& path);
-    void tagAdded();
-    void tagChanged();
-    void familyStateChanged();
+	QList<ActivationWidgetItem*> items;
+	void activateAll(bool c);
 
 private slots:
-    void slotPreviewUpdate();
-    void slotPreviewUpdateSize(int);
-    void slotPreviewSelected(const QModelIndex & index);
-    void slotShowInfo();
-    void slotShowSample();
-    void slotShowChart();
-    void slotShowActivation();
-    void slotDetachSample();
-    void slotDetachChart();
-//    void slotDetachActivation();
-    void slotStateChange();
+	void slotActivate();
+	void slotDeactivate();
+
+signals:
+	void familyStateChanged();
 };
 
-#endif // FAMILYWIDGET_H
+#endif // ACTIVATIONWIDGET_H

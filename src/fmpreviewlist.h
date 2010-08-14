@@ -38,20 +38,26 @@ class QListView;
 class FMPreviewIconEngine : public QIconEngineV2
 {
 public:
+	enum Activation{
+		NotActivated,
+		Activated,
+		PartlyActivated
+	};
 	FMPreviewIconEngine();
 	~FMPreviewIconEngine();
 	void paint ( QPainter * painter, const QRect & rect, QIcon::Mode mode, QIcon::State state );
 	void addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, QIcon::State state );
-	void setActivation(bool a){activatedFont = a;}
+	void setActivation(Activation a){activatedFont = a;}
 
 private:
 	QPixmap m_p;
-	bool activatedFont;
+	Activation activatedFont;
 	static bool initState;
 	static QPen pen;
 	static QVector<QRgb> m_selPalette;
 	static QRgb activatedColor;
 	static QRgb deactivatedColor;
+	static QRgb partlyActivatedColor;
 
 	QVector<QRgb> actualSelPalette(const QVector<QRgb>& orig);
 

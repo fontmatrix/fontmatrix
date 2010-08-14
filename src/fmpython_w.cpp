@@ -168,8 +168,8 @@ QStringList FMPythonW::currentFontNames()
 
 QList<FontItem*> FMPythonW::currentFonts()
 {
-	if ( !tk->getSelectedFont() )
-		return QList<FontItem*>();
+//	if ( !tk->getSelectedFont() )
+//		return QList<FontItem*>();
 	return FMFontDb::DB()->getFilteredFonts();
 }
 

@@ -18,72 +18,37 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FAMILYWIDGET_H
-#define FAMILYWIDGET_H
+#ifndef ACTIVATIONWIDGETITEM_H
+#define ACTIVATIONWIDGETITEM_H
 
 #include <QWidget>
-#include <QList>
-#include <QModelIndex>
-#include <QStringList>
-
-class FMPreviewModel;
-class FontItem;
-class TagsWidget;
-class QWebView;
-class FloatingWidget;
 
 namespace Ui {
-    class FamilyWidget;
+	class ActivationWidgetItem;
 }
 
-class FamilyWidget : public QWidget
+class ActivationWidgetItem : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit FamilyWidget(QWidget *parent = 0);
-    ~FamilyWidget();
+	explicit ActivationWidgetItem(const QString& fontID, QWidget *parent = 0);
+	~ActivationWidgetItem();
 
-    void setFamily(const QString& f, unsigned int curIdx = 0);
-    TagsWidget* tagWidget();
-    QWebView * info();
-    QString family;
-    QString curVariant;
+	void changeState(bool s);
 
 protected:
-    void changeEvent(QEvent *e);
-
-    void buildList(const QList<FontItem*>& fl);
+	void changeEvent(QEvent *e);
 
 private:
-    Ui::FamilyWidget *ui;
-    FMPreviewModel * previewModel;
-    FloatingWidget *sample;
-    FloatingWidget *chart;
-    FloatingWidget *activation;
-
-    bool forceReset;
-
-
-signals:
-    void backToList();
-    void fontSelected(const QString& path);
-    void tagAdded();
-    void tagChanged();
-    void familyStateChanged();
+	const QString fileName;
+	Ui::ActivationWidgetItem *ui;
 
 private slots:
-    void slotPreviewUpdate();
-    void slotPreviewUpdateSize(int);
-    void slotPreviewSelected(const QModelIndex & index);
-    void slotShowInfo();
-    void slotShowSample();
-    void slotShowChart();
-    void slotShowActivation();
-    void slotDetachSample();
-    void slotDetachChart();
-//    void slotDetachActivation();
-    void slotStateChange();
+	void activate(bool a);
+
+signals:
+	void fontStateChanged();
 };
 
-#endif // FAMILYWIDGET_H
+#endif // ACTIVATIONWIDGETITEM_H

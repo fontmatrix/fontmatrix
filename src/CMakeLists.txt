@@ -2,6 +2,8 @@
 
 set(fontmatrix_SRCS
 ${CMAKE_CURRENT_SOURCE_DIR}/aboutwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/activationwidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/activationwidgetitem.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/chartwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataexport.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dataloader.cpp
@@ -49,6 +51,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmsampletextview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmshaper_own.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmuniblocks.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmutils.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmvariants.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmverticalbutton.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontbook.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fontbookdialog.cpp
@@ -143,6 +146,8 @@ ENDIF(WANT_PYTHONQT)
 
 SET(fontmatrix_MOC_HDRS
 aboutwidget.h
+activationwidget.h
+activationwidgetitem.h
 chartwidget.h
 dumpdialog.h
 familywidget.h
@@ -207,6 +212,8 @@ ${PYTHONQT_SCRIPTER_MOC_HDRS})
 SET(fontmatrix_UIS
 ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/activationreportdialog.ui
+${CMAKE_CURRENT_SOURCE_DIR}/activationwidget.ui
+${CMAKE_CURRENT_SOURCE_DIR}/activationwidgetitem.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/altselectorwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/chartwidget.ui

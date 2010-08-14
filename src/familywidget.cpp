@@ -28,8 +28,9 @@
 #include "floatingwidgetsregister.h"
 #include "samplewidget.h"
 #include "chartwidget.h"
-#include "fmactivate.h"
-#include "fmactivationreport.h"
+#include "activationwidget.h"
+#include "fmvariants.h"
+
 
 #include <QColor>
 #include <QListWidgetItem>
@@ -41,7 +42,9 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 		QWidget(parent),
 		ui(new Ui::FamilyWidget),
 		sample(0),
-		chart(0)
+		chart(0),
+		activation(0),
+		forceReset(false)
 {
 	ui->setupUi(this);
 
@@ -57,80 +60,7 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	previewModel->setSpecString("<variant>");
 	ui->familyPreview->setModel(previewModel);
 
-	ui->activateButton->setCheckable(true);
-	ui->deactivateButton->setCheckable(true);
 
-	// init sorted variant names
-	variants.clear();
-	QStringList weight;
-	weight << QString("Hairline")
-			<<	QString("Thin")
-			<<	QString("UltraLight")
-			<<	QString("ExtraLight")
-			<<	QString("Light")
-			<<	QString("Book")
-			<<	QString("Normal")
-			<<	QString("Regular")
-			<<	QString("Roman")
-			<<	QString("Plain")
-			<<	QString("Medium")
-			<<	QString()
-			<<	QString("Demi")
-			<<	QString("DemiBold")
-			<<	QString("SemiBold")
-			<<	QString("Bold")
-			<<	QString("ExtraBold")
-			<<	QString("Extra")
-			<<	QString("Heavy")
-			<<	QString("Black")
-			<<	QString("ExtraBlack")
-			<<	QString("UltraBlack")
-			<<	QString("Ultra");
-
-	QStringList slope;
-	slope << QString()
-			<< QString("Italic")
-			<< QString("Oblique")
-			<< QString("Slanted");
-
-	QStringList width;
-	width << QString()
-			<< QString("UltraCompressed")
-			<<	QString("Compressed")
-			<<	QString("UltraCondensed")
-			<<	QString("Condensed")
-			<<	QString("SemiCondensed")
-			<<	QString("Narrow")
-			<<	QString("SemiExtended")
-			<<	QString("SemiExpanded")
-			<<	QString("Extended")
-			<<	QString("Expanded")
-			<<	QString("ExtraExtended")
-			<<	QString("ExtraExpanded");
-
-	QStringList  optical;
-	optical << QString()
-			<< QString("Poster")
-			<<	QString("Display")
-			<<	QString("SubHead")
-			<<	QString("SmallText")
-			<<	QString("Caption");
-
-	foreach(const QString& w, weight)
-	{
-		foreach(const QString& s, slope)
-		{
-			foreach(const QString& wi, width)
-			{
-				foreach(const QString& o, optical)
-				{
-					appendVariants(w, s, wi, o);
-				}
-			}
-		}
-	}
-//	foreach(const QStringList& v, variants)
-//		qDebug()<<v.join(" ");
 
 	connect(ui->returnListButton, SIGNAL(clicked()), this, SIGNAL(backToList()));
 	connect(ui->familyPreview, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
@@ -140,11 +70,9 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	connect(ui->infoButton, SIGNAL(clicked()), this, SLOT(slotShowInfo()));
 	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
 	connect(ui->chartButton, SIGNAL(clicked()), this, SLOT(slotShowChart()));
+	connect(ui->activationButton, SIGNAL(clicked()), this, SLOT(slotShowActivation()));
 	connect(ui->tagsWidget, SIGNAL(tagAdded()), this, SIGNAL(tagAdded()));
 	connect(ui->tagsWidget, SIGNAL(tagChanged()), this, SIGNAL(tagChanged()));
-
-	connect(ui->activateButton, SIGNAL(clicked(bool)), this, SLOT(slotActivate(bool)));
-	connect(ui->deactivateButton, SIGNAL(clicked(bool)), this, SLOT(slotDeactivate(bool)));
 
 }
 
@@ -175,92 +103,6 @@ void FamilyWidget::changeEvent(QEvent *e)
 	}
 }
 
-void FamilyWidget::appendVariants(const QString &w, const QString &s, const QString &wi, const QString &o)
-{
-	QStringList p;
-	p << w << s << wi << o;
-	QStringList l;
-	foreach(const QString& s, p)
-	{
-		if(!s.isEmpty())
-			l << s;
-	}
-	variants << l;
-}
-
-bool FamilyWidget::compareVariants(const QStringList &a, const QStringList &b)
-{
-	foreach(const QString& va, a)
-	{
-		if(!b.contains(va, Qt::CaseInsensitive))
-			return false;
-	}
-	foreach(const QString& vb, b)
-	{
-		if(!a.contains(vb, Qt::CaseInsensitive))
-			return false;
-	}
-	return true;
-}
-
-QList<FontItem*> FamilyWidget::orderVariants(QList<FontItem*> ul)
-{
-//	return ul;
-	QList<FontItem*> ret;
-	QMap<FontItem*, QStringList> fl;
-	foreach(FontItem* f, ul)
-	{
-		fl.insert(f, f->variant().split(QString(" ")));
-//		qDebug()<< f->variant()<< f->variant().split(QString(" "));
-	}
-	foreach(const QStringList& v, variants)
-	{
-		foreach(FontItem* f, fl.keys())
-		{
-			if(compareVariants(v,fl[f]))
-			{
-				ret.append(f);
-				fl.remove(f);
-			}
-		}
-	}
-	if(fl.count() > 0)
-	{
-		// for Univers-like fonts, we get the number key
-		QMap<int, QMap<QString,FontItem*> > ulikeFonts;
-		bool intOK(false);
-		foreach(FontItem* f, fl.keys())
-		{
-			intOK = false;
-			QString fs(fl[f].first());
-			int idx(fs.toInt(&intOK, 10));
-			if(intOK)
-			{
-				ulikeFonts[idx][f->variant()] = f;
-				fl.remove(f);
-			}
-		}
-		foreach(int k, ulikeFonts.keys())
-		{
-			foreach(const QString& v, ulikeFonts[k].keys())
-				ret << ulikeFonts[k][v];
-		}
-
-		// still fonts unsorted;
-		if(fl.count() > 0)
-		{
-			QMap<QString, FontItem*> lastChance;
-			foreach(FontItem* f, fl.keys())
-			{
-				lastChance[f->variant()] = f;
-			}
-			foreach(const QString& v, lastChance.keys())
-				ret << lastChance[v];
-		}
-	}
-	return ret;
-}
-
 void FamilyWidget::slotPreviewUpdateSize(int w)
 {
 	ui->familyPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
@@ -268,31 +110,38 @@ void FamilyWidget::slotPreviewUpdateSize(int w)
 
 void FamilyWidget::setFamily(const QString &f, unsigned int curIdx )
 {
-	if(f != family)
+	if((f != family) || forceReset)
 	{
 		family = f;
 		ui->familyLabel->setText(family);
-		QList<FontItem*> fl( orderVariants( FMFontDb::DB()->FamilySet(family)));
+		QList<FontItem*> fl( FMVariants::Order(FMFontDb::DB()->FamilySet(family)));
 		ui->tagsWidget->prepare(fl);
 		previewModel->resetBase(fl);
 		if(!fl.isEmpty())
 		{
-			FMInfoDisplay fid(fl.at(curIdx));
-			ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
 			ui->familyPreview->setCurrentIndex( previewModel->index(curIdx) );
 			curVariant = fl.at(curIdx)->path();
-
-			ui->activateButton->setChecked(fl.at(curIdx)->isActivated());
-			ui->activateButton->setEnabled(!fl.at(curIdx)->isActivated());
-			ui->deactivateButton->setChecked(!fl.at(curIdx)->isActivated());
-			ui->deactivateButton->setEnabled(fl.at(curIdx)->isActivated());
-
 			emit fontSelected(curVariant);
+			if(!forceReset)
+				slotShowInfo();
 		}
-		slotShowInfo();
-		delete sample;
-		delete chart;
-		sample = chart = 0;
+		if((sample != 0) && !sample->isVisible())
+		{
+			delete sample;
+			sample = 0;
+		}
+		if((chart != 0) && !chart->isVisible())
+		{
+			delete chart;
+			chart = 0;
+		}
+		if((activation != 0) && !activation->isVisible())
+		{
+			delete activation;
+			activation = 0;
+		}
+
+		forceReset = false;
 	}
 }
 
@@ -353,6 +202,8 @@ void FamilyWidget::slotShowSample()
 
 void FamilyWidget::slotShowInfo()
 {
+	FMInfoDisplay fid(FMFontDb::DB()->Font(curVariant));
+	ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
 	ui->displayStack->setCurrentIndex(0);
 }
 
@@ -376,6 +227,27 @@ void FamilyWidget::slotShowChart()
 	}
 }
 
+void FamilyWidget::slotShowActivation()
+{
+	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, ActivationWidget::Name));
+	if(fw == 0)
+	{
+		if(0 == activation)
+		{
+			ActivationWidget *aw(new ActivationWidget(family, ui->pageActivation));
+			ui->displayStack->insertWidget(3, aw);
+			activation = aw;
+			connect(activation, SIGNAL(familyStateChanged()), this, SLOT(slotStateChange()));
+//			connect(activation, SIGNAL(detached()), this, SLOT(slotDetachActivation()));
+		}
+		ui->displayStack->setCurrentWidget(activation);
+	}
+	else
+	{
+		fw->show();
+	}
+}
+
 void FamilyWidget::slotDetachSample()
 {
 	disconnect(sample, SIGNAL(detached()), this, SLOT(slotDetachSample()));
@@ -390,51 +262,18 @@ void FamilyWidget::slotDetachChart()
 	slotShowInfo();
 }
 
-void FamilyWidget::slotActivate(bool c)
+
+//void FamilyWidget::slotDetachActivation()
+//{
+//	disconnect(activation, SIGNAL(detached()), this, SLOT(slotDetachActivation()));
+//	activation = 0;
+//	slotShowInfo();
+//}
+
+void FamilyWidget::slotStateChange()
 {
-	if(c)
-	{
-		//		ui->activateButton->setChecked(true);
-		//		ui->activateButton->setEnabled(false);
-		//		ui->deactivateButton->setChecked(false);
-		//		ui->deactivateButton->setEnabled(true);
-
-		FMActivate::getInstance()->errors();
-		FMActivate::getInstance()->activate(FMFontDb::DB()->FamilySet(family), true);
-		QMap<QString,QString> actErr(FMActivate::getInstance()->errors());
-		if(actErr.count() > 0)
-		{
-			FMActivationReport ar(this, actErr);
-			ar.exec();
-		}
-		QString rf(family);
-		family = QString();
-		setFamily(rf, ui->familyPreview->currentIndex().row());
-		emit familyStateChanged();
-	}
-}
-
-void FamilyWidget::slotDeactivate(bool c)
-{
-	if(c)
-	{
-		//		ui->activateButton->setChecked(false);
-		//		ui->activateButton->setEnabled(true);
-		//		ui->deactivateButton->setChecked(true);
-		//		ui->deactivateButton->setEnabled(false);
-
-		FMActivate::getInstance()->errors();
-		FMActivate::getInstance()->activate(FMFontDb::DB()->FamilySet(family), false);
-		QMap<QString,QString> actErr(FMActivate::getInstance()->errors());
-		if(actErr.count() > 0)
-		{
-			FMActivationReport ar(this, actErr);
-			ar.exec();
-		}
-		QString rf(family);
-		family = QString();
-		setFamily(rf, ui->familyPreview->currentIndex().row());
-		emit familyStateChanged();
-	}
+	forceReset = true;
+	setFamily(family);
+	emit familyStateChanged();
 }
 

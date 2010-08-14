@@ -18,72 +18,26 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FAMILYWIDGET_H
-#define FAMILYWIDGET_H
+#ifndef FMVARIANTS_H
+#define FMVARIANTS_H
 
-#include <QWidget>
 #include <QList>
-#include <QModelIndex>
 #include <QStringList>
 
-class FMPreviewModel;
 class FontItem;
-class TagsWidget;
-class QWebView;
-class FloatingWidget;
 
-namespace Ui {
-    class FamilyWidget;
-}
-
-class FamilyWidget : public QWidget
+class FMVariants
 {
-    Q_OBJECT
+	static FMVariants *instance;
+	FMVariants();
+
+	QList<QStringList> variants;
+	void appendVariants(const QString& w, const QString& s, const QString& wi, const QString& o);
+	inline bool compareVariants(const QStringList& a, const QStringList& b);
 
 public:
-    explicit FamilyWidget(QWidget *parent = 0);
-    ~FamilyWidget();
+	static QList<FontItem*> Order(QList<FontItem*> ul);
 
-    void setFamily(const QString& f, unsigned int curIdx = 0);
-    TagsWidget* tagWidget();
-    QWebView * info();
-    QString family;
-    QString curVariant;
-
-protected:
-    void changeEvent(QEvent *e);
-
-    void buildList(const QList<FontItem*>& fl);
-
-private:
-    Ui::FamilyWidget *ui;
-    FMPreviewModel * previewModel;
-    FloatingWidget *sample;
-    FloatingWidget *chart;
-    FloatingWidget *activation;
-
-    bool forceReset;
-
-
-signals:
-    void backToList();
-    void fontSelected(const QString& path);
-    void tagAdded();
-    void tagChanged();
-    void familyStateChanged();
-
-private slots:
-    void slotPreviewUpdate();
-    void slotPreviewUpdateSize(int);
-    void slotPreviewSelected(const QModelIndex & index);
-    void slotShowInfo();
-    void slotShowSample();
-    void slotShowChart();
-    void slotShowActivation();
-    void slotDetachSample();
-    void slotDetachChart();
-//    void slotDetachActivation();
-    void slotStateChange();
 };
 
-#endif // FAMILYWIDGET_H
+#endif // FMVARIANTS_H

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ActivationWidget</class>
+ <widget class="FloatingWidget" name="ActivationWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>465</width>
+    <height>364</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QPushButton" name="activateAll">
+     <property name="text">
+      <string>Activate All</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="deactivateAll">
+     <property name="text">
+      <string>Deactivate All</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>147</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>451</width>
+        <height>320</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="listLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FloatingWidget</class>
+   <extends>QWidget</extends>
+   <header>floatingwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

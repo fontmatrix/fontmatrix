@@ -96,6 +96,19 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="activationButton">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Activation</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -107,45 +120,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-        <item>
-         <widget class="QToolButton" name="activateButton">
-          <property name="font">
-           <font>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Activate</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextOnly</enum>
-          </property>
-          <property name="autoRaise">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="deactivateButton">
-          <property name="font">
-           <font>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Deactivate</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextOnly</enum>
-          </property>
-         </widget>
         </item>
         <item>
          <widget class="QLabel" name="familyLabel">
@@ -225,6 +199,7 @@
       </widget>
       <widget class="QWidget" name="pageSample"/>
       <widget class="QWidget" name="pageChart"/>
+      <widget class="QWidget" name="pageActivation"/>
      </widget>
     </widget>
    </item>

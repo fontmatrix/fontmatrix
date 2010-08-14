@@ -18,68 +18,70 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "floatingwidget.h"
-#include "floatingwidgetsregister.h"
-#include "typotek.h"
+#include "activationwidgetitem.h"
+#include "ui_activationwidgetitem.h"
+
 #include "fmfontdb.h"
 #include "fontitem.h"
+#include "fmactivate.h"
+#include "fmactivationreport.h"
 
-FloatingWidget::FloatingWidget(const QString &f, const QString& typ, QWidget *parent) :
+ActivationWidgetItem::ActivationWidgetItem(const QString& fontID, QWidget *parent) :
 		QWidget(parent),
-		fName(f),
-		fType(typ)
+		fileName(fontID),
+		ui(new Ui::ActivationWidgetItem)
 {
-	setAttribute(Qt::WA_DeleteOnClose);
-	QString fn;
-	FontItem *fi(FMFontDb::DB()->Font(fName));
-	if(fi != 0)
-		fn = fi->fancyName();
-	else
-		fn = f;
-	actionName =  QString("[%1]").arg(fType) + QString(" ") + fn;
-	wTitle =  fn + QString(" - Fontmatrix");
-	if(0 == parent)
-	{
-		ddetach();
+	ui->setupUi(this);
+	FontItem * f(FMFontDb::DB()->Font(fileName));
+	ui->styleName->setText(f->variant());
+	ui->activatedStatus->setText(fileName);
+	ui->activatedStatus->setChecked(f->isActivated());
+
+	connect(ui->activatedStatus, SIGNAL(toggled(bool)), this, SLOT(activate(bool)));
+}
+
+ActivationWidgetItem::~ActivationWidgetItem()
+{
+	delete ui;
+}
+
+void ActivationWidgetItem::changeEvent(QEvent *e)
+{
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui->retranslateUi(this);
+		break;
+	default:
+		break;
 	}
 }
 
-FloatingWidget::~FloatingWidget()
+
+void ActivationWidgetItem::activate(bool a)
 {
-}
-
-
-bool FloatingWidget::event(QEvent *e)
-{
-	//	if(windowTitle().isEmpty())
-	//	{
-	//		QWidget::setWindowTitle(wTitle);
-	//	}
-	if((e->type() == QEvent::Show) || (e->type() == QEvent::Hide))
-		emit visibilityChange();
-
-	return QWidget::event(e);
-}
-
-void FloatingWidget::activate(bool a)
-{
-	if(a)
+	FontItem * f(FMFontDb::DB()->Font(fileName));
+	if(f == 0)
+		return;
+	if(a != f->isActivated())
 	{
-		if(!isVisible())
-			setVisible(true);
-		raise();
+		QList<FontItem*> fl;
+		fl.clear();
+		fl.append(f);
+		FMActivate::getInstance()->errors();
+		FMActivate::getInstance()->activate(fl, a);
+		QMap<QString,QString> actErr(FMActivate::getInstance()->errors());
+		if(actErr.count() > 0)
+		{
+			FMActivationReport ar(this, actErr);
+			ar.exec();
+		}
+		emit fontStateChanged();
 	}
-	else
-		hide();
 }
 
-
-void FloatingWidget::ddetach()
+void ActivationWidgetItem::changeState(bool s)
 {
-	if(0 != parent())
-		setParent(0, Qt::Window);
-	setWindowTitle(wTitle);
-	FloatingWidgetsRegister::Register(this, fName, fType);
-	show();
-	emit detached();
+	ui->activatedStatus->setChecked(s);
 }
+

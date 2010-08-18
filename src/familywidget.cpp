@@ -44,7 +44,8 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 		sample(0),
 		chart(0),
 		activation(0),
-		forceReset(false)
+		currentPage(FAMILY_VIEW_INFO),
+		currentIndex(0)
 {
 	ui->setupUi(this);
 
@@ -108,9 +109,9 @@ void FamilyWidget::slotPreviewUpdateSize(int w)
 	ui->familyPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
 
-void FamilyWidget::setFamily(const QString &f, unsigned int curIdx )
+void FamilyWidget::setFamily(const QString &f)
 {
-	if((f != family) || forceReset)
+	if(f != family)
 	{
 		family = f;
 		ui->familyLabel->setText(family);
@@ -119,29 +120,17 @@ void FamilyWidget::setFamily(const QString &f, unsigned int curIdx )
 		previewModel->resetBase(fl);
 		if(!fl.isEmpty())
 		{
-			ui->familyPreview->setCurrentIndex( previewModel->index(curIdx) );
-			curVariant = fl.at(curIdx)->path();
+			ui->familyPreview->setCurrentIndex( previewModel->index(0) );
+			curVariant = fl.first()->path();
 			emit fontSelected(curVariant);
-			if(!forceReset)
-				slotShowInfo();
 		}
-		if((sample != 0) && !sample->isVisible())
-		{
-			delete sample;
-			sample = 0;
-		}
-		if((chart != 0) && !chart->isVisible())
-		{
-			delete chart;
-			chart = 0;
-		}
-		if((activation != 0) && !activation->isVisible())
-		{
-			delete activation;
-			activation = 0;
-		}
-
-		forceReset = false;
+		delete sample;
+		sample = 0;
+		delete chart;
+		chart = 0;
+		delete activation;
+		activation = 0;
+		slotShowInfo();
 	}
 }
 
@@ -152,29 +141,26 @@ void FamilyWidget::slotPreviewUpdate()
 
 void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 {
-	//	FontItem * fItem(FMFontDb::DB()->Font(index.data(FMPreviewModel::PathRole)));
-	//	if(!fItem)
-	//	{
-	//		qDebug()<<"\t-FontItme invalid";
-	//		return;
-	//	}
-	//	QString fName(fItem->path());
-	//	qDebug()<<"\t+"<< fName;
-	//	if(!fName.isEmpty())
-	//	{
-	//		typotek::getInstance()->getTheMainView()->slotFontSelectedByName(index.data(FMPreviewModel::PathRole));
-	//	}
 	QString fid(index.data(FMPreviewModel::PathRole).toString());
 	if(fid != curVariant)
 	{
-		slotShowInfo();
 		delete sample;
 		delete chart;
 		sample = chart = 0;
 		curVariant = fid;
-		FontItem * fItem(FMFontDb::DB()->Font(curVariant));
-		FMInfoDisplay fid(fItem);
-		ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
+		currentIndex = index.row();
+		switch(currentPage)
+		{
+		case FAMILY_VIEW_INFO: slotShowInfo();
+			break;
+		case FAMILY_VIEW_SAMPLE: slotShowSample();
+			break;
+		case FAMILY_VIEW_CHART: slotShowChart();
+			break;
+		default:
+			break;
+		}
+
 		emit fontSelected(curVariant);
 	}
 }
@@ -188,7 +174,7 @@ void FamilyWidget::slotShowSample()
 		if(0 == sample)
 		{
 			SampleWidget *sw(new SampleWidget(curVariant, ui->pageSample));
-			ui->displayStack->insertWidget(1, sw);
+			ui->displayStack->insertWidget(FAMILY_VIEW_SAMPLE, sw);
 			sample = sw;
 			connect(sample, SIGNAL(detached()), this, SLOT(slotDetachSample()));
 		}
@@ -198,13 +184,15 @@ void FamilyWidget::slotShowSample()
 	{
 		fw->show();
 	}
+	currentPage = FAMILY_VIEW_SAMPLE;
 }
 
 void FamilyWidget::slotShowInfo()
 {
 	FMInfoDisplay fid(FMFontDb::DB()->Font(curVariant));
 	ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
-	ui->displayStack->setCurrentIndex(0);
+	ui->displayStack->setCurrentIndex(FAMILY_VIEW_INFO);
+	currentPage = FAMILY_VIEW_INFO;
 }
 
 void FamilyWidget::slotShowChart()
@@ -215,7 +203,7 @@ void FamilyWidget::slotShowChart()
 		if(0 == chart)
 		{
 			ChartWidget *cw(new ChartWidget(curVariant, ui->pageChart));
-			ui->displayStack->insertWidget(2, cw);
+			ui->displayStack->insertWidget(FAMILY_VIEW_CHART, cw);
 			chart = cw;
 			connect(chart, SIGNAL(detached()), this, SLOT(slotDetachChart()));
 		}
@@ -225,6 +213,7 @@ void FamilyWidget::slotShowChart()
 	{
 		fw->show();
 	}
+	currentPage = FAMILY_VIEW_CHART;
 }
 
 void FamilyWidget::slotShowActivation()
@@ -235,10 +224,9 @@ void FamilyWidget::slotShowActivation()
 		if(0 == activation)
 		{
 			ActivationWidget *aw(new ActivationWidget(family, ui->pageActivation));
-			ui->displayStack->insertWidget(3, aw);
+			ui->displayStack->insertWidget(FAMILY_VIEW_ACTIVATION, aw);
 			activation = aw;
 			connect(activation, SIGNAL(familyStateChanged()), this, SLOT(slotStateChange()));
-//			connect(activation, SIGNAL(detached()), this, SLOT(slotDetachActivation()));
 		}
 		ui->displayStack->setCurrentWidget(activation);
 	}
@@ -262,18 +250,9 @@ void FamilyWidget::slotDetachChart()
 	slotShowInfo();
 }
 
-
-//void FamilyWidget::slotDetachActivation()
-//{
-//	disconnect(activation, SIGNAL(detached()), this, SLOT(slotDetachActivation()));
-//	activation = 0;
-//	slotShowInfo();
-//}
-
 void FamilyWidget::slotStateChange()
 {
-	forceReset = true;
-	setFamily(family);
+	previewModel->resetBase(FMVariants::Order(FMFontDb::DB()->FamilySet(family)));
 	emit familyStateChanged();
 }
 

@@ -26,6 +26,11 @@
 #include <QModelIndex>
 #include <QStringList>
 
+#define FAMILY_VIEW_INFO	0
+#define FAMILY_VIEW_SAMPLE	1
+#define FAMILY_VIEW_CHART	2
+#define FAMILY_VIEW_ACTIVATION	3
+
 class FMPreviewModel;
 class FontItem;
 class TagsWidget;
@@ -44,7 +49,7 @@ public:
     explicit FamilyWidget(QWidget *parent = 0);
     ~FamilyWidget();
 
-    void setFamily(const QString& f, unsigned int curIdx = 0);
+    void setFamily(const QString& f);
     TagsWidget* tagWidget();
     QWebView * info();
     QString family;
@@ -62,7 +67,8 @@ private:
     FloatingWidget *chart;
     FloatingWidget *activation;
 
-    bool forceReset;
+    unsigned int currentIndex;
+    unsigned int currentPage;
 
 
 signals:

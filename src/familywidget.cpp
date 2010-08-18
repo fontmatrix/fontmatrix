@@ -45,7 +45,8 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 		chart(0),
 		activation(0),
 		currentPage(FAMILY_VIEW_INFO),
-		currentIndex(0)
+		currentIndex(0),
+		uniBlockIndex(0)
 {
 	ui->setupUi(this);
 
@@ -130,6 +131,8 @@ void FamilyWidget::setFamily(const QString &f)
 		chart = 0;
 		delete activation;
 		activation = 0;
+
+		uniBlockIndex = 0;
 		slotShowInfo();
 	}
 }
@@ -144,6 +147,8 @@ void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 	QString fid(index.data(FMPreviewModel::PathRole).toString());
 	if(fid != curVariant)
 	{
+		if(chart != 0)
+			uniBlockIndex = reinterpret_cast<ChartWidget*>(chart)->currentBlock();
 		delete sample;
 		delete chart;
 		sample = chart = 0;
@@ -202,7 +207,7 @@ void FamilyWidget::slotShowChart()
 	{
 		if(0 == chart)
 		{
-			ChartWidget *cw(new ChartWidget(curVariant, ui->pageChart));
+			ChartWidget *cw(new ChartWidget(curVariant, uniBlockIndex, ui->pageChart));
 			ui->displayStack->insertWidget(FAMILY_VIEW_CHART, cw);
 			chart = cw;
 			connect(chart, SIGNAL(detached()), this, SLOT(slotDetachChart()));

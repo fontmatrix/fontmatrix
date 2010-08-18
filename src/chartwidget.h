@@ -37,8 +37,10 @@ class ChartWidget : public FloatingWidget
 
 public:
 	static const QString Name;
-    explicit ChartWidget(const QString& fid, QWidget *parent = 0);
+    explicit ChartWidget(const QString& fid, unsigned block, QWidget *parent = 0);
     ~ChartWidget();
+
+    unsigned int currentBlock();
 
 protected:
     void changeEvent(QEvent *e);

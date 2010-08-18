@@ -38,7 +38,7 @@
 
 const QString ChartWidget::Name = QObject::tr("Chart");
 
-ChartWidget::ChartWidget(const QString& fid, QWidget *parent) :
+ChartWidget::ChartWidget(const QString& fid, unsigned block, QWidget *parent) :
 		FloatingWidget(fid, Name, parent),
 		ui(new Ui::ChartWidget),
 		fontIdentifier(fid)
@@ -62,6 +62,9 @@ ChartWidget::ChartWidget(const QString& fid, QWidget *parent) :
 	fancyGlyphInUse = -1;
 
 	createConnections();
+
+	if(block > 0)
+		slotPlaneSelected(block);
 
 }
 
@@ -120,6 +123,10 @@ void ChartWidget::changeEvent(QEvent *e)
 	}
 }
 
+unsigned int ChartWidget::currentBlock()
+{
+	return ui->uniPlaneCombo->currentIndex();
+}
 
 void ChartWidget::slotShowOneGlyph()
 {

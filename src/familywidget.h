@@ -69,7 +69,7 @@ private:
 
     unsigned int currentIndex;
     unsigned int currentPage;
-    unsigned int uniBlockIndex;
+    QString uniBlock;
 
 
 signals:

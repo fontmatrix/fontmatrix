@@ -38,7 +38,7 @@
 
 const QString ChartWidget::Name = QObject::tr("Chart");
 
-ChartWidget::ChartWidget(const QString& fid, unsigned block, QWidget *parent) :
+ChartWidget::ChartWidget(const QString& fid, const QString& block, QWidget *parent) :
 		FloatingWidget(fid, Name, parent),
 		ui(new Ui::ChartWidget),
 		fontIdentifier(fid)
@@ -61,11 +61,10 @@ ChartWidget::ChartWidget(const QString& fid, unsigned block, QWidget *parent) :
 	curGlyph = 0;
 	fancyGlyphInUse = -1;
 
+	if(!block.isEmpty())
+		selectBlock(block);
+
 	createConnections();
-
-	if(block > 0)
-		slotPlaneSelected(block);
-
 }
 
 ChartWidget::~ChartWidget()
@@ -123,9 +122,38 @@ void ChartWidget::changeEvent(QEvent *e)
 	}
 }
 
-unsigned int ChartWidget::currentBlock()
+QString ChartWidget::currentBlock()
 {
-	return ui->uniPlaneCombo->currentIndex();
+	return ui->uniPlaneCombo->currentText();
+}
+
+bool ChartWidget::selectBlock(const QString &uname)
+{
+	int idx(ui->uniPlaneCombo->findText(uname));
+	if(idx < 0)
+		idx = 0;
+	ui->uniPlaneCombo->setCurrentIndex(idx);
+	FontItem * theVeryFont(FMFontDb::DB()->Font(fontIdentifier));
+	if(theVeryFont && ui->abcView->lock())
+	{
+		QPair<int,int> uniPair;
+		if(uname == unMapGlyphName)
+			uniPair = qMakePair<int,int>(-1,100);
+		else if(uname == allMappedGlyphName)
+			uniPair = qMakePair<int,int>(0, 0x10FFFF);
+		else
+			uniPair = FMUniBlocks::interval( uname );
+
+		int coverage = theVeryFont->countCoverage ( uniPair.first, uniPair.second );
+		int interval = uniPair.second - uniPair.first;
+		coverage = coverage * 100 / ( interval + 1 );// against /0 exception
+
+		QString statstring(tr("Block (%1):").arg( QString::number ( coverage ) + "\%"));
+		ui->unicodeCoverageStat->setText ( statstring );
+
+		theVeryFont->renderAll ( abcScene , uniPair.first, uniPair.second );
+		ui->abcView->unlock();
+	}
 }
 
 void ChartWidget::slotShowOneGlyph()

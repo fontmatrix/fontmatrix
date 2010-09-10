@@ -22,6 +22,11 @@
 #include "ui_browserwidget.h"
 
 #include "fmfontdb.h"
+#include "fontitem.h"
+#include "fminfodisplay.h"
+#include "floatingwidgetsregister.h"
+#include "samplewidget.h"
+#include "chartwidget.h"
 
 #include <QDirModel>
 #include <QDir>
@@ -35,6 +40,8 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	currentPage = BROWSER_VIEW_INFO;
+	sample = chart = 0;
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
 	theDirModel = new QDirModel(ffilter, QDir::AllDirs | QDir::Files | QDir::Drives | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
 	theDirModel->setLazyChildCount(true);
@@ -61,6 +68,14 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 
 	dirWatcher = new QFileSystemWatcher(this);
 	initWatcher(theDirModel->index(0,0));
+
+	connect(ui->infoButton, SIGNAL(clicked()), this, SLOT(slotShowInfo()));
+	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
+	connect(ui->chartButton, SIGNAL(clicked()), this, SLOT(slotShowChart()));
+
+	connect(ui->browserView, SIGNAL(activated( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
+	connect(ui->browserView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
+	connect(ui->browserView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
 
 }
 
@@ -100,7 +115,31 @@ void BrowserWidget::slotFolderItemclicked(QModelIndex mIdx)
 	{
 		if(FMFontDb::DB()->insertTemporaryFont(path))
 		{
-			emit folderSelectFont(pf.absoluteFilePath());
+//			emit folderSelectFont(pf.absoluteFilePath());
+			QString fid(pf.absoluteFilePath());
+			if(fid != curVariant)
+			{
+				if(chart != 0)
+					uniBlock = reinterpret_cast<ChartWidget*>(chart)->currentBlock();
+				delete sample;
+				delete chart;
+				sample = chart = 0;
+				curVariant = fid;
+//				currentIndex = index.row();
+				switch(currentPage)
+				{
+				case BROWSER_VIEW_INFO: slotShowInfo();
+					break;
+				case BROWSER_VIEW_SAMPLE: slotShowSample();
+					break;
+				case BROWSER_VIEW_CHART: slotShowChart();
+					break;
+				default:
+					break;
+				}
+
+//				emit fontSelected(curVariant);
+			}
 		}
 	}
 	settingsDir(path);
@@ -142,3 +181,56 @@ void BrowserWidget::settingsDir(const QString &path)
 
 	s = path;
 }
+
+
+void BrowserWidget::slotShowInfo()
+{
+	FMInfoDisplay fid(FMFontDb::DB()->Font(curVariant));
+	ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
+	ui->displayStack->setCurrentIndex(BROWSER_VIEW_INFO);
+	currentPage = BROWSER_VIEW_INFO;
+}
+
+void BrowserWidget::slotShowChart()
+{
+	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, ChartWidget::Name));
+	if(fw == 0)
+	{
+		if(0 == chart)
+		{
+			ChartWidget *cw(new ChartWidget(curVariant, uniBlock, ui->pageChart));
+			ui->displayStack->insertWidget(BROWSER_VIEW_CHART, cw);
+			chart = cw;
+			connect(chart, SIGNAL(detached()), this, SLOT(slotDetachChart()));
+		}
+		ui->displayStack->setCurrentWidget(chart);
+	}
+	else
+	{
+		fw->show();
+	}
+	currentPage = BROWSER_VIEW_CHART;
+}
+
+
+void BrowserWidget::slotShowSample()
+{
+	FloatingWidget * fw(FloatingWidgetsRegister::Widget(curVariant, SampleWidget::Name));
+	if(fw == 0)
+	{
+		if(0 == sample)
+		{
+			SampleWidget *sw(new SampleWidget(curVariant, ui->pageSample));
+			ui->displayStack->insertWidget(BROWSER_VIEW_SAMPLE, sw);
+			sample = sw;
+			connect(sample, SIGNAL(detached()), this, SLOT(slotDetachSample()));
+		}
+		ui->displayStack->setCurrentWidget(sample);
+	}
+	else
+	{
+		fw->show();
+	}
+	currentPage = BROWSER_VIEW_SAMPLE;
+}
+

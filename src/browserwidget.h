@@ -25,8 +25,13 @@
 #include <QStringList>
 #include <QModelIndex>
 
+#define BROWSER_VIEW_INFO	0
+#define BROWSER_VIEW_SAMPLE	1
+#define BROWSER_VIEW_CHART	2
+
 class QDirModel;
 class QFileSystemWatcher;
+class FloatingWidget;
 
 namespace Ui {
 	class BrowserWidget;
@@ -43,6 +48,16 @@ public:
 private:
 	Ui::BrowserWidget *ui;
 
+	QString curVariant;
+
+	FloatingWidget *sample;
+	FloatingWidget *chart;
+	FloatingWidget *activation;
+
+	unsigned int currentIndex;
+	unsigned int currentPage;
+	QString uniBlock;
+
 	QDirModel *theDirModel;
 	QStringList ffilter;
 	QFileSystemWatcher *dirWatcher;
@@ -56,6 +71,10 @@ private slots:
 	void slotFolderAddToWatcher(QModelIndex mIdx);
 	void slotFolderRemoveFromWatcher(QModelIndex mIdx);
 	void slotFolderRefresh(const QString& dirPath);
+
+	void slotShowInfo();
+	void slotShowSample();
+	void slotShowChart();
 
 signals:
 	void folderSelectFont(QString);

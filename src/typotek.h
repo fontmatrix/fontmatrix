@@ -38,6 +38,7 @@ class QAction;
 class QMenu;
 class QTextEdit;
 class MainViewWidget;
+class BrowserWidget;
 class FontItem;
 // class TypotekAdaptator;
 class QDockWidget;
@@ -49,6 +50,7 @@ class QProgressBar;
 class HelpBrowser;
 class DataLoader;
 class FloatingWidget;
+class QStackedWidget;
 
 class typotek:public QMainWindow
 {
@@ -120,6 +122,7 @@ public slots:
 	void closeAllFloatings();
 	void showAllFloatings();
 	void hideAllFloatings();
+	void toggleMainView(bool v);
 
 	void hide();
 	void show();
@@ -219,7 +222,9 @@ private:
 
 	QProgressBar *statusProgressBar;
 
+	QStackedWidget * mainStack;
 	MainViewWidget *theMainView;
+	BrowserWidget * theBrowser;
 
 	QFile ResourceFile;
 	QDir ownDir;
@@ -290,6 +295,8 @@ private:
 	bool playVisible;
 
 	QString currentNamedSample;
+
+	QToolButton * toggleMainViewButton;
 
 public:
 	bool isSysFont(FontItem* f);

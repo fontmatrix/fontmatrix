@@ -21,6 +21,7 @@
 
 
 #include "aboutwidget.h"
+#include "browserwidget.h"
 #include "dataexport.h"
 #include "dataloader.h"
 #include "dumpdialog.h"
@@ -67,6 +68,7 @@
 #include <QDomDocument>
 #include <QProcess>
 #include <QDockWidget>
+#include <QStackedWidget>
 
 #ifdef HAVE_FONTCONFIG
 #include <fontconfig/fontconfig.h>
@@ -171,7 +173,17 @@ void typotek::initMatrix()
 	
 
 	theMainView = new MainViewWidget ( this );
-	setCentralWidget ( theMainView );
+	theBrowser = new BrowserWidget(this);
+	mainStack = new QStackedWidget(this);
+
+	mainStack->addWidget(theMainView);
+	mainStack->addWidget(theBrowser);
+	setCentralWidget ( mainStack );
+
+	toggleMainViewButton = new QToolButton(this);
+	toggleMainViewButton->setText("B");
+	toggleMainViewButton->setCheckable(true);
+	statusBar()->addPermanentWidget(toggleMainViewButton);
 
 	if ( QSystemTrayIcon::isSystemTrayAvailable() )
 		systray = new Systray();
@@ -273,9 +285,7 @@ void typotek::doConnect()
 #ifdef HAVE_PYTHONQT
 	connect(FMScriptConsole::getInstance(),SIGNAL(finished()), this, SLOT(slotUpdateScriptConsoleStatus()));
 #endif
-
-
-
+	connect(toggleMainViewButton, SIGNAL(toggled(bool)), this, SLOT(toggleMainView(bool)));
 }
 
 void typotek::closeEvent ( QCloseEvent *event )
@@ -2656,5 +2666,13 @@ void typotek::hideAllFloatings()
 	}
 }
 
+
+void typotek::toggleMainView(bool v)
+{
+	if(v)
+		mainStack->setCurrentWidget(theBrowser);
+	else
+		mainStack->setCurrentWidget(theMainView);
+}
 
 

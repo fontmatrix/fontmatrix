@@ -234,3 +234,17 @@ void BrowserWidget::slotShowSample()
 	currentPage = BROWSER_VIEW_SAMPLE;
 }
 
+void BrowserWidget::slotDetachChart()
+{
+	disconnect(chart, SIGNAL(detached()), this, SLOT(slotDetachChart()));
+	chart = 0;
+	slotShowInfo();
+}
+
+void BrowserWidget::slotDetachSample()
+{
+	disconnect(sample, SIGNAL(detached()), this, SLOT(slotDetachSample()));
+	sample = 0;
+	slotShowInfo();
+}
+

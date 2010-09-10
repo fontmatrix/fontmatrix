@@ -76,6 +76,9 @@ private slots:
 	void slotShowSample();
 	void slotShowChart();
 
+	void slotDetachChart();
+	void slotDetachSample();
+
 signals:
 	void folderSelectFont(QString);
 };

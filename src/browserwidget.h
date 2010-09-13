@@ -24,6 +24,9 @@
 #include <QWidget>
 #include <QStringList>
 #include <QModelIndex>
+#include <QFileInfo>
+#include <QPoint>
+#include <QMenu>
 
 #define BROWSER_VIEW_INFO	0
 #define BROWSER_VIEW_SAMPLE	1
@@ -32,6 +35,7 @@
 class QDirModel;
 class QFileSystemWatcher;
 class FloatingWidget;
+class FolderViewMenu;
 
 namespace Ui {
 	class BrowserWidget;
@@ -62,6 +66,9 @@ private:
 	QStringList ffilter;
 	QFileSystemWatcher *dirWatcher;
 	QModelIndex currentFIndex;
+
+	FolderViewMenu *folderViewContextMenu;
+
 	void initWatcher(QModelIndex parent);
 	void settingsDir(const QString& path);
 
@@ -79,8 +86,34 @@ private slots:
 	void slotDetachChart();
 	void slotDetachSample();
 
+	void slotFolderViewContextMenu(const QPoint&);
+
 signals:
 	void folderSelectFont(QString);
 };
+
+class FolderViewMenu : public QMenu
+{
+	Q_OBJECT
+public:
+	FolderViewMenu();
+	~FolderViewMenu();
+
+	void exec(const QFileInfo &fi, const QPoint &p);
+
+private:
+	QAction *dirAction;
+	QAction *dirRecursiveAction;
+	QAction *fileAction;
+
+	QFileInfo selectedFileOrDir;
+
+private slots:
+	void slotImportDir();
+	void slotImportDirRecursively();
+	void slotImportFile();
+
+};
+
 
 #endif // BROWSERWIDGET_H

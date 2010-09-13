@@ -27,6 +27,7 @@
 #include "floatingwidgetsregister.h"
 #include "samplewidget.h"
 #include "chartwidget.h"
+#include "typotek.h"
 
 #include <QDirModel>
 #include <QDir>
@@ -76,6 +77,8 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 	connect(ui->browserView, SIGNAL(activated( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(ui->browserView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(ui->browserView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
+
+	connect(ui->browserView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(slotFolderViewContextMenu(const QPoint &)));
 
 }
 
@@ -248,3 +251,88 @@ void BrowserWidget::slotDetachSample()
 	slotShowInfo();
 }
 
+void BrowserWidget::slotFolderViewContextMenu(const QPoint &p)
+{
+	QDirModel *dm = static_cast<QDirModel*>(ui->browserView->model());
+	if (!dm)
+		return;
+
+	QModelIndex mi = ui->browserView->currentIndex();
+	if (!mi.isValid())
+		return;
+
+	slotFolderItemclicked(mi); // make sure the font in question is loaded
+				   // with a direct right click it would crash without this
+
+	if (!folderViewContextMenu)
+		folderViewContextMenu = new FolderViewMenu();
+
+	folderViewContextMenu->exec(dm->fileInfo(mi), mapToGlobal(p));
+}
+
+
+FolderViewMenu::FolderViewMenu() : QMenu()
+{
+	dirAction = new QAction(tr("Import Directory"), 0);
+	dirRecursiveAction = new QAction(tr("Import recursively"), 0);
+	fileAction = new QAction(tr("Import File"), 0);
+
+	addAction(dirAction);
+	addAction(dirRecursiveAction);
+	addAction(fileAction);
+
+	connect(dirAction, SIGNAL(triggered()), this, SLOT(slotImportDir()));
+	connect(dirRecursiveAction, SIGNAL(triggered()), this, SLOT(slotImportDirRecursively()));
+	connect(fileAction, SIGNAL(triggered()), this, SLOT(slotImportFile()));
+}
+
+void FolderViewMenu::exec(const QFileInfo &fi, const QPoint &p)
+{
+	if (fi.isDir()) {
+		dirAction->setEnabled(true);
+		dirRecursiveAction->setEnabled(true);
+		fileAction->setEnabled(false);
+	} else if (fi.isFile()) {
+		dirAction->setEnabled(false);
+		dirRecursiveAction->setEnabled(false);
+		fileAction->setEnabled(true);
+	} else
+		return; // not a file or a directory
+
+	selectedFileOrDir = fi;
+
+	QMenu::exec(p);
+}
+
+
+void FolderViewMenu::slotImportDir()
+{
+	QDir dir(selectedFileOrDir.absoluteFilePath());
+	QStringList ffilter;
+	ffilter << "*.otf" << "*.ttf" << "*.pfb";
+	QStringList fontList = dir.entryList(ffilter);
+	if (fontList.count() < 1)
+		return;
+	QString lastItem = fontList.at(fontList.count() - 1);
+	fontList.removeAt(fontList.count() - 1);
+	foreach(QString tmpFontPath, fontList) {
+		QString absPath = dir.absolutePath() + "/" + tmpFontPath;
+		typotek::getInstance()->open(absPath, false, true);
+	}
+	typotek::getInstance()->open(dir.absolutePath() + "/" + lastItem, true); // import the last font with the announce flag set to true
+}
+
+void FolderViewMenu::slotImportDirRecursively()
+{
+	typotek::getInstance()->open(selectedFileOrDir.absoluteFilePath());
+}
+
+void FolderViewMenu::slotImportFile()
+{
+	typotek::getInstance()->open(selectedFileOrDir.absoluteFilePath());
+}
+
+FolderViewMenu::~FolderViewMenu()
+{
+
+}

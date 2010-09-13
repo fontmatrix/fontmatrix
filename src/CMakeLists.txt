@@ -68,7 +68,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/iview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/QHexView.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/parallelcoor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/puzzleviewimp.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
+#${CMAKE_CURRENT_SOURCE_DIR}/listdockwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/metawidget.cpp
@@ -186,7 +186,7 @@ helpbrowser.h
 importtags.h
 iview.h
 QHexView.h
-listdockwidget.h
+#listdockwidget.h
 mainviewwidget.h
 metawidget.h
 modeltext.h
@@ -234,7 +234,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/importtags.ui
 # ${CMAKE_CURRENT_SOURCE_DIR}/help.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/helpbrowser.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/layoutoptions.ui
-${CMAKE_CURRENT_SOURCE_DIR}/listsdock.ui
+#${CMAKE_CURRENT_SOURCE_DIR}/listsdock.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/mainview.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/metawidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/matchraster.ui

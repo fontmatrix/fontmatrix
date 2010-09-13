@@ -154,7 +154,6 @@ private:
 	QMenu *fileMenu;
 	QMenu *editMenu;
 	QMenu *servicesMenu;
-	QMenu *browseMenu;
 	QMenu *viewMenu;
 #ifdef HAVE_PYTHONQT
 	QMenu *scriptMenu;
@@ -196,11 +195,6 @@ private:
 
 	QAction *extractFontAction;
 	QAction *matchRasterAct;
-
-	QAction *nextFamily;
-	QAction *previousFamily;
-	QAction *nextFont;
-	QAction *previousFont;
 
 	QAction *playAction;
 	QAction *compareAction;

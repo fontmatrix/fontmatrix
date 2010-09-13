@@ -37,7 +37,7 @@ class QTreeWidgetItem;
 class QGraphicsRectItem;
 class QButtonGroup;
 class QWebView;
-class ListDockWidget;
+//class ListDockWidget;
 struct OTFSet;
 class FMLayout;
 class FMPreviewModel;
@@ -60,7 +60,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QStringList ord;
 		QStringList fields;
 		typotek *typo;
-		ListDockWidget *m_lists;
+//		ListDockWidget *m_lists;
 		QString faceIndex;
 		QString lastIndex;
 //		QList<FontItem*> currentFonts; *moved to FMFontDB*
@@ -81,85 +81,30 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void disConnect();
 		void allActivation(bool act);
 		void activation(QList<FontItem*> fit, bool act);
-		void fillTree();
-		void updateTree(bool checkFontActive = false);
-		
-		
-		void operateFilter(QList<FontItem*> allFiltered, const QString filterName);
-		
-		QStringList openKeys;
+
 		QString curItemName;
 		
-
-		
-// 		QMap<QString, QPair<int,int> > uniPlanes;
-// 		void fillUniPlanes();
-		
-//		void fillOTTree();
-//		OTFSet deFillOTTree();
-		
 		bool renderingLock;
-
-		
-		
-// 		void prepare(QList<FontItem*> fonts);
-// 		QList<FontItem*> theTaggedFonts;		
-// 		bool contextMenuReq;
-// 		QPoint contextMenuPos;
 		
 		QIcon iconPS1;
 		QIcon iconTTF;
 		QIcon iconOTF;
-		
-		QString currentDownload;
-		
-//		QUrl infoCSSUrl;
 
-		
 		FMPreviewModel * previewModel;
 
 	public slots:
 		void slotOrderingChanged ( QString s );
-		void slotFontSelected ( QTreeWidgetItem * item, int column );
 		bool slotFontSelectedByName(const QString& fname);
-//		void slotInfoFont();
-//		void slotView(bool needDeRendering = false);
-		void slotSearch(int, QString);
 		void slotShowFamily(const QModelIndex& familyIdx);
 		void slotQuitFamily();
-		
-//		void slotFontAction(QTreeWidgetItem * item, int column );
-//                bool slotFontActionByName(const QString &fname);
-//                bool slotFontActionByNames(QStringList fnames);
-//		void slotEditAll();
+
 		void slotAppendTag(QString tag);
-//		void slotFilterTag(QString tag);
 		
 		void slotDesactivateAll();
 		void slotActivateAll();
-		void slotActivate(bool act, QTreeWidgetItem * item, int column);
-		void slotReloadFontList();
-
-		void slotItemOpened(QTreeWidgetItem * item);
-		void slotViewAll();
-		void slotViewActivated();
-		void slotFTRasterChanged();
-		
-
-		void slotUpdateTree();
 		void slotRemoveCurrentItem();
 		
-		void slotPanoseFilter(const QMap<int,QList<int> >& filter);
-		
-		//lists
-		void slotSelectFromFolders(const QString&);
-
-		
 	private slots:
-		void slotPreviewUpdateSize(int);
-		void slotRemoteFinished();
-		void toggleFacesCheckBoxes(bool);
-		void refreshActStatus(const QStringList& flist);
 		void slotQuickSearch(const QString& text);
 		void slotEndQuickSearch();
 

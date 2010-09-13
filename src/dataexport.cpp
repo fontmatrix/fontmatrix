@@ -25,10 +25,7 @@ DataExport::DataExport(const QString &dirPath, const QString &filterTag)
 {
 	exDir.setPath(dirPath);
 	filter = filterTag;
-	typotek *typ = typotek::getInstance();
-// 	fonts = typ->getFonts(filter,"tag");
 	fonts = FMFontDb::DB()->Fonts(filter,FMFontDb::Tags);
-	typ->resetFilter();
 }
 
 

@@ -6,7 +6,7 @@
 
 #include "typotek.h"
 #include "mainviewwidget.h"
-#include "listdockwidget.h"
+//#include "listdockwidget.h"
 #include "fmfontdb.h"
 #include "fmscriptconsole.h"
 
@@ -108,30 +108,6 @@ void FMPythonW::catchStdErr ( const QString & s )
 
 /// "exported" methods
 
-void FMPythonW::nextFace()
-{
-// 	qDebug()<<"FMPythonW::nextFace";
-	ListDockWidget::getInstance()->fontTree->slotNextFont();
-}
-
-void FMPythonW::previousFace()
-{
-// 	qDebug()<<"FMPythonW::previousFace";
-	ListDockWidget::getInstance()->fontTree->slotPreviousFont();
-}
-
-void FMPythonW::nextFamily()
-{
-// 	qDebug()<<"FMPythonW::nextFamily";
-	ListDockWidget::getInstance()->fontTree->slotNextFamily();
-}
-
-void FMPythonW::previousFamily()
-{
-// 	qDebug()<<"FMPythonW::previousFamily";
-	ListDockWidget::getInstance()->fontTree->slotPreviousFamily();
-}
-
 QString FMPythonW::currentFontPath()
 {
 	if ( !tk->getSelectedFont() )
@@ -183,10 +159,5 @@ void FMPythonW::Debug ( QVariant var )
 FMFontDb* FMPythonW::DB()
 {
 	return FMFontDb::DB();
-}
-
-void FMPythonW::updateTree()
-{
-	typotek::getInstance()->getTheMainView()->slotUpdateTree();
 }
 

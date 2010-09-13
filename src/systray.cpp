@@ -110,43 +110,43 @@ void Systray::slotRestore()
 
 void Systray::slotActivateAll()
 {
-	ttek->theMainView->slotViewAll();
-	if (showAllConfirmation) {
-		bool wasVisible = ttek->isVisible();
-		if (!wasVisible)
-			ttek->show();
-		ttek->slotActivateCurrents();
-		if (!wasVisible)
-			ttek->hide();
-	} else
-		ttek->theMainView->slotActivateAll();
+//	ttek->theMainView->slotViewAll();
+//	if (showAllConfirmation) {
+//		bool wasVisible = ttek->isVisible();
+//		if (!wasVisible)
+//			ttek->show();
+//		ttek->slotActivateCurrents();
+//		if (!wasVisible)
+//			ttek->hide();
+//	} else
+//		ttek->theMainView->slotActivateAll();
 
-	disconnect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
-	QList<QAction*> tags = tagActions.values();
-	foreach (QAction* a, tags) {
-		a->setChecked(true);
-	}
-	connect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
+//	disconnect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
+//	QList<QAction*> tags = tagActions.values();
+//	foreach (QAction* a, tags) {
+//		a->setChecked(true);
+//	}
+//	connect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
 }
 
 void Systray::slotDeactivateAll()
 {
-	ttek->theMainView->slotViewAll();
-	if (showAllConfirmation) {
-		bool wasVisible = ttek->isVisible();
-		if (!wasVisible)
-			ttek->show();
-		ttek->slotDeactivateCurrents();
-		if (!wasVisible)
-			ttek->hide();
-	} else
-		ttek->theMainView->slotDesactivateAll();
-	disconnect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
-	QList<QAction*> tags = tagActions.values();
-	foreach (QAction* a, tags) {
-		a->setChecked(false);
-	}
-	connect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
+//	ttek->theMainView->slotViewAll();
+//	if (showAllConfirmation) {
+//		bool wasVisible = ttek->isVisible();
+//		if (!wasVisible)
+//			ttek->show();
+//		ttek->slotDeactivateCurrents();
+//		if (!wasVisible)
+//			ttek->hide();
+//	} else
+//		ttek->theMainView->slotDesactivateAll();
+//	disconnect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
+//	QList<QAction*> tags = tagActions.values();
+//	foreach (QAction* a, tags) {
+//		a->setChecked(false);
+//	}
+//	connect(tagMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotTagMenuClicked(QAction*)));
 }
 
 void Systray::slotTagMenuClicked(QAction *action)
@@ -210,10 +210,7 @@ void Systray::newTag(QString name)
 
 	QAction *tmp = tagMenu->addAction(name);
 	tmp->setCheckable(true);
-	if(!ttek)
-		ttek = typotek::getInstance();
 	QList<FontItem*> taggedFonts = FMFontDb::DB()->Fonts( name , FMFontDb::Tags );
-	ttek->resetFilter();
 	int nActivated(0);
 	int nFonts(taggedFonts.count());
 	for(int i = 0; i <  nFonts ; ++i)

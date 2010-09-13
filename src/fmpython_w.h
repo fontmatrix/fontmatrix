@@ -34,13 +34,6 @@ class FMPythonW : public QThread
 		void run();
 		
 	public slots:
-		void nextFace();
-		void previousFace();
-		void nextFamily();
-		void previousFamily();
-		
-		void updateTree();
-
 		QString currentFontPath();
 		QString currentFontFamily();
 		QString currentFontStyle();

@@ -42,7 +42,7 @@
 #include "hyphenate/fmhyphenator.h"
 #include "importedfontsdialog.h"
 #include "importtags.h"
-#include "listdockwidget.h"
+//#include "listdockwidget.h"
 #include "mainviewwidget.h"
 #include "panosedialog.h"
 #include "panosewidget.h"
@@ -188,7 +188,7 @@ void typotek::initMatrix()
 
 	setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::ForceTabbedDocks);
 
-	installDock("Main", tr ( "Browse Fonts" ), ListDockWidget::getInstance() , tr ( "Show/hide fonts browsing sidebar" ));
+//	installDock("Main", tr ( "Browse Fonts" ), ListDockWidget::getInstance() , tr ( "Show/hide fonts browsing sidebar" ));
 //	installDock("Tags", tr ( "Tags" ), TagsWidget::getInstance() ,  tr ( "Show/hide tags list sidebar" ) );
 //	installDock("Panose", tr ( "Panose"), PanoseWidget::getInstance(), tr ( "Browse fonts by means of Panose attributes" ) );
 
@@ -213,8 +213,6 @@ void typotek::initMatrix()
 	doConnect();
 
 	showToltalFilteredFonts();
-
-	theMainView->setCrumb();
 
 	if(!hyphenator)
 	{
@@ -261,7 +259,7 @@ void typotek::installDock(const QString& id, const QString& name, QWidget * w, c
 void typotek::postInit()
 {
 	// TODO restore last filter
-	theMainView->slotViewAll();
+//	theMainView->slotViewAll();
 	
 	QSettings st;
 	QString cname(st.value("CurrentFont", QString()).toString());
@@ -494,8 +492,8 @@ void typotek::open ( QString path, bool announce, bool collect )
 		tali.clear();
 		shouldAskTali = true;
 	}
-	theMainView->slotReloadFontList();
-	ListDockWidget::getInstance()->reloadTagsCombo();
+//	theMainView->slotReloadFontList();
+//	ListDockWidget::getInstance()->reloadTagsCombo();
 
 }
 
@@ -589,8 +587,8 @@ void typotek::openList ( QStringList files )
 		statusBar()->showMessage ( tr ( "Fonts imported: %1" ).arg ( nameList.count() ), 3000 );
 	}
 
-	theMainView->slotReloadFontList();
-	ListDockWidget::getInstance()->reloadTagsCombo();
+//	theMainView->slotReloadFontList();
+//	ListDockWidget::getInstance()->reloadTagsCombo();
 
 }
 
@@ -781,30 +779,6 @@ void typotek::createActions()
 	scuts->add(editPanoseAct);
 	connect(editPanoseAct, SIGNAL(triggered()), this, SLOT(slotEditPanose()));
 
-	nextFamily = new QAction(tr("Next Family"), this);
-	nextFamily->setShortcut(Qt::Key_PageDown);
-	nextFamily->setStatusTip ( tr ( "Switch to the next font family in the list" ) );
-	scuts->add(nextFamily);
-	connect(nextFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFamily()));
-
-	nextFont = new QAction(tr("Next Face"), this);
-	nextFont->setShortcut(Qt::Key_Down);
-	nextFont->setStatusTip ( tr ( "Switch to the next font face in the list" ) );
-	scuts->add(nextFont);
-	connect(nextFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotNextFont()));
-
-	previousFamily = new QAction(tr("Previous Family"), this);
-	previousFamily->setShortcut(Qt::Key_PageUp);
-	previousFamily->setStatusTip ( tr ( "Switch to the previous font family in the list" ) );
-	scuts->add(previousFamily);
-	connect(previousFamily, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFamily()));
-
-
-	previousFont = new QAction(tr("Previous Face"), this);
-	previousFont->setShortcut(Qt::Key_Up);
-	previousFont->setStatusTip ( tr ( "Switch to the previous font face in the list" ) );
-	scuts->add(previousFont);
-	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
 	playAction = new QAction(tr("Playground"), this);
 	playAction->setShortcut(Qt::CTRL + Qt::Key_G);
@@ -907,12 +881,6 @@ void typotek::createMenus()
 	editMenu->addAction(reloadAct);
 	editMenu->addSeparator();
 	editMenu->addAction ( prefsAct );
-
-	browseMenu = menuBar()->addMenu(tr("&Browse"));
-	browseMenu->addAction(nextFamily);
-	browseMenu->addAction(previousFamily);
-	browseMenu->addAction(nextFont);
-	browseMenu->addAction(previousFont);
 
 	viewMenu = menuBar()->addMenu(tr("&View"));
 	viewMenu->addAction(playAction);
@@ -1372,14 +1340,9 @@ void typotek::slotRemoteIsReady()
 			}
 		}
 	}
-	theMainView->slotReloadFontList();
+//	theMainView->slotReloadFontList();
 	showStatusMessage( QString::number(listInfo.count())+ " " +  tr("font descriptions imported from network"));
 // 	qDebug()<<"END OF slotRemoteIsReady()";
-}
-
-void typotek::resetFilter()
-{
-	theMainView->setCrumb();
 }
 
 
@@ -1469,25 +1432,6 @@ void typotek::dropEvent ( QDropEvent * event )
 // 	event->acceptProposedAction();
 	QStringList uris = event->mimeData()->text().split ( "\n" );
 	QStringList ret;
-
-	// Internal drag & drop
-	if(event->source() && event->source()->objectName() == "folderView" )
-	{
-		QString fP(ListDockWidget::getInstance()->getFolderCurrentIndex().data(QDirModel::FilePathRole).toString());
-
-		if(QFileInfo(fP).isDir())
-		{
-			open(fP);
-			return;
-		}
-		else
-		{
-			{
-				uris << "file://" + fP;
-			}
-		}
-
-	}
 
 	for ( int i = 0; i < uris.count() ; ++i )
 	{
@@ -1907,19 +1851,19 @@ void typotek::slotTagAll()
 
 void typotek::printInfo()
 {
-	FontItem * font(theMainView->selectedFont());
-	QString fontname(tr("Welcome maessage"));
-	if(font)
-		fontname =font->fancyName();
+//	FontItem * font(theMainView->selectedFont());
+//	QString fontname(tr("Welcome maessage"));
+//	if(font)
+//		fontname =font->fancyName();
 
-	QPrinter thePrinter ( QPrinter::HighResolution );
-	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Infos") +" - " + fontname );
+//	QPrinter thePrinter ( QPrinter::HighResolution );
+//	QPrintDialog dialog(&thePrinter, this);
+//	dialog.setWindowTitle("Fontmatrix - " + tr("Print Infos") +" - " + fontname );
 
-	if ( dialog.exec() != QDialog::Accepted )
-		return;
-	thePrinter.setFullPage ( true );
-	theMainView->info()->print(&thePrinter);
+//	if ( dialog.exec() != QDialog::Accepted )
+//		return;
+//	thePrinter.setFullPage ( true );
+//	theMainView->info()->print(&thePrinter);
 }
 
 void typotek::printSample()
@@ -2412,11 +2356,11 @@ void typotek::slotReloadFiltered()
 	{
 		//! Number of fonts we failed to reload
 		showStatusMessage(tr("Failed to reload %n fonts", "", toReload.count() - renewedFonts.count()));
-		theMainView->slotReloadFontList();
+//		theMainView->slotReloadFontList();
 	}
 	if(!cfName.isEmpty())
 	{
-			theMainView->forceReloadSelection();
+//			theMainView->forceReloadSelection();
 			theMainView->slotFontSelectedByName(cfName);
 	}
 
@@ -2436,7 +2380,7 @@ void typotek::slotReloadSingle()
 		if(cf)
 		{
 			cf->setTags(t);
-			theMainView->forceReloadSelection();
+//			theMainView->forceReloadSelection();
 			theMainView->slotFontSelectedByName(curName);
 		}
 	}

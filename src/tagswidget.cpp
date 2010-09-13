@@ -12,13 +12,14 @@
 
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QMenu>
 #include <QDebug>
 
 #include "typotek.h"
 #include "tagswidget.h"
 #include "fontitem.h"
 #include "fmfontdb.h"
-#include "listdockwidget.h"
+//#include "listdockwidget.h"
 
 
 //TagsWidget * TagsWidget::instance = 0;
@@ -257,7 +258,7 @@ void TagsWidget::slotActRemovetag()
 void TagsWidget::slotActEditTag()
 {
 // 	qDebug()<<"TagsWidget::slotActEditTag";
-	QString fromT(currentTag);
+//	QString fromT(currentTag);
 	QString message;
 	message = tr ( "Please provide a replacement name for\nthe following tag:") + " " + currentTag ;
 	QString nt = QInputDialog::getText ( typotek::getInstance(),
@@ -269,7 +270,7 @@ void TagsWidget::slotActEditTag()
 	{
 		FMFontDb::DB()->editTag ( currentTag, nt );
 		prepare(theTaggedFonts);
-		ListDockWidget::getInstance()->reloadTagsCombo();
+//		ListDockWidget::getInstance()->reloadTagsCombo();
 		emit tagChanged();
 	}
 	

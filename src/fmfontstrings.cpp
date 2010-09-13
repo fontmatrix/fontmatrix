@@ -23,6 +23,7 @@ FontStrings::FontStrings()
 	fillCharsetMap();
 	fillTTTableList();
 	fillFSftypeMap();
+	fillUniCat();
 }
 
 FontStrings * FontStrings::getInstance()
@@ -335,6 +336,40 @@ void FontStrings::fillFSftypeMap()
 	m_FsType[FontItem::BITMAP_ONLY] = tr("Only bitmaps contained in this font may be embedded. No outline data may be embedded. If there are no bitmaps available in this font, then it is considered unembeddable and the embedding services will fail. Other embedding restrictions specified in bits 0-3 and 8 also apply.");
 }
 
+void FontStrings::fillUniCat()
+{
+	unicodeCategory[QChar::Mark_NonSpacing] = tr("Mark, NonSpacing" );
+	unicodeCategory[QChar::Mark_SpacingCombining] = tr("Mark, SpacingCombining" );
+	unicodeCategory[QChar::Mark_Enclosing] = tr("Mark, Enclosing" );
+	unicodeCategory[QChar::Number_DecimalDigit] = tr("Number, DecimalDigit" );
+	unicodeCategory[QChar::Number_Letter] = tr("Number, Letter" );
+	unicodeCategory[QChar::Number_Other] = tr("Number, Other" );
+	unicodeCategory[QChar::Separator_Space] = tr("Separator, Space" );
+	unicodeCategory[QChar::Separator_Line] = tr("Separator, Line" );
+	unicodeCategory[QChar::Separator_Paragraph] = tr("Separator, Paragraph" );
+	unicodeCategory[QChar::Other_Control] = tr("Other, Control" );
+	unicodeCategory[QChar::Other_Format] = tr("Other, Format" );
+	unicodeCategory[QChar::Other_Surrogate] = tr("Other, Surrogate" );
+	unicodeCategory[QChar::Other_PrivateUse] = tr("Other, PrivateUse" );
+	unicodeCategory[QChar::Other_NotAssigned] = tr("Other, NotAssigned" );
+	unicodeCategory[QChar::Letter_Uppercase] = tr("Letter, Uppercase" );
+	unicodeCategory[QChar::Letter_Lowercase] = tr("Letter, Lowercase" );
+	unicodeCategory[QChar::Letter_Titlecase] = tr("Letter, Titlecase" );
+	unicodeCategory[QChar::Letter_Modifier] = tr("Letter, Modifier" );
+	unicodeCategory[QChar::Letter_Other] = tr("Letter, Other" );
+	unicodeCategory[QChar::Punctuation_Connector] = tr("Punctuation, Connector" );
+	unicodeCategory[QChar::Punctuation_Dash] = tr("Punctuation, Dash" );
+	unicodeCategory[QChar::Punctuation_Open] = tr("Punctuation, Open" );
+	unicodeCategory[QChar::Punctuation_Close] = tr("Punctuation, Close" );
+	unicodeCategory[QChar::Punctuation_InitialQuote] = tr("Punctuation, InitialQuote" );
+	unicodeCategory[QChar::Punctuation_FinalQuote] = tr("Punctuation, FinalQuote" );
+	unicodeCategory[QChar::Punctuation_Other] = tr("Punctuation, Other" );
+	unicodeCategory[QChar::Symbol_Math] = tr("Symbol, Math" );
+	unicodeCategory[QChar::Symbol_Currency] = tr("Symbol, Currency" );
+	unicodeCategory[QChar::Symbol_Modifier] = tr("Symbol, Modifier" );
+	unicodeCategory[QChar::Symbol_Other] = tr("Symbol, Other" );
+}
+
 
 const QMap< FMFontDb::InfoItem, QString >& FontStrings::Names()
 {
@@ -419,5 +454,9 @@ FontStrings::PanoseKey FontStrings::nextPanoseKey ( PanoseKey pk )
 	return InvalidPK;
 }
 
-
-
+QString FontStrings::UnicodeCategory(QChar::Category cat)
+{
+	if(getInstance()->unicodeCategory.contains(cat))
+		return getInstance()->unicodeCategory.value(cat);
+	return QString();
+}

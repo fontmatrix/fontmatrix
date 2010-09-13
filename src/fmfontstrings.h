@@ -51,6 +51,7 @@ class FontStrings : public QObject
 		static const QString Encoding(FT_Encoding enc);
 		static const QMap<QString,QString>& Tables(); 
 		static QString FsType(int fstype_part, bool shortString = true);
+		static QString UnicodeCategory(QChar::Category);
 
 	private:
 
@@ -61,6 +62,7 @@ class FontStrings : public QObject
 		void panoseFromFile(const QString& path);
 		void fillTTTableList();
 		void fillFSftypeMap();
+		void fillUniCat();
 		
 		QMap< PanoseKey, QMap<int, QString> > m_panoseMap;
 		QMap< PanoseKey, QString > m_panoseKeyName;
@@ -68,6 +70,7 @@ class FontStrings : public QObject
 		QMap<FT_Encoding, QString> charsetMap;
 		QMap<QString,QString> tttableList;// <TT name, description>
 		QMap< int, QString > m_FsType;
+		QMap<QChar::Category, QString> unicodeCategory;
 };
 
 #endif

@@ -95,6 +95,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 	public slots:
 		void slotOrderingChanged ( QString s );
 		bool slotFontSelectedByName(const QString& fname);
+		void slotPreviewUpdateSize(int w);
 		void slotShowFamily(const QModelIndex& familyIdx);
 		void slotQuitFamily();
 

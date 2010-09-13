@@ -558,7 +558,7 @@ void typotek::openList ( QStringList files )
 		else
 		{
 			QString errorFont ( tr ( "Cannot import this font because it is broken: " ) +" "+fi.fileName() );
-			statusBar()->showMessage ( errorFont );
+//			statusBar()->showMessage ( errorFont );
 			nameList << "__FAILEDTOLOAD__" + fi.fileName();
 		}
 	}
@@ -1375,7 +1375,7 @@ void typotek::slotEditFont()
 	FontItem *item = theMainView->selectedFont();
 	if ( !item )
 	{
-		statusBar()->showMessage ( tr ( "There is no font selected" ), 5000 );
+		statusBar()->showMessage ( tr ( "There is no font selected" ), 3000 );
 		return;
 	}
 
@@ -1430,7 +1430,7 @@ void typotek::dropEvent ( QDropEvent * event )
 		{
 			// TODO Get fonts over http
 			qDebug() << "Support of DragNDrop over http is sheduled";
-			statusBar()->showMessage ( tr ( "Support of DragNDrop over http is sheduled but not yet effective" ), 5000 );
+			statusBar()->showMessage ( tr ( "Support of DragNDrop over http is sheduled but not yet effective" ), 3000 );
 		}
 		else
 		{
@@ -1455,7 +1455,7 @@ void typotek::dragEnterEvent ( QDragEnterEvent * event )
 	else
 	{
 		qDebug() << "dragEnterEvent refused";
-		statusBar()->showMessage ( tr ( "You bring something over me I can’t handle" ), 2000 );
+		statusBar()->showMessage ( tr ( "You bring something over me I can’t handle" ), 3000 );
 	}
 }
 
@@ -1766,7 +1766,7 @@ void typotek::removeFontItem(QStringList keyList)
 
 void typotek::showStatusMessage(const QString & message)
 {
-	statusBar()->showMessage(message, 2500);
+	statusBar()->showMessage(message, 3000);
 }
 
 void typotek::setRemoteTmpDir(const QString & s)

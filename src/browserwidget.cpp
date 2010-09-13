@@ -41,6 +41,7 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	folderViewContextMenu = 0;
 	currentPage = BROWSER_VIEW_INFO;
 	sample = chart = 0;
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
@@ -50,6 +51,7 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 	ui->browserView->hideColumn(1);
 	ui->browserView->hideColumn(2);
 	ui->browserView->hideColumn(3);
+	ui->browserView->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	QSettings settings;
 	QString lastUsedDir = settings.value("Places/LastUsedFolder", QDir::homePath()).toString();
@@ -253,6 +255,7 @@ void BrowserWidget::slotDetachSample()
 
 void BrowserWidget::slotFolderViewContextMenu(const QPoint &p)
 {
+	qDebug()<<"P"<<p;
 	QDirModel *dm = static_cast<QDirModel*>(ui->browserView->model());
 	if (!dm)
 		return;

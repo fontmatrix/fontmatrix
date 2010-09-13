@@ -87,7 +87,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageOT">
        <layout class="QGridLayout" name="gridLayout_19">
@@ -221,25 +221,6 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QRadioButton" name="freetypeRadio">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="toolTip">
-                <string>FreeType based rasterized rendering</string>
-               </property>
-               <property name="text">
-                <string>Rasterized</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QWidget" name="hintingSelect" native="true">
                <layout class="QGridLayout" name="gridLayout_11">
                 <property name="topMargin">
@@ -275,22 +256,6 @@
                </layout>
               </widget>
              </item>
-             <item>
-              <widget class="QRadioButton" name="nativeRadio">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="toolTip">
-                <string>Freely scalable vector rendering using native toolkit (Qt)</string>
-               </property>
-               <property name="text">
-                <string>Vector</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
           </layout>
@@ -308,7 +273,7 @@
            <property name="margin">
             <number>3</number>
            </property>
-           <item row="4" column="1">
+           <item row="3" column="1">
             <widget class="QComboBox" name="langCombo">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -318,7 +283,7 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
+           <item row="2" column="1">
             <widget class="QComboBox" name="shaperTypeCombo">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -328,7 +293,7 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
+           <item row="3" column="0">
             <widget class="QLabel" name="label_4">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -344,7 +309,7 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item row="2" column="0">
             <widget class="QLabel" name="label_3">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -363,7 +328,7 @@
            <item row="0" column="0" colspan="2">
             <widget class="TextProgression" name="textProgression" native="true"/>
            </item>
-           <item row="2" column="0" colspan="2">
+           <item row="1" column="0" colspan="2">
             <widget class="QCheckBox" name="useShaperCheck">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -373,13 +338,6 @@
              </property>
              <property name="text">
               <string>Use shaper</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="Line" name="line_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>

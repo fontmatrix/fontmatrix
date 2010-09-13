@@ -46,6 +46,7 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 {
 	layoutForPrint = false;
 	ui->setupUi(this);
+	ui->textProgression->setVisible(false);
 	refillSampleList();
 	fillOTTree();
 	sysWatcher = new QFileSystemWatcher(this);
@@ -53,9 +54,9 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	reloadTimer = new QTimer(this);
 	reloadTimer->setInterval(1000);
 
-	radioRenderGroup = new QButtonGroup();
-	radioRenderGroup->addButton(ui->freetypeRadio);
-	radioRenderGroup->addButton(ui->nativeRadio);
+//	radioRenderGroup = new QButtonGroup();
+//	radioRenderGroup->addButton(ui->freetypeRadio);
+//	radioRenderGroup->addButton(ui->nativeRadio);
 	ui->stackedTools->setCurrentIndex(VIEW_PAGE_SAMPLES);
 	toolPanelWidth = ui->splitter_2->sizes().at(1);
 	if(toolPanelWidth == 0)
@@ -64,7 +65,7 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 		ui->stackedTools->hide();
 		toolPanelWidth = ui->splitter_2->width()/3;
 	}
-	radioFTHintingGroup = new QButtonGroup(ui->freetypeRadio);
+	radioFTHintingGroup = new QButtonGroup;
 	radioFTHintingGroup->addButton(ui->noHinting);
 	radioFTHintingGroup->addButton(ui->lightHinting);
 	radioFTHintingGroup->addButton(ui->normalHinting);
@@ -124,7 +125,7 @@ SampleWidget::~SampleWidget()
 void SampleWidget::createConnections()
 {
 	// connections
-	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
+//	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
 	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
 
 	connect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
@@ -167,7 +168,7 @@ void SampleWidget::createConnections()
 
 void SampleWidget::removeConnections()
 {
-	disconnect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
+//	disconnect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
 	disconnect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
 
 	disconnect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
@@ -224,6 +225,80 @@ QGraphicsScene * SampleWidget::textScene() const
 	return loremScene;
 }
 
+SampleWidget::State SampleWidget::state() const
+{
+	State ret;
+	ret.set = true;
+	ret.fontSize = ui->liveFontSizeSpin->value();
+//	ret.renderRaster = ui->freetypeRadio->isChecked();
+	ret.renderHinting = 0;
+	if(ui->normalHinting->isChecked())
+		ret.renderHinting = 1;
+	else if(ui->lightHinting->isChecked())
+		ret.renderHinting = 2;
+	ret.sampleName = ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString();
+	if(ui->useShaperCheck->isChecked())
+	{
+		ret.script = ui->langCombo->currentText();
+		ret.shaper = ui->shaperTypeCombo->currentText();
+	}
+	return ret;
+}
+
+void SampleWidget::setState(const SampleWidget::State &s)
+{
+	if(!s.set)
+		return;
+	ui->liveFontSizeSpin->setValue( s.fontSize );
+	reSize( s.fontSize, s.fontSize * sampleRatio );
+
+//	if(s.renderRaster)
+//		ui->freetypeRadio->setChecked(true);
+//	else
+//		ui->nativeRadio->setChecked(true);
+
+//	if(s.renderRaster)
+	{
+		switch(s.renderHinting)
+		{
+		case 0: ui->noHinting->setChecked(true);
+			break;
+		case 1: ui->normalHinting->setChecked(true);
+			break;
+		case 2: ui->lightHinting->setChecked(true);
+			break;
+		default:break;
+		}
+	}
+
+	QTreeWidgetItem * targetItem = 0;
+	for(int i(0); i < ui->sampleTextTree->topLevelItemCount(); ++i)
+	{
+		QTreeWidgetItem * tli(ui->sampleTextTree->topLevelItem(i));
+		for(int ii(0); ii < tli->childCount(); ++ii)
+		{
+			if(tli->child(ii)->data(0, Qt::UserRole).toString() == s.sampleName)
+			{
+				targetItem = tli->child(ii);
+				break;
+			}
+		}
+		if(targetItem != 0)
+			break;
+	}
+	if(targetItem != 0)
+		ui->sampleTextTree->setCurrentItem(targetItem, 0, QItemSelectionModel::SelectCurrent);
+
+	if(!s.shaper.isEmpty())
+	{
+		ui->useShaperCheck->setChecked(true);
+		ui->shaperTypeCombo->setCurrentIndex(ui->shaperTypeCombo->findText(s.shaper));
+		ui->langCombo->setCurrentIndex(ui->langCombo->findText(s.script));
+	}
+
+	slotView();
+}
+
 void SampleWidget::slotView ( bool needDeRendering )
 {
 	QTime t;
@@ -236,7 +311,8 @@ void SampleWidget::slotView ( bool needDeRendering )
 //		f->deRenderAll();
 	}
 
-	bool wantDeviceDependant = (!layoutForPrint) ? ui->loremView_FT->isVisible() : false;
+//	bool wantDeviceDependant = (!layoutForPrint) ? ui->freetypeRadio->isChecked() : false;
+	bool wantDeviceDependant = !layoutForPrint;
 	//	unsigned int storedHinting(f->getFTHintMode());
 	if(wantDeviceDependant)
 	{
@@ -328,7 +404,7 @@ void SampleWidget::slotView ( bool needDeRendering )
 			if(ui->loremView->isVisible())
 			{
 				QPointF texttopLeft(ui->loremView->mapFromScene(textLayout->getRect().topLeft()));
-				ui->loremView->translate(10 -texttopLeft.x(), 10 -texttopLeft.y());
+				ui->loremView->translate((10 + fSize) - texttopLeft.x()  , (10 + fSize) - texttopLeft.y());
 			}
 			else if(ui->loremView_FT->isVisible())
 			{

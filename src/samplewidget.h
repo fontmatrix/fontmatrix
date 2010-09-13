@@ -47,11 +47,25 @@ class SampleWidget : public FloatingWidget
     Q_OBJECT
 
 public:
+	struct State
+	{
+		bool set;
+		State() : set(false) {}
+		QString sampleName;
+		double fontSize;
+//		bool renderRaster;
+		unsigned int renderHinting; // 0 = No; 1 = Normal; 2 = Light
+		QString shaper;
+		QString script;
+	};
+
 	static const QString Name;
     explicit SampleWidget(const QString& fid, QWidget *parent = 0);
     ~SampleWidget();
 
-    QGraphicsScene* textScene()const;
+    QGraphicsScene* textScene() const;
+    State state() const;
+    void setState(const State& s);
 
 protected:
     void changeEvent(QEvent *e);
@@ -67,7 +81,7 @@ private:
     QGraphicsScene *ftScene;
     FMLayout *textLayoutVect;
     FMLayout *textLayoutFT;
-    QButtonGroup *radioRenderGroup;
+//    QButtonGroup *radioRenderGroup;
     QButtonGroup *radioFTHintingGroup;
     double sampleFontSize;
     double sampleInterSize;

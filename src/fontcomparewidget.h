@@ -19,8 +19,12 @@
 class FontCompareWidget : public QWidget, private Ui::CompareWidget
 {
 	Q_OBJECT
+
+	static FontCompareWidget* instance;
+	FontCompareWidget(QWidget * parent);
+
 	public:
-		FontCompareWidget(QWidget * parent);
+		static FontCompareWidget* getInstance();
 		~FontCompareWidget();
 		
 	private:

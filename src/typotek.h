@@ -203,6 +203,7 @@ private:
 	QAction *previousFont;
 
 	QAction *playAction;
+	QAction *compareAction;
 	QAction *closeAllFloat;
 	QAction *showAllFloat;
 	QAction *hideAllFloat;

@@ -24,6 +24,8 @@
 #include <QSettings>
 #include <QDebug>
 
+FontCompareWidget* FontCompareWidget::instance = 0;
+
 FontCompareWidget::FontCompareWidget(QWidget * parent)
 	:QWidget(parent),neverUsed(true)
 {
@@ -39,6 +41,16 @@ FontCompareWidget::FontCompareWidget(QWidget * parent)
 FontCompareWidget::~ FontCompareWidget()
 {
 
+}
+
+FontCompareWidget* FontCompareWidget::getInstance()
+{
+	if(instance == 0)
+	{
+		instance = new FontCompareWidget(0);
+		Q_ASSERT(instance);
+	}
+	return instance;
 }
 
 void FontCompareWidget::initColors()

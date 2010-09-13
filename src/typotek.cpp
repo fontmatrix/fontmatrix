@@ -35,6 +35,7 @@
 #include "fmpaths.h"
 #include "fmrepair.h"
 #include "fontbook.h"
+#include "fontcomparewidget.h"
 #include "fontitem.h"
 // #include "helpwidget.h"
 #include "helpbrowser.h"
@@ -808,12 +809,20 @@ void typotek::createActions()
 	connect(previousFont, SIGNAL(triggered()), ListDockWidget::getInstance()->fontTree, SLOT(slotPreviousFont()));
 
 	playAction = new QAction(tr("Playground"), this);
-	playAction->setShortcut(Qt::Key_G);
+	playAction->setShortcut(Qt::CTRL + Qt::Key_G);
 	playAction->setToolTip(tr("Show/Hide Playground"));
 	playAction->setCheckable(true);
 	playAction->setChecked(false);
 	scuts->add(playAction);
 	connect(playAction, SIGNAL(triggered(bool)), PlayWidget::getInstance(), SLOT(setVisible(bool)));
+
+	compareAction = new QAction(tr("Compare"), this);
+	compareAction->setShortcut(Qt::CTRL + Qt::Key_R);
+	compareAction->setToolTip(tr("Show/Hide Compare glyphs"));
+	compareAction->setCheckable(true);
+	compareAction->setChecked(false);
+	scuts->add(compareAction);
+	connect(compareAction, SIGNAL(triggered(bool)), FontCompareWidget::getInstance(), SLOT(setVisible(bool)));
 
 	closeAllFloat = new QAction(tr("Close All"), this);
 	closeAllFloat->setToolTip(tr("Close all floating windows"));
@@ -909,6 +918,7 @@ void typotek::createMenus()
 
 	viewMenu = menuBar()->addMenu(tr("&View"));
 	viewMenu->addAction(playAction);
+	viewMenu->addAction(compareAction);
 	viewMenu->addSeparator();
 	connect(viewMenu, SIGNAL(aboutToShow()), this,SLOT(updateFloatingStatus()));
 
@@ -2596,6 +2606,7 @@ QString typotek::word(FontItem * item, const QString& alt)
 void typotek::updateFloatingStatus()
 {
 	playAction->setChecked( PlayWidget::getInstance()->isVisible() );
+	compareAction->setChecked(FontCompareWidget::getInstance()->isVisible());
 
 	viewMenu->removeAction(closeAllFloat);
 	viewMenu->removeAction(showAllFloat);

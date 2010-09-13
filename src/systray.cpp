@@ -185,7 +185,6 @@ void Systray::slotTagMenuClicked(QAction *action)
 
 void Systray::slotQuit()
 {
-		ttek->save();
 		ttek->writeSettings();
 		qApp->quit();
 }

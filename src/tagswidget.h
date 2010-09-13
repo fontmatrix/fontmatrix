@@ -45,9 +45,6 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 		void slotActRemovetag();
 		void slotActEditTag();
 
-	signals:
-		void tagAdded();
-		void tagChanged();
 };
 
 #endif //TAGSWIDGET_H

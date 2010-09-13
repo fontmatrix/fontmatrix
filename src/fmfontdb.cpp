@@ -476,6 +476,7 @@ void FMFontDb::addTagToDB ( const QString & t )
 	             .arg ( t ) );
 	QSqlQuery query ( vs,*this );
 	query.exec();
+	emit tagsChanged();
 }
 
 void FMFontDb::removeTagFromDB(const QString & t)
@@ -486,6 +487,7 @@ void FMFontDb::removeTagFromDB(const QString & t)
 		     .arg ( t ) );
 	QSqlQuery query ( qs,*this );
 	query.exec();
+	emit tagsChanged();
 }
 
 void FMFontDb::editTag(const QString & tOld, const QString & tNew)
@@ -498,6 +500,7 @@ void FMFontDb::editTag(const QString & tOld, const QString & tNew)
 		     .arg ( tOld ) );
 	QSqlQuery query ( qs,*this );
 	query.exec();
+	emit tagsChanged();
 }
 
 void FMFontDb::initFMDb()

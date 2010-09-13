@@ -101,8 +101,8 @@ private slots:
 
 public slots:
 	void open( QString path = QString(), bool announce = true, bool collect = false );
+	void importFiles();
 	void openList( QStringList files );
-	bool save();
 	void slotCloseToSystray(bool isEnabled);
 	void slotSystrayStart(bool isEnabled);
 	void slotUseInitialTags(bool isEnabled);
@@ -122,9 +122,9 @@ public slots:
 	void show();
 
 signals:
-	void tagAdded(QString);
 	void relayStartingStepOut(QString, int, QColor);
 	void previewHasChanged();
+	void newFontsArrived();
 
 private:
 	void installDock(const QString& id, const QString& name, QWidget *w, const QString& tip=QString() );
@@ -157,8 +157,7 @@ private:
 	QToolBar *editToolBar;
 	QAction *newAct;
 	QAction *openAct;
-	QAction *saveAct;
-	QAction *saveAsAct;
+	QAction *importFilesAction;
 	QAction *exitAct;
 	QAction *cutAct;
 	QAction *copyAct;

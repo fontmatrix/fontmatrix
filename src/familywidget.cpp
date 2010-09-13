@@ -72,8 +72,6 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
 	connect(ui->chartButton, SIGNAL(clicked()), this, SLOT(slotShowChart()));
 	connect(ui->activationButton, SIGNAL(clicked()), this, SLOT(slotShowActivation()));
-	connect(ui->tagsWidget, SIGNAL(tagAdded()), this, SIGNAL(tagAdded()));
-	connect(ui->tagsWidget, SIGNAL(tagChanged()), this, SIGNAL(tagChanged()));
 
 }
 

@@ -98,8 +98,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void slotPreviewUpdateSize(int w);
 		void slotShowFamily(const QModelIndex& familyIdx);
 		void slotQuitFamily();
-
-		void slotAppendTag(QString tag);
 		
 		void slotDesactivateAll();
 		void slotActivateAll();
@@ -112,8 +110,6 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		
 	signals:
 		void faceChanged();
-		void newTag(QString);
-		void tagAdded(QString);
 		void listChanged();
 
 	public:

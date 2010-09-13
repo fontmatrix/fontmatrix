@@ -145,8 +145,6 @@ void MainViewWidget::doConnect()
 
 	connect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
 	connect(filterBar,SIGNAL(filterChanged()),typo, SLOT(showToltalFilteredFonts()));
-	connect(familyWidget, SIGNAL(tagAdded()), filterBar, SLOT(loadTags()));
-	connect(familyWidget, SIGNAL(tagChanged()), filterBar, SLOT(loadTags()));
 
 
 	connect(listView, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
@@ -163,8 +161,6 @@ void MainViewWidget::disConnect()
 
 	disconnect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
 	connect(filterBar,SIGNAL(filterChanged()),typo, SLOT(showToltalFilteredFonts()));
-	disconnect(familyWidget, SIGNAL(tagAdded()), filterBar, SLOT(loadTags()));
-	disconnect(familyWidget, SIGNAL(tagChanged()), filterBar, SLOT(loadTags()));
 
 	disconnect(listView, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
 	disconnect(listView, SIGNAL(activated(const QModelIndex&)), this, SLOT(slotShowFamily(const QModelIndex&)));
@@ -1099,12 +1095,6 @@ void MainViewWidget::slotQuitFamily()
 //}
 
 
-
-void MainViewWidget::slotAppendTag ( QString tag )
-{
-	emit newTag ( tag );
-//	m_lists->reloadTagsCombo();
-}
 
 void MainViewWidget::activation(QList< FontItem * > fit, bool act)
 {

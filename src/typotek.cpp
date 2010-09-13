@@ -492,9 +492,17 @@ void typotek::open ( QString path, bool announce, bool collect )
 		tali.clear();
 		shouldAskTali = true;
 	}
-//	theMainView->slotReloadFontList();
-//	ListDockWidget::getInstance()->reloadTagsCombo();
+	emit newFontsArrived();
+}
 
+void typotek::importFiles()
+{
+	QStringList flist = QFileDialog::getOpenFileNames(this,
+							  tr("Select Files to Import"),
+							  QDir::homePath(),
+							  QString("%1 (*.otf *.ttf *.pfb)").arg(tr("Font Files")));
+	if(!flist.isEmpty())
+		openList(flist);
 }
 
 /// Import files in a drop event.
@@ -586,9 +594,7 @@ void typotek::openList ( QStringList files )
 	{
 		statusBar()->showMessage ( tr ( "Fonts imported: %1" ).arg ( nameList.count() ), 3000 );
 	}
-
-//	theMainView->slotReloadFontList();
-//	ListDockWidget::getInstance()->reloadTagsCombo();
+	emit newFontsArrived();
 
 }
 
@@ -617,11 +623,6 @@ void typotek::slotExportFontSet()
 
 }
 
-bool typotek::save()
-{
-	return true;
-
-}
 
 void typotek::about()
 {
@@ -633,17 +634,17 @@ void typotek::createActions()
 {
 	Shortcuts *scuts = Shortcuts::getInstance();
 
-	openAct = new QAction ( QIcon ( ":/fontmatrix_import_icon" ), tr ( "&Import..." ), this );
-	openAct->setShortcut ( tr ( "Ctrl+O" ) );
-	openAct->setStatusTip ( tr ( "Import a directory" ) );
+	openAct = new QAction ( QIcon ( ":/fontmatrix_import_icon" ), tr ( "&Import Directory..." ), this );
+	openAct->setShortcut ( Qt::CTRL + Qt::Key_O );
+	openAct->setToolTip( tr ( "Import a directory" ) );
 	scuts->add(openAct);
 	connect ( openAct, SIGNAL ( triggered() ), this, SLOT ( open() ) );
 
-	saveAct = new QAction ( tr ( "&Sync" ), this );
-	saveAct->setShortcut ( tr ( "Ctrl+S" ) );
-	saveAct->setStatusTip ( tr ( "Sync with the DB file" ) );
-	scuts->add(saveAct);
-	connect ( saveAct, SIGNAL ( triggered() ), this, SLOT ( save()) );
+	importFilesAction = new QAction(QIcon ( ":/fontmatrix_import_icon" ), tr ( "Import &Files..." ), this );
+	importFilesAction->setShortcut( Qt::CTRL + Qt::SHIFT + Qt::Key_O );
+	importFilesAction->setToolTip(tr("Import Files"));
+	scuts->add(importFilesAction);
+	connect(importFilesAction, SIGNAL(triggered()), this, SLOT(importFiles()));
 
 	exportFontSetAct = new QAction(tr("Export &fonts"),this);
 	exportFontSetAct->setStatusTip(tr("Export a fontset"));
@@ -737,8 +738,8 @@ void typotek::createActions()
 	scuts->add(repairAct);
 	connect( repairAct, SIGNAL ( triggered() ),this,SLOT (slotRepair()));
 
-	if ( systray )
-		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
+//	if ( systray )
+//		connect ( theMainView, SIGNAL ( newTag ( QString ) ), systray, SLOT ( newTag ( QString ) ) );
 
 	tagAll = new QAction(tr("Tag All Filtered..."), this);
 	tagAll->setStatusTip ( tr ( "Tag all currently visible files" ) );
@@ -827,7 +828,7 @@ void typotek::createMenus()
 	fileMenu = menuBar()->addMenu ( tr ( "&File" ) );
 
 	fileMenu->addAction ( openAct );
-	fileMenu->addAction ( saveAct );
+	fileMenu->addAction ( importFilesAction );
 	fileMenu->addAction ( exportFontSetAct );
 	fileMenu->addSeparator();
 
@@ -1010,7 +1011,6 @@ void typotek::writeSettings()
 	if(theMainView->selectedFont())
 		settings.setValue("CurrentFont", theMainView->selectedFont()->path());
 
-	save();
 
 }
 
@@ -1305,7 +1305,6 @@ void typotek::slotRemoteIsReady()
 			if(!tag.isEmpty() && !tagsList.contains(tag))
 			{
 				tagsList << tag;
-				theMainView->slotAppendTag(tag);
 			}
 		}
 	}
@@ -1800,7 +1799,6 @@ void typotek::slotTagAll()
 		if(!tagsList.contains(tali[t]))
 		{
 			tagsList.append(tali[t]);
-			emit tagAdded(tali[t]);
 		}
 	}
 	

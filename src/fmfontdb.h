@@ -175,6 +175,9 @@ class FMFontDb : public QObject, public QSqlDatabase
 
 		int transactionDeep;
 
+	signals:
+		void tagsChanged();
+
 };
 
 

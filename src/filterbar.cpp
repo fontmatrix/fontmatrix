@@ -29,6 +29,7 @@
 #include "filtermeta.h"
 #include "fmpaths.h"
 #include "filtersdialog.h"
+#include "typotek.h"
 
 #include <QDialog>
 #include <QGridLayout>
@@ -53,8 +54,9 @@ FilterBar::FilterBar(QWidget *parent) :
 	connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(slotClearFilter()));
 	connect(PanoseWidget::getInstance(), SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
 	connect(ui->tagsCombo, SIGNAL(activated(const QString&)), this, SLOT(slotTagSelect(const QString&)));
-	//	connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(slotSaveFilter()));
 	connect(ui->filtersButton, SIGNAL(clicked()), this, SLOT(filtersDialog()));
+	connect(FMFontDb::DB(), SIGNAL(tagsChanged()), this, SLOT(loadTags()));
+	connect(typotek::getInstance(), SIGNAL(newFontsArrived()), this, SLOT(loadTags()));
 }
 
 FilterBar::~FilterBar()
@@ -84,6 +86,7 @@ void FilterBar::loadTags()
 	//	ui->tagsCombo->addItem(tr("Similar to current"),"SIMILAR");
 
 	QStringList tl_tmp = FMFontDb::DB()->getTags();
+//	qDebug()<< "T"<< tl_tmp.join("||");
 	tl_tmp.sort();
 	foreach(QString tag, tl_tmp )
 	{

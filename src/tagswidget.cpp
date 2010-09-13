@@ -70,9 +70,6 @@ void TagsWidget::slotNewTag()
 	lit->setCheckState ( Qt::Checked );
 	tagsListWidget->addItem ( lit );
 	slotFinalize();
-
-	emit tagAdded();
-//	ListDockWidget::getInstance()->reloadTagsCombo();
 }
 
 void TagsWidget::slotFinalize()
@@ -250,7 +247,6 @@ void TagsWidget::slotActRemovetag()
 	{
 		FMFontDb::DB()->removeTagFromDB ( currentTag );
 		prepare(theTaggedFonts);
-		emit tagChanged();
 	}
 
 }
@@ -270,8 +266,6 @@ void TagsWidget::slotActEditTag()
 	{
 		FMFontDb::DB()->editTag ( currentTag, nt );
 		prepare(theTaggedFonts);
-//		ListDockWidget::getInstance()->reloadTagsCombo();
-		emit tagChanged();
 	}
 	
 }

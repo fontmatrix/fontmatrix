@@ -70,12 +70,6 @@ protected:
 	void keyPressEvent ( QKeyEvent * event ) ;
 
 private slots:
-	void printInfo();
-	void printSample();
-	void printChart();
-	void printPlayground();
-	void printFamily();
-
 	void fontBook();
 	void slotActivateCurrents();
 	void slotDeactivateCurrents();
@@ -202,13 +196,6 @@ private:
 	QAction *showAllFloat;
 	QAction *hideAllFloat;
 	QAction *floatSep;
-
-	QMenu *printMenu;
-	QAction *printInfoAct;
-	QAction *printSampleAct;
-	QAction *printChartAct;
-	QAction *printPlaygroundAct;
-	QAction *printFamilyAct;
 
 	// 		HelpWidget *theHelp;
 	HelpBrowser *theHelp;

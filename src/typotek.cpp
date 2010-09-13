@@ -650,30 +650,6 @@ void typotek::createActions()
 	scuts->add(exportFontSetAct);
 	connect( exportFontSetAct,SIGNAL(triggered( )),this,SLOT(slotExportFontSet()));
 
-	printInfoAct = new QAction ( tr ( "Print Info..." ),this );
-	printInfoAct->setStatusTip ( tr ( "Print informations about the current font" ) );
-	scuts->add(printInfoAct);
-	connect ( printInfoAct, SIGNAL ( triggered() ), this, SLOT ( printInfo() ) );
-
-	printSampleAct = new QAction ( tr ( "Print Sample..." ),this );
-	printSampleAct->setStatusTip( tr("Print the sample as a specimen"));
-	scuts->add(printSampleAct);
-	connect (printSampleAct,SIGNAL( triggered() ), this, SLOT ( printSample()) );
-
-	printChartAct = new QAction ( tr ( "Print Chart..." ),this );
-	printChartAct->setStatusTip( tr("Print a chart of the current font"));
-	scuts->add(printChartAct);
-	connect (printChartAct,SIGNAL( triggered() ), this, SLOT ( printChart()) );
-
-	printPlaygroundAct = new QAction ( tr ( "Print Playground..." ),this );
-	printPlaygroundAct->setStatusTip( tr("Print the playground"));
-	scuts->add(printPlaygroundAct);
-	connect (printPlaygroundAct,SIGNAL( triggered() ), this, SLOT ( printPlayground()) );
-
-	printFamilyAct = new QAction ( tr ( "Print Family..." ),this );
-	printFamilyAct->setStatusTip( tr("Print a specimen of the whole family the current face belongs to"));
-	scuts->add(printFamilyAct);
-	connect (printFamilyAct,SIGNAL( triggered() ), this, SLOT ( printFamily()) );
 
 	fontBookAct = new QAction ( QIcon ( ":/fontmatrix_fontbookexport_icon.png" ), tr ( "Export font book..." ),this );
 	fontBookAct->setStatusTip ( tr ( "Export a PDF document that shows selected fonts" ) );
@@ -854,13 +830,6 @@ void typotek::createMenus()
 	fileMenu->addAction ( saveAct );
 	fileMenu->addAction ( exportFontSetAct );
 	fileMenu->addSeparator();
-
-	printMenu = fileMenu->addMenu(tr("Print"));
-	printMenu->addAction(printInfoAct);
-	printMenu->addAction(printSampleAct);
-	printMenu->addAction(printChartAct);
-	printMenu->addAction(printPlaygroundAct);
-	printMenu->addAction(printFamilyAct);
 
 	fileMenu->addAction ( fontBookAct );
 	fileMenu->addAction ( dumpInfoAct );
@@ -1849,269 +1818,133 @@ void typotek::slotTagAll()
 //	TagsWidget::getInstance()->newTag();
 }
 
-void typotek::printInfo()
-{
-//	FontItem * font(theMainView->selectedFont());
-//	QString fontname(tr("Welcome maessage"));
-//	if(font)
-//		fontname =font->fancyName();
 
-//	QPrinter thePrinter ( QPrinter::HighResolution );
-//	QPrintDialog dialog(&thePrinter, this);
-//	dialog.setWindowTitle("Fontmatrix - " + tr("Print Infos") +" - " + fontname );
-
-//	if ( dialog.exec() != QDialog::Accepted )
-//		return;
-//	thePrinter.setFullPage ( true );
-//	theMainView->info()->print(&thePrinter);
-}
-
-void typotek::printSample()
-{
+//void typotek::printFamily()
+//{
 //	FontItem * font(theMainView->selectedFont());
 //	if(!font)
 //		return;
-//	QGraphicsScene *ls (theMainView->currentSampleScene());
-//	if( FMLayout::getLayout()->isRunning() )
-//	{
-//		connect(FMLayout::getLayout(), SIGNAL(paintFinished()), this,SLOT(printSample()));
-//// 		waitLayoutForPrint = false;
-//		return;
-//	}
-//	else
-//	{
-//		disconnect(FMLayout::getLayout(), SIGNAL(paintFinished()), this,SLOT(printSample()));
-//// 		waitLayoutForPrint = true;
-//	}
-
 //	QPrinter thePrinter ( QPrinter::HighResolution );
 //	QPrintDialog dialog(&thePrinter, this);
-//	dialog.setWindowTitle("Fontmatrix - " + tr("Print Sample") +" - " + font->fancyName() );
+//	dialog.setWindowTitle("Fontmatrix - " + tr("Print Family") +" - " + font->family());
 
 //	if ( dialog.exec() != QDialog::Accepted )
 //		return;
+
 //	thePrinter.setFullPage ( true );
 //	QPainter aPainter ( &thePrinter );
 
-//	ls->render(&aPainter);
+//	QGraphicsScene tmpScene(thePrinter.paperRect());
+//	QGraphicsScene pScene(thePrinter.paperRect());
 
-}
+//	qDebug()<<thePrinter.paperRect();
 
-void typotek::printChart()
-{
-	FontItem * font(theMainView->selectedFont());
-	if(!font)
-		return;
+//	QMap<int , double> logWidth;
+//	QMap<int , double> logAscend;
+//	QMap<int , double> logDescend;
+//	QMap<int , QString> sampleString;
+//	QMap<int , FontItem*> sampleFont;
 
-	QPrinter thePrinter ( QPrinter::HighResolution );
-	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Chart") +" - " + font->fancyName() );
+//	QStringList stl1(namedSample ( theMainView->sampleName() ).split ( QRegExp("\\W") ));
+//	if(stl1.count() < 10 )
+//	{
+//		QMessageBox::information(this,"Fontmatrix",tr("Not enough text to make a sample"));
+//		return;
+//	}
+//	QStringList stl;
+//	int idxS(0);
+//	int idxE( qrand() % 9 );
+//	while((idxS + idxE) < stl1.count())
+//	{
+//		QString t(QStringList(stl1.mid(idxS,idxE)).join( " " ));
+//		qDebug()<<"s e T"<<idxS<<idxE<<t;
+//		if(!t.isEmpty())
+//			stl << t;
 
-	if ( dialog.exec() != QDialog::Accepted )
-		return;
-	thePrinter.setFullPage ( true );
-	QPainter aPainter ( &thePrinter );
+//		idxS += idxE;
+//		idxE = qrand() % 9;
+//	}
+//	QList<FontItem*> familyFonts(FMFontDb::DB()->Fonts(theMainView->selectedFont()->family(), FMFontDb::Family ));
 
+//// 	if(familyFonts.count() > stl.count())
+//	{
+//		int diff ( familyFonts.count()  );
+//		for (int i(0); i < diff; ++i)
+//		{
+//			sampleString[i] = stl[ i % stl.count() ];
+//		}
+//	}
 
-	double pWidth(thePrinter.paperRect().width());
-	double pHeight(thePrinter.paperRect().height());
-	double pFactor( thePrinter.resolution() );
+//	// first we’ll get widths for font size 1000
+//	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
+//	{
+//		sampleFont[fidx] = familyFonts[fidx];
+//		bool rasterState(sampleFont[fidx]->rasterFreetype());
+//		sampleFont[fidx]->setFTRaster(false);
+//		sampleFont[fidx]->setRenderReturnWidth(true);
+//		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, sampleString[fidx], QPointF(0.0, 1000.0) , 999999.0, 1000.0, 1) ;
+//		sampleFont[fidx]->setRenderReturnWidth(false);
+//		sampleFont[fidx]->setFTRaster(rasterState);
+//		logAscend[fidx] = 1000.0 - tmpScene.itemsBoundingRect().top();
+//		logDescend[fidx] = tmpScene.itemsBoundingRect().bottom() - 1000.0;
+//		qDebug()<< sampleString[fidx] << logWidth[fidx];
+//		QList<QGraphicsItem*> lgit(tmpScene.items());
+//		foreach(QGraphicsItem* git, lgit)
+//		{
+//			tmpScene.removeItem(git);
+//			delete git;
+//		}
+//	}
+//	double defWidth(0.8 * pScene.width() );
+//	double defHeight(0.9 * pScene.height() );
+//	double xOff( 0.1 * pScene.width() );
+//	double yPos(0.1 * pScene.height() );
 
-	qDebug()<<"Paper :"<<pWidth<<pHeight;
-	qDebug()<<"Resolution :"<<pFactor;
-	qDebug()<<"P/R*72:"<<pWidth / pFactor * 72.0<< pHeight / pFactor * 72.0;
+//	QFont nameFont;
+//	nameFont.setPointSizeF(100.0);
+//	nameFont.setItalic(true);
 
-	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
+//	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
+//	{
+//		double scaleFactor(1000.0 / logWidth[fidx] );
+//		double fSize( defWidth *  scaleFactor );
+//		double fAscend(logAscend[fidx] * fSize / 1000.0);
+//		double fDescend(logDescend[fidx] * fSize  / 1000.0 );
+//		if( yPos + fAscend + fDescend > defHeight)
+//		{
+//			pScene.render(&aPainter);
+//			thePrinter.newPage();
+//			QList<QGraphicsItem*> lgit(pScene.items());
+//			foreach(QGraphicsItem* git, lgit)
+//			{
+//				pScene.removeItem(git);
+//				delete git;
+//			}
+//			yPos = 0.1 * pScene.height();
 
+//		}
 
-	QRectF sourceR( 0, 0, pWidth / pFactor * 72.0, pHeight / pFactor * 72.0);
-	QGraphicsScene pScene(sourceR);
+//		yPos +=  fAscend;
+//		QPointF origine(xOff,  yPos );
 
-	int maxCharcode(0x10FFFF);
-	int beginCharcode(0);
-	int numP(0);
-	bool first(true);
-	while(beginCharcode < maxCharcode)
-	{
-		qDebug() << "Chart("<< ++numP <<") ->"<<beginCharcode<<maxCharcode;
-		QList<QGraphicsItem*> lgit(pScene.items());
-		foreach(QGraphicsItem* git, lgit)
-		{
-			pScene.removeItem(git);
-			delete git;
-		}
+//		qDebug()<< sampleString[fidx] << fSize;
 
-		int controlN(maxCharcode - beginCharcode);
-		int stopAtCode( font->renderChart(&pScene, beginCharcode, maxCharcode, sourceR.width(),sourceR.height() ) );
-		qDebug()<< "Control"<<beginCharcode<<stopAtCode;
+//		bool rasterState(sampleFont[fidx]->rasterFreetype());
+//		sampleFont[fidx]->setFTRaster(false);
+//		sampleFont[fidx]->renderLine(&pScene, sampleString[fidx], origine, pScene.width(), fSize, 100);
+//		pScene.addLine(QLineF(origine, QPointF(xOff + defWidth, yPos)));
+//		sampleFont[fidx]->setFTRaster(rasterState);
 
-		if(stopAtCode == beginCharcode)
-			break;
+//		yPos +=  fDescend ;
 
-		if(first)
-		{
-			first = false;
-		}
-		else
-		{
-			thePrinter.newPage();
-		}
-		aPainter.drawText(targetR.bottomLeft(), font->fancyName()+"[U"+QString::number(beginCharcode  ,16).toUpper()+", U"+QString::number(stopAtCode ,16).toUpper()+"]");
-		pScene.render(&aPainter,targetR, sourceR, Qt::KeepAspectRatio);
+//		QGraphicsSimpleTextItem * nameText = pScene.addSimpleText( familyFonts[fidx]->fancyName(), nameFont) ;
+//		nameText->setPos(xOff, yPos);
+//// 		nameText->setBrush(Qt::gray);
+//		yPos += nameText->boundingRect().height();
+//	}
 
-		beginCharcode = stopAtCode;
-	}
-
-
-}
-
-void typotek::printPlayground()
-{
-	FontItem * font(theMainView->selectedFont());
-	QPrinter thePrinter ( QPrinter::HighResolution );
-	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Playground")  );
-
-	if ( dialog.exec() != QDialog::Accepted )
-		return;
-	thePrinter.setFullPage ( true );
-	QPainter aPainter ( &thePrinter );
-
-	double pWidth(thePrinter.paperRect().width());
-	double pHeight(thePrinter.paperRect().height());
-
-	QRectF targetR( pWidth * 0.1, pHeight * 0.1, pWidth * 0.8, pHeight * 0.8 );
-	QRectF sourceR( PlayWidget::getInstance()->getMaxRect());
-	PlayWidget::getInstance()->clearSelection();
-	PlayWidget::getInstance()->getPlayScene()->render(&aPainter, targetR ,sourceR, Qt::KeepAspectRatio );
-}
-
-void typotek::printFamily()
-{
-	FontItem * font(theMainView->selectedFont());
-	if(!font)
-		return;
-	QPrinter thePrinter ( QPrinter::HighResolution );
-	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Family") +" - " + font->family());
-
-	if ( dialog.exec() != QDialog::Accepted )
-		return;
-
-	thePrinter.setFullPage ( true );
-	QPainter aPainter ( &thePrinter );
-
-	QGraphicsScene tmpScene(thePrinter.paperRect());
-	QGraphicsScene pScene(thePrinter.paperRect());
-
-	qDebug()<<thePrinter.paperRect();
-
-	QMap<int , double> logWidth;
-	QMap<int , double> logAscend;
-	QMap<int , double> logDescend;
-	QMap<int , QString> sampleString;
-	QMap<int , FontItem*> sampleFont;
-
-	QStringList stl1(namedSample ( theMainView->sampleName() ).split ( QRegExp("\\W") ));
-	if(stl1.count() < 10 )
-	{
-		QMessageBox::information(this,"Fontmatrix",tr("Not enough text to make a sample"));
-		return;
-	}
-	QStringList stl;
-	int idxS(0);
-	int idxE( qrand() % 9 );
-	while((idxS + idxE) < stl1.count())
-	{
-		QString t(QStringList(stl1.mid(idxS,idxE)).join( " " ));
-		qDebug()<<"s e T"<<idxS<<idxE<<t;
-		if(!t.isEmpty())
-			stl << t;
-
-		idxS += idxE;
-		idxE = qrand() % 9;
-	}
-	QList<FontItem*> familyFonts(FMFontDb::DB()->Fonts(theMainView->selectedFont()->family(), FMFontDb::Family ));
-
-// 	if(familyFonts.count() > stl.count())
-	{
-		int diff ( familyFonts.count()  );
-		for (int i(0); i < diff; ++i)
-		{
-			sampleString[i] = stl[ i % stl.count() ];
-		}
-	}
-
-	// first we’ll get widths for font size 1000
-	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
-	{
-		sampleFont[fidx] = familyFonts[fidx];
-		bool rasterState(sampleFont[fidx]->rasterFreetype());
-		sampleFont[fidx]->setFTRaster(false);
-		sampleFont[fidx]->setRenderReturnWidth(true);
-		logWidth[fidx] =  familyFonts[fidx]->renderLine(&tmpScene, sampleString[fidx], QPointF(0.0, 1000.0) , 999999.0, 1000.0, 1) ;
-		sampleFont[fidx]->setRenderReturnWidth(false);
-		sampleFont[fidx]->setFTRaster(rasterState);
-		logAscend[fidx] = 1000.0 - tmpScene.itemsBoundingRect().top();
-		logDescend[fidx] = tmpScene.itemsBoundingRect().bottom() - 1000.0;
-		qDebug()<< sampleString[fidx] << logWidth[fidx];
-		QList<QGraphicsItem*> lgit(tmpScene.items());
-		foreach(QGraphicsItem* git, lgit)
-		{
-			tmpScene.removeItem(git);
-			delete git;
-		}
-	}
-	double defWidth(0.8 * pScene.width() );
-	double defHeight(0.9 * pScene.height() );
-	double xOff( 0.1 * pScene.width() );
-	double yPos(0.1 * pScene.height() );
-
-	QFont nameFont;
-	nameFont.setPointSizeF(100.0);
-	nameFont.setItalic(true);
-
-	for(int fidx(0); fidx < familyFonts.count(); ++fidx)
-	{
-		double scaleFactor(1000.0 / logWidth[fidx] );
-		double fSize( defWidth *  scaleFactor );
-		double fAscend(logAscend[fidx] * fSize / 1000.0);
-		double fDescend(logDescend[fidx] * fSize  / 1000.0 );
-		if( yPos + fAscend + fDescend > defHeight)
-		{
-			pScene.render(&aPainter);
-			thePrinter.newPage();
-			QList<QGraphicsItem*> lgit(pScene.items());
-			foreach(QGraphicsItem* git, lgit)
-			{
-				pScene.removeItem(git);
-				delete git;
-			}
-			yPos = 0.1 * pScene.height();
-
-		}
-
-		yPos +=  fAscend;
-		QPointF origine(xOff,  yPos );
-
-		qDebug()<< sampleString[fidx] << fSize;
-
-		bool rasterState(sampleFont[fidx]->rasterFreetype());
-		sampleFont[fidx]->setFTRaster(false);
-		sampleFont[fidx]->renderLine(&pScene, sampleString[fidx], origine, pScene.width(), fSize, 100);
-		pScene.addLine(QLineF(origine, QPointF(xOff + defWidth, yPos)));
-		sampleFont[fidx]->setFTRaster(rasterState);
-
-		yPos +=  fDescend ;
-
-		QGraphicsSimpleTextItem * nameText = pScene.addSimpleText( familyFonts[fidx]->fancyName(), nameFont) ;
-		nameText->setPos(xOff, yPos);
-// 		nameText->setBrush(Qt::gray);
-		yPos += nameText->boundingRect().height();
-	}
-
-	pScene.render(&aPainter);
-}
+//	pScene.render(&aPainter);
+//}
 
 void typotek::showEvent(QShowEvent * event)
 {

@@ -181,11 +181,6 @@ void typotek::initMatrix()
 	mainStack->addWidget(theBrowser);
 	setCentralWidget ( mainStack );
 
-	toggleMainViewButton = new QToolButton(this);
-	toggleMainViewButton->setText("B");
-	toggleMainViewButton->setCheckable(true);
-	statusBar()->addPermanentWidget(toggleMainViewButton);
-
 	if ( QSystemTrayIcon::isSystemTrayAvailable() )
 		systray = new Systray();
 	else
@@ -216,6 +211,8 @@ void typotek::initMatrix()
 	createMenus();
 	createStatusBar();
 	doConnect();
+
+	showToltalFilteredFonts();
 
 	theMainView->setCrumb();
 
@@ -316,6 +313,7 @@ void typotek::closeEvent ( QCloseEvent *event )
 		f->close();
 	}
 	delete PlayWidget::getInstance();
+	delete FontCompareWidget::getInstance();
 
 	writeSettings();
 	event->accept();
@@ -952,7 +950,7 @@ void typotek::createMenus()
 
 void typotek::createStatusBar()
 {
-	statusBar()->showMessage ( tr ( "Ready" ) );
+//	statusBar()->showMessage ( tr ( "Ready" ) );
 
 	statusProgressBar = new QProgressBar(this);
 	statusProgressBar->setMaximumSize(200,20);
@@ -964,13 +962,19 @@ void typotek::createStatusBar()
 	curFontPresentation->setFrameShape(QFrame::StyledPanel);
 	curFontPresentation->setAlignment ( Qt::AlignRight );
 	curFontPresentation->setFont ( statusFontFont );
-	statusBar()->addPermanentWidget ( curFontPresentation );
+	statusBar()->insertWidget ( 0, curFontPresentation );
 
 	countFilteredFonts = new QLabel ( "" );
 	countFilteredFonts->setFrameShape(QFrame::StyledPanel);
 	countFilteredFonts->setAlignment ( Qt::AlignRight );
 	countFilteredFonts->setFont ( statusFontFont );
 	statusBar()->addPermanentWidget ( countFilteredFonts );
+
+	toggleMainViewButton = new QToolButton(this);
+	toggleMainViewButton->setText("B");
+	toggleMainViewButton->setCheckable(true);
+	toggleMainViewButton->setToolTip(tr("Toggle Files/Collection view"));
+	statusBar()->addPermanentWidget(toggleMainViewButton);
 }
 
 void typotek::readSettings()
@@ -2502,12 +2506,14 @@ void typotek::slotExecRecentScript(){}
 
 void typotek::showToltalFilteredFonts()
 {
-	countFilteredFonts->setText( tr( "Filtered Font(s): %n", "number of filtererd fonts showed in status bar", theMainView->curFonts().count() ) );
+	countFilteredFonts->setText( tr( "Filtered Font(s): %n", "number of filtererd fonts showed in status bar", FMFontDb::DB()->countFilteredFonts() ) );
 }
 
 void typotek::presentFontName(QString s)
 {
-	curFontPresentation->setText(tr("Current Font:", "followed by currently selected font name (in status bar)") +s);
+	curFontPresentation->setText(QString("%1 : <b>%2</b>")
+				     .arg(tr("Current Font", "followed by currently selected font name (in status bar)"))
+				     .arg(s));
 }
 
 

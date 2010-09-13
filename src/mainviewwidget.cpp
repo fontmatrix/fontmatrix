@@ -151,9 +151,10 @@ void MainViewWidget::doConnect()
 	connect(familyWidget, SIGNAL(familyStateChanged()), previewModel, SLOT(dataChanged()));
 	connect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 
-	connect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
-	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
+//	connect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
+//	connect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	connect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
+	connect(filterBar,SIGNAL(filterChanged()),typo, SLOT(showToltalFilteredFonts()));
 	connect(familyWidget, SIGNAL(tagAdded()), filterBar, SLOT(loadTags()));
 	connect(familyWidget, SIGNAL(tagChanged()), filterBar, SLOT(loadTags()));
 
@@ -178,9 +179,10 @@ void MainViewWidget::disConnect()
 	disconnect(familyWidget, SIGNAL(familyStateChanged()), previewModel, SLOT(dataChanged()));
 	disconnect ( m_lists->actFacesButton, SIGNAL(toggled( bool )), this, SLOT(toggleFacesCheckBoxes(bool)) );
 
-	disconnect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
-	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
+//	disconnect ( this, SIGNAL(listChanged()), previewModel, SLOT(dataChanged()));
+//	disconnect ( this, SIGNAL(listChanged()), typo, SLOT(showToltalFilteredFonts()));
 	disconnect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
+	connect(filterBar,SIGNAL(filterChanged()),typo, SLOT(showToltalFilteredFonts()));
 	disconnect(familyWidget, SIGNAL(tagAdded()), filterBar, SLOT(loadTags()));
 	disconnect(familyWidget, SIGNAL(tagChanged()), filterBar, SLOT(loadTags()));
 	

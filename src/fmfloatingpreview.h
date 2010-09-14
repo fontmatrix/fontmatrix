@@ -25,10 +25,11 @@
 #include <QRect>
 
 class QPushButton;
-class QHBoxLayout;
+class QGridLayout;
 class QVBoxLayout;
 class QLabel;
 class QFrame;
+class QLineEdit;
 
 class FontItem;
 
@@ -48,8 +49,9 @@ private:
 	QPushButton * closeButton;
 	QPushButton * actButton;
 	QFrame * line;
-	QHBoxLayout * menuLayout;
+	QGridLayout * menuLayout;
 	QLabel * fontName;
+	QLineEdit * text;
 
 
 private slots:
@@ -63,6 +65,8 @@ signals:
 class FontItem;
 class FMFloatingPreview : public QWidget
 {
+	Q_OBJECT
+
 	FMFloatingPreview(QWidget * parent, FontItem * item);
 public:
 	~FMFloatingPreview();
@@ -76,6 +80,7 @@ protected:
 	void leaveEvent(QEvent *e);
 
 private:
+	FontItem *fontItem;
 	bool hasMouseGrab;
 	QPoint refPoint;
 	FMFloatingMenu * menuWidget;
@@ -83,6 +88,9 @@ private:
 	QLabel * previewLabel;
 
 	bool canTransparent();
+
+public slots:
+	void updatePreview(const QString& t);
 
 };
 

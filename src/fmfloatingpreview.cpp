@@ -33,6 +33,7 @@
 #include <QSize>
 #include <QMouseEvent>
 #include <QCursor>
+#include <QLineEdit>
 
 #if defined(Q_WS_X11)
 #include <QX11Info>
@@ -43,8 +44,9 @@
 FMFloatingMenu::FMFloatingMenu(QWidget * parent, FontItem * item)
 		:QWidget(parent), fontItem(item)
 {
-	menuLayout = new QHBoxLayout(this);
+	menuLayout = new QGridLayout(this);
 	menuLayout->setContentsMargins(3,0,3,0);
+	menuLayout->setVerticalSpacing(0);
 
 	QFont f(font());
 	double fs(f.pointSizeF());
@@ -56,27 +58,34 @@ FMFloatingMenu::FMFloatingMenu(QWidget * parent, FontItem * item)
 		f2.setBold(true);
 		fontName = new QLabel(item->fancyName(), this);
 		fontName->setFont(f2);
-		menuLayout->addWidget(fontName, 0);
+		menuLayout->addWidget(fontName, 0,0);
 	}
 
 	line = new QFrame(this);
 	line->setFrameShape(QFrame::HLine);
 	line->setFrameShadow(QFrame::Sunken);
 
-	menuLayout->addWidget(line, 2);
+	menuLayout->addWidget(line,0, 1);
 
+	bool act(false);
 	if(item && !item->isActivated())
 	{
 		actButton = new QPushButton(tr("Activate"),this);
 		actButton->setFont(f);
-		menuLayout->addWidget(actButton, 0, Qt::AlignRight);
+		menuLayout->addWidget(actButton, 0,2, Qt::AlignRight);
 		connect(actButton, SIGNAL(clicked()),this,SLOT(activateFont()));
+		act = true;
 	}
 
 	closeButton = new QPushButton(tr("close"), this);
 	closeButton->setFont(f);
-	menuLayout->addWidget(closeButton, 0, Qt::AlignRight);
+	menuLayout->addWidget(closeButton, 0,act?3:2, Qt::AlignRight);
 
+	text = new QLineEdit(typotek::getInstance()->word(item), this);
+	text->setFont(f);
+	menuLayout->addWidget(text,1, 0, 1, -1);
+
+	connect(text, SIGNAL(textEdited(QString)), reinterpret_cast<FMFloatingPreview*>(parent), SLOT(updatePreview(QString)));
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(forwardCloseClicked()));
 }
 
@@ -146,6 +155,7 @@ FMFloatingPreview::~FMFloatingPreview()
 void FMFloatingPreview::create(FontItem *item, QRect rect)
 {
 	FMFloatingPreview * p(new FMFloatingPreview(typotek::getInstance(), item));
+	p->fontItem = item;
 	QColor bgC;
 	if(p->canTransparent())
 		bgC = QColor(Qt::transparent);
@@ -218,4 +228,17 @@ bool FMFloatingPreview::canTransparent()
 	return QX11Info::isCompositingManagerRunning();
 #endif
 	return true;
+}
+
+void FMFloatingPreview::updatePreview(const QString &t)
+{
+	QColor bgC;
+	if(canTransparent())
+		bgC = QColor(Qt::transparent);
+	else
+		bgC = QColor(Qt::white);
+	QPixmap preview = fontItem->oneLinePreviewPixmap(t, Qt::black, bgC, this->width());
+	QRect r(preview.rect());
+	previewLabel->setGeometry(r);
+	previewLabel->setPixmap(preview);
 }

@@ -42,12 +42,11 @@ FiltersDialog::FiltersDialog(const QList<FilterItem*>& currentFilters, QWidget *
 {
 	setAttribute(Qt::WA_DeleteOnClose);
 	ui->setupUi(this);
-	ui->frame->setVisible(false);
 
 	loadFilters();
 
 	connect(ui->addButton, SIGNAL(clicked()), this, SLOT(slotAddFilter()));
-	connect(ui->moreButton, SIGNAL(clicked(bool)), this, SLOT(showAdd(bool)));
+//	connect(ui->moreButton, SIGNAL(clicked(bool)), this, SLOT(showAdd(bool)));
 
 	if(!currentFilters.isEmpty())
 	{
@@ -66,10 +65,11 @@ FiltersDialog::FiltersDialog(const QList<FilterItem*>& currentFilters, QWidget *
 
 		}
 		ui->curFilter->setText(fs);
+		ui->messageStack->setCurrentWidget(ui->pagePossible);
 	}
 	else
 	{
-		ui->moreButton->setEnabled(false);
+		ui->messageStack->setCurrentWidget(ui->pageImpossible);
 	}
 }
 
@@ -169,8 +169,6 @@ void FiltersDialog::slotAddFilter()
 		emit AddFilter(fname);
 
 	loadFilters();
-	showAdd(false);
-	ui->moreButton->setChecked(false);
 }
 
 void FiltersDialog::slotRemoveFilter(QString fs)
@@ -180,7 +178,3 @@ void FiltersDialog::slotRemoveFilter(QString fs)
 }
 
 
-void FiltersDialog::showAdd(bool v)
-{
-	ui->frame->setVisible(v);
-}

@@ -115,20 +115,8 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 	QSettings settings;
 	activateByFamilyOnly = settings.value("ActivateOnlyFamily", false).toBool();
-//	m_lists->actFacesButton->setChecked(!activateByFamilyOnly);
 
-	// 	fillUniPlanes();
-	//	refillSampleList();
-
-	//	fontInfoText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
-
-
-
-	sampleText= typo->namedSample();
 	currentOrdering = "family" ;
-
-
-	
 	doConnect();
 	listView->setFocus(Qt::OtherFocusReason);
 }

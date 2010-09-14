@@ -26,7 +26,6 @@
 #include <QModelIndex>
 #include <QStringList>
 
-#include "samplewidget.h"
 
 #define FAMILY_VIEW_INFO	0
 #define FAMILY_VIEW_SAMPLE	1
@@ -72,7 +71,6 @@ private:
     unsigned int currentIndex;
     unsigned int currentPage;
     QString uniBlock;
-    SampleWidget::State sampleState;
 
 
 signals:

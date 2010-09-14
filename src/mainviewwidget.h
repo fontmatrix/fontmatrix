@@ -65,7 +65,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		QString lastIndex;
 //		QList<FontItem*> currentFonts; *moved to FMFontDB*
 		QList<FontItem*> orderedCurrentFonts;
-		QString sampleText;
+//		QString sampleText;
 		QGridLayout *tagLayout;
 		QString currentOrdering;
 		FontItem *theVeryFont; 

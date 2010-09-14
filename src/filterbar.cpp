@@ -119,6 +119,7 @@ void FilterBar::metaDialog()
 	l->addWidget(mw,0,0,0,0);
 
 	connect(mw,SIGNAL(filterAdded()), d, SLOT(close()));
+	connect(mw, SIGNAL(Close()), d, SLOT(close()));
 
 	d->exec();
 
@@ -151,18 +152,21 @@ void FilterBar::metaDialog()
 
 void FilterBar::processFilters()
 {
-	FMFontDb::DB()->clearFilteredFonts();
-	bool first(true);
-	foreach(FilterItem* d, filters)
+	if(filters.count() > 0)
 	{
-		if(first)
+		FMFontDb::DB()->clearFilteredFonts();
+		bool first(true);
+		foreach(FilterItem* d, filters)
 		{
-			d->hideOperation(FilterItem::AND);
-			first = false;
+			if(first)
+			{
+				d->hideOperation(FilterItem::AND);
+				first = false;
+			}
+			d->filter()->operate();
 		}
-		d->filter()->operate();
+		emit filterChanged();
 	}
-	emit filterChanged();
 }
 
 void FilterBar::slotRemoveFilterItem(bool process)

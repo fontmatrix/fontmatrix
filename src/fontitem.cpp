@@ -2958,12 +2958,14 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 
 	QString itemNameStyle ( "background-color:#000;color:#fff;font-weight:bold;font-size:13pt;padding:0 3px;" );
 	QString itemValueStyle ( "background-color:#fff;color:#000;font-size:9pt;padding:0 3px;" );
+
 	if ( charcodeIsAGlyphIndex )
 	{
-		QString html;
-
-		html = "<span style=\""+ itemNameStyle +"\"> Index </span>";
-		html += "<span style=\""+ itemValueStyle +"\"> "+ QString::number ( charcode ) +" </span>";
+		QString html(QString("<span style=\"%1\"> %2 </span> <span style=\"%3\"> - Index %4 <span>")
+			     .arg(itemNameStyle)
+			     .arg(glyphName(charcode))
+			     .arg(itemValueStyle)
+			     .arg(QString::number ( charcode )));
 		textIt->setHtml ( html );
 	}
 	else
@@ -2976,7 +2978,7 @@ int FontItem::showFancyGlyph ( QGraphicsView *view, int charcode , bool charcode
 			     .arg(glyphName(charcode))
 			     .arg(itemValueStyle)
 			     .arg(catString)
-			     .arg(charcode, 4, 16, QChar('0'))
+			     .arg(QString("%1").arg(charcode, 4, 16, QChar('0')).toUpper())
 			     .arg(charcode));
 
 		textIt->setHtml ( html );

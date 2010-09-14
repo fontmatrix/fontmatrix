@@ -64,6 +64,7 @@ private:
 
 signals:
     void filterAdded();
+    void Close();
 
 private slots:
     void addFilter();

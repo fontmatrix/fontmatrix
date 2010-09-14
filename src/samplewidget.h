@@ -23,6 +23,7 @@
 
 #include "floatingwidget.h"
 #include <QString>
+#include <QByteArray>
 #include "fmotf.h"
 
 class QGraphicsScene;
@@ -51,12 +52,33 @@ public:
 	{
 		bool set;
 		State() : set(false) {}
+		State(const QString& sn, double fs, unsigned int rh, const QString& sh, const QString& sc):
+				set(true),
+				sampleName(sn),
+				fontSize(fs),
+				renderHinting(rh),
+				shaper(sh),
+				script(sc)
+		{}
+		State(const State& other)
+				: set(true)
+		{
+			sampleName = other.sampleName;
+			fontSize = other.fontSize;
+			renderHinting = other.renderHinting;
+			shaper = other.shaper;
+			script = other.script;
+		}
 		QString sampleName;
 		double fontSize;
-//		bool renderRaster;
 		unsigned int renderHinting; // 0 = No; 1 = Normal; 2 = Light
 		QString shaper;
 		QString script;
+		QByteArray toByteArray() const;
+		State fromByteArray(QByteArray b);
+
+	private:
+		State operator= (const State&){}
 	};
 
 	static const QString Name;
@@ -122,9 +144,11 @@ private slots:
 
     void slotPrint();
 
+    void saveState();
 
 signals:
     void stopLayout();
+    void stateChanged();
 
 
 

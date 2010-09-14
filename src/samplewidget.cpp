@@ -36,6 +36,45 @@
 #include <QFileSystemWatcher>
 #include <QDebug>
 #include <QTimer>
+#include <QDataStream>
+#include <QSettings>
+
+
+QByteArray SampleWidget::State::toByteArray() const
+{
+	QByteArray b;
+	QDataStream ds(&b, QIODevice::WriteOnly);
+	ds << sampleName;
+	ds << fontSize;
+	ds << renderHinting;
+	ds << shaper;
+	ds << script;
+	return b;
+}
+
+SampleWidget::State SampleWidget::State::fromByteArray(QByteArray b)
+{
+	QDataStream ds(&b, QIODevice::ReadOnly);
+	QString sn;
+	double fs;
+	unsigned int rh;
+	QString sh;
+	QString sc;
+	ds >> sn;
+	ds >> fs;
+	ds >> rh;
+	ds >> sh;
+	ds >> sc;
+//	State*  pState(new State(sn,fs,rh,sh,sc));
+//	State rState(*pState);
+	sampleName = sn;
+	fontSize = fs;
+	renderHinting = rh;
+	shaper = sh;
+	script = sc;
+//	return State(sn,fs,rh,sh,sc);
+	return *this;
+}
 
 const QString SampleWidget::Name = QObject::tr("Sample");
 
@@ -97,15 +136,22 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	}
 
 	QSettings settings;
-	sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
-	sampleInterSize = settings.value("Sample/Interline", 18.0).toDouble();
-	sampleRatio = sampleInterSize / sampleFontSize  ;
-	ui->liveFontSizeSpin->setValue(sampleFontSize);
+//	sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
+//	sampleInterSize = settings.value("Sample/Interline", 18.0).toDouble();
+//	sampleRatio = sampleInterSize / sampleFontSize  ;
+//	ui->liveFontSizeSpin->setValue(sampleFontSize);
 
+	State s;
+	s.fontSize = 14;
+	QByteArray bs = settings.value("Sample/state", s.toByteArray()).toByteArray();
+	setState(s.fromByteArray(bs));
+	sampleRatio = 1.2;
+	sampleInterSize = sampleFontSize * sampleRatio;
 
 	FontItem * cf(FMFontDb::DB()->Font(fid));
 	textLayoutVect = new FMLayout(loremScene, cf);
 	textLayoutFT =  new FMLayout(ftScene, cf);
+
 
 
 	createConnections();
@@ -163,6 +209,8 @@ void SampleWidget::createConnections()
 
 	connect(sysWatcher, SIGNAL(fileChanged(QString)),this, SLOT(slotFileChanged(QString)));
 	connect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));
+
+	connect(this, SIGNAL(stateChanged()), this, SLOT(saveState()));
 }
 
 
@@ -206,6 +254,8 @@ void SampleWidget::removeConnections()
 
 	disconnect(sysWatcher, SIGNAL(fileChanged(QString)),this, SLOT(slotFileChanged(QString)));
 	disconnect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));
+
+	disconnect(this, SIGNAL(stateChanged()), this, SLOT(saveState()));
 }
 
 void SampleWidget::changeEvent(QEvent *e)
@@ -252,12 +302,6 @@ void SampleWidget::setState(const SampleWidget::State &s)
 	ui->liveFontSizeSpin->setValue( s.fontSize );
 	reSize( s.fontSize, s.fontSize * sampleRatio );
 
-//	if(s.renderRaster)
-//		ui->freetypeRadio->setChecked(true);
-//	else
-//		ui->nativeRadio->setChecked(true);
-
-//	if(s.renderRaster)
 	{
 		switch(s.renderHinting)
 		{
@@ -280,12 +324,14 @@ void SampleWidget::setState(const SampleWidget::State &s)
 			if(tli->child(ii)->data(0, Qt::UserRole).toString() == s.sampleName)
 			{
 				targetItem = tli->child(ii);
+				typotek::getInstance()->namedSample(s.sampleName);
 				break;
 			}
 		}
 		if(targetItem != 0)
 			break;
 	}
+//	qDebug()<<"TI"<<targetItem;
 	if(targetItem != 0)
 		ui->sampleTextTree->setCurrentItem(targetItem, 0, QItemSelectionModel::SelectCurrent);
 
@@ -560,6 +606,7 @@ void SampleWidget::slotChangeViewPage(QAbstractButton* but)
 void SampleWidget::slotHintChanged(int )
 {
 	slotView(true);
+	emit stateChanged();
 }
 
 
@@ -648,6 +695,7 @@ void SampleWidget::slotSampleChanged()
 {
 	typotek::getInstance()->namedSample( ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString() );
 	slotView ( true );
+	emit stateChanged();
 }
 
 void SampleWidget::slotEditSampleText()
@@ -660,12 +708,14 @@ void SampleWidget::slotLiveFontSize()
 	double fs( ui->liveFontSizeSpin->value() );
 	reSize(fs, fs * sampleRatio);
 	slotView(true);
+	emit stateChanged();
 }
 
 void SampleWidget::slotFeatureChanged()
 {
 	// 	OTFSet ret = deFillOTTree();
 	slotView ( true );
+	emit stateChanged();
 }
 
 void SampleWidget::slotDefaultOTF()
@@ -694,6 +744,7 @@ void SampleWidget::slotChangeScript()
 	{
 		slotView ( true );
 	}
+	emit stateChanged();
 }
 
 void SampleWidget::slotProgressionChanged()
@@ -704,6 +755,7 @@ void SampleWidget::slotProgressionChanged()
 void SampleWidget::slotWantShape()
 {
 	slotView ( true );
+	emit stateChanged();
 }
 
 
@@ -814,4 +866,11 @@ void SampleWidget::slotReload()
 {
 //	reloadTimer->stop();
 	slotView();
+}
+
+void SampleWidget::saveState()
+{
+	QSettings settings;
+	QByteArray bs(state().toByteArray());
+	settings.setValue("Sample/state", bs);
 }

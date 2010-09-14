@@ -26,7 +26,7 @@
 #include "fontitem.h"
 #include "fminfodisplay.h"
 #include "floatingwidgetsregister.h"
-//#include "samplewidget.h"
+#include "samplewidget.h"
 #include "chartwidget.h"
 #include "activationwidget.h"
 #include "fmvariants.h"
@@ -146,8 +146,6 @@ void FamilyWidget::slotPreviewSelected(const QModelIndex &index)
 	{
 		if(chart != 0)
 			uniBlock = reinterpret_cast<ChartWidget*>(chart)->currentBlock();
-		if(sample != 0)
-			sampleState = reinterpret_cast<SampleWidget*>(sample)->state();
 		delete sample;
 		delete chart;
 		sample = chart = 0;
@@ -178,7 +176,6 @@ void FamilyWidget::slotShowSample()
 		if(0 == sample)
 		{
 			SampleWidget *sw(new SampleWidget(curVariant, ui->pageSample));
-			sw->setState(sampleState);
 			ui->displayStack->insertWidget(FAMILY_VIEW_SAMPLE, sw);
 			sample = sw;
 			connect(sample, SIGNAL(detached()), this, SLOT(slotDetachSample()));
@@ -251,6 +248,7 @@ void FamilyWidget::slotDetachSample()
 void FamilyWidget::slotDetachChart()
 {
 	disconnect(chart, SIGNAL(detached()), this, SLOT(slotDetachChart()));
+	uniBlock = reinterpret_cast<ChartWidget*>(chart)->currentBlock();
 	chart = 0;
 	slotShowInfo();
 }

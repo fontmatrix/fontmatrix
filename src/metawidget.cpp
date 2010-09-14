@@ -94,6 +94,7 @@ MetaWidget::MetaWidget(QWidget *parent) :
 		}
 	}
 
+	connect(ui->cancelButton, SIGNAL(clicked()), this, SIGNAL(Close()));
 	connect(ui->filterButton, SIGNAL(clicked()), this, SLOT(addFilter()));
 }
 
@@ -116,19 +117,19 @@ void MetaWidget::changeEvent(QEvent *e)
 
 void MetaWidget::addFilter()
 {
-	if(QString(sender()->metaObject()->className()) == QString("QLineEdit"))
-	{
-		QLineEdit *l(reinterpret_cast<QLineEdit*>(sender()));
-		FMFontDb::InfoItem it(metFields[l]);
-		QString t(l->text());
-		if(!mList.contains(t))
-		{
-			mList.append(t);
-			mModel->setStringList(mList);
-		}
-		resultMap[it] = t;
-	}
-	else
+//	if(QString(sender()->metaObject()->className()) == QString("QLineEdit"))
+//	{
+//		QLineEdit *l(reinterpret_cast<QLineEdit*>(sender()));
+//		FMFontDb::InfoItem it(metFields[l]);
+//		QString t(l->text());
+//		if(!mList.contains(t))
+//		{
+//			mList.append(t);
+//			mModel->setStringList(mList);
+//		}
+//		resultMap[it] = t;
+//	}
+//	else
 	{
 		foreach(QLineEdit *l, metFields.keys())
 		{

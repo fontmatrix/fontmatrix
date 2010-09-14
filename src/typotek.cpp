@@ -662,7 +662,7 @@ void typotek::createActions()
 	connect(dumpInfoAct, SIGNAL(triggered()), this, SLOT(slotDumpInfo()));
 
 	exitAct = new QAction ( tr ( "E&xit" ), this );
-	exitAct->setShortcut ( tr ( "Ctrl+Q" ) );
+	exitAct->setShortcut ( Qt::CTRL + Qt::Key_Q );
 	exitAct->setStatusTip ( tr ( "Exit the application" ) );
         exitAct->setMenuRole(QAction::QuitRole);
 	scuts->add(exitAct);
@@ -682,7 +682,7 @@ void typotek::createActions()
 	connect (aboutQtAct,SIGNAL(triggered()), QApplication::instance(),SLOT(aboutQt()));
 
 	helpAct = new QAction ( tr ( "Help" ), this );
-	helpAct->setShortcut ( tr ( "F1" ) );
+	helpAct->setShortcut ( Qt::Key_F1 );
 	helpAct->setStatusTip ( tr ( "Read documentation on Fontmatrix" ) );
 	helpAct->setCheckable(true);
 	helpAct->setChecked(false);
@@ -1532,8 +1532,6 @@ QString typotek::namedSample ( QString name )
 
 	if(!dataLoader)
 		dataLoader = new DataLoader();
-
-//	qDebug()<<"typotek::namedSample"<<name;
 
 	const QMap<QString,QString>& us(dataLoader->userSamples());
 	foreach(const QString& k, us.keys())

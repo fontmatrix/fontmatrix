@@ -14,6 +14,7 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QDebug>
+#include <QFont>
 
 #include "typotek.h"
 #include "tagswidget.h"
@@ -53,6 +54,9 @@ TagsWidget::~ TagsWidget()
 
 void TagsWidget::slotSwitchCheckState ( QListWidgetItem * item )
 {
+	QFont font(item->font());
+	font.setBold(item->checkState() == Qt::Checked);
+	item->setFont(font);
 	slotFinalize();
 }
 
@@ -181,11 +185,18 @@ void TagsWidget::prepare ( QList< FontItem * > fonts )
 				if ( tmap[theTaggedFonts[i]].contains ( cur_tag ) )
 					++YesState;
 			}
-			if ( YesState == theTaggedFonts.count() )
-				lit->setCheckState ( Qt::Checked );
-			else if ( YesState > 0 && YesState < theTaggedFonts.count() )
-				lit->setCheckState ( Qt::PartiallyChecked );
+//			if ( YesState == theTaggedFonts.count() )
+//				lit->setCheckState ( Qt::Checked );
+//			else if ( YesState > 0 && YesState < theTaggedFonts.count() )
+//				lit->setCheckState ( Qt::PartiallyChecked );
 
+			 if ( YesState > 0 )
+			{
+				 lit->setCheckState ( Qt::Checked );
+				 QFont font(lit->font());
+				 font.setBold(true);
+				 lit->setFont(font);
+			}
 			tagsListWidget->addItem ( lit );
 			if ( readOnly )
 				lit->setFlags ( 0 );// No NoItemFlags in Qt < 4.4

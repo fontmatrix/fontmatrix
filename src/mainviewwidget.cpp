@@ -1139,7 +1139,7 @@ void MainViewWidget::slotActivateAll()
 void MainViewWidget::keyPressEvent ( QKeyEvent * e )
 {
 	qDebug() << " MainViewWidget::keyPressEvent(QKeyEvent * "<<e<<")";
-	if(e->text().isEmpty())
+	if(e->text().isEmpty() || (!e->text().at(0).isLetterOrNumber()))
 		return;
 	slotQuickSearch(e->text());
 }

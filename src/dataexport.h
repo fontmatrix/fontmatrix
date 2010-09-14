@@ -14,8 +14,13 @@
 
 #include <QString>
 #include <QDir>
+#include <QWidget>
 
 class FontItem;
+
+namespace Ui {
+    class DataExport;
+}
 
 /**
 	@author Pierre Marchand <pierremarc@oep-h.com>
@@ -23,24 +28,29 @@ class FontItem;
 	This class is supposed to export a set of fonts in a
 	directory and build a usefull index of the exported font files.
 */
-class DataExport
+class DataExport : public QWidget
 {
-	public:
-		DataExport(const QString &dirPath, const QString &filterTag);
-		~DataExport();
-		
-		int doExport();
+	Q_OBJECT
+public:
+	explicit DataExport(QWidget* parent);
+//	DataExport(const QString &dirPath, const QString &filterTag);
+	~DataExport();
 
-	private:
-		//data
-		QDir exDir;
-		QString filter;
-		QList<FontItem*> fonts;
-		//methods
-		int copyFiles();
-		int buildIndex();
-		int buildHtml();
-		int buildTemplate(const QString& templateDirPath);
+
+private:
+	//data
+	Ui::DataExport *ui;
+	QDir exDir;
+	QString filter;
+	QList<FontItem*> fonts;
+	//methods
+	int copyFiles();
+	int buildIndex();
+	int buildHtml();
+	int buildTemplate(const QString& templateDirPath);
+
+private slots:
+	void doExport();
 };
 
 #endif

@@ -601,26 +601,24 @@ void typotek::openList ( QStringList files )
 /// EXPORT
 void typotek::slotExportFontSet()
 {
-	QStringList tagsList(FMFontDb::DB()->getTags());
-	QStringList items ( tagsList );
-// 	items.removeAll ( "Activated_On" );
-// 	items.removeAll ( "Activated_Off" );
-	bool ok;
-	QString item = QInputDialog::getItem ( this, tr ( "Fontmatrix Tags" ),
-	                                       tr ( "Choose the tag for filter exported fonts" ), items, 0, false, &ok );
-	if ( ok && !item.isEmpty() )
-	{
+//	QStringList tagsList(FMFontDb::DB()->getTags());
+//	QStringList items ( tagsList );
+//	bool ok;
+//	QString item = QInputDialog::getItem ( this, tr ( "Fontmatrix Tags" ),
+//	                                       tr ( "Choose the tag for filter exported fonts" ), items, 0, false, &ok );
+//	if ( ok && !item.isEmpty() )
+//	{
 
 
-		QString dir( QDir::homePath() );
-		dir = QFileDialog::getExistingDirectory ( this, tr ( "Choose Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
-		if ( dir.isEmpty() )
-			return;
+//		QString dir( QDir::homePath() );
+//		dir = QFileDialog::getExistingDirectory ( this, tr ( "Choose Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
+//		if ( dir.isEmpty() )
+//			return;
 
-		DataExport dx(dir,item);
-		dx.doExport();
-	}
-
+//		DataExport dx(dir,item);
+//		dx.doExport();
+//	}
+	new DataExport(this);
 }
 
 

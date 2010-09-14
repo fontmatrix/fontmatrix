@@ -151,6 +151,7 @@ browserwidget.h
 activationwidget.h
 activationwidgetitem.h
 chartwidget.h
+dataexport.h
 dumpdialog.h
 familywidget.h
 filterbar.h
@@ -216,11 +217,12 @@ ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/activationreportdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/activationwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/activationwidgetitem.ui
-${CMAKE_CURRENT_SOURCE_DIR}/browserwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/altselectorwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/bookexport.ui
+${CMAKE_CURRENT_SOURCE_DIR}/browserwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/chartwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/comparewidget.ui
+${CMAKE_CURRENT_SOURCE_DIR}/dataexport.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/dumpdialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/familywidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/filterbar.ui

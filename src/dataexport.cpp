@@ -9,7 +9,9 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+
 #include "dataexport.h"
+#include "ui_dataexport.h"
 
 #include "typotek.h"
 #include "fontitem.h"
@@ -20,58 +22,91 @@
 #include <QXmlStreamWriter>
 #include <QDebug>
 #include <QProgressDialog>
+#include <QListWidgetItem>
+#include <QFileDialog>
 
-DataExport::DataExport(const QString &dirPath, const QString &filterTag)
+//DataExport::DataExport(const QString &dirPath, const QString &filterTag)
+//{
+//	exDir.setPath(dirPath);
+//	filter = filterTag;
+//	fonts = FMFontDb::DB()->Fonts(filter,FMFontDb::Tags);
+//}
+
+DataExport::DataExport(QWidget* parent):
+		QWidget(parent,Qt::Window),
+		ui(new Ui::DataExport)
 {
-	exDir.setPath(dirPath);
-	filter = filterTag;
-	fonts = FMFontDb::DB()->Fonts(filter,FMFontDb::Tags);
-}
+	setAttribute(Qt::WA_DeleteOnClose, true);
+	ui->setupUi(this);
+	fonts = FMFontDb::DB()->getFilteredFonts();
+	foreach(FontItem* f, fonts)
+	{
+		QListWidgetItem *it(new QListWidgetItem(f->path()));
+		it->setCheckState(Qt::Checked);
+		ui->listWidget->addItem(it);
+	}
 
+	show();
+	connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(close()));
+	connect(ui->continueButton, SIGNAL(clicked()), this, SLOT(doExport()));
+}
 
 DataExport::~DataExport()
 {
+
 }
+
+void DataExport::doExport()
+{
+	QString dir( QDir::homePath() );
+	dir = QFileDialog::getExistingDirectory ( this, tr ( "Choose Directory" ), dir  ,  QFileDialog::ShowDirsOnly );
+	if ( dir.isEmpty() )
+		return ;
+	exDir = QDir(dir);
+
+	copyFiles();
+	buildHtml();
+	close();
+}
+
 
 int DataExport::copyFiles()
 {
-	QProgressDialog progress ( QObject::tr ( "Copying files" ), QObject::tr ( "cancel" ), 0, fonts.count(), typotek::getInstance() );
+	QProgressDialog progress ( QObject::tr ( "Copying files" ), QObject::tr ( "cancel" ), 0, fonts.count(), this );
 	progress.setWindowModality ( Qt::WindowModal );
 	int progressindex(0);
-
-	
-	int copyCounter(0);
 	QList<int> toRemove;
 	for(int fidx( 0 ); fidx < fonts.count() ; ++fidx)
 	{
 		if ( progress.wasCanceled() )
 			break;
 
-		QString preview(typotek::getInstance()->word(fonts[fidx]));
-		
 		progress.setLabelText ( fonts[fidx]->fancyName() );
 		progress.setValue ( ++progressindex );
 		
 		QFile ffile(fonts[fidx]->path());
 		QFileInfo ifile(ffile);
-// 		qDebug()<< exDir.absolutePath() + exDir.separator() + ifile.fileName();
 		if(ffile.copy(exDir.absolutePath() + exDir.separator() + ifile.fileName()) )
 		{
-			++copyCounter;
-			QImage itImage(fonts[fidx]->oneLinePreviewPixmap(preview, Qt::black , Qt::white).toImage());
-			if(!itImage.save(exDir.absolutePath() + exDir.separator() + ifile.fileName() + ".png"))
-				qDebug()<<"Unable to save "<< exDir.absolutePath() + exDir.separator() + ifile.fileName() + ".png";
+			if ( !fonts[fidx]->afm().isEmpty() )
+			{
+				if ( !QFile::copy( fonts[fidx]->afm(), exDir.absolutePath() + exDir.separator() +  fonts[fidx]->activationAFMName() ) )
+				{
+					qDebug() << "unable to copy " << fonts[fidx]->afm();
+				}
+				else
+				{
+					qDebug() << fonts[fidx]->afm() << "copied";
+				}
+			}
 		}
 		else
-		{
-			typotek::getInstance()->showStatusMessage(QObject::tr("Unable to copy")+" "+fonts[fidx]->path());
 			toRemove << fidx;
-		}
 	}
 	
 	for(int i(toRemove.count() - 1); i >= 0;--i)
 		fonts.removeAt(toRemove[i]);
-	return copyCounter;
+	return 0;
 }
 
 int DataExport::buildIndex()
@@ -108,8 +143,8 @@ int DataExport::buildIndex()
 			xmlStream.writeCharacters( fid.getHtml() );
 			xmlStream.writeEndElement();
 			QStringList tl = fitem->tags();
-// 			tl.removeAll("Activated_On");
-// 			tl.removeAll("Activated_Off");
+			// 			tl.removeAll("Activated_On");
+			// 			tl.removeAll("Activated_Off");
 			foreach(QString tag, tl)
 			{
 				xmlStream.writeStartElement("tag");
@@ -126,18 +161,6 @@ int DataExport::buildIndex()
 	return fonts.count();
 }
 
-int DataExport::doExport()
-{
-	int bd (buildIndex());
-	if( bd == 0 )
-		return 0;
-	
-	int cp (copyFiles());
-	
-	buildHtml();
-	
-	return cp;
-}
 
 int DataExport::buildHtml()
 {
@@ -183,17 +206,17 @@ int DataExport::buildHtml()
 			
 			xmlStream.writeEndElement();// div.namebox
 			
-			xmlStream.writeStartElement("img");
-			xmlStream.writeAttribute("class", "imgbox");
-			xmlStream.writeAttribute("src", ffile.fileName() + ".png");
-			xmlStream.writeEndElement();// img.imgbox
+			//			xmlStream.writeStartElement("img");
+			//			xmlStream.writeAttribute("class", "imgbox");
+			//			xmlStream.writeAttribute("src", ffile.fileName() + ".png");
+			//			xmlStream.writeEndElement();// img.imgbox
 			
 			xmlStream.writeStartElement("div");
 			xmlStream.writeAttribute("class", "infobox");
 			
 			QStringList tl = fitem->tags();
-// 			tl.removeAll("Activated_On");
-// 			tl.removeAll("Activated_Off");
+			// 			tl.removeAll("Activated_On");
+			// 			tl.removeAll("Activated_Off");
 			foreach(QString tag, tl)
 			{
 				xmlStream.writeStartElement("div");

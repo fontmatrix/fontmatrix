@@ -72,6 +72,7 @@ private:
     unsigned int currentPage;
     QString uniBlock;
 
+    void updateButtons();
 
 signals:
     void backToList();

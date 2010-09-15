@@ -130,7 +130,7 @@ void FamilyWidget::setFamily(const QString &f)
 		activation = 0;
 
 		uniBlock = QString();
-		slotShowInfo();
+		slotShowSample();
 	}
 }
 
@@ -187,6 +187,7 @@ void FamilyWidget::slotShowSample()
 		fw->show();
 	}
 	currentPage = FAMILY_VIEW_SAMPLE;
+	updateButtons();
 }
 
 void FamilyWidget::slotShowInfo()
@@ -195,6 +196,7 @@ void FamilyWidget::slotShowInfo()
 	ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
 	ui->displayStack->setCurrentIndex(FAMILY_VIEW_INFO);
 	currentPage = FAMILY_VIEW_INFO;
+	updateButtons();
 }
 
 void FamilyWidget::slotShowChart()
@@ -216,6 +218,7 @@ void FamilyWidget::slotShowChart()
 		fw->show();
 	}
 	currentPage = FAMILY_VIEW_CHART;
+	updateButtons();
 }
 
 void FamilyWidget::slotShowActivation()
@@ -236,6 +239,8 @@ void FamilyWidget::slotShowActivation()
 	{
 		fw->show();
 	}
+	currentPage = FAMILY_VIEW_ACTIVATION;
+	updateButtons();
 }
 
 void FamilyWidget::slotDetachSample()
@@ -257,5 +262,37 @@ void FamilyWidget::slotStateChange()
 {
 	previewModel->resetBase(FMVariants::Order(FMFontDb::DB()->FamilySet(family)));
 	emit familyStateChanged();
+}
+
+void FamilyWidget::updateButtons()
+{
+	static QList<QToolButton*> buttons;
+	if(buttons.isEmpty())
+	{
+		buttons << ui->sampleButton
+				<< ui->infoButton
+				<< ui->chartButton
+				<< ui->activationButton;
+		foreach(QToolButton * b, buttons)
+		{
+			b->setCheckable(true);
+		}
+	}
+	foreach(QToolButton * b, buttons)
+	{
+		b->setChecked(false);
+	}
+	switch(currentPage)
+	{
+	case FAMILY_VIEW_SAMPLE: ui->sampleButton->setChecked(true);
+		break;
+	case FAMILY_VIEW_ACTIVATION: ui->activationButton->setChecked(true);
+		break;
+	case FAMILY_VIEW_CHART: ui->chartButton->setChecked(true);
+		break;
+	case FAMILY_VIEW_INFO : ui->infoButton->setChecked(true);
+		break;
+	default:break;
+	}
 }
 

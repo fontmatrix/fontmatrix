@@ -57,20 +57,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="infoButton">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>24</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Info</string>
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="sampleButton">
+         <widget class="QToolButton" name="sampleButton">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -83,7 +77,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="chartButton">
+         <widget class="QToolButton" name="chartButton">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -96,7 +90,20 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="activationButton">
+         <widget class="QToolButton" name="infoButton">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Info</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="activationButton">
           <property name="maximumSize">
            <size>
             <width>16777215</width>

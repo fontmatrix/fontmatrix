@@ -82,6 +82,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/playwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/prefspaneldialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/remotedir.cpp
 #${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/sampletoolbar.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/samplewidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/schelptreemodel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/sctextbrowser.cpp
@@ -197,6 +198,7 @@ parallelcoor.h
 playwidget.h
 prefspaneldialog.h
 remotedir.h
+sampletoolbar.h
 samplewidget.h
 sctextbrowser.h
 shortcuts.h
@@ -245,6 +247,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/panosewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/playwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/prefs_panel.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/repair.ui
+${CMAKE_CURRENT_SOURCE_DIR}/sampletoolbar.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/samplewidget.ui
 # ${CMAKE_CURRENT_SOURCE_DIR}/tagset.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.ui

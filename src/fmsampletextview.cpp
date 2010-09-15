@@ -51,7 +51,9 @@ FMSampleTextView::FMSampleTextView ( QWidget* parent )
 	}
 #endif
 
-	setInteractive ( true );
+	setInteractive ( false );
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	theRect = 0;
 	fPage = 0;
 	isSelecting = false;

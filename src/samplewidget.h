@@ -32,6 +32,7 @@ class QButtonGroup;
 class QAbstractButton;
 class QFileSystemWatcher;
 class QTimer;
+class SampleToolBar;
 
 namespace Ui {
     class SampleWidget;
@@ -97,6 +98,7 @@ protected:
 
 private:
     Ui::SampleWidget *ui;
+    SampleToolBar * sampleToolBar;
 
     const QString fontIdentifier;
     QGraphicsScene *loremScene;
@@ -124,9 +126,9 @@ private:
 
 private slots:
     void slotView(bool needDeRendering = false);
-    void slotChangeViewPage(QAbstractButton* );
-    void slotHintChanged(int);
-    void slotChangeViewPageSetting(bool);
+//    void slotChangeViewPage(QAbstractButton* );
+//    void slotHintChanged(int);
+//    void slotChangeViewPageSetting(bool);
     void slotUpdateSView();
     void slotZoom(int z);
     void slotUpdateRView();

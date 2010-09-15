@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include "samplewidget.h"
+#include "sampletoolbar.h"
 #include "ui_samplewidget.h"
 #include "typotek.h"
 #include "fmbaseshaper.h"
@@ -86,6 +87,11 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	layoutForPrint = false;
 	ui->setupUi(this);
 	ui->textProgression->setVisible(false);
+
+	sampleToolBar = new SampleToolBar(this);
+	ui->sampleGridLayout->addWidget(sampleToolBar, 0,0, Qt::AlignRight | Qt::AlignBottom);
+
+
 	refillSampleList();
 	fillOTTree();
 	sysWatcher = new QFileSystemWatcher(this);
@@ -96,18 +102,18 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 //	radioRenderGroup = new QButtonGroup();
 //	radioRenderGroup->addButton(ui->freetypeRadio);
 //	radioRenderGroup->addButton(ui->nativeRadio);
-	ui->stackedTools->setCurrentIndex(VIEW_PAGE_SAMPLES);
-	toolPanelWidth = ui->splitter_2->sizes().at(1);
-	if(toolPanelWidth == 0)
-	{
-		ui->sampleButton->setChecked(false);
-		ui->stackedTools->hide();
-		toolPanelWidth = ui->splitter_2->width()/3;
-	}
-	radioFTHintingGroup = new QButtonGroup;
-	radioFTHintingGroup->addButton(ui->noHinting);
-	radioFTHintingGroup->addButton(ui->lightHinting);
-	radioFTHintingGroup->addButton(ui->normalHinting);
+//	ui->stackedTools->setCurrentIndex(VIEW_PAGE_SAMPLES);
+//	toolPanelWidth = ui->splitter_2->sizes().at(1);
+//	if(toolPanelWidth == 0)
+//	{
+//		ui->sampleButton->setChecked(false);
+//		ui->stackedTools->hide();
+//		toolPanelWidth = ui->splitter_2->width()/3;
+//	}
+//	radioFTHintingGroup = new QButtonGroup;
+//	radioFTHintingGroup->addButton(ui->noHinting);
+//	radioFTHintingGroup->addButton(ui->lightHinting);
+//	radioFTHintingGroup->addButton(ui->normalHinting);
 
 	loremScene = new QGraphicsScene;
 	ftScene =  new QGraphicsScene;
@@ -129,11 +135,11 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	ui->loremView_FT->locker = false;
 	ui->loremView_FT->fakePage();
 
-	QMap<QString, int> sTypes(FMShaperFactory::types());
-	for(QMap<QString, int>::iterator sIt = sTypes.begin(); sIt != sTypes.end() ; ++sIt)
-	{
-		ui->shaperTypeCombo->addItem(sIt.key(), sIt.value());
-	}
+//	QMap<QString, int> sTypes(FMShaperFactory::types());
+//	for(QMap<QString, int>::iterator sIt = sTypes.begin(); sIt != sTypes.end() ; ++sIt)
+//	{
+//		ui->shaperTypeCombo->addItem(sIt.key(), sIt.value());
+//	}
 
 	QSettings settings;
 //	sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
@@ -172,11 +178,11 @@ void SampleWidget::createConnections()
 {
 	// connections
 //	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
-	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
+//	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
 
-	connect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-	connect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-	connect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+//	connect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+//	connect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+//	connect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 
 	connect ( ui->loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	connect ( ui->loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -191,16 +197,17 @@ void SampleWidget::createConnections()
 
 	connect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
 	connect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
-	connect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
+//	connect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
+	connect ( sampleToolBar, SIGNAL( SizeChanged() ),this,SLOT(slotLiveFontSize()));
 
 	connect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	connect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
 	connect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
-	connect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-	connect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+//	connect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+//	connect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
 
 	connect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
-	connect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
+//	connect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
 	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 	connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
@@ -217,11 +224,11 @@ void SampleWidget::createConnections()
 void SampleWidget::removeConnections()
 {
 //	disconnect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
-	disconnect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
+//	disconnect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
 
-	disconnect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-	disconnect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-	disconnect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+//	disconnect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+//	disconnect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
+//	disconnect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 
 	disconnect ( ui->loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	disconnect ( ui->loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -236,16 +243,17 @@ void SampleWidget::removeConnections()
 
 	disconnect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
 	disconnect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
-	disconnect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
+//	disconnect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
+	disconnect ( sampleToolBar, SIGNAL( SizeChanged() ),this,SLOT(slotLiveFontSize()));
 
 	disconnect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	disconnect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
 	disconnect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
-	disconnect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-	disconnect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+//	disconnect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
+//	disconnect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
 
 	disconnect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
-	disconnect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
+//	disconnect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
 	disconnect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 	disconnect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
@@ -279,19 +287,19 @@ SampleWidget::State SampleWidget::state() const
 {
 	State ret;
 	ret.set = true;
-	ret.fontSize = ui->liveFontSizeSpin->value();
+	ret.fontSize = sampleToolBar->getFontSize();
 //	ret.renderRaster = ui->freetypeRadio->isChecked();
 	ret.renderHinting = 0;
-	if(ui->normalHinting->isChecked())
-		ret.renderHinting = 1;
-	else if(ui->lightHinting->isChecked())
-		ret.renderHinting = 2;
-	ret.sampleName = ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString();
-	if(ui->useShaperCheck->isChecked())
-	{
-		ret.script = ui->langCombo->currentText();
-		ret.shaper = ui->shaperTypeCombo->currentText();
-	}
+//	if(ui->normalHinting->isChecked())
+//		ret.renderHinting = 1;
+//	else if(ui->lightHinting->isChecked())
+//		ret.renderHinting = 2;
+//	ret.sampleName = ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString();
+//	if(ui->useShaperCheck->isChecked())
+//	{
+//		ret.script = ui->langCombo->currentText();
+//		ret.shaper = ui->shaperTypeCombo->currentText();
+//	}
 	return ret;
 }
 
@@ -299,21 +307,21 @@ void SampleWidget::setState(const SampleWidget::State &s)
 {
 	if(!s.set)
 		return;
-	ui->liveFontSizeSpin->setValue( s.fontSize );
+	sampleToolBar->setFontSize( s.fontSize );
 	reSize( s.fontSize, s.fontSize * sampleRatio );
 
-	{
-		switch(s.renderHinting)
-		{
-		case 0: ui->noHinting->setChecked(true);
-			break;
-		case 1: ui->normalHinting->setChecked(true);
-			break;
-		case 2: ui->lightHinting->setChecked(true);
-			break;
-		default:break;
-		}
-	}
+//	{
+//		switch(s.renderHinting)
+//		{
+//		case 0: ui->noHinting->setChecked(true);
+//			break;
+//		case 1: ui->normalHinting->setChecked(true);
+//			break;
+//		case 2: ui->lightHinting->setChecked(true);
+//			break;
+//		default:break;
+//		}
+//	}
 
 	QTreeWidgetItem * targetItem = 0;
 	for(int i(0); i < ui->sampleTextTree->topLevelItemCount(); ++i)
@@ -335,12 +343,12 @@ void SampleWidget::setState(const SampleWidget::State &s)
 	if(targetItem != 0)
 		ui->sampleTextTree->setCurrentItem(targetItem, 0, QItemSelectionModel::SelectCurrent);
 
-	if(!s.shaper.isEmpty())
-	{
-		ui->useShaperCheck->setChecked(true);
-		ui->shaperTypeCombo->setCurrentIndex(ui->shaperTypeCombo->findText(s.shaper));
-		ui->langCombo->setCurrentIndex(ui->langCombo->findText(s.script));
-	}
+//	if(!s.shaper.isEmpty())
+//	{
+//		ui->useShaperCheck->setChecked(true);
+//		ui->shaperTypeCombo->setCurrentIndex(ui->shaperTypeCombo->findText(s.shaper));
+//		ui->langCombo->setCurrentIndex(ui->langCombo->findText(s.script));
+//	}
 
 	slotView();
 }
@@ -585,72 +593,72 @@ OTFSet SampleWidget::deFillOTTree()
 
 }
 
-void SampleWidget::slotChangeViewPage(QAbstractButton* but)
-{
-	QString radioName( but->objectName() );
+//void SampleWidget::slotChangeViewPage(QAbstractButton* but)
+//{
+//	QString radioName( but->objectName() );
 
-	if(radioName == "freetypeRadio" )
-	{
-		ui->stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
-		ui->hintingSelect->setEnabled(true);
-	}
-	else if(radioName == "nativeRadio" )
-	{
-		ui->stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
-		ui->hintingSelect->setEnabled(false);
-	}
+//	if(radioName == "freetypeRadio" )
+//	{
+//		ui->stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
+//		ui->hintingSelect->setEnabled(true);
+//	}
+//	else if(radioName == "nativeRadio" )
+//	{
+//		ui->stackedViews->setCurrentIndex(VIEW_PAGE_ABSOLUTE);
+//		ui->hintingSelect->setEnabled(false);
+//	}
 
-	slotView(true);
-}
+//	slotView(true);
+//}
 
-void SampleWidget::slotHintChanged(int )
-{
-	slotView(true);
-	emit stateChanged();
-}
+//void SampleWidget::slotHintChanged(int )
+//{
+//	slotView(true);
+//	emit stateChanged();
+//}
 
 
-void SampleWidget::slotChangeViewPageSetting ( bool ch )
-{
-	// 	qDebug() <<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
-	QString butName ( sender()->objectName() );
-	if ( !ch )
-	{
-		toolPanelWidth = ui->splitter_2->sizes().at ( 1 ) ;
-		ui->stackedTools->hide();
-	}
-	else
-	{
-		ui->stackedTools->show();
-		if ( ui->splitter_2->sizes().at ( 1 ) == 0 )
-		{
-			QList<int> li;
-			li << ui->splitter_2->width() - toolPanelWidth << toolPanelWidth;
-			ui->splitter_2->setSizes ( li );
-		}
-	}
+//void SampleWidget::slotChangeViewPageSetting ( bool ch )
+//{
+//	// 	qDebug() <<"MainViewWidget::slotChangeViewPageSetting("<<ch<<")";
+//	QString butName ( sender()->objectName() );
+//	if ( !ch )
+//	{
+//		toolPanelWidth = ui->splitter_2->sizes().at ( 1 ) ;
+//		ui->stackedTools->hide();
+//	}
+//	else
+//	{
+//		ui->stackedTools->show();
+//		if ( ui->splitter_2->sizes().at ( 1 ) == 0 )
+//		{
+//			QList<int> li;
+//			li << ui->splitter_2->width() - toolPanelWidth << toolPanelWidth;
+//			ui->splitter_2->setSizes ( li );
+//		}
+//	}
 
-	QMap<QString, QToolButton*> bmap;
-	QMap<QString, int> pmap;
-	bmap[ "settingsButton" ] = ui->settingsButton;
-	bmap[ "openTypeButton" ] = ui->openTypeButton;
-	bmap[ "sampleButton" ] = ui->sampleButton;
-	pmap[ "settingsButton" ] = VIEW_PAGE_SETTINGS;
-	pmap[ "openTypeButton" ] = VIEW_PAGE_OPENTYPE;
-	pmap[ "sampleButton" ] = VIEW_PAGE_SAMPLES;
+//	QMap<QString, QToolButton*> bmap;
+//	QMap<QString, int> pmap;
+//	bmap[ "settingsButton" ] = ui->settingsButton;
+//	bmap[ "openTypeButton" ] = ui->openTypeButton;
+//	bmap[ "sampleButton" ] = ui->sampleButton;
+//	pmap[ "settingsButton" ] = VIEW_PAGE_SETTINGS;
+//	pmap[ "openTypeButton" ] = VIEW_PAGE_OPENTYPE;
+//	pmap[ "sampleButton" ] = VIEW_PAGE_SAMPLES;
 
-	foreach(QString pk, bmap.keys())
-	{
-		if(butName == pk)
-		{
-			ui->stackedTools->setCurrentIndex(pmap[pk]);
-		}
-		else
-		{
-			bmap[pk]->setChecked ( false );
-		}
-	}
-}
+//	foreach(QString pk, bmap.keys())
+//	{
+//		if(butName == pk)
+//		{
+//			ui->stackedTools->setCurrentIndex(pmap[pk]);
+//		}
+//		else
+//		{
+//			bmap[pk]->setChecked ( false );
+//		}
+//	}
+//}
 
 
 void SampleWidget::slotUpdateSView()
@@ -705,7 +713,7 @@ void SampleWidget::slotEditSampleText()
 
 void SampleWidget::slotLiveFontSize()
 {
-	double fs( ui->liveFontSizeSpin->value() );
+	double fs( sampleToolBar->getFontSize() );
 	reSize(fs, fs * sampleRatio);
 	slotView(true);
 	emit stateChanged();
@@ -812,10 +820,10 @@ void SampleWidget::refillSampleList()
 
 unsigned int SampleWidget::hinting()
 {
-	if(ui->lightHinting->isChecked())
-		return FT_LOAD_TARGET_LIGHT;
-	else if(ui->normalHinting->isChecked())
-		return FT_LOAD_TARGET_NORMAL;
+//	if(ui->lightHinting->isChecked())
+//		return FT_LOAD_TARGET_LIGHT;
+//	else if(ui->normalHinting->isChecked())
+//		return FT_LOAD_TARGET_NORMAL;
 
 	return FT_LOAD_NO_HINTING ;
 }

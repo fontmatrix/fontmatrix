@@ -45,7 +45,7 @@ private:
     Ui::SampleToolBar *ui;
 
 signals:
-    void SizeChanged();
+    void SizeChanged(double);
 };
 
 #endif // SAMPLETOOLBAR_H

@@ -134,7 +134,7 @@ private slots:
     void slotUpdateRView();
     void slotSampleChanged();
     void slotEditSampleText();
-    void slotLiveFontSize();
+    void slotLiveFontSize(double);
     void slotFeatureChanged();
     void slotDefaultOTF();
     void slotResetOTF();

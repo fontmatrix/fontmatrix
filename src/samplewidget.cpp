@@ -198,7 +198,7 @@ void SampleWidget::createConnections()
 	connect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
 	connect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 //	connect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
-	connect ( sampleToolBar, SIGNAL( SizeChanged() ),this,SLOT(slotLiveFontSize()));
+	connect ( sampleToolBar, SIGNAL( SizeChanged(double) ),this,SLOT(slotLiveFontSize(double)));
 
 	connect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	connect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
@@ -244,7 +244,7 @@ void SampleWidget::removeConnections()
 	disconnect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
 	disconnect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
 //	disconnect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
-	disconnect ( sampleToolBar, SIGNAL( SizeChanged() ),this,SLOT(slotLiveFontSize()));
+	disconnect ( sampleToolBar, SIGNAL( SizeChanged(double) ),this,SLOT(slotLiveFontSize(double)));
 
 	disconnect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	disconnect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
@@ -711,9 +711,9 @@ void SampleWidget::slotEditSampleText()
 	typotek::getInstance()->slotPrefsPanel(PrefsPanelDialog::PAGE_SAMPLETEXT);
 }
 
-void SampleWidget::slotLiveFontSize()
+void SampleWidget::slotLiveFontSize(double fs)
 {
-	double fs( sampleToolBar->getFontSize() );
+//	double fs( sampleToolBar->getFontSize() );
 	reSize(fs, fs * sampleRatio);
 	slotView(true);
 	emit stateChanged();

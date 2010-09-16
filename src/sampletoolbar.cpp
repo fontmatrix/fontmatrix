@@ -29,6 +29,8 @@ SampleToolBar::SampleToolBar(QWidget *parent) :
     setAutoFillBackground(true);
 
     connect(ui->liveSize, SIGNAL(valueChanged(double)), this, SIGNAL(SizeChanged(double)));
+    connect(ui->sampleButton, SIGNAL(toggled(bool)), this, SIGNAL(SampleToggled(bool)));
+    connect(ui->opentypeButton, SIGNAL(toggled(bool)), this, SIGNAL(OpenTypeToggled(bool)));
 }
 
 SampleToolBar::~SampleToolBar()

@@ -32,6 +32,12 @@
      <property name="text">
       <string>Samples</string>
      </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="0" column="3">
@@ -39,14 +45,16 @@
      <property name="text">
       <string>OpenType</string>
      </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="0" column="4">
-    <widget class="QCheckBox" name="shaperCheckBox">
-     <property name="text">
-      <string>Use shaper</string>
-     </property>
-    </widget>
+    <widget class="QComboBox" name="languageCombo"/>
    </item>
   </layout>
  </widget>

@@ -177,12 +177,6 @@ SampleWidget::~SampleWidget()
 void SampleWidget::createConnections()
 {
 	// connections
-//	connect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
-//	connect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
-
-//	connect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-//	connect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-//	connect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 
 	connect ( ui->loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	connect ( ui->loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -196,18 +190,14 @@ void SampleWidget::createConnections()
 	connect ( this, SIGNAL(stopLayout()), textLayoutFT,SLOT(stopLayout()));
 
 	connect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
-	connect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
-//	connect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
+	connect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotEditSample() ) );
 	connect ( sampleToolBar, SIGNAL( SizeChanged(double) ),this,SLOT(slotLiveFontSize(double)));
 
 	connect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	connect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
 	connect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
-//	connect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-//	connect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
 
 	connect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
-//	connect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
 	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 	connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
@@ -218,17 +208,16 @@ void SampleWidget::createConnections()
 	connect(reloadTimer,SIGNAL(timeout()), this, SLOT(slotReload()));
 
 	connect(this, SIGNAL(stateChanged()), this, SLOT(saveState()));
+
+	connect(sampleToolBar, SIGNAL(OpenTypeToggled(bool)), this, SLOT(slotShowOpenType(bool)));
+	connect(sampleToolBar, SIGNAL(SampleToggled(bool)), this, SLOT(slotShowSamples(bool)));
+
+	connect(ui->addSampleButton, SIGNAL(clicked()), this, SLOT(slotAddSample()));
 }
 
 
 void SampleWidget::removeConnections()
 {
-//	disconnect (radioRenderGroup,SIGNAL(buttonClicked( QAbstractButton* )),this,SLOT(slotChangeViewPage(QAbstractButton*)));
-//	disconnect (radioFTHintingGroup, SIGNAL(buttonClicked(int)),this,SLOT(slotHintChanged(int)));
-
-//	disconnect (ui->openTypeButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-//	disconnect (ui->settingsButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
-//	disconnect (ui->sampleButton,SIGNAL(clicked( bool )),this,SLOT(slotChangeViewPageSetting( bool )));
 
 	disconnect ( ui->loremView, SIGNAL(pleaseUpdateMe()), this, SLOT(slotUpdateSView()));
 	disconnect ( ui->loremView, SIGNAL(pleaseZoom(int)),this,SLOT(slotZoom(int)));
@@ -242,18 +231,13 @@ void SampleWidget::removeConnections()
 	disconnect ( this, SIGNAL(stopLayout()), textLayoutFT,SLOT(stopLayout()));
 
 	disconnect ( ui->sampleTextTree,SIGNAL ( itemSelectionChanged ()),this,SLOT ( slotSampleChanged() ) );
-	disconnect ( ui->sampleTextButton, SIGNAL(released()),this, SLOT(slotEditSampleText()));
-//	disconnect ( ui->liveFontSizeSpin, SIGNAL( editingFinished() ),this,SLOT(slotLiveFontSize()));
 	disconnect ( sampleToolBar, SIGNAL( SizeChanged(double) ),this,SLOT(slotLiveFontSize(double)));
 
 	disconnect ( ui->OpenTypeTree, SIGNAL ( itemClicked ( QTreeWidgetItem*, int ) ), this, SLOT ( slotFeatureChanged() ) );
 	disconnect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
 	disconnect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
-//	disconnect ( ui->shaperTypeCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
-//	disconnect ( ui->langCombo,SIGNAL ( activated ( int ) ),this,SLOT ( slotChangeScript() ) );
 
 	disconnect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
-//	disconnect ( ui->useShaperCheck,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotWantShape() ) );
 
 	disconnect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 	disconnect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
@@ -294,12 +278,12 @@ SampleWidget::State SampleWidget::state() const
 //		ret.renderHinting = 1;
 //	else if(ui->lightHinting->isChecked())
 //		ret.renderHinting = 2;
-//	ret.sampleName = ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString();
-//	if(ui->useShaperCheck->isChecked())
-//	{
-//		ret.script = ui->langCombo->currentText();
-//		ret.shaper = ui->shaperTypeCombo->currentText();
-//	}
+	ret.sampleName = ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString();
+	if(ui->useShaperCheck->isChecked())
+	{
+		ret.script = ui->langCombo->currentText();
+		ret.shaper = ui->shaperTypeCombo->currentText();
+	}
 	return ret;
 }
 
@@ -351,6 +335,7 @@ void SampleWidget::setState(const SampleWidget::State &s)
 //	}
 
 	slotView();
+	slotEditSample();
 }
 
 void SampleWidget::slotView ( bool needDeRendering )
@@ -706,10 +691,7 @@ void SampleWidget::slotSampleChanged()
 	emit stateChanged();
 }
 
-void SampleWidget::slotEditSampleText()
-{
-	typotek::getInstance()->slotPrefsPanel(PrefsPanelDialog::PAGE_SAMPLETEXT);
-}
+
 
 void SampleWidget::slotLiveFontSize(double fs)
 {
@@ -776,7 +758,7 @@ void SampleWidget::refillSampleList()
 	QList<QString> ul( sl.take(QString("User")) );
 	if(ul.count())
 	{
-		QTreeWidgetItem * uRoot = new QTreeWidgetItem(ui->sampleTextTree);
+		uRoot = new QTreeWidgetItem(ui->sampleTextTree);
 		//: Identify root of user defined sample texts
 		uRoot->setText(0, tr("User"));
 		bool first(true);
@@ -879,6 +861,57 @@ void SampleWidget::slotReload()
 void SampleWidget::saveState()
 {
 	QSettings settings;
-	QByteArray bs(state().toByteArray());
+	State s(state());
+	QByteArray bs(s.toByteArray());
 	settings.setValue("Sample/state", bs);
 }
+
+void SampleWidget::slotShowSamples(bool b)
+{
+	if(b)
+	{
+		ui->sampleEditWidget->setAutoFillBackground(true);
+		ui->sampleEditWidget->resize(ui->sampleGridLayout->geometry().width() / 2, ui->sampleGridLayout->geometry().height() / 2);
+		ui->sampleGridLayout->addWidget(ui->sampleEditWidget, 0,0, Qt::AlignRight | Qt::AlignTop);
+	}
+	else
+	{
+		ui->sampleGridLayout->removeWidget(ui->sampleEditWidget);
+		ui->sampleEditWidget->setParent(ui->stackedViews->widget(VIEW_PAGE_SAMPLES));
+	}
+}
+
+void SampleWidget::slotShowOpenType(bool b)
+{
+	if(b)
+		ui->stackedViews->setCurrentIndex(VIEW_PAGE_OPENTYPE);
+	else
+		ui->stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
+}
+
+void SampleWidget::slotAddSample()
+{
+	QString nu( tr("New Sample") );
+	QTreeWidgetItem * it = new QTreeWidgetItem();
+	it->setText(0,nu);
+	it->setData(0, Qt::UserRole , QString("User::") + nu);
+	it->setFlags(it->flags() | Qt::ItemIsEditable);
+	uRoot->addChild(it);
+	ui->sampleTextTree->openPersistentEditor(it);
+	if(!uRoot->isExpanded())
+		uRoot->setExpanded(true);
+	ui->sampleTextTree->setCurrentItem(it);
+}
+
+void SampleWidget::slotRemoveSample()
+{
+
+}
+
+void SampleWidget::slotEditSample()
+{
+	QTreeWidgetItem * currentItem = ui->sampleTextTree->currentItem();
+	ui->sampleEdit->setPlainText(typotek::getInstance()->namedSample( currentItem->data(0, Qt::UserRole).toString() ));
+	ui->sampleEdit->setReadOnly(currentItem->parent() != uRoot);
+}
+

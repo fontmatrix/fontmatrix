@@ -46,6 +46,8 @@ private:
 
 signals:
     void SizeChanged(double);
+    void SampleToggled(bool);
+    void OpenTypeToggled(bool);
 };
 
 #endif // SAMPLETOOLBAR_H

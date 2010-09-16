@@ -33,6 +33,7 @@ class QAbstractButton;
 class QFileSystemWatcher;
 class QTimer;
 class SampleToolBar;
+class QTreeWidgetItem;
 
 namespace Ui {
     class SampleWidget;
@@ -40,9 +41,9 @@ namespace Ui {
 
 #define VIEW_PAGE_FREETYPE 0
 #define VIEW_PAGE_ABSOLUTE 1
-#define VIEW_PAGE_OPENTYPE 0
-#define VIEW_PAGE_SETTINGS 1
-#define VIEW_PAGE_SAMPLES  2
+#define VIEW_PAGE_OPENTYPE 3
+//#define VIEW_PAGE_SETTINGS 1
+#define VIEW_PAGE_SAMPLES  4
 
 class SampleWidget : public FloatingWidget
 {
@@ -99,6 +100,7 @@ protected:
 private:
     Ui::SampleWidget *ui;
     SampleToolBar * sampleToolBar;
+    QTreeWidgetItem * uRoot;
 
     const QString fontIdentifier;
     QGraphicsScene *loremScene;
@@ -133,7 +135,6 @@ private slots:
     void slotZoom(int z);
     void slotUpdateRView();
     void slotSampleChanged();
-    void slotEditSampleText();
     void slotLiveFontSize(double);
     void slotFeatureChanged();
     void slotDefaultOTF();
@@ -143,6 +144,13 @@ private slots:
     void slotWantShape();
     void slotFileChanged(const QString&);
     void slotReload();
+
+    void slotAddSample();
+    void slotRemoveSample();
+    void slotEditSample();
+
+    void slotShowSamples(bool);
+    void slotShowOpenType(bool);
 
     void slotPrint();
 

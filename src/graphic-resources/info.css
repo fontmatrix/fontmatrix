@@ -1,1 +1,177 @@
-MOVED TO /src/graphic-resources/html-css/info.css
+/*
+	Informations (Fontmatrix) 
+	base style 
+*/
+
+*{
+	border:0;
+	margin:0;
+	padding:0;
+	font-family: sans-serif;
+}
+
+body{
+	background-color : #fefefe;
+}
+
+#file {
+	display:none;
+/*	text-align:right;
+    background-color : #ddd;
+    color : #333;
+    font-family : monospace;
+    font-size : 10pt;*/
+}
+
+#general{
+	position: absolute;
+	top: 142px;
+	width:620px;
+/* 	background-color:green; */
+}
+
+.encodingcurrent{
+	font-weight:bold;
+}
+
+.infoblock {
+	clear:both;
+}
+
+.infoblock:hover .langundefined {
+	border-left : 1pt solid red ;
+	color:black;
+}
+.infoblock:hover .infoname
+{
+	color:red;
+}
+
+.infoname {
+	text-align:right;
+    background-color : #fefefe;
+    color:#333;
+    float : left;
+    font-size : 8pt;
+    font-weight : bold;
+    width : 180px;
+	height:6pt;
+  }
+
+.overflow{
+	cursor: pointer;
+	color:#666;
+}
+
+.unfolded{
+	color: #333;
+}
+
+
+.langundefined {
+    color: #444;
+    background-color : #fefefe;
+    margin-left : 186px;
+    border-left : 1pt solid gray ;
+	padding-bottom:9pt;
+    padding-left: 6pt;
+    font-size : 8pt;
+    line-height : 12pt;
+	overflow:hidden;
+  }
+
+
+#panose_block {
+	position: absolute;
+	top: 142px;
+	left: 490px;
+	width: 300px;
+}
+
+#panoselabel{
+	font-size:12pt;
+}
+
+.panose_name {
+	float:left;
+	text-align:left;
+    font-size : 8pt;
+/* 	padding-left:8pt; */
+    color : #aaa;
+	padding-right:4pt;
+  }
+
+
+.panose_desc {
+text-align:left;
+    font-size:8pt;
+    color:#333;
+  }
+
+#langblock{
+	position: absolute;
+	top:322px;
+	left: 550px;
+	width: 300px;
+ }
+
+.langblockname {
+	font-size:12pt;
+ }
+ 
+ #langblock ul{
+	list-style-type:none
+ }
+ 
+ #langblock ul li{
+/* 	font-style:italic; */
+	font-size:8pt;
+	color:#666;
+/* 	padding-left:8pt; */
+ }
+ 
+ #langblock ul li:hover{
+ 	color:#222;
+ }
+
+#fstype {
+/* 	margin-top:24pt; */
+position:fixed;
+bottom:0;
+width:400px;
+padding-right:200px;
+background-color:#fff;
+}
+
+#fstype > div{
+	margin:4pt 0;
+	padding:2pt 0 2pt 2pt;
+	border-left:6pt solid black;
+}
+
+.fsname {
+	float:left;
+	padding-right: 9pt;
+	font-weight:bold;
+	line-height:9pt;
+	font-size:12pt;
+}
+.fsdesc{
+	line-height:8pt;
+/* 	font-style:italic; */
+	font-size:7pt;
+/* 	font-family:serif; */
+}
+
+#previewblock{
+	text-align:center;
+	width:800px;
+}
+
+svg{
+/*	margin-left: 182px;*/
+	margin-bottom:62px;
+	padding:1% 1% 0 1%;
+	border-bottom:1px solid black;
+}
+

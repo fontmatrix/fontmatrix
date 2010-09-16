@@ -7,37 +7,27 @@
 	border:0;
 	margin:0;
 	padding:0;
+	font-family: sans-serif;
 }
 
 body{
 	background-color : #fefefe;
 }
 
-#headline {
-/*    text-shadow: black 4px 4px 2px; */
-    background-color : #ff3f00;
-    color : white;
-    font-family : 'sans-serif';
-    font-size : 18pt;
-    font-weight : bold;
-    line-height : 30pt;
-    padding-bottom : 4pt;
-    padding-left : 6pt;
-    padding-right : 4pt;
-    padding-top : 4pt;
-  }
-
 #file {
-	text-align:right;
+	display:none;
+/*	text-align:right;
     background-color : #ddd;
     color : #333;
     font-family : monospace;
-    font-size : 10pt;
+    font-size : 10pt;*/
 }
 
 #general{
-	float:left;
-	width:75%;
+	position: absolute;
+	top: 142px;
+	width:620px;
+/* 	background-color:green; */
 }
 
 .encodingcurrent{
@@ -47,8 +37,9 @@ body{
 .infoblock {
 	clear:both;
 }
+
 .infoblock:hover .langundefined {
-	border-left : 10pt solid red ;
+	border-left : 1pt solid red ;
 	color:black;
 }
 .infoblock:hover .infoname
@@ -56,101 +47,76 @@ body{
 	color:red;
 }
 
-
 .infoname {
 	text-align:right;
     background-color : #fefefe;
     color:#333;
-/*     background-image : url('css-info-propertyname.png'); */
-    background-repeat : repeat-y;
     float : left;
-    font-family : 'sans-serif';
-    font-size : 10pt;
-    font-style : italic;
+    font-size : 8pt;
     font-weight : bold;
-    line-height : 200%;
-    padding-right : 1%;
-    width : 30%;
+    width : 180px;
+	height:6pt;
   }
 
+.overflow{
+	cursor: pointer;
+	color:#666;
+}
 
-.langmatch {
-    color: #333;
-    background-color : #fefefe;
-    margin-left : 31%;
-    border-left : 10pt solid gray ;
-    padding-left: 6pt;
-    font-family : 'sans-serif';
-    font-size : 10pt;
-    line-height : 20pt;
-  }
+.unfolded{
+	color: #333;
+}
 
 
 .langundefined {
     color: #444;
     background-color : #fefefe;
-    margin-left : 31%;
-    border-left : 10pt solid gray ;
+    margin-left : 186px;
+    border-left : 1pt solid gray ;
+	padding-bottom:9pt;
     padding-left: 6pt;
-    font-family : 'sans-serif';
-    font-size : 10pt;
-    line-height : 20pt;
-  }
-
-
-.langnomatch {
-    color: #444;
-    background-color : #fefefe;
-    margin-left : 31%;
-    border-left : 10pt solid gray ;
-    padding-left: 6pt;
-    font-family : 'sans-serif';
-    font-style : italic;
-    font-size : 10pt;
-    line-height : 20pt;
+    font-size : 8pt;
+    line-height : 12pt;
+	overflow:hidden;
   }
 
 
 #panose_block {
-    background-color : #fafafa;
-    margin-left:80%;
-    padding:1pt;
-/*     border-left: 2px solid black; */
-  }
+	position: absolute;
+	top: 142px;
+	left: 490px;
+	width: 300px;
+}
 
+#panoselabel{
+	font-size:12pt;
+}
 
 .panose_name {
+	float:left;
 	text-align:left;
-	font-style:italic;
-    font-size : 9pt;
-    color : gray;
+    font-size : 8pt;
+/* 	padding-left:8pt; */
+    color : #aaa;
+	padding-right:4pt;
   }
 
 
 .panose_desc {
-text-align:center;
-    font-size:9pt;
+text-align:left;
+    font-size:8pt;
     color:#333;
   }
 
-
-
-.panose_desc:hover {
-    background-color:white;
-    color:black;
-  }
-
-
 #langblock{
-	margin-left:80%;
+	position: absolute;
+	top:322px;
+	left: 550px;
+	width: 300px;
  }
 
 .langblockname {
-	margin-top:8pt;
-	border-top :2pt solid #222;
-	font-weight:bold;
-	font-size:10pt;
-/* 	padding-left:4pt; */
+	font-size:12pt;
  }
  
  #langblock ul{
@@ -159,9 +125,9 @@ text-align:center;
  
  #langblock ul li{
 /* 	font-style:italic; */
-	font-size:9pt;
+	font-size:8pt;
 	color:#666;
-	padding-left:4pt;
+/* 	padding-left:8pt; */
  }
  
  #langblock ul li:hover{
@@ -169,25 +135,43 @@ text-align:center;
  }
 
 #fstype {
-	margin-top:24pt;
-	font-style:monospace;
+/* 	margin-top:24pt; */
+position:fixed;
+bottom:0;
+width:400px;
+padding-right:200px;
+background-color:#fff;
 }
 
 #fstype > div{
 	margin:4pt 0;
 	padding:2pt 0 2pt 2pt;
-	border-left:20pt solid black;
+	border-left:6pt solid black;
 }
 
 .fsname {
 	float:left;
-	padding-right: 1em;
+	padding-right: 9pt;
 	font-weight:bold;
 	line-height:9pt;
-	font-size:9pt;
+	font-size:12pt;
 }
 .fsdesc{
-	line-height:9pt;
-	font-style:italic;
-	font-size:8pt;
+	line-height:8pt;
+/* 	font-style:italic; */
+	font-size:7pt;
+/* 	font-family:serif; */
 }
+
+#previewblock{
+	text-align:center;
+	width:800px;
+}
+
+svg{
+/*	margin-left: 182px;*/
+	margin-bottom:62px;
+	padding:1% 1% 0 1%;
+	border-bottom:1px solid black;
+}
+

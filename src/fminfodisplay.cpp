@@ -157,21 +157,29 @@ QString FMInfoDisplay::writeSVGPreview(FontItem * font)
 			}
 		}
 	}
-	QString openElem ( QString ( "<svg width=\"%1\" height=\"%2\"  xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n" )
-			.arg ( horOffset )
-			.arg ( maxHeight*1.6 ));
+	QString openElem ( QString ( "<div id=\"previewblock\"><svg width=\"%1px\" height=\"%2px\"  xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n" )
+			.arg ( qRound(horOffset) )
+			.arg ( qRound(maxHeight*1.6) ));
 	
 	
-	return openElem + svg + "</svg>\n";
+	return openElem + svg + "</svg></div>\n";
 }
 
 QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 {
 	QString ret;
 	QMap<int, QStringList> orderedInfo;
+	QString modelItem ( "<div class=\"infoblock\"><div class=\"infoname\"> %1 </div><div class=\"langundefined\"> %2 </div></div>\n" );
+	QString fontType(font->type());
+	if(fontType == QString("CFF"))
+		fontType = QString("OpenType");
 
-	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ QObject::tr ( "Glyphs count" ) +"</div><div class=\"langundefined\">"+ QString::number ( font->glyphsCount() ) +"</div></div>\n";
-	ret += "<div class=\"infoblock\"><div class=\"infoname\">"+ QObject::tr ( "Font Type" ) +"</div><div class=\"langundefined\">"+ font->type() +"</div></div>\n";
+	ret += modelItem.arg(QObject::tr("File"))
+	       .arg(font->path().replace("/","/&shy;"));
+	ret += modelItem.arg( QObject::tr ( "Glyphs count" ))
+	       .arg(QString::number ( font->glyphsCount() ));
+	ret += modelItem.arg(QObject::tr ( "Font Type" ) )
+	       .arg(fontType );
 
 
 	QStringList cmapStrings;
@@ -208,39 +216,40 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 			}
 		}
 
-		QString styleLangMatch;
+//		QString styleLangMatch("\"langundefined\"");
 		for ( QMap<int, QMap<int, QString> >::const_iterator lit = moreInfo.begin(); lit != moreInfo.end(); ++lit )
 		{
-			if ( FMEncData::LangIdMap()[ lit.key() ].contains ( sysLang ) ) // lang match
-			{
-				styleLangMatch = "\"langmatch\"";
-			}
-			else if ( FMEncData::LangIdMap()[ lit.key() ] == "DEFAULT" ) // lang does not match but it’s international name
-			{
-				styleLangMatch = "\"langundefined\"";
-			}
-			else // lang does not match at all
-			{
-				styleLangMatch = "\"langnomatch\"";
-			}
+//			if ( FMEncData::LangIdMap()[ lit.key() ].contains ( sysLang ) ) // lang match
+//			{
+//				styleLangMatch = "\"langmatch\"";
+//			}
+//			else if ( FMEncData::LangIdMap()[ lit.key() ] == "DEFAULT" ) // lang does not match but it’s international name
+//			{
+//				styleLangMatch = "\"langundefined\"";
+//			}
+//			else // lang does not match at all
+//			{
+//				styleLangMatch = "\"langnomatch\"";
+//			}
 			for ( QMap<int, QString>::const_iterator mit = lit.value().begin(); mit != lit.value().end(); ++mit )
 			{
-				if ( FMEncData::LangIdMap()[ lit.key() ].contains ( sysLang ) )
+//				if ( FMEncData::LangIdMap()[ lit.key() ].contains ( sysLang ) )
 				{
 					QString name_value(url2href(xhtmlifies(mit.value()))); // compact coding :)
 					name_value.replace ( "\n","<br/>" );
-					QString dcname ( "<div class="+ styleLangMatch +">" + name_value  +"</div>\n" );
-					if ( !orderedInfo[ mit.key() ].contains ( dcname ) )
+					QString dcname (name_value);
+//					if ( !orderedInfo[ mit.key() ].contains ( dcname ) )
+					if(!orderedInfo.contains(mit.key()))
 						orderedInfo[ mit.key() ] << dcname;
 				}
-				else if ( FMEncData::LangIdMap()[ lit.key() ] == "DEFAULT" && !localizedKeys.contains ( mit.key() ) )
-				{
-					QString name_value(url2href(xhtmlifies(mit.value())));
-					name_value.replace ( "\n","<br/>" );
-					QString dcname ( "<div class="+ styleLangMatch +">" +  name_value +"</div>\n" );
-					if ( !orderedInfo[ mit.key() ].contains ( dcname ) )
-						orderedInfo[ mit.key() ] << dcname;
-				}
+//				else if ( FMEncData::LangIdMap()[ lit.key() ] == "DEFAULT" && !localizedKeys.contains ( mit.key() ) )
+//				{
+//					QString name_value(url2href(xhtmlifies(mit.value())));
+//					name_value.replace ( "\n","<br/>" );
+//					QString dcname ( "<div class="+ styleLangMatch +">" +  name_value +"</div>\n" );
+//					if ( !orderedInfo[ mit.key() ].contains ( dcname ) )
+//						orderedInfo[ mit.key() ] << dcname;
+//				}
 			}
 		}
 
@@ -248,9 +257,6 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 
 	}
 	
-	
-	QString modelItem ( "<div class=\"infoblock\"><div class=\"infoname\"> %1 </div> %2 </div>\n" );
-
 	/// Times to manually order presentation!
 	
 	QList<FMFontDb::InfoItem> order;
@@ -289,6 +295,7 @@ QString FMInfoDisplay::writeOrderedInfo(FontItem * font)
 QString FMInfoDisplay::writePanose(FontItem * font)
 {
 	QString panBlockOut;
+	QString panoseLabel("<div id=\"panoselabel\">Panose</div>");
 	QString pN ( FMFontDb::DB()->getValue ( font->path(), FMFontDb::Panose, false ).toString() );
 	if ( !pN.isEmpty() )
 	{
@@ -300,12 +307,12 @@ QString FMInfoDisplay::writePanose(FontItem * font)
 				FontStrings::PanoseKey k ( FontStrings::Panose().keys() [i] );
 				int pValue ( pl[i].toInt() );
 				panBlockOut += "<div class=\"panose_name\">" + FontStrings::PanoseKeyName ( k ) + "</div>\n";
-				panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value ( k ).value ( pValue ) + " - "+ pl[i] +"</div>\n";
+				panBlockOut += "<div class=\"panose_desc\">" + FontStrings::Panose().value ( k ).value ( pValue )/* + " - "+ pl[i]*/ +"</div>\n";
 			}
 		}
 	}
 	
-	return "<div id=\"panose_block\">" + panBlockOut + "</div>\n";
+	return "<div id=\"panose_block\">" + panoseLabel + panBlockOut + "</div>\n";
 }
 
 

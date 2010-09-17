@@ -85,6 +85,8 @@ private slots:
 	void slotShowSample();
 	void slotShowChart();
 
+	void slotImport();
+
 	void slotDetachChart();
 	void slotDetachSample();
 

@@ -392,8 +392,8 @@ void typotek::open ( QString path, bool announce, bool collect )
 	
 	// It can happen that you wrongly select a dir, it is time to let the user cancel the import.
 	// I want it :) - pm
-	if ( ( pathList.count() > 1 )
-	        && ( QMessageBox::question ( this,
+	if ( /*( pathList.count() > 1 )
+		&&*/ ( QMessageBox::question ( this,
 	                                     QString ( "Fontmatrix - %1" ).arg ( tr ( "confirmation" ) ) ,
 	                                     tr ( "Do you confirm you want to import these %1 fonts?" ).arg ( pathList.count() ),
 	                                     QMessageBox::Yes | QMessageBox::No,

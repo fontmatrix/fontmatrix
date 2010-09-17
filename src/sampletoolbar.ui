@@ -54,7 +54,13 @@
     </widget>
    </item>
    <item row="0" column="4">
-    <widget class="QComboBox" name="languageCombo"/>
+    <widget class="QComboBox" name="languageCombo">
+     <property name="toolTip">
+      <string>Depending of the font, some scripts 
+are especially supported if processed 
+through some logic (ICU here).</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

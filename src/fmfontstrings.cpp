@@ -24,6 +24,7 @@ FontStrings::FontStrings()
 	fillTTTableList();
 	fillFSftypeMap();
 	fillUniCat();
+	fillScriptTagNames();
 }
 
 FontStrings * FontStrings::getInstance()
@@ -370,6 +371,78 @@ void FontStrings::fillUniCat()
 	unicodeCategory[QChar::Symbol_Other] = tr("Symbol, Other" );
 }
 
+void FontStrings::fillScriptTagNames()
+{
+	scriptTagNames[QString("arab")] = tr("Arabic");
+	scriptTagNames[QString("armn")] = tr("Armenian");
+	scriptTagNames[QString("bali")] = tr("Balinese");
+	scriptTagNames[QString("beng")] = tr("Bengali");
+	scriptTagNames[QString("bopo")] = tr("Bopomofo");
+	scriptTagNames[QString("brai")] = tr("Braille");
+	scriptTagNames[QString("bugi")] = tr("Buginese");
+	scriptTagNames[QString("buhd")] = tr("Buhid");
+	scriptTagNames[QString("byzm")] = tr("Byzantine Music");
+	scriptTagNames[QString("cans")] = tr("Canadian Syllabics");
+	scriptTagNames[QString("cher")] = tr("Cherokee");
+	scriptTagNames[QString("hani")] = tr("CJK Ideographic");
+	scriptTagNames[QString("copt")] = tr("Coptic");
+	scriptTagNames[QString("cprt")] = tr("Cypriot Syllabary");
+	scriptTagNames[QString("cyrl")] = tr("Cyrillic");
+	scriptTagNames[QString("DFLT")] = tr("Default");
+	scriptTagNames[QString("dsrt")] = tr("Deseret");
+	scriptTagNames[QString("deva")] = tr("Devanagari");
+	scriptTagNames[QString("ethi")] = tr("Ethiopic");
+	scriptTagNames[QString("geor")] = tr("Georgian");
+	scriptTagNames[QString("glag")] = tr("Glagolitic");
+	scriptTagNames[QString("goth")] = tr("Gothic");
+	scriptTagNames[QString("grek")] = tr("Greek");
+	scriptTagNames[QString("gujr")] = tr("Gujarati");
+	scriptTagNames[QString("guru")] = tr("Gurmukhi");
+	scriptTagNames[QString("jamo")] = tr("Hangul Jamo");
+	scriptTagNames[QString("hang")] = tr("Hangul");
+	scriptTagNames[QString("hano")] = tr("Hanunoo");
+	scriptTagNames[QString("hebr")] = tr("Hebrew");
+	scriptTagNames[QString("kana")] = tr("Hiragana and Katakana");
+	scriptTagNames[QString("java")] = tr("Javanese");
+	scriptTagNames[QString("knda")] = tr("Kannada");
+	scriptTagNames[QString("khar")] = tr("Kharosthi");
+	scriptTagNames[QString("khmr")] = tr("Khmer");
+	scriptTagNames[QString("lao ")] = tr("Lao");
+	scriptTagNames[QString("latn")] = tr("Latin");
+	scriptTagNames[QString("limb")] = tr("Limbu");
+	scriptTagNames[QString("linb")] = tr("Linear B");
+	scriptTagNames[QString("mlym")] = tr("Malayalam");
+	scriptTagNames[QString("math")] = tr("Mathematical Alphanumeric Symbols");
+	scriptTagNames[QString("mong")] = tr("Mongolian");
+	scriptTagNames[QString("musc")] = tr("Musical Symbols");
+	scriptTagNames[QString("mymr")] = tr("Myanmar");
+	scriptTagNames[QString("nko ")] = tr("N'ko");
+	scriptTagNames[QString("ogam")] = tr("Ogham");
+	scriptTagNames[QString("ital")] = tr("Old Italic");
+	scriptTagNames[QString("xpeo")] = tr("Old Persian Cuneiform");
+	scriptTagNames[QString("orya")] = tr("Oriya");
+	scriptTagNames[QString("osma")] = tr("Osmanya");
+	scriptTagNames[QString("phag")] = tr("Phags-pa");
+	scriptTagNames[QString("phnx")] = tr("Phoenician");
+	scriptTagNames[QString("runr")] = tr("Runic");
+	scriptTagNames[QString("shaw")] = tr("Shavian");
+	scriptTagNames[QString("sinh")] = tr("Sinhala");
+	scriptTagNames[QString("xsux")] = tr("Sumero-Akkadian Cuneiform");
+	scriptTagNames[QString("sylo")] = tr("Syloti Nagri");
+	scriptTagNames[QString("syrc")] = tr("Syriac");
+	scriptTagNames[QString("tglg")] = tr("Tagalog");
+	scriptTagNames[QString("tagb")] = tr("Tagbanwa");
+	scriptTagNames[QString("tale")] = tr("Tai Le");
+	scriptTagNames[QString("talu")] = tr("Tai Lu");
+	scriptTagNames[QString("taml")] = tr("Tamil");
+	scriptTagNames[QString("telu")] = tr("Telugu");
+	scriptTagNames[QString("thaa")] = tr("Thaana");
+	scriptTagNames[QString("thai")] = tr("Thai");
+	scriptTagNames[QString("tibt")] = tr("Tibetan");
+	scriptTagNames[QString("tfng")] = tr("Tifinagh");
+	scriptTagNames[QString("ugar")] = tr("Ugaritic Cuneiform");
+	scriptTagNames[QString("yi ")] = tr("Yi");
+}
 
 const QMap< FMFontDb::InfoItem, QString >& FontStrings::Names()
 {
@@ -460,3 +533,11 @@ QString FontStrings::UnicodeCategory(QChar::Category cat)
 		return getInstance()->unicodeCategory.value(cat);
 	return QString();
 }
+
+QString FontStrings::scriptTagName(const QString &script)
+{
+	if(getInstance()->scriptTagNames.contains(script))
+		return getInstance()->scriptTagNames.value(script);
+	return script;
+}
+

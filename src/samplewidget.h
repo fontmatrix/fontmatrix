@@ -147,6 +147,7 @@ private slots:
 	void slotWantShape();
 	void slotFileChanged(const QString&);
 	void slotReload();
+	void slotScriptChange();
 
 	void slotAddSample();
 	void slotSampleNameEdited(QWidget* w);

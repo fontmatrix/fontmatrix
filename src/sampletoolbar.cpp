@@ -20,6 +20,7 @@
 
 #include "sampletoolbar.h"
 #include "ui_sampletoolbar.h"
+#include "fmfontstrings.h"
 
 SampleToolBar::SampleToolBar(QWidget *parent) :
     QWidget(parent),
@@ -31,6 +32,7 @@ SampleToolBar::SampleToolBar(QWidget *parent) :
     connect(ui->liveSize, SIGNAL(valueChanged(double)), this, SIGNAL(SizeChanged(double)));
     connect(ui->sampleButton, SIGNAL(toggled(bool)), this, SIGNAL(SampleToggled(bool)));
     connect(ui->opentypeButton, SIGNAL(toggled(bool)), this, SIGNAL(OpenTypeToggled(bool)));
+    connect(ui->languageCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(ScriptSelected()));
 }
 
 SampleToolBar::~SampleToolBar()
@@ -77,4 +79,21 @@ void SampleToolBar::toggle(Button b, bool c)
 		ui->opentypeButton->setChecked(c);
 }
 
+void SampleToolBar::setScripts(const QStringList &ll)
+{
+	ui->languageCombo->addItem(tr("Select language"), QString("NOSHAPER"));
+	foreach(QString l, ll)
+	{
+		ui->languageCombo->addItem(FontStrings::scriptTagName(l), l);
+	}
+	if(ll.isEmpty())
+		ui->languageCombo->setEnabled(false);
+}
 
+QString SampleToolBar::getScript()
+{
+	QString ret(ui->languageCombo->itemData(ui->languageCombo->currentIndex()).toString());
+	if(ret != QString("NOSHAPER"))
+		return ret;
+	return QString();
+}

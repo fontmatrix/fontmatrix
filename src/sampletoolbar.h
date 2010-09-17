@@ -22,6 +22,7 @@
 #define SAMPLETOOLBAR_H
 
 #include <QWidget>
+#include <QStringList>
 
 namespace Ui {
     class SampleToolBar;
@@ -46,6 +47,9 @@ public:
     bool isChecked(Button b);
     void toggle(Button b, bool c);
 
+    void setScripts(const QStringList& ll);
+    QString getScript();
+
 protected:
     void changeEvent(QEvent *e);
 
@@ -56,6 +60,7 @@ signals:
     void SizeChanged(double);
     void SampleToggled(bool);
     void OpenTypeToggled(bool);
+    void ScriptSelected();
 };
 
 #endif // SAMPLETOOLBAR_H

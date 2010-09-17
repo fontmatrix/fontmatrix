@@ -52,6 +52,7 @@ class FontStrings : public QObject
 		static const QMap<QString,QString>& Tables(); 
 		static QString FsType(int fstype_part, bool shortString = true);
 		static QString UnicodeCategory(QChar::Category);
+		static QString scriptTagName(const QString& script);
 
 	private:
 
@@ -63,6 +64,7 @@ class FontStrings : public QObject
 		void fillTTTableList();
 		void fillFSftypeMap();
 		void fillUniCat();
+		void fillScriptTagNames();
 		
 		QMap< PanoseKey, QMap<int, QString> > m_panoseMap;
 		QMap< PanoseKey, QString > m_panoseKeyName;
@@ -71,6 +73,7 @@ class FontStrings : public QObject
 		QMap<QString,QString> tttableList;// <TT name, description>
 		QMap< int, QString > m_FsType;
 		QMap<QChar::Category, QString> unicodeCategory;
+		QMap<QString, QString> scriptTagNames;
 };
 
 #endif

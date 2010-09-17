@@ -1354,23 +1354,26 @@ double FontItem::renderLine ( QString script, QGraphicsScene * scene, QString sp
 		return 0;
 	
 	FMShaperFactory *shaperfactory = 0;
-	switch(m_shaperType)
-	{
-		case FMShaperFactory::FONTMATRIX : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
-		break;
-		case FMShaperFactory::HARFBUZZ : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::HARFBUZZ );
-		break;
-		case FMShaperFactory::ICU : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::ICU );
-		break;
-		case FMShaperFactory::M17N : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::M17N );
-		break;
-		case FMShaperFactory::PANGO : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::PANGO );
-		break;
-		case FMShaperFactory::OMEGA : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::OMEGA);
-		break;
-		default : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
-	}
-	
+	//	switch(m_shaperType)
+	//	{
+	//		case FMShaperFactory::FONTMATRIX : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
+	//		break;
+	//		case FMShaperFactory::HARFBUZZ : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::HARFBUZZ );
+	//		break;
+	//		case FMShaperFactory::ICU : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::ICU );
+	//		break;
+	//		case FMShaperFactory::M17N : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::M17N );
+	//		break;
+	//		case FMShaperFactory::PANGO : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::PANGO );
+	//		break;
+	//		case FMShaperFactory::OMEGA : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::OMEGA);
+	//		break;
+	//		default : shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::FONTMATRIX );
+	//	}
+
+	/// Let's do it only with ICU atm.
+	shaperfactory = new FMShaperFactory(otf,script, FMShaperFactory::ICU );
+
 	GlyphList refGlyph ( shaperfactory->doShape( spec ) );
 	delete shaperfactory;
 

@@ -192,6 +192,7 @@ void SampleWidget::createConnections()
 
 	connect(sampleToolBar, SIGNAL(OpenTypeToggled(bool)), this, SLOT(slotShowOpenType(bool)));
 	connect(sampleToolBar, SIGNAL(SampleToggled(bool)), this, SLOT(slotShowSamples(bool)));
+	connect(sampleToolBar, SIGNAL(ScriptSelected()), this, SLOT(slotScriptChange()));
 
 	connect(ui->addSampleButton, SIGNAL(clicked()), this, SLOT(slotAddSample()));
 	connect(ui->removeSampleButton, SIGNAL(clicked()), this, SLOT(slotRemoveSample()));
@@ -378,8 +379,9 @@ void SampleWidget::slotView ( bool needDeRendering )
 			}
 
 			bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
-			QString script = ui->langCombo->currentText();
-			bool processScript =  f->isOpenType() && ( ui->useShaperCheck->checkState() == Qt::Checked ) && ( !script.isEmpty() );
+//			QString script = ui->langCombo->currentText();
+			QString script(sampleToolBar->getScript());
+			bool processScript( !script.isEmpty() );
 			textLayout->setDeviceIndy(!wantDeviceDependant);
 			textLayout->setAdjustedSampleInter( sampleInterSize );
 
@@ -507,11 +509,12 @@ void SampleWidget::fillOTTree()
 	}
 	scripts = scripts.toSet().toList();
 	// 	scripts.removeAll ( "latn" );
-	if ( !scripts.isEmpty() )
+//	if ( !scripts.isEmpty() )
 	{
-		ui->langCombo->setEnabled ( true );
-		ui->useShaperCheck->setEnabled ( true );
-		ui->langCombo->addItems ( scripts );
+//		ui->langCombo->setEnabled ( true );
+//		ui->useShaperCheck->setEnabled ( true );
+//		ui->langCombo->addItems ( scripts );
+		sampleToolBar->setScripts(scripts);
 	}
 }
 
@@ -840,6 +843,11 @@ void SampleWidget::slotFileChanged(const QString &)
 void SampleWidget::slotReload()
 {
 //	reloadTimer->stop();
+	slotView();
+}
+
+void SampleWidget::slotScriptChange()
+{
 	slotView();
 }
 

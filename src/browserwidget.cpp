@@ -80,6 +80,8 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 	connect(ui->sampleButton, SIGNAL(clicked()), this, SLOT(slotShowSample()));
 	connect(ui->chartButton, SIGNAL(clicked()), this, SLOT(slotShowChart()));
 
+	connect(ui->importButton, SIGNAL(clicked()), this, SLOT(slotImport()));
+
 	connect(ui->browserView, SIGNAL(activated( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(ui->browserView, SIGNAL(clicked( const QModelIndex& )), this, SLOT(slotFolderItemclicked(QModelIndex)));
 	connect(ui->browserView,SIGNAL(pressed( const QModelIndex& )),this,SLOT(slotFolderPressed(QModelIndex)));
@@ -313,6 +315,12 @@ void BrowserWidget::updateButtons()
 		break;
 	default:break;
 	}
+}
+
+void BrowserWidget::slotImport()
+{
+	if(!curVariant.isEmpty())
+		typotek::getInstance()->open(curVariant, true);
 }
 
 FolderViewMenu::FolderViewMenu() : QMenu()

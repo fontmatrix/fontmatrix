@@ -34,9 +34,10 @@ class QFileSystemWatcher;
 class QTimer;
 class SampleToolBar;
 class QTreeWidgetItem;
+class QStyledItemDelegate;
 
 namespace Ui {
-    class SampleWidget;
+	class SampleWidget;
 }
 
 #define VIEW_PAGE_FREETYPE 0
@@ -47,7 +48,7 @@ namespace Ui {
 
 class SampleWidget : public FloatingWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
 	struct State
@@ -63,7 +64,7 @@ public:
 				script(sc)
 		{}
 		State(const State& other)
-				: set(true)
+			: set(true)
 		{
 			sampleName = other.sampleName;
 			fontSize = other.fontSize;
@@ -84,81 +85,85 @@ public:
 	};
 
 	static const QString Name;
-    explicit SampleWidget(const QString& fid, QWidget *parent = 0);
-    ~SampleWidget();
+	explicit SampleWidget(const QString& fid, QWidget *parent = 0);
+	~SampleWidget();
 
-    QGraphicsScene* textScene() const;
-    State state() const;
-    void setState(const State& s);
+	QGraphicsScene* textScene() const;
+	State state() const;
+	void setState(const State& s);
 
 protected:
-    void changeEvent(QEvent *e);
+	void changeEvent(QEvent *e);
 
-    void refillSampleList();
-    unsigned int hinting();
+	void refillSampleList();
+	unsigned int hinting();
 
 private:
-    Ui::SampleWidget *ui;
-    SampleToolBar * sampleToolBar;
-    QTreeWidgetItem * uRoot;
+	Ui::SampleWidget *ui;
+	SampleToolBar * sampleToolBar;
+	QTreeWidgetItem * uRoot;
+	QTreeWidgetItem * newSampleName;
+	QStyledItemDelegate * sampleNameEditor;
 
-    const QString fontIdentifier;
-    QGraphicsScene *loremScene;
-    QGraphicsScene *ftScene;
-    FMLayout *textLayoutVect;
-    FMLayout *textLayoutFT;
-//    QButtonGroup *radioRenderGroup;
-    QButtonGroup *radioFTHintingGroup;
-    double sampleFontSize;
-    double sampleInterSize;
-    double sampleRatio;
-    int toolPanelWidth;
-    QFileSystemWatcher *sysWatcher;
-    QTimer *reloadTimer;
+	const QString fontIdentifier;
+	QGraphicsScene *loremScene;
+	QGraphicsScene *ftScene;
+	FMLayout *textLayoutVect;
+	FMLayout *textLayoutFT;
+	//    QButtonGroup *radioRenderGroup;
+	QButtonGroup *radioFTHintingGroup;
+	double sampleFontSize;
+	double sampleInterSize;
+	double sampleRatio;
+	int toolPanelWidth;
+	QFileSystemWatcher *sysWatcher;
+	QTimer *reloadTimer;
 
-    void createConnections();
-    void removeConnections();
+	void createConnections();
+	void removeConnections();
 
-    void fillOTTree();
-    OTFSet deFillOTTree();
+	void fillOTTree();
+	OTFSet deFillOTTree();
 
-    bool layoutForPrint;
+	bool layoutForPrint;
 
-    void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
+	void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 
 private slots:
-    void slotView(bool needDeRendering = false);
-//    void slotChangeViewPage(QAbstractButton* );
-//    void slotHintChanged(int);
-//    void slotChangeViewPageSetting(bool);
-    void slotUpdateSView();
-    void slotZoom(int z);
-    void slotUpdateRView();
-    void slotSampleChanged();
-    void slotLiveFontSize(double);
-    void slotFeatureChanged();
-    void slotDefaultOTF();
-    void slotResetOTF();
-    void slotChangeScript();
-    void slotProgressionChanged();
-    void slotWantShape();
-    void slotFileChanged(const QString&);
-    void slotReload();
+	void slotView(bool needDeRendering = false);
+	//    void slotChangeViewPage(QAbstractButton* );
+	//    void slotHintChanged(int);
+	//    void slotChangeViewPageSetting(bool);
+	void slotUpdateSView();
+	void slotZoom(int z);
+	void slotUpdateRView();
+	void slotSampleChanged();
+	void slotLiveFontSize(double);
+	void slotFeatureChanged();
+	void slotDefaultOTF();
+	void slotResetOTF();
+	void slotChangeScript();
+	void slotProgressionChanged();
+	void slotWantShape();
+	void slotFileChanged(const QString&);
+	void slotReload();
 
-    void slotAddSample();
-    void slotRemoveSample();
-    void slotEditSample();
+	void slotAddSample();
+	void slotSampleNameEdited(QWidget* w);
+	void slotRemoveSample();
+	void slotEditSample();
+	void slotUpdateSample();
 
-    void slotShowSamples(bool);
-    void slotShowOpenType(bool);
+	void slotShowSamples(bool);
+	void slotShowOpenType(bool);
 
-    void slotPrint();
+	void slotPrint();
 
-    void saveState();
+	void saveState();
 
 signals:
-    void stopLayout();
-    void stateChanged();
+	void stopLayout();
+	void stateChanged();
 
 
 

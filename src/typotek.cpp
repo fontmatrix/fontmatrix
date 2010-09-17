@@ -1523,6 +1523,8 @@ void typotek::slotSystrayStart( bool isEnabled )
 QString typotek::namedSample ( QString name )
 {
 	QString cn(name);
+	if(cn == QString("NEW_SAMPLE"))
+		return tr("Edit me!");
 	if(cn.isEmpty())
 		cn = currentNamedSample;
 	else

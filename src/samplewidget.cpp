@@ -39,6 +39,7 @@
 #include <QTimer>
 #include <QDataStream>
 #include <QSettings>
+#include <QStyledItemDelegate>
 
 
 QByteArray SampleWidget::State::toByteArray() const
@@ -92,36 +93,21 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	ui->sampleGridLayout->addWidget(sampleToolBar, 0,0, Qt::AlignRight | Qt::AlignBottom);
 
 
+	sampleNameEditor = new QStyledItemDelegate(ui->sampleTextTree);
+	ui->sampleTextTree->setItemDelegate(sampleNameEditor);
 	refillSampleList();
 	fillOTTree();
+
 	sysWatcher = new QFileSystemWatcher(this);
 	sysWatcher->addPath(fid);
 	reloadTimer = new QTimer(this);
 	reloadTimer->setInterval(1000);
-
-//	radioRenderGroup = new QButtonGroup();
-//	radioRenderGroup->addButton(ui->freetypeRadio);
-//	radioRenderGroup->addButton(ui->nativeRadio);
-//	ui->stackedTools->setCurrentIndex(VIEW_PAGE_SAMPLES);
-//	toolPanelWidth = ui->splitter_2->sizes().at(1);
-//	if(toolPanelWidth == 0)
-//	{
-//		ui->sampleButton->setChecked(false);
-//		ui->stackedTools->hide();
-//		toolPanelWidth = ui->splitter_2->width()/3;
-//	}
-//	radioFTHintingGroup = new QButtonGroup;
-//	radioFTHintingGroup->addButton(ui->noHinting);
-//	radioFTHintingGroup->addButton(ui->lightHinting);
-//	radioFTHintingGroup->addButton(ui->normalHinting);
 
 	loremScene = new QGraphicsScene;
 	ftScene =  new QGraphicsScene;
 	QRectF pageRect ( 0,0,597.6,842.4 ); //TODO find means to smartly decide of page size (here, iso A4)
 
 	loremScene->setSceneRect ( pageRect );
-	// 	QGraphicsRectItem *backp = loremScene->addRect ( pageRect,QPen(),Qt::white );
-	// 	backp->setEnabled ( false );
 
 	ftScene->setSceneRect ( 0,0, 597.6 * typotek::getInstance()->getDpiX() / 72.0, 842.4 * typotek::getInstance()->getDpiX() / 72.0);
 	ui->loremView->setScene ( loremScene );
@@ -142,11 +128,6 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 //	}
 
 	QSettings settings;
-//	sampleFontSize = settings.value("Sample/FontSize", 14.0).toDouble();
-//	sampleInterSize = settings.value("Sample/Interline", 18.0).toDouble();
-//	sampleRatio = sampleInterSize / sampleFontSize  ;
-//	ui->liveFontSizeSpin->setValue(sampleFontSize);
-
 	State s;
 	s.fontSize = 14;
 	QByteArray bs = settings.value("Sample/state", s.toByteArray()).toByteArray();
@@ -213,6 +194,8 @@ void SampleWidget::createConnections()
 	connect(sampleToolBar, SIGNAL(SampleToggled(bool)), this, SLOT(slotShowSamples(bool)));
 
 	connect(ui->addSampleButton, SIGNAL(clicked()), this, SLOT(slotAddSample()));
+	connect(sampleNameEditor, SIGNAL(closeEditor(QWidget*)), this, SLOT(slotSampleNameEdited(QWidget*)));
+	connect(ui->sampleEdit, SIGNAL(textChanged()), this, SLOT(slotUpdateSample()));
 }
 
 
@@ -892,15 +875,22 @@ void SampleWidget::slotShowOpenType(bool b)
 void SampleWidget::slotAddSample()
 {
 	QString nu( tr("New Sample") );
-	QTreeWidgetItem * it = new QTreeWidgetItem();
-	it->setText(0,nu);
-	it->setData(0, Qt::UserRole , QString("User::") + nu);
-	it->setFlags(it->flags() | Qt::ItemIsEditable);
-	uRoot->addChild(it);
-	ui->sampleTextTree->openPersistentEditor(it);
+	newSampleName = new QTreeWidgetItem();
+	newSampleName->setText(0,nu);
+	newSampleName->setData(0, Qt::UserRole , QString("NEW_SAMPLE"));
+	newSampleName->setFlags(newSampleName->flags() | Qt::ItemIsEditable);
+	uRoot->addChild(newSampleName);
+	ui->sampleTextTree->openPersistentEditor(newSampleName);
 	if(!uRoot->isExpanded())
 		uRoot->setExpanded(true);
-	ui->sampleTextTree->setCurrentItem(it);
+	ui->sampleTextTree->setCurrentItem(newSampleName);
+}
+
+void SampleWidget::slotSampleNameEdited(QWidget *w)
+{
+	ui->sampleTextTree->closePersistentEditor(newSampleName);
+	newSampleName->setData(0, Qt::UserRole , QString("User::") + newSampleName->text(0));
+	typotek::getInstance()->changeSample(newSampleName->text(0), ui->sampleEdit->toPlainText() );
 }
 
 void SampleWidget::slotRemoveSample()
@@ -910,8 +900,16 @@ void SampleWidget::slotRemoveSample()
 
 void SampleWidget::slotEditSample()
 {
+	disconnect(ui->sampleEdit, SIGNAL(textChanged()), this, SLOT(slotUpdateSample()));
 	QTreeWidgetItem * currentItem = ui->sampleTextTree->currentItem();
 	ui->sampleEdit->setPlainText(typotek::getInstance()->namedSample( currentItem->data(0, Qt::UserRole).toString() ));
 	ui->sampleEdit->setReadOnly(currentItem->parent() != uRoot);
+	connect(ui->sampleEdit, SIGNAL(textChanged()), this, SLOT(slotUpdateSample()));
+}
+
+void SampleWidget::slotUpdateSample()
+{
+	typotek::getInstance()->changeSample(ui->sampleTextTree->currentItem()->text(0), ui->sampleEdit->toPlainText());
+	slotUpdateRView();
 }
 

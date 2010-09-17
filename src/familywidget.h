@@ -58,6 +58,7 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+    void keyPressEvent ( QKeyEvent * event );
 
     void buildList(const QList<FontItem*>& fl);
 

@@ -102,6 +102,38 @@ void FamilyWidget::changeEvent(QEvent *e)
 	}
 }
 
+void FamilyWidget::keyPressEvent(QKeyEvent *event)
+{
+	if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_PageUp))
+	{
+		switch(currentPage)
+		{
+		case FAMILY_VIEW_SAMPLE: slotShowActivation();
+			break;
+		case FAMILY_VIEW_CHART: slotShowSample();
+			break;
+		case FAMILY_VIEW_INFO: slotShowChart();
+			break;
+		case FAMILY_VIEW_ACTIVATION: slotShowInfo();
+		default:break;
+		}
+	}
+	else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_PageDown))
+	{
+		switch(currentPage)
+		{
+		case FAMILY_VIEW_INFO: slotShowActivation();
+			break;
+		case FAMILY_VIEW_ACTIVATION: slotShowSample();
+			break;
+		case FAMILY_VIEW_SAMPLE: slotShowChart();
+			break;
+		case FAMILY_VIEW_CHART: slotShowInfo();
+		default:break;
+		}
+	}
+}
+
 void FamilyWidget::slotPreviewUpdateSize(int w)
 {
 	ui->familyPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));

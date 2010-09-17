@@ -94,7 +94,6 @@ public:
 
 protected:
 	void changeEvent(QEvent *e);
-
 	void refillSampleList();
 	unsigned int hinting();
 

@@ -40,6 +40,7 @@
 #include <QDataStream>
 #include <QSettings>
 #include <QStyledItemDelegate>
+#include <QKeyEvent>
 
 
 QByteArray SampleWidget::State::toByteArray() const
@@ -246,6 +247,7 @@ void SampleWidget::changeEvent(QEvent *e)
 		break;
 	}
 }
+
 
 QGraphicsScene * SampleWidget::textScene() const
 {

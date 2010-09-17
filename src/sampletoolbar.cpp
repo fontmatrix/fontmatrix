@@ -60,3 +60,21 @@ void SampleToolBar::setFontSize(double fs)
 	ui->liveSize->setValue(fs);
 }
 
+bool SampleToolBar::isChecked(Button b)
+{
+	if(b == SampleButton)
+		return ui->sampleButton->isChecked();
+	else if(b == OpenTypeButton)
+		return ui->opentypeButton->isChecked();
+	return false;
+}
+
+void SampleToolBar::toggle(Button b, bool c)
+{
+	if(b == SampleButton)
+		ui->sampleButton->setChecked(c);
+	else if(b == OpenTypeButton)
+		ui->opentypeButton->setChecked(c);
+}
+
+

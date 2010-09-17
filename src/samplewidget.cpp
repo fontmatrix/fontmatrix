@@ -855,6 +855,12 @@ void SampleWidget::slotShowSamples(bool b)
 {
 	if(b)
 	{
+		if(sampleToolBar->isChecked(SampleToolBar::OpenTypeButton))
+		{
+			ui->sampleGridLayout->removeWidget(ui->opentypeWidget);
+			ui->opentypeWidget->setParent(ui->stackedViews->widget(VIEW_PAGE_OPENTYPE));
+			sampleToolBar->toggle(SampleToolBar::OpenTypeButton, false);
+		}
 		ui->sampleEditWidget->setAutoFillBackground(true);
 		ui->sampleEditWidget->resize(ui->sampleGridLayout->geometry().width() / 2, ui->sampleGridLayout->geometry().height() / 2);
 		ui->sampleGridLayout->addWidget(ui->sampleEditWidget, 0,0, Qt::AlignRight | Qt::AlignTop);
@@ -869,9 +875,22 @@ void SampleWidget::slotShowSamples(bool b)
 void SampleWidget::slotShowOpenType(bool b)
 {
 	if(b)
-		ui->stackedViews->setCurrentIndex(VIEW_PAGE_OPENTYPE);
+	{
+		if(sampleToolBar->isChecked(SampleToolBar::SampleButton))
+		{
+			ui->sampleGridLayout->removeWidget(ui->sampleEditWidget);
+			ui->sampleEditWidget->setParent(ui->stackedViews->widget(VIEW_PAGE_SAMPLES));
+			sampleToolBar->toggle(SampleToolBar::SampleButton, false);
+		}
+		ui->opentypeWidget->setAutoFillBackground(true);
+		ui->opentypeWidget->resize(ui->sampleGridLayout->geometry().width() / 2, ui->sampleGridLayout->geometry().height());
+		ui->sampleGridLayout->addWidget(ui->opentypeWidget, 0,0, Qt::AlignLeft);
+	}
 	else
-		ui->stackedViews->setCurrentIndex(VIEW_PAGE_FREETYPE);
+	{
+		ui->sampleGridLayout->removeWidget(ui->opentypeWidget);
+		ui->opentypeWidget->setParent(ui->stackedViews->widget(VIEW_PAGE_OPENTYPE));
+	}
 }
 
 void SampleWidget::slotAddSample()

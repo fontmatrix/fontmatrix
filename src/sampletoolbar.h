@@ -35,8 +35,16 @@ public:
     explicit SampleToolBar(QWidget *parent = 0);
     ~SampleToolBar();
 
+    enum Button{
+	    SampleButton,
+	    OpenTypeButton
+    };
+
     double getFontSize() const;
     void setFontSize(double fs);
+
+    bool isChecked(Button b);
+    void toggle(Button b, bool c);
 
 protected:
     void changeEvent(QEvent *e);

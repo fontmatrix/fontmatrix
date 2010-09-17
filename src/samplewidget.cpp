@@ -194,6 +194,7 @@ void SampleWidget::createConnections()
 	connect(sampleToolBar, SIGNAL(SampleToggled(bool)), this, SLOT(slotShowSamples(bool)));
 
 	connect(ui->addSampleButton, SIGNAL(clicked()), this, SLOT(slotAddSample()));
+	connect(ui->removeSampleButton, SIGNAL(clicked()), this, SLOT(slotRemoveSample()));
 	connect(sampleNameEditor, SIGNAL(closeEditor(QWidget*)), this, SLOT(slotSampleNameEdited(QWidget*)));
 	connect(ui->sampleEdit, SIGNAL(textChanged()), this, SLOT(slotUpdateSample()));
 }
@@ -670,6 +671,7 @@ void SampleWidget::slotUpdateRView()
 void SampleWidget::slotSampleChanged()
 {
 	typotek::getInstance()->namedSample( ui->sampleTextTree->currentItem()->data(0, Qt::UserRole).toString() );
+	ui->removeSampleButton->setEnabled(ui->sampleTextTree->currentItem()->parent() == uRoot);
 	slotView ( true );
 	emit stateChanged();
 }
@@ -895,7 +897,10 @@ void SampleWidget::slotSampleNameEdited(QWidget *w)
 
 void SampleWidget::slotRemoveSample()
 {
-
+	QString name(ui->sampleTextTree->currentItem()->text(0));
+	QTreeWidgetItem * currentItem = ui->sampleTextTree->currentItem();
+	uRoot->removeChild(currentItem);
+	typotek::getInstance()->removeNamedSample(name);
 }
 
 void SampleWidget::slotEditSample()

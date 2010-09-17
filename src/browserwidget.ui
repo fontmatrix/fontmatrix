@@ -27,7 +27,7 @@
        </sizepolicy>
       </property>
      </widget>
-     <widget class="QWidget" name="widget" native="true">
+     <widget class="QWidget" name="viewWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
         <horstretch>2</horstretch>
@@ -47,13 +47,6 @@
           <property name="margin">
            <number>2</number>
           </property>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="infoButton">
-            <property name="text">
-             <string>Info</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QPushButton" name="sampleButton">
             <property name="text">
@@ -68,14 +61,14 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="4">
+          <item row="0" column="5">
            <widget class="QPushButton" name="importButton">
             <property name="text">
              <string>Import</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="3">
+          <item row="0" column="4">
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -87,6 +80,13 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="infoButton">
+            <property name="text">
+             <string>Info</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

@@ -41,6 +41,10 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	ui->infoButton->setEnabled(false);
+	ui->sampleButton->setEnabled(false);
+	ui->chartButton->setEnabled(false);
+
 	folderViewContextMenu = 0;
 	currentPage = BROWSER_VIEW_INFO;
 	sample = chart = 0;
@@ -114,6 +118,12 @@ void BrowserWidget::slotFolderAddToWatcher(QModelIndex mIdx)
 
 void BrowserWidget::slotFolderItemclicked(QModelIndex mIdx)
 {
+	if(curVariant.isEmpty())
+	{
+		ui->infoButton->setEnabled(true);
+		ui->sampleButton->setEnabled(true);
+		ui->chartButton->setEnabled(true);
+	}
 	QString path(theDirModel->data(mIdx,QDirModel::FilePathRole).toString());
 	QFileInfo pf(path);
 	if(!pf.isDir())

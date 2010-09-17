@@ -72,6 +72,8 @@ private:
 	void initWatcher(QModelIndex parent);
 	void settingsDir(const QString& path);
 
+	void updateButtons();
+
 private slots:
 	void slotFolderItemclicked(QModelIndex mIdx);
 	void slotFolderPressed(QModelIndex mIdx);

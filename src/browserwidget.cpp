@@ -46,7 +46,7 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 	ui->chartButton->setEnabled(false);
 
 	folderViewContextMenu = 0;
-	currentPage = BROWSER_VIEW_INFO;
+	currentPage = BROWSER_VIEW_SAMPLE;
 	sample = chart = 0;
 	ffilter << "*.otf" << "*.ttf" << "*.pfb";
 	theDirModel = new QDirModel(ffilter, QDir::AllDirs | QDir::Files | QDir::Drives | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
@@ -204,6 +204,7 @@ void BrowserWidget::slotShowInfo()
 	ui->webView->setContent(fid.getHtml().toUtf8(), "application/xhtml+xml");
 	ui->displayStack->setCurrentIndex(BROWSER_VIEW_INFO);
 	currentPage = BROWSER_VIEW_INFO;
+	updateButtons();
 }
 
 void BrowserWidget::slotShowChart()
@@ -225,6 +226,7 @@ void BrowserWidget::slotShowChart()
 		fw->show();
 	}
 	currentPage = BROWSER_VIEW_CHART;
+	updateButtons();
 }
 
 
@@ -247,6 +249,7 @@ void BrowserWidget::slotShowSample()
 		fw->show();
 	}
 	currentPage = BROWSER_VIEW_SAMPLE;
+	updateButtons();
 }
 
 void BrowserWidget::slotDetachChart()
@@ -283,6 +286,34 @@ void BrowserWidget::slotFolderViewContextMenu(const QPoint &p)
 	folderViewContextMenu->exec(dm->fileInfo(mi), mapToGlobal(p));
 }
 
+void BrowserWidget::updateButtons()
+{
+	static QList<QToolButton*> buttons;
+	if(buttons.isEmpty())
+	{
+		buttons << ui->sampleButton
+				<< ui->infoButton
+				<< ui->chartButton;
+		foreach(QToolButton * b, buttons)
+		{
+			b->setCheckable(true);
+		}
+	}
+	foreach(QToolButton * b, buttons)
+	{
+		b->setChecked(false);
+	}
+	switch(currentPage)
+	{
+	case BROWSER_VIEW_SAMPLE: ui->sampleButton->setChecked(true);
+		break;
+	case BROWSER_VIEW_CHART: ui->chartButton->setChecked(true);
+		break;
+	case BROWSER_VIEW_INFO : ui->infoButton->setChecked(true);
+		break;
+	default:break;
+	}
+}
 
 FolderViewMenu::FolderViewMenu() : QMenu()
 {

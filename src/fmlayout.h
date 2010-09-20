@@ -84,7 +84,7 @@ private:
 
 
 		
-class FMLayout : public QThread
+class FMLayout : public QObject
 {
 	Q_OBJECT
 
@@ -93,7 +93,6 @@ class FMLayout : public QThread
 		~FMLayout();
 		void doLayout(const QList<GlyphList>& spec , double fs);
 //		static FMLayout *getLayout();
-		void run();
 		
 	private://methods
 		/// Build a graph on node
@@ -103,10 +102,14 @@ class FMLayout : public QThread
 		
 		void clearCaches();
 
+		void run();
+
 	public:// utils
 		double distance ( int start, int end, const GlyphList& gl , bool strip = false );
 		int sepCount( int start, int end, const GlyphList& gl);
 		void resetScene();
+
+		bool isLayoutFinished() {return layoutIsFinished;}
 
 		QList<int> breakList;
 		QList<int> hyphenList;
@@ -154,6 +157,8 @@ class FMLayout : public QThread
 		int textProgressionLine;
 		bool deviceIndy;
 		QPointF origine;
+
+		bool layoutIsFinished;
 
 	public: //accessors
 		QRectF getRect()const{return theRect;}

@@ -41,6 +41,7 @@
 #include <QSettings>
 #include <QStyledItemDelegate>
 #include <QKeyEvent>
+#include <QThread>
 
 
 QByteArray SampleWidget::State::toByteArray() const
@@ -86,9 +87,11 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 		ui(new Ui::SampleWidget),
 		fontIdentifier(fid)
 {
+	layoutTimer = new QTimer(this);
+	layoutWait = 1000;
 	layoutForPrint = false;
 	ui->setupUi(this);
-	ui->textProgression->setVisible(false);
+//	ui->textProgression->setVisible(false);
 
 	sampleToolBar = new SampleToolBar(this);
 	ui->sampleGridLayout->addWidget(sampleToolBar, 1,0, Qt::AlignRight | Qt::AlignBottom);
@@ -122,11 +125,12 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	ui->loremView_FT->locker = false;
 	ui->loremView_FT->fakePage();
 
-//	QMap<QString, int> sTypes(FMShaperFactory::types());
-//	for(QMap<QString, int>::iterator sIt = sTypes.begin(); sIt != sTypes.end() ; ++sIt)
-//	{
-//		ui->shaperTypeCombo->addItem(sIt.key(), sIt.value());
-//	}
+	FontItem * cf(FMFontDb::DB()->Font(fid));
+	textLayoutVect = new FMLayout(loremScene, cf);
+	textLayoutFT =  new FMLayout(ftScene, cf);
+
+	layoutThread = new  QThread(this);
+	textLayoutFT->moveToThread(layoutThread);
 
 	QSettings settings;
 	State s;
@@ -135,12 +139,6 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	setState(s.fromByteArray(bs));
 	sampleRatio = 1.2;
 	sampleInterSize = sampleFontSize * sampleRatio;
-
-	FontItem * cf(FMFontDb::DB()->Font(fid));
-	textLayoutVect = new FMLayout(loremScene, cf);
-	textLayoutFT =  new FMLayout(ftScene, cf);
-
-
 
 	createConnections();
 	slotView(true);
@@ -179,7 +177,7 @@ void SampleWidget::createConnections()
 	connect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
 	connect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
 
-	connect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
+//	connect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 
 	connect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 	connect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
@@ -199,6 +197,8 @@ void SampleWidget::createConnections()
 	connect(ui->removeSampleButton, SIGNAL(clicked()), this, SLOT(slotRemoveSample()));
 	connect(sampleNameEditor, SIGNAL(closeEditor(QWidget*)), this, SLOT(slotSampleNameEdited(QWidget*)));
 	connect(ui->sampleEdit, SIGNAL(textChanged()), this, SLOT(slotUpdateSample()));
+
+	connect(layoutTimer, SIGNAL(timeout()), this, SLOT(slotUpdateSample()));
 }
 
 
@@ -223,7 +223,7 @@ void SampleWidget::removeConnections()
 	disconnect ( ui->saveDefOTFBut, SIGNAL(released()),this,SLOT(slotDefaultOTF()));
 	disconnect ( ui->resetDefOTFBut, SIGNAL(released()),this,SLOT(slotResetOTF()));
 
-	disconnect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
+//	disconnect ( ui->textProgression, SIGNAL ( stateChanged (  ) ),this ,SLOT(slotProgressionChanged()));
 
 	disconnect(ui->toolbar, SIGNAL(Print()), this, SLOT(slotPrint()));
 	disconnect(ui->toolbar, SIGNAL(Close()), this, SLOT(close()));
@@ -327,6 +327,7 @@ void SampleWidget::setState(const SampleWidget::State &s)
 
 void SampleWidget::slotView ( bool needDeRendering )
 {
+	qDebug()<<"SampleWidget::slotView ";
 	QTime t;
 	t.start();
 	FontItem *f(FMFontDb::DB()->Font( fontIdentifier ));
@@ -337,51 +338,44 @@ void SampleWidget::slotView ( bool needDeRendering )
 //		f->deRenderAll();
 	}
 
-//	bool wantDeviceDependant = (!layoutForPrint) ? ui->freetypeRadio->isChecked() : false;
 	bool wantDeviceDependant = !layoutForPrint;
-	//	unsigned int storedHinting(f->getFTHintMode());
 	if(wantDeviceDependant)
 	{
 		f->setFTHintMode(hinting());
 	}
 
-	if(ui->textProgression->inLine() == TextProgression::INLINE_LTR )
+//	if(ui->textProgression->inLine() == TextProgression::INLINE_LTR )
 		f->setProgression(PROGRESSION_LTR );
-	else if(ui->textProgression->inLine() == TextProgression::INLINE_RTL )
-		f->setProgression(PROGRESSION_RTL);
-	else if(ui->textProgression->inLine() == TextProgression::INLINE_TTB )
-		f->setProgression(PROGRESSION_TTB );
-	else if(ui->textProgression->inLine() == TextProgression::INLINE_BTT )
-		f->setProgression(PROGRESSION_BTT);
+//	else if(ui->textProgression->inLine() == TextProgression::INLINE_RTL )
+//		f->setProgression(PROGRESSION_RTL);
+//	else if(ui->textProgression->inLine() == TextProgression::INLINE_TTB )
+//		f->setProgression(PROGRESSION_TTB );
+//	else if(ui->textProgression->inLine() == TextProgression::INLINE_BTT )
+//		f->setProgression(PROGRESSION_BTT);
 
 	f->setFTRaster ( wantDeviceDependant );
-	f->setShaperType(ui->shaperTypeCombo->itemData( ui->shaperTypeCombo->currentIndex() ).toInt() );
 
-	if ( ui->loremView->isVisible() || ui->loremView_FT->isVisible() || layoutForPrint)
+//	if ( ui->loremView->isVisible() || ui->loremView_FT->isVisible() || layoutForPrint)
 	{
-		//		qDebug()<<"lv(ft) is visible";
-		if(textLayoutFT->isRunning())
-			textLayoutFT->stopLayout();
-		else if(textLayoutVect->isRunning())
-			textLayoutVect->stopLayout();
-		else
+		if(!textLayoutFT->isLayoutFinished())
 		{
-			//			qDebug()<<"tl is NOT running";
-			QGraphicsScene *targetScene;
+			textLayoutFT->stopLayout();
+			qDebug()<<"\tLayout stopped";
+		}
+//		else if(textLayoutVect->isRunning())
+//			textLayoutVect->stopLayout();
+//		else
+		{
+			qDebug()<<"\tStart layout";
 			ui->loremView_FT->unSheduleUpdate();
 			ui->loremView->unSheduleUpdate();
 			FMLayout * textLayout;
-			if(ui->loremView->isVisible() || layoutForPrint)
-			{
+			if(layoutForPrint)
 				textLayout = textLayoutVect;
-			}
-			else if(ui->loremView_FT->isVisible())
-			{
+			else
 				textLayout = textLayoutFT;
-			}
 
 			bool processFeatures = f->isOpenType() &&  !deFillOTTree().isEmpty();
-//			QString script = ui->langCombo->currentText();
 			QString script(sampleToolBar->getScript());
 			bool processScript( !script.isEmpty() );
 			textLayout->setDeviceIndy(!wantDeviceDependant);
@@ -400,18 +394,10 @@ void SampleWidget::slotView ( bool needDeRendering )
 			}
 			else if(processFeatures)
 			{
-				// Experimental code to handle alternate is commented out
-				// Do not uncomment
-				//				FMAltContext * actx ( FMAltContextLib::SetCurrentContext(sampleTextTree->currentText(), f->path()));
-				//				int rs(0);
-				//				actx->setPar(rs);
 				for(int p(0);p<stl.count();++p)
 				{
 					list << f->glyphs( stl[p] , fSize, deFillOTTree());
-					//					actx->setPar(++rs);
 				}
-				//				actx->cleanup();
-				//				FMAltContextLib::SetCurrentContext(sampleTextTree->currentText(), f->path());
 			}
 			else
 			{
@@ -419,36 +405,13 @@ void SampleWidget::slotView ( bool needDeRendering )
 					list << f->glyphs( stl[p] , fSize  );
 			}
 			textLayout->doLayout(list, fSize);
-			// 			if (loremView->isVisible() /*&& fitViewCheck->isChecked()*/ )
-			// 			{
-			// 				loremView->fitInView ( textLayout->getRect(), Qt::KeepAspectRatio );
-			// 			}
-			if(!layoutForPrint)
-				textLayout->start(QThread::LowestPriority);
-			else
-				textLayout->run();
 
-			if(ui->loremView->isVisible())
-			{
-				QPointF texttopLeft(ui->loremView->mapFromScene(textLayout->getRect().topLeft()));
-				ui->loremView->translate((10 + fSize) - texttopLeft.x()  , (10 + fSize) - texttopLeft.y());
-			}
-			else if(ui->loremView_FT->isVisible())
 			{
 				QPointF texttopLeft(ui->loremView_FT->mapFromScene(textLayout->getRect().topLeft()));
 				ui->loremView_FT->translate( 10 -texttopLeft.x(), 10 -texttopLeft.y());
 			}
 		}
 	}
-	else if(!ui->loremView->isVisible() && !ui->loremView_FT->isVisible())
-	{
-		ui->loremView->sheduleUpdate();
-		ui->loremView_FT->sheduleUpdate();
-	}
-
-
-	//	slotUpdateGView();
-	//	slotInfoFont();
 
 }
 
@@ -944,6 +907,28 @@ void SampleWidget::slotEditSample()
 void SampleWidget::slotUpdateSample()
 {
 	typotek::getInstance()->changeSample(ui->sampleTextTree->currentItem()->text(0), ui->sampleEdit->toPlainText());
-	slotUpdateRView();
+	slotView(true);
+//	if(firstUpdateRequest)
+//	{
+//		typotek::getInstance()->changeSample(ui->sampleTextTree->currentItem()->text(0), ui->sampleEdit->toPlainText());
+//		slotView(true);
+//		firstUpdateRequest = false;
+//		firstUpdateRequestTimeStamp = layoutTime.elapsed();
+//	}
+//	else
+//	{
+//		if((layoutTime.elapsed() - firstUpdateRequestTimeStamp) < layoutWait)
+//		{
+//			firstUpdateRequestTimeStamp = layoutTime.elapsed();
+//			layoutTimer->start(layoutWait);
+//		}
+//		else
+//		{
+//			layoutTimer->stop();
+//			firstUpdateRequest = true;
+//			typotek::getInstance()->changeSample(ui->sampleTextTree->currentItem()->text(0), ui->sampleEdit->toPlainText());
+//			slotView(true);
+//		}
+//	}
 }
 

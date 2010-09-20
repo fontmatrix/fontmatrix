@@ -47,6 +47,8 @@ public:
     bool isChecked(Button b);
     void toggle(Button b, bool c);
 
+    void enableButton(Button b, bool c);
+
     void setScripts(const QStringList& ll);
     QString getScript();
 

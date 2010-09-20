@@ -27,7 +27,7 @@ SampleToolBar::SampleToolBar(QWidget *parent) :
     ui(new Ui::SampleToolBar)
 {
     ui->setupUi(this);
-    setAutoFillBackground(true);
+//    setAutoFillBackground(true);
 
     connect(ui->liveSize, SIGNAL(valueChanged(double)), this, SIGNAL(SizeChanged(double)));
     connect(ui->sampleButton, SIGNAL(toggled(bool)), this, SIGNAL(SampleToggled(bool)));
@@ -77,6 +77,14 @@ void SampleToolBar::toggle(Button b, bool c)
 		ui->sampleButton->setChecked(c);
 	else if(b == OpenTypeButton)
 		ui->opentypeButton->setChecked(c);
+}
+
+void SampleToolBar::enableButton(Button b, bool c)
+{
+	if(b == SampleButton)
+		ui->sampleButton->setEnabled(c);
+	else if(b == OpenTypeButton)
+		ui->opentypeButton->setEnabled(c);
 }
 
 void SampleToolBar::setScripts(const QStringList &ll)

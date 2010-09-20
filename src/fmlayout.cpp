@@ -335,9 +335,9 @@ FMLayout::FMLayout ( QGraphicsScene * scene, FontItem * font , QRectF rect )
 	// 	onSceneProgressBar->setWidget ( progressBar );
 	// 	onSceneProgressBar->setZValue ( 1000 );
 
-	connect ( this, SIGNAL ( paragraphFinished() ), this, SLOT( endOfParagraph() ) );
-	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
-	connect ( this, SIGNAL ( paintFinished() ), this, SLOT ( endOfRun() ) );
+//	connect ( this, SIGNAL ( paragraphFinished() ), this, SLOT( endOfParagraph() ) );
+//	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
+//	connect ( this, SIGNAL ( paintFinished() ), this, SLOT ( endOfRun() ) );
 
 	FM_LAYOUT_NODE_SOON_F=	1200.0;
 	FM_LAYOUT_NODE_FIT_F=	1000.0;
@@ -390,7 +390,7 @@ FMLayout::~ FMLayout()
 void FMLayout::run()
 {
 	if(justRedraw)
-		emit layoutFinished();
+		 doDraw();
 	else
 	{
 		for ( int i ( 0 ); i < paragraphs.count() ; ++ i )
@@ -426,13 +426,15 @@ void FMLayout::run()
 			emit paragraphFinished();
 
 		}
-		emit layoutFinished();
+		 doDraw();
 	}
+	qDebug()<<"\tLayout Finished";
 }
 
 void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 {
 	stopIt = false;
+	layoutIsFinished = false;
 
 	TextProgression *tp = TextProgression::getInstance();
 
@@ -471,11 +473,9 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 	paragraphs = spec;
 	optionHasChanged = false;
 
-	// 	if ( node )
-	// 	{
-	// 		delete node;
-	// 		node = 0;
-	// 	}
+	run();
+	layoutIsFinished = true;
+	qDebug()<< "FMLayout::doLayout return";
 }
 
 void FMLayout::endOfRun()
@@ -505,6 +505,7 @@ void FMLayout::endOfRun()
 void FMLayout::stopLayout()
 {
 	stopIt = true;
+	layoutIsFinished = true;
 }
 
 void FMLayout::doGraph() // Has became doBreaks
@@ -570,7 +571,7 @@ void FMLayout::doLines()
 	
 	for ( int lIdx ( 0 ); lIdx < maxIndex ; ++lIdx )
 	{
-		if ( stopIt )
+		if ( stopIt || ((adjustedSampleInter * (lines.count() + 1)) > theRect.height()))
 			break;
 		int start1 ( /*!lIdx ?*/ indices[lIdx] /*: indices[lIdx] + 1*/ );
 		int end1 ( indices[ lIdx + 1 ] );

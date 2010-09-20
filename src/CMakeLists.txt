@@ -205,7 +205,7 @@ shortcuts.h
 systray.h
 # tagseteditor.h
 tagswidget.h
-textprogression.h
+#textprogression.h
 tttableview.h
 typotek.h
 )

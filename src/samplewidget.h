@@ -22,9 +22,11 @@
 #define SAMPLEWIDGET_H
 
 #include "floatingwidget.h"
+#include "fmotf.h"
+
 #include <QString>
 #include <QByteArray>
-#include "fmotf.h"
+#include <QTime>
 
 class QGraphicsScene;
 class FMLayout;
@@ -35,6 +37,7 @@ class QTimer;
 class SampleToolBar;
 class QTreeWidgetItem;
 class QStyledItemDelegate;
+class QThread;
 
 namespace Ui {
 	class SampleWidget;
@@ -125,6 +128,12 @@ private:
 	OTFSet deFillOTTree();
 
 	bool layoutForPrint;
+	bool firstUpdateRequest;
+	int firstUpdateRequestTimeStamp;
+	QTime layoutTime;
+	QTimer *layoutTimer;
+	int layoutWait;
+	QThread * layoutThread;
 
 	void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 

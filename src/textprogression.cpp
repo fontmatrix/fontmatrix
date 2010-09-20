@@ -12,48 +12,47 @@
 #include "textprogression.h"
 
 TextProgression *TextProgression::instance = 0;
-TextProgression::TextProgression(QWidget * parent)
-	:QWidget(parent)
+TextProgression::TextProgression()
 {
 	instance = this;
-	setupUi(this);
+//	setupUi(this);
 	
-	connect(inlineBTT,SIGNAL(released()),this,SLOT(forwardStateChanged()));
-	connect(inlineRTL,SIGNAL(released()),this,SLOT(forwardStateChanged()));
-	connect(inlineLTR,SIGNAL(released()),this,SLOT(forwardStateChanged()));
-	connect(inlineTTB,SIGNAL(released()),this,SLOT(forwardStateChanged()));
-	connect(blockTTB,SIGNAL(released()),this,SLOT(forwardStateChanged()));
-	connect(blockRTL,SIGNAL(released()),this,SLOT(forwardStateChanged()));
-	connect(blockLTR,SIGNAL(released()),this,SLOT(forwardStateChanged()));
+//	connect(inlineBTT,SIGNAL(released()),this,SLOT(forwardStateChanged()));
+//	connect(inlineRTL,SIGNAL(released()),this,SLOT(forwardStateChanged()));
+//	connect(inlineLTR,SIGNAL(released()),this,SLOT(forwardStateChanged()));
+//	connect(inlineTTB,SIGNAL(released()),this,SLOT(forwardStateChanged()));
+//	connect(blockTTB,SIGNAL(released()),this,SLOT(forwardStateChanged()));
+//	connect(blockRTL,SIGNAL(released()),this,SLOT(forwardStateChanged()));
+//	connect(blockLTR,SIGNAL(released()),this,SLOT(forwardStateChanged()));
 }
 
 TextProgression::Progression TextProgression::inBlock()
 {
-	if(blockTTB->isChecked())
-		return BLOCK_TTB;
-	else if(blockRTL->isChecked())
-		return BLOCK_RTL;
-	else if(blockLTR->isChecked())
-		return BLOCK_LTR;
+//	if(blockTTB->isChecked())
+//		return BLOCK_TTB;
+//	else if(blockRTL->isChecked())
+//		return BLOCK_RTL;
+//	else if(blockLTR->isChecked())
+//		return BLOCK_LTR;
 	
-	return UNDEFINED;
+	return BLOCK_TTB;
 }
 
 TextProgression::Progression TextProgression::inLine()
 {
-	if(inlineLTR->isChecked())
-		return INLINE_LTR;
-	else if(inlineRTL->isChecked())
-		return INLINE_RTL;
-	else if(inlineTTB->isChecked())
-		return INLINE_TTB;
-	else if(inlineBTT->isChecked())
-		return INLINE_BTT;
+//	if(inlineLTR->isChecked())
+//		return INLINE_LTR;
+//	else if(inlineRTL->isChecked())
+//		return INLINE_RTL;
+//	else if(inlineTTB->isChecked())
+//		return INLINE_TTB;
+//	else if(inlineBTT->isChecked())
+//		return INLINE_BTT;
 	
-	return UNDEFINED;
+	return INLINE_LTR;
 }
 
-void TextProgression::forwardStateChanged( )
-{
-	emit stateChanged();
-}
+//void TextProgression::forwardStateChanged( )
+//{
+//	emit stateChanged();
+//}

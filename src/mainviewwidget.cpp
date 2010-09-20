@@ -1234,7 +1234,7 @@ void MainViewWidget::slotQuickSearch(const QString& text)
 		quickSearchTime.start();
 		hasText = listView->moveTo(quickSearchString);
 	}
-	else if(t < quickSearchWait)
+	else if(t <= quickSearchWait)
 	{
 		if(sender() != quickSearch)
 		{

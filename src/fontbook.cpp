@@ -444,7 +444,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						tlay->setDeviceIndy ( true );
 						
 						tlay->doLayout ( gl , conSubfamily[elemIndex].textStyle.fontsize );
-						tlay->run();
+//						tlay->run();
 						
 						needed = tlay->drawnLines * conSubfamily[elemIndex].textStyle.lineheight;
 						
@@ -564,7 +564,7 @@ void FontBook::doBookFromTemplate ( const QDomDocument &aTemplate )
 						alay->setDeviceIndy ( true );
 						
 						alay->doLayout ( gl , conSubfamily[elemIndex].textStyle.fontsize );
-						alay->run();
+//						alay->run();
 						
 						thePos.ry() += alay->drawnLines * conSubfamily[elemIndex].textStyle.lineheight;
 						renderedFont.append ( theFont );

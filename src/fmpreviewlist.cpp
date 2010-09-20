@@ -402,10 +402,14 @@ void FMPreviewView::resizeEvent(QResizeEvent * event)
 	//	qDebug()<<frameWidth() << lineWidth() << midLineWidth();
 	if(spacing() == 0)
 		setSpacing(3);
-	usedWidth = qRound((double(actualWidth)  / columns) - (columns * 2.0 * double(spacing())));
+	if(columns == 1)
+		usedWidth = qRound((double(actualWidth)  / columns) - (columns * 2.0 * double(spacing())));
+	else
+		usedWidth = 280;
 	//	emit widthChanged(usedWidth);
 	setIconSize(QSize(qRound(usedWidth),
 			  2.0 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	QListView::resizeEvent(event);
 }
 
 void FMPreviewView::mousePressEvent(QMouseEvent * event)
@@ -448,6 +452,15 @@ void FMPreviewView::mouseMoveEvent(QMouseEvent * event)
 		}
 	}
 
+}
+
+void FMPreviewView::keyPressEvent(QKeyEvent *event)
+{
+	qDebug()<<"FMPreviewView::keyPressEvent"<<event;
+	if((!event->text().isEmpty()) && (event->text().at(0).isLetterOrNumber()))
+		emit keyPressed(event->text());
+	else
+		QListView::keyPressEvent(event);
 }
 
 void FMPreviewView::updateLayout()

@@ -141,6 +141,8 @@ void MainViewWidget::doConnect()
 	connect(familyWidget, SIGNAL(fontSelected(const QString&)), this, SLOT(slotFontSelectedByName(const QString&)));
 
 	connect(quickSearch, SIGNAL(textEdited(QString)), this, SLOT(slotQuickSearch(QString)));
+	connect(quickSearch, SIGNAL(returnPressed()), this, SLOT(slotSelectFromQuickSearch()));
+	connect(listView, SIGNAL(keyPressed(QString)), this, SLOT(slotQuickSearch(QString)));
 }
 
 void MainViewWidget::disConnect()
@@ -1264,6 +1266,12 @@ void MainViewWidget::slotEndQuickSearch()
 	quickSearchTimer->stop();
 	listView->setFocus(Qt::OtherFocusReason);
 	quickSearch->setStyleSheet(QString());
+}
+
+void MainViewWidget::slotSelectFromQuickSearch()
+{
+	slotEndQuickSearch();
+	slotShowFamily( listView->currentIndex() );
 }
 
 void MainViewWidget::slotPreviewUpdateSize(int w)

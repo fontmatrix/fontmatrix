@@ -71,6 +71,7 @@ public:
 	FMPreviewView(QWidget * parent = 0);
 	~FMPreviewView(){}
 	int getUsedWidth() const{return usedWidth;}
+	// n = 1 for a single column layout (list); n = 2 for multi columns layout
 	void setNumCol(int n){columns = n;}
 	bool moveTo(const QString& fname); // fname can be the begining of a fancy name
 
@@ -80,6 +81,7 @@ protected:
 	bool dragFlag;
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual void mouseMoveEvent(QMouseEvent *event);
+	void keyPressEvent(QKeyEvent *event);
 
 private:
 	int usedWidth;
@@ -91,6 +93,7 @@ public slots:
 
 signals:
 	void widthChanged(int);
+	void keyPressed(QString);
 
 };
 

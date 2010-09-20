@@ -35,8 +35,14 @@
      <property name="checkable">
       <bool>true</bool>
      </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonTextBesideIcon</enum>
+     </property>
      <property name="autoRaise">
       <bool>true</bool>
+     </property>
+     <property name="arrowType">
+      <enum>Qt::UpArrow</enum>
      </property>
     </widget>
    </item>
@@ -48,8 +54,14 @@
      <property name="checkable">
       <bool>true</bool>
      </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonTextBesideIcon</enum>
+     </property>
      <property name="autoRaise">
       <bool>true</bool>
+     </property>
+     <property name="arrowType">
+      <enum>Qt::UpArrow</enum>
      </property>
     </widget>
    </item>

@@ -106,6 +106,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 	private slots:
 		void slotQuickSearch(const QString& text);
 		void slotEndQuickSearch();
+		void slotSelectFromQuickSearch();
 
 		
 	signals:

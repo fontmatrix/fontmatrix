@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>411</width>
+    <width>511</width>
     <height>37</height>
    </rect>
   </property>
@@ -65,12 +65,22 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
+   <item row="0" column="5">
     <widget class="QComboBox" name="languageCombo">
      <property name="toolTip">
       <string>Depending of the font, some scripts 
 are especially supported if processed 
 through some logic (ICU here).</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Shaping:</string>
+     </property>
+     <property name="buddy">
+      <cstring>languageCombo</cstring>
      </property>
     </widget>
    </item>

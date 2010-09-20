@@ -91,7 +91,7 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	ui->textProgression->setVisible(false);
 
 	sampleToolBar = new SampleToolBar(this);
-	ui->sampleGridLayout->addWidget(sampleToolBar, 0,0, Qt::AlignRight | Qt::AlignBottom);
+	ui->sampleGridLayout->addWidget(sampleToolBar, 1,0, Qt::AlignRight | Qt::AlignBottom);
 
 
 	sampleNameEditor = new QStyledItemDelegate(ui->sampleTextTree);
@@ -872,8 +872,8 @@ void SampleWidget::slotShowSamples(bool b)
 			sampleToolBar->toggle(SampleToolBar::OpenTypeButton, false);
 		}
 		ui->sampleEditWidget->setAutoFillBackground(true);
-		ui->sampleEditWidget->resize(ui->sampleGridLayout->geometry().width() / 2, ui->sampleGridLayout->geometry().height() / 2);
-		ui->sampleGridLayout->addWidget(ui->sampleEditWidget, 0,0, Qt::AlignRight | Qt::AlignTop);
+		ui->sampleEditWidget->resize(ui->sampleGridLayout->geometry().width() / 2, ui->sampleGridLayout->geometry().height());
+		ui->sampleGridLayout->addWidget(ui->sampleEditWidget, 0,0, Qt::AlignRight);
 	}
 	else
 	{
@@ -894,7 +894,7 @@ void SampleWidget::slotShowOpenType(bool b)
 		}
 		ui->opentypeWidget->setAutoFillBackground(true);
 		ui->opentypeWidget->resize(ui->sampleGridLayout->geometry().width() / 2, ui->sampleGridLayout->geometry().height());
-		ui->sampleGridLayout->addWidget(ui->opentypeWidget, 0,0, Qt::AlignLeft);
+		ui->sampleGridLayout->addWidget(ui->opentypeWidget, 0,0, Qt::AlignRight);
 	}
 	else
 	{

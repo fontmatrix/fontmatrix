@@ -163,6 +163,7 @@ typotek::typotek()
 
 void typotek::initMatrix()
 {
+	qDebug()<<"Main Thread:"<<thread();
 	if(matrix)
 		return;
 	matrix = true;
@@ -1315,7 +1316,7 @@ void typotek::slotRemoteIsReady()
 void typotek::fontBook()
 {
 	FontBook fontbook;
-	fontbook.doBook();
+	fontbook.doBook(FontBook::Full);
 }
 
 

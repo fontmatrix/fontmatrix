@@ -16,7 +16,13 @@
 #include <QColor>
 #include <QPrinter>
 #include <QMap>
+#include <QPainter>
+#include <QRectF>
+#include <QPrinter>
+#include <QObject>
 
+
+class ProgressBarDuo;
 /**
 	@author Pierre Marchand <pierremarc@oep-h.com>
 
@@ -58,7 +64,7 @@ struct TextElement
 	- ...
 	At some point, I’ll provide a reference.
 	*/
-// 	bool internal; OBSOLETE - substitution will be regexpizated ##KEYWORD##
+	// 	bool internal; OBSOLETE - substitution will be regexpizated ##KEYWORD##
 	TextElement():valid(false){}
 	TextElement ( QString elem) :e ( elem ), valid(true){}
 };
@@ -83,25 +89,42 @@ struct FontBookContext
 	TextElement textElement;
 	TextElementStyle textStyle;
 	GraphicElement graphic;
-/*	
+	/*
 	enum FBCLevel{PAGE, FAMILY, SUBFAMILY};
 	
 	FBCLevel level;*/
 	
 };
 
-class FontBook
+class FontBook : public QObject
 {
-	public:
-		FontBook();
+public:
+	enum Style
+	{
+		Full,
+		OneLiner
+	};
+	FontBook();
 
-		~FontBook();
-		void doBook();
-	private:
-		
-		QString outputFilePath;
-		QMap<QString, QPrinter::PageSize > mapPSize;
-		void doBookFromTemplate ( const QDomDocument &aTemplate );
+	~FontBook();
+	void doBook(Style s);
+private:
+
+	void doFullBook();
+	// return true if uses only its page, false if it spreads over the 2 pages
+	bool doFullBookPageLeft(const QString& family);
+	void doFullBookPageRight(const QString& family);
+	void doOneLinerBook();
+
+	QPrinter * printer;
+	QPainter * painter;
+	QRectF printerRect;
+	QStringList stringList;
+	ProgressBarDuo * progress;
+
+	QString outputFilePath;
+	QMap<QString, QPrinter::PageSize > mapPSize;
+	void doBookFromTemplate ( const QDomDocument &aTemplate );
 };
 
 #endif

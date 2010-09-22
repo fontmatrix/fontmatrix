@@ -18,28 +18,35 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FMVARIANTS_H
-#define FMVARIANTS_H
+#ifndef PROGRESSBARDUO_H
+#define PROGRESSBARDUO_H
 
-#include <QList>
-#include <QStringList>
+#include <QDialog>
 
-class FontItem;
+namespace Ui {
+    class ProgressBarDuo;
+}
 
-class FMVariants
+class ProgressBarDuo : public QDialog
 {
-	static FMVariants *instance;
-	FMVariants();
-
-	QList<QStringList> variants;
-	QStringList priorList;
-	void appendVariants(const QString& w, const QString& s, const QString& wi, const QString& o);
-	inline bool compareVariants(const QStringList& a, const QStringList& b);
+    Q_OBJECT
 
 public:
-	static QList<FontItem*> Order(QList<FontItem*> ul);
-	static FontItem* Preferred(QList<FontItem*> ul);
+    explicit ProgressBarDuo(QWidget *parent = 0);
+    ~ProgressBarDuo();
 
+    void setLabel(const QString& s, int n);
+    void setValue(int value, int n);
+    void setMax(int max, int n);
+
+protected:
+    void changeEvent(QEvent *e);
+
+private:
+    Ui::ProgressBarDuo *ui;
+
+signals:
+    void Canceled();
 };
 
-#endif // FMVARIANTS_H
+#endif // PROGRESSBARDUO_H

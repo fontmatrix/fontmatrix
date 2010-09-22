@@ -642,7 +642,9 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		glyph->setBrush ( QBrush ( Qt::red ) );
 		glyph->setPath ( glyphPath );
 		glyph->setData ( GLYPH_DATA_GLYPH, index);
-		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size );
+		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size * scalefactor);
+		glyph->setData ( GLYPH_DATA_HADVANCE_SCALED , ( double ) size );
+		glyph->setData ( GLYPH_DATA_ERROR , true );
 		releaseFace();
 		return glyph;
 	}
@@ -666,8 +668,10 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		glyph->setBrush ( brush );
 		glyph->setPen ( pen );
 		glyph->setPath ( errPath );
-		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) size  /scalefactor );
+		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) m_glyph->metrics.horiAdvance   );
+		glyph->setData ( GLYPH_DATA_HADVANCE_SCALED , ( double ) m_glyph->metrics.horiAdvance  *scalefactor);
 		glyph->setData ( GLYPH_DATA_GLYPH, index);
+		glyph->setData ( GLYPH_DATA_ERROR , true );
 	}
 	else
 	{
@@ -675,7 +679,9 @@ QGraphicsPathItem * FontItem::itemFromGindex ( int index, double size )
 		glyph->setPath ( glyphPath );
 		glyph->setData ( GLYPH_DATA_GLYPH, index);
 		glyph->setData ( GLYPH_DATA_HADVANCE , ( double ) m_glyph->metrics.horiAdvance );
+		glyph->setData ( GLYPH_DATA_HADVANCE_SCALED , ( double ) m_glyph->metrics.horiAdvance * scalefactor);
 		glyph->setData ( 5, ( double ) m_glyph->metrics.vertAdvance );
+		glyph->setData ( GLYPH_DATA_ERROR , false );
 // 		glyph->scale ( scalefactor,-scalefactor );
 	}
 	releaseFace();

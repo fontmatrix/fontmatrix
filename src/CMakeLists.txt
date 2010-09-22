@@ -80,6 +80,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/panosewidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pangoshaper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/playwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/prefspaneldialog.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/progressbarduo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/remotedir.cpp
 #${CMAKE_CURRENT_SOURCE_DIR}/savedata.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/sampletoolbar.cpp
@@ -197,6 +198,7 @@ panosewidget.h
 parallelcoor.h
 playwidget.h
 prefspaneldialog.h
+progressbarduo.h
 remotedir.h
 sampletoolbar.h
 samplewidget.h
@@ -246,6 +248,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/panosewidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/playwidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/prefs_panel.ui
+${CMAKE_CURRENT_SOURCE_DIR}/progressbarduo.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/repair.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/sampletoolbar.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/samplewidget.ui

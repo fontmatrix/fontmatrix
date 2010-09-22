@@ -97,6 +97,13 @@ FMVariants::FMVariants()
 	}
 //	foreach(const QStringList& v, variants)
 //		qDebug()<<v.join(" ");
+
+	priorList <<	QString("Book")
+			<<	QString("Normal")
+			<<	QString("Regular")
+			<<	QString("Roman")
+			<<	QString("Plain")
+			<<	QString("Medium");
 }
 
 
@@ -188,4 +195,21 @@ QList<FontItem*> FMVariants::Order(QList<FontItem*> ul)
 		}
 	}
 	return ret;
+}
+
+
+FontItem * FMVariants::Preferred(QList<FontItem *> ul)
+{
+	if(ul.isEmpty())
+		return 0;
+	if(instance == 0)
+		instance = new FMVariants;
+	foreach(FontItem* it, ul)
+	{
+		if(instance->priorList.contains(it->variant(), Qt::CaseInsensitive))
+		{
+			return it;
+		}
+	}
+	return ul.first();
 }

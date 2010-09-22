@@ -18,28 +18,78 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef FMVARIANTS_H
-#define FMVARIANTS_H
+#include "progressbarduo.h"
+#include "ui_progressbarduo.h"
 
-#include <QList>
-#include <QStringList>
-
-class FontItem;
-
-class FMVariants
+ProgressBarDuo::ProgressBarDuo(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ProgressBarDuo)
 {
-	static FMVariants *instance;
-	FMVariants();
+    ui->setupUi(this);
+    connect(ui->cancelButton, SIGNAL(Canceled()), this, SIGNAL(Canceled()));
+}
 
-	QList<QStringList> variants;
-	QStringList priorList;
-	void appendVariants(const QString& w, const QString& s, const QString& wi, const QString& o);
-	inline bool compareVariants(const QStringList& a, const QStringList& b);
+ProgressBarDuo::~ProgressBarDuo()
+{
+    delete ui;
+}
 
-public:
-	static QList<FontItem*> Order(QList<FontItem*> ul);
-	static FontItem* Preferred(QList<FontItem*> ul);
+void ProgressBarDuo::changeEvent(QEvent *e)
+{
+    QDialog::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}
 
-};
 
-#endif // FMVARIANTS_H
+void ProgressBarDuo::setLabel(const QString &s, int n)
+{
+	QLabel *l = 0;
+
+	switch(n)
+	{
+	case 0: l = ui->Label0;
+	break;
+	case 1: l = ui->Label1;
+	break;
+	default: break;
+	}
+	if(l)
+		l->setText(s);
+}
+
+
+void ProgressBarDuo::setValue(int value, int n)
+{
+	QProgressBar *p = 0;
+	switch(n)
+	{
+	case 0: p = ui->Bar0;
+	break;
+	case 1: p = ui->Bar1;
+	break;
+	default: break;
+	}
+	if(p)
+		p->setValue(value);
+}
+
+void ProgressBarDuo::setMax(int max, int n)
+{
+	QProgressBar *p = 0;
+	switch(n)
+	{
+	case 0: p = ui->Bar0;
+	break;
+	case 1: p = ui->Bar1;
+	break;
+	default: break;
+	}
+	if(p)
+		p->setMaximum(max);
+}

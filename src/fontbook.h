@@ -111,6 +111,7 @@ public:
 private:
 
 	void doFullBook();
+	void doFullBookCover();
 	// return true if uses only its page, false if it spreads over the 2 pages
 	bool doFullBookPageLeft(const QString& family);
 	void doFullBookPageRight(const QString& family);

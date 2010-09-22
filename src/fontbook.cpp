@@ -114,11 +114,13 @@ void FontBook::doFullBook()
 {
 	// Full book
 	// <img>
-	painter->drawText(printerRect, QString("Fontbook produced by Fontmatrix"));
 
 	progress = new ProgressBarDuo(typotek::getInstance());
-	progress->setLabel(QString("Family"), 0);
-	progress->setLabel(QString("Variant"), 1);
+
+	doFullBookCover();
+
+	progress->setLabel(QString("-"), 0);
+	progress->setLabel(QString("-"), 1);
 	progress->setMax(FMFontDb::DB()->getFilteredFonts(true).count(), 0);
 	progress->setMax(0, 1);
 	progress->show();
@@ -137,6 +139,44 @@ void FontBook::doFullBook()
 	}
 
 	delete progress;
+}
+
+void FontBook::doFullBookCover()
+{
+	QGraphicsScene pScene(printerRect);
+
+	QFont aFont;
+	aFont.setPointSizeF(26.0);
+	QGraphicsSimpleTextItem * title(pScene.addSimpleText(QString("Fontmatrix"),aFont));
+	title->setPos(60, printerRect.height()*.9);
+
+	int module(250);
+	double x(0);
+	double y(0);
+	double fsize(qrand() % module);
+	int gray(qrand() % 160);
+	foreach(FontItem * f, FMFontDb::DB()->getFilteredFonts())
+	{
+		int lc(f->lastChar());
+		int charcode(qrand() % lc);
+		while(!f->hasCharcode(charcode))
+			charcode = qrand() % lc;
+
+		QGraphicsPathItem *p(f->itemFromChar(charcode, fsize));
+		if(p->data(GLYPH_DATA_ERROR).toBool())
+		{
+			delete p;
+			continue;
+		}
+		pScene.addItem(p);
+		p->setPos(x + (qrand() % qRound(printerRect.width())), y + (qrand() % qRound(printerRect.height())));
+		p->setBrush(QColor(gray,  gray,  gray));
+		p->setPen(Qt::NoPen);
+		gray = qrand() % 160;
+		fsize = qrand() % module;
+	}
+
+	pScene.render(painter, printer->paperRect(), printerRect);
 }
 
 void FontBook::doFullBookPageRight(const QString &family)
@@ -399,6 +439,7 @@ bool FontBook::doFullBookPageLeft(const QString &family)
 				continue;
 			}
 			pScene.addItem(p);
+			p->setPen(Qt::NoPen);
 			double advance(p->data(GLYPH_DATA_HADVANCE_SCALED).toDouble());
 			double fakeAdvance(advance * 1.5);
 			if((ccX + fakeAdvance) > ccW)

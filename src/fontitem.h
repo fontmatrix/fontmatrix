@@ -244,6 +244,7 @@ class FontItem : public QObject
 	public slots:
 		QString renderSVG(const QString& s, const double& size);
 		int countCoverage ( int begin_code, int end_code );
+		bool hasCharcode(int cc);
 		bool hasChars(const QString& s);
 		int firstChar();
 		int lastChar();

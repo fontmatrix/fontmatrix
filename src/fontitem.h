@@ -32,6 +32,9 @@
 #include <QUrl>
 #include <QFlags>
 // #include <QThread>
+#include <QGraphicsItem>
+#include <QRectF>
+#include <QVariant>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -45,6 +48,7 @@ class QGraphicsTextItem;
 struct OTFSet;
 class FMOtf;
 class QGraphicsView;
+class QGraphicsObject;
 
 class QProgressDialog;
 class QHttp;
@@ -85,6 +89,22 @@ struct FontLocalInfo
 	QPixmap pix;
 };
 
+class MetaGlyphItem : public QGraphicsItem
+{
+	QMap<int, QVariant> m_Data;
+public:
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){}
+	QRectF boundingRect() const {return QRectF();}
+	void setMetaData(int key, const QVariant &value)
+	{
+		m_Data.insert(key,value);
+	}
+	QVariant metaData(int key) const
+	{
+		return m_Data.value(key);
+	}
+};
+
 class FontItem : public QObject
 {
 		Q_OBJECT
@@ -109,6 +129,7 @@ class FontItem : public QObject
 				
 		FontItem ( QString path , bool remote = false, bool faststart = false);
 		FontItem (QString path,  QString family, QString variant, QString type , bool active);
+		FontItem * Clone();
 		/** Needed when the item has been instantiate with "faststart=true" */
 		void updateItem();
 		~FontItem();
@@ -158,9 +179,11 @@ class FontItem : public QObject
 		bool m_isOpenType;
 		FMOtf *otf;
 
-		static FT_Library theLibrary;
+//		FT_Library theLibrary;
+		FT_Face	m_face;
+		FT_Face lastFace;
 		FT_Error      ft_error;
-		FT_Face m_face;
+//		QMap<FT_Library,FT_Face> faces;
 		int facesRef;
 		FT_GlyphSlot m_glyph;
 		
@@ -172,8 +195,7 @@ class FontItem : public QObject
 		bool m_rasterFreetype;
 		unsigned int m_FTHintMode;
 // 		unsigned int m_FTRenderMode;not yet implemented
-		
-		bool ensureLibrary();
+
 		bool ensureFace();
 		void releaseFace();
 		void encodeFace();
@@ -193,7 +215,6 @@ class FontItem : public QObject
 		QMap<int, QGraphicsTextItem*> fancyTexts;
 		QMap<int, QList<QGraphicsPixmapItem*> > fancyAlternates;
 
-		QPixmap fixedPixmap;
 		
 		bool allIsRendered;
 		bool isDerendered;
@@ -298,9 +319,10 @@ class FontItem : public QObject
 		QGraphicsPathItem* itemFromChar ( int charcode, double size );
 		QGraphicsPathItem* itemFromGindex ( int index, double size );
 		
-		QGraphicsPixmapItem* itemFromCharPix ( int charcode, double size );
-		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size );
-		QGraphicsPixmapItem* itemFromGindexPix_mt ( int index, double size );
+		QGraphicsPixmapItem* itemFromCharPix ( int charcode, double size);
+		QGraphicsPixmapItem* itemFromGindexPix ( int index, double size);
+		// cant have qpixmap outside main thread and QGraphicsPixmapItem create at least  a null one when instantiated
+		MetaGlyphItem* itemFromGindexPix_mt ( int index, double size );
 		
 		QImage charImage(int charcode, double size);
 		QImage glyphImage(int index, double size);

@@ -2466,4 +2466,7 @@ void typotek::toggleMainView(bool v)
 		mainStack->setCurrentWidget(theMainView);
 }
 
-
+void typotek::pushObject(QObject *o)
+{
+	o->moveToThread(sender()->thread());
+}

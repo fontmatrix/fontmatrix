@@ -33,6 +33,8 @@
 // #include <QMutexLocker>
 #include <QMutex>
 // #include <QWaitCondition>
+#include <QCoreApplication>
+#include <QGraphicsObject>
 
 #define OUT_OF_RECT 99999999.0
 
@@ -136,7 +138,7 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 	// 	{debugL << v.n->index;}
 	// 	qDebug()<<"Node::sPath(" <<dist<< ", "<<curList<<", "<<theList<<", "<<theScore<<")"<< "I L"<<index<<debugL;
 	int deep ( curList.count() + 1 );
-//	FMLayout* lyt ( FMLayout::getLayout() );
+	//	FMLayout* lyt ( FMLayout::getLayout() );
 	if ( lyt->stopIt )
 	{
 		theScore = 0;
@@ -309,7 +311,9 @@ void Node::sPath ( double dist , QList< int > curList, QList< int > & theList, d
 //FMLayout *FMLayout::instance = 0;
 FMLayout::FMLayout ( QGraphicsScene * scene, FontItem * font , QRectF rect )
 	:theScene(scene),
-	theFont(font)
+	theFont(font),
+	layoutIsFinished(true),
+	contextIsMainThread(true)
 {
 	if(rect.isNull())
 	{
@@ -335,9 +339,9 @@ FMLayout::FMLayout ( QGraphicsScene * scene, FontItem * font , QRectF rect )
 	// 	onSceneProgressBar->setWidget ( progressBar );
 	// 	onSceneProgressBar->setZValue ( 1000 );
 
-//	connect ( this, SIGNAL ( paragraphFinished() ), this, SLOT( endOfParagraph() ) );
-//	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
-//	connect ( this, SIGNAL ( paintFinished() ), this, SLOT ( endOfRun() ) );
+	//	connect ( this, SIGNAL ( paragraphFinished() ), this, SLOT( endOfParagraph() ) );
+	//	connect ( this, SIGNAL ( layoutFinished() ), this, SLOT ( doDraw() ) );
+	//	connect ( this, SIGNAL ( paintFinished() ), this, SLOT ( endOfRun() ) );
 
 	FM_LAYOUT_NODE_SOON_F=	1200.0;
 	FM_LAYOUT_NODE_FIT_F=	1000.0;
@@ -347,7 +351,7 @@ FMLayout::FMLayout ( QGraphicsScene * scene, FontItem * font , QRectF rect )
 	FM_LAYOUT_MAX_COMPRESSION = 50.0; // 50%
 
 	optionDialog = new QWidget;
-//	optionDialog->setWindowTitle ( tr ( "Text engine options" ) );
+	//	optionDialog->setWindowTitle ( tr ( "Text engine options" ) );
 	optionLayout =  new QGridLayout(optionDialog) ;
 	
 	optionsWidget = new FMLayOptWidget;
@@ -367,7 +371,8 @@ FMLayout::FMLayout ( QGraphicsScene * scene, FontItem * font , QRectF rect )
 	
 	optionLayout->addWidget(optionsWidget,0,0);
 
-	connect ( optionsWidget,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotOption ( int ) ) );
+//	connect ( optionsWidget,SIGNAL ( valueChanged ( int ) ),this,SLOT ( slotOption ( int ) ) );
+	connect(this, SIGNAL(objectWanted(QObject*)), typotek::getInstance(), SLOT(pushObject(QObject*)));
 
 }
 
@@ -389,9 +394,9 @@ FMLayout::~ FMLayout()
 
 void FMLayout::run()
 {
-	if(justRedraw)
-		 doDraw();
-	else
+//	if(justRedraw)
+//		doDraw();
+//	else
 	{
 		for ( int i ( 0 ); i < paragraphs.count() ; ++ i )
 		{
@@ -426,13 +431,16 @@ void FMLayout::run()
 			emit paragraphFinished();
 
 		}
-		 doDraw();
+		doDraw();
 	}
 	qDebug()<<"\tLayout Finished";
 }
 
-void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
+void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs, FontItem* font)
 {
+	qDebug()<<"FMLayout::doLayout"<<thread();
+	if(font)
+		theFont = font;
 	stopIt = false;
 	layoutIsFinished = false;
 
@@ -455,18 +463,18 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 		origine.rx() = theRect.left();
 
 	// 	qDebug()<<"LO"<<lastOrigine<<"O"<<origine<<"options"<<optionHasChanged;
-	if( !optionHasChanged && origine == lastOrigine && fontSize == fs && paragraphs == spec )
-	{
-		justRedraw = true;
-//		typotek::getInstance()->startProgressJob( lines.count() );
-		// 		qDebug()<<"LAYOUT O : lines "<<lines.count();
-	}
-	else
+//	if( !optionHasChanged && origine == lastOrigine && fontSize == fs && paragraphs == spec )
+//	{
+//		justRedraw = true;
+//		//		typotek::getInstance()->startProgressJob( lines.count() );
+//		// 		qDebug()<<"LAYOUT O : lines "<<lines.count();
+//	}
+//	else
 	{
 		// 		qDebug()<<"LAYOUT 1";
 		justRedraw = false;
 		lines.clear();
-//		typotek::getInstance()->startProgressJob( paragraphs.count() + ( theRect.height() / fs*1.20 ) );// layout AND draw
+		//		typotek::getInstance()->startProgressJob( paragraphs.count() + ( theRect.height() / fs*1.20 ) );// layout AND draw
 	}
 	lastOrigine = origine;
 	fontSize = fs;
@@ -475,7 +483,8 @@ void FMLayout::doLayout ( const QList<GlyphList> & spec , double fs )
 
 	run();
 	layoutIsFinished = true;
-	qDebug()<< "FMLayout::doLayout return";
+	emit layoutFinished();
+	qDebug()<< "FMLayout::doLayout return" << justRedraw;
 }
 
 void FMLayout::endOfRun()
@@ -493,11 +502,11 @@ void FMLayout::endOfRun()
 	if ( stopIt ) // We’re here after a interruption
 	{
 		stopIt = false;
-//		typotek::getInstance()->endProgressJob();
+		//		typotek::getInstance()->endProgressJob();
 		emit updateLayout();
 	}
-//	else
-//		typotek::getInstance()->endProgressJob();
+	//	else
+	//		typotek::getInstance()->endProgressJob();
 	
 	// 	qDebug()<<"EOR B"<<lines.count();
 }
@@ -505,7 +514,7 @@ void FMLayout::endOfRun()
 void FMLayout::stopLayout()
 {
 	stopIt = true;
-	layoutIsFinished = true;
+	emit clearScene();
 }
 
 void FMLayout::doGraph() // Has became doBreaks
@@ -815,8 +824,9 @@ void FMLayout::doDraw()
 	
 	double scale = fontSize / theFont->getUnitPerEm();
 	double pixelAdjustX = typotek::getInstance()->getDpiX() / 72.0 ;
-	double pixelAdjustY = typotek::getInstance()->getDpiX() / 72.0 ;
+	double pixelAdjustY = typotek::getInstance()->getDpiY() / 72.0 ;
 
+	int pd =0;
 
 	for ( int lIdx ( 0 ); lIdx < lines.count() ; ++lIdx )
 	{
@@ -834,14 +844,18 @@ void FMLayout::doDraw()
 		++drawnLines;
 		clearCaches();
 		GlyphList refGlyph ( lines[lIdx] );
-
+//		emit drawBaselineForMe(pen.y());
 		if ( !deviceIndy )
 		{
 			for ( int i=0; i < refGlyph.count(); ++i )
 			{
 				if ( !refGlyph[i].glyph )
 					continue;
-				QGraphicsPixmapItem *glyph = theFont->itemFromGindexPix ( refGlyph[i].glyph , fontSize );
+				QGraphicsItem *glyph;
+				if(contextIsMainThread)
+					glyph =  theFont->itemFromGindexPix ( refGlyph[i].glyph , fontSize );
+				else
+					glyph = theFont->itemFromGindexPix_mt( refGlyph[i].glyph , fontSize );
 				if ( !glyph )
 					continue;
 				if ( tp->inLine() == TextProgression::INLINE_RTL )
@@ -854,11 +868,33 @@ void FMLayout::doDraw()
 				}
 
 				/*************************************************/
-				pixList << glyph;
-				theScene->addItem ( glyph );
-				glyph->setZValue ( 100.0 );
-				glyph->setPos ( pen.x() + ( refGlyph[i].xoffset * pixelAdjustX ) + glyph->data ( GLYPH_DATA_BITMAPLEFT ).toDouble() * scale  ,
-				                pen.y() + ( refGlyph[i].yoffset * pixelAdjustY ) - glyph->data ( GLYPH_DATA_BITMAPTOP ).toInt() );
+				if(contextIsMainThread)
+				{
+					pixList << reinterpret_cast<QGraphicsPixmapItem*>(glyph);
+					theScene->addItem ( glyph );
+					glyph->setZValue ( 100.0 );
+					glyph->setPos ( pen.x()
+							+ ( refGlyph[i].xoffset * pixelAdjustX )
+							+ glyph->data (GLYPH_DATA_BITMAPLEFT).toDouble() * scale  ,
+							pen.y()
+							+ ( refGlyph[i].yoffset * pixelAdjustY )
+							- glyph->data(GLYPH_DATA_BITMAPTOP).toDouble());
+				}
+				else
+				{
+//					refGlyph[i].dump();
+					MetaGlyphItem * mgi(reinterpret_cast<MetaGlyphItem*>(glyph));
+//					qDebug()<<refGlyph[i].glyph<<pen.y() << ( refGlyph[i].yoffset * pixelAdjustY ) << mgi->metaData ( GLYPH_DATA_BITMAPTOP ).toDouble();
+					++pd;
+					emit drawPixmapForMe(refGlyph[i].glyph,
+							     fontSize,
+							     pen.x()
+							     + (refGlyph[i].xoffset * pixelAdjustX)
+							     + mgi->metaData(GLYPH_DATA_BITMAPLEFT).toDouble() * scale,
+							     pen.y()
+							     + (refGlyph[i].yoffset * pixelAdjustY)
+							     - mgi->metaData(GLYPH_DATA_BITMAPTOP).toDouble());
+				}
 				/*************************************************/
 
 				if ( tp->inLine() == TextProgression::INLINE_LTR )
@@ -929,13 +965,14 @@ void FMLayout::doDraw()
 			pen.rx() += adjustedSampleInter;
 		}
 		
-//		typotek::getInstance()->runProgressJob();
+		//		typotek::getInstance()->runProgressJob();
 		// 		qDebug() <<"P"<<pen;
 	}
 	//
 	// 	qDebug() <<"doDraw T(ms)"<<t.elapsed();
 	emit paintFinished();
-	theScene->update(theRect);
+	emit drawPixmapForMe(-1,0,0,0);
+	qDebug()<<"P emitted:"<<pd;
 }
 
 int FMLayout::sepCount(int start, int end, const GlyphList & gl)
@@ -1275,7 +1312,11 @@ void FMLayout::resetScene()
 {
 	if(persistentScene)
 		return;
-	
+	if(!contextIsMainThread)
+	{
+		emit clearScene();
+		return;
+	}
 	int pCount ( pixList.count() );
 	for ( int i = 0; i < pCount ; ++i )
 	{
@@ -1421,10 +1462,18 @@ void FMLayout::clearCaches()
 
 void FMLayout::endOfParagraph()
 {
-//	typotek::getInstance()->runProgressJob();
+	//	typotek::getInstance()->runProgressJob();
 }
 
 
+void FMLayout::setContext(bool c)
+{
+	contextIsMainThread = c;
+//	if(c)
+//		theFont->moveToThread(QApplication::instance()->thread());
+//	else
+//		emit objectWanted(theFont);
+}
 
 
 

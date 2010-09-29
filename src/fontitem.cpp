@@ -23,6 +23,7 @@
 #include "fmencdata.h"
 #include "fmfontdb.h"
 #include "fmfontstrings.h"
+#include "fmfreetypelib.h"
 #include "fmglyphsview.h"
 #include "glyphtosvghelper.h"
 #include "typotek.h"
@@ -36,6 +37,7 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsObject>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPathItem>
@@ -63,7 +65,6 @@
 
 int fm_num_face_opened = 0;
 
-FT_Library FontItem::theLibrary = 0;
 QGraphicsScene *FontItem::theOneLineScene = 0;
 
 
@@ -217,7 +218,7 @@ FontItem::FontItem ( QString path , bool remote, bool faststart )
 	remoteCached = false;
 	stopperDownload = false;
 	m_face = 0;
-	facesRef = 0;
+	lastFace = 0;
 	m_glyphsPerRow = 5;
 	m_isEncoded = false;
 	currentChar = -1;
@@ -343,7 +344,7 @@ FontItem::FontItem(QString path, QString family, QString variant, QString type,b
 	remoteCached = false;
 	stopperDownload = false;
 	m_face = 0;
-	facesRef = 0;
+	lastFace = 0;
 	m_glyphsPerRow = 5;
 	m_isEncoded = false;
 	currentChar = -1;
@@ -376,6 +377,12 @@ FontItem::FontItem(QString path, QString family, QString variant, QString type,b
 	m_variant = variant;
 	m_active = active;
 	m_type = type;
+}
+
+FontItem * FontItem::Clone()
+{
+	FontItem *fitem = new FontItem ( m_path, m_family, m_variant, m_type, m_active );
+	return fitem;
 }
 
 void FontItem::updateItem()
@@ -441,18 +448,6 @@ FontItem::~FontItem()
 	}
 }
 
-bool FontItem::ensureLibrary()
-{
-	if ( theLibrary )
-		return true;
-	ft_error = FT_Init_FreeType ( &theLibrary );
-	if ( ft_error )
-	{
-		qDebug() << "Error loading ft_library ";
-		return false;
-	}
-	return true;
-}
 
 void FontItem::encodeFace()
 {
@@ -508,40 +503,39 @@ void FontItem::encodeFace()
 
 bool FontItem::ensureFace()
 {
-	if ( ensureLibrary() )
+	FT_Library ftlib = FMFreetypeLib::lib(thread());
+//	qDebug()<<"FontItem::ensureFace"<<thread();
+
+	if ( m_face )
 	{
-		if ( m_face )
-		{
-			++facesRef;
-			return true;
-		}
-		QString trueFile ( m_remote ? remoteHerePath : m_path );
-		ft_error = FT_New_Face ( theLibrary, trueFile.toLocal8Bit() , 0, &m_face );
-		if ( ft_error )
-		{
-			qDebug() << "Error loading face [" << trueFile <<"]";
-			return false;
-		}
-		encodeFace();
-		if ( spaceIndex.isEmpty() )
-		{
-			int gIndex ( 0 );
-			for ( int i ( 0 ); i < legitimateNonPathChars.count(); ++i )
-			{
-				gIndex =   FT_Get_Char_Index ( m_face , legitimateNonPathChars[i] );
-				if ( gIndex )
-				{
-					spaceIndex << gIndex;
-				}
-			}
-		}
-		unitPerEm = m_face->units_per_EM;
-		m_glyph = m_face->glyph;
 		++facesRef;
-		++fm_num_face_opened;
 		return true;
 	}
-	return false;
+	QString trueFile ( m_remote ? remoteHerePath : m_path );
+	ft_error = FT_New_Face ( ftlib, trueFile.toLocal8Bit() , 0, &m_face );
+	if ( ft_error )
+	{
+		qDebug() << "Error loading face [" << trueFile <<"]";
+		return false;
+	}
+	encodeFace();
+	if ( spaceIndex.isEmpty() )
+	{
+		int gIndex ( 0 );
+		for ( int i ( 0 ); i < legitimateNonPathChars.count(); ++i )
+		{
+			gIndex =   FT_Get_Char_Index ( m_face , legitimateNonPathChars[i] );
+			if ( gIndex )
+			{
+				spaceIndex << gIndex;
+			}
+		}
+	}
+	unitPerEm = m_face->units_per_EM;
+	m_glyph = m_face->glyph;
+	facesRef = 1;
+	++fm_num_face_opened;
+	return true;
 }
 
 void FontItem::releaseFace()
@@ -735,8 +729,8 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	}
 
 	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( typotek::getInstance()->getDpiX() / 72.0 );
-	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( typotek::getInstance()->getDpiX() / 72.0 );
-	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( typotek::getInstance()->getDpiX() / 72.0 );
+	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( typotek::getInstance()->getDpiY() / 72.0 );
+	double takeLeftBeforeRender = double(m_glyph->metrics.horiBearingX) * ( typotek::getInstance()->getDpiX() / 72.0 );
 	
 // 	if(m_FTHintMode != FT_LOAD_NO_HINTING)
 	{
@@ -785,7 +779,7 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 		// we need to transport more data
 		glyph->setData ( GLYPH_DATA_GLYPH , index );
 		glyph->setData ( GLYPH_DATA_BITMAPLEFT , takeLeftBeforeRender );
-		glyph->setData ( GLYPH_DATA_BITMAPTOP , m_face->glyph->bitmap_top );
+		glyph->setData ( GLYPH_DATA_BITMAPTOP , double(m_face->glyph->bitmap_top) );
 		glyph->setData ( GLYPH_DATA_HADVANCE , takeAdvanceBeforeRender );
 		glyph->setData ( GLYPH_DATA_VADVANCE , takeVertAdvanceBeforeRender );
 	}
@@ -794,6 +788,78 @@ QGraphicsPixmapItem * FontItem::itemFromGindexPix ( int index, double size )
 	return glyph;
 }
 
+MetaGlyphItem * FontItem::itemFromGindexPix_mt(int index, double size)
+{
+	if ( !ensureFace() )
+		return 0;
+	int charcode = index ;
+//	qDebug()<<"FontItem::itemFromGindexPix_mt"<< thread();
+	MetaGlyphItem * glyph = new MetaGlyphItem;
+	double scaleFactor = size / m_face->units_per_EM;
+
+	// Set size
+	FT_Set_Char_Size ( m_face,
+			   qRound( size  * 64 ),
+			   0,
+			   typotek::getInstance()->getDpiX(),
+			   typotek::getInstance()->getDpiY() );
+
+	// Grab metrics in FONT UNIT
+	ft_error = FT_Load_Glyph ( m_face,
+				   charcode  ,
+				   FT_LOAD_NO_SCALE  );
+	if ( ft_error )
+	{
+		glyph->setMetaData ( GLYPH_DATA_GLYPH ,index );
+		glyph->setMetaData ( GLYPH_DATA_BITMAPLEFT , 0 );
+		glyph->setMetaData ( GLYPH_DATA_BITMAPTOP,size );
+		glyph->setMetaData ( GLYPH_DATA_HADVANCE ,size / scaleFactor );
+		releaseFace();
+		return glyph;
+	}
+
+	double takeAdvanceBeforeRender = m_glyph->metrics.horiAdvance * ( typotek::getInstance()->getDpiX() / 72.0 );
+	double takeVertAdvanceBeforeRender = m_glyph->metrics.vertAdvance * ( typotek::getInstance()->getDpiX() / 72.0 );
+	double takeLeftBeforeRender = ( double ) m_glyph->metrics.horiBearingX * ( typotek::getInstance()->getDpiX() / 72.0 );
+
+// 	if(m_FTHintMode != FT_LOAD_NO_HINTING)
+	{
+		ft_error = FT_Load_Glyph ( m_face, charcode  , FT_LOAD_DEFAULT | m_FTHintMode  );
+	}
+	// Render the glyph into a grayscale bitmap
+	ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
+	if ( ft_error )
+	{
+		glyph->setMetaData ( GLYPH_DATA_GLYPH , index );
+		glyph->setMetaData ( GLYPH_DATA_BITMAPLEFT , 0 );
+		glyph->setMetaData ( GLYPH_DATA_BITMAPTOP,size );
+		glyph->setMetaData ( GLYPH_DATA_HADVANCE ,size  / scaleFactor );
+		releaseFace();
+		return glyph;
+	}
+
+
+	QImage img ( glyphImage() );
+
+	if ( img.isNull() && !spaceIndex.contains ( index ) )
+	{
+		glyph->setMetaData ( GLYPH_DATA_GLYPH , index );
+		glyph->setMetaData ( GLYPH_DATA_BITMAPLEFT , 0 );
+		glyph->setMetaData ( GLYPH_DATA_BITMAPTOP,size );
+		glyph->setMetaData ( GLYPH_DATA_HADVANCE ,size /scaleFactor  );
+	}
+	else
+	{
+		glyph->setMetaData ( GLYPH_DATA_GLYPH , index );
+		glyph->setMetaData ( GLYPH_DATA_BITMAPLEFT , takeLeftBeforeRender );
+		glyph->setMetaData ( GLYPH_DATA_BITMAPTOP , double(m_face->glyph->bitmap_top) );
+		glyph->setMetaData ( GLYPH_DATA_HADVANCE , takeAdvanceBeforeRender );
+		glyph->setMetaData ( GLYPH_DATA_VADVANCE , takeVertAdvanceBeforeRender );
+	}
+
+	releaseFace();
+	return glyph;
+}
 
 QImage FontItem::charImage(int charcode, double size)
 {
@@ -3107,7 +3173,7 @@ void FontItem::fileRemote ( QString f , QString v, QString t, QString i, QPixmap
 	m_variant = v;
 	m_type = t;
 // 	m_cacheInfo = i;
-	fixedPixmap = p;
+//	fixedPixmap = p;
 }
 
 /// the same, but just for speedup startup with a lot of font files

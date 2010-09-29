@@ -27,6 +27,7 @@
 #include <QString>
 #include <QByteArray>
 #include <QTime>
+#include <QThread>
 
 class QGraphicsScene;
 class FMLayout;
@@ -37,7 +38,7 @@ class QTimer;
 class SampleToolBar;
 class QTreeWidgetItem;
 class QStyledItemDelegate;
-class QThread;
+class FontItem;
 
 namespace Ui {
 	class SampleWidget;
@@ -48,6 +49,19 @@ namespace Ui {
 #define VIEW_PAGE_OPENTYPE 3
 //#define VIEW_PAGE_SETTINGS 1
 #define VIEW_PAGE_SAMPLES  4
+
+class FMLayoutThread : public QThread
+{
+	FMLayout * pLayout;
+	QList<GlyphList> gl;
+	double fontSize;
+	FontItem * font;
+	unsigned int fHinting;
+
+public:
+	void setLayout(FMLayout * l, const QList<GlyphList>& spec , double fs, FontItem * f, unsigned int hinting);
+	void run();
+};
 
 class SampleWidget : public FloatingWidget
 {
@@ -133,12 +147,18 @@ private:
 	QTime layoutTime;
 	QTimer *layoutTimer;
 	int layoutWait;
-	QThread * layoutThread;
+	FMLayoutThread * layoutThread;
+	bool layoutSwitch;
+	int pixmapDrawn;
 
 	void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 
 private slots:
-	void slotView(bool needDeRendering = false);
+	void slotView();
+	void drawPixmap(int index, double fontsize, double x, double y);
+	void drawBaseline(double y);
+	void clearFTScene();
+	void endLayout();
 	//    void slotChangeViewPage(QAbstractButton* );
 	//    void slotHintChanged(int);
 	//    void slotChangeViewPageSetting(bool);

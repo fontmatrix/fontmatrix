@@ -25,7 +25,11 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QDoubleSpinBox" name="liveSize"/>
+    <widget class="QDoubleSpinBox" name="liveSize">
+     <property name="maximum">
+      <double>999.990000000000009</double>
+     </property>
+    </widget>
    </item>
    <item row="0" column="2">
     <widget class="QToolButton" name="sampleButton">

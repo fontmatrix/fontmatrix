@@ -117,6 +117,7 @@ public slots:
 	void showAllFloatings();
 	void hideAllFloatings();
 	void toggleMainView(bool v);
+	void pushObject(QObject* o);
 
 	void hide();
 	void show();

@@ -89,10 +89,9 @@ class FMLayout : public QObject
 	Q_OBJECT
 
 	public:
-		explicit FMLayout ( QGraphicsScene* scene, FontItem* font, QRectF rect = QRectF());
+		explicit FMLayout ( QGraphicsScene* scene, FontItem* font = 0, QRectF rect = QRectF());
 		~FMLayout();
-		void doLayout(const QList<GlyphList>& spec , double fs);
-//		static FMLayout *getLayout();
+		void doLayout(const QList<GlyphList>& spec , double fs, FontItem* font = 0 );
 		
 	private://methods
 		/// Build a graph on node
@@ -118,6 +117,8 @@ class FMLayout : public QObject
 //		QMutex *layoutMutex;
 		bool stopIt;
 		int drawnLines;
+
+		void setContext(bool c);
 		
 	public slots:
 		void stopLayout();		
@@ -125,6 +126,7 @@ class FMLayout : public QObject
 	private:// data
 		// Argued
 //		static FMLayout *instance;
+		bool contextIsMainThread;
 		QGraphicsScene* theScene;
 		FontItem*	theFont;
 		QList<GlyphList> paragraphs;
@@ -186,6 +188,12 @@ class FMLayout : public QObject
 		void slotOption(int v);
 
 	signals:
+		// needed if layout is executed outside the main (GUI) thread
+		// receiver is expected to know with what font and on which scene;
+		void drawPixmapForMe(int index, double fontsize, double x, double y);
+		void drawBaselineForMe(double y);
+		void clearScene();
+		void objectWanted(QObject*);
 		void updateLayout();
 		void layoutFinished();
 		void paragraphFinished();

@@ -33,6 +33,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fmfontcompareview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontdb.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontextract.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmfontstrings.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/fmfreetypelib.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphhighlight.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fmglyphsview.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/fminfodisplay.cpp
@@ -171,6 +172,7 @@ fmfontcompareview.h
 fmfontdb.h
 fmfontextract.h
 fmfontstrings.h
+fmfreetypelib.h
 fmglyphhighlight.h
 fmglyphsview.h
 fmlayoptwidget.h

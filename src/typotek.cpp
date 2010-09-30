@@ -908,7 +908,7 @@ void typotek::createStatusBar()
 	statusBar()->addPermanentWidget ( countFilteredFonts );
 
 	toggleMainViewButton = new QToolButton(this);
-	toggleMainViewButton->setText("B");
+	toggleMainViewButton->setText(tr("Browse Directories"));
 	toggleMainViewButton->setCheckable(true);
 	toggleMainViewButton->setToolTip(tr("Toggle Files/Collection view"));
 	statusBar()->addPermanentWidget(toggleMainViewButton);

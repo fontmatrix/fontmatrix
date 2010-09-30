@@ -23,63 +23,79 @@
 
 #include "floatingwidget.h"
 
+#include <QMenu>
+#include <QAction>
+
 FloatingWidgetToolBar::FloatingWidgetToolBar(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FloatingWidgetToolBar),
-    noClose(false)
+		QWidget(parent),
+		ui(new Ui::FloatingWidgetToolBar),
+		noClose(false),
+		isDetached(false)
 {
-    ui->setupUi(this);
-    ui->closeButton->hide();
-    ui->hideButton->hide();
-    connect(ui->closeButton, SIGNAL(clicked()), this, SIGNAL(Close()));
-    connect(ui->hideButton, SIGNAL(clicked()), this, SIGNAL(Hide()));
-    connect(ui->printButton, SIGNAL(clicked()), this, SIGNAL(Print()));
-    connect(ui->detachButton, SIGNAL(clicked()), this, SLOT(setDetached()));
+	ui->setupUi(this);
+
+	menu = new QMenu(this);
+	setupMenu();
+	ui->toolButton->setMenu(menu);
+
 }
 
 FloatingWidgetToolBar::~FloatingWidgetToolBar()
 {
-    delete ui;
+	delete ui;
 }
 
 void FloatingWidgetToolBar::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui->retranslateUi(this);
+		break;
+	default:
+		break;
+	}
+}
+
+
+void FloatingWidgetToolBar::setupMenu()
+{
+	menu->clear();
+
+	if(isDetached)
+	{
+		if(!noClose)
+		{
+			closeAction = new QAction(tr("Close"), menu);
+			menu->addAction(closeAction);
+			connect(closeAction, SIGNAL(triggered()), this, SIGNAL(Close()));
+		}
+		hideAction = new QAction(tr("Hide"), menu);
+		menu->addAction(hideAction);
+		connect(hideAction, SIGNAL(triggered()), this, SIGNAL(Hide()));
+	}
+	printAction = new QAction(tr("Print"), menu);
+	menu->addAction(printAction);
+	connect(printAction, SIGNAL(triggered()), this, SIGNAL(Print()));
+	if(!isDetached)
+	{
+		detachAction = new QAction(tr("Detach"), menu);
+		menu->addAction(detachAction);
+		connect(detachAction, SIGNAL(triggered()), this, SLOT(setDetached()));
+	}
+
+
 }
 
 void FloatingWidgetToolBar::setDetached()
 {
-	ui->closeButton->show();
-	ui->hideButton->show();
-	ui->detachButton->hide();
-
-//	QWidget *p(parent());
-//	while(0 != p)
-//	{
-//		if(QString(p->metaObject()->className()) == QString("FloatingWidget"))
-//		{
-//			FloatingWidget * fw(reinterpret_cast<FloatingWidget*>(p));
-//			fw->ddetach();
-//			break;
-//		}
-//		p = parent();
-//	}
-
+	isDetached = true;
+	setupMenu();
 	emit Detach();
 }
 
 void FloatingWidgetToolBar::setNoClose(bool c)
 {
 	noClose = c;
-	if(noClose)
-		ui->closeButton->hide();
-	else
-		ui->closeButton->show();
+	setupMenu();
 }

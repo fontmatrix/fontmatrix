@@ -23,6 +23,9 @@
 
 #include <QWidget>
 
+class QMenu;
+class QAction;
+
 namespace Ui {
     class FloatingWidgetToolBar;
 }
@@ -43,7 +46,16 @@ protected:
 private:
     Ui::FloatingWidgetToolBar *ui;
 
+    QAction * closeAction;
+    QAction * hideAction;
+    QAction * printAction;
+    QAction * detachAction;
+
+    QMenu * menu;
     bool noClose;
+    bool isDetached;
+
+    void setupMenu();
 
 public slots:
     void setDetached();

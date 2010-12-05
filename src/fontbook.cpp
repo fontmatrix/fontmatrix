@@ -96,6 +96,8 @@ void FontBook::doBook(FontBook::Style s)
 
 	printer->setFullPage ( true );
 	painter = new QPainter( printer );
+	painter->setRenderHint(QPainter::Antialiasing, true);
+	painter->setRenderHint(QPainter::TextAntialiasing, true);
 
 	switch(s)
 	{

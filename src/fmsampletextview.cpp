@@ -33,7 +33,7 @@ FMSampleTextView::FMSampleTextView ( QWidget* parent )
 		: QGraphicsView ( parent ),
 		hasPendingUpdate ( false )
 {
-#ifdef HAVE_QTOPENGL
+#if 0
 	QGLFormat glfmt;
 	glfmt.setSampleBuffers ( true );
 	QGLWidget *glwgt = new QGLWidget ( glfmt );

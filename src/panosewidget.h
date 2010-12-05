@@ -36,11 +36,8 @@ namespace Ui {
 class PanoseWidget : public QWidget {
 	Q_OBJECT
 
-	PanoseWidget(QWidget *parent = 0);
-	static PanoseWidget * instance;
 public:
-	static PanoseWidget * getInstance();
-
+	PanoseWidget(QWidget *parent = 0);
 	~PanoseWidget();
 
 	void setFilter(const QMap<int, QList<int> >& filter);

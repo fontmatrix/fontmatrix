@@ -74,6 +74,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainviewwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/metawidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/modeltext.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/openclosearrow.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/panosedialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/panosematch.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/panosemodel.cpp
@@ -195,6 +196,7 @@ QHexView.h
 mainviewwidget.h
 metawidget.h
 modeltext.h
+openclosearrow.h
 panosedialog.h
 panosewidget.h
 parallelcoor.h
@@ -401,9 +403,28 @@ IF(APPLE)
         COMMAND cp ARGS ${fontmatrix_QMS} ${BUNDLE_LOCALES_DIR}
 	)
 # bundles libs
-	ADD_CUSTOM_COMMAND(TARGET ${PROGNAME} POST_BUILD
-	COMMAND ${CMAKE_COMMAND} ARGS -Dinput_file=${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/${PROGNAME} -P ${CMAKE_MODULE_PATH}/OwnIngestOSXBundleLibraries.cmake
-	)
+#	ADD_CUSTOM_COMMAND(TARGET ${PROGNAME} POST_BUILD
+#	COMMAND ${CMAKE_COMMAND} ARGS -Dinput_file=${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/${PROGNAME} -P ${CMAKE_MODULE_PATH}/OwnIngestOSXBundleLibraries.cmake
+#	)
+
+INSTALL(TARGETS ${PROGNAME}
+    BUNDLE DESTINATION . COMPONENT Runtime
+    )
+
+SET(APPLE_LIBS
+	${PYTHONQT_LIB}
+	${QT_LIBRARIES}
+	${FREETYPE_LIBRARIES}
+	${SHAPERS_LIBRARIES}
+	${PYTHON_LIBRARIES}
+	${LIBPODOFO_LIBRARY}
+)
+SET(APPLE_DIRS "${QT_PLUGINS_DIR}/sqldrivers")
+SET(APPLE_APPS "\${CMAKE_INSTALL_PREFIX}/fontmatrix.app")
+INSTALL(CODE "
+    include(BundleUtilities)
+    fixup_bundle(\"${APPLE_APPS}\" \"${APPLE_LIBS}\" \"${APPLE_DIRS}\")
+    " COMPONENT Runtime)
 
 ENDIF(APPLE)
 

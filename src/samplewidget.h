@@ -28,6 +28,7 @@
 #include <QByteArray>
 #include <QTime>
 #include <QThread>
+#include <QFileInfo>
 
 class QGraphicsScene;
 class FMLayout;
@@ -150,7 +151,10 @@ private:
 	FMLayoutThread * layoutThread;
 	bool layoutSwitch;
 	int pixmapDrawn;
-
+#ifdef PLATFORM_APPLE
+      QFileInfo fileInfo;
+      qint64 fileLastModified;
+#endif
 	void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
 
 private slots:

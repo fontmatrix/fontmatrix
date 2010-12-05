@@ -25,7 +25,6 @@
 
 #include <QTreeWidgetItem>
 
-PanoseWidget * PanoseWidget::instance = 0;
 
 PanoseWidget::PanoseWidget(QWidget *parent) :
 		QWidget(parent),
@@ -47,16 +46,6 @@ PanoseWidget::PanoseWidget(QWidget *parent) :
 PanoseWidget::~PanoseWidget()
 {
 	delete m_ui;
-}
-
-PanoseWidget * PanoseWidget::getInstance()
-{
-	if(!instance)
-	{
-		instance = new PanoseWidget();
-		Q_ASSERT(instance);
-	}
-	return instance;
 }
 
 
@@ -128,7 +117,7 @@ void PanoseWidget::slotUpdateFilter(const QItemSelection & selected, const QItem
 	m_ui->attributeView->clearSelection();
 	m_ui->valueView->clearSelection();
 	doConnect(true);
-	hide();
+//	hide();
 }
 
 void PanoseWidget::slotSelectAttr(const QModelIndex& idx)

@@ -34,7 +34,7 @@ TagsWidget::TagsWidget ( QWidget * parent )
 
 	connect ( tagsListWidget,SIGNAL ( itemClicked ( QListWidgetItem* ) ),this,SLOT ( slotSwitchCheckState ( QListWidgetItem* ) ) );
 	connect ( newTagButton,SIGNAL ( clicked ( bool ) ),this,SLOT ( slotNewTag() ) );
-	connect ( newTagName, SIGNAL ( editingFinished() ), this, SLOT ( slotNewTag() ) );
+//	connect ( newTagName, SIGNAL ( editingFinished() ), this, SLOT ( slotNewTag() ) );
 	connect ( tagsListWidget,SIGNAL ( customContextMenuRequested ( const QPoint & ) ), this, SLOT ( slotContextMenu ( QPoint ) ) );
 }
 
@@ -62,18 +62,18 @@ void TagsWidget::slotSwitchCheckState ( QListWidgetItem * item )
 
 void TagsWidget::slotNewTag()
 {
-	QString nTag ( newTagName->text() );
-	newTagName->clear();
-	bool ok;
-// 	nTag = QInputDialog::getText(this,"Fontmatrix",tr("Add new tag"),QLineEdit::Normal, QString() , &ok );
-	if ( nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ) )
-		return;
+//	QString nTag ( newTagName->text() );
+//	newTagName->clear();
+//	bool ok;
+//// 	nTag = QInputDialog::getText(this,"Fontmatrix",tr("Add new tag"),QLineEdit::Normal, QString() , &ok );
+//	if ( nTag.isEmpty() || FMFontDb::DB()->getTags().contains ( nTag ) )
+//		return;
 
-	FMFontDb::DB()->addTagToDB ( nTag );
-	QListWidgetItem *lit = new QListWidgetItem ( nTag );
-	lit->setCheckState ( Qt::Checked );
-	tagsListWidget->addItem ( lit );
-	slotFinalize();
+//	FMFontDb::DB()->addTagToDB ( nTag );
+//	QListWidgetItem *lit = new QListWidgetItem ( nTag );
+//	lit->setCheckState ( Qt::Checked );
+//	tagsListWidget->addItem ( lit );
+//	slotFinalize();
 }
 
 void TagsWidget::slotFinalize()

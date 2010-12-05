@@ -42,6 +42,7 @@
 #include <QSettings>
 #include <QStyledItemDelegate>
 #include <QKeyEvent>
+#include <QDateTime>
 
 
 QByteArray SampleWidget::State::toByteArray() const
@@ -122,6 +123,10 @@ SampleWidget::SampleWidget(const QString& fid, QWidget *parent) :
 	refillSampleList();
 	fillOTTree();
 
+#ifdef PLATFORM_APPLE
+      fileInfo.setFile(fid);
+      fileLastModified = fileInfo.lastModified().toMSecsSinceEpoch();
+#endif
 	sysWatcher = new QFileSystemWatcher(this);
 	sysWatcher->addPath(fid);
 	reloadTimer = new QTimer(this);
@@ -787,11 +792,12 @@ void SampleWidget::refillSampleList()
 	QTreeWidgetItem * curIt = 0;
 	QMap<QString, QList<QString> > sl = typotek::getInstance()->namedSamplesNames();
 	QList<QString> ul( sl.take(QString("User")) );
+	uRoot = new QTreeWidgetItem(ui->sampleTextTree);
+	//: Identify root of user defined sample texts
+	uRoot->setText(0, tr("User"));
 	if(ul.count())
 	{
-		uRoot = new QTreeWidgetItem(ui->sampleTextTree);
-		//: Identify root of user defined sample texts
-		uRoot->setText(0, tr("User"));
+
 		bool first(true);
 		foreach(QString uk, ul)
 		{
@@ -875,6 +881,11 @@ void SampleWidget::slotPrint()
 
 void SampleWidget::slotFileChanged(const QString &)
 {
+#ifdef PLATFORM_APPLE
+	if(fileInfo.lastModified().toMSecsSinceEpoch() == fileLastModified)
+		return;
+	fileLastModified = fileInfo.lastModified().toMSecsSinceEpoch();
+#endif
 	if(reloadTimer->isActive())
 		reloadTimer->start();
 	else

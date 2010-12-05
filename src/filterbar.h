@@ -24,9 +24,36 @@
 #include <QWidget>
 #include <QList>
 #include <QMap>
+#include <QAbstractTableModel>
+#include <QMenu>
+#include <QStringListModel>
 
+class FiltersDialogItem;
 class FilterItem;
 class FilterData;
+
+
+class TagListModel : public QAbstractTableModel
+{
+	Q_OBJECT
+	const int specialTagsCount;
+public:
+	enum TagListRole
+	{
+		TagType = Qt::UserRole
+	};
+
+	TagListModel(QObject * parent);
+	int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
+	int columnCount ( const QModelIndex & parent = QModelIndex() ) const;
+	QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+	bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
+	Qt::ItemFlags flags ( const QModelIndex & index ) const;
+
+public slots:
+	void tagsDBChanged();
+
+};
 
 namespace Ui {
     class FilterBar;
@@ -49,6 +76,19 @@ private:
     QList<FilterItem*> filters;
     void addFilterItem(FilterData* f, bool process = true);
     void removeAllFilters();
+    TagListModel * tagListModel;
+    QMenu * metaFieldsMenu;
+    int metaFieldKey;
+
+    QString filterString(FilterData *d, bool first = false);
+    void loadFilters();
+    QList<FiltersDialogItem*> items;
+    static QString andOpString;
+    static QString notOpString;
+    static QString orOpString;
+
+    QStringListModel *mModel;
+    QStringList mList;
 
 signals:
     void initSearch(int, QString);
@@ -57,20 +97,25 @@ signals:
 private slots:
     void processFilters();
     void slotPanoFilter();
-    void loadTags();
-    void panoseDialog();
-    void metaDialog();
+    void metaFilter();
+    void metaSelectField(QAction * action);
 
     void filtersDialog();
 
-    void slotSaveFilter(const QString& fname);
+    void slotSaveFilter();
     void slotLoadFilter(const QString& fname);
     void slotRemoveFilter(const QString& fname);
 
     void slotRemoveFilterItem(bool process = true);
 
-    void slotTagSelect(const QString& t);
+    void slotTagSelect(const QModelIndex & index);
     void slotClearFilter();
+
+    void slotToggleTags(bool t);
+    void slotToggleMeta(bool t);
+    void slotTogglePano(bool t);
+    void slotToggleFilter(bool t);
+
 };
 
 #endif // FILTERBAR_H

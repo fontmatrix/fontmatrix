@@ -32,10 +32,24 @@ find_library(
   DOC "Libraries to link against for the common parts of ICU")
 mark_as_advanced(ICU_LIBRARY)
 
+# Look for the library. Again
+find_library(
+  ICUX_LIBRARY
+  NAMES iculx
+  DOC "Libraries to link against for the common parts of ICU X")
+mark_as_advanced(ICUX_LIBRARY)
+
+# Look for the library. Again
+find_library(
+  ICUUC_LIBRARY
+  NAMES icuuc
+  DOC "Libraries to link against for the common parts of ICU X")
+mark_as_advanced(ICUUC_LIBRARY)
+
 # Copy the results to the output variables.
-if(ICU_INCLUDE_DIR AND ICU_LIBRARY)
+if(ICU_INCLUDE_DIR AND ICU_LIBRARY AND ICUX_LIBRARY AND ICUUC_LIBRARY)
   set(ICU_FOUND 1)
-  set(ICU_LIBRARIES ${ICU_LIBRARY})
+  set(ICU_LIBRARIES ${ICU_LIBRARY} ${ICUX_LIBRARY} ${ICUUC_LIBRARY})
   set(ICU_INCLUDE_DIRS ${ICU_INCLUDE_DIR})
 
   # Look for the ICU internationalization libraries
@@ -57,5 +71,5 @@ else(ICU_INCLUDE_DIR AND ICU_LIBRARY)
   set(ICU_LIBRARIES)
   set(ICU_I18N_LIBRARIES)
   set(ICU_INCLUDE_DIRS)
-endif(ICU_INCLUDE_DIR AND ICU_LIBRARY)
+endif(ICU_INCLUDE_DIR AND ICU_LIBRARY AND ICUX_LIBRARY AND ICUUC_LIBRARY)
 

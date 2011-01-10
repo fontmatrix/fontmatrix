@@ -29,6 +29,7 @@
 #include <QSettings>
 #include <QIcon>
 #include <QColor>
+#include <QPalette>
 
 
 PanoseWidget::PanoseWidget(QWidget *parent) :
@@ -40,6 +41,9 @@ PanoseWidget::PanoseWidget(QWidget *parent) :
 	m_filter.clear();
 	m_filterKey = 0;
 
+	QPalette palette(m_ui->pTree->palette());
+	palette.setBrush(QPalette::Base, Qt::transparent);
+	m_ui->pTree->setPalette(palette);
 
 	const QMap< FontStrings::PanoseKey, QMap<int, QString> >& p(FontStrings::Panose());
 	QSettings settings;

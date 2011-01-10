@@ -27,6 +27,8 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 		QList<QAction*> contAction;
 		
 		QString currentTag;
+
+		QListWidgetItem * newTagBeingEdited;
 		
 	public:
 		TagsWidget(QWidget * parent);
@@ -40,10 +42,12 @@ class TagsWidget : public QWidget , private Ui::tagsWidget
 		void slotSwitchCheckState( QListWidgetItem * item );
 		void slotNewTag();
 		void slotFinalize();
+
+		void slotUpdateCurrentTag(QListWidgetItem * current, QListWidgetItem *  previous);
 		
 		void slotContextMenu( QPoint  pos );
 		void slotActRemovetag();
-		void slotActEditTag();
+		void slotActEditTag(QListWidgetItem * item );
 
 };
 

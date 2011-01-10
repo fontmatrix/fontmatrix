@@ -6,26 +6,28 @@
 
 class OpenCloseArrow : public QLabel
 {
-    Q_OBJECT
+	Q_OBJECT
+
+	QString baseText;
 
 public:
-    explicit OpenCloseArrow(QWidget *parent = 0, bool open = true);
-    ~OpenCloseArrow();
+	explicit OpenCloseArrow(QWidget *parent = 0, bool open = true);
+	~OpenCloseArrow();
 
-    bool isOpen() const {return openingState;}
+	bool isOpen() const {return openingState;}
 
 private:
-    bool openingState;
-    void setOpText();
+	bool openingState;
+	void setOpText();
 
 protected:
-    void mouseReleaseEvent( QMouseEvent * ev );
+	void mouseReleaseEvent( QMouseEvent * ev );
 
 signals:
-    void openChanged(bool);
+	void openChanged(bool);
 
 public slots:
-    void changeOpen(bool t);
+	void changeOpen(bool t);
 
 };
 

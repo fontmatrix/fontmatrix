@@ -30,13 +30,6 @@
        <item>
         <widget class="OpenCloseArrow" name="tagsArrow">
          <property name="text">
-          <string>-</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
           <string>Tags</string>
          </property>
         </widget>
@@ -66,40 +59,83 @@
          <number>0</number>
         </property>
         <item row="0" column="0">
-         <widget class="QTableView" name="tagsView">
+         <widget class="TagListView" name="tagsView">
+          <property name="palette">
+           <palette>
+            <active>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="0">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </active>
+            <inactive>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="0">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </inactive>
+            <disabled>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>212</red>
+                <green>208</green>
+                <blue>200</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </disabled>
+           </palette>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="autoScroll">
+           <bool>false</bool>
+          </property>
           <property name="editTriggers">
            <set>QAbstractItemView::DoubleClicked</set>
           </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
+           <enum>QAbstractItemView::NoSelection</enum>
           </property>
-          <property name="showGrid">
+          <property name="movement">
+           <enum>QListView::Static</enum>
+          </property>
+          <property name="resizeMode">
+           <enum>QListView::Adjust</enum>
+          </property>
+          <property name="viewMode">
+           <enum>QListView::ListMode</enum>
+          </property>
+          <property name="modelColumn">
+           <number>0</number>
+          </property>
+          <property name="selectionRectVisible">
            <bool>false</bool>
           </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="horizontalHeaderHighlightSections">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="horizontalHeaderStretchLastSection">
-           <bool>true</bool>
-          </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderDefaultSectionSize">
-           <number>18</number>
-          </attribute>
-          <attribute name="verticalHeaderHighlightSections">
-           <bool>false</bool>
-          </attribute>
          </widget>
         </item>
        </layout>
@@ -107,7 +143,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
+   <item row="3" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <property name="spacing">
       <number>0</number>
@@ -116,13 +152,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="OpenCloseArrow" name="metadataArrow">
-         <property name="text">
-          <string>-</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Metadata</string>
          </property>
@@ -153,43 +182,75 @@
          <number>0</number>
         </property>
         <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="spacing">
-           <number>0</number>
+           <number>3</number>
+          </property>
+          <property name="topMargin">
+           <number>3</number>
+          </property>
+          <property name="bottomMargin">
+           <number>3</number>
           </property>
           <item>
-           <widget class="QLabel" name="metaFieldLabel">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <property name="topMargin">
+             <number>0</number>
             </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Search</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="metadataLineEdit">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>172</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QLineEdit" name="metadataLineEdit"/>
-          </item>
-          <item>
-           <widget class="QToolButton" name="metadataTool">
-            <property name="toolTip">
-             <string>Select field</string>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="topMargin">
+             <number>0</number>
             </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="popupMode">
-             <enum>QToolButton::InstantPopup</enum>
-            </property>
-            <property name="autoRaise">
-             <bool>false</bool>
-            </property>
-            <property name="arrowType">
-             <enum>Qt::DownArrow</enum>
-            </property>
-           </widget>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>in</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="fieldCombo">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>172</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -198,22 +259,21 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
+   <item row="5" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <property name="spacing">
       <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <widget class="OpenCloseArrow" name="panoseArrow">
-         <property name="text">
-          <string>-</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Panose</string>
          </property>
@@ -251,22 +311,18 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0">
+   <item row="7" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_5">
      <property name="spacing">
       <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
         <widget class="OpenCloseArrow" name="filtersArrow">
-         <property name="text">
-          <string>-</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_5">
          <property name="text">
           <string>Filters</string>
          </property>
@@ -310,7 +366,7 @@
              <x>0</x>
              <y>0</y>
              <width>223</width>
-             <height>152</height>
+             <height>128</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -339,7 +395,7 @@
      </item>
     </layout>
    </item>
-   <item row="6" column="0">
+   <item row="10" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_6">
      <property name="spacing">
       <number>0</number>
@@ -429,7 +485,7 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0">
+   <item row="8" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -442,8 +498,29 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="0">
+   <item row="9" column="0">
     <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="Line" name="line_4">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -462,6 +539,11 @@
    <class>OpenCloseArrow</class>
    <extends>QLabel</extends>
    <header>openclosearrow.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TagListView</class>
+   <extends>QListView</extends>
+   <header>filterbar.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

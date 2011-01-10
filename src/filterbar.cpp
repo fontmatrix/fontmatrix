@@ -41,13 +41,17 @@
 #include <QAction>
 #include <QDebug>
 #include <QCompleter>
+#include <QPixmap>
+#include <QPainter>
+#include <QRect>
+#include <QSettings>
 
 QString FilterBar::andOpString = FilterBar::tr("And");
 QString FilterBar::notOpString = FilterBar::tr("Not");
 QString FilterBar::orOpString = FilterBar::tr("Or");
 
 TagListModel::TagListModel(QObject *parent)
-	:QAbstractTableModel(parent),
+	:QAbstractListModel(parent),
 	specialTagsCount(1)
 {
 //	ui->tagsCombo->clear();
@@ -91,7 +95,38 @@ QVariant TagListModel::data(const QModelIndex &index, int role) const
 
 	QString tag(tl_tmp.at(index.row()));
 	if(role == Qt::DisplayRole)
+	{
+//		return tag;
+		return QVariant();
+//		return QString("<div style=\"color:red;\">%1</div>").arg(tag);
+	}
+	else if(role == Qt::EditRole)
 		return tag;
+	else if(role == Qt::DecorationRole)
+	{
+//		return QVariant();
+		QRect pr(0,0,1024,18);
+		QPixmap pm(pr.size());
+		QPainter p;
+		p.begin(&pm);
+		p.drawText(pr,Qt::AlignLeft | Qt::TextDontClip | Qt::TextSingleLine, tag, &pr);
+		p.end();
+		QPixmap tagPix(pr.width() + 18, 18);
+		tagPix.fill(Qt::transparent);
+		p.begin(&tagPix);
+		p.setRenderHint(QPainter::Antialiasing);
+		p.save();
+		p.setBrush(QColor(210,210,210));
+		if(currentTags.contains(tag))
+			p.setBrush(QColor(180,180,180));
+		p.setPen(Qt::NoPen);
+		p.drawRoundedRect(tagPix.rect(), 5,5);
+		p.restore();
+		pr.translate(9,0);
+		p.drawText(pr, tag);
+		p.end();
+		return tagPix;
+	}
 	else if(role == TagType)
 	{
 		if(index.row() < specialTagsCount)
@@ -99,6 +134,10 @@ QVariant TagListModel::data(const QModelIndex &index, int role) const
 			return QString("ALL_ACTIVATED");
 		}
 		return QString("TAG");
+	}
+	else if(role == TagString)
+	{
+		return tag;
 	}
 	return QVariant();
 }
@@ -120,10 +159,38 @@ bool TagListModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 Qt::ItemFlags TagListModel::flags(const QModelIndex &index) const
 {
-	if(index.row() > specialTagsCount - 1)
-		return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+//	if(index.row() > specialTagsCount - 1)
+//		return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 	return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
+
+void TagListModel::clearCurrents()
+{
+	if(!currentTags.isEmpty())
+	{
+		currentTags.clear();
+		emit dataChanged(index(0,0),index(FMFontDb::DB()->getTags().count() + specialTagsCount -1 ,columnCount() -1));
+	}
+}
+
+void TagListModel::addToCurrents(const QString &t)
+{
+	if(!currentTags.contains(t))
+	{
+		currentTags << t;
+		emit dataChanged(index(0,0),index(FMFontDb::DB()->getTags().count() + specialTagsCount -1 ,columnCount() -1));
+	}
+}
+
+void TagListModel::removeFromCurrents(const QString &t)
+{
+	if(currentTags.contains(t))
+	{
+		currentTags.removeAll(t);
+		emit dataChanged(index(0,0),index(FMFontDb::DB()->getTags().count() + specialTagsCount -1 ,columnCount() -1));
+	}
+}
+
 
 void TagListModel::tagsDBChanged()
 {
@@ -137,13 +204,13 @@ FilterBar::FilterBar(QWidget *parent) :
 	ui->setupUi(this);
 
 	tagListModel = new TagListModel(this);
-	ui->tagsView->setShowGrid(false);
-	ui->tagsView->horizontalHeader()->setStretchLastSection(true);
-	ui->tagsView->verticalHeader()->hide();
-	ui->tagsView->horizontalHeader()->hide();
+//	ui->tagsView->setShowGrid(false);
+//	ui->tagsView->horizontalHeader()->setStretchLastSection(true);
+//	ui->tagsView->verticalHeader()->hide();
+//	ui->tagsView->horizontalHeader()->hide();
 	ui->tagsView->setModel(tagListModel);
 
-	metaFieldsMenu = new QMenu(tr("Fields"), this);
+//	metaFieldsMenu = new QMenu(tr("Fields"), this);
 	QList<FMFontDb::InfoItem> ln;
 	metaFieldKey = int(FMFontDb::AllInfo);
 	ln << FMFontDb::AllInfo
@@ -160,13 +227,14 @@ FilterBar::FilterBar(QWidget *parent) :
 		FMFontDb::InfoItem k(ln[gIdx]);
 		{
 			QString fieldname(FontStrings::Names().value(k));
-			QAction * ma(new QAction(fieldname, metaFieldsMenu));
-			ma->setData(int(k));
-			metaFieldsMenu->addAction(ma);
+//			QAction * ma(new QAction(fieldname, metaFieldsMenu));
+//			ma->setData(int(k));
+//			metaFieldsMenu->addAction(ma);
+			ui->fieldCombo->addItem(fieldname, int(k));
 		}
 	}
-	ui->metadataTool->setMenu(metaFieldsMenu);
-	ui->metaFieldLabel->setText(FontStrings::Names().value(FMFontDb::AllInfo));
+//	ui->metadataTool->setMenu(metaFieldsMenu);
+//	ui->metaFieldLabel->setText(FontStrings::Names().value(FMFontDb::AllInfo));
 	mModel = new QStringListModel;
 	mModel->setStringList(mList);
 	ui->metadataLineEdit->setCompleter(new QCompleter(mModel));
@@ -174,9 +242,12 @@ FilterBar::FilterBar(QWidget *parent) :
 	loadFilters();
 
 	connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(slotSaveFilter()));
+
 	connect(ui->tagsView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotTagSelect(QModelIndex)));
+	connect(ui->tagsView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotTagEdit(QModelIndex)));
+
 	connect(ui->metadataLineEdit, SIGNAL(editingFinished()), this, SLOT(metaFilter()));
-	connect(metaFieldsMenu, SIGNAL(triggered(QAction*)), this, SLOT(metaSelectField(QAction*)));
+	connect(ui->fieldCombo, SIGNAL(activated(int)), this, SLOT(metaSelectField(int)));
 	connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(slotClearFilter()));
 	connect(ui->panoseWidget, SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
 	connect(FMFontDb::DB(), SIGNAL(tagsChanged()), tagListModel, SLOT(tagsDBChanged()));
@@ -186,14 +257,20 @@ FilterBar::FilterBar(QWidget *parent) :
 	connect(ui->panoseArrow, SIGNAL(openChanged(bool)), this, SLOT(slotTogglePano(bool)));
 	connect(ui->filtersArrow, SIGNAL(openChanged(bool)), this, SLOT(slotToggleFilter(bool)));
 
-	ui->tagsArrow->changeOpen(false);
-	ui->metadataArrow->changeOpen(false);
-	ui->panoseArrow->changeOpen(false);
-	ui->filtersArrow->changeOpen(false);
+	QSettings settings;
+	ui->tagsArrow->changeOpen(settings.value("FilterBar/TagsOpen", true).toBool());
+	ui->metadataArrow->changeOpen(settings.value("FilterBar/MetaOpen", false).toBool());
+	ui->panoseArrow->changeOpen(settings.value("FilterBar/PanoseOpen", false).toBool());
+	ui->filtersArrow->changeOpen(settings.value("FilterBar/FiltersOpen", true).toBool());
 }
 
 FilterBar::~FilterBar()
 {
+	QSettings settings;
+	settings.setValue("FilterBar/TagsOpen", ui->tagsArrow->isOpen());
+	settings.setValue("FilterBar/MetaOpen", ui->metadataArrow->isOpen());
+	settings.setValue("FilterBar/PanoseOpen", ui->panoseArrow->isOpen());
+	settings.setValue("FilterBar/FiltersOpen", ui->filtersArrow->isOpen());
 	delete ui;
 }
 
@@ -385,7 +462,7 @@ void FilterBar::loadFilters()
 
 void FilterBar::slotTagSelect(const QModelIndex & index)
 {
-	QString tag(tagListModel->data(index).toString());
+	QString tag(tagListModel->data(index, TagListModel::TagString).toString());
 	QString key(tagListModel->data(index,TagListModel::TagType).toString());
 
 //	int selCount(ui->tagsView->selectionModel()->selectedIndexes().count());
@@ -398,17 +475,41 @@ void FilterBar::slotTagSelect(const QModelIndex & index)
 		}
 	}
 
-
+	int andTag(ui->tagsView->getAndKey());
+	if(0 == andTag)
+	{
+		slotClearFilter();
+		tagListModel->clearCurrents();
+	}
 	FilterTag * ft(new FilterTag);
 	ft->setData(FilterData::Text, tag);
 	ft->setData(FilterTag::Key, key);
 	ft->setData(FilterTag::Tag, tag);
-//	if( selCount > 1 )
-//	{
-//		ft->setData(FilterData::And, true);
-//		ft->setData(FilterData::Or, false);
-//	}
+	if(1 == andTag)
+	{
+		ft->setData(FilterData::And, true);
+		ft->setData(FilterData::Or, false);
+	}
+	else if (2 == andTag)
+	{
+		ft->setData(FilterData::And, true);
+		ft->setData(FilterData::Or, false);
+		ft->setData(FilterData::Not, true);
+	}
+	tagListModel->addToCurrents(tag);
 	addFilterItem(ft);
+}
+
+void FilterBar::slotTagEdit(const QModelIndex &index)
+{
+	QString tag(tagListModel->data(index, TagListModel::TagString).toString());
+	bool ok;
+	QString newTag(QInputDialog::getText(this, tr("Fontmatrix - edit tag"), tr("Edit tag: ") + tag, QLineEdit::Normal, QString(), &ok));
+	if(!ok || newTag.isEmpty())
+		return;
+	FMFontDb::DB()->editTag(tag, newTag);
+	ui->tagsView->update(index);
+
 }
 
 void FilterBar::slotPanoFilter()
@@ -431,15 +532,17 @@ void FilterBar::slotPanoFilter()
 
 }
 
-void FilterBar::metaSelectField(QAction *action)
+void FilterBar::metaSelectField(int idx)
 {
-	metaFieldKey = action->data().toInt();
-	ui->metaFieldLabel->setText(FontStrings::Names().value(FMFontDb::InfoItem(metaFieldKey)));
+//	metaFieldKey = action->data().toInt();
+//	ui->metaFieldLabel->setText(FontStrings::Names().value(FMFontDb::InfoItem(metaFieldKey)));
+	metaFieldKey = ui->fieldCombo->itemData(idx).toInt();
 }
 
 void FilterBar::slotClearFilter()
 {
 	removeAllFilters();
+	tagListModel->clearCurrents();
 	emit filterChanged();
 }
 

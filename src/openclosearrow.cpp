@@ -4,7 +4,7 @@ OpenCloseArrow::OpenCloseArrow(QWidget *parent, bool open) :
     QLabel(parent),
     openingState(open)
 {
-	setOpText();
+//	setOpText();
 }
 
 OpenCloseArrow::~OpenCloseArrow()
@@ -31,8 +31,19 @@ void OpenCloseArrow::changeOpen(bool t)
 
 void OpenCloseArrow::setOpText()
 {
+	if(baseText.isEmpty())
+		baseText = text();
+	QFont f(font());
 	if(openingState)
-		setText("-");
+	{
+		f.setBold(true);
+		setFont(f);
+		setText(QString("%1").arg(baseText));
+	}
 	else
-		setText("+");
+	{
+		f.setBold(false);
+		setFont(f);
+		setText(QString("%1").arg(baseText));
+	}
 }

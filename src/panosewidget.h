@@ -22,11 +22,9 @@
 #define PANOSEWIDGET_H
 
 #include <QtGui/QWidget>
-#include <QModelIndex>
 #include <QItemSelection>
 
-class PanoseValueModel;
-class PanoseAttributeModel;
+class QTreeWidgetItem;
 
 namespace Ui {
 	class PanoseWidget;
@@ -49,8 +47,6 @@ protected:
 
 private:
 	Ui::PanoseWidget *m_ui;
-	PanoseAttributeModel * attributeModel;
-	PanoseValueModel * valueModel;
 
 	int m_filterKey;
 	QMap<int, QList<int> > m_filter;
@@ -58,9 +54,7 @@ private:
 	void doConnect(const bool& c);
 
 private slots:
-	void slotChangeAtrr(const QModelIndex& idx);
-	void slotUpdateFilter(const QItemSelection & selected, const QItemSelection & deselected);
-	void slotSelectAttr(const QModelIndex& idx);
+	void slotSelect(QTreeWidgetItem * item, int column);
 
 signals:
 	void filterChanged();

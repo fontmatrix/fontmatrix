@@ -311,10 +311,12 @@ void typotek::closeEvent ( QCloseEvent *event )
 	{
 		f->close();
 	}
+	writeSettings();
+
 	delete PlayWidget::getInstance();
 	delete FontCompareWidget::getInstance();
+	delete theMainView;
 
-	writeSettings();
 	event->accept();
 
 }
@@ -1021,7 +1023,6 @@ bool typotek::maybeSave()
 
 typotek::~typotek()
 {
-
 }
 
 void typotek::fillTagsList()

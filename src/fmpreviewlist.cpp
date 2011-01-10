@@ -356,6 +356,7 @@ FMPreviewView::FMPreviewView(QWidget * parent):
 	setDragEnabled(true);
 	setDragDropMode(QAbstractItemView::DragDrop);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setSelectionRectVisible(false);
 }
 
 bool FMPreviewView::moveTo(const QString &fname)

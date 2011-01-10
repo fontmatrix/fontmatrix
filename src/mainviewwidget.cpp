@@ -124,6 +124,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 
 MainViewWidget::~MainViewWidget()
 {
+	delete filterBar;
 }
 
 

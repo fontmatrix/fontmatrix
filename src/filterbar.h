@@ -24,23 +24,28 @@
 #include <QWidget>
 #include <QList>
 #include <QMap>
-#include <QAbstractTableModel>
+#include <QAbstractListModel>
+#include <QListView>
 #include <QMenu>
 #include <QStringListModel>
+#include <QMouseEvent>
 
 class FiltersDialogItem;
 class FilterItem;
 class FilterData;
 
 
-class TagListModel : public QAbstractTableModel
+class TagListModel : public QAbstractListModel
 {
 	Q_OBJECT
 	const int specialTagsCount;
+
+	QStringList currentTags;
 public:
 	enum TagListRole
 	{
-		TagType = Qt::UserRole
+		TagType = Qt::UserRole,
+		TagString
 	};
 
 	TagListModel(QObject * parent);
@@ -50,10 +55,42 @@ public:
 	bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 	Qt::ItemFlags flags ( const QModelIndex & index ) const;
 
+	void clearCurrents();
+	void addToCurrents(const QString& t);
+	void removeFromCurrents(const QString& t);
+
 public slots:
 	void tagsDBChanged();
 
 };
+
+
+class TagListView : public QListView
+{
+	Q_OBJECT
+
+	int m_andOrKey;
+public:
+	TagListView(QWidget * parent):
+			QListView(parent),
+			m_andOrKey(0)
+	{}
+
+	int getAndKey(){int ret(m_andOrKey), m_andOrKey = 0; return ret;}
+
+protected:
+	void mouseReleaseEvent(QMouseEvent *event)
+	{
+		if(event->modifiers().testFlag(Qt::ShiftModifier))
+			m_andOrKey = 1;
+		else if(event->modifiers().testFlag(Qt::ControlModifier))
+			m_andOrKey = 2;
+		else
+			m_andOrKey = 0;
+		QListView::mouseReleaseEvent(event);
+	}
+};
+
 
 namespace Ui {
     class FilterBar;
@@ -77,7 +114,7 @@ private:
     void addFilterItem(FilterData* f, bool process = true);
     void removeAllFilters();
     TagListModel * tagListModel;
-    QMenu * metaFieldsMenu;
+//    QMenu * metaFieldsMenu;
     int metaFieldKey;
 
     QString filterString(FilterData *d, bool first = false);
@@ -98,7 +135,7 @@ private slots:
     void processFilters();
     void slotPanoFilter();
     void metaFilter();
-    void metaSelectField(QAction * action);
+    void metaSelectField(int idx);
 
     void filtersDialog();
 
@@ -109,6 +146,7 @@ private slots:
     void slotRemoveFilterItem(bool process = true);
 
     void slotTagSelect(const QModelIndex & index);
+    void slotTagEdit(const QModelIndex & index);
     void slotClearFilter();
 
     void slotToggleTags(bool t);

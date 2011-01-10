@@ -22,8 +22,13 @@
 #include "ui_panosewidget.h"
 #include "panosemodel.h"
 #include "fmfontstrings.h"
+#include "fmpaths.h"
 
 #include <QTreeWidgetItem>
+#include <QDir>
+#include <QSettings>
+#include <QIcon>
+#include <QColor>
 
 
 PanoseWidget::PanoseWidget(QWidget *parent) :
@@ -31,16 +36,43 @@ PanoseWidget::PanoseWidget(QWidget *parent) :
 		m_ui(new Ui::PanoseWidget)
 {
 	m_ui->setupUi(this);
-	attributeModel = new PanoseAttributeModel( this);
-	valueModel = new PanoseValueModel( this);
-	m_ui->attributeView->setModel(attributeModel);
-	m_ui->valueView->setModel(valueModel);
 
-	m_ui->pTree->hide();
 	m_filter.clear();
 	m_filterKey = 0;
 
-	doConnect(true);
+
+	const QMap< FontStrings::PanoseKey, QMap<int, QString> >& p(FontStrings::Panose());
+	QSettings settings;
+	QString defaultDir(FMPaths::ResourcesDir() + "Panose/Icons");
+	QString pDir(settings.value("Panose/IconDir", defaultDir).toString() + QDir::separator());
+
+	foreach(const FontStrings::PanoseKey& k, p.keys())
+	{
+		QString fn(pDir + QString::number(k) + QDir::separator() + "attribute.png");
+		QTreeWidgetItem  * pItem(new QTreeWidgetItem(m_ui->pTree));
+
+		pItem->setText(0, FontStrings::PanoseKeyName(k));
+		pItem->setData(0,Qt::UserRole,k);
+		if(QFile::exists(fn))
+			pItem->setIcon(0, QIcon(fn));
+
+		foreach(const int& v, p[k].keys())
+		{
+			if(v > 1) // We do not want "Any" and "No Fit"
+			{
+				QString fn2(pDir + QString::number(k) + QDir::separator() + QString::number(v) +".png");
+
+				QTreeWidgetItem * item(new QTreeWidgetItem(pItem));
+				item->setText(0, p[k][v]);
+				item->setData(0,Qt::UserRole,v);
+				item->setForeground(0, QColor(qrand() % 255, qrand() % 255, qrand() % 255));
+				if(QFile::exists(fn2))
+					item->setIcon(0, QIcon(fn2));
+			}
+		}
+	}
+
+	connect(m_ui->pTree, SIGNAL(itemClicked(QTreeWidgetItem * , int )), this, SLOT(slotSelect(QTreeWidgetItem * , int )));
 }
 
 PanoseWidget::~PanoseWidget()
@@ -53,91 +85,27 @@ void PanoseWidget::doConnect(const bool &c)
 {
 	if(c)
 	{
-		connect(m_ui->attributeView, SIGNAL(activated (const QModelIndex&)), this, SLOT(slotChangeAtrr(const QModelIndex&)));
-		connect(m_ui->valueView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotUpdateFilter(const QItemSelection & , const QItemSelection &)));
-		connect(m_ui->pTree, SIGNAL(activated(QModelIndex)), this, SLOT(slotSelectAttr(QModelIndex)));
+		connect(m_ui->pTree, SIGNAL(clicked(QTreeWidgetItem * , int )), this, SLOT(slotSelect(QTreeWidgetItem * , int )));
 	}
 	else
 	{
-		disconnect(m_ui->attributeView, SIGNAL(activated (const QModelIndex&)), this, SLOT(slotChangeAtrr(const QModelIndex&)));
-		disconnect(m_ui->valueView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotUpdateFilter(const QItemSelection & , const QItemSelection &)));
-		disconnect(m_ui->pTree, SIGNAL(activated(QModelIndex)), this, SLOT(slotSelectAttr(QModelIndex)));
+		disconnect(m_ui->pTree, SIGNAL(clicked(QTreeWidgetItem * , int )), this, SLOT(slotSelect(QTreeWidgetItem * , int )));
 	}
 }
 
-void PanoseWidget::slotChangeAtrr(const QModelIndex& index)
+void PanoseWidget::slotSelect(QTreeWidgetItem *item, int column)
 {
-	if(index.isValid())
-	{
-		m_filterKey = index.row();
-		valueModel->setCat(m_filterKey);
-		disconnect(m_ui->valueView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotUpdateFilter(const QItemSelection & , const QItemSelection &)));
-		m_ui->valueView->clearSelection();
-		if(m_filter.contains(m_filterKey) && !m_filter[m_filterKey].isEmpty())
-		{
-			foreach(const int& r, m_filter[m_filterKey])
-			{
-				m_ui->valueView->selectionModel()->select(valueModel->index(r), QItemSelectionModel::Select);
-			}
-		}
-		connect(m_ui->valueView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotUpdateFilter(const QItemSelection & , const QItemSelection &)));
-	}
-}
+	if(column > 0 )
+		return;
+	if(item->childCount() > 0)
+		return;
+	int pValue(item->parent()->data(0,Qt::UserRole).toInt());
+	int cValue(item->data(0,Qt::UserRole).toInt());
 
-void PanoseWidget::slotUpdateFilter(const QItemSelection & selected, const QItemSelection & deselected)
-{
 	m_filter.clear();
-	QList<int> ns;
-	foreach(const QModelIndex& i, m_ui->valueView->selectionModel()->selectedIndexes())
-	{
-		ns << i.row() + 2; // since "0" and "1" has been removed from the list
-	}
-	if(ns.count())
-		m_filter[m_filterKey] = ns;
-	else
-		m_filter.remove(m_filterKey);
-
-	m_ui->pTree->clear();
-	foreach(const int& k, m_filter.keys())
-	{
-		QTreeWidgetItem *pItem(new QTreeWidgetItem(m_ui->pTree));
-		pItem->setText(0, FontStrings::PanoseKeyName(FontStrings::PanoseKey(k)));
-		foreach(const int& v, m_filter[k])
-		{
-			QTreeWidgetItem *item(new QTreeWidgetItem(pItem));
-			item->setText(0, FontStrings::Panose().value( FontStrings::PanoseKey(k) )[v]);
-		}
-		pItem->setExpanded(true);
-	}
-
-
+	m_filter.insert(pValue,QList<int>() << cValue);
 
 	emit filterChanged();
-	doConnect(false);
-	m_ui->attributeView->clearSelection();
-	m_ui->valueView->clearSelection();
-	doConnect(true);
-//	hide();
-}
-
-void PanoseWidget::slotSelectAttr(const QModelIndex& idx)
-{
-	QModelIndex tmpIdx(idx);
-	while(tmpIdx.parent().isValid())
-		tmpIdx = tmpIdx.parent();
-
-	const QString cs(tmpIdx.data(Qt::DisplayRole).toString());
-	for(int i(0); i < m_ui->attributeView->model()->rowCount(); ++i)
-	{
-		const QModelIndex &cIdx(m_ui->attributeView->model()->index(i,0));
-		if(cs == cIdx.data(Qt::DisplayRole).toString())
-		{
-			m_ui->attributeView->setCurrentIndex(cIdx);
-			slotChangeAtrr(cIdx);
-			return;
-		}
-	}
-
 }
 
 void PanoseWidget::setFilter(const QMap<int, QList<int> >& filter)

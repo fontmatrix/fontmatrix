@@ -16,9 +16,15 @@
 
 
 TagsWidget_ListModel::TagsWidget_ListModel(QObject *parent)
-		:QAbstractListModel(parent)
+		:QAbstractListModel(parent),
+		newTagString(tr("New Tag"))
 {
+	connect(FMFontDb::DB(), SIGNAL(tagsChanged()), this, SLOT(updateTags()));
+}
 
+void TagsWidget_ListModel::updateTags()
+{
+	emit dataChanged(index(0), index(rowCount() -  1));
 }
 
 int TagsWidget_ListModel::rowCount(const QModelIndex &parent) const
@@ -137,6 +143,28 @@ void TagsWidget_ListModel::setFonts(const QList<FontItem *> &flist)
 	fonts = flist;
 	if(fonts.count() > 0)
 		tags = fonts.first()->tags();
-	emit dataChanged(index(0), index(rowCount() -  1));
+	updateTags();
 }
+
+
+QModelIndex TagsWidget_ListModel::addTag()
+{
+	if(FMFontDb::DB()->getTags().contains(newTagString))
+			return QModelIndex();
+
+	FMFontDb::DB()->addTagToDB(newTagString);
+	updateTags();
+
+	QStringList tl_tmp = FMFontDb::DB()->getTags();
+	tl_tmp.sort();
+
+	for(int i(0); i < tl_tmp.count(); ++i)
+	{
+		if(tl_tmp.at(i) == newTagString)
+			return index(i);
+	}
+
+}
+
+
 

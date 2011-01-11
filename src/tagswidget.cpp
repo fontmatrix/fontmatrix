@@ -15,6 +15,7 @@
 #include <QMenu>
 #include <QDebug>
 #include <QFont>
+#include <QModelIndex>
 
 #include "typotek.h"
 #include "tagswidget.h"
@@ -48,34 +49,23 @@ void TagsWidget::prepare(QList<FontItem *> fonts)
 
 void TagsWidget::slotNewTag()
 {
-
-//	QString nTag(tr("New Tag"));
-//	newTagBeingEdited = new QListWidgetItem(0);
-//	newTagBeingEdited->setText(nTag);
-//	newTagBeingEdited->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
-//	newTagBeingEdited->setCheckState(Qt::Unchecked);
-//	FMFontDb::DB()->addTagToDB ( nTag );
-//	currentTag = nTag;
-
-
-//	tagsListWidget->setFocus();
-//	tagsListWidget->addItem(newTagBeingEdited);
-//	tagsListWidget->scrollToItem(newTagBeingEdited);
-//	tagsListWidget->setCurrentItem(newTagBeingEdited);
-//	tagsListWidget->openPersistentEditor(newTagBeingEdited);
-
-//	disconnect(tagsListWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(slotActEditTag(QListWidgetItem*)));
-//	connect(tagsListWidget, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(slotActEditTag(QListWidgetItem*)));
+	QModelIndex  idx(model->addTag());
+	if(!idx.isValid())
+		return;
+	tagsListView->setCurrentIndex(idx);
+	tagsListView->edit(idx);
 }
 
 
 
 void TagsWidget::slotActRemovetag()
 {
-//	if(currentTag.isEmpty())
-//		return;
+	QModelIndex idx(tagsListView->currentIndex());
+	if(!idx.isValid())
+		return;
+	QString currentTag(model->data(idx, Qt::DisplayRole).toString());
 	QString message;
-	message = tr ( "Please confirm that you want to remove\nthe following tag from database:" ) /*+ " " + currentTag*/;
+	message = tr ( "Please confirm that you want to remove\nthe following tag from database:" ) + " " + currentTag;
 	if ( QMessageBox::question ( typotek::getInstance(),
 	                             "Fontmatrix",
 	                             message ,
@@ -83,7 +73,7 @@ void TagsWidget::slotActRemovetag()
 	                             QMessageBox::Cancel )
 	        == QMessageBox::Ok )
 	{
-//		FMFontDb::DB()->removeTagFromDB ( currentTag );
+		FMFontDb::DB()->removeTagFromDB ( currentTag );
 	}
 
 }

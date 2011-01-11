@@ -21,6 +21,10 @@ class TagsWidget_ListModel : public  QAbstractListModel
 
 	QList<FontItem*> fonts;
 	QStringList tags;
+	const QString newTagString;
+
+private slots:
+	void updateTags();
 
 public:
 
@@ -32,6 +36,7 @@ public:
 	Qt::ItemFlags flags ( const QModelIndex & index ) const;
 
 	void setFonts(const QList<FontItem*>& flist);
+	QModelIndex addTag();
 
 };
 

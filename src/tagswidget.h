@@ -16,38 +16,24 @@
 #include "ui_tagswidget.h"
 
 class FontItem;
+class TagsWidget_ListModel;
 
 class TagsWidget : public QWidget , private Ui::tagsWidget
 {
 	Q_OBJECT
-//		static TagsWidget * instance;
-		
-		QList<FontItem*> theTaggedFonts;
-		
-		QList<QAction*> contAction;
-		
-		QString currentTag;
 
-		QListWidgetItem * newTagBeingEdited;
-		
-	public:
-		TagsWidget(QWidget * parent);
-		~TagsWidget();
-//		static TagsWidget *getInstance();
-		void prepare(QList<FontItem*> fonts);
-		void newTag();
-		void removeFromTagged(FontItem* f){theTaggedFonts.removeAll(f);}
-		
-	private slots:
-		void slotSwitchCheckState( QListWidgetItem * item );
-		void slotNewTag();
-		void slotFinalize();
 
-		void slotUpdateCurrentTag(QListWidgetItem * current, QListWidgetItem *  previous);
-		
-		void slotContextMenu( QPoint  pos );
-		void slotActRemovetag();
-		void slotActEditTag(QListWidgetItem * item );
+	TagsWidget_ListModel * model;
+
+public:
+	TagsWidget(QWidget * parent);
+	~TagsWidget();
+
+	void prepare(QList<FontItem*> fonts);
+
+private slots:
+	void slotNewTag();
+	void slotActRemovetag();
 
 };
 

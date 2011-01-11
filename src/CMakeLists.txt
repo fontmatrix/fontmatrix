@@ -93,6 +93,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/shortcuts.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/systray.cpp
 # ${CMAKE_CURRENT_SOURCE_DIR}/tagseteditor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/tagswidget_listmodel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/treeitem.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/treemodel.cpp
@@ -211,6 +212,7 @@ shortcuts.h
 systray.h
 # tagseteditor.h
 tagswidget.h
+tagswidget_listmodel.h
 #textprogression.h
 tttableview.h
 typotek.h

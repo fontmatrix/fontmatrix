@@ -2329,93 +2329,46 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QCol
 	QPixmap linePixmap ( qRound(theWidth), qRound(theHeight) );
 	linePixmap.fill ( bg_color );
 	QPainter apainter ( &linePixmap );
-	QVector<QRgb> palette;
-	int notRenderedGlyphsCount ( 0 );
 
-	for ( int i =0;i < oneline.count() ; ++i )
+	bool canRender(true);
+	for ( int i(0);i < oneline.count() ; ++i )
 	{
-		int glyphIndex = FT_Get_Char_Index ( m_face, oneline[i].unicode() );
-		if ( glyphIndex == 0 )
+		if(FT_Get_Char_Index ( m_face, oneline[i].unicode() ) == 0)
 		{
-			++notRenderedGlyphsCount;
-			continue;
+			canRender = false;
+			break;
 		}
-
-		FT_Set_Char_Size ( m_face,
-		                   fsize,
-		                   0,
-				   typotek::getInstance()->getDpiX(),
-				   typotek::getInstance()->getDpiY() );
-
-		ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING );
-		if ( ft_error )
-		{
-			continue;
-		}
-
-		ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
-		if ( ft_error )
-		{
-			continue;
-		}
-
-		if ( pRTL )
-			pen.rx() -= qRound ( m_glyph->linearHoriAdvance / 65536 );
-
-		apainter.drawImage ( pen.x() +  m_glyph->bitmap_left , pen.y() - m_glyph->bitmap_top , glyphImage(fg_color) );
-
-		if ( !pRTL )
-			pen.rx() += qRound ( m_glyph->linearHoriAdvance / 65536 );
-
 	}
-	/// Check if we have drawn something
-	if ( notRenderedGlyphsCount == oneline.count() )
+	if(canRender)
 	{
-		pen.rx() = 0; // we don’t bother about RTL here.
-		//If not we draw first available characters.
-		FT_ULong  charCode;
-		FT_UInt   glyphIndex;
-		charCode = FT_Get_First_Char ( m_face, &glyphIndex );
-		for ( int i =0;i < oneline.count() ; ++i ) // get same number of glyphs than normal preview word
+		for ( int i(0);i < oneline.count() ; ++i )
 		{
-			if ( glyphIndex == 0 )
-			{
-				continue;
-			}
-			ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_NO_SCALE );
-			if ( ft_error )
-			{
-				continue;
-			}
-			double advance = m_glyph->metrics.horiAdvance  * scalefactor * pt2px;
-			double leftBearing = ( double ) m_glyph->metrics.horiBearingX * scalefactor * pt2px;
-// 			qDebug() << oneline[i] <<  m_glyph->metrics.horiAdvance  << advance ;
+			int glyphIndex = FT_Get_Char_Index ( m_face, oneline[i].unicode() );
+
 			FT_Set_Char_Size ( m_face,
-			                   fsize,
-			                   0,
+					   fsize,
+					   0,
 					   typotek::getInstance()->getDpiX(),
 					   typotek::getInstance()->getDpiY() );
-			ft_error = FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT );
-			if ( ft_error )
-			{
+
+			if(FT_Load_Glyph ( m_face, glyphIndex, FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING ) > 0)
 				continue;
-			}
-			ft_error = FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL );
-			if ( ft_error )
-			{
+			if(FT_Render_Glyph ( m_face->glyph, FT_RENDER_MODE_NORMAL ) > 0)
 				continue;
-			}
 
-			pen.ry() = ( theSize * pt2px ) - m_glyph->bitmap_top;
-
-			apainter.drawImage ( qRound(pen.x() + leftBearing),qRound( pen.y()), glyphImage(fg_color) );
-
-			pen.rx() +=  advance;
-
-			charCode = FT_Get_Next_Char ( m_face, charCode, &glyphIndex );
-
+			if ( pRTL )
+				pen.rx() -= qRound ( m_glyph->linearHoriAdvance / 65536 );
+			apainter.drawImage ( pen.x() +  m_glyph->bitmap_left , pen.y() - m_glyph->bitmap_top , glyphImage(fg_color) );
+			if ( !pRTL )
+				pen.rx() += qRound ( m_glyph->linearHoriAdvance / 65536 );
 		}
 	}
+	else
+	{
+		QString cantRenderString(tr("(%1)", "when doing the font preview, used to denote a font that can not displayed its name"));
+		apainter.drawText(pen.x(),pen.y(), cantRenderString.arg(oneline));
+	}
+
 	apainter.end();
 	releaseFace();
 

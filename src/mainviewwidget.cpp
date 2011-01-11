@@ -1165,7 +1165,6 @@ void MainViewWidget::slotRemoveCurrentItem()
 	{
 		theVeryFont->deRenderAll();
 		FMFontDb::DB()->removeFilteredFont(theVeryFont);
-		familyWidget->tagWidget()->removeFromTagged(theVeryFont);
 		theVeryFont  = 0 ;
 		typo->removeFontItem(curItemName);
 		curItemName = lastIndex = faceIndex = "";

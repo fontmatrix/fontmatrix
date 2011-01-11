@@ -91,7 +91,8 @@ QVariant TagListModel::data(const QModelIndex &index, int role) const
 	QStringList tl_tmp = FMFontDb::DB()->getTags();
 	tl_tmp.sort();
 	// specials
-	tl_tmp.prepend(tr("All activated"));
+	QString tagActivated(tr("Activated"));
+	tl_tmp.prepend(tagActivated);
 
 	QString tag(tl_tmp.at(index.row()));
 	if(role == Qt::DisplayRole)
@@ -105,11 +106,15 @@ QVariant TagListModel::data(const QModelIndex &index, int role) const
 	else if(role == Qt::DecorationRole)
 	{
 //		return QVariant();
+		QString ts("%1 (%2)");
+		int tc(tag == tagActivated ?
+		       FMFontDb::DB()->Fonts(1, FMFontDb::Activation ).count()
+			       :FMFontDb::DB()->Fonts(tag, FMFontDb::Tags ).count());
 		QRect pr(0,0,1024,18);
 		QPixmap pm(pr.size());
 		QPainter p;
 		p.begin(&pm);
-		p.drawText(pr,Qt::AlignLeft | Qt::TextDontClip | Qt::TextSingleLine, tag, &pr);
+		p.drawText(pr,Qt::AlignLeft | Qt::TextDontClip | Qt::TextSingleLine, ts.arg(tag).arg(tc) , &pr);
 		p.end();
 		QPixmap tagPix(pr.width() + 18, 18);
 		tagPix.fill(Qt::transparent);
@@ -123,7 +128,7 @@ QVariant TagListModel::data(const QModelIndex &index, int role) const
 		p.drawRoundedRect(tagPix.rect(), 5,5);
 		p.restore();
 		pr.translate(9,0);
-		p.drawText(pr, tag);
+		p.drawText(pr, ts.arg(tag).arg(tc));
 		p.end();
 		return tagPix;
 	}

@@ -266,7 +266,7 @@ void RemoteDir::slotProgress(int done, int total)
 }
 
 /// FontInfo **********************************************
-QString FontInfo::dump()
+QString RemoteDir::FontInfo::dump()
 {
 	QString sep(" | ");
 	return file + sep + family + sep + variant + sep + type + sep +tags.join(sep);

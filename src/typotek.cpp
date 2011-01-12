@@ -82,6 +82,9 @@
 #define MAX_RECENT_PYSCRIPTS 10
 #endif // HAVE_PYTHONQT
 
+#ifdef Q_WS_MAC
+#include <ApplicationServices/ApplicationServices.h>
+#endif
 
 typotek* typotek::instance = 0;
 bool typotek::matrix = false;
@@ -159,6 +162,21 @@ typotek::typotek()
 
 	m_dpiX = ( double ) QApplication::desktop()->physicalDpiX();
 	m_dpiY = ( double ) QApplication::desktop()->physicalDpiY();
+#ifdef Q_WS_MAC
+	CGDirectDisplayID macDId = CGMainDisplayID();
+	CGRect macDRect = CGDisplayBounds(macDId);
+	CGSize macDSize = CGDisplayScreenSize(macDId);
+
+	double macDisplayPxWidth(macDRect.size.width);
+	double macDisplayPxHeight(macDRect.size.height);
+	double macDisplayPhysicalWidth(double(macDSize.width) / 25.4);
+	double macDisplayPhysicalHeight(double(macDSize.height) / 25.4);
+
+	m_dpiX = macDisplayPxWidth / macDisplayPhysicalWidth;
+	m_dpiY = macDisplayPxHeight / macDisplayPhysicalHeight;
+#endif
+
+	qDebug()<< m_dpiX << m_dpiY;
 }
 
 void typotek::initMatrix()
@@ -1285,7 +1303,7 @@ void typotek::slotRemoteIsReady()
 	QStringList tagsList(FMFontDb::DB()->getTags());
 
 // 	qDebug()<<"typotek::slotRemoteIsReady()";
-	QList<FontInfo> listInfo(remoteDir->rFonts());
+	QList<RemoteDir::FontInfo> listInfo(remoteDir->rFonts());
 // 	qDebug()<< "Have got "<< listInfo.count() <<"remote font descriptions";
 	for(int rf(0) ;rf < listInfo.count(); ++rf)
 	{

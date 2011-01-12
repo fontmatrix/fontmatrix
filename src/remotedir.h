@@ -22,17 +22,6 @@ class QBuffer;
 class QByteArray;
 class QHttp;
 
-struct FontInfo
-{
-	QString file;
-	QString family;
-	QString variant;
-	QString type;
-	QString info;
-	QStringList tags;
-	QPixmap pix;
-	QString dump();
-};
 
 /**
 	@author Pierre Marchand <pierremarc@oep-h.com>
@@ -41,6 +30,18 @@ class RemoteDir : public QObject
 {
 		Q_OBJECT
 	public:
+	struct FontInfo
+	{
+		QString file;
+		QString family;
+		QString variant;
+		QString type;
+		QString info;
+		QStringList tags;
+		QPixmap pix;
+		QString dump();
+	};
+
 		RemoteDir ( const QStringList &dirs );
 		~RemoteDir();
 		

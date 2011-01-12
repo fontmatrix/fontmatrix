@@ -367,6 +367,7 @@ IF(APPLE)
 	${SHAPERS_LIBRARIES}
 	${PYTHON_LIBRARIES}
 	${LIBPODOFO_LIBRARY}
+	"-framework ApplicationServices"
 	)
 
 	# here we’ll poupulate the bundle in order to make it

@@ -402,8 +402,14 @@
      </property>
      <item>
       <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>Current</string>
+        <string>Current filter</string>
        </property>
       </widget>
      </item>

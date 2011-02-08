@@ -134,6 +134,7 @@ class MainViewWidget :  public QWidget, private Ui::MainView
 		void forceReloadSelection();
 
 
+
 	protected:
 		void keyPressEvent ( QKeyEvent * event ) ;
 };

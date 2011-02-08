@@ -88,6 +88,8 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 
 	connect(ui->browserView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(slotFolderViewContextMenu(const QPoint &)));
 
+	connect(dirWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(slotFolderRefresh(QString)));
+
 }
 
 BrowserWidget::~BrowserWidget()
@@ -320,7 +322,7 @@ void BrowserWidget::updateButtons()
 void BrowserWidget::slotImport()
 {
 	if(!curVariant.isEmpty())
-		typotek::getInstance()->open(curVariant, true);
+		typotek::getInstance()->open(curVariant, false, true);
 }
 
 FolderViewMenu::FolderViewMenu() : QMenu()
@@ -359,19 +361,19 @@ void FolderViewMenu::exec(const QFileInfo &fi, const QPoint &p)
 
 void FolderViewMenu::slotImportDir()
 {
-	QDir dir(selectedFileOrDir.absoluteFilePath());
-	QStringList ffilter;
-	ffilter << "*.otf" << "*.ttf" << "*.pfb";
-	QStringList fontList = dir.entryList(ffilter);
-	if (fontList.count() < 1)
-		return;
-	QString lastItem = fontList.at(fontList.count() - 1);
-	fontList.removeAt(fontList.count() - 1);
-	foreach(QString tmpFontPath, fontList) {
-		QString absPath = dir.absolutePath() + "/" + tmpFontPath;
-		typotek::getInstance()->open(absPath, false, true);
-	}
-	typotek::getInstance()->open(dir.absolutePath() + "/" + lastItem, true); // import the last font with the announce flag set to true
+//	QDir dir(selectedFileOrDir.absoluteFilePath());
+//	QStringList ffilter;
+//	ffilter << "*.otf" << "*.ttf" << "*.pfb";
+//	QStringList fontList = dir.entryList(ffilter);
+//	if (fontList.count() < 1)
+//		return;
+//	QString lastItem = fontList.at(fontList.count() - 1);
+//	fontList.removeAt(fontList.count() - 1);
+//	foreach(QString tmpFontPath, fontList) {
+//		QString absPath = dir.absolutePath() + "/" + tmpFontPath;
+//		typotek::getInstance()->open(absPath, false, true);
+//	}
+	typotek::getInstance()->open(selectedFileOrDir.absoluteFilePath(),false, true); // import the last font with the announce flag set to true
 }
 
 void FolderViewMenu::slotImportDirRecursively()

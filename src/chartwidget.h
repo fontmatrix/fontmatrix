@@ -74,6 +74,7 @@ private slots:
     void slotSearchCharName();
 
     void slotPrint();
+    void slotDoPrinting();
 
 };
 

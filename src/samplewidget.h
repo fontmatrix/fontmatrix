@@ -191,6 +191,7 @@ private slots:
 	void slotShowOpenType(bool);
 
 	void slotPrint();
+	void slotDoPrinting();
 
 	void saveState();
 

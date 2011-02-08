@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>149</width>
-    <height>30</height>
+    <height>31</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="margin">
-       <number>0</number>
+       <number>2</number>
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="filterLabel">
@@ -37,6 +37,13 @@
           <height>24</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
@@ -45,14 +52,14 @@
       <item row="0" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QToolButton" name="removeButton">
           <property name="maximumSize">
            <size>
-            <width>24</width>
-            <height>24</height>
+            <width>16</width>
+            <height>16</height>
            </size>
           </property>
           <property name="font">
@@ -64,8 +71,15 @@
           <property name="toolTip">
            <string>Remove Filter</string>
           </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
            <string>X</string>
+          </property>
+          <property name="icon">
+           <iconset resource="application.qrc">
+            <normaloff>:/graphic-resources/filter-remove.png</normaloff>:/graphic-resources/filter-remove.png</iconset>
           </property>
           <property name="autoRaise">
            <bool>true</bool>
@@ -76,8 +90,8 @@
          <widget class="QToolButton" name="andButton">
           <property name="maximumSize">
            <size>
-            <width>24</width>
-            <height>24</height>
+            <width>16</width>
+            <height>16</height>
            </size>
           </property>
           <property name="font">
@@ -99,6 +113,10 @@ p, li { white-space: pre-wrap; }
           <property name="text">
            <string>&amp;&amp;</string>
           </property>
+          <property name="icon">
+           <iconset resource="application.qrc">
+            <normaloff>:/graphic-resources/filter-and.png</normaloff>:/graphic-resources/filter-and.png</iconset>
+          </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
@@ -111,8 +129,8 @@ p, li { white-space: pre-wrap; }
          <widget class="QToolButton" name="noButton">
           <property name="maximumSize">
            <size>
-            <width>24</width>
-            <height>24</height>
+            <width>16</width>
+            <height>16</height>
            </size>
           </property>
           <property name="font">
@@ -142,6 +160,8 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="application.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -23,6 +23,8 @@
 
 #include <QWidget>
 #include <QString>
+#include <QPrinter>
+#include <QPrintDialog>
 
 class FloatingWidget : public QWidget
 {
@@ -42,6 +44,8 @@ private:
 	QString wTitle;
 
 protected:
+	QPrinter * printer;
+	QPrintDialog * printDialog;
 	virtual bool event( QEvent * e );
 
 signals:

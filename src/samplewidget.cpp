@@ -853,30 +853,25 @@ void SampleWidget::slotPrint()
 	FontItem * font(FMFontDb::DB()->Font( fontIdentifier ));
 	if(!font)
 		return;
+
+	if(printer == 0)
+		printer = new QPrinter(QPrinter::HighResolution);
+	if(printDialog == 0)
+		printDialog = new QPrintDialog(printer, this);
+
+	printDialog->setWindowTitle("Fontmatrix - " + tr("Print Sample") +" - " + font->fancyName() );
+	printDialog->open(this, SLOT(slotDoPrinting()));
+}
+
+
+void SampleWidget::slotDoPrinting()
+{
 	layoutForPrint = true;
 	slotView();
-//	if( textLayoutVect->isRunning() )
-//	{
-//		connect(textLayoutVect, SIGNAL(paintFinished()), this,SLOT(slotPrint()));
-//		return;
-//	}
-//	else
-//	{
-//		disconnect(textLayoutVect, SIGNAL(paintFinished()), this,SLOT(slotPrint()));
-//	}
-
-	QPrinter thePrinter ( QPrinter::HighResolution );
-	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Sample") +" - " + font->fancyName() );
-
-	if ( dialog.exec() != QDialog::Accepted )
-		return;
-	thePrinter.setFullPage ( true );
-	QPainter aPainter ( &thePrinter );
-
+	printer->setFullPage ( true );
+	QPainter aPainter ( printer );
 	loremScene->render(&aPainter);
 	layoutForPrint = false;
-
 }
 
 void SampleWidget::slotFileChanged(const QString &)

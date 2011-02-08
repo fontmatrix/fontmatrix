@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
-    <height>57</height>
+    <width>203</width>
+    <height>34</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,19 +30,19 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <property name="leftMargin">
-       <number>12</number>
+       <number>6</number>
       </property>
       <property name="topMargin">
        <number>2</number>
       </property>
       <property name="rightMargin">
-       <number>12</number>
+       <number>6</number>
       </property>
       <property name="bottomMargin">
        <number>2</number>
       </property>
       <property name="horizontalSpacing">
-       <number>-1</number>
+       <number>3</number>
       </property>
       <property name="verticalSpacing">
        <number>0</number>
@@ -51,18 +51,22 @@
        <widget class="QLabel" name="filterName">
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>64</width>
           <height>24</height>
          </size>
         </property>
         <property name="font">
          <font>
+          <pointsize>11</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
         <property name="text">
          <string>filter name</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
         </property>
        </widget>
       </item>
@@ -80,11 +84,11 @@
        </spacer>
       </item>
       <item row="0" column="2">
-       <widget class="QPushButton" name="filterButton">
+       <widget class="QToolButton" name="filterButton">
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>24</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
         <property name="toolTip">
@@ -93,14 +97,18 @@
         <property name="text">
          <string>Filter</string>
         </property>
+        <property name="icon">
+         <iconset resource="application.qrc">
+          <normaloff>:/graphic-resources/filter.png</normaloff>:/graphic-resources/filter.png</iconset>
+        </property>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QPushButton" name="removeButton">
+       <widget class="QToolButton" name="removeButton">
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>24</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
         <property name="toolTip">
@@ -109,19 +117,12 @@
         <property name="text">
          <string>Remove</string>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="4">
-       <widget class="QLabel" name="filters">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-          <italic>false</italic>
-          <strikeout>false</strikeout>
-         </font>
+        <property name="icon">
+         <iconset resource="application.qrc">
+          <normaloff>:/graphic-resources/filter-remove.png</normaloff>:/graphic-resources/filter-remove.png</iconset>
         </property>
-        <property name="text">
-         <string>TextLabel</string>
+        <property name="autoRaise">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -130,6 +131,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="application.qrc"/>
+ </resources>
  <connections/>
 </ui>

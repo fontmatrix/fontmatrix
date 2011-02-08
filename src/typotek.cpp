@@ -343,7 +343,7 @@ void typotek::closeEvent ( QCloseEvent *event )
 // if announce == true user will be shown a dialog of imported fonts
 // if announce == false and collect == true all fonts imported will be
 // collected and announced next time announce == true
-void typotek::open ( QString path, bool announce, bool collect )
+void typotek::open ( QString path, bool recursive, bool announce, bool collect )
 {
 	static QStringList nameList;
 	static QStringList tali; // tali gets reseted when announce = true then the shouldAskTali is also set to true
@@ -372,10 +372,12 @@ void typotek::open ( QString path, bool announce, bool collect )
 		dir = tmpdir; // only set dir if importing wasn't cancelled
 		settings.setValue ( "Places/LastUsedFolder", dir );
 
-		QDir theDir ( dir );
-		// 	addFcDirItem(theDir.absolutePath());
 
-		QStringList dirList ( fontmatrix::exploreDirs ( dir,0 ) );
+		QStringList dirList;
+		if(recursive)
+			dirList =  fontmatrix::exploreDirs ( dir,0 ) ;
+		else
+			dirList.append(dir);
 		// 	qDebug() << dirList.join ( "\n" );
 
 		QStringList yetHereFonts;

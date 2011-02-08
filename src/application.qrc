@@ -1,66 +1,59 @@
 <RCC>
-  <qresource prefix="/" >
-    <file alias="action-copy-char" >icons/action-copy-char-24.png</file>
-    <file alias="Welcome.png" >graphic-resources/welcome.png</file>
-    <file alias="fontmatrix_icon.png" >icons/application-fontmatrix_128.png</file>
-    <file alias="fontmatrix_systray_icon.png" >icons/fontmatrix-systray.png</file>
-    <file alias="icon_fake_partiallychecked" >icons/icon_warning-32.png</file>
-    <file alias="fontmatrix_splash.png" >graphic-resources/splashscreen.png</file>
-    <file alias="fontmatrix_info.png" >graphic-resources/font-info.png</file>
-    <file alias="fontmatrix_glypg.png" >graphic-resources/font-glyph.png</file>
-    <file alias="fontmatrix_playground.png" >graphic-resources/font-playground.png</file>
-    <file alias="fontmatrix_tags.png" >graphic-resources/font-tag.png</file>
-    <file alias="fontmatrix_compare.png" >graphic-resources/font-compare.png</file>
-    <file alias="fontmatrix_tags_graphic.png" >graphic-resources/fontmatrix-tag-graphic.png</file>
-    <file alias="fontmatrix_zoom.png" >graphic-resources/fontmatrix-zoom.png</file>
-    <file alias="fontmatrix_clasification.png" >graphic-resources/font-class.png</file>
-    <file alias="fontmatrix_antialias.png" >graphic-resources/fontmatrix-AA.png</file>
-    <file alias="fontmatrix_tagseteditor.png" >graphic-resources/fontmatrix-tagseteditor.png</file>
-    <file alias="fontmatrix_tagseteditor_icon.png" >graphic-resources/fontmatrix-tagseteditor-icon.png</file>
-    <file alias="fontmatrix_fontbookexport_icon.png" >graphic-resources/fontmatrix-fontbookexport-icon.png</file>
-    <file alias="fontmatrix_import_icon.png" >graphic-resources/fontmatrix-import-icon.png</file>
-    <file alias="icon-TTF" >icons/font_truetype16.png</file>
-    <file alias="icon-PS1" >icons/font_type116.png</file>
-    <file alias="fontmatrix_sampletext.png" >graphic-resources/font-sampletext2.png</file>
-    <file alias="icon-OTF" >icons/font_otf16.png</file>
-    <file alias="icon_empty.png" >icons/action-empty-128.png</file>
-  </qresource>
-  <qresource prefix="/help" >
-    <file alias="document-print.png" >icons/help/document-print.png</file>
-    <file alias="exit.png" >icons/help/exit.png</file>
-    <file alias="go-bottom.png" >icons/help/go-bottom.png</file>
-    <file alias="go-down.png" >icons/help/go-down.png</file>
-    <file alias="go-first.png" >icons/help/go-first.png</file>
-    <file alias="go-home.png" >icons/help/go-home.png</file>
-    <file alias="go-last.png" >icons/help/go-last.png</file>
-    <file alias="go-next.png" >icons/help/go-next.png</file>
-    <file alias="go-previous.png" >icons/help/go-previous.png</file>
-    <file alias="go-top.png" >icons/help/go-top.png</file>
-    <file alias="go-up.png" >icons/help/go-up.png</file>
-    <file alias="help-browser.png" >icons/help/help-browser.png</file>
-  </qresource>
-  <qresource prefix="/texts" >
-    <file alias="about" >messages/about.html</file>
-    <file alias="about_people" >messages/about_people.html</file>
-  </qresource>
-  <qresource prefix="/texts" lang="de" >
-    <file alias="about" >messages/about_de.html</file>
-  </qresource>
-  <qresource prefix="/texts" lang="fi" >
-    <file alias="about" >messages/about_fi.html</file>
-  </qresource>
-  <qresource prefix="/texts" lang="fr" >
-    <file alias="about" >messages/about_fr.html</file>
-  </qresource>
-  <qresource prefix="/texts" lang="uk" >
-    <file alias="about" >messages/about_uk.html</file>
-  </qresource>
-  <qresource prefix="/shapers" >
-    <file alias="latn.dict" >langs/latn.dict</file>
-    <file alias="latn.match" >langs/latn.match</file>
-  </qresource>
-  <qresource prefix="/shapers" >
-    <file alias="deva.dict" >langs/deva.dict</file>
-    <file alias="deva.match" >langs/deva.match</file>
-  </qresource>
+    <qresource prefix="/">
+        <file alias="action-copy-char">icons/action-copy-char-24.png</file>
+        <file alias="Welcome.png">graphic-resources/welcome.png</file>
+        <file alias="fontmatrix_icon.png">icons/application-fontmatrix_128.png</file>
+        <file alias="fontmatrix_systray_icon.png">icons/fontmatrix-systray.png</file>
+        <file alias="icon_fake_partiallychecked">icons/icon_warning-32.png</file>
+        <file alias="fontmatrix_splash.png">graphic-resources/splashscreen.png</file>
+        <file alias="fontmatrix_info.png">graphic-resources/font-info.png</file>
+        <file alias="fontmatrix_glypg.png">graphic-resources/font-glyph.png</file>
+        <file alias="fontmatrix_playground.png">graphic-resources/font-playground.png</file>
+        <file alias="fontmatrix_tags.png">graphic-resources/font-tag.png</file>
+        <file alias="fontmatrix_compare.png">graphic-resources/font-compare.png</file>
+        <file alias="fontmatrix_tags_graphic.png">graphic-resources/fontmatrix-tag-graphic.png</file>
+        <file alias="fontmatrix_zoom.png">graphic-resources/fontmatrix-zoom.png</file>
+        <file alias="fontmatrix_clasification.png">graphic-resources/font-class.png</file>
+        <file alias="fontmatrix_antialias.png">graphic-resources/fontmatrix-AA.png</file>
+        <file alias="fontmatrix_tagseteditor.png">graphic-resources/fontmatrix-tagseteditor.png</file>
+        <file alias="fontmatrix_tagseteditor_icon.png">graphic-resources/fontmatrix-tagseteditor-icon.png</file>
+        <file alias="fontmatrix_fontbookexport_icon.png">graphic-resources/fontmatrix-fontbookexport-icon.png</file>
+        <file alias="fontmatrix_import_icon.png">graphic-resources/fontmatrix-import-icon.png</file>
+        <file alias="icon-TTF">icons/font_truetype16.png</file>
+        <file alias="icon-PS1">icons/font_type116.png</file>
+        <file alias="fontmatrix_sampletext.png">graphic-resources/font-sampletext2.png</file>
+        <file alias="icon-OTF">icons/font_otf16.png</file>
+        <file alias="icon_empty.png">icons/action-empty-128.png</file>
+        <file>graphic-resources/filter-and.png</file>
+        <file>graphic-resources/filter-remove.png</file>
+        <file>graphic-resources/filter.png</file>
+    </qresource>
+    <qresource prefix="/help">
+        <file alias="document-print.png">icons/help/document-print.png</file>
+        <file alias="exit.png">icons/help/exit.png</file>
+        <file alias="go-bottom.png">icons/help/go-bottom.png</file>
+        <file alias="go-down.png">icons/help/go-down.png</file>
+        <file alias="go-first.png">icons/help/go-first.png</file>
+        <file alias="go-home.png">icons/help/go-home.png</file>
+        <file alias="go-last.png">icons/help/go-last.png</file>
+        <file alias="go-next.png">icons/help/go-next.png</file>
+        <file alias="go-previous.png">icons/help/go-previous.png</file>
+        <file alias="go-top.png">icons/help/go-top.png</file>
+        <file alias="go-up.png">icons/help/go-up.png</file>
+        <file alias="help-browser.png">icons/help/help-browser.png</file>
+    </qresource>
+    <qresource prefix="/texts">
+        <file alias="about">messages/about.html</file>
+        <file alias="about_people">messages/about_people.html</file>
+        <file alias="about">messages/about_de.html</file>
+        <file alias="about">messages/about_fi.html</file>
+        <file alias="about">messages/about_fr.html</file>
+        <file alias="about">messages/about_uk.html</file>
+    </qresource>
+    <qresource prefix="/shapers">
+        <file alias="latn.dict">langs/latn.dict</file>
+        <file alias="latn.match">langs/latn.match</file>
+        <file alias="deva.dict">langs/deva.dict</file>
+        <file alias="deva.match">langs/deva.match</file>
+    </qresource>
 </RCC>

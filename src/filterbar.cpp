@@ -31,6 +31,7 @@
 #include "fmpaths.h"
 #include "filtersdialog.h"
 #include "typotek.h"
+#include "mainviewwidget.h"
 
 #include <QDialog>
 #include <QGridLayout>
@@ -246,14 +247,13 @@ FilterBar::FilterBar(QWidget *parent) :
 
 	loadFilters();
 
-	connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(slotSaveFilter()));
 
 	connect(ui->tagsView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotTagSelect(QModelIndex)));
 	connect(ui->tagsView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotTagEdit(QModelIndex)));
 
 	connect(ui->metadataLineEdit, SIGNAL(editingFinished()), this, SLOT(metaFilter()));
 	connect(ui->fieldCombo, SIGNAL(activated(int)), this, SLOT(metaSelectField(int)));
-	connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(slotClearFilter()));
+//	connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(slotClearFilter()));
 	connect(ui->panoseWidget, SIGNAL(filterChanged()), this, SLOT(slotPanoFilter()));
 	connect(FMFontDb::DB(), SIGNAL(tagsChanged()), tagListModel, SLOT(tagsDBChanged()));
 
@@ -346,6 +346,7 @@ void FilterBar::slotRemoveFilterItem(bool process)
 		if(filters.count() == 0)
 		{
 			FMFontDb::DB()->filterAllFonts();
+			curFilterWidget->setVisible(false);
 			emit filterChanged();
 		}
 		fi->deleteLater();
@@ -362,12 +363,14 @@ void FilterBar::removeAllFilters()
 		d->deleteLater();
 	}
 	filters.clear();
+	curFilterWidget->setVisible(false);
 }
 
 void FilterBar::addFilterItem(FilterData *f, bool process)
 {
 	if(f != 0)
 	{
+		curFilterWidget->setVisible(true);
 		FilterItem * it(f->item());
 		if(!filters.contains(it))
 		{
@@ -376,7 +379,7 @@ void FilterBar::addFilterItem(FilterData *f, bool process)
 			connect(it, SIGNAL(remove()), this, SLOT(slotRemoveFilterItem()));
 			connect(f, SIGNAL(Changed()), this, SLOT(processFilters()));
 			filters.append(it);
-			ui->filterListLayout->addWidget(it);
+			filterListLayout->addWidget(it);
 
 			if(process)
 				processFilters();

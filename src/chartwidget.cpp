@@ -486,19 +486,29 @@ void ChartWidget::slotPrint()
 	FontItem *font(FMFontDb::DB()->Font(fontIdentifier));
 	if(font == 0)
 		return;
-	QPrinter thePrinter ( QPrinter::HighResolution );
-	QPrintDialog dialog(&thePrinter, this);
-	dialog.setWindowTitle("Fontmatrix - " + tr("Print Chart") +" - " + font->fancyName() );
 
-	if ( dialog.exec() != QDialog::Accepted )
-		return;
-	thePrinter.setFullPage ( true );
-	QPainter aPainter ( &thePrinter );
+	if(printer == 0)
+		printer = new QPrinter(QPrinter::HighResolution);
+	if(printDialog == 0)
+		printDialog = new QPrintDialog(printer, this);
+
+	printDialog->setWindowTitle("Fontmatrix - " + tr("Print Chart") +" - " + font->fancyName() );
 
 
-	double pWidth(thePrinter.paperRect().width());
-	double pHeight(thePrinter.paperRect().height());
-	double pFactor( thePrinter.resolution() );
+	printDialog->open(this, SLOT(slotDoPrinting()));
+
+}
+
+void ChartWidget::slotDoPrinting()
+{
+	FontItem *font(FMFontDb::DB()->Font(fontIdentifier));
+	printer->setFullPage ( true );
+	QPainter aPainter ( printer );
+
+
+	double pWidth(printer->paperRect().width());
+	double pHeight(printer->paperRect().height());
+	double pFactor(printer->resolution() );
 
 	qDebug()<<"Paper :"<<pWidth<<pHeight;
 	qDebug()<<"Resolution :"<<pFactor;
@@ -537,7 +547,7 @@ void ChartWidget::slotPrint()
 		}
 		else
 		{
-			thePrinter.newPage();
+			printer->newPage();
 		}
 		aPainter.drawText(targetR.bottomLeft(), font->fancyName()+"[U"+QString::number(beginCharcode  ,16).toUpper()+", U"+QString::number(stopAtCode ,16).toUpper()+"]");
 		pScene.render(&aPainter,targetR, sourceR, Qt::KeepAspectRatio);

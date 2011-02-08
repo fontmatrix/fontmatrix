@@ -100,7 +100,7 @@ private slots:
 	void slotMatchRaster();
 
 public slots:
-	void open( QString path = QString(), bool announce = true, bool collect = false );
+	void open( QString path = QString(), bool recursive = true, bool announce = true, bool collect = false );
 	void importFiles();
 	void openList( QStringList files );
 	void slotCloseToSystray(bool isEnabled);

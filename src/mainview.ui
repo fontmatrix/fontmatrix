@@ -84,7 +84,7 @@
            <property name="spacing">
             <number>0</number>
            </property>
-           <item row="0" column="0">
+           <item row="1" column="0">
             <widget class="FMPreviewView" name="listView">
              <property name="resizeMode">
               <enum>QListView::Adjust</enum>
@@ -94,7 +94,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QWidget" name="quickSearchWidget" native="true">
              <layout class="QGridLayout" name="gridLayout_4">
               <item row="0" column="0">
@@ -139,14 +139,80 @@
              </layout>
             </widget>
            </item>
+           <item row="0" column="0">
+            <widget class="QWidget" name="curFilterWidget" native="true">
+             <layout class="QGridLayout" name="gridLayout_6">
+              <property name="margin">
+               <number>0</number>
+              </property>
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item row="0" column="0">
+               <layout class="QHBoxLayout" name="filterListLayout_Base">
+                <property name="spacing">
+                 <number>4</number>
+                </property>
+                <item>
+                 <layout class="QHBoxLayout" name="filterListLayout">
+                  <property name="spacing">
+                   <number>3</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>3</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>3</number>
+                  </property>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="saveButton">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Save</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="clearButton">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>clear</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
           </layout>
          </widget>
         </widget>
        </item>
       </layout>
-      <zorder>frame</zorder>
-      <zorder>widget</zorder>
-      <zorder>filterBar</zorder>
      </widget>
      <widget class="QWidget" name="pageFamily">
       <layout class="QGridLayout" name="gridLayout_14">

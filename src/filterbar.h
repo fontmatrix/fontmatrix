@@ -29,6 +29,8 @@
 #include <QMenu>
 #include <QStringListModel>
 #include <QMouseEvent>
+#include <QHBoxLayout>
+
 
 class FiltersDialogItem;
 class FilterItem;
@@ -104,11 +106,16 @@ public:
     explicit FilterBar(QWidget *parent = 0);
     ~FilterBar();
 
+    void setFilterListLayout(QHBoxLayout *l){filterListLayout = l;}
+    void setCurFilterWidget(QWidget * w){curFilterWidget = w;}
+
 protected:
     void changeEvent(QEvent *e);
 
 private:
     Ui::FilterBar *ui;
+    QHBoxLayout * filterListLayout;
+    QWidget * curFilterWidget;
 
     QList<FilterItem*> filters;
     void addFilterItem(FilterData* f, bool process = true);
@@ -139,7 +146,6 @@ private slots:
 
     void filtersDialog();
 
-    void slotSaveFilter();
     void slotLoadFilter(const QString& fname);
     void slotRemoveFilter(const QString& fname);
 
@@ -153,6 +159,9 @@ private slots:
     void slotToggleMeta(bool t);
     void slotTogglePano(bool t);
     void slotToggleFilter(bool t);
+
+public slots:
+    void slotSaveFilter();
 
 };
 

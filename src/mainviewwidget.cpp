@@ -80,6 +80,9 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	: QWidget ( parent )
 {
 	setupUi ( this );
+	filterBar->setFilterListLayout(filterListLayout);
+	filterBar->setCurFilterWidget(curFilterWidget);
+	curFilterWidget->setVisible(false);
 	quickSearchWidget->setVisible(false);
 
 	quickSearchWait = 4000;
@@ -134,6 +137,8 @@ void MainViewWidget::doConnect()
 
 	connect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
 	connect(filterBar,SIGNAL(filterChanged()),typo, SLOT(showToltalFilteredFonts()));
+	connect(saveButton, SIGNAL(clicked()), filterBar, SLOT(slotSaveFilter()));
+	connect(clearButton, SIGNAL(clicked()), filterBar, SLOT(slotClearFilter()));
 
 
 	connect(listView, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
@@ -151,7 +156,9 @@ void MainViewWidget::disConnect()
 	disconnect(familyWidget, SIGNAL(familyStateChanged()), previewModel, SLOT(dataChanged()));
 
 	disconnect(filterBar,SIGNAL(filterChanged()),previewModel,SLOT(dataChanged()));
-	connect(filterBar,SIGNAL(filterChanged()),typo, SLOT(showToltalFilteredFonts()));
+	disconnect(filterBar,SIGNAL(filterChanged()),typo, SLOT(showToltalFilteredFonts()));
+	disconnect(saveButton, SIGNAL(clicked()), filterBar, SLOT(slotSaveFilter()));
+	disconnect(clearButton, SIGNAL(clicked()), filterBar, SLOT(slotClearFilter()));
 
 	disconnect(listView, SIGNAL(widthChanged(int)),this,SLOT(slotPreviewUpdateSize(int)));
 	disconnect(listView, SIGNAL(activated(const QModelIndex&)), this, SLOT(slotShowFamily(const QModelIndex&)));
@@ -1278,3 +1285,4 @@ void MainViewWidget::slotPreviewUpdateSize(int w)
 {
 	listView->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
+

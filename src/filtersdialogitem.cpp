@@ -27,9 +27,19 @@ FiltersDialogItem::FiltersDialogItem(const QString& name, const QString& f, QWid
     filterName(name)
 {
     ui->setupUi(this);
-    setButtonsVisible(false);
+    QString ssheet;
+    ssheet += QString("QToolButton{border:none;}");
+    ssheet += QString("QToolButton:checked{border-bottom:2px solid black;}");
+    ssheet += QString("QToolButton:hover{background:white;}");
+//	ssheet += QString();
+//	ssheet += QString();
+//	ssheet += QString();
+//	ssheet += QString();
+    this->setStyleSheet(ssheet);
+//    setButtonsVisible(false);
     ui->filterName->setText(filterName);
-    ui->filters->setText(f);
+    ui->filterName->setToolTip(f);
+//    ui->filters->setText(f);
 
     connect(ui->filterButton, SIGNAL(clicked()), this, SLOT(slotFilter()));
     connect(ui->removeButton, SIGNAL(clicked()), this, SLOT(slotRemove()));
@@ -61,10 +71,10 @@ void FiltersDialogItem::setButtonsVisible(bool v)
 
 void FiltersDialogItem::enterEvent(QEvent *)
 {
-	setButtonsVisible(true);
+//	setButtonsVisible(true);
 }
 
 void FiltersDialogItem::leaveEvent(QEvent *)
 {
-	setButtonsVisible(false);
+//	setButtonsVisible(false);
 }

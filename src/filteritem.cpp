@@ -28,6 +28,17 @@ FilterItem::FilterItem(FilterData *filter, QWidget *parent) :
 		ui(new Ui::FilterItem)
 {
 	ui->setupUi(this);
+
+	QString ssheet;
+	ssheet += QString("QToolButton{border:none;}");
+	ssheet += QString("QToolButton:checked{border-bottom:2px solid black;}");
+	ssheet += QString("QToolButton:hover{background:white;}");
+//	ssheet += QString();
+//	ssheet += QString();
+//	ssheet += QString();
+//	ssheet += QString();
+	this->setStyleSheet(ssheet);
+
 	ui->filterLabel->setText(d->getText());
 	ui->andButton->setChecked(d->data(FilterData::And).toBool());
 	ui->noButton->setChecked(d->data(FilterData::Not).toBool());

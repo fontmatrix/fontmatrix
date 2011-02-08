@@ -27,7 +27,9 @@
 FloatingWidget::FloatingWidget(const QString &f, const QString& typ, QWidget *parent) :
 		QWidget(parent),
 		fName(f),
-		fType(typ)
+		fType(typ),
+		printer(0),
+		printDialog(0)
 {
 	setAttribute(Qt::WA_DeleteOnClose);
 	QString fn;
@@ -46,6 +48,10 @@ FloatingWidget::FloatingWidget(const QString &f, const QString& typ, QWidget *pa
 
 FloatingWidget::~FloatingWidget()
 {
+	if(printer)
+		delete printer;
+	if(printDialog)
+		delete printDialog;
 }
 
 

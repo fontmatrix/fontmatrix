@@ -36,6 +36,8 @@
 #include <QPainter>
 #include <QBrush>
 
+#define FM_MINIMUM_PREVIEW_WIDTH 280
+
 bool FMPreviewIconEngine::initState = false;
 QPen FMPreviewIconEngine::pen = QPen();
 QVector<QRgb> FMPreviewIconEngine::m_selPalette;
@@ -356,7 +358,8 @@ FMPreviewView::FMPreviewView(QWidget * parent):
 	setDragEnabled(true);
 	setDragDropMode(QAbstractItemView::DragDrop);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	setSelectionRectVisible(false);
+        setSelectionRectVisible(false);
+
 }
 
 bool FMPreviewView::moveTo(const QString &fname)
@@ -394,22 +397,24 @@ bool FMPreviewView::moveTo(const QString &fname)
 
 void FMPreviewView::resizeEvent(QResizeEvent * event)
 {
-	int extraSpace((verticalScrollBar()->isVisible() ? verticalScrollBar()->width() : 0)
-		       + frameWidth()
-		       + lineWidth()
-		       + midLineWidth());
-	int actualWidth(this->width() - extraSpace);
-	//	qDebug()<<"W"<<this->width()<<"AW"<<actualWidth<<verticalScrollBar()->width()<<verticalScrollBar()->isVisible();
-	//	qDebug()<<frameWidth() << lineWidth() << midLineWidth();
-	if(spacing() == 0)
-		setSpacing(3);
+        int actualWidth(width() - 20); // if we use the viewport size, it becomes funny when a resize shows/hides the scrollbar
+        setSpacing(0);
+        int gHeight(2.0 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0);
+        qDebug()<< "VW" << actualWidth<<verticalScrollBar()->width()<< "S" <<spacing();
+        double cNr(1);
+
 	if(columns == 1)
-		usedWidth = qRound((double(actualWidth)  / columns) - (columns * 2.0 * double(spacing())));
+                usedWidth = qRound((double(actualWidth)  / columns));
 	else
-		usedWidth = 280;
-	//	emit widthChanged(usedWidth);
-	setIconSize(QSize(qRound(usedWidth),
-			  2.0 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+        {
+            int minCellWidth(FM_MINIMUM_PREVIEW_WIDTH + 6);
+            cNr = qRound(actualWidth / minCellWidth);
+            minCellWidth =  qRound((double(actualWidth)  / cNr) - 6);
+            qDebug()<< "C" << cNr << "U" << minCellWidth ;
+            setGridSize(QSize(minCellWidth, gHeight + 12));
+            usedWidth = minCellWidth - 6;
+        }
+        setIconSize(QSize(qRound(usedWidth), gHeight + 6));
 	QListView::resizeEvent(event);
 }
 

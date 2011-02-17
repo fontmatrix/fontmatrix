@@ -21,6 +21,9 @@
 #include "filtersdialogitem.h"
 #include "ui_filtersdialogitem.h"
 
+
+#include <QMessageBox>
+
 FiltersDialogItem::FiltersDialogItem(const QString& name, const QString& f, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FiltersDialogItem),
@@ -59,7 +62,8 @@ void FiltersDialogItem::slotFilter()
 
 void FiltersDialogItem::slotRemove()
 {
-	emit Remove(filterName);
+	if(QMessageBox::question(0, tr("Remove Filter"), tr("Confirm deletion of filter:") + filterName, QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Ok)
+		emit Remove(filterName);
 }
 
 void FiltersDialogItem::setButtonsVisible(bool v)

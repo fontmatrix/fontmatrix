@@ -30,7 +30,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <property name="leftMargin">
-       <number>6</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>2</number>
@@ -49,9 +49,15 @@
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="filterName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>64</width>
+          <width>1000</width>
           <height>24</height>
          </size>
         </property>
@@ -68,22 +74,12 @@
         <property name="textFormat">
          <enum>Qt::PlainText</enum>
         </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>160</width>
-          <height>24</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="2">
        <widget class="QToolButton" name="filterButton">
         <property name="maximumSize">
          <size>
@@ -103,7 +99,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
+      <item row="0" column="2">
        <widget class="QToolButton" name="removeButton">
         <property name="maximumSize">
          <size>

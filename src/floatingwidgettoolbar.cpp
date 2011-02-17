@@ -34,9 +34,11 @@ FloatingWidgetToolBar::FloatingWidgetToolBar(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	menu = new QMenu(this);
-	setupMenu();
-	ui->toolButton->setMenu(menu);
+	connect(ui->closeButton, SIGNAL(clicked()), this, SIGNAL(Close()));
+	connect(ui->hideButton, SIGNAL(clicked()), this, SIGNAL(Hide()));
+	connect(ui->printButton, SIGNAL(clicked()), this, SIGNAL(Print()));
+	connect(ui->detachButton, SIGNAL(clicked()), this, SLOT(setDetached()));
+        setupMenu();
 
 }
 
@@ -60,31 +62,22 @@ void FloatingWidgetToolBar::changeEvent(QEvent *e)
 
 void FloatingWidgetToolBar::setupMenu()
 {
-	menu->clear();
-
 	if(isDetached)
 	{
 		if(!noClose)
-		{
-			closeAction = new QAction(tr("Close"), menu);
-			menu->addAction(closeAction);
-			connect(closeAction, SIGNAL(triggered()), this, SIGNAL(Close()));
-		}
-		hideAction = new QAction(tr("Hide"), menu);
-		menu->addAction(hideAction);
-		connect(hideAction, SIGNAL(triggered()), this, SIGNAL(Hide()));
+			ui->closeButton->show();
+		else
+			ui->closeButton->hide();
+		ui->hideButton->show();
+		ui->detachButton->hide();
 	}
-	printAction = new QAction(tr("Print"), menu);
-	menu->addAction(printAction);
-	connect(printAction, SIGNAL(triggered()), this, SIGNAL(Print()));
-	if(!isDetached)
+	else
 	{
-		detachAction = new QAction(tr("Detach"), menu);
-		menu->addAction(detachAction);
-		connect(detachAction, SIGNAL(triggered()), this, SLOT(setDetached()));
+		ui->closeButton->hide();
+		ui->hideButton->hide();
+		ui->detachButton->show();
 	}
-
-
+	ui->printButton->show();
 }
 
 void FloatingWidgetToolBar::setDetached()

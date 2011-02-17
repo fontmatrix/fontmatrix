@@ -46,12 +46,6 @@ protected:
 private:
     Ui::FloatingWidgetToolBar *ui;
 
-    QAction * closeAction;
-    QAction * hideAction;
-    QAction * printAction;
-    QAction * detachAction;
-
-    QMenu * menu;
     bool noClose;
     bool isDetached;
 

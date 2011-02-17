@@ -69,7 +69,7 @@ PanoseWidget::PanoseWidget(QWidget *parent) :
 				QTreeWidgetItem * item(new QTreeWidgetItem(pItem));
 				item->setText(0, p[k][v]);
 				item->setData(0,Qt::UserRole,v);
-				item->setForeground(0, QColor(qrand() % 255, qrand() % 255, qrand() % 255));
+//				item->setForeground(0, QColor(qrand() % 255, qrand() % 255, qrand() % 255));
 				if(QFile::exists(fn2))
 					item->setIcon(0, QIcon(fn2));
 			}

@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>CompareWidget</class>
- <widget class="QWidget" name="CompareWidget" >
-  <property name="geometry" >
+ <widget class="QWidget" name="CompareWidget">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,63 +10,63 @@
     <height>434</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>Form</string>
+  <property name="windowTitle">
+   <string>Compare Glyphs</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3" >
-   <item row="0" column="0" colspan="4" >
-    <widget class="QSplitter" name="splitter" >
-     <property name="orientation" >
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0" colspan="4">
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" native="1" name="widget" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+     <widget class="QWidget" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>1</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QGridLayout" name="gridLayout" >
-       <property name="margin" >
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="margin">
         <number>0</number>
        </property>
-       <item row="0" column="0" >
-        <layout class="QVBoxLayout" name="verticalLayout_2" >
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QGroupBox" name="fgbox" >
-           <property name="sizePolicy" >
-            <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+          <widget class="QGroupBox" name="fgbox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="title" >
+           <property name="title">
             <string>Fonts</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_15" >
-            <item row="0" column="0" colspan="3" >
-             <widget class="QListWidget" name="compareList" />
+           <layout class="QGridLayout" name="gridLayout_15">
+            <item row="0" column="0" colspan="3">
+             <widget class="QListWidget" name="compareList"/>
             </item>
-            <item row="1" column="1" >
-             <widget class="QPushButton" name="compareAdd" >
-              <property name="text" >
+            <item row="1" column="1">
+             <widget class="QPushButton" name="compareAdd">
+              <property name="text">
                <string>Add</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="2" >
-             <widget class="QPushButton" name="compareRemove" >
-              <property name="text" >
+            <item row="1" column="2">
+             <widget class="QPushButton" name="compareRemove">
+              <property name="text">
                <string>Remove</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0" >
-             <spacer name="horizontalSpacer" >
-              <property name="orientation" >
+            <item row="1" column="0">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>40</width>
                 <height>20</height>
@@ -77,39 +78,39 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="compareShow" >
-           <property name="title" >
+          <widget class="QGroupBox" name="compareShow">
+           <property name="title">
             <string>Show</string>
            </property>
-           <property name="checkable" >
+           <property name="checkable">
             <bool>true</bool>
            </property>
-           <layout class="QGridLayout" name="gridLayout_16" >
-            <item row="2" column="0" colspan="2" >
-             <widget class="QCheckBox" name="compareMetrics" >
-              <property name="text" >
+           <layout class="QGridLayout" name="gridLayout_16">
+            <item row="2" column="0" colspan="2">
+             <widget class="QCheckBox" name="compareMetrics">
+              <property name="text">
                <string>Metrics</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0" colspan="3" >
-             <widget class="QGroupBox" name="comparePoints" >
-              <property name="enabled" >
+            <item row="1" column="0" colspan="3">
+             <widget class="QGroupBox" name="comparePoints">
+              <property name="enabled">
                <bool>true</bool>
               </property>
-              <property name="title" >
+              <property name="title">
                <string>Points</string>
               </property>
-              <property name="checkable" >
+              <property name="checkable">
                <bool>true</bool>
               </property>
-              <property name="checked" >
+              <property name="checked">
                <bool>false</bool>
               </property>
-              <layout class="QGridLayout" name="gridLayout_2" >
-               <item row="0" column="0" >
-                <widget class="QCheckBox" name="compareControls" >
-                 <property name="text" >
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="compareControls">
+                 <property name="text">
                   <string>Controls</string>
                  </property>
                 </widget>
@@ -117,48 +118,48 @@
               </layout>
              </widget>
             </item>
-            <item row="3" column="1" >
-             <widget class="QSlider" name="compareOffset" >
-              <property name="maximum" >
+            <item row="3" column="1">
+             <widget class="QSlider" name="compareOffset">
+              <property name="maximum">
                <number>1000</number>
               </property>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="tickPosition" >
+              <property name="tickPosition">
                <enum>QSlider::NoTicks</enum>
               </property>
-              <property name="tickInterval" >
+              <property name="tickInterval">
                <number>500</number>
               </property>
              </widget>
             </item>
-            <item row="3" column="0" >
-             <widget class="QLabel" name="label" >
-              <property name="text" >
+            <item row="3" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
                <string>Offset</string>
               </property>
-              <property name="buddy" >
+              <property name="buddy">
                <cstring>compareOffset</cstring>
               </property>
              </widget>
             </item>
-            <item row="3" column="2" >
-             <widget class="QLabel" name="compareOffsetValue" >
-              <property name="text" >
+            <item row="3" column="2">
+             <widget class="QLabel" name="compareOffsetValue">
+              <property name="text">
                <string>0</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1" colspan="2" >
-             <widget class="QComboBox" name="compareFillColor" />
+            <item row="0" column="1" colspan="2">
+             <widget class="QComboBox" name="compareFillColor"/>
             </item>
-            <item row="0" column="0" >
-             <widget class="QLabel" name="label_2" >
-              <property name="text" >
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
                <string>Fill:</string>
               </property>
-              <property name="buddy" >
+              <property name="buddy">
                <cstring>compareFillColor</cstring>
               </property>
              </widget>
@@ -170,9 +171,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="FMFontCompareView" name="compareView" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+     <widget class="FMFontCompareView" name="compareView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>3</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -180,44 +181,44 @@
      </widget>
     </widget>
    </item>
-   <item row="1" column="1" >
-    <widget class="QSlider" name="compareCharSelect" >
-     <property name="toolTip" >
+   <item row="1" column="1">
+    <widget class="QSlider" name="compareCharSelect">
+     <property name="toolTip">
       <string>Select a character</string>
      </property>
-     <property name="minimum" >
+     <property name="minimum">
       <number>1</number>
      </property>
-     <property name="value" >
+     <property name="value">
       <number>1</number>
      </property>
-     <property name="tracking" >
+     <property name="tracking">
       <bool>true</bool>
      </property>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" >
-    <widget class="QCheckBox" name="compareSyncChars" >
-     <property name="text" >
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="compareSyncChars">
+     <property name="text">
       <string>Keep in sync</string>
      </property>
-     <property name="checked" >
+     <property name="checked">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="1" column="2" >
-    <widget class="QComboBox" name="compareCharBox" >
-     <property name="maxVisibleItems" >
+   <item row="1" column="2">
+    <widget class="QComboBox" name="compareCharBox">
+     <property name="maxVisibleItems">
       <number>12</number>
      </property>
-     <property name="sizeAdjustPolicy" >
+     <property name="sizeAdjustPolicy">
       <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
      </property>
-     <property name="minimumContentsLength" >
+     <property name="minimumContentsLength">
       <number>8</number>
      </property>
     </widget>

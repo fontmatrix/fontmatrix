@@ -1,0 +1,42 @@
+
+# /
+/bin
+/templates
+/Doxyfile
+/typotek.kdevelop
+/typotek.kdevelop.pcs
+/typotek.kdevses
+/Makefile
+/fontmatrix.kdevelop
+/fontmatrix.kdevelop.filelist
+/fontmatrix.kdevelop.pcs
+/fontmatrix.kdevses
+
+# /harfbuzz/
+/harfbuzz/.git
+/harfbuzz/tests
+/harfbuzz/.gitignore
+
+# /src/
+/src/Makefile
+/src/customscene.cpp
+/src/customscene.h
+/src/moc_fontactionwidget.cpp
+/src/moc_typotek.cpp
+/src/moc_mainviewwidget.cpp
+/src/moc_typotekadaptator.cpp
+/src/mainview.ui_BAK
+/src/Makefile.Release
+/src/Makefile.Debug
+/src/moc_fontbookdialog.cpp
+/src/ui_bookexport.h
+/src/qmake_image_collection.cpp
+/src/ui_fontaction.h
+/src/ui_mainview.h
+/src/fontmatrix_splashscreen.png
+/src/moc_fmsampletextview.cpp
+/src/moc_tagseteditor.cpp
+/src/ui_tagset.h
+
+# /src/messages/
+/src/messages/about.html~

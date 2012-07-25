@@ -13,6 +13,7 @@ _PIERRE_
     tags database, etc.) with a third party one or even write 
     this more general purpose font management library in order
     to focus on presentation in fontmatrix itself.
+  - update internal copy of harfbuzz with harfbuzz2 and make it not crash
 
 * FEATURES:
   - continue to listen Vlada!

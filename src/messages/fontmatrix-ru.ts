@@ -153,7 +153,7 @@
     <message>
         <location filename="../browserwidget.ui" line="76"/>
         <source>Import</source>
-        <translation type="unfinished">Импортируются</translation>
+        <translation>Импортировать</translation>
     </message>
     <message>
         <location filename="../browserwidget.ui" line="86"/>
@@ -5945,7 +5945,7 @@ the following tag:</source>
         <location filename="../typotek.cpp" line="450"/>
         <location filename="../typotek.cpp" line="572"/>
         <source>Import</source>
-        <translation>Импортируются</translation>
+        <translation>Импортировать</translation>
     </message>
     <message>
         <source>Choose the tag for filter exported fonts</source>

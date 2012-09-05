@@ -81,6 +81,42 @@
     </message>
 </context>
 <context>
+    <name>ActivationWidget</name>
+    <message>
+        <location filename="../activationwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../activationwidget.ui" line="20"/>
+        <source>Activate All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../activationwidget.ui" line="27"/>
+        <source>Deactivate All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActivationWidgetItem</name>
+    <message>
+        <location filename="../activationwidgetitem.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../activationwidgetitem.ui" line="44"/>
+        <source>StyleName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../activationwidgetitem.ui" line="51"/>
+        <source>Activated</source>
+        <translation type="unfinished">Zapnuto</translation>
+    </message>
+</context>
+<context>
     <name>AltSelectorWidget</name>
     <message>
         <location filename="../altselectorwidget.ui" line="13"/>
@@ -211,71 +247,204 @@
     </message>
 </context>
 <context>
-    <name>CompareWidget</name>
+    <name>BrowserWidget</name>
     <message>
-        <location filename="../comparewidget.ui" line="13"/>
+        <location filename="../browserwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulář</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="43"/>
+        <location filename="../browserwidget.ui" line="66"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../browserwidget.ui" line="76"/>
+        <source>Import</source>
+        <translation type="unfinished">Zavést</translation>
+    </message>
+    <message>
+        <location filename="../browserwidget.ui" line="86"/>
+        <source>Chart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../browserwidget.ui" line="96"/>
+        <source>Sample</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../browserwidget.ui" line="117"/>
+        <source>about:blank</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChartWidget</name>
+    <message>
+        <location filename="../chartwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.ui" line="34"/>
+        <source>Coverage of Unicode Interval</source>
+        <translation type="unfinished">Pokrytí rozmezí Unicode</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.ui" line="37"/>
+        <source>Block:</source>
+        <translation type="unfinished">Blok:</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.ui" line="79"/>
+        <source>Search:</source>
+        <translation type="unfinished">Hledat:</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.ui" line="89"/>
+        <source>Search a character by its codepoint (expressed in hexadecimal 
+and prefixed with &quot;U+&quot;, &quot;u+&quot; or &quot;+&quot;) or a glyph by its name.
+Press enter after editing to run the search.</source>
+        <translation type="unfinished">Hledat znak pomocí jeho pozice (vyjádřené šestnáctkově a
+uvozené &quot;U+&quot;, &quot;u+&quot; nebo &quot;+&quot;) nebo glyf pomocí jména.
+Hledání začně až po stisku Enter.</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.ui" line="115"/>
+        <source>Clicking on a glyph will show details about it</source>
+        <translation type="unfinished">Klepnutím na glyf se ukážou jeho podrobnosti</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.ui" line="136"/>
+        <source>Set Mode &quot;Copy Character to Clipboard&quot;</source>
+        <translation type="unfinished">Nastavit režim &quot;Kopírovat znak do schránky&quot;</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.ui" line="139"/>
+        <source>Copy Mode</source>
+        <translation type="unfinished">Režim kopírování</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.cpp" line="57"/>
+        <source>Un-Mapped Glyphs</source>
+        <translation type="unfinished">Nepřiřazené glyfy</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.cpp" line="58"/>
+        <source>View all mapped glyphs</source>
+        <translation type="unfinished">Zobrazit všechny přiřazené glyfy</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.cpp" line="151"/>
+        <location filename="../chartwidget.cpp" line="238"/>
+        <source>Block (%1):</source>
+        <translation type="unfinished">Blok (%1):</translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.cpp" line="495"/>
+        <source>Print Chart</source>
+        <translation type="unfinished">Vytisknout tabulku</translation>
+    </message>
+</context>
+<context>
+    <name>CompareWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="obsolete">Formulář</translation>
+    </message>
+    <message>
+        <location filename="../comparewidget.ui" line="14"/>
+        <source>Compare Glyphs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../comparewidget.ui" line="44"/>
         <source>Fonts</source>
         <translation>Písma</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="52"/>
+        <location filename="../comparewidget.ui" line="53"/>
         <source>Add</source>
         <translation>Přidat</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="59"/>
+        <location filename="../comparewidget.ui" line="60"/>
         <source>Remove</source>
         <translation>Odstranit</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="82"/>
+        <location filename="../comparewidget.ui" line="83"/>
         <source>Show</source>
         <translation>Ukázat</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="91"/>
+        <location filename="../comparewidget.ui" line="92"/>
         <source>Metrics</source>
         <translation>Metrika</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="101"/>
+        <location filename="../comparewidget.ui" line="102"/>
         <source>Points</source>
         <translation>Body</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="113"/>
+        <location filename="../comparewidget.ui" line="114"/>
         <source>Controls</source>
         <translation>Řídicí body</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="139"/>
+        <location filename="../comparewidget.ui" line="140"/>
         <source>Offset</source>
         <translation>Posunutí</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="149"/>
+        <location filename="../comparewidget.ui" line="150"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="159"/>
+        <location filename="../comparewidget.ui" line="160"/>
         <source>Fill:</source>
         <translation>Výplň:</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="186"/>
+        <location filename="../comparewidget.ui" line="187"/>
         <source>Select a character</source>
         <translation>Výběr znaku</translation>
     </message>
     <message>
-        <location filename="../comparewidget.ui" line="205"/>
+        <location filename="../comparewidget.ui" line="206"/>
         <source>Keep in sync</source>
         <translation>Udržet seřízené</translation>
+    </message>
+</context>
+<context>
+    <name>DataExport</name>
+    <message>
+        <location filename="../dataexport.ui" line="14"/>
+        <source>Export Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dataexport.ui" line="23"/>
+        <source>The font files currently filtered and selected here will be copied in a directory of your choice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dataexport.ui" line="36"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+    <message>
+        <location filename="../dataexport.ui" line="43"/>
+        <source>Continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dataexport.cpp" line="62"/>
+        <source>Choose Directory</source>
+        <translation type="unfinished">Vybrat adresář</translation>
     </message>
 </context>
 <context>
@@ -368,12 +537,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>FMFloatingMenu</name>
     <message>
-        <location filename="../fmfloatingpreview.cpp" line="70"/>
+        <location filename="../fmfloatingpreview.cpp" line="73"/>
         <source>Activate</source>
         <translation>Zapnout</translation>
     </message>
     <message>
-        <location filename="../fmfloatingpreview.cpp" line="76"/>
+        <location filename="../fmfloatingpreview.cpp" line="80"/>
         <source>close</source>
         <translation>Zavřít</translation>
     </message>
@@ -401,24 +570,382 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>FMLayout</name>
     <message>
-        <location filename="../fmlayout.cpp" line="334"/>
         <source>Text engine options</source>
-        <translation>Volby pro nástroj textu</translation>
+        <translation type="obsolete">Volby pro nástroj textu</translation>
     </message>
 </context>
 <context>
     <name>FMMatchRaster</name>
     <message>
-        <location filename="../fmmatchraster.cpp" line="159"/>
+        <location filename="../fmmatchraster.cpp" line="160"/>
         <source>The font %1 scores %2.
 Do you want to add it to the filtered fonts?</source>
         <translation>Písmo %1 dosahuje %2.
 Chcete je přidat do filtrovaných písem?</translation>
     </message>
     <message>
-        <location filename="../fmmatchraster.cpp" line="215"/>
+        <location filename="../fmmatchraster.cpp" line="216"/>
         <source>No font match the submitted image</source>
         <translation>Žádné písmo neodpovídá předloženému obrázku</translation>
+    </message>
+</context>
+<context>
+    <name>FMMissingFontHelper</name>
+    <message>
+        <location filename="../fmmissingfonthelper.cpp" line="30"/>
+        <location filename="../fmmissingfonthelper.cpp" line="42"/>
+        <source>Missing Font File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmmissingfonthelper.cpp" line="31"/>
+        <source>Fontmatrix has been unable to load the font in file 
+%1.
+ Please check missing files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmmissingfonthelper.cpp" line="43"/>
+        <source>Fontmatrix has been unable to load fonts in files 
+%1.
+ Please check missing files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FMScriptConsole</name>
+    <message>
+        <location filename="../fmscriptconsole.cpp" line="136"/>
+        <source>A name for the script to save:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmscriptconsole.cpp" line="146"/>
+        <source>The file %1 already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmscriptconsole.cpp" line="283"/>
+        <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FamilyWidget</name>
+    <message>
+        <location filename="../familywidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../familywidget.ui" line="55"/>
+        <source>Return To List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../familywidget.ui" line="75"/>
+        <source>Sample</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../familywidget.ui" line="88"/>
+        <source>Chart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../familywidget.ui" line="101"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../familywidget.ui" line="114"/>
+        <source>Activation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../familywidget.ui" line="140"/>
+        <source>Family Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../familywidget.ui" line="200"/>
+        <source>about:blank</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterBar</name>
+    <message>
+        <location filename="../filterbar.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.ui" line="49"/>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.ui" line="143"/>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.ui" line="273"/>
+        <source>Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.ui" line="320"/>
+        <source>Search</source>
+        <translation type="unfinished">Search</translation>
+    </message>
+    <message>
+        <location filename="../filterbar.ui" line="350"/>
+        <source>in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.ui" line="395"/>
+        <source>Panose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.cpp" line="50"/>
+        <source>And</source>
+        <translation type="unfinished">A</translation>
+    </message>
+    <message>
+        <location filename="../filterbar.cpp" line="51"/>
+        <source>Not</source>
+        <translation type="unfinished">Ne</translation>
+    </message>
+    <message>
+        <location filename="../filterbar.cpp" line="52"/>
+        <source>Or</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.cpp" line="515"/>
+        <source>Fontmatrix - edit tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.cpp" line="515"/>
+        <source>Edit tag: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.cpp" line="563"/>
+        <source>Fontmatrix - Filter name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filterbar.cpp" line="564"/>
+        <source>Filter name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterItem</name>
+    <message>
+        <location filename="../filteritem.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filteritem.ui" line="48"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filteritem.ui" line="72"/>
+        <source>Remove Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filteritem.ui" line="78"/>
+        <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filteritem.ui" line="104"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;table style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
+&lt;tr&gt;
+&lt;td style=&quot;border: none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If set, the filter will &lt;span style=&quot; font-weight:600;&quot;&gt;intersect&lt;/span&gt; with the previous filters.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filteritem.ui" line="114"/>
+        <source>&amp;&amp;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filteritem.ui" line="143"/>
+        <source>if set, it will filter all the fonts but these matching this filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filteritem.ui" line="146"/>
+        <source>!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterTagDialog</name>
+    <message>
+        <location filename="../filtertagdialog.ui" line="13"/>
+        <source>Dialog</source>
+        <translation type="unfinished">Dialog</translation>
+    </message>
+</context>
+<context>
+    <name>FiltersDialog</name>
+    <message>
+        <location filename="../filtersdialog.ui" line="14"/>
+        <source>Filters Manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.ui" line="67"/>
+        <source>In order to add filters, you have to first select some of tags, meta informations or classifications elements.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.ui" line="96"/>
+        <source>Add Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.ui" line="127"/>
+        <source>Filter Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.ui" line="153"/>
+        <source>Add</source>
+        <translation type="unfinished">Přidat</translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.ui" line="162"/>
+        <source>current filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.ui" line="201"/>
+        <source>Close</source>
+        <translation type="unfinished">Zavřít</translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.cpp" line="34"/>
+        <source>And</source>
+        <translation type="unfinished">A</translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.cpp" line="35"/>
+        <source>Not</source>
+        <translation type="unfinished">Ne</translation>
+    </message>
+    <message>
+        <location filename="../filtersdialog.cpp" line="36"/>
+        <source>Or</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FiltersDialogItem</name>
+    <message>
+        <location filename="../filtersdialogitem.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialogitem.ui" line="72"/>
+        <source>filter name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialogitem.ui" line="91"/>
+        <source>Apply this filter to the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialogitem.ui" line="94"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialogitem.ui" line="111"/>
+        <source>Delete this filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialogitem.ui" line="114"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialogitem.cpp" line="65"/>
+        <source>Remove Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../filtersdialogitem.cpp" line="65"/>
+        <source>Confirm deletion of filter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FloatingWidgetToolBar</name>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="66"/>
+        <source>Print</source>
+        <translation type="unfinished">Tisk</translation>
+    </message>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="69"/>
+        <source>P</source>
+        <translation type="unfinished">P</translation>
+    </message>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="76"/>
+        <source>Detach from main window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="79"/>
+        <source>D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="95"/>
+        <source>Close window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="98"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="109"/>
+        <source>Hide window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../floatingwidgettoolbar.ui" line="112"/>
+        <source>H</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -428,17 +955,20 @@ Chcete je přidat do filtrovaných písem?</translation>
         <translation type="obsolete">Znovu nahrát strom</translation>
     </message>
     <message>
-        <location filename="../listdockwidget.cpp" line="378"/>
+        <location filename="../browserwidget.cpp" line="330"/>
+        <location filename="../listdockwidget.cpp" line="381"/>
         <source>Import Directory</source>
         <translation>Zavést adresář</translation>
     </message>
     <message>
-        <location filename="../listdockwidget.cpp" line="379"/>
+        <location filename="../browserwidget.cpp" line="331"/>
+        <location filename="../listdockwidget.cpp" line="382"/>
         <source>Import recursively</source>
         <translation>Zavést včetně podsložek</translation>
     </message>
     <message>
-        <location filename="../listdockwidget.cpp" line="380"/>
+        <location filename="../browserwidget.cpp" line="332"/>
+        <location filename="../listdockwidget.cpp" line="383"/>
         <source>Import File</source>
         <translation>Zavést soubor</translation>
     </message>
@@ -446,26 +976,42 @@ Chcete je přidat do filtrovaných písem?</translation>
 <context>
     <name>FontAction</name>
     <message>
+        <location filename="../fontaction.ui" line="14"/>
         <source>Form</source>
-        <translation type="obsolete">Form</translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <source>action</source>
         <translation type="obsolete">action</translation>
     </message>
     <message>
+        <location filename="../fontaction.ui" line="65"/>
         <source>Add Tag</source>
-        <translation type="obsolete">Add Tag</translation>
+        <translation type="unfinished">Add Tag</translation>
     </message>
     <message>
+        <location filename="../fontaction.ui" line="32"/>
         <source>Action</source>
-        <translation type="obsolete">Action</translation>
+        <translation type="unfinished">Action</translation>
+    </message>
+</context>
+<context>
+    <name>FontBook</name>
+    <message>
+        <location filename="../fontbook.cpp" line="92"/>
+        <source>Print Fontbook</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontbook.cpp" line="475"/>
+        <source>Unicode coverage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FontBookDialog</name>
     <message>
-        <location filename="../fontbookdialog.cpp" line="110"/>
+        <location filename="../fontbookdialog.cpp" line="111"/>
         <source>Save fontBook</source>
         <translation>Uložit knihu písem</translation>
     </message>
@@ -473,7 +1019,7 @@ Chcete je přidat do filtrovaných písem?</translation>
 <context>
     <name>FontCompareWidget</name>
     <message>
-        <location filename="../fontcomparewidget.cpp" line="61"/>
+        <location filename="../fontcomparewidget.cpp" line="73"/>
         <source>None</source>
         <comment>No fill color in comprae glyph</comment>
         <translation>Žádná</translation>
@@ -613,12 +1159,18 @@ Chcete je přidat do filtrovaných písem?</translation>
         <translation type="obsolete">Název nelezeného písma PostScript CID</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3235"/>
+        <location filename="../fontitem.cpp" line="2368"/>
+        <source>(%1)</source>
+        <comment>when doing the font preview, used to denote a font that can not displayed its name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fontitem.cpp" line="3185"/>
         <source>Fontmatrix - Download</source>
         <translation>Fontmatrix - Stažení</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3236"/>
+        <location filename="../fontitem.cpp" line="3186"/>
         <source>Downloading %1.</source>
         <translation>Stahuje se %1.</translation>
     </message>
@@ -1035,976 +1587,1470 @@ Chcete je přidat do filtrovaných písem?</translation>
         <translation type="obsolete">Výška malých písmen</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3074"/>
         <source>Category</source>
-        <translation>Skupina</translation>
+        <translation type="obsolete">Skupina</translation>
     </message>
 </context>
 <context>
     <name>FontStrings</name>
     <message>
-        <location filename="../fmfontstrings.cpp" line="37"/>
+        <location filename="../fmfontstrings.cpp" line="39"/>
         <source>Copyright</source>
         <translation>Autorské právo</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="38"/>
+        <location filename="../fmfontstrings.cpp" line="40"/>
         <source>Font Family</source>
         <translation>Rodina písem</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="39"/>
+        <location filename="../fmfontstrings.cpp" line="41"/>
         <source>Font Subfamily</source>
         <translation>Podrodina písem</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="40"/>
+        <location filename="../fmfontstrings.cpp" line="42"/>
         <source>Unique font identifier</source>
         <translation>Jedinečný identifikátor písma</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="41"/>
+        <location filename="../fmfontstrings.cpp" line="43"/>
         <source>Full font name</source>
         <translation>Úplný název písma</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="42"/>
+        <location filename="../fmfontstrings.cpp" line="44"/>
         <source>Version string</source>
         <translation>Řetězec verze</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="43"/>
+        <location filename="../fmfontstrings.cpp" line="45"/>
         <source>Postscript name</source>
         <translation>Postscriptový název</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="44"/>
+        <location filename="../fmfontstrings.cpp" line="46"/>
         <source>Trademark</source>
         <translation>Obchodní značka</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="45"/>
+        <location filename="../fmfontstrings.cpp" line="47"/>
         <source>Manufacturer</source>
         <translation>Výrobce</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="46"/>
+        <location filename="../fmfontstrings.cpp" line="48"/>
         <source>Designer</source>
         <translation>Návrhář</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="47"/>
+        <location filename="../fmfontstrings.cpp" line="49"/>
         <source>Description</source>
         <translation>Popis</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="48"/>
+        <location filename="../fmfontstrings.cpp" line="50"/>
         <source>URL Vendor</source>
         <translation>Adresa prodejce</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="49"/>
+        <location filename="../fmfontstrings.cpp" line="51"/>
         <source>URL Designer</source>
         <translation>Adresa návrháře</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="50"/>
+        <location filename="../fmfontstrings.cpp" line="52"/>
         <source>License Description</source>
         <translation>Popis licenčního ujednání</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="51"/>
+        <location filename="../fmfontstrings.cpp" line="53"/>
         <source>License Info URL</source>
         <translation>Adresa informací o licenčním ujednání</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="52"/>
+        <location filename="../fmfontstrings.cpp" line="54"/>
         <source>Preferred Family</source>
         <translation>Upřednostňovaná rodina</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="53"/>
+        <location filename="../fmfontstrings.cpp" line="55"/>
         <source>Preferred Subfamily</source>
         <translation>Upřednostňovaná podrodina</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="54"/>
+        <location filename="../fmfontstrings.cpp" line="56"/>
         <source>Compatible Full (Macintosh only)</source>
         <translation>Plně slučitelné (pouze Macintosh)</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="55"/>
+        <location filename="../fmfontstrings.cpp" line="57"/>
         <source>Sample text</source>
         <translation>Ukázkový text</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="56"/>
+        <location filename="../fmfontstrings.cpp" line="58"/>
         <source>PostScript CID findfont name</source>
         <translation>Postscriptový název nalezeného písma CID</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="58"/>
+        <location filename="../fmfontstrings.cpp" line="60"/>
         <source>All fields</source>
         <translation>Všechna pole</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="75"/>
-        <location filename="../fmfontstrings.cpp" line="87"/>
-        <location filename="../fmfontstrings.cpp" line="109"/>
-        <location filename="../fmfontstrings.cpp" line="127"/>
-        <location filename="../fmfontstrings.cpp" line="143"/>
-        <location filename="../fmfontstrings.cpp" line="159"/>
-        <location filename="../fmfontstrings.cpp" line="174"/>
-        <location filename="../fmfontstrings.cpp" line="192"/>
-        <location filename="../fmfontstrings.cpp" line="214"/>
-        <location filename="../fmfontstrings.cpp" line="234"/>
+        <location filename="../fmfontstrings.cpp" line="77"/>
+        <location filename="../fmfontstrings.cpp" line="89"/>
+        <location filename="../fmfontstrings.cpp" line="111"/>
+        <location filename="../fmfontstrings.cpp" line="129"/>
+        <location filename="../fmfontstrings.cpp" line="145"/>
+        <location filename="../fmfontstrings.cpp" line="161"/>
+        <location filename="../fmfontstrings.cpp" line="176"/>
+        <location filename="../fmfontstrings.cpp" line="194"/>
+        <location filename="../fmfontstrings.cpp" line="216"/>
+        <location filename="../fmfontstrings.cpp" line="236"/>
         <source>Any</source>
         <translation>Jakékoli</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="76"/>
-        <location filename="../fmfontstrings.cpp" line="88"/>
-        <location filename="../fmfontstrings.cpp" line="110"/>
-        <location filename="../fmfontstrings.cpp" line="128"/>
-        <location filename="../fmfontstrings.cpp" line="144"/>
-        <location filename="../fmfontstrings.cpp" line="160"/>
-        <location filename="../fmfontstrings.cpp" line="175"/>
-        <location filename="../fmfontstrings.cpp" line="193"/>
-        <location filename="../fmfontstrings.cpp" line="215"/>
-        <location filename="../fmfontstrings.cpp" line="235"/>
+        <location filename="../fmfontstrings.cpp" line="78"/>
+        <location filename="../fmfontstrings.cpp" line="90"/>
+        <location filename="../fmfontstrings.cpp" line="112"/>
+        <location filename="../fmfontstrings.cpp" line="130"/>
+        <location filename="../fmfontstrings.cpp" line="146"/>
+        <location filename="../fmfontstrings.cpp" line="162"/>
+        <location filename="../fmfontstrings.cpp" line="177"/>
+        <location filename="../fmfontstrings.cpp" line="195"/>
+        <location filename="../fmfontstrings.cpp" line="217"/>
+        <location filename="../fmfontstrings.cpp" line="237"/>
         <source>No Fit</source>
         <translation>Žádné spojení</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="77"/>
+        <location filename="../fmfontstrings.cpp" line="79"/>
         <source>Text and Display</source>
         <comment>Family Type</comment>
         <translation>Text a zobrazení</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="78"/>
+        <location filename="../fmfontstrings.cpp" line="80"/>
         <source>Script</source>
         <comment>Family Type</comment>
         <translation>Skript</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="79"/>
+        <location filename="../fmfontstrings.cpp" line="81"/>
         <source>Decorative</source>
         <comment>Family Type</comment>
         <translation>Ozdobné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="80"/>
+        <location filename="../fmfontstrings.cpp" line="82"/>
         <source>Pictorial</source>
         <comment>Family Type</comment>
         <translation>Obrázkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="83"/>
+        <location filename="../fmfontstrings.cpp" line="85"/>
         <source>Family Type</source>
         <translation>Rodinný typ</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="89"/>
+        <location filename="../fmfontstrings.cpp" line="91"/>
         <source>Cove</source>
         <comment>Serif style</comment>
         <translation>Výklenek</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="90"/>
+        <location filename="../fmfontstrings.cpp" line="92"/>
         <source>Obtuse Cove</source>
         <comment>Serif style</comment>
         <translation>Neostrý výklenek</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="91"/>
+        <location filename="../fmfontstrings.cpp" line="93"/>
         <source>Square Cove</source>
         <comment>Serif style</comment>
         <translation>Čtvercový výklenek</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="92"/>
+        <location filename="../fmfontstrings.cpp" line="94"/>
         <source>Obtuse Square Cove</source>
         <comment>Serif style</comment>
         <translation>Neostrý čtvercový výklenek</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="93"/>
+        <location filename="../fmfontstrings.cpp" line="95"/>
         <source>Square</source>
         <comment>Serif style</comment>
         <translation>Čtvercové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="94"/>
+        <location filename="../fmfontstrings.cpp" line="96"/>
         <source>Thin</source>
         <comment>Serif style</comment>
         <translation>Tenké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="95"/>
+        <location filename="../fmfontstrings.cpp" line="97"/>
         <source>Bone</source>
         <comment>Serif style</comment>
         <translation>Kostěné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="96"/>
+        <location filename="../fmfontstrings.cpp" line="98"/>
         <source>Exaggerated</source>
         <comment>Serif style</comment>
         <translation>Zvětšené</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="97"/>
+        <location filename="../fmfontstrings.cpp" line="99"/>
         <source>Triangle</source>
         <comment>Serif style</comment>
         <translation>Trojúhelníkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="98"/>
+        <location filename="../fmfontstrings.cpp" line="100"/>
         <source>Normal Sans</source>
         <comment>Serif style</comment>
         <translation>Normální bez patek</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="99"/>
+        <location filename="../fmfontstrings.cpp" line="101"/>
         <source>Obtuse Sans</source>
         <comment>Serif style</comment>
         <translation>Neostré bez patek</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="100"/>
+        <location filename="../fmfontstrings.cpp" line="102"/>
         <source>Perp Sans</source>
         <comment>Serif style</comment>
         <translation>Pachatel bez patek</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="101"/>
+        <location filename="../fmfontstrings.cpp" line="103"/>
         <source>Flared</source>
         <comment>Serif style</comment>
         <translation>Zvonové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="102"/>
+        <location filename="../fmfontstrings.cpp" line="104"/>
         <source>Rounded</source>
         <comment>Serif style</comment>
         <translation>Zakulacené</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="105"/>
+        <location filename="../fmfontstrings.cpp" line="107"/>
         <source>Serif style</source>
         <translation>Patkový styl</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="111"/>
+        <location filename="../fmfontstrings.cpp" line="113"/>
         <source>Very Light</source>
         <comment>Weight</comment>
         <translation>Velmi lehké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="112"/>
+        <location filename="../fmfontstrings.cpp" line="114"/>
         <source>Light</source>
         <comment>Weight</comment>
         <translation>Lehké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="113"/>
+        <location filename="../fmfontstrings.cpp" line="115"/>
         <source>Thin</source>
         <comment>Weight</comment>
         <translation>Tenké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="114"/>
+        <location filename="../fmfontstrings.cpp" line="116"/>
         <source>Book</source>
         <comment>Weight</comment>
         <translation>Knižní</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="115"/>
+        <location filename="../fmfontstrings.cpp" line="117"/>
         <source>Medium</source>
         <comment>Weight</comment>
         <translation>Středně velké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="116"/>
+        <location filename="../fmfontstrings.cpp" line="118"/>
         <source>Demi</source>
         <comment>Weight</comment>
         <translation>Polo</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="117"/>
+        <location filename="../fmfontstrings.cpp" line="119"/>
         <source>Bold</source>
         <comment>Weight</comment>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="118"/>
+        <location filename="../fmfontstrings.cpp" line="120"/>
         <source>Heavy</source>
         <comment>Weight</comment>
         <translation>Těžké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="119"/>
+        <location filename="../fmfontstrings.cpp" line="121"/>
         <source>Black</source>
         <comment>Weight</comment>
         <translation>Černé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="120"/>
+        <location filename="../fmfontstrings.cpp" line="122"/>
         <source>Nord</source>
         <comment>Weight</comment>
         <translation>Severské</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="123"/>
+        <location filename="../fmfontstrings.cpp" line="125"/>
         <source>Weight</source>
         <translation>Váhové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="129"/>
+        <location filename="../fmfontstrings.cpp" line="131"/>
         <source>Old Style</source>
         <comment>Proportion</comment>
         <translation>Starý styl</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="130"/>
+        <location filename="../fmfontstrings.cpp" line="132"/>
         <source>Modern</source>
         <comment>Proportion</comment>
         <translation>Moderní</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="131"/>
+        <location filename="../fmfontstrings.cpp" line="133"/>
         <source>Even Width</source>
         <comment>Proportion</comment>
         <translation>Neměnná šířka</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="132"/>
+        <location filename="../fmfontstrings.cpp" line="134"/>
         <source>Expanded</source>
         <comment>Proportion</comment>
         <translation>Roztažené</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="133"/>
+        <location filename="../fmfontstrings.cpp" line="135"/>
         <source>Condensed</source>
         <comment>Proportion</comment>
         <translation>Zhuštěné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="134"/>
+        <location filename="../fmfontstrings.cpp" line="136"/>
         <source>Very Expanded</source>
         <comment>Proportion</comment>
         <translation>Velmi roztažené</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="135"/>
+        <location filename="../fmfontstrings.cpp" line="137"/>
         <source>Very Condensed</source>
         <comment>Proportion</comment>
         <translation>Velmi zhuštěné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="136"/>
+        <location filename="../fmfontstrings.cpp" line="138"/>
         <source>Monospaced</source>
         <comment>Proportion</comment>
         <translation>Neproporcionální</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="139"/>
+        <location filename="../fmfontstrings.cpp" line="141"/>
         <source>Proportion</source>
         <translation>Úměrnost</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="145"/>
+        <location filename="../fmfontstrings.cpp" line="147"/>
         <source>None</source>
         <comment>Contrast</comment>
         <translation>Žádná</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="146"/>
+        <location filename="../fmfontstrings.cpp" line="148"/>
         <source>Very Low</source>
         <comment>Contrast</comment>
         <translation>Velmi nízké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="147"/>
+        <location filename="../fmfontstrings.cpp" line="149"/>
         <source>Low</source>
         <comment>Contrast</comment>
         <translation>Nízké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="148"/>
+        <location filename="../fmfontstrings.cpp" line="150"/>
         <source>Medium Low</source>
         <comment>Contrast</comment>
         <translation>Středně nízké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="149"/>
+        <location filename="../fmfontstrings.cpp" line="151"/>
         <source>Medium</source>
         <comment>Contrast</comment>
         <translation>Středně velké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="150"/>
+        <location filename="../fmfontstrings.cpp" line="152"/>
         <source>Medium High</source>
         <comment>Contrast</comment>
         <translation>Středně vysoké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="151"/>
+        <location filename="../fmfontstrings.cpp" line="153"/>
         <source>High</source>
         <comment>Contrast</comment>
         <translation>Vysoké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="152"/>
+        <location filename="../fmfontstrings.cpp" line="154"/>
         <source>Very High</source>
         <comment>Contrast</comment>
         <translation>Velmi vysoké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="155"/>
+        <location filename="../fmfontstrings.cpp" line="157"/>
         <source>Contrast</source>
         <translation>Kontrastní</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="161"/>
+        <location filename="../fmfontstrings.cpp" line="163"/>
         <source>Gradual/Diagonal</source>
         <comment>Stroke Variation</comment>
         <translation>Postupné/Úhlopříčné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="162"/>
+        <location filename="../fmfontstrings.cpp" line="164"/>
         <source>Gradual/Transitional</source>
         <comment>Stroke Variation</comment>
         <translation>Postupné/Přechodné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="163"/>
+        <location filename="../fmfontstrings.cpp" line="165"/>
         <source>Gradual/Vertical</source>
         <comment>Stroke Variation</comment>
         <translation>Postupné/Svislé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="164"/>
+        <location filename="../fmfontstrings.cpp" line="166"/>
         <source>Gradual/Horizontal</source>
         <comment>Stroke Variation</comment>
         <translation>Postupné/Vodorovné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="165"/>
+        <location filename="../fmfontstrings.cpp" line="167"/>
         <source>Rapid/Vertical</source>
         <comment>Stroke Variation</comment>
         <translation>Svižné/Svislé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="166"/>
+        <location filename="../fmfontstrings.cpp" line="168"/>
         <source>Rapid/Horizontal</source>
         <comment>Stroke Variation</comment>
         <translation>Svižné/Vodorovné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="167"/>
+        <location filename="../fmfontstrings.cpp" line="169"/>
         <source>Instant/Vertical</source>
         <comment>Stroke Variation</comment>
         <translation>Bezprostřední/Svislé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="170"/>
+        <location filename="../fmfontstrings.cpp" line="172"/>
         <source>Stroke Variation</source>
         <translation>Obměna tahu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="176"/>
+        <location filename="../fmfontstrings.cpp" line="178"/>
         <source>Straight Arms/Horizontal</source>
         <comment>Arm Style</comment>
         <translation>Urovnané ruce/Vodorovné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="177"/>
+        <location filename="../fmfontstrings.cpp" line="179"/>
         <source>Straight Arms/Wedge</source>
         <comment>Arm Style</comment>
         <translation>Urovnané ruce/Klínové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="178"/>
+        <location filename="../fmfontstrings.cpp" line="180"/>
         <source>Straight Arms/Vertical</source>
         <comment>Arm Style</comment>
         <translation>Urovnané ruce/Svislé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="179"/>
+        <location filename="../fmfontstrings.cpp" line="181"/>
         <source>Straight Arms/Single Serif</source>
         <comment>Arm Style</comment>
         <translation>Urovnané ruce/Jednoduché patkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="180"/>
+        <location filename="../fmfontstrings.cpp" line="182"/>
         <source>Straight Arms/Double Serif</source>
         <comment>Arm Style</comment>
         <translation>Urovnané ruce/Dvojité patkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="181"/>
+        <location filename="../fmfontstrings.cpp" line="183"/>
         <source>Non-Straight Arms/Horizontal</source>
         <comment>Arm Style</comment>
         <translation>Neurovnané ruce/Vodorovné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="182"/>
+        <location filename="../fmfontstrings.cpp" line="184"/>
         <source>Non-Straight Arms/Wedge</source>
         <comment>Arm Style</comment>
         <translation>Neurovnané ruce/Klínové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="183"/>
+        <location filename="../fmfontstrings.cpp" line="185"/>
         <source>Non-Straight Arms/Vertical</source>
         <comment>Arm Style</comment>
         <translation>Neurovnané ruce/Svislé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="184"/>
+        <location filename="../fmfontstrings.cpp" line="186"/>
         <source>Non-Straight Arms/Single Serif</source>
         <comment>Arm Style</comment>
         <translation>Neurovnané ruce/Jednoduché patkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="185"/>
+        <location filename="../fmfontstrings.cpp" line="187"/>
         <source>Non-Straight Arms/Double Serif</source>
         <comment>Arm Style</comment>
         <translation>Neurovnané ruce/Dvojité patkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="188"/>
+        <location filename="../fmfontstrings.cpp" line="190"/>
         <source>Arm Style</source>
         <translation>Styl ruky</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="194"/>
+        <location filename="../fmfontstrings.cpp" line="196"/>
         <source>Normal/Contact</source>
         <comment>Letterform</comment>
         <translation>Běžné/Dotykové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="195"/>
+        <location filename="../fmfontstrings.cpp" line="197"/>
         <source>Normal/Weighted</source>
         <comment>Letterform</comment>
         <translation>Běžné/Zatěžkané</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="196"/>
+        <location filename="../fmfontstrings.cpp" line="198"/>
         <source>Normal/Boxed</source>
         <comment>Letterform</comment>
         <translation>Běžné/Uložené v krabici</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="197"/>
+        <location filename="../fmfontstrings.cpp" line="199"/>
         <source>Normal/Flattened</source>
         <comment>Letterform</comment>
         <translation>Běžné/Zploštěné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="198"/>
+        <location filename="../fmfontstrings.cpp" line="200"/>
         <source>Normal/Rounded</source>
         <comment>Letterform</comment>
         <translation>Běžné/Kulaté</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="199"/>
+        <location filename="../fmfontstrings.cpp" line="201"/>
         <source>Normal/Off Center</source>
         <comment>Letterform</comment>
         <translation>Běžné/Mimo střed</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="200"/>
+        <location filename="../fmfontstrings.cpp" line="202"/>
         <source>Normal/Square</source>
         <comment>Letterform</comment>
         <translation>Běžné/Čtvercové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="201"/>
+        <location filename="../fmfontstrings.cpp" line="203"/>
         <source>Oblique/Contact</source>
         <comment>Letterform</comment>
         <translation>Šikmé/Dotykové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="202"/>
+        <location filename="../fmfontstrings.cpp" line="204"/>
         <source>Oblique/Weighted</source>
         <comment>Letterform</comment>
         <translation>Šikmé/Zatěžkané</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="203"/>
+        <location filename="../fmfontstrings.cpp" line="205"/>
         <source>Oblique/Boxed</source>
         <comment>Letterform</comment>
         <translation>Šikmé/Uložené v krabici</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="204"/>
+        <location filename="../fmfontstrings.cpp" line="206"/>
         <source>Oblique/Flattened</source>
         <comment>Letterform</comment>
         <translation>Šikmé/Zploštěné</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="205"/>
+        <location filename="../fmfontstrings.cpp" line="207"/>
         <source>Oblique/Rounded</source>
         <comment>Letterform</comment>
         <translation>Šikmé/Kulaté</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="206"/>
+        <location filename="../fmfontstrings.cpp" line="208"/>
         <source>Oblique/Off Center</source>
         <comment>Letterform</comment>
         <translation>Šikmé/Mimo střed</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="207"/>
+        <location filename="../fmfontstrings.cpp" line="209"/>
         <source>Oblique/Square</source>
         <comment>Letterform</comment>
         <translation>Šikmé/Čtvercové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="210"/>
+        <location filename="../fmfontstrings.cpp" line="212"/>
         <source>Letterform</source>
         <translation>Tvar písmene</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="216"/>
+        <location filename="../fmfontstrings.cpp" line="218"/>
         <source>Standard/Trimmed</source>
         <comment>Midline</comment>
         <translation>Obvyklé/Štíhlé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="217"/>
+        <location filename="../fmfontstrings.cpp" line="219"/>
         <source>Standard/Pointed</source>
         <comment>Midline</comment>
         <translation>Obvyklé/Špičaté</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="218"/>
+        <location filename="../fmfontstrings.cpp" line="220"/>
         <source>Standard/Serifed</source>
         <comment>Midline</comment>
         <translation>Obvyklé/Patkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="219"/>
+        <location filename="../fmfontstrings.cpp" line="221"/>
         <source>High/Trimmed</source>
         <comment>Midline</comment>
         <translation>Vysoké/Štíhlé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="220"/>
+        <location filename="../fmfontstrings.cpp" line="222"/>
         <source>High/Pointed</source>
         <comment>Midline</comment>
         <translation>Vysoké/Špičaté</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="221"/>
+        <location filename="../fmfontstrings.cpp" line="223"/>
         <source>High/Serifed</source>
         <comment>Midline</comment>
         <translation>Vysoké/Patkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="222"/>
+        <location filename="../fmfontstrings.cpp" line="224"/>
         <source>Constant/Trimmed</source>
         <comment>Midline</comment>
         <translation>Stálé/Štíhlé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="223"/>
+        <location filename="../fmfontstrings.cpp" line="225"/>
         <source>Constant/Pointed</source>
         <comment>Midline</comment>
         <translation>Stálé/Špičaté</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="224"/>
+        <location filename="../fmfontstrings.cpp" line="226"/>
         <source>Constant/Serifed</source>
         <comment>Midline</comment>
         <translation>Stálé/Patkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="225"/>
+        <location filename="../fmfontstrings.cpp" line="227"/>
         <source>Low/Trimmed</source>
         <comment>Midline</comment>
         <translation>Nízké/Štíhlé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="226"/>
+        <location filename="../fmfontstrings.cpp" line="228"/>
         <source>Low/Pointed</source>
         <comment>Midline</comment>
         <translation>Nízké/Špičaté</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="227"/>
+        <location filename="../fmfontstrings.cpp" line="229"/>
         <source>Low/Serifed</source>
         <comment>Midline</comment>
         <translation>Nízké/Patkové</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="230"/>
+        <location filename="../fmfontstrings.cpp" line="232"/>
         <source>Midline</source>
         <translation>Středová čára</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="236"/>
+        <location filename="../fmfontstrings.cpp" line="238"/>
         <source>Constant/Small</source>
         <comment>X-Height</comment>
         <translation>Stálé/Malé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="237"/>
+        <location filename="../fmfontstrings.cpp" line="239"/>
         <source>Constant/Standard</source>
         <comment>X-Height</comment>
         <translation>Stálé/Obvyklé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="238"/>
+        <location filename="../fmfontstrings.cpp" line="240"/>
         <source>Constant/Large</source>
         <comment>X-Height</comment>
         <translation>Stálé/Velké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="239"/>
+        <location filename="../fmfontstrings.cpp" line="241"/>
         <source>Ducking/Small</source>
         <comment>X-Height</comment>
         <translation>Skrčené/Malé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="240"/>
+        <location filename="../fmfontstrings.cpp" line="242"/>
         <source>Ducking/Standard</source>
         <comment>X-Height</comment>
         <translation>Skrčené/Obvyklé</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="241"/>
+        <location filename="../fmfontstrings.cpp" line="243"/>
         <source>Ducking/Large</source>
         <comment>X-Height</comment>
         <translation>Skrčené/Velké</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="244"/>
+        <location filename="../fmfontstrings.cpp" line="246"/>
         <source>X-Height</source>
         <translation>Výška malých písmen</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="268"/>
+        <location filename="../fmfontstrings.cpp" line="270"/>
         <source>This value is deprecated and was never used nor reported by FreeType. Don&apos;t use or test for it.</source>
         <translation>Tato hodnota je odmítnuta a nikdy nebyla používána ani hlášena od FreeType.  Nepoužívejte ji a nezkoušejte ji.</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="281"/>
+        <location filename="../fmfontstrings.cpp" line="283"/>
         <source>Character to glyph mapping</source>
         <translation>Přiřazení znaku ke glyfu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="282"/>
+        <location filename="../fmfontstrings.cpp" line="284"/>
         <source>Font header</source>
         <translation>Záhlaví písma</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="283"/>
+        <location filename="../fmfontstrings.cpp" line="285"/>
         <source>Horizontal header</source>
         <translation>Vodorovné záhlaví</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="284"/>
+        <location filename="../fmfontstrings.cpp" line="286"/>
         <source>Horizontal metrics</source>
         <translation>Vodorovná metrika</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="285"/>
+        <location filename="../fmfontstrings.cpp" line="287"/>
         <source>Maximum profile</source>
         <translation>Největší boční obrys</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="286"/>
+        <location filename="../fmfontstrings.cpp" line="288"/>
         <source>Naming table</source>
         <translation>Tabulka názvů</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="287"/>
+        <location filename="../fmfontstrings.cpp" line="289"/>
         <source>OS/2 and Windows specific metrics</source>
         <translation>Metrika vlastní OS/2 a Windows</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="288"/>
+        <location filename="../fmfontstrings.cpp" line="290"/>
         <source>PostScript information</source>
         <translation>Informace o PostScriptu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="291"/>
+        <location filename="../fmfontstrings.cpp" line="293"/>
         <source>Control Value Table</source>
         <translation>Tabulka ovládacích hodnot</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="292"/>
+        <location filename="../fmfontstrings.cpp" line="294"/>
         <source>Font program</source>
         <translation>Program na písma</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="293"/>
+        <location filename="../fmfontstrings.cpp" line="295"/>
         <source>Glyph data</source>
         <translation>Data ke glyfu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="294"/>
+        <location filename="../fmfontstrings.cpp" line="296"/>
         <source>Index to location</source>
         <translation>Rejstřík k umístění</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="295"/>
+        <location filename="../fmfontstrings.cpp" line="297"/>
         <source>CVT Program</source>
         <translation>Program CVT</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="298"/>
+        <location filename="../fmfontstrings.cpp" line="300"/>
         <source>PostScript font program</source>
         <translation>Program na písma PostScript</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="299"/>
+        <location filename="../fmfontstrings.cpp" line="301"/>
         <source>Vertical Origin</source>
         <translation>Svislý počátek</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="302"/>
+        <location filename="../fmfontstrings.cpp" line="304"/>
         <source>Embedded bitmap data</source>
         <translation>Data pro vloženou bitmapu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="303"/>
+        <location filename="../fmfontstrings.cpp" line="305"/>
         <source>Embedded bitmap location data</source>
         <translation>Data pro umístění vložené bitmapy</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="304"/>
+        <location filename="../fmfontstrings.cpp" line="306"/>
         <source>Embedded bitmap scaling data</source>
         <translation>Data pro změnu velikosti vložené bitmapy</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="307"/>
+        <location filename="../fmfontstrings.cpp" line="309"/>
         <source>Baseline data</source>
         <translation>Data pro základnu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="308"/>
+        <location filename="../fmfontstrings.cpp" line="310"/>
         <source>Glyph definition data</source>
         <translation>Data pro vymezení glyfu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="309"/>
+        <location filename="../fmfontstrings.cpp" line="311"/>
         <source>Glyph positioning data</source>
         <translation>Data pro umísťování glyfu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="310"/>
+        <location filename="../fmfontstrings.cpp" line="312"/>
         <source>Glyph substitution data</source>
         <translation>Data pro nahrazení glyfu</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="311"/>
+        <location filename="../fmfontstrings.cpp" line="313"/>
         <source>Justification data</source>
         <translation>Data pro zarovnání</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="314"/>
+        <location filename="../fmfontstrings.cpp" line="316"/>
         <source>Digital signature</source>
         <translation>Digitální podpis</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="315"/>
+        <location filename="../fmfontstrings.cpp" line="317"/>
         <source>Grid-fitting/Scan-conversion</source>
         <translation>Umístění do mřížky/Převod naskenovaného obrázku</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="316"/>
+        <location filename="../fmfontstrings.cpp" line="318"/>
         <source>Horizontal device metrics</source>
         <translation>Vodorovná metrika zařízení</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="317"/>
+        <location filename="../fmfontstrings.cpp" line="319"/>
         <source>Kerning</source>
         <translation>Podřezávání</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="318"/>
+        <location filename="../fmfontstrings.cpp" line="320"/>
         <source>Linear threshold data</source>
         <translation>Lineární prahová data</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="319"/>
+        <location filename="../fmfontstrings.cpp" line="321"/>
         <source>PCL 5 data</source>
         <translation>Data PCL 5</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="320"/>
+        <location filename="../fmfontstrings.cpp" line="322"/>
         <source>Vertical device metrics</source>
         <translation>Svislá metrika zařízení</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="321"/>
+        <location filename="../fmfontstrings.cpp" line="323"/>
         <source>Vertical Metrics header</source>
         <translation>Záhlaví svislé metriky</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="322"/>
+        <location filename="../fmfontstrings.cpp" line="324"/>
         <source>Vertical Metrics</source>
         <translation>Svislá metrika</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="330"/>
+        <location filename="../fmfontstrings.cpp" line="332"/>
         <source>This font may be embedded and permanently installed on the remote system by an application. The user of the remote system acquires the identical rights, obligations and licenses for that font as the original purchaser of the font, and is subject to the same end-user license agreement, copyright, design patent, and/or trademark as was the original purchaser.</source>
         <translation>Toto písmo může být vloženo a trvale nainstalováno ve vzdáleném systému pomocí nějaké aplikace. Uživatel vzdáleného systému dostane pro toto písmo stejná práva, povinnosti a oprávnění jako původní kupec písma, a je předmětem stejného ujednání pro koncového uživatele, autorského práva, výsady pro tvar, a/nebo obchodní značky, jako byl původní kupující.</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="331"/>
+        <location filename="../fmfontstrings.cpp" line="333"/>
         <source>This font must not be modified, embedded or exchanged in any manner without first obtaining permission of the legal owner.</source>
         <translation>Toto písmo se nesmí jakýmkoli způsobem upravovat, vkládat nebo vyměňovat bez toho, že by nejprve bylo získáno svolení zákonného vlastníka.</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="332"/>
+        <location filename="../fmfontstrings.cpp" line="334"/>
         <source>This font may be embedded, and temporarily loaded on the remote system. Documents containing this font must be opened &quot;read-only;&quot; no edits can be applied to the document.</source>
         <translation>Toto písmo může být vkládáno, a dočasně nahráno na vzdálený systém. Dokumenty obsahující toto písmo se musí otevírat &quot;pouze pro čtení&quot;. Tento dokument nelze nijak upravovat.</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="333"/>
+        <location filename="../fmfontstrings.cpp" line="335"/>
         <source>This font may be embedded but must only be installed  temporarily  on other systems. In contrast to Preview &amp;amp; Print fonts, documents containing this font may be opened for reading, editing is permitted, and changes may be saved.</source>
         <translation>Toto písmo může být vkládáno, ale musí být na vzdálených systémech nainstalováno pouze dočasně. V protikladu k Náhled &amp;amp; Vytisknout písma, dokumenty obsahující toto písmo mohou být otevírány pro čtení, úpravy jsou povoleny, a změny lze ukládat.</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="334"/>
+        <location filename="../fmfontstrings.cpp" line="336"/>
         <source>This font may not be subsetted prior to embedding. Other embedding restrictions specified in bits 0-3 and 9 also apply.</source>
         <translation>Toto písmo se nesmí stát podmnožinou před vkládání. Další omezení pro vkládání předepsané v bitech 0-3 a 9 platí také.</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="335"/>
+        <location filename="../fmfontstrings.cpp" line="337"/>
         <source>Only bitmaps contained in this font may be embedded. No outline data may be embedded. If there are no bitmaps available in this font, then it is considered unembeddable and the embedding services will fail. Other embedding restrictions specified in bits 0-3 and 8 also apply.</source>
         <translation>Smí být vkládány pouze bitmapy obsažené v tomto písmu. Nesmí být vkládána žádná data s obrysovým náčrtem. Pokud v tomto písmu nejsou dostupné žádné bitmapy, potom je považováno za nevkladatelné a vložit se je nepodaří. Další omezení pro vkládání předepsané v bitech 0-3 a 8 platí také.</translation>
     </message>
     <message>
+        <location filename="../fmfontstrings.cpp" line="342"/>
+        <source>Mark, NonSpacing</source>
+        <translation type="unfinished">Značka, bez prostrkávání</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="343"/>
+        <source>Mark, SpacingCombining</source>
+        <translation type="unfinished">Značka, kombinuje se s prostrkáváním</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="344"/>
+        <source>Mark, Enclosing</source>
+        <translation type="unfinished">Značka, uzavírá se</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="345"/>
+        <source>Number, DecimalDigit</source>
+        <translation type="unfinished">Číslo, číslo od 0 do 9 v desítkovém zápisu</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="346"/>
+        <source>Number, Letter</source>
+        <translation type="unfinished">Číslo, písmeno</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="347"/>
+        <source>Number, Other</source>
+        <translation type="unfinished">Číslo, jiné</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="348"/>
+        <source>Separator, Space</source>
+        <translation type="unfinished">Oddělovač, mezera</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="349"/>
+        <source>Separator, Line</source>
+        <translation type="unfinished">Oddělovač, řádek</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="350"/>
+        <source>Separator, Paragraph</source>
+        <translation type="unfinished">Oddělovač, odstavec</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="351"/>
+        <source>Other, Control</source>
+        <translation type="unfinished">Jiné, ovládání</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="352"/>
+        <source>Other, Format</source>
+        <translation type="unfinished">Jiné, formát</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="353"/>
+        <source>Other, Surrogate</source>
+        <translation type="unfinished">Jiné, náhrada</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="354"/>
+        <source>Other, PrivateUse</source>
+        <translation type="unfinished">Jiné, soukromé použití</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="355"/>
+        <source>Other, NotAssigned</source>
+        <translation type="unfinished">Jiné, nepřiděleno</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="356"/>
+        <source>Letter, Uppercase</source>
+        <translation type="unfinished">Písmeno, velká písmena</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="357"/>
+        <source>Letter, Lowercase</source>
+        <translation type="unfinished">Písmeno, malá písmena</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="358"/>
+        <source>Letter, Titlecase</source>
+        <translation type="unfinished">Písmeno, písmena v nadpisech</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="359"/>
+        <source>Letter, Modifier</source>
+        <translation type="unfinished">Písmeno, modifikátor</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="360"/>
+        <source>Letter, Other</source>
+        <translation type="unfinished">Písmeno, jiné</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="361"/>
+        <source>Punctuation, Connector</source>
+        <translation type="unfinished">Interpunkční znaménka, spojovník</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="362"/>
+        <source>Punctuation, Dash</source>
+        <translation type="unfinished">Interpunkční znaménka, pomlčka</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="363"/>
+        <source>Punctuation, Open</source>
+        <translation type="unfinished">Interpunkční znaménka, otevřít</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="364"/>
+        <source>Punctuation, Close</source>
+        <translation type="unfinished">Interpunkční znaménka, zavřít</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="365"/>
+        <source>Punctuation, InitialQuote</source>
+        <translation type="unfinished">Interpunkční znaménka, počáteční uvozovky</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="366"/>
+        <source>Punctuation, FinalQuote</source>
+        <translation type="unfinished">Interpunkční znaménka, závěrečné uvozovky</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="367"/>
+        <source>Punctuation, Other</source>
+        <translation type="unfinished">Interpunkční znaménka, jiná</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="368"/>
+        <source>Symbol, Math</source>
+        <translation type="unfinished">Symbol, matematika</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="369"/>
+        <source>Symbol, Currency</source>
+        <translation type="unfinished">Symbol, měna</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="370"/>
+        <source>Symbol, Modifier</source>
+        <translation type="unfinished">Symbol, modifikátor</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="371"/>
+        <source>Symbol, Other</source>
+        <translation type="unfinished">Symbol, jiný</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="376"/>
+        <source>Arabic</source>
+        <translation type="unfinished">Arabština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="377"/>
+        <source>Armenian</source>
+        <translation type="unfinished">Arménština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="378"/>
+        <source>Balinese</source>
+        <translation type="unfinished">Balijština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="379"/>
+        <source>Bengali</source>
+        <translation type="unfinished">Bengálština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="380"/>
+        <source>Bopomofo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="381"/>
+        <source>Braille</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="382"/>
+        <source>Buginese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../fmfontstrings.cpp" line="383"/>
+        <source>Buhid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="384"/>
+        <source>Byzantine Music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="385"/>
+        <source>Canadian Syllabics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="386"/>
+        <source>Cherokee</source>
+        <translation type="unfinished">Čerokijské</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="387"/>
+        <source>CJK Ideographic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="388"/>
+        <source>Coptic</source>
+        <translation type="unfinished">Kopština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="389"/>
+        <source>Cypriot Syllabary</source>
+        <translation type="unfinished">Slabikové kyperské písmo</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="390"/>
+        <source>Cyrillic</source>
+        <translation type="unfinished">Azbuka</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="391"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="392"/>
+        <source>Deseret</source>
+        <translation type="unfinished">Deseretština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="393"/>
+        <source>Devanagari</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="394"/>
+        <source>Ethiopic</source>
+        <translation type="unfinished">Etiopština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="395"/>
+        <source>Georgian</source>
+        <translation type="unfinished">Gruzínština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="396"/>
+        <source>Glagolitic</source>
+        <translation type="unfinished">Hlaholice</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="397"/>
+        <source>Gothic</source>
+        <translation type="unfinished">Gotika</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="398"/>
+        <source>Greek</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="399"/>
+        <source>Gujarati</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="400"/>
+        <source>Gurmukhi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="401"/>
+        <source>Hangul Jamo</source>
+        <translation type="unfinished">Korejské písmo hangul jamo</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="402"/>
+        <source>Hangul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="403"/>
+        <source>Hanunoo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="404"/>
+        <source>Hebrew</source>
+        <translation type="unfinished">Hebrejština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="405"/>
+        <source>Hiragana and Katakana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="406"/>
+        <source>Javanese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="407"/>
+        <source>Kannada</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="408"/>
+        <source>Kharosthi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="409"/>
+        <source>Khmer</source>
+        <translation type="unfinished">Khmérština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="410"/>
+        <source>Lao</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="411"/>
+        <source>Latin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="412"/>
+        <source>Limbu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="413"/>
+        <source>Linear B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="414"/>
+        <source>Malayalam</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="415"/>
+        <source>Mathematical Alphanumeric Symbols</source>
+        <translation type="unfinished">Matematické alfanumerické symboly</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="416"/>
+        <source>Mongolian</source>
+        <translation type="unfinished">Mongolština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="417"/>
+        <source>Musical Symbols</source>
+        <translation type="unfinished">Hudební symboly</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="418"/>
+        <source>Myanmar</source>
+        <translation type="unfinished">Myanmarština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="419"/>
+        <source>N&apos;ko</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="420"/>
+        <source>Ogham</source>
+        <translation type="unfinished">Ogamština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="421"/>
+        <source>Old Italic</source>
+        <translation type="unfinished">Stará italika</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="422"/>
+        <source>Old Persian Cuneiform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="423"/>
+        <source>Oriya</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="424"/>
+        <source>Osmanya</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="425"/>
+        <source>Phags-pa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="426"/>
+        <source>Phoenician</source>
+        <translation type="unfinished">Féničtina</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="427"/>
+        <source>Runic</source>
+        <translation type="unfinished">Runové</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="428"/>
+        <source>Shavian</source>
+        <translation type="unfinished">Shavijština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="429"/>
+        <source>Sinhala</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="430"/>
+        <source>Sumero-Akkadian Cuneiform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="431"/>
+        <source>Syloti Nagri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="432"/>
+        <source>Syriac</source>
+        <translation type="unfinished">Syrština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="433"/>
+        <source>Tagalog</source>
+        <translation type="unfinished">Filipínština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="434"/>
+        <source>Tagbanwa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="435"/>
+        <source>Tai Le</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="436"/>
+        <source>Tai Lu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="437"/>
+        <source>Tamil</source>
+        <translation type="unfinished">Tamilština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="438"/>
+        <source>Telugu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="439"/>
+        <source>Thaana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="440"/>
+        <source>Thai</source>
+        <translation type="unfinished">Thajština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="441"/>
+        <source>Tibetan</source>
+        <translation type="unfinished">Tibetština</translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="442"/>
+        <source>Tifinagh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="443"/>
+        <source>Ugaritic Cuneiform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="444"/>
+        <source>Yi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fmfontstrings.cpp" line="491"/>
         <source>Not Restricted</source>
         <translation>Neomezeno</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="385"/>
+        <location filename="../fmfontstrings.cpp" line="493"/>
         <source>Restricted</source>
         <translation>Omezeno</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="387"/>
+        <location filename="../fmfontstrings.cpp" line="495"/>
         <source>Preview/Print</source>
         <translation>Poskytnout náhled/Vytisknout</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="389"/>
+        <location filename="../fmfontstrings.cpp" line="497"/>
         <source>Edit/Embed</source>
         <translation>Upravit/Vložit</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="391"/>
+        <location filename="../fmfontstrings.cpp" line="499"/>
         <source>No Subset</source>
         <translation>Žádná podmnožina</translation>
     </message>
     <message>
-        <location filename="../fmfontstrings.cpp" line="393"/>
+        <location filename="../fmfontstrings.cpp" line="501"/>
         <source>Bitmap Only</source>
         <translation>Pouze bitmapa</translation>
     </message>
@@ -2012,9 +3058,15 @@ Chcete je přidat do filtrovaných písem?</translation>
 <context>
     <name>Help</name>
     <message>
+        <location filename="../help.ui" line="13"/>
         <source>Fontmatrix Help</source>
         <translatorcomment>Nápověda k programu Fontmatrix</translatorcomment>
-        <translation type="obsolete">Fontmatrix Help</translation>
+        <translation type="unfinished">Fontmatrix Help</translation>
+    </message>
+    <message>
+        <location filename="../help.ui" line="31"/>
+        <source>Close</source>
+        <translation type="unfinished">Zavřít</translation>
     </message>
 </context>
 <context>
@@ -2040,8 +3092,8 @@ Chcete je přidat do filtrovaných písem?</translation>
         <translation>&amp;Záložky</translation>
     </message>
     <message>
-        <location filename="../helpbrowser.cpp" line="297"/>
         <location filename="../helpbrowser.ui" line="148"/>
+        <location filename="../helpbrowser.cpp" line="297"/>
         <source>&amp;Print...</source>
         <translation>&amp;Tisk...</translation>
     </message>
@@ -2051,8 +3103,8 @@ Chcete je přidat do filtrovaných písem?</translation>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="../helpbrowser.cpp" line="299"/>
         <location filename="../helpbrowser.ui" line="158"/>
+        <location filename="../helpbrowser.cpp" line="299"/>
         <source>&amp;Find...</source>
         <translation>&amp;Najít...</translation>
     </message>
@@ -2072,16 +3124,16 @@ Chcete je přidat do filtrovaných písem?</translation>
         <translation>&amp;Přidat záložku</translation>
     </message>
     <message>
-        <location filename="../helpbrowser.cpp" line="303"/>
         <location filename="../helpbrowser.ui" line="103"/>
         <location filename="../helpbrowser.ui" line="178"/>
+        <location filename="../helpbrowser.cpp" line="303"/>
         <source>&amp;Delete</source>
         <translation>&amp;Smazat</translation>
     </message>
     <message>
-        <location filename="../helpbrowser.cpp" line="304"/>
         <location filename="../helpbrowser.ui" line="110"/>
         <location filename="../helpbrowser.ui" line="183"/>
+        <location filename="../helpbrowser.cpp" line="304"/>
         <source>D&amp;elete All</source>
         <translation>S&amp;mazat vše</translation>
     </message>
@@ -2343,7 +3395,7 @@ v nastavení.&lt;/qt&gt;</translation>
 <context>
     <name>ListDock</name>
     <message>
-        <location filename="../listsdock.ui" line="22"/>
+        <location filename="../listsdock.ui" line="23"/>
         <source>Form</source>
         <translation>Formulář</translation>
     </message>
@@ -2368,7 +3420,7 @@ v nastavení.&lt;/qt&gt;</translation>
         <translation type="obsolete">Tag</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="127"/>
+        <location filename="../listsdock.ui" line="128"/>
         <source>Filter view by chosing tag</source>
         <translation>Zobrazení filtru při výběru značky</translation>
     </message>
@@ -2381,8 +3433,8 @@ v nastavení.&lt;/qt&gt;</translation>
         <translation type="obsolete">Show only fonts that belong to chosen tagset</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="281"/>
-        <location filename="../listsdock.ui" line="342"/>
+        <location filename="../listsdock.ui" line="282"/>
+        <location filename="../listsdock.ui" line="343"/>
         <source>Names</source>
         <translation>Názvy</translation>
     </message>
@@ -2395,7 +3447,7 @@ v nastavení.&lt;/qt&gt;</translation>
         <translation type="obsolete">Preview</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="200"/>
+        <location filename="../listsdock.ui" line="201"/>
         <source>Show complete collection of available fonts</source>
         <translation>Ukázat celou sbírku dostupných písem</translation>
     </message>
@@ -2452,7 +3504,7 @@ v nastavení.&lt;/qt&gt;</translation>
         <translation type="obsolete">Výběr pole</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="73"/>
+        <location filename="../listsdock.ui" line="74"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2477,52 +3529,51 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&quot;+!vzor&quot;&lt;/span&gt; nebo &quot;!+vzor&quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="86"/>
+        <location filename="../listsdock.ui" line="87"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="167"/>
+        <location filename="../listsdock.ui" line="168"/>
         <source>Not</source>
         <translation>Ne</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="174"/>
+        <location filename="../listsdock.ui" line="175"/>
         <source>And</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="203"/>
+        <location filename="../listsdock.ui" line="204"/>
         <source>reset</source>
         <translation>Vymazat</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="234"/>
+        <location filename="../listsdock.ui" line="235"/>
         <source>TextLabel</source>
         <translation>Textový štítek</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="250"/>
+        <location filename="../listsdock.ui" line="251"/>
         <source>save</source>
         <translation>Uložit</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="354"/>
+        <location filename="../listsdock.ui" line="355"/>
         <source>Collapse or expand</source>
         <translation>Sbalit nebo rozbalit</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="370"/>
+        <location filename="../listsdock.ui" line="371"/>
         <source>Show face boxes</source>
         <translation>Zobrazit značky u řezů</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="398"/>
         <source>Previews</source>
-        <translation>Náhledy</translation>
+        <translation type="obsolete">Náhledy</translation>
     </message>
     <message>
-        <location filename="../listsdock.ui" line="430"/>
+        <location filename="../listsdock.ui" line="399"/>
         <source>Folders</source>
         <translation>Složky</translation>
     </message>
@@ -2530,9 +3581,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ListDockWidget</name>
     <message>
-        <location filename="../listdockwidget.cpp" line="71"/>
         <source>You can use the following keywords to be replaced by data from fonts: &lt;strong&gt;&amp;#60;name&amp;#62;&lt;/strong&gt; ; &lt;strong&gt;&amp;#60;family&amp;#62;&lt;/strong&gt; ; &lt;strong&gt;&amp;#60;variant&amp;#62;&lt;/strong&gt;</source>
-        <translation>Můžete použít následující klíčová slova, aby byla nahrazena daty z písem: &lt;strong&gt;&amp;#60;name&amp;#62;&lt;/strong&gt; ; &lt;strong&gt;&amp;#60;family&amp;#62;&lt;/strong&gt; ; &lt;strong&gt;&amp;#60;variant&amp;#62;&lt;/strong&gt;</translation>
+        <translation type="obsolete">Můžete použít následující klíčová slova, aby byla nahrazena daty z písem: &lt;strong&gt;&amp;#60;name&amp;#62;&lt;/strong&gt; ; &lt;strong&gt;&amp;#60;family&amp;#62;&lt;/strong&gt; ; &lt;strong&gt;&amp;#60;variant&amp;#62;&lt;/strong&gt;</translation>
     </message>
     <message>
         <location filename="../listdockwidget.cpp" line="108"/>
@@ -2565,7 +3615,7 @@ p, li { white-space: pre-wrap; }
         <translation>Rozbalit rodiny písem</translation>
     </message>
     <message>
-        <location filename="../listdockwidget.cpp" line="448"/>
+        <location filename="../listdockwidget.cpp" line="451"/>
         <source>Similar to current</source>
         <translation>Podobné nynějšímu</translation>
     </message>
@@ -2578,7 +3628,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Unicode</translation>
     </message>
     <message>
-        <location filename="../listdockwidget.cpp" line="447"/>
+        <location filename="../listdockwidget.cpp" line="450"/>
         <source>All activated</source>
         <translation>Vše zapnuto</translation>
     </message>
@@ -2589,6 +3639,21 @@ p, li { white-space: pre-wrap; }
         <location filename="../mainview.ui" line="24"/>
         <source>main view widget</source>
         <translation>Prvek uživatelského rozhraní pro hlavní pohled</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="103"/>
+        <source>Quick Search:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="190"/>
+        <source>Save</source>
+        <translation type="unfinished">Uložit</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="202"/>
+        <source>clear</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
@@ -2622,175 +3687,144 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">FT</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="143"/>
         <source>Sample text rendering options</source>
-        <translation>Volby zobrazení ukázkového textu</translation>
+        <translation type="obsolete">Volby zobrazení ukázkového textu</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="146"/>
         <source>Display settings</source>
-        <translation>Nastavení zobrazení</translation>
+        <translation type="obsolete">Nastavení zobrazení</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="177"/>
         <source>Enable and disable OpenType features implemented in the font</source>
-        <translation>Povolení nebo zakázání vlastností OpenType daného písma</translation>
+        <translation type="obsolete">Povolení nebo zakázání vlastností OpenType daného písma</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="180"/>
         <source>OpenType features</source>
-        <translation>Vlastnosti OpenType</translation>
+        <translation type="obsolete">Vlastnosti OpenType</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="221"/>
         <source>Choose a sample text from your collection</source>
-        <translation>Výběr ukázkového textu z vaší sbírky</translation>
+        <translation type="obsolete">Výběr ukázkového textu z vaší sbírky</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="224"/>
         <source>Samples collection</source>
-        <translation>Sbírka ukázek</translation>
+        <translation type="obsolete">Sbírka ukázek</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="336"/>
         <source>OpenType Features</source>
-        <translation>Vlastnosti OpenType</translation>
+        <translation type="obsolete">Vlastnosti OpenType</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="341"/>
         <source>Friendly Name</source>
-        <translation>Přátelský název</translation>
+        <translation type="obsolete">Přátelský název</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="384"/>
         <source>Appearance</source>
-        <translation>Vzhled</translation>
+        <translation type="obsolete">Vzhled</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="449"/>
         <source>FreeType based rasterized rendering</source>
-        <translation>Zobrazení založené na rastrovači FreeType</translation>
+        <translation type="obsolete">Zobrazení založené na rastrovači FreeType</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="452"/>
         <source>Rasterized</source>
-        <translation>Rastrovaný obraz</translation>
+        <translation type="obsolete">Rastrovaný obraz</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="471"/>
         <source>No hinting</source>
-        <translation>Bez vodítek</translation>
+        <translation type="obsolete">Bez vodítek</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="481"/>
         <source>Light Hinting</source>
-        <translation>Slabá vodítka</translation>
+        <translation type="obsolete">Slabá vodítka</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="488"/>
         <source>Normal Hinting</source>
-        <translation>Běžná vodítka</translation>
+        <translation type="obsolete">Běžná vodítka</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="504"/>
         <source>Freely scalable vector rendering using native toolkit (Qt)</source>
-        <translation>Libovolně zvětšitelné vektorové zobrazení s použitím Qt</translation>
+        <translation type="obsolete">Libovolně zvětšitelné vektorové zobrazení s použitím Qt</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="507"/>
         <source>Vector</source>
-        <translation>Vektorový obraz</translation>
+        <translation type="obsolete">Vektorový obraz</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="633"/>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="681"/>
         <source>Edit sample text</source>
-        <translation>Upravit ukázkový text</translation>
+        <translation type="obsolete">Upravit ukázkový text</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="684"/>
         <source>Edit</source>
-        <translation>Úpravy</translation>
+        <translation type="obsolete">Úpravy</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="717"/>
         <source>Coverage of Unicode Interval</source>
-        <translation>Pokrytí rozmezí Unicode</translation>
+        <translation type="obsolete">Pokrytí rozmezí Unicode</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="720"/>
         <source>Block:</source>
-        <translation>Blok:</translation>
+        <translation type="obsolete">Blok:</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="762"/>
         <source>Search:</source>
-        <translation>Hledat:</translation>
+        <translation type="obsolete">Hledat:</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="772"/>
         <source>Search a character by its codepoint (expressed in hexadecimal 
 and prefixed with &quot;U+&quot;, &quot;u+&quot; or &quot;+&quot;) or a glyph by its name.
 Press enter after editing to run the search.</source>
-        <translation>Hledat znak pomocí jeho pozice (vyjádřené šestnáctkově a
+        <translation type="obsolete">Hledat znak pomocí jeho pozice (vyjádřené šestnáctkově a
 uvozené &quot;U+&quot;, &quot;u+&quot; nebo &quot;+&quot;) nebo glyf pomocí jména.
 Hledání začně až po stisku Enter.</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="822"/>
         <source>Copy Mode</source>
-        <translation>Režim kopírování</translation>
+        <translation type="obsolete">Režim kopírování</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="865"/>
         <source>Font Size:</source>
-        <translation>Velikost písma:</translation>
+        <translation type="obsolete">Velikost písma:</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="909"/>
         <source>Classification</source>
-        <translation>Třídění</translation>
+        <translation type="obsolete">Třídění</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="950"/>
         <source>Compare</source>
-        <translation>Porovnání</translation>
+        <translation type="obsolete">Porovnání</translation>
     </message>
     <message>
         <source>Apply features</source>
         <translation type="obsolete">Apply features</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="703"/>
         <source>Glyphs</source>
-        <translation>Obrázky</translation>
+        <translation type="obsolete">Obrázky</translation>
     </message>
     <message>
         <source>Coverage of unicode interval :</source>
         <translation type="obsolete">Coverage of unicode interval :</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="798"/>
         <source>Clicking on a glyph will show details about it</source>
-        <translation>Klepnutím na glyf se ukážou jeho podrobnosti</translation>
+        <translation type="obsolete">Klepnutím na glyf se ukážou jeho podrobnosti</translation>
     </message>
     <message>
         <source>Tags</source>
         <translation type="obsolete">Tags</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="83"/>
         <source>Font Information</source>
-        <translation>Informace o písmu</translation>
+        <translation type="obsolete">Informace o písmu</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="107"/>
         <source>Sample Text</source>
-        <translation>Ukázkový text</translation>
+        <translation type="obsolete">Ukázkový text</translation>
     </message>
     <message>
         <source>Fit to View</source>
@@ -2809,15 +3843,12 @@ Hledání začně až po stisku Enter.</translation>
         <translation type="obsolete">Add Tag</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="398"/>
         <source>Font Size</source>
-        <translation>Velikost písma</translation>
+        <translation type="obsolete">Velikost písma</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="423"/>
-        <location filename="../mainview.ui" line="875"/>
         <source> pt</source>
-        <translation> pt</translation>
+        <translation type="obsolete"> pt</translation>
     </message>
     <message>
         <source>part I</source>
@@ -2852,14 +3883,12 @@ Hledání začně až po stisku Enter.</translation>
         <translation type="obsolete">O</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="364"/>
         <source>Save as default</source>
-        <translation>Uložit jako výchozí</translation>
+        <translation type="obsolete">Uložit jako výchozí</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="371"/>
         <source>Reset Default</source>
-        <translation>Přenastavit na výchozí</translation>
+        <translation type="obsolete">Přenastavit na výchozí</translation>
     </message>
     <message>
         <source>SampleText</source>
@@ -2886,29 +3915,25 @@ Hledání začně až po stisku Enter.</translation>
         <translation type="obsolete">Přirozené Qt objekty</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="519"/>
         <source>World is wide</source>
-        <translation>Svět je rozlehlý</translation>
+        <translation type="obsolete">Svět je rozlehlý</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="557"/>
         <source>Script</source>
         <comment>Writing system</comment>
-        <translation>Skript</translation>
+        <translation type="obsolete">Skript</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="573"/>
         <source>Shaper type</source>
-        <translation>Druh tvarovače</translation>
+        <translation type="obsolete">Druh tvarovače</translation>
     </message>
     <message>
         <source>Script</source>
         <translation type="obsolete">Skript</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="592"/>
         <source>Use shaper</source>
-        <translation>Použít tvarovač</translation>
+        <translation type="obsolete">Použít tvarovač</translation>
     </message>
     <message>
         <source>Text Progression</source>
@@ -2919,14 +3944,12 @@ Hledání začně až po stisku Enter.</translation>
         <translation type="obsolete">Tlačit</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="852"/>
         <source>Playground</source>
-        <translation>Hřiště</translation>
+        <translation type="obsolete">Hřiště</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="819"/>
         <source>Set Mode &quot;Copy Character to Clipboard&quot;</source>
-        <translation>Nastavit režim &quot;Kopírovat znak do schránky&quot;</translation>
+        <translation type="obsolete">Nastavit režim &quot;Kopírovat znak do schránky&quot;</translation>
     </message>
     <message>
         <source>C</source>
@@ -3492,85 +4515,70 @@ Hledání začně až po stisku Enter.</translation>
         <translation type="obsolete">134 Zobrazit všechny zobrazované piktogramy</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="95"/>
         <source>Un-Mapped Glyphs</source>
-        <translation>Nepřiřazené glyfy</translation>
+        <translation type="obsolete">Nepřiřazené glyfy</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="96"/>
         <source>View all mapped glyphs</source>
-        <translation>Zobrazit všechny přiřazené glyfy</translation>
+        <translation type="obsolete">Zobrazit všechny přiřazené glyfy</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="847"/>
         <source>Names</source>
-        <translation>Názvy</translation>
+        <translation type="obsolete">Názvy</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1106"/>
         <source>Activated</source>
-        <translation>Zapnuto</translation>
+        <translation type="obsolete">Zapnuto</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1595"/>
         <source>User</source>
         <extracomment>Identify root of user defined sample texts</extracomment>
-        <translation>Uživatel</translation>
+        <translation type="obsolete">Uživatel</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1859"/>
         <source>Block (%1):</source>
-        <translation>Blok (%1):</translation>
+        <translation type="obsolete">Blok (%1):</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1923"/>
+        <location filename="../mainviewwidget.cpp" line="1168"/>
         <source>Fontmatrix takes care of you</source>
         <translation>Fontmatrix se o vás postará</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1923"/>
+        <location filename="../mainviewwidget.cpp" line="1168"/>
         <source> is activated.
 If you want to remove it from Fontmatrix database, please deactivate it first.</source>
         <translation> je zapnut.
 Pokud je chcete odstranit z databáze programu Fontmatrix, nejprve je, prosím, vypněte.</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1926"/>
+        <location filename="../mainviewwidget.cpp" line="1171"/>
         <source>Fontmatrix safe</source>
         <translation>Fontmatrix je v bezpečí</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1926"/>
+        <location filename="../mainviewwidget.cpp" line="1171"/>
         <source>You are about to remove a font from Fontmatrix database</source>
         <translation>Chystáte se písmo odstranit z databáze programu Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1926"/>
+        <location filename="../mainviewwidget.cpp" line="1171"/>
         <source>Do you want to continue?</source>
         <translation>Chcete pokračovat?</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="1983"/>
         <source>Welcome to Fontmatrix</source>
-        <translation>Vítejte v programu Fontmatrix</translation>
+        <translation type="obsolete">Vítejte v programu Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="2001"/>
-        <source>122.0</source>
-        <comment>Size of the welcome message</comment>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainviewwidget.cpp" line="2187"/>
         <source>Load</source>
-        <translation>Nahrát</translation>
+        <translation type="obsolete">Nahrát</translation>
     </message>
     <message>
-        <location filename="../mainviewwidget.cpp" line="2198"/>
         <source>An error occured when tried to load %1
 with command: %2</source>
         <comment>%1 is an url and %2 a program</comment>
-        <translation>Při pokusu o nahrání %1 se vyskytla
+        <translation type="obsolete">Při pokusu o nahrání %1 se vyskytla
 při použití příkazu: %2 chyba</translation>
     </message>
 </context>
@@ -3658,6 +4666,29 @@ při použití příkazu: %2 chyba</translation>
     </message>
 </context>
 <context>
+    <name>MetaWidget</name>
+    <message>
+        <location filename="../metawidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../metawidget.ui" line="26"/>
+        <source>Fill-in text fields and press enter key  or click &quot;Add Filters&quot; button to process filters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../metawidget.ui" line="66"/>
+        <source>Add Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../metawidget.ui" line="73"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+</context>
+<context>
     <name>PanoseDialog</name>
     <message>
         <location filename="../panosedialog.ui" line="13"/>
@@ -3668,6 +4699,47 @@ při použití příkazu: %2 chyba</translation>
         <location filename="../panosedialog.ui" line="25"/>
         <source>TextLabel</source>
         <translation>Textový štítek</translation>
+    </message>
+</context>
+<context>
+    <name>PanoseWidget</name>
+    <message>
+        <location filename="../panosewidget.ui" line="14"/>
+        <source>Panose Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panosewidget.ui" line="57"/>
+        <source>Panose Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PlayWidget</name>
+    <message>
+        <location filename="../playwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../playwidget.ui" line="49"/>
+        <source>Font Size:</source>
+        <translation type="unfinished">Velikost písma:</translation>
+    </message>
+    <message>
+        <location filename="../playwidget.ui" line="59"/>
+        <source> pt</source>
+        <translation type="unfinished"> pt</translation>
+    </message>
+    <message>
+        <location filename="../playwidget.cpp" line="35"/>
+        <source>Playground</source>
+        <translation type="unfinished">Hřiště</translation>
+    </message>
+    <message>
+        <location filename="../playwidget.cpp" line="107"/>
+        <source>Print Playground</source>
+        <translation type="unfinished">Vytisknout hřiště</translation>
     </message>
 </context>
 <context>
@@ -4191,32 +5263,48 @@ při použití příkazu: %2 chyba</translation>
     </message>
 </context>
 <context>
+    <name>ProgressBarDuo</name>
+    <message>
+        <location filename="../progressbarduo.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished">Dialog</translation>
+    </message>
+    <message>
+        <location filename="../progressbarduo.ui" line="20"/>
+        <location filename="../progressbarduo.ui" line="34"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../progressbarduo.ui" line="61"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../fontitem.cpp" line="2250"/>
+        <location filename="../fontitem.cpp" line="2269"/>
         <source>codepoint is U+</source>
         <translation>Kód je U+</translation>
     </message>
     <message>
-        <location filename="../fontbook.cpp" line="208"/>
         <source>Creating font book... </source>
-        <translation>Vytváří se kniha písem... </translation>
+        <translation type="obsolete">Vytváří se kniha písem... </translation>
     </message>
     <message>
-        <location filename="../dataexport.cpp" line="41"/>
-        <location filename="../fontbook.cpp" line="208"/>
+        <location filename="../dataexport.cpp" line="75"/>
         <source>cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../dataexport.cpp" line="41"/>
+        <location filename="../dataexport.cpp" line="75"/>
         <source>Copying files</source>
         <translation>Kopírují se soubory</translation>
     </message>
     <message>
-        <location filename="../dataexport.cpp" line="70"/>
         <source>Unable to copy</source>
-        <translation>Nelze kopírovat</translation>
+        <translation type="obsolete">Nelze kopírovat</translation>
     </message>
     <message>
         <source>ABCDEFGH
@@ -4243,154 +5331,124 @@ rstuvxyz
         <translation type="obsolete">hamburgefonstiv</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3043"/>
         <source>Mark, NonSpacing</source>
-        <translation>Značka, bez prostrkávání</translation>
+        <translation type="obsolete">Značka, bez prostrkávání</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3044"/>
         <source>Mark, SpacingCombining</source>
-        <translation>Značka, kombinuje se s prostrkáváním</translation>
+        <translation type="obsolete">Značka, kombinuje se s prostrkáváním</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3045"/>
         <source>Mark, Enclosing</source>
-        <translation>Značka, uzavírá se</translation>
+        <translation type="obsolete">Značka, uzavírá se</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3046"/>
         <source>Number, DecimalDigit</source>
-        <translation>Číslo, číslo od 0 do 9 v desítkovém zápisu</translation>
+        <translation type="obsolete">Číslo, číslo od 0 do 9 v desítkovém zápisu</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3047"/>
         <source>Number, Letter</source>
-        <translation>Číslo, písmeno</translation>
+        <translation type="obsolete">Číslo, písmeno</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3048"/>
         <source>Number, Other</source>
-        <translation>Číslo, jiné</translation>
+        <translation type="obsolete">Číslo, jiné</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3049"/>
         <source>Separator, Space</source>
-        <translation>Oddělovač, mezera</translation>
+        <translation type="obsolete">Oddělovač, mezera</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3050"/>
         <source>Separator, Line</source>
-        <translation>Oddělovač, řádek</translation>
+        <translation type="obsolete">Oddělovač, řádek</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3051"/>
         <source>Separator, Paragraph</source>
-        <translation>Oddělovač, odstavec</translation>
+        <translation type="obsolete">Oddělovač, odstavec</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3052"/>
         <source>Other, Control</source>
-        <translation>Jiné, ovládání</translation>
+        <translation type="obsolete">Jiné, ovládání</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3053"/>
         <source>Other, Format</source>
-        <translation>Jiné, formát</translation>
+        <translation type="obsolete">Jiné, formát</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3054"/>
         <source>Other, Surrogate</source>
-        <translation>Jiné, náhrada</translation>
+        <translation type="obsolete">Jiné, náhrada</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3055"/>
         <source>Other, PrivateUse</source>
-        <translation>Jiné, soukromé použití</translation>
+        <translation type="obsolete">Jiné, soukromé použití</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3056"/>
         <source>Other, NotAssigned</source>
-        <translation>Jiné, nepřiděleno</translation>
+        <translation type="obsolete">Jiné, nepřiděleno</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3057"/>
         <source>Letter, Uppercase</source>
-        <translation>Písmeno, velká písmena</translation>
+        <translation type="obsolete">Písmeno, velká písmena</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3058"/>
         <source>Letter, Lowercase</source>
-        <translation>Písmeno, malá písmena</translation>
+        <translation type="obsolete">Písmeno, malá písmena</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3059"/>
         <source>Letter, Titlecase</source>
-        <translation>Písmeno, písmena v nadpisech</translation>
+        <translation type="obsolete">Písmeno, písmena v nadpisech</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3060"/>
         <source>Letter, Modifier</source>
-        <translation>Písmeno, modifikátor</translation>
+        <translation type="obsolete">Písmeno, modifikátor</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3061"/>
         <source>Letter, Other</source>
-        <translation>Písmeno, jiné</translation>
+        <translation type="obsolete">Písmeno, jiné</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3062"/>
         <source>Punctuation, Connector</source>
-        <translation>Interpunkční znaménka, spojovník</translation>
+        <translation type="obsolete">Interpunkční znaménka, spojovník</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3063"/>
         <source>Punctuation, Dash</source>
-        <translation>Interpunkční znaménka, pomlčka</translation>
+        <translation type="obsolete">Interpunkční znaménka, pomlčka</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3064"/>
         <source>Punctuation, Open</source>
-        <translation>Interpunkční znaménka, otevřít</translation>
+        <translation type="obsolete">Interpunkční znaménka, otevřít</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3065"/>
         <source>Punctuation, Close</source>
-        <translation>Interpunkční znaménka, zavřít</translation>
+        <translation type="obsolete">Interpunkční znaménka, zavřít</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3066"/>
         <source>Punctuation, InitialQuote</source>
-        <translation>Interpunkční znaménka, počáteční uvozovky</translation>
+        <translation type="obsolete">Interpunkční znaménka, počáteční uvozovky</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3067"/>
         <source>Punctuation, FinalQuote</source>
-        <translation>Interpunkční znaménka, závěrečné uvozovky</translation>
+        <translation type="obsolete">Interpunkční znaménka, závěrečné uvozovky</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3068"/>
         <source>Punctuation, Other</source>
-        <translation>Interpunkční znaménka, jiná</translation>
+        <translation type="obsolete">Interpunkční znaménka, jiná</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3069"/>
         <source>Symbol, Math</source>
-        <translation>Symbol, matematika</translation>
+        <translation type="obsolete">Symbol, matematika</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3070"/>
         <source>Symbol, Currency</source>
-        <translation>Symbol, měna</translation>
+        <translation type="obsolete">Symbol, měna</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3071"/>
         <source>Symbol, Modifier</source>
-        <translation>Symbol, modifikátor</translation>
+        <translation type="obsolete">Symbol, modifikátor</translation>
     </message>
     <message>
-        <location filename="../fontitem.cpp" line="3072"/>
         <source>Symbol, Other</source>
-        <translation>Symbol, jiný</translation>
+        <translation type="obsolete">Symbol, jiný</translation>
     </message>
     <message>
         <location filename="../fminfodisplay.cpp" line="119"/>
@@ -4398,874 +5456,1235 @@ rstuvxyz
         <translation>Rozsahy Unicode</translation>
     </message>
     <message>
-        <location filename="../fminfodisplay.cpp" line="173"/>
+        <location filename="../fminfodisplay.cpp" line="177"/>
+        <source>File</source>
+        <translation type="unfinished">File</translation>
+    </message>
+    <message>
+        <location filename="../fminfodisplay.cpp" line="179"/>
         <source>Glyphs count</source>
         <translation>Počet obrázků</translation>
     </message>
     <message>
-        <location filename="../fminfodisplay.cpp" line="174"/>
+        <location filename="../fminfodisplay.cpp" line="181"/>
         <source>Font Type</source>
         <translation>Typ písma</translation>
     </message>
     <message>
-        <location filename="../fminfodisplay.cpp" line="188"/>
+        <location filename="../fminfodisplay.cpp" line="196"/>
         <source>Charmaps List</source>
         <translation>Seznam zobrazení znaků</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="1"/>
         <source>Basic Latin</source>
-        <translation>Základní latinka</translation>
+        <translation type="obsolete">Základní latinka</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="2"/>
         <source>Latin-1 Supplement</source>
-        <translation>Dodatečná latinka-1</translation>
+        <translation type="obsolete">Dodatečná latinka-1</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="3"/>
         <source>Latin Extended-A</source>
-        <translation>Rozšířená latinka A</translation>
+        <translation type="obsolete">Rozšířená latinka A</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="4"/>
         <source>Latin Extended-B</source>
-        <translation>Rozšířená latinka B</translation>
+        <translation type="obsolete">Rozšířená latinka B</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="5"/>
         <source>IPA Extensions</source>
-        <translation>Rozšíření IPA</translation>
+        <translation type="obsolete">Rozšíření IPA</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="6"/>
         <source>Spacing Modifier Letters</source>
-        <translation>Písmenné modifikátory s šířkou</translation>
+        <translation type="obsolete">Písmenné modifikátory s šířkou</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="7"/>
         <source>Combining Diacritical Marks</source>
-        <translation>Kombinující se diakritika</translation>
+        <translation type="obsolete">Kombinující se diakritika</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="8"/>
         <source>Greek and Coptic</source>
-        <translation>Řečtina a kopština</translation>
+        <translation type="obsolete">Řečtina a kopština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="9"/>
         <source>Cyrillic</source>
-        <translation>Azbuka</translation>
+        <translation type="obsolete">Azbuka</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="10"/>
         <source>Cyrillic Supplement</source>
-        <translation>Dodatečná azbuka</translation>
+        <translation type="obsolete">Dodatečná azbuka</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="11"/>
         <source>Armenian</source>
-        <translation>Arménština</translation>
+        <translation type="obsolete">Arménština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="12"/>
         <source>Hebrew</source>
-        <translation>Hebrejština</translation>
+        <translation type="obsolete">Hebrejština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="13"/>
         <source>Arabic</source>
-        <translation>Arabština</translation>
+        <translation type="obsolete">Arabština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="14"/>
         <source>Syriac</source>
-        <translation>Syrština</translation>
+        <translation type="obsolete">Syrština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="15"/>
         <source>Arabic Supplement</source>
-        <translation>Dodatečná arabština</translation>
+        <translation type="obsolete">Dodatečná arabština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="16"/>
-        <source>Thaana</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="17"/>
-        <source>NKo</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="18"/>
-        <source>Devanagari</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="19"/>
         <source>Bengali</source>
-        <translation>Bengálština</translation>
+        <translation type="obsolete">Bengálština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="20"/>
-        <source>Gurmukhi</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="21"/>
-        <source>Gujarati</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="22"/>
-        <source>Oriya</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="23"/>
         <source>Tamil</source>
-        <translation>Tamilština</translation>
+        <translation type="obsolete">Tamilština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="24"/>
-        <source>Telugu</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="25"/>
-        <source>Kannada</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="26"/>
-        <source>Malayalam</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="27"/>
-        <source>Sinhala</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="28"/>
         <source>Thai</source>
-        <translation>Thajština</translation>
+        <translation type="obsolete">Thajština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="29"/>
-        <source>Lao</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="30"/>
         <source>Tibetan</source>
-        <translation>Tibetština</translation>
+        <translation type="obsolete">Tibetština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="31"/>
         <source>Myanmar</source>
-        <translation>Myanmarština</translation>
+        <translation type="obsolete">Myanmarština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="32"/>
         <source>Georgian</source>
-        <translation>Gruzínština</translation>
+        <translation type="obsolete">Gruzínština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="33"/>
         <source>Hangul Jamo</source>
-        <translation>Korejské písmo hangul jamo</translation>
+        <translation type="obsolete">Korejské písmo hangul jamo</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="34"/>
         <source>Ethiopic</source>
-        <translation>Etiopština</translation>
+        <translation type="obsolete">Etiopština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="35"/>
         <source>Ethiopic Supplement</source>
-        <translation>Dodatečná etiopština</translation>
+        <translation type="obsolete">Dodatečná etiopština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="36"/>
         <source>Cherokee</source>
-        <translation>Čerokijské</translation>
+        <translation type="obsolete">Čerokijské</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="37"/>
         <source>Unified Canadian Aboriginal Syllabics</source>
-        <translation>Sjednocené kanadské původní slabikotvorné souhláskové</translation>
+        <translation type="obsolete">Sjednocené kanadské původní slabikotvorné souhláskové</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="38"/>
         <source>Ogham</source>
-        <translation>Ogamština</translation>
+        <translation type="obsolete">Ogamština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="39"/>
         <source>Runic</source>
-        <translation>Runové</translation>
+        <translation type="obsolete">Runové</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="40"/>
         <source>Tagalog</source>
-        <translation>Filipínština</translation>
+        <translation type="obsolete">Filipínština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="41"/>
-        <source>Hanunoo</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="42"/>
-        <source>Buhid</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="43"/>
-        <source>Tagbanwa</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="44"/>
         <source>Khmer</source>
-        <translation>Khmérština</translation>
+        <translation type="obsolete">Khmérština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="45"/>
         <source>Mongolian</source>
-        <translation>Mongolština</translation>
+        <translation type="obsolete">Mongolština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="46"/>
-        <source>Limbu</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="47"/>
-        <source>Tai Le</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="48"/>
         <source>New Tai Lue</source>
-        <translation>Nové Tai Lue</translation>
+        <translation type="obsolete">Nové Tai Lue</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="49"/>
         <source>Khmer Symbols</source>
-        <translation>Khmérské symboly</translation>
+        <translation type="obsolete">Khmérské symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="50"/>
-        <source>Buginese</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="51"/>
         <source>Balinese</source>
-        <translation>Balijština</translation>
+        <translation type="obsolete">Balijština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="52"/>
         <source>Sundanese</source>
-        <translation>Sundština</translation>
+        <translation type="obsolete">Sundština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="53"/>
-        <source>Lepcha</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="54"/>
-        <source>Ol Chiki</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="55"/>
         <source>Phonetic Extensions</source>
-        <translation>Fonetické rozšíření</translation>
+        <translation type="obsolete">Fonetické rozšíření</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="56"/>
         <source>Phonetic Extensions Supplement</source>
-        <translation>Dodatečné fonetické rozšíření</translation>
+        <translation type="obsolete">Dodatečné fonetické rozšíření</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="57"/>
         <source>Combining Diacritical Marks Supplement</source>
-        <translation>Dodatečná kombinující se diakritika</translation>
+        <translation type="obsolete">Dodatečná kombinující se diakritika</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="58"/>
         <source>Latin Extended Additional</source>
-        <translation>Přídavná rozšířená latinka</translation>
+        <translation type="obsolete">Přídavná rozšířená latinka</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="59"/>
         <source>Greek Extended</source>
-        <translation>Rozšířená řečtina</translation>
+        <translation type="obsolete">Rozšířená řečtina</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="60"/>
         <source>General Punctuation</source>
-        <translation>Obecné značky</translation>
+        <translation type="obsolete">Obecné značky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="61"/>
         <source>Superscripts and Subscripts</source>
-        <translation>Horní a dolní indexy</translation>
+        <translation type="obsolete">Horní a dolní indexy</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="62"/>
         <source>Currency Symbols</source>
-        <translation>Měnové symboly</translation>
+        <translation type="obsolete">Měnové symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="63"/>
         <source>Combining Diacritical Marks for Symbols</source>
-        <translation>Kombinující se diakritika pro symboly</translation>
+        <translation type="obsolete">Kombinující se diakritika pro symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="64"/>
         <source>Letterlike Symbols</source>
-        <translation>Písmenné symboly</translation>
+        <translation type="obsolete">Písmenné symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="65"/>
         <source>Number Forms</source>
-        <translation>Číselné formy</translation>
+        <translation type="obsolete">Číselné formy</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="66"/>
         <source>Arrows</source>
-        <translation>Šipky</translation>
+        <translation type="obsolete">Šipky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="67"/>
         <source>Mathematical Operators</source>
-        <translation>Matematické operátory</translation>
+        <translation type="obsolete">Matematické operátory</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="68"/>
         <source>Miscellaneous Technical</source>
-        <translation>Různé technické symboly</translation>
+        <translation type="obsolete">Různé technické symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="69"/>
         <source>Control Pictures</source>
-        <translation>Kontrolní obrázky</translation>
+        <translation type="obsolete">Kontrolní obrázky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="70"/>
         <source>Optical Character Recognition</source>
-        <translation>Optické rozpoznávání znaků</translation>
+        <translation type="obsolete">Optické rozpoznávání znaků</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="71"/>
         <source>Enclosed Alphanumerics</source>
-        <translation>Obklopené alfanumerické</translation>
+        <translation type="obsolete">Obklopené alfanumerické</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="72"/>
         <source>Box Drawing</source>
-        <translation>Kreslení boxů</translation>
+        <translation type="obsolete">Kreslení boxů</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="73"/>
         <source>Block Elements</source>
-        <translation>Blokové prvky</translation>
+        <translation type="obsolete">Blokové prvky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="74"/>
         <source>Geometric Shapes</source>
-        <translation>Geometrické tvary</translation>
+        <translation type="obsolete">Geometrické tvary</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="75"/>
         <source>Miscellaneous Symbols</source>
-        <translation>Různé symboly</translation>
+        <translation type="obsolete">Různé symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="76"/>
         <source>Dingbats</source>
-        <translation>Dingbats</translation>
+        <translation type="obsolete">Dingbats</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="77"/>
         <source>Miscellaneous Mathematical Symbols-A</source>
-        <translation>Různé matematické symboly A</translation>
+        <translation type="obsolete">Různé matematické symboly A</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="78"/>
         <source>Supplemental Arrows-A</source>
-        <translation>Dodatečné šipky A</translation>
+        <translation type="obsolete">Dodatečné šipky A</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="79"/>
         <source>Braille Patterns</source>
-        <translation>Braillovy vzory</translation>
+        <translation type="obsolete">Braillovy vzory</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="80"/>
         <source>Supplemental Arrows-B</source>
-        <translation>Dodatečné šipky B</translation>
+        <translation type="obsolete">Dodatečné šipky B</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="81"/>
         <source>Miscellaneous Mathematical Symbols-B</source>
-        <translation>Různé matematické symboly B</translation>
+        <translation type="obsolete">Různé matematické symboly B</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="82"/>
         <source>Supplemental Mathematical Operators</source>
-        <translation>Dodatečné matematické operátory</translation>
+        <translation type="obsolete">Dodatečné matematické operátory</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="83"/>
         <source>Miscellaneous Symbols and Arrows</source>
-        <translation>Různé symboly a šipky</translation>
+        <translation type="obsolete">Různé symboly a šipky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="84"/>
         <source>Glagolitic</source>
-        <translation>Hlaholice</translation>
+        <translation type="obsolete">Hlaholice</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="85"/>
         <source>Latin Extended-C</source>
-        <translation>Rozšířená latinka C</translation>
+        <translation type="obsolete">Rozšířená latinka C</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="86"/>
         <source>Coptic</source>
-        <translation>Kopština</translation>
+        <translation type="obsolete">Kopština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="87"/>
         <source>Georgian Supplement</source>
-        <translation>Dodatečná gruzínština</translation>
+        <translation type="obsolete">Dodatečná gruzínština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="88"/>
-        <source>Tifinagh</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="89"/>
         <source>Ethiopic Extended</source>
-        <translation>Rozšířená etiopština</translation>
+        <translation type="obsolete">Rozšířená etiopština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="90"/>
         <source>Cyrillic Extended-A</source>
-        <translation>Rozšířená azbuka A</translation>
+        <translation type="obsolete">Rozšířená azbuka A</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="91"/>
         <source>Supplemental Punctuation</source>
-        <translation>Dodatečná interpunkce</translation>
+        <translation type="obsolete">Dodatečná interpunkce</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="92"/>
         <source>CJK Radicals Supplement</source>
-        <translation>CJK kořeny doplněk</translation>
+        <translation type="obsolete">CJK kořeny doplněk</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="93"/>
         <source>Kangxi Radicals</source>
-        <translation>Kangxi kořeny</translation>
+        <translation type="obsolete">Kangxi kořeny</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="94"/>
         <source>Ideographic Description Characters</source>
-        <translation>Znaky ideografického popisu</translation>
+        <translation type="obsolete">Znaky ideografického popisu</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="95"/>
         <source>CJK Symbols and Punctuation</source>
-        <translation>CJK symboly a interpunkční znaménka</translation>
+        <translation type="obsolete">CJK symboly a interpunkční znaménka</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="96"/>
-        <source>Hiragana</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="97"/>
-        <source>Katakana</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="98"/>
-        <source>Bopomofo</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="99"/>
         <source>Hangul Compatibility Jamo</source>
-        <translation>Hangul slučitelnosti Jamo</translation>
+        <translation type="obsolete">Hangul slučitelnosti Jamo</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="100"/>
-        <source>Kanbun</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="101"/>
         <source>Bopomofo Extended</source>
-        <translation>Bopomofo rozšířené</translation>
+        <translation type="obsolete">Bopomofo rozšířené</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="102"/>
         <source>CJK Strokes</source>
-        <translation>CJK tahy</translation>
+        <translation type="obsolete">CJK tahy</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="103"/>
         <source>Katakana Phonetic Extensions</source>
-        <translation>Fonetická rozšíření pro Katakanu</translation>
+        <translation type="obsolete">Fonetická rozšíření pro Katakanu</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="104"/>
         <source>Enclosed CJK Letters and Months</source>
-        <translation>Uzavřená CJK písmena a měsíce</translation>
+        <translation type="obsolete">Uzavřená CJK písmena a měsíce</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="105"/>
         <source>CJK Compatibility</source>
-        <translation>CJK slučitelnost</translation>
+        <translation type="obsolete">CJK slučitelnost</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="106"/>
         <source>CJK Unified Ideographs Extension A</source>
-        <translation>CJK sjednocené ideografické rozšíření A</translation>
+        <translation type="obsolete">CJK sjednocené ideografické rozšíření A</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="107"/>
         <source>Yijing Hexagram Symbols</source>
-        <translation>Yijing hexagramové symboly</translation>
+        <translation type="obsolete">Yijing hexagramové symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="108"/>
         <source>CJK Unified Ideographs</source>
-        <translation>CJK sjednocené ideogramy</translation>
+        <translation type="obsolete">CJK sjednocené ideogramy</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="109"/>
         <source>Yi Syllables</source>
-        <translation>Yi slabiky</translation>
+        <translation type="obsolete">Yi slabiky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="110"/>
         <source>Yi Radicals</source>
-        <translation>Yi kořeny</translation>
+        <translation type="obsolete">Yi kořeny</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="111"/>
-        <source>Vai</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="112"/>
         <source>Cyrillic Extended-B</source>
-        <translation>Rozšířená azbuka B</translation>
+        <translation type="obsolete">Rozšířená azbuka B</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="113"/>
         <source>Modifier Tone Letters</source>
-        <translation>Písmena tónového rozvíjejícího větného členu (před podstatným jménem)</translation>
+        <translation type="obsolete">Písmena tónového rozvíjejícího větného členu (před podstatným jménem)</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="114"/>
         <source>Latin Extended-D</source>
-        <translation>Rozšířená latinka D</translation>
+        <translation type="obsolete">Rozšířená latinka D</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="115"/>
-        <source>Syloti Nagri</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="116"/>
-        <source>Phags-pa</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="117"/>
-        <source>Saurashtra</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="118"/>
-        <source>Kayah Li</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="119"/>
-        <source>Rejang</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="120"/>
-        <source>Cham</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="121"/>
         <source>Hangul Syllables</source>
-        <translation>Hangul slabiky</translation>
+        <translation type="obsolete">Hangul slabiky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="122"/>
         <source>High Surrogates</source>
-        <translation>Vysoké náhrady</translation>
+        <translation type="obsolete">Vysoké náhrady</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="123"/>
         <source>High Private Use Surrogates</source>
-        <translation>Vysoké náhrady pro soukromé použití</translation>
+        <translation type="obsolete">Vysoké náhrady pro soukromé použití</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="124"/>
         <source>Low Surrogates</source>
-        <translation>Nízké náhrady</translation>
+        <translation type="obsolete">Nízké náhrady</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="125"/>
         <source>Private Use Area</source>
-        <translation>Oblast soukromého použití</translation>
+        <translation type="obsolete">Oblast soukromého použití</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="126"/>
         <source>CJK Compatibility Ideographs</source>
-        <translation>Ideogramy CJK slučitelnosti</translation>
+        <translation type="obsolete">Ideogramy CJK slučitelnosti</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="127"/>
         <source>Alphabetic Presentation Forms</source>
-        <translation>Abecední provedení tvarů</translation>
+        <translation type="obsolete">Abecední provedení tvarů</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="128"/>
         <source>Arabic Presentation Forms-A</source>
-        <translation>Arabské provedení tvarů A</translation>
+        <translation type="obsolete">Arabské provedení tvarů A</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="129"/>
         <source>Variation Selectors</source>
-        <translation>Voliče obměn</translation>
+        <translation type="obsolete">Voliče obměn</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="130"/>
         <source>Vertical Forms</source>
-        <translation>Svislé tvary</translation>
+        <translation type="obsolete">Svislé tvary</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="131"/>
         <source>Combining Half Marks</source>
-        <translation>Spojující poloznaky</translation>
+        <translation type="obsolete">Spojující poloznaky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="132"/>
         <source>CJK Compatibility Forms</source>
-        <translation>Tvary CJK slučitelnosti</translation>
+        <translation type="obsolete">Tvary CJK slučitelnosti</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="133"/>
         <source>Small Form Variants</source>
-        <translation>Obměny malých tvarů</translation>
+        <translation type="obsolete">Obměny malých tvarů</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="134"/>
         <source>Arabic Presentation Forms-B</source>
-        <translation>Arabské provedení tvarů B</translation>
+        <translation type="obsolete">Arabské provedení tvarů B</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="135"/>
         <source>Halfwidth and Fullwidth Forms</source>
-        <translation>Tvary s poloviční a plnou šířkou</translation>
+        <translation type="obsolete">Tvary s poloviční a plnou šířkou</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="136"/>
         <source>Specials</source>
-        <translation>Speciální</translation>
+        <translation type="obsolete">Speciální</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="137"/>
         <source>Linear B Syllabary</source>
-        <translation>Slabikové písmo Lineární B</translation>
+        <translation type="obsolete">Slabikové písmo Lineární B</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="138"/>
         <source>Linear B Ideograms</source>
-        <translation>Ideogramy písma Lineární B</translation>
+        <translation type="obsolete">Ideogramy písma Lineární B</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="139"/>
         <source>Aegean Numbers</source>
-        <translation>Egejská čísla</translation>
+        <translation type="obsolete">Egejská čísla</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="140"/>
         <source>Ancient Greek Numbers</source>
-        <translation>Starověká řecká čísla</translation>
+        <translation type="obsolete">Starověká řecká čísla</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="141"/>
         <source>Ancient Symbols</source>
-        <translation>Starověké symboly</translation>
+        <translation type="obsolete">Starověké symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="142"/>
         <source>Phaistos Disc</source>
-        <translation>Disk z Faistu</translation>
+        <translation type="obsolete">Disk z Faistu</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="143"/>
         <source>Lycian</source>
-        <translation>Lycijština</translation>
+        <translation type="obsolete">Lycijština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="144"/>
         <source>Carian</source>
-        <translation>Karijština</translation>
+        <translation type="obsolete">Karijština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="145"/>
         <source>Old Italic</source>
-        <translation>Stará italika</translation>
+        <translation type="obsolete">Stará italika</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="146"/>
         <source>Gothic</source>
-        <translation>Gotika</translation>
+        <translation type="obsolete">Gotika</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="147"/>
         <source>Ugaritic</source>
-        <translation>Ugaritština</translation>
+        <translation type="obsolete">Ugaritština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="148"/>
         <source>Old Persian</source>
-        <translation>Stará perština</translation>
+        <translation type="obsolete">Stará perština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="149"/>
         <source>Deseret</source>
-        <translation>Deseretština</translation>
+        <translation type="obsolete">Deseretština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="150"/>
         <source>Shavian</source>
-        <translation>Shavijština</translation>
+        <translation type="obsolete">Shavijština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="151"/>
-        <source>Osmanya</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="152"/>
         <source>Cypriot Syllabary</source>
-        <translation>Slabikové kyperské písmo</translation>
+        <translation type="obsolete">Slabikové kyperské písmo</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="153"/>
         <source>Phoenician</source>
-        <translation>Féničtina</translation>
+        <translation type="obsolete">Féničtina</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="154"/>
         <source>Lydian</source>
-        <translation>Lýdština</translation>
+        <translation type="obsolete">Lýdština</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="155"/>
         <source>Kharoshthi</source>
-        <translation>Kharoshthi</translation>
+        <translation type="obsolete">Kharoshthi</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="156"/>
         <source>Cuneiform</source>
-        <translation>Klínové písmo</translation>
+        <translation type="obsolete">Klínové písmo</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="157"/>
         <source>Cuneiform Numbers and Punctuation</source>
-        <translation>Symboly a interpunkční znaménka klínového písma</translation>
+        <translation type="obsolete">Symboly a interpunkční znaménka klínového písma</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="158"/>
         <source>Byzantine Musical Symbols</source>
-        <translation>Byzantské hudební symboly</translation>
+        <translation type="obsolete">Byzantské hudební symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="159"/>
         <source>Musical Symbols</source>
-        <translation>Hudební symboly</translation>
+        <translation type="obsolete">Hudební symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="160"/>
         <source>Ancient Greek Musical Notation</source>
-        <translation>Starověký řecký hudební zápis</translation>
+        <translation type="obsolete">Starověký řecký hudební zápis</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="161"/>
         <source>Tai Xuan Jing Symbols</source>
-        <translation>Symboly Tai Xuan Jing</translation>
+        <translation type="obsolete">Symboly Tai Xuan Jing</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="162"/>
         <source>Counting Rod Numerals</source>
-        <translation>Číslice při počítání s pruty</translation>
+        <translation type="obsolete">Číslice při počítání s pruty</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="163"/>
         <source>Mathematical Alphanumeric Symbols</source>
-        <translation>Matematické alfanumerické symboly</translation>
+        <translation type="obsolete">Matematické alfanumerické symboly</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="164"/>
         <source>Mahjong Tiles</source>
-        <translation>Dlaždice pro Mahjong</translation>
+        <translation type="obsolete">Dlaždice pro Mahjong</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="165"/>
         <source>Domino Tiles</source>
-        <translation>Dlaždice pro domino</translation>
+        <translation type="obsolete">Dlaždice pro domino</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="166"/>
         <source>CJK Unified Ideographs Extension B</source>
-        <translation>CJK sjednocené ideografické rozšíření B</translation>
+        <translation type="obsolete">CJK sjednocené ideografické rozšíření B</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="167"/>
         <source>CJK Compatibility Ideographs Supplement</source>
-        <translation>CJK doplněk pro ideogramy slučitelnosti</translation>
+        <translation type="obsolete">CJK doplněk pro ideogramy slučitelnosti</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="168"/>
         <source>Tags</source>
-        <translation>Značky</translation>
+        <translation type="obsolete">Značky</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="169"/>
         <source>Variation Selectors Supplement</source>
-        <translation>Doplněk k voličům obměn</translation>
+        <translation type="obsolete">Doplněk k voličům obměn</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="170"/>
         <source>Supplementary Private Use Area-A</source>
-        <translation>Dodatečná oblast soukromého použití A</translation>
+        <translation type="obsolete">Dodatečná oblast soukromého použití A</translation>
     </message>
     <message>
-        <location filename="../langs/unicode/uniblocks.cxx" line="171"/>
         <source>Supplementary Private Use Area-B</source>
-        <translation>Dodatečná oblast soukromého použití B</translation>
+        <translation type="obsolete">Dodatečná oblast soukromého použití B</translation>
+    </message>
+    <message>
+        <location filename="../activationwidget.cpp" line="32"/>
+        <source>Activation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../chartwidget.cpp" line="39"/>
+        <source>Chart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="32"/>
+        <source>Access All Alternates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="33"/>
+        <source>Above-Base Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="34"/>
+        <source>Above-Base Mark Positioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="35"/>
+        <source>Above-Base Substitutions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="36"/>
+        <source>Alternative Fractions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="37"/>
+        <source>Akhands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="38"/>
+        <source>Below-Base Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="39"/>
+        <source>Below-Base Mark Positioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="40"/>
+        <source>Below-Base Substitutions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="41"/>
+        <source>Petite Capitals From Capitals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="42"/>
+        <source>Small Capitals From Capitals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="43"/>
+        <source>Contextual Alternates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="44"/>
+        <source>Case-Sensitive Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="45"/>
+        <source>Glyph Composition/Decomposition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="46"/>
+        <source>Contextual Ligatures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="47"/>
+        <source>Conjunct Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="48"/>
+        <source>Capital Spacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="49"/>
+        <source>Contextual Swash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="50"/>
+        <source>Cursive Positioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="51"/>
+        <source>Default Processing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="52"/>
+        <source>Distances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="53"/>
+        <source>Discretionary Ligatures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="54"/>
+        <source>Denominators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="55"/>
+        <source>Expert Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="56"/>
+        <source>Final glyph Alternates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="57"/>
+        <source>Terminal Forms #2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="58"/>
+        <source>Terminal Forms #3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="59"/>
+        <source>Terminal Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="60"/>
+        <source>Fractions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="61"/>
+        <source>Full Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="62"/>
+        <source>Half Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="63"/>
+        <source>Halant Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="64"/>
+        <source>Alternate Half Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="65"/>
+        <source>Historical Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="66"/>
+        <source>Horizontal Kana Alternates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="67"/>
+        <source>Historical Ligatures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="68"/>
+        <source>Hangul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="69"/>
+        <source>Hojo Kanji Forms (JIS x 212-1990 Kanji Forms)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="70"/>
+        <source>Half Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="71"/>
+        <source>Initial Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="72"/>
+        <source>Isolated Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="73"/>
+        <source>Italics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="74"/>
+        <source>Justification Alternatives</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="75"/>
+        <source>JIS78 Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="76"/>
+        <source>JIS83 Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="77"/>
+        <source>JIS90 Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="78"/>
+        <source>JIS2004 Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="79"/>
+        <source>Kerning</source>
+        <translation type="unfinished">Podřezávání</translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="80"/>
+        <source>Left Bounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="81"/>
+        <source>Standard Ligatures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="82"/>
+        <source>Leading Jamo Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="83"/>
+        <source>Lining Figures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="84"/>
+        <source>Localized Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="85"/>
+        <source>Mark Positioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="86"/>
+        <source>Medial Forms #2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="87"/>
+        <source>Medial Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="88"/>
+        <source>Mathematical Greek</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="89"/>
+        <source>Mark to Mark Positioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="90"/>
+        <source>Mark Positioning via Substitution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="91"/>
+        <source>Alternate Annotation Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="92"/>
+        <source>NLC Kanji Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="93"/>
+        <source>Nukta Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="94"/>
+        <source>Numerators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="95"/>
+        <source>Old Style Figures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="96"/>
+        <source>Optical Bounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="97"/>
+        <source>Ordinals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="98"/>
+        <source>Ornaments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="99"/>
+        <source>Proportional Alternate Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="100"/>
+        <source>Petite Capitals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="101"/>
+        <source>Proportional Figures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="102"/>
+        <source>Pre-base Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="103"/>
+        <source>Pre-base Substitutions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="104"/>
+        <source>Post-base Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="105"/>
+        <source>Post-base Substitutions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="106"/>
+        <source>Proportional Widths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="107"/>
+        <source>Quarter Widths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="108"/>
+        <source>Randomize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="109"/>
+        <source>Rakar Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="110"/>
+        <source>Required Ligatures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="111"/>
+        <source>Reph Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="112"/>
+        <source>Right Bounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="113"/>
+        <source>Right-To-Left Alternates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="114"/>
+        <source>Ruby Notation Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="115"/>
+        <source>Stylistic Alternates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="116"/>
+        <source>Scientific Inferiors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="117"/>
+        <source>Optical Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="118"/>
+        <source>Small Capitals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="119"/>
+        <source>Simplified Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="120"/>
+        <source>Stylistic Set 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="121"/>
+        <source>Stylistic Set 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="122"/>
+        <source>Stylistic Set 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="123"/>
+        <source>Stylistic Set 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="124"/>
+        <source>Stylistic Set 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="125"/>
+        <source>Stylistic Set 6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="126"/>
+        <source>Stylistic Set 7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="127"/>
+        <source>Stylistic Set 8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="128"/>
+        <source>Stylistic Set 9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="129"/>
+        <source>Stylistic Set 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="130"/>
+        <source>Stylistic Set 11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="131"/>
+        <source>Stylistic Set 12</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="132"/>
+        <source>Stylistic Set 13</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="133"/>
+        <source>Stylistic Set 14</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="134"/>
+        <source>Stylistic Set 15</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="135"/>
+        <source>Stylistic Set 16</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="136"/>
+        <source>Stylistic Set 17</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="137"/>
+        <source>Stylistic Set 18</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="138"/>
+        <source>Stylistic Set 19</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="139"/>
+        <source>Stylistic Set 20</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="140"/>
+        <source>Subscript</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="141"/>
+        <source>Superscript</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="142"/>
+        <source>Swash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="143"/>
+        <source>Titling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="144"/>
+        <source>Trailing Jamo Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="145"/>
+        <source>Traditional Name Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="146"/>
+        <source>Tabular Figures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="147"/>
+        <source>Traditional Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="148"/>
+        <source>Third Widths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="149"/>
+        <source>Unicase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="150"/>
+        <source>Alternate Vertical Metrics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="151"/>
+        <source>Vattu Variants</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="152"/>
+        <source>Vertical Writing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="153"/>
+        <source>Alternate Vertical Half Metrics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="154"/>
+        <source>Vowel Jamo Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="155"/>
+        <source>Vertical Kana Alternates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="156"/>
+        <source>Vertical Kerning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="157"/>
+        <source>Proportional Alternate Vertical Metrics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="158"/>
+        <source>Vertical Rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../opentypetags.h" line="159"/>
+        <source>Slashed Zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.cpp" line="103"/>
+        <source>Sample</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5278,24 +6697,208 @@ rstuvxyz
     </message>
 </context>
 <context>
+    <name>SampleToolBar</name>
+    <message>
+        <location filename="../sampletoolbar.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sampletoolbar.ui" line="20"/>
+        <source>Font Size:</source>
+        <translation type="unfinished">Velikost písma:</translation>
+    </message>
+    <message>
+        <location filename="../sampletoolbar.ui" line="37"/>
+        <source>Samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sampletoolbar.ui" line="56"/>
+        <source>OpenType</source>
+        <translation type="unfinished">OpenType</translation>
+    </message>
+    <message>
+        <location filename="../sampletoolbar.ui" line="75"/>
+        <source>Depending of the font, some scripts 
+are especially supported if processed 
+through some logic (ICU here).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sampletoolbar.ui" line="84"/>
+        <source>Shaping:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sampletoolbar.cpp" line="92"/>
+        <source>Select language</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SampleWidget</name>
+    <message>
+        <location filename="../samplewidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="80"/>
+        <source>World is wide</source>
+        <translation type="unfinished">Svět je rozlehlý</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="118"/>
+        <source>Script</source>
+        <comment>Writing system</comment>
+        <translation type="unfinished">Skript</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="134"/>
+        <source>Shaper type</source>
+        <translation type="unfinished">Druh tvarovače</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="150"/>
+        <source>Use shaper</source>
+        <translation type="unfinished">Použít tvarovač</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="193"/>
+        <source>OpenType Features</source>
+        <translation type="unfinished">Vlastnosti OpenType</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="198"/>
+        <source>Friendly Name</source>
+        <translation type="unfinished">Přátelský název</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="207"/>
+        <source>Save as default</source>
+        <translation type="unfinished">Uložit jako výchozí</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="214"/>
+        <source>Reset Default</source>
+        <translation type="unfinished">Přenastavit na výchozí</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="266"/>
+        <source>1</source>
+        <translation type="unfinished">1</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="274"/>
+        <source>Add</source>
+        <translation type="unfinished">Přidat</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.ui" line="281"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.cpp" line="797"/>
+        <source>User</source>
+        <extracomment>Identify root of user defined sample texts</extracomment>
+        <translation type="unfinished">Uživatel</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.cpp" line="862"/>
+        <source>Print Sample</source>
+        <translation type="unfinished">Vytisknout ukázku</translation>
+    </message>
+    <message>
+        <location filename="../samplewidget.cpp" line="955"/>
+        <source>New Sample</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptConsole</name>
+    <message>
+        <location filename="../scriptconsole.ui" line="13"/>
+        <source>Script Console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="29"/>
+        <source>Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="42"/>
+        <source># Type your script right here
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="68"/>
+        <source>Load</source>
+        <translation type="unfinished">Nahrát</translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="78"/>
+        <source>Save</source>
+        <translation type="unfinished">Uložit</translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="98"/>
+        <source>Execute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="111"/>
+        <source>Running label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="125"/>
+        <source>Output</source>
+        <translation type="unfinished">Výstup</translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="143"/>
+        <source>Standard Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="172"/>
+        <source>clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="188"/>
+        <source>Standard Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../scriptconsole.ui" line="225"/>
+        <source>close</source>
+        <translation type="unfinished">Zavřít</translation>
+    </message>
+</context>
+<context>
     <name>Systray</name>
     <message>
-        <location filename="../systray.cpp" line="259"/>
+        <location filename="../systray.cpp" line="257"/>
         <source>&amp;Activate all</source>
         <translation>&amp;Zapnout vše</translation>
     </message>
     <message>
-        <location filename="../systray.cpp" line="262"/>
+        <location filename="../systray.cpp" line="260"/>
         <source>&amp;Deactivate all</source>
         <translation>&amp;Vypnout vše</translation>
     </message>
     <message>
-        <location filename="../systray.cpp" line="265"/>
+        <location filename="../systray.cpp" line="263"/>
         <source>Mi&amp;nimize</source>
         <translation>&amp;Zmenšit</translation>
     </message>
     <message>
-        <location filename="../systray.cpp" line="268"/>
+        <location filename="../systray.cpp" line="266"/>
         <source>&amp;Restore</source>
         <translation>&amp;Obnovit</translation>
     </message>
@@ -5304,12 +6907,12 @@ rstuvxyz
         <translation type="obsolete">&amp;Exit</translation>
     </message>
     <message>
-        <location filename="../systray.cpp" line="282"/>
+        <location filename="../systray.cpp" line="280"/>
         <source>&amp;Tags</source>
         <translation>&amp;Značky</translation>
     </message>
     <message>
-        <location filename="../systray.cpp" line="271"/>
+        <location filename="../systray.cpp" line="269"/>
         <source>E&amp;xit</source>
         <translation>&amp;Ukončit</translation>
     </message>
@@ -5356,87 +6959,110 @@ rstuvxyz
     </message>
 </context>
 <context>
+    <name>TagListModel</name>
+    <message>
+        <location filename="../filterbar.cpp" line="95"/>
+        <source>Activated</source>
+        <translation type="unfinished">Zapnuto</translation>
+    </message>
+</context>
+<context>
     <name>TagSetDialog</name>
     <message>
+        <location filename="../tagset.ui" line="19"/>
         <source>TagSet editor</source>
-        <translation type="obsolete">Editor nastavení značek</translation>
+        <translation type="unfinished">Editor nastavení značek</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="64"/>
         <source>Collections of Tags</source>
-        <translation type="obsolete">Sbírky značek</translation>
+        <translation type="unfinished">Sbírky značek</translation>
     </message>
     <message>
         <source>Available tags</source>
         <translation type="obsolete">Available tags</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="115"/>
         <source>Add selected tag to current set.</source>
-        <translation type="obsolete">Přidat vybranou značku k nynější sadě.</translation>
+        <translation type="unfinished">Přidat vybranou značku k nynější sadě.</translation>
     </message>
     <message>
         <source>add</source>
         <translation type="obsolete">add</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="138"/>
         <source>Collections</source>
-        <translation type="obsolete">Sbírky</translation>
+        <translation type="unfinished">Sbírky</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="153"/>
         <source>New</source>
-        <translation type="obsolete">Nový</translation>
+        <translation type="unfinished">Nový</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="160"/>
         <source>delete</source>
-        <translation type="obsolete">Smazat</translation>
+        <translation type="unfinished">Smazat</translation>
     </message>
     <message>
         <source>remove</source>
         <translation type="obsolete">remove</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="231"/>
         <source>Close</source>
-        <translation type="obsolete">Zavřít</translation>
+        <translation type="unfinished">Zavřít</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="80"/>
         <source>Available Tags</source>
-        <translation type="obsolete">Dostupné značky</translation>
+        <translation type="unfinished">Dostupné značky</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="118"/>
         <source>Add</source>
-        <translation type="obsolete">Přidat</translation>
+        <translation type="unfinished">Přidat</translation>
     </message>
     <message>
+        <location filename="../tagset.ui" line="187"/>
         <source>Remove</source>
-        <translation type="obsolete">Odstranit</translation>
+        <translation type="unfinished">Odstranit</translation>
     </message>
 </context>
 <context>
     <name>TagsWidget</name>
     <message>
-        <location filename="../tagswidget.cpp" line="223"/>
         <source>Edit</source>
         <comment>followed by a tag name</comment>
-        <translation>Úpravy</translation>
+        <translation type="obsolete">Úpravy</translation>
     </message>
     <message>
-        <location filename="../tagswidget.cpp" line="226"/>
         <source>Remove tag &quot;%1&quot; from database</source>
         <comment>the %%1 is a tag name</comment>
-        <translation>Odstranit značku &quot;%1&quot; z databáze</translation>
+        <translation type="obsolete">Odstranit značku &quot;%1&quot; z databáze</translation>
     </message>
     <message>
-        <location filename="../tagswidget.cpp" line="241"/>
+        <location filename="../tagswidget.cpp" line="68"/>
         <source>Please confirm that you want to remove
 the following tag from database:</source>
         <translation>Potvrďte, prosím, že chcete, aby byla
 následující značka odstraněna z databáze:</translation>
     </message>
     <message>
-        <location filename="../tagswidget.cpp" line="260"/>
         <source>Please provide a replacement name for
 the following tag:</source>
-        <translation>Poskytněte, prosím, název nahrazení pro
+        <translation type="obsolete">Poskytněte, prosím, název nahrazení pro
 následující značku:</translation>
+    </message>
+</context>
+<context>
+    <name>TagsWidget_ListModel</name>
+    <message>
+        <location filename="../tagswidget_listmodel.cpp" line="20"/>
+        <source>New Tag</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5509,6 +7135,39 @@ následující značku:</translation>
         <location filename="../textprogression.ui" line="124"/>
         <source>e.g. Traditional Mongolian text</source>
         <translation>např. tradiční mongolský text</translation>
+    </message>
+</context>
+<context>
+    <name>multiPrintDialog</name>
+    <message>
+        <location filename="../multiprintdialog.ui" line="19"/>
+        <source>Printing multiple items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiprintdialog.ui" line="41"/>
+        <source>Views</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiprintdialog.ui" line="47"/>
+        <source>Informations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiprintdialog.ui" line="54"/>
+        <source>Preview</source>
+        <translation type="unfinished">Preview</translation>
+    </message>
+    <message>
+        <location filename="../multiprintdialog.ui" line="61"/>
+        <source>Glyphs chart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiprintdialog.ui" line="68"/>
+        <source>Playground</source>
+        <translation type="unfinished">Hřiště</translation>
     </message>
 </context>
 <context>
@@ -5585,75 +7244,82 @@ následující značku:</translation>
 <context>
     <name>tagsWidget</name>
     <message>
-        <location filename="../tagswidget.ui" line="13"/>
+        <location filename="../tagswidget.ui" line="20"/>
         <source>Form</source>
         <translation>Formulář</translation>
     </message>
     <message>
-        <location filename="../tagswidget.ui" line="51"/>
         <source>Nothing selected</source>
-        <translation>Nic nebylo označeno</translation>
+        <translation type="obsolete">Nic nebylo označeno</translation>
     </message>
     <message>
-        <location filename="../tagswidget.ui" line="76"/>
+        <location filename="../tagswidget.ui" line="77"/>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
         <translation>Klepnutí pravým tlačítkem myši na značku pro její přidání nebo odstranění ze sady značek</translation>
     </message>
     <message>
-        <location filename="../tagswidget.ui" line="96"/>
+        <location filename="../tagswidget.ui" line="54"/>
         <source>Add a tag</source>
         <translation>Přidat značku</translation>
     </message>
     <message>
-        <location filename="../tagswidget.ui" line="99"/>
+        <location filename="../tagswidget.ui" line="41"/>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tagswidget.ui" line="57"/>
         <source>Add Tag</source>
         <translation>Přidat značku</translation>
+    </message>
+    <message>
+        <location filename="../tagswidget.ui" line="67"/>
+        <source>Remove Tag</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>typotek</name>
     <message>
-        <location filename="../typotek.cpp" line="272"/>
+        <location filename="../typotek.cpp" line="315"/>
         <source>Fontmatrix</source>
         <translation>Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="273"/>
+        <location filename="../typotek.cpp" line="316"/>
         <source>The program will keep running in the system tray. To terminate the program, choose &lt;b&gt;Exit&lt;/b&gt; in the context menu of the system tray entry.</source>
         <translation>Program poběží i nadále v oznamovací části panelu. Pro ukončení programu zvolte &lt;b&gt;Ukončit&lt;/b&gt; v nabídce souvisejících činností vyvolané z oznamovací části panelu.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="316"/>
+        <location filename="../typotek.cpp" line="367"/>
         <source>Add Directory</source>
         <translation>Přidat adresář</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="367"/>
+        <location filename="../typotek.cpp" line="420"/>
         <source>confirmation</source>
         <translation>Potvrzení</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="368"/>
+        <location filename="../typotek.cpp" line="421"/>
         <source>Do you confirm you want to import these %1 fonts?</source>
         <translation>Potvrzujete, že chcete zavést těchto %1 písem?</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="427"/>
+        <location filename="../typotek.cpp" line="480"/>
         <source>Cannot import this font because it is broken:</source>
         <translation>Toto písmo nelze zavést, protože je rozbité:</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="606"/>
         <source>&amp;Import...</source>
-        <translation>&amp;Zavést...</translation>
+        <translation type="obsolete">&amp;Zavést...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="607"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation type="obsolete">Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="608"/>
+        <location filename="../typotek.cpp" line="660"/>
         <source>Import a directory</source>
         <translation>Zavést adresář</translation>
     </message>
@@ -5662,9 +7328,8 @@ následující značku:</translation>
         <translation type="obsolete">&amp;Uložit</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="613"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="obsolete">Ctrl+S</translation>
     </message>
     <message>
         <source>Save the document to disk</source>
@@ -5679,7 +7344,7 @@ následující značku:</translation>
         <translation type="obsolete">Print a specimen of the current font</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="648"/>
+        <location filename="../typotek.cpp" line="676"/>
         <source>Export font book...</source>
         <translation>Vyvést knihu písem...</translation>
     </message>
@@ -5688,22 +7353,21 @@ následující značku:</translation>
         <translation type="obsolete">Exportovat pdf, které ukazuje vybraná písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="657"/>
+        <location filename="../typotek.cpp" line="685"/>
         <source>E&amp;xit</source>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="658"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="obsolete">Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="659"/>
+        <location filename="../typotek.cpp" line="687"/>
         <source>Exit the application</source>
         <translation>Ukončit program</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="665"/>
+        <location filename="../typotek.cpp" line="693"/>
         <source>&amp;About</source>
         <translation>&amp;O programu</translation>
     </message>
@@ -5712,7 +7376,7 @@ následující značku:</translation>
         <translation type="obsolete">Ukázat informační okénko Typotéky &quot;O&quot;</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="677"/>
+        <location filename="../typotek.cpp" line="705"/>
         <source>Help</source>
         <translation>Nápověda</translation>
     </message>
@@ -5729,7 +7393,7 @@ následující značku:</translation>
         <translation type="obsolete">Deactivate all currents</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="700"/>
+        <location filename="../typotek.cpp" line="728"/>
         <source>Edit current font</source>
         <translation>Upravit nynější písmo</translation>
     </message>
@@ -5738,12 +7402,12 @@ následující značku:</translation>
         <translation type="obsolete">Try to run Fontforge with the selected font as argument</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="723"/>
+        <location filename="../typotek.cpp" line="751"/>
         <source>Preferences</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="816"/>
+        <location filename="../typotek.cpp" line="849"/>
         <source>&amp;File</source>
         <translation>&amp;Soubor</translation>
     </message>
@@ -5752,31 +7416,30 @@ následující značku:</translation>
         <translation type="obsolete">Edit</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="881"/>
+        <location filename="../typotek.cpp" line="903"/>
         <source>&amp;Help</source>
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="890"/>
         <source>Ready</source>
-        <translation>Připraven</translation>
+        <translation type="obsolete">Připraven</translation>
     </message>
     <message>
         <source>Print specimen</source>
         <translation type="obsolete">Print specimen</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1376"/>
+        <location filename="../typotek.cpp" line="1397"/>
         <source>There is no font selected</source>
         <translation>Žádné písmo nebylo vybráno</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1450"/>
+        <location filename="../typotek.cpp" line="1452"/>
         <source>Support of DragNDrop over http is sheduled but not yet effective</source>
         <translation>Podpora pro &quot;táhni a pusť&quot; přes http je naplánována, ale dosud není účinná</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1475"/>
+        <location filename="../typotek.cpp" line="1477"/>
         <source>You bring something over me I canât handle</source>
         <translation>Dal jste mi něco, s čím si nedovedu poradit</translation>
     </message>
@@ -5789,22 +7452,27 @@ následující značku:</translation>
         <translation type="obsolete">&quot;default&quot; is a reserved keyword</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="690"/>
+        <location filename="../typotek.cpp" line="718"/>
         <source>Activate all current</source>
         <translation>Zapnout všechna nynější</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="695"/>
+        <location filename="../typotek.cpp" line="723"/>
         <source>Deactivate all current</source>
         <translation>Vypnout všechna nynější</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1702"/>
+        <location filename="../typotek.cpp" line="1549"/>
+        <source>Edit me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1710"/>
         <source>Try to run font editor with the selected font as argument</source>
         <translation>Zkusit spustit editor písem s vybraným písmem jako argumentem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1707"/>
+        <location filename="../typotek.cpp" line="1715"/>
         <source>You don&apos;t seem to have font editor installed. Path to font editor can be set in preferences.</source>
         <translation>Nezdá se, že byste měl nainstalován editor písem. Cestu k editoru písem lze nastavit v nastavení.</translation>
     </message>
@@ -5813,170 +7481,246 @@ následující značku:</translation>
         <translation type="obsolete">Nic nebylo označeno</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="387"/>
-        <location filename="../typotek.cpp" line="506"/>
+        <location filename="../typotek.cpp" line="440"/>
+        <location filename="../typotek.cpp" line="567"/>
         <source>Importing font files... </source>
         <translation>Zavádějí se soubory s písmy... </translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="387"/>
-        <location filename="../typotek.cpp" line="506"/>
+        <location filename="../typotek.cpp" line="440"/>
+        <location filename="../typotek.cpp" line="567"/>
         <source>cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="397"/>
-        <location filename="../typotek.cpp" line="511"/>
+        <location filename="../typotek.cpp" line="450"/>
+        <location filename="../typotek.cpp" line="572"/>
         <source>Import</source>
         <translation>Zavést</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="773"/>
         <source>Switch to the previous font face in the list</source>
-        <translation>Přepnout na předchozí písmový řez v seznamu</translation>
+        <translation type="obsolete">Přepnout na předchozí písmový řez v seznamu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="777"/>
         <source>Text layout engine options</source>
-        <translation>Volby pro stroj na rozvržení textu</translation>
+        <translation type="obsolete">Volby pro stroj na rozvržení textu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="778"/>
         <source>View and edit text layout engine variables</source>
-        <translation>Zobrazit a upravovat proměnné stroje na rozvržení textu</translation>
+        <translation type="obsolete">Zobrazit a upravovat proměnné stroje na rozvržení textu</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="658"/>
+        <source>&amp;Import Directory...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="664"/>
+        <source>Import &amp;Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="666"/>
+        <source>Import Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="781"/>
+        <source>Playground</source>
+        <translation type="unfinished">Hřiště</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="783"/>
+        <source>Show/Hide Playground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="789"/>
+        <source>Compare</source>
+        <translation type="unfinished">Porovnání</translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="791"/>
+        <source>Show/Hide Compare glyphs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="797"/>
+        <source>Close All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="798"/>
+        <source>Close all floating windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="802"/>
+        <source>Show All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="803"/>
+        <source>Show all floating windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="807"/>
+        <source>Hide All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="808"/>
+        <source>Hide all floating windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="816"/>
         <source>Extract fonts...</source>
         <translation>Vytáhnout písma...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="784"/>
+        <location filename="../typotek.cpp" line="817"/>
         <source>Extract fonts from documents like PDF to PFM file format</source>
         <translation>Vytáhnout písma z dokumentů jako PDF do souborového formátu PFM</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="788"/>
+        <location filename="../typotek.cpp" line="821"/>
         <source>Find a font using raster sample...</source>
         <translation>Najít písmo pomocí ukázky rastru jeho obrazu...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="789"/>
+        <location filename="../typotek.cpp" line="822"/>
         <source>Find a font using a raster sample of a letter</source>
         <translation>Najít písmo pomocí ukázky rastru obrazu jeho písmene</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="795"/>
+        <location filename="../typotek.cpp" line="828"/>
         <source>Execute Script...</source>
         <translation>Provést skript...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="796"/>
+        <location filename="../typotek.cpp" line="829"/>
         <source>Execute a Python script</source>
         <translation>Provést Pythonový script</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="800"/>
+        <location filename="../typotek.cpp" line="833"/>
         <source>Execute Last Script</source>
         <translation>Provést poslední script</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="801"/>
+        <location filename="../typotek.cpp" line="834"/>
         <source>Execute the last chosen Python script</source>
         <translation>Provést naposledy vybraný Pythonový script</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="805"/>
+        <location filename="../typotek.cpp" line="838"/>
         <source>Script Console...</source>
         <translation>Skriptovací konzole...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="806"/>
+        <location filename="../typotek.cpp" line="839"/>
         <source>Open Python scripting console</source>
         <translation>Otevřít skriptovací konzoli pro Python</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="857"/>
+        <location filename="../typotek.cpp" line="876"/>
         <source>&amp;View</source>
         <translation>&amp;Pohled</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="861"/>
+        <location filename="../typotek.cpp" line="883"/>
         <source>&amp;Scripts</source>
         <translation>&amp;Skripty</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="867"/>
+        <location filename="../typotek.cpp" line="889"/>
         <source>&amp;Service</source>
         <translation>&amp;Služba</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1178"/>
+        <location filename="../typotek.cpp" line="933"/>
+        <source>Browse Directories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="935"/>
+        <source>Toggle Files/Collection view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="1208"/>
         <source>Loading System Fonts</source>
         <translation>Nahrává se systémové písmo</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1179"/>
+        <location filename="../typotek.cpp" line="1209"/>
         <source>System Fonts</source>
         <translation>Systémová písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1215"/>
-        <location filename="../typotek.cpp" line="1216"/>
+        <location filename="../typotek.cpp" line="1245"/>
+        <location filename="../typotek.cpp" line="1246"/>
         <source>fonts from</source>
         <comment>followed by a directory name</comment>
         <translation>Písma z</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1242"/>
+        <location filename="../typotek.cpp" line="1272"/>
         <source>system fonts added.</source>
         <translation>Systémová písma přidána.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1338"/>
-        <location filename="../typotek.cpp" line="1344"/>
+        <location filename="../typotek.cpp" line="1359"/>
+        <location filename="../typotek.cpp" line="1365"/>
         <source>Fontmatrix care</source>
         <translation>Péče programu Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1338"/>
+        <location filename="../typotek.cpp" line="1359"/>
         <source>You are about to activate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
         <translation>Vypadá to, že se chystáte zapnout skupinu písem.
 Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v úmyslu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1344"/>
+        <location filename="../typotek.cpp" line="1365"/>
         <source>You are about to deactivate a bunch of fonts,
 it is time to cancel if it was not your intent</source>
         <translation>Vypadá to, že se chystáte vypnout skupinu písem.
 Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v úmyslu</translation>
     </message>
     <message>
+        <location filename="../typotek.cpp" line="2310"/>
+        <source>Current Font</source>
+        <comment>followed by currently selected font name (in status bar)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Canât import this font because itâs broken :</source>
         <translation type="obsolete">Toto písmo nelze zavést, protože je poškozeno:</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="574"/>
         <source>Choose the tag for filter exported fonts</source>
-        <translation>Vybrat značku pro filtrování vyvedených písem</translation>
+        <translation type="obsolete">Vybrat značku pro filtrování vyvedených písem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="580"/>
         <source>Choose Directory</source>
-        <translation>Vybrat adresář</translation>
+        <translation type="obsolete">Vybrat adresář</translation>
     </message>
     <message>
         <source>Export &amp;Fonts</source>
         <translation type="obsolete">Exportovat &amp;písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="619"/>
+        <location filename="../typotek.cpp" line="671"/>
         <source>Export a fontset</source>
         <translation>Vyvést sadu písem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="729"/>
+        <location filename="../typotek.cpp" line="757"/>
         <source>Check Database</source>
         <translation>Prověřit databázi</translation>
     </message>
@@ -5985,12 +7729,12 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
         <translation type="obsolete">Označit vše...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="913"/>
+        <location filename="../typotek.cpp" line="941"/>
         <source>Load settings</source>
         <translation>Nahrát nastavení</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1025"/>
+        <location filename="../typotek.cpp" line="1055"/>
         <source>Check for Fontmatrix own dir</source>
         <translation>Prověřit vlastní adresář Fontmatrixu</translation>
     </message>
@@ -6015,8 +7759,8 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
         <translation type="obsolete">Shromážděná systémová písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1215"/>
-        <location filename="../typotek.cpp" line="1216"/>
+        <location filename="../typotek.cpp" line="1245"/>
+        <location filename="../typotek.cpp" line="1246"/>
         <source>Adding</source>
         <translation>Přidávají se</translation>
     </message>
@@ -6029,37 +7773,33 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
         <translation type="obsolete">Písma dostupná ze systému</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1303"/>
+        <location filename="../typotek.cpp" line="1332"/>
         <source>font descriptions imported from network</source>
         <translation>Popisy písem zavedené ze sítě</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="178"/>
         <source>Browse Fonts</source>
-        <translation>Procházet písma</translation>
+        <translation type="obsolete">Procházet písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="180"/>
         <source>Show/hide fonts browsing sidebar</source>
-        <translation>Ukázat/Skrýt postranní panel na procházení písem</translation>
+        <translation type="obsolete">Ukázat/Skrýt postranní panel na procházení písem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="187"/>
         <source>Tags</source>
-        <translation>Značky</translation>
+        <translation type="obsolete">Značky</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="189"/>
         <source>Show/hide tags list sidebar</source>
-        <translation>Ukázat/Skrýt postranní panel s uvedením značek</translation>
+        <translation type="obsolete">Ukázat/Skrýt postranní panel s uvedením značek</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1350"/>
+        <location filename="../typotek.cpp" line="1371"/>
         <source>Fontmatrix Help</source>
         <translation>Nápověda k programu Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1626"/>
+        <location filename="../typotek.cpp" line="1634"/>
         <source>default</source>
         <translation>Výchozí</translation>
     </message>
@@ -6068,295 +7808,284 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
         <translation type="obsolete">&quot;Výchozí&quot; je zamluveno</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="459"/>
-        <location filename="../typotek.cpp" line="557"/>
+        <location filename="../typotek.cpp" line="512"/>
+        <location filename="../typotek.cpp" line="618"/>
         <source>Fonts imported: %1</source>
         <translation>Zavedená písma: %1</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="530"/>
+        <location filename="../typotek.cpp" line="524"/>
+        <source>Select Files to Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="526"/>
+        <source>Font Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../typotek.cpp" line="591"/>
         <source>Cannot import this font because it is broken: </source>
         <translation>Toto písmo nelze zavést, protože je rozbité: </translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="573"/>
         <source>Fontmatrix Tags</source>
-        <translation>Značky Fontmatrixu</translation>
+        <translation type="obsolete">Značky Fontmatrixu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="612"/>
         <source>&amp;Sync</source>
-        <translation>&amp;Seřídit</translation>
+        <translation type="obsolete">&amp;Seřídit</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="614"/>
         <source>Sync with the DB file</source>
-        <translation>Seřídit se souborem DB</translation>
+        <translation type="obsolete">Seřídit se souborem DB</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="618"/>
+        <location filename="../typotek.cpp" line="670"/>
         <source>Export &amp;fonts</source>
         <translation>Vyvést &amp;písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="623"/>
         <source>Print Info...</source>
-        <translation>Vytisknout informace...</translation>
+        <translation type="obsolete">Vytisknout informace...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="624"/>
         <source>Print informations about the current font</source>
-        <translation>Vytisknout informace o nynějším písmu</translation>
+        <translation type="obsolete">Vytisknout informace o nynějším písmu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="628"/>
         <source>Print Sample...</source>
-        <translation>Vytisknout ukázku...</translation>
+        <translation type="obsolete">Vytisknout ukázku...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="629"/>
         <source>Print the sample as a specimen</source>
-        <translation>Vytisknout ukázku jako vzorový příklad</translation>
+        <translation type="obsolete">Vytisknout ukázku jako vzorový příklad</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="633"/>
         <source>Print Chart...</source>
-        <translation>Vytisknout tabulku...</translation>
+        <translation type="obsolete">Vytisknout tabulku...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="634"/>
         <source>Print a chart of the current font</source>
-        <translation>Vytisknout tabulku nynějšího písma</translation>
+        <translation type="obsolete">Vytisknout tabulku nynějšího písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="638"/>
         <source>Print Playground...</source>
-        <translation>Vytisknout hřiště...</translation>
+        <translation type="obsolete">Vytisknout hřiště...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="639"/>
         <source>Print the playground</source>
-        <translation>Vytisknout hřiště</translation>
+        <translation type="obsolete">Vytisknout hřiště</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="643"/>
         <source>Print Family...</source>
-        <translation>Vytisknout rodinu písem...</translation>
+        <translation type="obsolete">Vytisknout rodinu písem...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="644"/>
         <source>Print a specimen of the whole family the current face belongs to</source>
-        <translation>Vytisknout ukázkový příklad celé rodiny písem, ke které náleží nynější řez písma</translation>
+        <translation type="obsolete">Vytisknout ukázkový příklad celé rodiny písem, ke které náleží nynější řez písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="649"/>
+        <location filename="../typotek.cpp" line="677"/>
         <source>Export a PDF document that shows selected fonts</source>
         <translation>Vyvést dokument PDF, který ukazuje vybraná písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="653"/>
+        <location filename="../typotek.cpp" line="681"/>
         <source>Export font info for packaging...</source>
         <translation>Vyvést informace o písmu pro balení...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="654"/>
+        <location filename="../typotek.cpp" line="682"/>
         <source>Fill a template file with metadata for packaging currently selected font to a Linux distribution</source>
         <translation>Naplnit soubor s předlohou údaji pro balení nyní vybraného písma pro linuxovou distribuci</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="666"/>
+        <location filename="../typotek.cpp" line="694"/>
         <source>Show information about Fontmatrix</source>
         <translation>Ukázat informace o programu Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="671"/>
+        <location filename="../typotek.cpp" line="699"/>
         <source>About &amp;Qt</source>
         <translation>O &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="672"/>
+        <location filename="../typotek.cpp" line="700"/>
         <source>Show information about Qt</source>
         <translation>Ukázat informace o Qt</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="678"/>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation type="obsolete">F1</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="679"/>
+        <location filename="../typotek.cpp" line="707"/>
         <source>Read documentation on Fontmatrix</source>
         <translation>Číst dokumentaci k programu Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="691"/>
+        <location filename="../typotek.cpp" line="719"/>
         <source>Activate all currently visible fonts</source>
         <translation>Zapnout všechna nyní viditelná písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="696"/>
+        <location filename="../typotek.cpp" line="724"/>
         <source>Deactivate all currently visible fonts</source>
         <translation>Vypnout všechna nyní viditelná písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="705"/>
+        <location filename="../typotek.cpp" line="733"/>
         <source>Edit currently selected font in a font editor of your choice</source>
         <translation>Upravit nyní vybrané písmo v editoru písem dle vaší volby</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="710"/>
+        <location filename="../typotek.cpp" line="738"/>
         <source>You don&apos;t seem to have a font editor installed. Path to font editor can be set in Preferences dialog.</source>
         <translation>Zdá se, že nemáte nainstalován editor písem. Cestu k editoru písem lze nastavit v dialogu Nastavení.</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="713"/>
+        <location filename="../typotek.cpp" line="741"/>
         <source>Reload Filtered</source>
         <translation>Nahrát znovu vyfiltrované</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="714"/>
+        <location filename="../typotek.cpp" line="742"/>
         <source>Reload informations for filtered fonts from the font files they belong to</source>
         <translation>Nahrát znovu informace pro vyfiltrovaná písma z jejich souborů písem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="718"/>
+        <location filename="../typotek.cpp" line="746"/>
         <source>Reload Selected</source>
         <translation>Nahrát znovu vybrané</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="719"/>
+        <location filename="../typotek.cpp" line="747"/>
         <source>Reload informations for selected font from the font file</source>
         <translation>Nahrát znovu informace k vybranému písmu z jeho souboru</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="724"/>
+        <location filename="../typotek.cpp" line="752"/>
         <source>Setup Fontmatrix</source>
         <translation>Nastavit Fontmatrix</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="730"/>
+        <location filename="../typotek.cpp" line="758"/>
         <source>Check Fontmatrix database for dead links to font files</source>
         <translation>Prověřit databázi Fontmatrixu na mrtvé odkazy k souborům písem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="737"/>
+        <location filename="../typotek.cpp" line="765"/>
         <source>Tag All Filtered...</source>
         <translation>Označit vše vyfiltrované...</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="738"/>
+        <location filename="../typotek.cpp" line="766"/>
         <source>Tag all currently visible files</source>
         <translation>Označit všechny nyní viditelné soubory</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="742"/>
+        <location filename="../typotek.cpp" line="770"/>
         <source>Show TrueType tables</source>
         <translation>Ukázat tabulky TrueType</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="743"/>
+        <location filename="../typotek.cpp" line="771"/>
         <source>View hexadecimal values of TrueType tables for currently selected font file</source>
         <translation>Zobrazit šestnáctkové hodnoty tabulek TrueType nyní vybraného souboru s písmem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="747"/>
+        <location filename="../typotek.cpp" line="775"/>
         <source>Edit PANOSE metadata</source>
         <translation>Upravit údaje PANOSE</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="748"/>
+        <location filename="../typotek.cpp" line="776"/>
         <source>Edit PANOSE metadata without saving changes to font files</source>
         <translation>Upravit údaje PANOSE bez uložení změn do souborů s písmy</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="752"/>
         <source>Next Family</source>
-        <translation>Další rodina písem</translation>
+        <translation type="obsolete">Další rodina písem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="754"/>
         <source>Switch to the next font family in the list</source>
-        <translation>Přepnout na další rodinu písem v seznamu</translation>
+        <translation type="obsolete">Přepnout na další rodinu písem v seznamu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="758"/>
         <source>Next Face</source>
-        <translation>Další řez písma</translation>
+        <translation type="obsolete">Další řez písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="760"/>
         <source>Switch to the next font face in the list</source>
-        <translation>Přepnout na další písmový řez v seznamu</translation>
+        <translation type="obsolete">Přepnout na další písmový řez v seznamu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="764"/>
         <source>Previous Family</source>
-        <translation>Předchozí rodina písem</translation>
+        <translation type="obsolete">Předchozí rodina písem</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="766"/>
         <source>Switch to the previous font family in the list</source>
-        <translation>Přepnout na předchozí rodinu písem v seznamu</translation>
+        <translation type="obsolete">Přepnout na předchozí rodinu písem v seznamu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="771"/>
         <source>Previous Face</source>
-        <translation>Předchozí řez písma</translation>
+        <translation type="obsolete">Předchozí řez písma</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1998"/>
         <source>Not enough text to make a sample</source>
-        <translation>Na udělání ukázky není dost textu</translation>
+        <translation type="obsolete">Na udělání ukázky není dost textu</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2263"/>
+        <location filename="../typotek.cpp" line="2129"/>
         <source>Close</source>
         <translation>Zavřít</translation>
     </message>
     <message numerus="yes">
-        <location filename="../typotek.cpp" line="2343"/>
+        <location filename="../typotek.cpp" line="2209"/>
         <source>Failed to reload %n fonts</source>
         <translation>
             <numerusform>Nepodařilo se nahrát znovu jedno písmo@Nepodařilo se nahrát znovu %n písma@Nepodařilo se nahrát znovu %n písem</numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2390"/>
+        <location filename="../typotek.cpp" line="2256"/>
         <source>Python scripts (*.py)</source>
         <translation>Pythonové scripty (*.py)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../typotek.cpp" line="2438"/>
+        <location filename="../typotek.cpp" line="2304"/>
         <source>Filtered Font(s): %n</source>
         <comment>number of filtererd fonts showed in status bar</comment>
         <translation>
             <numerusform>Vyfiltrované písmo: %n@Vyfiltrovaná písma: %n@Vyfiltrovaných písem: %n</numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="2443"/>
         <source>Current Font:</source>
         <comment>followed by currently selected font name (in status bar)</comment>
-        <translation>Nynější písmo:</translation>
+        <translation type="obsolete">Nynější písmo:</translation>
     </message>
     <message>
         <source>Layout Options</source>
         <translation type="obsolete">Volby rozvržení</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="823"/>
         <source>Print</source>
-        <translation>Tisk</translation>
+        <translation type="obsolete">Tisk</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="835"/>
+        <location filename="../typotek.cpp" line="861"/>
         <source>&amp;Edit</source>
         <translation>&amp;Úpravy</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="850"/>
         <source>&amp;Browse</source>
-        <translation>&amp;Přechod</translation>
+        <translation type="obsolete">&amp;Přechod</translation>
     </message>
     <message>
         <source>Fontmatrix - data warning</source>
@@ -6381,34 +8110,28 @@ Není to problém, pouze jste ztratil volby pro písma, značky &amp; texty s uk
         <translation type="obsolete">Všechna pole</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1835"/>
         <source>Welcome maessage</source>
-        <translation>Sdělení na uvítanou</translation>
+        <translation type="obsolete">Sdělení na uvítanou</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1841"/>
         <source>Print Infos</source>
-        <translation>Vytisknout informace</translation>
+        <translation type="obsolete">Vytisknout informace</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1869"/>
         <source>Print Sample</source>
-        <translation>Vytisknout ukázku</translation>
+        <translation type="obsolete">Vytisknout ukázku</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1888"/>
         <source>Print Chart</source>
-        <translation>Vytisknout tabulku</translation>
+        <translation type="obsolete">Vytisknout tabulku</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1953"/>
         <source>Print Playground</source>
-        <translation>Vytisknout hřiště</translation>
+        <translation type="obsolete">Vytisknout hřiště</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="1976"/>
         <source>Print Family</source>
-        <translation>Vytisknout rodinu písem</translation>
+        <translation type="obsolete">Vytisknout rodinu písem</translation>
     </message>
 </context>
 </TS>

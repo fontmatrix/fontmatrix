@@ -192,6 +192,7 @@ ${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-shadow.png
 ${CMAKE_SOURCE_DIR}/src/graphic-resources/html-css/img/css-tech-info.png
 )
 SET(FM_WELCOME_FILES
+${CMAKE_SOURCE_DIR}/src/messages/welcome_cs.html
 ${CMAKE_SOURCE_DIR}/src/messages/welcome_da.html
 ${CMAKE_SOURCE_DIR}/src/messages/welcome_de.html
 ${CMAKE_SOURCE_DIR}/src/messages/welcome_en.html

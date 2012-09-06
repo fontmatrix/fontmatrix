@@ -17,7 +17,7 @@
     <message>
         <location filename="../about.ui" line="34"/>
         <source>Splash</source>
-        <translation>Úvodní obrazovka</translation>
+        <translation>Uvítací obrazovka</translation>
     </message>
     <message>
         <location filename="../about.ui" line="98"/>
@@ -85,17 +85,17 @@
     <message>
         <location filename="../activationwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../activationwidget.ui" line="20"/>
         <source>Activate All</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnout vše</translation>
     </message>
     <message>
         <location filename="../activationwidget.ui" line="27"/>
         <source>Deactivate All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypnout vše</translation>
     </message>
 </context>
 <context>
@@ -103,17 +103,17 @@
     <message>
         <location filename="../activationwidgetitem.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../activationwidgetitem.ui" line="44"/>
         <source>StyleName</source>
-        <translation type="unfinished"></translation>
+        <translation>Název stylu</translation>
     </message>
     <message>
         <location filename="../activationwidgetitem.ui" line="51"/>
         <source>Activated</source>
-        <translation type="unfinished">Zapnuto</translation>
+        <translation>Zapnuto</translation>
     </message>
 </context>
 <context>
@@ -251,32 +251,32 @@
     <message>
         <location filename="../browserwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../browserwidget.ui" line="66"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace</translation>
     </message>
     <message>
         <location filename="../browserwidget.ui" line="76"/>
         <source>Import</source>
-        <translation type="unfinished">Zavést</translation>
+        <translation>Zavést</translation>
     </message>
     <message>
         <location filename="../browserwidget.ui" line="86"/>
         <source>Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulka</translation>
     </message>
     <message>
         <location filename="../browserwidget.ui" line="96"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázka</translation>
     </message>
     <message>
         <location filename="../browserwidget.ui" line="117"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation>about:blank</translation>
     </message>
 </context>
 <context>
@@ -284,67 +284,67 @@
     <message>
         <location filename="../chartwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../chartwidget.ui" line="34"/>
         <source>Coverage of Unicode Interval</source>
-        <translation type="unfinished">Pokrytí rozmezí Unicode</translation>
+        <translation>Pokrytí rozmezí Unicode</translation>
     </message>
     <message>
         <location filename="../chartwidget.ui" line="37"/>
         <source>Block:</source>
-        <translation type="unfinished">Blok:</translation>
+        <translation>Blok:</translation>
     </message>
     <message>
         <location filename="../chartwidget.ui" line="79"/>
         <source>Search:</source>
-        <translation type="unfinished">Hledat:</translation>
+        <translation>Hledat:</translation>
     </message>
     <message>
         <location filename="../chartwidget.ui" line="89"/>
         <source>Search a character by its codepoint (expressed in hexadecimal 
 and prefixed with &quot;U+&quot;, &quot;u+&quot; or &quot;+&quot;) or a glyph by its name.
 Press enter after editing to run the search.</source>
-        <translation type="unfinished">Hledat znak pomocí jeho pozice (vyjádřené šestnáctkově a
+        <translation>Hledat znak pomocí jeho pozice (vyjádřené šestnáctkově a
 uvozené &quot;U+&quot;, &quot;u+&quot; nebo &quot;+&quot;) nebo glyf pomocí jména.
 Hledání začně až po stisku Enter.</translation>
     </message>
     <message>
         <location filename="../chartwidget.ui" line="115"/>
         <source>Clicking on a glyph will show details about it</source>
-        <translation type="unfinished">Klepnutím na glyf se ukážou jeho podrobnosti</translation>
+        <translation>Klepnutím na glyf se ukážou jeho podrobnosti</translation>
     </message>
     <message>
         <location filename="../chartwidget.ui" line="136"/>
         <source>Set Mode &quot;Copy Character to Clipboard&quot;</source>
-        <translation type="unfinished">Nastavit režim &quot;Kopírovat znak do schránky&quot;</translation>
+        <translation>Nastavit režim Kopírovat znak do schránky</translation>
     </message>
     <message>
         <location filename="../chartwidget.ui" line="139"/>
         <source>Copy Mode</source>
-        <translation type="unfinished">Režim kopírování</translation>
+        <translation>Režim kopírování</translation>
     </message>
     <message>
         <location filename="../chartwidget.cpp" line="57"/>
         <source>Un-Mapped Glyphs</source>
-        <translation type="unfinished">Nepřiřazené glyfy</translation>
+        <translation>Nepřiřazené glyfy</translation>
     </message>
     <message>
         <location filename="../chartwidget.cpp" line="58"/>
         <source>View all mapped glyphs</source>
-        <translation type="unfinished">Zobrazit všechny přiřazené glyfy</translation>
+        <translation>Zobrazit všechny přiřazené glyfy</translation>
     </message>
     <message>
         <location filename="../chartwidget.cpp" line="151"/>
         <location filename="../chartwidget.cpp" line="238"/>
         <source>Block (%1):</source>
-        <translation type="unfinished">Blok (%1):</translation>
+        <translation>Blok (%1):</translation>
     </message>
     <message>
         <location filename="../chartwidget.cpp" line="495"/>
         <source>Print Chart</source>
-        <translation type="unfinished">Vytisknout tabulku</translation>
+        <translation>Vytisknout tabulku</translation>
     </message>
 </context>
 <context>
@@ -356,7 +356,7 @@ Hledání začně až po stisku Enter.</translation>
     <message>
         <location filename="../comparewidget.ui" line="14"/>
         <source>Compare Glyphs</source>
-        <translation type="unfinished"></translation>
+        <translation>Porovnat glyfy</translation>
     </message>
     <message>
         <location filename="../comparewidget.ui" line="44"/>
@@ -424,27 +424,27 @@ Hledání začně až po stisku Enter.</translation>
     <message>
         <location filename="../dataexport.ui" line="14"/>
         <source>Export Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyvést data</translation>
     </message>
     <message>
         <location filename="../dataexport.ui" line="23"/>
         <source>The font files currently filtered and selected here will be copied in a directory of your choice.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyní vyfiltrované a zde vybrané soubory písem budou zkopírovány do adresáře dle vaší volby.</translation>
     </message>
     <message>
         <location filename="../dataexport.ui" line="36"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../dataexport.ui" line="43"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokračovat</translation>
     </message>
     <message>
         <location filename="../dataexport.cpp" line="62"/>
         <source>Choose Directory</source>
-        <translation type="unfinished">Vybrat adresář</translation>
+        <translation>Vybrat adresář</translation>
     </message>
 </context>
 <context>
@@ -595,21 +595,25 @@ Chcete je přidat do filtrovaných písem?</translation>
         <location filename="../fmmissingfonthelper.cpp" line="30"/>
         <location filename="../fmmissingfonthelper.cpp" line="42"/>
         <source>Missing Font File</source>
-        <translation type="unfinished"></translation>
+        <translation>Chybí soubor s písmem</translation>
     </message>
     <message>
         <location filename="../fmmissingfonthelper.cpp" line="31"/>
         <source>Fontmatrix has been unable to load the font in file 
 %1.
  Please check missing files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontmatrixu se nepodařilo nahrát písmo v souboru 
+%1.
+Prověřte, prosím, chybějící soubory.</translation>
     </message>
     <message>
         <location filename="../fmmissingfonthelper.cpp" line="43"/>
         <source>Fontmatrix has been unable to load fonts in files 
 %1.
  Please check missing files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontmatrixu se nepodařilo nahrát písma v souborech 
+%1.
+Prověřte, prosím, chybějící soubory.</translation>
     </message>
 </context>
 <context>
@@ -617,17 +621,17 @@ Chcete je přidat do filtrovaných písem?</translation>
     <message>
         <location filename="../fmscriptconsole.cpp" line="136"/>
         <source>A name for the script to save:</source>
-        <translation type="unfinished"></translation>
+        <translation>Název pro skript k uložení:</translation>
     </message>
     <message>
         <location filename="../fmscriptconsole.cpp" line="146"/>
         <source>The file %1 already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor %1 již existuje</translation>
     </message>
     <message>
         <location filename="../fmscriptconsole.cpp" line="283"/>
         <source>Running</source>
-        <translation type="unfinished"></translation>
+        <translation>Běží</translation>
     </message>
 </context>
 <context>
@@ -635,42 +639,42 @@ Chcete je přidat do filtrovaných písem?</translation>
     <message>
         <location filename="../familywidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../familywidget.ui" line="55"/>
         <source>Return To List</source>
-        <translation type="unfinished"></translation>
+        <translation>Návrat do seznamu</translation>
     </message>
     <message>
         <location filename="../familywidget.ui" line="75"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázka</translation>
     </message>
     <message>
         <location filename="../familywidget.ui" line="88"/>
         <source>Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulka</translation>
     </message>
     <message>
         <location filename="../familywidget.ui" line="101"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace</translation>
     </message>
     <message>
         <location filename="../familywidget.ui" line="114"/>
         <source>Activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnutí</translation>
     </message>
     <message>
         <location filename="../familywidget.ui" line="140"/>
         <source>Family Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název rodiny písma</translation>
     </message>
     <message>
         <location filename="../familywidget.ui" line="200"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation>about:blank</translation>
     </message>
 </context>
 <context>
@@ -678,72 +682,72 @@ Chcete je přidat do filtrovaných písem?</translation>
     <message>
         <location filename="../filterbar.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../filterbar.ui" line="49"/>
         <source>Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtry</translation>
     </message>
     <message>
         <location filename="../filterbar.ui" line="143"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Značky</translation>
     </message>
     <message>
         <location filename="../filterbar.ui" line="273"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Popisná data</translation>
     </message>
     <message>
         <location filename="../filterbar.ui" line="320"/>
         <source>Search</source>
-        <translation type="unfinished">Search</translation>
+        <translation>Hledat</translation>
     </message>
     <message>
         <location filename="../filterbar.ui" line="350"/>
         <source>in</source>
-        <translation type="unfinished"></translation>
+        <translation>v</translation>
     </message>
     <message>
         <location filename="../filterbar.ui" line="395"/>
         <source>Panose</source>
-        <translation type="unfinished"></translation>
+        <translation>Panose</translation>
     </message>
     <message>
         <location filename="../filterbar.cpp" line="50"/>
         <source>And</source>
-        <translation type="unfinished">A</translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../filterbar.cpp" line="51"/>
         <source>Not</source>
-        <translation type="unfinished">Ne</translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <location filename="../filterbar.cpp" line="52"/>
         <source>Or</source>
-        <translation type="unfinished"></translation>
+        <translation>Nebo</translation>
     </message>
     <message>
         <location filename="../filterbar.cpp" line="515"/>
         <source>Fontmatrix - edit tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontmatrix - Upravit značku</translation>
     </message>
     <message>
         <location filename="../filterbar.cpp" line="515"/>
         <source>Edit tag: </source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit značku:</translation>
     </message>
     <message>
         <location filename="../filterbar.cpp" line="563"/>
         <source>Fontmatrix - Filter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontmatrix - Název filtru</translation>
     </message>
     <message>
         <location filename="../filterbar.cpp" line="564"/>
         <source>Filter name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Název filtru:</translation>
     </message>
 </context>
 <context>
@@ -751,22 +755,22 @@ Chcete je přidat do filtrovaných písem?</translation>
     <message>
         <location filename="../filteritem.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../filteritem.ui" line="48"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Textový popisek</translation>
     </message>
     <message>
         <location filename="../filteritem.ui" line="72"/>
         <source>Remove Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit filtr</translation>
     </message>
     <message>
         <location filename="../filteritem.ui" line="78"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../filteritem.ui" line="104"/>
@@ -778,22 +782,29 @@ p, li { white-space: pre-wrap; }
 &lt;tr&gt;
 &lt;td style=&quot;border: none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If set, the filter will &lt;span style=&quot; font-weight:600;&quot;&gt;intersect&lt;/span&gt; with the previous filters.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;table style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
+&lt;tr&gt;
+&lt;td style=&quot;border: none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Je-li nastaveno, filtr se bude &lt;span style=&quot; font-weight:600;&quot;&gt;překrývat&lt;/span&gt; s předchozími filtry.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../filteritem.ui" line="114"/>
         <source>&amp;&amp;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;&amp;</translation>
     </message>
     <message>
         <location filename="../filteritem.ui" line="143"/>
         <source>if set, it will filter all the fonts but these matching this filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Je-li nastaveno, budou se filtrovat všechna písma odpovídající tomuto filtru</translation>
     </message>
     <message>
         <location filename="../filteritem.ui" line="146"/>
         <source>!</source>
-        <translation type="unfinished"></translation>
+        <translation>!</translation>
     </message>
 </context>
 <context>
@@ -801,7 +812,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../filtertagdialog.ui" line="13"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialog</translation>
     </message>
 </context>
 <context>
@@ -809,52 +820,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../filtersdialog.ui" line="14"/>
         <source>Filters Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Správce filtrů</translation>
     </message>
     <message>
         <location filename="../filtersdialog.ui" line="67"/>
         <source>In order to add filters, you have to first select some of tags, meta informations or classifications elements.</source>
-        <translation type="unfinished"></translation>
+        <translation>Abyste přidali filtry, musíte nejprve vybrat nějaké značky, popisné údaje nebo třídící prvky.</translation>
     </message>
     <message>
         <location filename="../filtersdialog.ui" line="96"/>
         <source>Add Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat filtr</translation>
     </message>
     <message>
         <location filename="../filtersdialog.ui" line="127"/>
         <source>Filter Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Název filtru:</translation>
     </message>
     <message>
         <location filename="../filtersdialog.ui" line="153"/>
         <source>Add</source>
-        <translation type="unfinished">Přidat</translation>
+        <translation>Přidat</translation>
     </message>
     <message>
         <location filename="../filtersdialog.ui" line="162"/>
         <source>current filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Nynější filtr</translation>
     </message>
     <message>
         <location filename="../filtersdialog.ui" line="201"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <location filename="../filtersdialog.cpp" line="34"/>
         <source>And</source>
-        <translation type="unfinished">A</translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../filtersdialog.cpp" line="35"/>
         <source>Not</source>
-        <translation type="unfinished">Ne</translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <location filename="../filtersdialog.cpp" line="36"/>
         <source>Or</source>
-        <translation type="unfinished"></translation>
+        <translation>Nebo</translation>
     </message>
 </context>
 <context>
@@ -862,42 +873,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../filtersdialogitem.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../filtersdialogitem.ui" line="72"/>
         <source>filter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název filtru</translation>
     </message>
     <message>
         <location filename="../filtersdialogitem.ui" line="91"/>
         <source>Apply this filter to the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít tento filtr na seznam</translation>
     </message>
     <message>
         <location filename="../filtersdialogitem.ui" line="94"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtr</translation>
     </message>
     <message>
         <location filename="../filtersdialogitem.ui" line="111"/>
         <source>Delete this filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Smazat tento filtr</translation>
     </message>
     <message>
         <location filename="../filtersdialogitem.ui" line="114"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <location filename="../filtersdialogitem.cpp" line="65"/>
         <source>Remove Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit filtr</translation>
     </message>
     <message>
         <location filename="../filtersdialogitem.cpp" line="65"/>
         <source>Confirm deletion of filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdit smazání filtru:</translation>
     </message>
 </context>
 <context>
@@ -905,47 +916,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="66"/>
         <source>Print</source>
-        <translation type="unfinished">Tisk</translation>
+        <translation>Tisk</translation>
     </message>
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="69"/>
         <source>P</source>
-        <translation type="unfinished">P</translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="76"/>
         <source>Detach from main window</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpojit od hlavního okna</translation>
     </message>
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="79"/>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="95"/>
         <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít okno</translation>
     </message>
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="98"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="109"/>
         <source>Hide window</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrýt okno</translation>
     </message>
     <message>
         <location filename="../floatingwidgettoolbar.ui" line="112"/>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
 </context>
 <context>
@@ -978,7 +989,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fontaction.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <source>action</source>
@@ -987,12 +998,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fontaction.ui" line="65"/>
         <source>Add Tag</source>
-        <translation type="unfinished">Add Tag</translation>
+        <translation>Přidat značku</translation>
     </message>
     <message>
         <location filename="../fontaction.ui" line="32"/>
         <source>Action</source>
-        <translation type="unfinished">Action</translation>
+        <translation>Činnost</translation>
     </message>
 </context>
 <context>
@@ -1000,12 +1011,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fontbook.cpp" line="92"/>
         <source>Print Fontbook</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytisknout knihu písem</translation>
     </message>
     <message>
         <location filename="../fontbook.cpp" line="475"/>
         <source>Unicode coverage</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozsah Unicode</translation>
     </message>
 </context>
 <context>
@@ -1162,7 +1173,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../fontitem.cpp" line="2368"/>
         <source>(%1)</source>
         <comment>when doing the font preview, used to denote a font that can not displayed its name</comment>
-        <translation type="unfinished"></translation>
+        <translation>(%1)</translation>
     </message>
     <message>
         <location filename="../fontitem.cpp" line="3185"/>
@@ -1601,12 +1612,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fmfontstrings.cpp" line="40"/>
         <source>Font Family</source>
-        <translation>Rodina písem</translation>
+        <translation>Rodina písma</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="41"/>
         <source>Font Subfamily</source>
-        <translation>Podrodina písem</translation>
+        <translation>Podrodina písma</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="42"/>
@@ -1753,7 +1764,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fmfontstrings.cpp" line="85"/>
         <source>Family Type</source>
-        <translation>Rodinný typ</translation>
+        <translation>Typ rodiny</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="91"/>
@@ -1907,7 +1918,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fmfontstrings.cpp" line="125"/>
         <source>Weight</source>
-        <translation>Váhové</translation>
+        <translation>Váha</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="131"/>
@@ -2532,497 +2543,497 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fmfontstrings.cpp" line="342"/>
         <source>Mark, NonSpacing</source>
-        <translation type="unfinished">Značka, bez prostrkávání</translation>
+        <translation>Značka, bez prostrkávání</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="343"/>
         <source>Mark, SpacingCombining</source>
-        <translation type="unfinished">Značka, kombinuje se s prostrkáváním</translation>
+        <translation>Značka, kombinuje se s prostrkáváním</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="344"/>
         <source>Mark, Enclosing</source>
-        <translation type="unfinished">Značka, uzavírá se</translation>
+        <translation>Značka, uzavírá se</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="345"/>
         <source>Number, DecimalDigit</source>
-        <translation type="unfinished">Číslo, číslo od 0 do 9 v desítkovém zápisu</translation>
+        <translation>Číslo, číslo od 0 do 9 v desítkovém zápisu</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="346"/>
         <source>Number, Letter</source>
-        <translation type="unfinished">Číslo, písmeno</translation>
+        <translation>Číslo, písmeno</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="347"/>
         <source>Number, Other</source>
-        <translation type="unfinished">Číslo, jiné</translation>
+        <translation>Číslo, jiné</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="348"/>
         <source>Separator, Space</source>
-        <translation type="unfinished">Oddělovač, mezera</translation>
+        <translation>Oddělovač, mezera</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="349"/>
         <source>Separator, Line</source>
-        <translation type="unfinished">Oddělovač, řádek</translation>
+        <translation>Oddělovač, řádek</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="350"/>
         <source>Separator, Paragraph</source>
-        <translation type="unfinished">Oddělovač, odstavec</translation>
+        <translation>Oddělovač, odstavec</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="351"/>
         <source>Other, Control</source>
-        <translation type="unfinished">Jiné, ovládání</translation>
+        <translation>Jiné, ovládání</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="352"/>
         <source>Other, Format</source>
-        <translation type="unfinished">Jiné, formát</translation>
+        <translation>Jiné, formát</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="353"/>
         <source>Other, Surrogate</source>
-        <translation type="unfinished">Jiné, náhrada</translation>
+        <translation>Jiné, náhrada</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="354"/>
         <source>Other, PrivateUse</source>
-        <translation type="unfinished">Jiné, soukromé použití</translation>
+        <translation>Jiné, soukromé použití</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="355"/>
         <source>Other, NotAssigned</source>
-        <translation type="unfinished">Jiné, nepřiděleno</translation>
+        <translation>Jiné, nepřiděleno</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="356"/>
         <source>Letter, Uppercase</source>
-        <translation type="unfinished">Písmeno, velká písmena</translation>
+        <translation>Písmeno, velká písmena</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="357"/>
         <source>Letter, Lowercase</source>
-        <translation type="unfinished">Písmeno, malá písmena</translation>
+        <translation>Písmeno, malá písmena</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="358"/>
         <source>Letter, Titlecase</source>
-        <translation type="unfinished">Písmeno, písmena v nadpisech</translation>
+        <translation>Písmeno, písmena v nadpisech</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="359"/>
         <source>Letter, Modifier</source>
-        <translation type="unfinished">Písmeno, modifikátor</translation>
+        <translation>Písmeno, modifikátor</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="360"/>
         <source>Letter, Other</source>
-        <translation type="unfinished">Písmeno, jiné</translation>
+        <translation>Písmeno, jiné</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="361"/>
         <source>Punctuation, Connector</source>
-        <translation type="unfinished">Interpunkční znaménka, spojovník</translation>
+        <translation>Interpunkční znaménka, spojovník</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="362"/>
         <source>Punctuation, Dash</source>
-        <translation type="unfinished">Interpunkční znaménka, pomlčka</translation>
+        <translation>Interpunkční znaménka, pomlčka</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="363"/>
         <source>Punctuation, Open</source>
-        <translation type="unfinished">Interpunkční znaménka, otevřít</translation>
+        <translation>Interpunkční znaménka, otevřít</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="364"/>
         <source>Punctuation, Close</source>
-        <translation type="unfinished">Interpunkční znaménka, zavřít</translation>
+        <translation>Interpunkční znaménka, zavřít</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="365"/>
         <source>Punctuation, InitialQuote</source>
-        <translation type="unfinished">Interpunkční znaménka, počáteční uvozovky</translation>
+        <translation>Interpunkční znaménka, počáteční uvozovky</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="366"/>
         <source>Punctuation, FinalQuote</source>
-        <translation type="unfinished">Interpunkční znaménka, závěrečné uvozovky</translation>
+        <translation>Interpunkční znaménka, závěrečné uvozovky</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="367"/>
         <source>Punctuation, Other</source>
-        <translation type="unfinished">Interpunkční znaménka, jiná</translation>
+        <translation>Interpunkční znaménka, jiná</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="368"/>
         <source>Symbol, Math</source>
-        <translation type="unfinished">Symbol, matematika</translation>
+        <translation>Symbol, matematika</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="369"/>
         <source>Symbol, Currency</source>
-        <translation type="unfinished">Symbol, měna</translation>
+        <translation>Symbol, měna</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="370"/>
         <source>Symbol, Modifier</source>
-        <translation type="unfinished">Symbol, modifikátor</translation>
+        <translation>Symbol, modifikátor</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="371"/>
         <source>Symbol, Other</source>
-        <translation type="unfinished">Symbol, jiný</translation>
+        <translation>Symbol, jiný</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="376"/>
         <source>Arabic</source>
-        <translation type="unfinished">Arabština</translation>
+        <translation>Arabské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="377"/>
         <source>Armenian</source>
-        <translation type="unfinished">Arménština</translation>
+        <translation>Arménské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="378"/>
         <source>Balinese</source>
-        <translation type="unfinished">Balijština</translation>
+        <translation>Balijské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="379"/>
         <source>Bengali</source>
-        <translation type="unfinished">Bengálština</translation>
+        <translation>Bengálské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="380"/>
         <source>Bopomofo</source>
-        <translation type="unfinished"></translation>
+        <translation>Bopomofo</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="381"/>
         <source>Braille</source>
-        <translation type="unfinished"></translation>
+        <translation>Braillovo/Slepecké písmo</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="382"/>
         <source>Buginese</source>
-        <translation type="unfinished"></translation>
+        <translation>Buginezské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="383"/>
         <source>Buhid</source>
-        <translation type="unfinished"></translation>
+        <translation>Buhidské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="384"/>
         <source>Byzantine Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Byzantská hudba</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="385"/>
         <source>Canadian Syllabics</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanadské slabiky</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="386"/>
         <source>Cherokee</source>
-        <translation type="unfinished">Čerokijské</translation>
+        <translation>Čerokijské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="387"/>
         <source>CJK Ideographic</source>
-        <translation type="unfinished"></translation>
+        <translation>CJK ideogramy</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="388"/>
         <source>Coptic</source>
-        <translation type="unfinished">Kopština</translation>
+        <translation>Koptské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="389"/>
         <source>Cypriot Syllabary</source>
-        <translation type="unfinished">Slabikové kyperské písmo</translation>
+        <translation>Slabikové kyperské písmo</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="390"/>
         <source>Cyrillic</source>
-        <translation type="unfinished">Azbuka</translation>
+        <translation>Azbuka</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="391"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="392"/>
         <source>Deseret</source>
-        <translation type="unfinished">Deseretština</translation>
+        <translation>Deseretské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="393"/>
         <source>Devanagari</source>
-        <translation type="unfinished"></translation>
+        <translation>Devanagarijské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="394"/>
         <source>Ethiopic</source>
-        <translation type="unfinished">Etiopština</translation>
+        <translation>Etiopské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="395"/>
         <source>Georgian</source>
-        <translation type="unfinished">Gruzínština</translation>
+        <translation>Gruzínské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="396"/>
         <source>Glagolitic</source>
-        <translation type="unfinished">Hlaholice</translation>
+        <translation>Hlaholice</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="397"/>
         <source>Gothic</source>
-        <translation type="unfinished">Gotika</translation>
+        <translation>Gotické</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="398"/>
         <source>Greek</source>
-        <translation type="unfinished"></translation>
+        <translation>Řecké</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="399"/>
         <source>Gujarati</source>
-        <translation type="unfinished"></translation>
+        <translation>Gujaratské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="400"/>
         <source>Gurmukhi</source>
-        <translation type="unfinished"></translation>
+        <translation>Gurmucké</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="401"/>
         <source>Hangul Jamo</source>
-        <translation type="unfinished">Korejské písmo hangul jamo</translation>
+        <translation>Korejské písmo hangul jamo</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="402"/>
         <source>Hangul</source>
-        <translation type="unfinished"></translation>
+        <translation>Korejské písmo hangul</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="403"/>
         <source>Hanunoo</source>
-        <translation type="unfinished"></translation>
+        <translation>Hanunoo</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="404"/>
         <source>Hebrew</source>
-        <translation type="unfinished">Hebrejština</translation>
+        <translation>Hebrejské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="405"/>
         <source>Hiragana and Katakana</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiragana a Katakana</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="406"/>
         <source>Javanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Jávské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="407"/>
         <source>Kannada</source>
-        <translation type="unfinished"></translation>
+        <translation>Kannadské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="408"/>
         <source>Kharosthi</source>
-        <translation type="unfinished"></translation>
+        <translation>Kharosthijské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="409"/>
         <source>Khmer</source>
-        <translation type="unfinished">Khmérština</translation>
+        <translation>Khmerské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="410"/>
         <source>Lao</source>
-        <translation type="unfinished"></translation>
+        <translation>Lao</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="411"/>
         <source>Latin</source>
-        <translation type="unfinished"></translation>
+        <translation>Latinka</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="412"/>
         <source>Limbu</source>
-        <translation type="unfinished"></translation>
+        <translation>Limbu</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="413"/>
         <source>Linear B</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineární B</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="414"/>
         <source>Malayalam</source>
-        <translation type="unfinished"></translation>
+        <translation>Malayalamské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="415"/>
         <source>Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished">Matematické alfanumerické symboly</translation>
+        <translation>Matematické alfanumerické symboly</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="416"/>
         <source>Mongolian</source>
-        <translation type="unfinished">Mongolština</translation>
+        <translation>Mongolské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="417"/>
         <source>Musical Symbols</source>
-        <translation type="unfinished">Hudební symboly</translation>
+        <translation>Hudební symboly</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="418"/>
         <source>Myanmar</source>
-        <translation type="unfinished">Myanmarština</translation>
+        <translation>Myanmarské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="419"/>
         <source>N&apos;ko</source>
-        <translation type="unfinished"></translation>
+        <translation>N&apos;Ko</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="420"/>
         <source>Ogham</source>
-        <translation type="unfinished">Ogamština</translation>
+        <translation>Ogamské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="421"/>
         <source>Old Italic</source>
-        <translation type="unfinished">Stará italika</translation>
+        <translation>Stará italika</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="422"/>
         <source>Old Persian Cuneiform</source>
-        <translation type="unfinished"></translation>
+        <translation>Staré perské klínové</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="423"/>
         <source>Oriya</source>
-        <translation type="unfinished"></translation>
+        <translation>Oriya</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="424"/>
         <source>Osmanya</source>
-        <translation type="unfinished"></translation>
+        <translation>Osmanyjské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="425"/>
         <source>Phags-pa</source>
-        <translation type="unfinished"></translation>
+        <translation>Phags-pa</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="426"/>
         <source>Phoenician</source>
-        <translation type="unfinished">Féničtina</translation>
+        <translation>Fénické</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="427"/>
         <source>Runic</source>
-        <translation type="unfinished">Runové</translation>
+        <translation>Runové</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="428"/>
         <source>Shavian</source>
-        <translation type="unfinished">Shavijština</translation>
+        <translation>Shavijské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="429"/>
         <source>Sinhala</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinhálské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="430"/>
         <source>Sumero-Akkadian Cuneiform</source>
-        <translation type="unfinished"></translation>
+        <translation>Sumerské-akadské klínové</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="431"/>
         <source>Syloti Nagri</source>
-        <translation type="unfinished"></translation>
+        <translation>Syloti Nagri</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="432"/>
         <source>Syriac</source>
-        <translation type="unfinished">Syrština</translation>
+        <translation>Syrské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="433"/>
         <source>Tagalog</source>
-        <translation type="unfinished">Filipínština</translation>
+        <translation>Filipínské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="434"/>
         <source>Tagbanwa</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagbanwa</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="435"/>
         <source>Tai Le</source>
-        <translation type="unfinished"></translation>
+        <translation>Tai Le</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="436"/>
         <source>Tai Lu</source>
-        <translation type="unfinished"></translation>
+        <translation>Tai Lu</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="437"/>
         <source>Tamil</source>
-        <translation type="unfinished">Tamilština</translation>
+        <translation>Tamilské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="438"/>
         <source>Telugu</source>
-        <translation type="unfinished"></translation>
+        <translation>Telugské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="439"/>
         <source>Thaana</source>
-        <translation type="unfinished"></translation>
+        <translation>Thaanské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="440"/>
         <source>Thai</source>
-        <translation type="unfinished">Thajština</translation>
+        <translation>Thajské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="441"/>
         <source>Tibetan</source>
-        <translation type="unfinished">Tibetština</translation>
+        <translation>Tibetské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="442"/>
         <source>Tifinagh</source>
-        <translation type="unfinished"></translation>
+        <translation>Tifinaghské</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="443"/>
         <source>Ugaritic Cuneiform</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugaritické klínové</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="444"/>
         <source>Yi</source>
-        <translation type="unfinished"></translation>
+        <translation>Yi</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="491"/>
@@ -3061,12 +3072,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../help.ui" line="13"/>
         <source>Fontmatrix Help</source>
         <translatorcomment>Nápověda k programu Fontmatrix</translatorcomment>
-        <translation type="unfinished">Fontmatrix Help</translation>
+        <translation>Fontmatrix Help</translation>
     </message>
     <message>
         <location filename="../help.ui" line="31"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Zavřít</translation>
     </message>
 </context>
 <context>
@@ -3084,7 +3095,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../helpbrowser.cpp" line="294"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Úpravy</translation>
+        <translation>Úp&amp;ravy</translation>
     </message>
     <message>
         <location filename="../helpbrowser.cpp" line="295"/>
@@ -3643,17 +3654,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainview.ui" line="103"/>
         <source>Quick Search:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rychlé hledání:</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="190"/>
         <source>Save</source>
-        <translation type="unfinished">Uložit</translation>
+        <translation>Uložit</translation>
     </message>
     <message>
         <location filename="../mainview.ui" line="202"/>
         <source>clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyprázdnit</translation>
     </message>
     <message>
         <source>Right mouse click on a tag to add it or remove it from TagSet</source>
@@ -4670,22 +4681,22 @@ při použití příkazu: %2 chyba</translation>
     <message>
         <location filename="../metawidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../metawidget.ui" line="26"/>
         <source>Fill-in text fields and press enter key  or click &quot;Add Filters&quot; button to process filters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Naplňte textová pole a stiskněte klávesu Enter nebo klepněte na tlačítko Přidat filtry pro zpracování filtrů.</translation>
     </message>
     <message>
         <location filename="../metawidget.ui" line="66"/>
         <source>Add Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat filtry</translation>
     </message>
     <message>
         <location filename="../metawidget.ui" line="73"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>
@@ -4706,12 +4717,12 @@ při použití příkazu: %2 chyba</translation>
     <message>
         <location filename="../panosewidget.ui" line="14"/>
         <source>Panose Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Popisná data Panose</translation>
     </message>
     <message>
         <location filename="../panosewidget.ui" line="57"/>
         <source>Panose Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti Panose</translation>
     </message>
 </context>
 <context>
@@ -4719,27 +4730,27 @@ při použití příkazu: %2 chyba</translation>
     <message>
         <location filename="../playwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../playwidget.ui" line="49"/>
         <source>Font Size:</source>
-        <translation type="unfinished">Velikost písma:</translation>
+        <translation>Velikost písma:</translation>
     </message>
     <message>
         <location filename="../playwidget.ui" line="59"/>
         <source> pt</source>
-        <translation type="unfinished"> pt</translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="../playwidget.cpp" line="35"/>
         <source>Playground</source>
-        <translation type="unfinished">Hřiště</translation>
+        <translation>Hřiště</translation>
     </message>
     <message>
         <location filename="../playwidget.cpp" line="107"/>
         <source>Print Playground</source>
-        <translation type="unfinished">Vytisknout hřiště</translation>
+        <translation>Vytisknout hřiště</translation>
     </message>
 </context>
 <context>
@@ -4921,17 +4932,17 @@ při použití příkazu: %2 chyba</translation>
     <message>
         <location filename="../prefs_panel.ui" line="99"/>
         <source>Files &amp; Folders</source>
-        <translation>Soubory &amp; složky</translation>
+        <translation>Soubory a složky</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="195"/>
         <source>Start minimized to system tray</source>
-        <translation>Spouštět minimalizované do systémové části panelu</translation>
+        <translation>Spouštět zmenšené v systémové části panelu</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="202"/>
         <source>Show &quot;All&quot; actions</source>
-        <translation>Ukázat &quot;všechny&quot; kroky</translation>
+        <translation>Ukázat všechny kroky</translation>
     </message>
     <message>
         <location filename="../prefs_panel.ui" line="217"/>
@@ -5267,18 +5278,18 @@ při použití příkazu: %2 chyba</translation>
     <message>
         <location filename="../progressbarduo.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="../progressbarduo.ui" line="20"/>
         <location filename="../progressbarduo.ui" line="34"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Textový popisek</translation>
     </message>
     <message>
         <location filename="../progressbarduo.ui" line="61"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>
@@ -5458,7 +5469,7 @@ rstuvxyz
     <message>
         <location filename="../fminfodisplay.cpp" line="177"/>
         <source>File</source>
-        <translation type="unfinished">File</translation>
+        <translation>Soubor</translation>
     </message>
     <message>
         <location filename="../fminfodisplay.cpp" line="179"/>
@@ -6034,657 +6045,657 @@ rstuvxyz
     <message>
         <location filename="../activationwidget.cpp" line="32"/>
         <source>Activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnutí</translation>
     </message>
     <message>
         <location filename="../chartwidget.cpp" line="39"/>
         <source>Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulka</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="32"/>
         <source>Access All Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Získat všechna náhradní</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="33"/>
         <source>Above-Base Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary nad základem</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="34"/>
         <source>Above-Base Mark Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Umístění značky nad základem</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="35"/>
         <source>Above-Base Substitutions</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrazení nad základem</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="36"/>
         <source>Alternative Fractions</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhradní zlomky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="37"/>
         <source>Akhands</source>
-        <translation type="unfinished"></translation>
+        <translation>Akhand</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="38"/>
         <source>Below-Base Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary pod základem</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="39"/>
         <source>Below-Base Mark Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Umístění značky pod základem</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="40"/>
         <source>Below-Base Substitutions</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrazení pod základem</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="41"/>
         <source>Petite Capitals From Capitals</source>
-        <translation type="unfinished"></translation>
+        <translation>Drobné kapitálky z velkých písmen</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="42"/>
         <source>Small Capitals From Capitals</source>
-        <translation type="unfinished"></translation>
+        <translation>Malé kapitálky z velkých písmen</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="43"/>
         <source>Contextual Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhrady vyplývající ze souvislosti</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="44"/>
         <source>Case-Sensitive Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary rozlišující velká a malá písmena</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="45"/>
         <source>Glyph Composition/Decomposition</source>
-        <translation type="unfinished"></translation>
+        <translation>Složení/Rozklad glyfu</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="46"/>
         <source>Contextual Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Slitky vyplývající ze souvislosti</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="47"/>
         <source>Conjunct Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Spojené tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="48"/>
         <source>Capital Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozestupy velkých písmen</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="49"/>
         <source>Contextual Swash</source>
-        <translation type="unfinished"></translation>
+        <translation>Ozdobné písmeno vyplývající ze souvislosti</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="50"/>
         <source>Cursive Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurzívní umístění</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="51"/>
         <source>Default Processing</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí zpracování</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="52"/>
         <source>Distances</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzdálenosti</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="53"/>
         <source>Discretionary Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepředepsané slitky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="54"/>
         <source>Denominators</source>
-        <translation type="unfinished"></translation>
+        <translation>Jmenovatelé</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="55"/>
         <source>Expert Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Odborné tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="56"/>
         <source>Final glyph Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhrady závěrečného glyfu</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="57"/>
         <source>Terminal Forms #2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary zakončení #2</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="58"/>
         <source>Terminal Forms #3</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary zakončení #3</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="59"/>
         <source>Terminal Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary zakončení</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="60"/>
         <source>Fractions</source>
-        <translation type="unfinished"></translation>
+        <translation>Zlomky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="61"/>
         <source>Full Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Celá šířka</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="62"/>
         <source>Half Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloviční tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="63"/>
         <source>Halant Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary Halant</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="64"/>
         <source>Alternate Half Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhradní poloviční šířka</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="65"/>
         <source>Historical Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Historické tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="66"/>
         <source>Horizontal Kana Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodorovné náhrady Kana</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="67"/>
         <source>Historical Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Historické slitky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="68"/>
         <source>Hangul</source>
-        <translation type="unfinished"></translation>
+        <translation>Korejské písmo hangul</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="69"/>
         <source>Hojo Kanji Forms (JIS x 212-1990 Kanji Forms)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary Hojo Kanji (tvary Kanji JIS x 212-1990)</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="70"/>
         <source>Half Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloviční šířka</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="71"/>
         <source>Initial Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Počáteční tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="72"/>
         <source>Isolated Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Osamocené tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="73"/>
         <source>Italics</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurzíva</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="74"/>
         <source>Justification Alternatives</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhradní zarovnání</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="75"/>
         <source>JIS78 Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary JIS78</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="76"/>
         <source>JIS83 Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary JIS83</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="77"/>
         <source>JIS90 Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary JIS90</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="78"/>
         <source>JIS2004 Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary JIS2004</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="79"/>
         <source>Kerning</source>
-        <translation type="unfinished">Podřezávání</translation>
+        <translation>Podřezávání</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="80"/>
         <source>Left Bounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Levé hranice</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="81"/>
         <source>Standard Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Obvyklé slitky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="82"/>
         <source>Leading Jamo Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary Jamo na začátku</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="83"/>
         <source>Lining Figures</source>
-        <translation type="unfinished"></translation>
+        <translation>Seřazení číslic</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="84"/>
         <source>Localized Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokalizované tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="85"/>
         <source>Mark Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Umístění značky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="86"/>
         <source>Medial Forms #2</source>
-        <translation type="unfinished"></translation>
+        <translation>Průměrné tvary #2</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="87"/>
         <source>Medial Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Průměrné tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="88"/>
         <source>Mathematical Greek</source>
-        <translation type="unfinished"></translation>
+        <translation>Matematické řecké</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="89"/>
         <source>Mark to Mark Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Umístění značky k značce</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="90"/>
         <source>Mark Positioning via Substitution</source>
-        <translation type="unfinished"></translation>
+        <translation>Umístění značky pomocí nahrazení</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="91"/>
         <source>Alternate Annotation Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhradní tvary vysvětlivek</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="92"/>
         <source>NLC Kanji Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary Kanji NLC</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="93"/>
         <source>Nukta Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary Nukta</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="94"/>
         <source>Numerators</source>
-        <translation type="unfinished"></translation>
+        <translation>Čitatelé</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="95"/>
         <source>Old Style Figures</source>
-        <translation type="unfinished"></translation>
+        <translation>Číslice ve starém slohu</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="96"/>
         <source>Optical Bounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Viditelné hranice</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="97"/>
         <source>Ordinals</source>
-        <translation type="unfinished"></translation>
+        <translation>Řadové číslovky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="98"/>
         <source>Ornaments</source>
-        <translation type="unfinished"></translation>
+        <translation>Ozdoby</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="99"/>
         <source>Proportional Alternate Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Poměrná náhradní šířka</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="100"/>
         <source>Petite Capitals</source>
-        <translation type="unfinished"></translation>
+        <translation>Drobná velká písmena (kapitálky)</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="101"/>
         <source>Proportional Figures</source>
-        <translation type="unfinished"></translation>
+        <translation>Poměrné číslice</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="102"/>
         <source>Pre-base Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary před základem</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="103"/>
         <source>Pre-base Substitutions</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhrady před základem</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="104"/>
         <source>Post-base Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary po základu</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="105"/>
         <source>Post-base Substitutions</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhrady po základu</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="106"/>
         <source>Proportional Widths</source>
-        <translation type="unfinished"></translation>
+        <translation>Poměrné šířky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="107"/>
         <source>Quarter Widths</source>
-        <translation type="unfinished"></translation>
+        <translation>Čtvrtinové šířky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="108"/>
         <source>Randomize</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat náhodně</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="109"/>
         <source>Rakar Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary Rakar</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="110"/>
         <source>Required Ligatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Požadované slitky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="111"/>
         <source>Reph Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvar Reph</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="112"/>
         <source>Right Bounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Pravé hranice</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="113"/>
         <source>Right-To-Left Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Pravolevé náhrady</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="114"/>
         <source>Ruby Notation Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary zápisu typu písma Ruby</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="115"/>
         <source>Stylistic Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohové náhrady</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="116"/>
         <source>Scientific Inferiors</source>
-        <translation type="unfinished"></translation>
+        <translation>Vědecké psané jako dolní index</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="117"/>
         <source>Optical Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Viditelná velikost</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="118"/>
         <source>Small Capitals</source>
-        <translation type="unfinished"></translation>
+        <translation>Malé kapitálky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="119"/>
         <source>Simplified Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Zjednodušené tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="120"/>
         <source>Stylistic Set 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 1</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="121"/>
         <source>Stylistic Set 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 2</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="122"/>
         <source>Stylistic Set 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 3</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="123"/>
         <source>Stylistic Set 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 4</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="124"/>
         <source>Stylistic Set 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 5</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="125"/>
         <source>Stylistic Set 6</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 6</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="126"/>
         <source>Stylistic Set 7</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 7</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="127"/>
         <source>Stylistic Set 8</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 8</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="128"/>
         <source>Stylistic Set 9</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 9</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="129"/>
         <source>Stylistic Set 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 10</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="130"/>
         <source>Stylistic Set 11</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 11</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="131"/>
         <source>Stylistic Set 12</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 12</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="132"/>
         <source>Stylistic Set 13</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 13</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="133"/>
         <source>Stylistic Set 14</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 14</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="134"/>
         <source>Stylistic Set 15</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 15</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="135"/>
         <source>Stylistic Set 16</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 16</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="136"/>
         <source>Stylistic Set 17</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 17</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="137"/>
         <source>Stylistic Set 18</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 18</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="138"/>
         <source>Stylistic Set 19</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 19</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="139"/>
         <source>Stylistic Set 20</source>
-        <translation type="unfinished"></translation>
+        <translation>Slohový soubor 20</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="140"/>
         <source>Subscript</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolní index</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="141"/>
         <source>Superscript</source>
-        <translation type="unfinished"></translation>
+        <translation>Horní index</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="142"/>
         <source>Swash</source>
-        <translation type="unfinished"></translation>
+        <translation>Ozdobné písmeno</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="143"/>
         <source>Titling</source>
-        <translation type="unfinished"></translation>
+        <translation>Titulování</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="144"/>
         <source>Trailing Jamo Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary Jamo na konci</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="145"/>
         <source>Traditional Name Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tradiční tvary názvu</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="146"/>
         <source>Tabular Figures</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulkové číslice</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="147"/>
         <source>Traditional Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tradiční tvary</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="148"/>
         <source>Third Widths</source>
-        <translation type="unfinished"></translation>
+        <translation>Třetinové šířky</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="149"/>
         <source>Unicase</source>
-        <translation type="unfinished"></translation>
+        <translation>Jednotná písmovka</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="150"/>
         <source>Alternate Vertical Metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhradní svislá metrika</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="151"/>
         <source>Vattu Variants</source>
-        <translation type="unfinished"></translation>
+        <translation>Obměny Vattu</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="152"/>
         <source>Vertical Writing</source>
-        <translation type="unfinished"></translation>
+        <translation>Svislé písmo</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="153"/>
         <source>Alternate Vertical Half Metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhradní svislá poloviční metrika</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="154"/>
         <source>Vowel Jamo Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvary samohlásek Jamo</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="155"/>
         <source>Vertical Kana Alternates</source>
-        <translation type="unfinished"></translation>
+        <translation>Svislé náhrady Kana</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="156"/>
         <source>Vertical Kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>Svislé podřezávání</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="157"/>
         <source>Proportional Alternate Vertical Metrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Poměrná náhradní svislá metrika</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="158"/>
         <source>Vertical Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Svislé otočení</translation>
     </message>
     <message>
         <location filename="../opentypetags.h" line="159"/>
         <source>Slashed Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Nula s lomítkem</translation>
     </message>
     <message>
         <location filename="../samplewidget.cpp" line="103"/>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázka</translation>
     </message>
 </context>
 <context>
@@ -6701,39 +6712,41 @@ rstuvxyz
     <message>
         <location filename="../sampletoolbar.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../sampletoolbar.ui" line="20"/>
         <source>Font Size:</source>
-        <translation type="unfinished">Velikost písma:</translation>
+        <translation>Velikost písma:</translation>
     </message>
     <message>
         <location filename="../sampletoolbar.ui" line="37"/>
         <source>Samples</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázky</translation>
     </message>
     <message>
         <location filename="../sampletoolbar.ui" line="56"/>
         <source>OpenType</source>
-        <translation type="unfinished">OpenType</translation>
+        <translation>OpenType</translation>
     </message>
     <message>
         <location filename="../sampletoolbar.ui" line="75"/>
         <source>Depending of the font, some scripts 
 are especially supported if processed 
 through some logic (ICU here).</source>
-        <translation type="unfinished"></translation>
+        <translation>V závislosti na písmě jsou některé skripty
+obzvláště podporovány, pokud jsou
+zpracovávány některou logikou (zde ICU).</translation>
     </message>
     <message>
         <location filename="../sampletoolbar.ui" line="84"/>
         <source>Shaping:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvarování:</translation>
     </message>
     <message>
         <location filename="../sampletoolbar.cpp" line="92"/>
         <source>Select language</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat jazyk</translation>
     </message>
 </context>
 <context>
@@ -6741,79 +6754,79 @@ through some logic (ICU here).</source>
     <message>
         <location filename="../samplewidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="80"/>
         <source>World is wide</source>
-        <translation type="unfinished">Svět je rozlehlý</translation>
+        <translation>Svět je rozlehlý</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="118"/>
         <source>Script</source>
         <comment>Writing system</comment>
-        <translation type="unfinished">Skript</translation>
+        <translation>Skript</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="134"/>
         <source>Shaper type</source>
-        <translation type="unfinished">Druh tvarovače</translation>
+        <translation>Druh tvarovače</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="150"/>
         <source>Use shaper</source>
-        <translation type="unfinished">Použít tvarovač</translation>
+        <translation>Použít tvarovač</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="193"/>
         <source>OpenType Features</source>
-        <translation type="unfinished">Vlastnosti OpenType</translation>
+        <translation>Vlastnosti OpenType</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="198"/>
         <source>Friendly Name</source>
-        <translation type="unfinished">Přátelský název</translation>
+        <translation>Přátelský název</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="207"/>
         <source>Save as default</source>
-        <translation type="unfinished">Uložit jako výchozí</translation>
+        <translation>Uložit jako výchozí</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="214"/>
         <source>Reset Default</source>
-        <translation type="unfinished">Přenastavit na výchozí</translation>
+        <translation>Přenastavit na výchozí</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="266"/>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="274"/>
         <source>Add</source>
-        <translation type="unfinished">Přidat</translation>
+        <translation>Přidat</translation>
     </message>
     <message>
         <location filename="../samplewidget.ui" line="281"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <location filename="../samplewidget.cpp" line="797"/>
         <source>User</source>
         <extracomment>Identify root of user defined sample texts</extracomment>
-        <translation type="unfinished">Uživatel</translation>
+        <translation>Uživatel</translation>
     </message>
     <message>
         <location filename="../samplewidget.cpp" line="862"/>
         <source>Print Sample</source>
-        <translation type="unfinished">Vytisknout ukázku</translation>
+        <translation>Vytisknout ukázku</translation>
     </message>
     <message>
         <location filename="../samplewidget.cpp" line="955"/>
         <source>New Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Nová ukázka</translation>
     </message>
 </context>
 <context>
@@ -6821,63 +6834,63 @@ through some logic (ICU here).</source>
     <message>
         <location filename="../scriptconsole.ui" line="13"/>
         <source>Script Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriptovací konzole</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="29"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstup</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="42"/>
         <source># Type your script right here
 </source>
-        <translation type="unfinished"></translation>
+        <translation># Napište svůj skript přesně zde</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="68"/>
         <source>Load</source>
-        <translation type="unfinished">Nahrát</translation>
+        <translation>Nahrát</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="78"/>
         <source>Save</source>
-        <translation type="unfinished">Uložit</translation>
+        <translation>Uložit</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="98"/>
         <source>Execute</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykonat</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="111"/>
         <source>Running label</source>
-        <translation type="unfinished"></translation>
+        <translation>Běžící návěští</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="125"/>
         <source>Output</source>
-        <translation type="unfinished">Výstup</translation>
+        <translation>Výstup</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="143"/>
         <source>Standard Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Obvyklý výstup</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="172"/>
         <source>clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyprázdnit</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="188"/>
         <source>Standard Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Obvyklá chyba</translation>
     </message>
     <message>
         <location filename="../scriptconsole.ui" line="225"/>
         <source>close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Zavřít</translation>
     </message>
 </context>
 <context>
@@ -6963,7 +6976,7 @@ through some logic (ICU here).</source>
     <message>
         <location filename="../filterbar.cpp" line="95"/>
         <source>Activated</source>
-        <translation type="unfinished">Zapnuto</translation>
+        <translation>Zapnuto</translation>
     </message>
 </context>
 <context>
@@ -6971,12 +6984,12 @@ through some logic (ICU here).</source>
     <message>
         <location filename="../tagset.ui" line="19"/>
         <source>TagSet editor</source>
-        <translation type="unfinished">Editor nastavení značek</translation>
+        <translation>Editor nastavení značek</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="64"/>
         <source>Collections of Tags</source>
-        <translation type="unfinished">Sbírky značek</translation>
+        <translation>Sbírky značek</translation>
     </message>
     <message>
         <source>Available tags</source>
@@ -6985,7 +6998,7 @@ through some logic (ICU here).</source>
     <message>
         <location filename="../tagset.ui" line="115"/>
         <source>Add selected tag to current set.</source>
-        <translation type="unfinished">Přidat vybranou značku k nynější sadě.</translation>
+        <translation>Přidat vybranou značku k nynější sadě.</translation>
     </message>
     <message>
         <source>add</source>
@@ -6994,17 +7007,17 @@ through some logic (ICU here).</source>
     <message>
         <location filename="../tagset.ui" line="138"/>
         <source>Collections</source>
-        <translation type="unfinished">Sbírky</translation>
+        <translation>Sbírky</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="153"/>
         <source>New</source>
-        <translation type="unfinished">Nový</translation>
+        <translation>Nový</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="160"/>
         <source>delete</source>
-        <translation type="unfinished">Smazat</translation>
+        <translation>Smazat</translation>
     </message>
     <message>
         <source>remove</source>
@@ -7013,22 +7026,22 @@ through some logic (ICU here).</source>
     <message>
         <location filename="../tagset.ui" line="231"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="80"/>
         <source>Available Tags</source>
-        <translation type="unfinished">Dostupné značky</translation>
+        <translation>Dostupné značky</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="118"/>
         <source>Add</source>
-        <translation type="unfinished">Přidat</translation>
+        <translation>Přidat</translation>
     </message>
     <message>
         <location filename="../tagset.ui" line="187"/>
         <source>Remove</source>
-        <translation type="unfinished">Odstranit</translation>
+        <translation>Odstranit</translation>
     </message>
 </context>
 <context>
@@ -7062,7 +7075,7 @@ následující značku:</translation>
     <message>
         <location filename="../tagswidget_listmodel.cpp" line="20"/>
         <source>New Tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Nová značka</translation>
     </message>
 </context>
 <context>
@@ -7142,32 +7155,32 @@ následující značku:</translation>
     <message>
         <location filename="../multiprintdialog.ui" line="19"/>
         <source>Printing multiple items</source>
-        <translation type="unfinished"></translation>
+        <translation>Tisk více položek</translation>
     </message>
     <message>
         <location filename="../multiprintdialog.ui" line="41"/>
         <source>Views</source>
-        <translation type="unfinished"></translation>
+        <translation>Pohledy</translation>
     </message>
     <message>
         <location filename="../multiprintdialog.ui" line="47"/>
         <source>Informations</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace</translation>
     </message>
     <message>
         <location filename="../multiprintdialog.ui" line="54"/>
         <source>Preview</source>
-        <translation type="unfinished">Preview</translation>
+        <translation>Náhled</translation>
     </message>
     <message>
         <location filename="../multiprintdialog.ui" line="61"/>
         <source>Glyphs chart</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulka glyfů</translation>
     </message>
     <message>
         <location filename="../multiprintdialog.ui" line="68"/>
         <source>Playground</source>
-        <translation type="unfinished">Hřiště</translation>
+        <translation>Hřiště</translation>
     </message>
 </context>
 <context>
@@ -7265,7 +7278,7 @@ následující značku:</translation>
     <message>
         <location filename="../tagswidget.ui" line="41"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Značky</translation>
     </message>
     <message>
         <location filename="../tagswidget.ui" line="57"/>
@@ -7275,7 +7288,7 @@ následující značku:</translation>
     <message>
         <location filename="../tagswidget.ui" line="67"/>
         <source>Remove Tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit značku</translation>
     </message>
 </context>
 <context>
@@ -7464,7 +7477,7 @@ následující značku:</translation>
     <message>
         <location filename="../typotek.cpp" line="1549"/>
         <source>Edit me!</source>
-        <translation type="unfinished"></translation>
+        <translation>Uprav mě!</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="1710"/>
@@ -7513,67 +7526,67 @@ následující značku:</translation>
     <message>
         <location filename="../typotek.cpp" line="658"/>
         <source>&amp;Import Directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zavést adresář...</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="664"/>
         <source>Import &amp;Files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavést &amp;soubory...</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="666"/>
         <source>Import Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavést soubory</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="781"/>
         <source>Playground</source>
-        <translation type="unfinished">Hřiště</translation>
+        <translation>Hřiště</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="783"/>
         <source>Show/Hide Playground</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat/Skrýt hřiště</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="789"/>
         <source>Compare</source>
-        <translation type="unfinished">Porovnání</translation>
+        <translation>Porovnání</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="791"/>
         <source>Show/Hide Compare glyphs</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat/Skrýt porovnání glyfů</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="797"/>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít vše</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="798"/>
         <source>Close all floating windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít všechna plovoucí okna</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="802"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat vše</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="803"/>
         <source>Show all floating windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat všechna plovoucí okna</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="807"/>
         <source>Hide All</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrýt vše</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="808"/>
         <source>Hide all floating windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrýt všechna plovoucí okna</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="816"/>
@@ -7633,22 +7646,22 @@ následující značku:</translation>
     <message>
         <location filename="../typotek.cpp" line="883"/>
         <source>&amp;Scripts</source>
-        <translation>&amp;Skripty</translation>
+        <translation>S&amp;kripty</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="889"/>
         <source>&amp;Service</source>
-        <translation>&amp;Služba</translation>
+        <translation>S&amp;lužba</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="933"/>
         <source>Browse Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Procházet adresáře</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="935"/>
         <source>Toggle Files/Collection view</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepnout pohled soubory/sbírka</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="1208"/>
@@ -7696,7 +7709,7 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
         <location filename="../typotek.cpp" line="2310"/>
         <source>Current Font</source>
         <comment>followed by currently selected font name (in status bar)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nynější písmo</translation>
     </message>
     <message>
         <source>Canât import this font because itâs broken :</source>
@@ -7816,12 +7829,12 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
     <message>
         <location filename="../typotek.cpp" line="524"/>
         <source>Select Files to Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat soubory k zavedení</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="526"/>
         <source>Font Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubory s písmy</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="591"/>
@@ -7898,7 +7911,7 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
     <message>
         <location filename="../typotek.cpp" line="682"/>
         <source>Fill a template file with metadata for packaging currently selected font to a Linux distribution</source>
-        <translation>Naplnit soubor s předlohou údaji pro balení nyní vybraného písma pro linuxovou distribuci</translation>
+        <translation>Naplnit soubor s předlohou popisnými údaji pro balení nyní vybraného písma pro linuxovou distribuci</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="694"/>
@@ -7997,12 +8010,12 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
     <message>
         <location filename="../typotek.cpp" line="775"/>
         <source>Edit PANOSE metadata</source>
-        <translation>Upravit údaje PANOSE</translation>
+        <translation>Upravit údaje Panose</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="776"/>
         <source>Edit PANOSE metadata without saving changes to font files</source>
-        <translation>Upravit údaje PANOSE bez uložení změn do souborů s písmy</translation>
+        <translation>Upravit údaje Panose bez uložení změn do souborů s písmy</translation>
     </message>
     <message>
         <source>Next Family</source>
@@ -8081,7 +8094,7 @@ Teď je čas na zrušení této akce, pokud jste tedy její provedení neměl v 
     <message>
         <location filename="../typotek.cpp" line="861"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Úpravy</translation>
+        <translation>Úp&amp;ravy</translation>
     </message>
     <message>
         <source>&amp;Browse</source>

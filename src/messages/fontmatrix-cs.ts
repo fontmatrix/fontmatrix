@@ -1056,7 +1056,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../fontextractordialog.ui" line="41"/>
         <source>&amp;Browse</source>
-        <translation>&amp;Přechod</translation>
+        <translation>&amp;Procházet</translation>
     </message>
     <message>
         <location filename="../fontextractordialog.ui" line="51"/>
@@ -1800,7 +1800,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../fmfontstrings.cpp" line="96"/>
         <source>Thin</source>
         <comment>Serif style</comment>
-        <translation>Tenké</translation>
+        <translation>Slabé</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="97"/>
@@ -1859,19 +1859,19 @@ p, li { white-space: pre-wrap; }
         <location filename="../fmfontstrings.cpp" line="113"/>
         <source>Very Light</source>
         <comment>Weight</comment>
-        <translation>Velmi lehké</translation>
+        <translation>Velmi jemné</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="114"/>
         <source>Light</source>
         <comment>Weight</comment>
-        <translation>Lehké</translation>
+        <translation>Jemné</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="115"/>
         <source>Thin</source>
         <comment>Weight</comment>
-        <translation>Tenké</translation>
+        <translation>Slabé</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="116"/>
@@ -1883,13 +1883,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../fmfontstrings.cpp" line="117"/>
         <source>Medium</source>
         <comment>Weight</comment>
-        <translation>Středně velké</translation>
+        <translation>Střední</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="118"/>
         <source>Demi</source>
         <comment>Weight</comment>
-        <translation>Polo</translation>
+        <translation>Polotučné</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="119"/>
@@ -1901,7 +1901,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../fmfontstrings.cpp" line="120"/>
         <source>Heavy</source>
         <comment>Weight</comment>
-        <translation>Těžké</translation>
+        <translation>Tmavé</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="121"/>
@@ -1942,25 +1942,25 @@ p, li { white-space: pre-wrap; }
         <location filename="../fmfontstrings.cpp" line="134"/>
         <source>Expanded</source>
         <comment>Proportion</comment>
-        <translation>Roztažené</translation>
+        <translation>Rozšířené</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="135"/>
         <source>Condensed</source>
         <comment>Proportion</comment>
-        <translation>Zhuštěné</translation>
+        <translation>Zúžené</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="136"/>
         <source>Very Expanded</source>
         <comment>Proportion</comment>
-        <translation>Velmi roztažené</translation>
+        <translation>Velmi rozšířené</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="137"/>
         <source>Very Condensed</source>
         <comment>Proportion</comment>
-        <translation>Velmi zhuštěné</translation>
+        <translation>Velmi zúžené</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="138"/>
@@ -2001,7 +2001,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../fmfontstrings.cpp" line="151"/>
         <source>Medium</source>
         <comment>Contrast</comment>
-        <translation>Středně velké</translation>
+        <translation>Střední</translation>
     </message>
     <message>
         <location filename="../fmfontstrings.cpp" line="152"/>
@@ -4618,7 +4618,7 @@ při použití příkazu: %2 chyba</translation>
     <message>
         <location filename="../matchraster.ui" line="108"/>
         <source>&amp;Browse</source>
-        <translation>&amp;Přechod</translation>
+        <translation>&amp;Procházet</translation>
     </message>
     <message>
         <location filename="../matchraster.ui" line="126"/>

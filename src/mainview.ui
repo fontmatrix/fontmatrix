@@ -181,10 +181,8 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="saveButton">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
+                  <property name="toolTip">
+                   <string>Save this filter for later use</string>
                   </property>
                   <property name="text">
                    <string>Save</string>
@@ -193,13 +191,11 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="clearButton">
-                  <property name="font">
-                   <font>
-                    <pointsize>11</pointsize>
-                   </font>
+                  <property name="toolTip">
+                   <string>Reset the filter to show all fonts</string>
                   </property>
                   <property name="text">
-                   <string>clear</string>
+                   <string>Clear</string>
                   </property>
                  </widget>
                 </item>

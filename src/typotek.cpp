@@ -417,8 +417,8 @@ void typotek::open ( QString path, bool recursive, bool announce, bool collect )
 	// I want it :) - pm
 	if ( /*( pathList.count() > 1 )
 		&&*/ ( QMessageBox::question ( this,
-	                                     QString ( "Fontmatrix - %1" ).arg ( tr ( "confirmation" ) ) ,
-	                                     tr ( "Do you confirm you want to import these %1 fonts?" ).arg ( pathList.count() ),
+	                                     QString ( "Fontmatrix - %1" ).arg ( tr ( "Confirmation" ) ) ,
+	                                     tr ( "Do you confirm you want to import %n font(s)?", "", pathList.count()),
 	                                     QMessageBox::Yes | QMessageBox::No,
 	                                     QMessageBox::No )
 	             != QMessageBox::Yes ) )

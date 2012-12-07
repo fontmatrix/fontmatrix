@@ -54,6 +54,9 @@
           <property name="text">
            <string>Return To List</string>
           </property>
+          <property name="shortcut">
+           <string>Esc</string>
+          </property>
          </widget>
         </item>
         <item>

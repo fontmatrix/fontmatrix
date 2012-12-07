@@ -109,7 +109,7 @@
     <message>
         <location filename="../activationwidgetitem.ui" line="51"/>
         <source>Activated</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Активированные</translation>
     </message>
 </context>
 <context>
@@ -538,22 +538,27 @@ Do you want to add it to the filtered fonts?</source>
         <translation>Вернуться в коллекцию</translation>
     </message>
     <message>
-        <location filename="../familywidget.ui" line="101"/>
+        <location filename="../familywidget.ui" line="58"/>
+        <source>Esc</source>
+        <translation>Esc</translation>
+    </message>
+    <message>
+        <location filename="../familywidget.ui" line="104"/>
         <source>Info</source>
         <translation>Сводка</translation>
     </message>
     <message>
-        <location filename="../familywidget.ui" line="114"/>
+        <location filename="../familywidget.ui" line="117"/>
         <source>Activation</source>
         <translation>Активация</translation>
     </message>
     <message>
-        <location filename="../familywidget.ui" line="75"/>
+        <location filename="../familywidget.ui" line="78"/>
         <source>Sample</source>
         <translation>Образец</translation>
     </message>
     <message>
-        <location filename="../familywidget.ui" line="88"/>
+        <location filename="../familywidget.ui" line="91"/>
         <source>Chart</source>
         <translation>Таблица символов</translation>
     </message>
@@ -566,12 +571,12 @@ Do you want to add it to the filtered fonts?</source>
         <translation type="obsolete">Деактивировать</translation>
     </message>
     <message>
-        <location filename="../familywidget.ui" line="140"/>
+        <location filename="../familywidget.ui" line="143"/>
         <source>Family Name</source>
         <translation>Название гарнитуры</translation>
     </message>
     <message>
-        <location filename="../familywidget.ui" line="200"/>
+        <location filename="../familywidget.ui" line="203"/>
         <source>about:blank</source>
         <translation>about:blank</translation>
     </message>
@@ -586,12 +591,12 @@ Do you want to add it to the filtered fonts?</source>
     <message>
         <location filename="../filterbar.ui" line="320"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Что искать</translation>
     </message>
     <message>
         <location filename="../filterbar.ui" line="350"/>
         <source>in</source>
-        <translation type="unfinished"></translation>
+        <translation>Где</translation>
     </message>
     <message>
         <source>Add Filter:</source>
@@ -669,12 +674,12 @@ Do you want to add it to the filtered fonts?</source>
     <message>
         <location filename="../filterbar.cpp" line="563"/>
         <source>Fontmatrix - Filter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название фильтра</translation>
     </message>
     <message>
         <location filename="../filterbar.cpp" line="564"/>
         <source>Filter name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Название фильтра:</translation>
     </message>
 </context>
 <context>
@@ -685,22 +690,22 @@ Do you want to add it to the filtered fonts?</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../filteritem.ui" line="48"/>
+        <location filename="../filteritem.ui" line="47"/>
         <source>TextLabel</source>
         <translation>Метка</translation>
     </message>
     <message>
-        <location filename="../filteritem.ui" line="72"/>
+        <location filename="../filteritem.ui" line="71"/>
         <source>Remove Filter</source>
         <translation>Удалить фильтры</translation>
     </message>
     <message>
-        <location filename="../filteritem.ui" line="78"/>
+        <location filename="../filteritem.ui" line="77"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../filteritem.ui" line="104"/>
+        <location filename="../filteritem.ui" line="103"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -712,17 +717,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filteritem.ui" line="114"/>
+        <location filename="../filteritem.ui" line="113"/>
         <source>&amp;&amp;</source>
         <translation>&amp;&amp;</translation>
     </message>
     <message>
-        <location filename="../filteritem.ui" line="143"/>
+        <location filename="../filteritem.ui" line="142"/>
         <source>if set, it will filter all the fonts but these matching this filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filteritem.ui" line="146"/>
+        <location filename="../filteritem.ui" line="145"/>
         <source>!</source>
         <translation>!</translation>
     </message>
@@ -840,7 +845,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../filtersdialogitem.cpp" line="65"/>
         <source>Confirm deletion of filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердите удаление фильтра:</translation>
     </message>
 </context>
 <context>
@@ -2950,14 +2955,28 @@ p, li { white-space: pre-wrap; }
         <translation>Быстрый поиск:</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="190"/>
-        <source>Save</source>
-        <translation type="unfinished">Сохранить</translation>
+        <location filename="../mainview.ui" line="185"/>
+        <source>Save this filter for later use</source>
+        <translation>Сохранить этот фильтр для дальнейшего использования</translation>
     </message>
     <message>
-        <location filename="../mainview.ui" line="202"/>
+        <location filename="../mainview.ui" line="188"/>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="195"/>
+        <source>Reset the filter to show all fonts</source>
+        <translation>Очистить фильтр и показать все шрифты</translation>
+    </message>
+    <message>
+        <location filename="../mainview.ui" line="198"/>
+        <source>Clear</source>
+        <translation>Очистить</translation>
+    </message>
+    <message>
         <source>clear</source>
-        <translation type="unfinished">Очистить</translation>
+        <translation type="obsolete">Очистить</translation>
     </message>
     <message>
         <source>Font Information</source>
@@ -3337,7 +3356,7 @@ with command: %2</source>
     <message>
         <location filename="../metawidget.ui" line="73"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../metawidget.ui" line="66"/>
@@ -3835,7 +3854,7 @@ Ein Textbeispiel</translation>
     <message>
         <location filename="../progressbarduo.ui" line="61"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
@@ -5605,7 +5624,7 @@ through some logic (ICU here).</source>
     <message>
         <location filename="../filterbar.cpp" line="95"/>
         <source>Activated</source>
-        <translation type="unfinished"></translation>
+        <translation>Активированные</translation>
     </message>
 </context>
 <context>
@@ -6540,14 +6559,12 @@ it is time to cancel if it was not your intent</source>
         <translation type="obsolete">Просмотреть и изменить переменные текстового движка</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="420"/>
         <source>confirmation</source>
-        <translation>Подтверждение</translation>
+        <translation type="obsolete">Подтверждение</translation>
     </message>
     <message>
-        <location filename="../typotek.cpp" line="421"/>
         <source>Do you confirm you want to import these %1 fonts?</source>
-        <translation>Вы действительно хотите импортировать %1 шрифтов?</translation>
+        <translation type="obsolete">Вы действительно хотите импортировать %1 шрифтов?</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="1208"/>
@@ -6580,9 +6597,23 @@ it is time to cancel if it was not your intent</source>
         <translation>Повторно загрузить отфильтрованные</translation>
     </message>
     <message>
+        <location filename="../typotek.cpp" line="420"/>
+        <source>Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../typotek.cpp" line="421"/>
+        <source>Do you confirm you want to import %n font(s)?</source>
+        <translation>
+            <numerusform>Вы действительно хотите импортировать %n шрифт?</numerusform>
+            <numerusform>Вы действительно хотите импортировать %n шрифта?</numerusform>
+            <numerusform>Вы действительно хотите импортировать %n шрифтов?</numerusform>
+        </translation>
+    </message>
+    <message>
         <location filename="../typotek.cpp" line="524"/>
         <source>Select Files to Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите импортируемые файлы</translation>
     </message>
     <message>
         <location filename="../typotek.cpp" line="526"/>

@@ -2392,7 +2392,7 @@ QString typotek::word(FontItem * item, const QString& alt)
 	if(item)
 	{
 		QString word(m_theWord);
-		if(!alt.isEmpty())
+		if(word.isEmpty() && !alt.isEmpty())
 			word = alt;
 		word.replace("<name>", item->fancyName());
 		word.replace("<family>", item->family());

@@ -285,7 +285,7 @@ void FMActivate::activate(QList< FontItem * > fitList, bool act)
 bool FMActivate::addFcReject(const QString & path)
 {
 #ifdef HAVE_FONTCONFIG
-	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
+	QFile fcfile ( QDir::homePath() + "/.config/fontconfig/fonts.conf" );
 	if ( !fcfile.open ( QFile::ReadWrite ) )
 	{
 		qWarning()<<"Cannot open"<< fcfile.fileName();
@@ -380,7 +380,7 @@ bool FMActivate::addFcReject(const QString & path)
 bool FMActivate::remFcReject(const QString & path)
 {
 #ifdef HAVE_FONTCONFIG
-	QFile fcfile ( QDir::homePath() + "/.fonts.conf" );
+	QFile fcfile ( QDir::homePath() + "/.config/fontconfig/fonts.conf" );
 	if ( !fcfile.open ( QFile::ReadWrite ) )
 	{
 		return false;

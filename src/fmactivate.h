@@ -52,7 +52,7 @@ class FMActivate : public QObject
 		
 	private:
 		/*
-		Add and Remove fonts in ~/.fonts.conf
+		Add and Remove fonts in ~/.config/fontconfig/fonts.conf
 		with <selecfont><rejectfont><glob> sequence
 		*/
 		bool addFcReject(const QString& path);

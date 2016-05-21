@@ -151,7 +151,8 @@ QString FMInfoDisplay::writeSVGPreview(FontItem * font)
 				GlyphToSVGHelper gtsh ( gpi->path(), tf );
 				svg += gtsh.getSVGPath() + "\n";
 				horOffset += gpi->data(GLYPH_DATA_HADVANCE).toDouble() * scaleFactor;
-				maxHeight = qMax ( gtsh.getRect().height(), maxHeight );
+				/* cast gtsh.height from qreal (float on ARM) to double so qMax can be done */
+				maxHeight = qMax ( (double) gtsh.getRect().height(), maxHeight );
 				tf.translate( gpi->data(GLYPH_DATA_HADVANCE).toDouble()  * scaleFactor,0 );
 				delete gpi;
 			}

@@ -11,8 +11,8 @@ then we add a few extra dependencies added in the svn version of fontmatrix by t
   sudo apt-get install libqt4-sql-sqlite python-dev libicu-dev 
 
 then we retrive the source code by typing:
-  sudo apt-get install subversion 
-  svn co http://svn.gna.org/svn/undertype/trunk/tools/typotek fontmatrix
+  sudo apt-get install git 
+  git clone https://github.com/fontmatrix/fontmatrix.git
 
 then we build from source by typing:  
   cd fontmatrix

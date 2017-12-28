@@ -27,7 +27,7 @@ class IcuFontImpl : public LEFontInstance
 		~IcuFontImpl();
 		// implements pure virtual methods of LEFontInstance
 
-		const void* getFontTable(LETag   tableTag ) const;
+		const void* getFontTable(LETag   tableTag, size_t &length_sz ) const;
 		le_bool 	canDisplay (LEUnicode32 ch) const {return true;}
 		le_int32 	getUnitsPerEM () const;
 		LEGlyphID 	mapCharToGlyph (LEUnicode32 ch) const ;

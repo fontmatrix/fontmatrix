@@ -248,7 +248,7 @@ IcuFontImpl::~ IcuFontImpl()
 
 }
 
-const void * IcuFontImpl::getFontTable ( LETag tableTag ) const
+const void * IcuFontImpl::getFontTable ( LETag tableTag, size_t &length_sz ) const
 {
 // 	qDebug()<< "IcuFontImpl::getFontTable" << OTF_tag_name( tableTag );
 	FT_Face face ( otf->face() );

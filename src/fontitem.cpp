@@ -3915,7 +3915,7 @@ unsigned short FontItem::getNamedChar(const QString & name)
 		while ( index )
 		{
 			FT_Get_Glyph_Name(m_face, index , buffer, bLen);
-			cname = QString::fromAscii(buffer);
+			cname = QString::fromLatin1(buffer);
 // 			qDebug()<<"NC"<<cname<<cc<<index;
 			if(0 == name.compare(cname))
 			{
@@ -3946,7 +3946,7 @@ QStringList FontItem::getNames()
 		while ( index )
 		{
 			FT_Get_Glyph_Name(m_face, index , buffer, bLen);
-			ret << QString::fromAscii(buffer);
+			ret << QString::fromLatin1(buffer);
 			cc = FT_Get_Next_Char ( m_face, cc, &index );
 		}
 		delete[] buffer;

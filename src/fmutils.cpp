@@ -42,8 +42,8 @@ void printBacktrace ( int frames )
 				char* outbuf = 0;
 				size_t length = 0;
 				int status = 0;
-				outbuf = abi::__cxa_demangle ( mName.trimmed().toAscii().data(), outbuf, &length, &status );
-				name = QString::fromAscii ( outbuf );
+				outbuf = abi::__cxa_demangle ( mName.trimmed().toLatin1().data(), outbuf, &length, &status );
+				name = QString::fromLatin1 ( outbuf );
 				if ( 0 == status )
 				{
 //					qDebug()<<"Demangle success["<< length <<"]"<<name;

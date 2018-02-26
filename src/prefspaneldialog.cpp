@@ -642,7 +642,7 @@ QString PrefsPanelDialog::getKeyText ( int KeyC )
 		res += "Alt+";
 	if ( ( KeyC & Qt::SHIFT ) != 0 )
 		res += "Shift+";
-	return res + QString ( QKeySequence ( KeyC & ~ ( Qt::META | Qt::CTRL | Qt::ALT | Qt::SHIFT ) ) );
+	return res + QString ( QKeySequence ( KeyC & ~ ( Qt::META | Qt::CTRL | Qt::ALT | Qt::SHIFT ) ).toString() );
 }
 
 void PrefsPanelDialog::shortcutSet ( const QString &shortcut )

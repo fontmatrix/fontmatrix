@@ -1,5 +1,7 @@
 # Fontmatrix src/CMakeLists.txt v1
 
+set(QT_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Svg Qt5::Sql Qt5::Xml Qt5::PrintSupport Qt5::WebKitWidgets)
+
 set(fontmatrix_SRCS
 ${CMAKE_CURRENT_SOURCE_DIR}/aboutwidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/activationwidget.cpp
@@ -217,7 +219,7 @@ tagswidget_listmodel.h
 tttableview.h
 typotek.h
 )
-QT4_WRAP_CPP(fontmatrix_MOC_SRCS 
+QT5_WRAP_CPP(fontmatrix_MOC_SRCS 
 ${fontmatrix_MOC_HDRS} 
 ${PYTHONQT_SCRIPTER_MOC_HDRS})
 
@@ -263,7 +265,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/tagswidget.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/textprogression.ui
 ${CMAKE_CURRENT_SOURCE_DIR}/tttablewidget.ui
 )
-QT4_WRAP_UI(fontmatrix_UIS_H 
+QT5_WRAP_UI(fontmatrix_UIS_H 
 ${fontmatrix_UIS}
 ${PYTHONQT_SCRIPTER_UIS}
 )
@@ -277,7 +279,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/langs/unicode/uniblocks.cxx
 SET(fontmatrix_RCCS
 application.qrc
 )
-QT4_ADD_RESOURCES(fontmatrix_RCC_SRCS ${fontmatrix_RCCS})
+QT5_ADD_RESOURCES(fontmatrix_RCC_SRCS ${fontmatrix_RCCS})
 
 FILE( GLOB FM_GLOB_TSS ${CMAKE_CURRENT_SOURCE_DIR}/messages/fontmatrix-*.ts )
 # message(STATUS "lang files: ${FM_GLOB_TSS}")
@@ -299,7 +301,7 @@ ENDIF( TRANSLATOR )
 
 
 
-QT4_ADD_TRANSLATION ( fontmatrix_QMS ${fontmatrix_TSS} )
+qt5_add_translation( fontmatrix_QMS ${fontmatrix_TSS} )
 ADD_CUSTOM_TARGET ( translation_release ALL DEPENDS ${fontmatrix_QMS} )
 
 # ADD_SUBDIRECTORY(messages)

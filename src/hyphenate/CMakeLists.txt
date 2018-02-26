@@ -1,12 +1,13 @@
-INCLUDE_DIRECTORIES(
+include_directories(
 ${CMAKE_SOURCE_DIR}/src
 )
 
-SET(HYPHENATE_SRCS
+set(HYPHENATE_SRCS
 hnjalloc.c
 hyphen.c
 fmhyphenator.cpp
 )
 
-ADD_LIBRARY(hyphenate
+add_library(hyphenate
 STATIC ${HYPHENATE_SRCS})
+target_link_libraries(hyphenate Qt5::Core)

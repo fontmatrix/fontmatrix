@@ -12,7 +12,7 @@
 #include "remotedir.h"
 #include "typotek.h"
 
-#include <QHttp>
+// #include <QHttp>
 #include <QByteArray>
 #include <QBuffer>
 #include <QUrl>
@@ -44,6 +44,7 @@ void RemoteDir::run()
 		buffer->open(QIODevice::WriteOnly);
 		
 		QUrl url(argDirs[ridx]);
+#if 0 // TODO Replace this part of code
 		QHttp *rd = new QHttp(url.host());
 		rd->setObjectName(argDirs[ridx]);
 		https << rd;
@@ -58,17 +59,19 @@ void RemoteDir::run()
 		httpBuffers[rdId] = ba;
 		reverseHttp[rdId] = rd;
 		httpPaths[rdId] = url.path();
-		
+#endif
 	}
 }
 
 
 RemoteDir::~RemoteDir()
 {
+#if 0 // TODO Replace this code
 	foreach(QHttp *h, https)
 	{
 		delete h;
 	}
+#endif
 	foreach(QBuffer *b, buffers)
 	{
 		delete b;
@@ -88,6 +91,7 @@ void RemoteDir::slotEndPreviews(int id, bool error)
 		pendingPixmaps[id] = 2;
 	
 	int pendingReqs(0);
+#if 0 // TODO Replace this code
 	for(int i(0);i < https.count(); ++i)
 	{
 		if (https[i]->hasPendingRequests())
@@ -99,7 +103,7 @@ void RemoteDir::slotEndPreviews(int id, bool error)
 			https[i]->close();
 		}
 	}
-	
+#endif
 	if(!pendingReqs)
 	{
 		qDebug() <<"Get all previews";
@@ -121,6 +125,7 @@ void RemoteDir::slotEndReq(int id, bool error)
 	
 	int ih(0);
 	bool hFound = false;
+#if 0 // TODO Replace this code
 	for(;ih < https.count();++ih)
 	{
 		if(sender() == https[ih])
@@ -129,14 +134,17 @@ void RemoteDir::slotEndReq(int id, bool error)
 			break;
 		}
 	}
+#endif
 	if(!hFound)
 	{
 		qDebug()<< "Oops - Can’t determine which Http object called me";
 		return;
 	}
+#if 0 // TODO Replace this code
 	disconnect( https[ih],SIGNAL(requestFinished( int, bool )),this,SLOT(slotEndReq(int, bool)));
-	
+#endif
 	int pendingReqs(0);
+#if 0 // TODO Replace this code
 	for(int i(0);i < https.count(); ++i)
 	{
 		if (https[i]->hasPendingRequests())
@@ -148,7 +156,7 @@ void RemoteDir::slotEndReq(int id, bool error)
 // 			https[i]->close();
 // 		}
 	}
-	
+#endif
 	if(!pendingReqs)
 	{
 		stopperEndReq = true;
@@ -232,12 +240,13 @@ void RemoteDir::getPreviews()
 			buffer->open(QIODevice::WriteOnly);
 			pixmaps[p] = ba;
 			
+#if 0 // TODO Replace this code
 			connect(reverseHttp[bIt.key()],SIGNAL(requestFinished( int, bool )),this,SLOT(slotEndPreviews(int, bool)));
 			int rdId(reverseHttp[bIt.key()]->get(httpPaths[bIt.key()]+"/"+ p + ".png", buffer));
 			pendingPixmaps[rdId] = 1; 
 // 			qDebug() << "Started download of " << httpPaths[bIt.key()]+"/"+ p + ".png";
 			typotek::getInstance()->showStatusMessage(tr("Downloading") +" "+ httpPaths[bIt.key()]+"/"+ p + ".png");
-			
+#endif
 		}
 	}
 }
@@ -248,6 +257,7 @@ void RemoteDir::slotProgress(int done, int total)
 // 	qDebug()<<"RemoteDir::slotProgress(int done, int total)";
 	int ih(0);
 	bool hFound = false;
+#if 0 // TODO Replace this code
 	for(;ih < https.count();++ih)
 	{
 		if(sender() == https[ih])
@@ -256,13 +266,16 @@ void RemoteDir::slotProgress(int done, int total)
 			break;
 		}
 	}
+#endif
 	if(!hFound)
 	{
 		qDebug()<< "Oops - Can’t determine which Http object called me";
 		return;
 	}
-	QString file(https[ih]->objectName());
+#if 0
+	QString file(https[ih]->objectName()); // TODO Replace this code
 	qDebug()<< file <<" [" <<done << "/"<< total<<"]";
+#endif
 }
 
 /// FontInfo **********************************************

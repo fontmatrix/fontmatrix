@@ -48,7 +48,6 @@
 #include <QTextCodec>
 
 #include <QProgressDialog>
-#include <QHttp>
 
 #include "QDebug"
 
@@ -3178,7 +3177,7 @@ int FontItem::getFromNetwork()
 		delete rFile;
 // 		return false;
 	}
-
+#if 0 // TODO Must be re-implemented
 	rHttp = new QHttp ( url.host() );
 	qDebug() << "Init progress Dialog";
 	rProgressDialog = new QProgressDialog ( typotek::getInstance() );
@@ -3195,6 +3194,7 @@ int FontItem::getFromNetwork()
 	connect ( rHttp,SIGNAL ( stateChanged ( int ) ),this,SLOT ( slotDownloadState ( int ) ) );
 
 	remoteId = rHttp->get ( url.path() , rFile );
+#endif
 	return 2;
 }
 
@@ -3233,7 +3233,9 @@ void FontItem::slotDownloadEnd ( int id, bool error )
 	}
 	rFile->flush();
 	rFile->close();
-	rHttp->close();
+#if 0
+	rHttp->close(); // TODO Must be replaced
+#endif
 
 	delete rProgressDialog;
 	delete rFile;
@@ -3248,6 +3250,7 @@ void FontItem::slotDownloadDone ( bool error )
 
 void FontItem::slotDownloadState ( int state )
 {
+#if 0 // TODO Must be re-implemented
 // 	qDebug() << "slotDownloadState("<<state<<")";
 	if ( state == QHttp::Unconnected  && rHttp )
 	{
@@ -3255,7 +3258,7 @@ void FontItem::slotDownloadState ( int state )
 		delete rHttp;
 		rHttp = 0;
 	}
-
+#endif
 }
 
 

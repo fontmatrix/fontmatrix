@@ -51,7 +51,6 @@ class QGraphicsView;
 class QGraphicsObject;
 
 class QProgressDialog;
-class QHttp;
 class QFile;
 
 
@@ -147,7 +146,7 @@ class FontItem : public QObject
 		bool remoteCached;
 		QString remoteHerePath;
 		bool stopperDownload;
-		QHttp *rHttp;
+// 		QHttp *rHttp; // TODO To be replaced
 		QFile *rFile;
 		int remoteId;
 		QProgressDialog *rProgressDialog;

@@ -196,7 +196,7 @@ HB_Fixed hb_getFontMetric ( HB_Font font, HB_FontMetric metric )
 
 void *HB_Library_Resolve(const char *library, const char *symbol)
 {
-	return QLibrary::resolve(library, symbol);
+	return (void*)QLibrary::resolve(library, symbol); // Not very clean cast
 }
 
 void *HB_TextCodecForMib(int mib)

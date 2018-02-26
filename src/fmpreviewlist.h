@@ -23,7 +23,7 @@
 
 #include <QListView>
 #include <QAbstractListModel>
-#include <QIconEngineV2>
+#include <QIconEngine>
 #include <QPixmap>
 #include <QPoint>
 #include <QPen>
@@ -35,7 +35,7 @@ class QListView;
 
 
 // Rather than fighting against Qt to not resize our icons, draw them ourselves.
-class FMPreviewIconEngine : public QIconEngineV2
+class FMPreviewIconEngine : public QIconEngine
 {
 public:
 	enum Activation{
@@ -48,6 +48,7 @@ public:
 	void paint ( QPainter * painter, const QRect & rect, QIcon::Mode mode, QIcon::State state );
 	void addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, QIcon::State state );
 	void setActivation(Activation a){activatedFont = a;}
+	virtual QIconEngine *clone() const; // TODO Implement this function
 
 private:
 	QPixmap m_p;

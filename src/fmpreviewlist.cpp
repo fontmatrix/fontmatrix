@@ -47,7 +47,7 @@ QRgb FMPreviewIconEngine::partlyActivatedColor =  qRgb (166,220,220);
 
 
 FMPreviewIconEngine::FMPreviewIconEngine()
-	:QIconEngineV2(),
+	:QIconEngine(),
 	activatedFont(NotActivated)
 {
 	if(!initState)
@@ -80,6 +80,12 @@ FMPreviewIconEngine::FMPreviewIconEngine()
 		initState = true;
 	}
 
+}
+
+QIconEngine *FMPreviewIconEngine::clone() const
+{
+	// TODO Implement this function
+	return 0;
 }
 
 QVector<QRgb> FMPreviewIconEngine::actualSelPalette(const QVector<QRgb>& orig)

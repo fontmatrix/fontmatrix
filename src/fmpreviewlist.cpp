@@ -408,13 +408,13 @@ void FMPreviewView::resizeEvent(QResizeEvent * event)
 	else
         {
             int minCellWidth(FM_MINIMUM_PREVIEW_WIDTH + 6);
-            cNr = qRound(actualWidth / minCellWidth);
+            cNr = qRound(double(actualWidth) / minCellWidth);
             minCellWidth =  qRound((double(actualWidth)  / cNr) - 6);
             qDebug()<< "C" << cNr << "U" << minCellWidth ;
             setGridSize(QSize(minCellWidth, gHeight + 12));
             usedWidth = minCellWidth - 6;
         }
-        setIconSize(QSize(qRound(usedWidth), gHeight + 6));
+        setIconSize(QSize(usedWidth, gHeight + 6));
 	QListView::resizeEvent(event);
 }
 

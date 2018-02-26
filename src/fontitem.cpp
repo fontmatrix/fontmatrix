@@ -2357,10 +2357,10 @@ QPixmap FontItem::oneLinePreviewPixmap ( QString oneline , QColor fg_color, QCol
 				continue;
 
 			if ( pRTL )
-				pen.rx() -= qRound ( m_glyph->linearHoriAdvance / 65536 );
+				pen.rx() -= qRound ( double(m_glyph->linearHoriAdvance) / 65536 );
 			apainter.drawImage ( pen.x() +  m_glyph->bitmap_left , pen.y() - m_glyph->bitmap_top , glyphImage(fg_color) );
 			if ( !pRTL )
-				pen.rx() += qRound ( m_glyph->linearHoriAdvance / 65536 );
+				pen.rx() += qRound ( double(m_glyph->linearHoriAdvance) / 65536 );
 		}
 	}
 	else

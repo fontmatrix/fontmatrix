@@ -53,7 +53,7 @@ FamilyWidget::FamilyWidget(QWidget *parent) :
 	ui->familyPreview->setNumCol(1);
 	ui->familyPreview->setModelColumn(1);
 	ui->familyPreview->setViewMode(QListView::IconMode);
-	ui->familyPreview->setIconSize(QSize(qRound(ui->familyPreview->width() ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	ui->familyPreview->setIconSize(QSize(ui->familyPreview->width(), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 	ui->familyPreview->setUniformItemSizes(true);
 	ui->familyPreview->setMovement(QListView::Static);
 
@@ -136,7 +136,7 @@ void FamilyWidget::keyPressEvent(QKeyEvent *event)
 
 void FamilyWidget::slotPreviewUpdateSize(int w)
 {
-	ui->familyPreview->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	ui->familyPreview->setIconSize(QSize(w, 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
 
 void FamilyWidget::setFamily(const QString &f)

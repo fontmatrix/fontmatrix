@@ -64,7 +64,7 @@ MetaWidget::MetaWidget(QWidget *parent) :
 			<< FMFontDb::LicenseDescription
 			<< FMFontDb::AllInfo;
 
-	int limit(qRound((ln.count() + 1) / 2) - 1);
+	int limit = ((ln.count() + 1) / 2) - 1;
 
 	for(int gIdx(0); gIdx < ln.count() ; ++gIdx)
 	{

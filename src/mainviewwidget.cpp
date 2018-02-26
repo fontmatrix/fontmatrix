@@ -93,7 +93,7 @@ MainViewWidget::MainViewWidget ( QWidget *parent )
 	listView->setNumCol(4);
 	listView->setModelColumn(1);
 	listView->setViewMode(QListView::IconMode);
-	listView->setIconSize(QSize(qRound(listView->width() ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	listView->setIconSize(QSize(listView->width(), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 	listView->setUniformItemSizes(true);
 	listView->setMovement(QListView::Static);
 
@@ -1283,6 +1283,6 @@ void MainViewWidget::slotSelectFromQuickSearch()
 
 void MainViewWidget::slotPreviewUpdateSize(int w)
 {
-	listView->setIconSize(QSize(qRound(w ), 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
+	listView->setIconSize(QSize(w, 1.3 * typotek::getInstance()->getPreviewSize() * typotek::getInstance()->getDpiY() / 72.0));
 }
 

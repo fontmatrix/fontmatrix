@@ -12,6 +12,13 @@
 /fontmatrix.kdevelop.pcs
 /fontmatrix.kdevses
 
+CMakeCache.txt
+cmake_install.cmake
+CPackConfig.cmake
+CPackSourceConfig.cmake
+Makefile
+CMakeFiles/
+
 # /harfbuzz/
 /harfbuzz/.git
 /harfbuzz/tests
@@ -21,22 +28,16 @@
 /src/Makefile
 /src/customscene.cpp
 /src/customscene.h
-/src/moc_fontactionwidget.cpp
-/src/moc_typotek.cpp
-/src/moc_mainviewwidget.cpp
-/src/moc_typotekadaptator.cpp
+/src/moc_*.cpp
+/src/qrc_*.cpp
+/src/moc_*.cpp_parameters
+/src/ui_*.h
+/src/*.qm
 /src/mainview.ui_BAK
 /src/Makefile.Release
 /src/Makefile.Debug
-/src/moc_fontbookdialog.cpp
-/src/ui_bookexport.h
 /src/qmake_image_collection.cpp
-/src/ui_fontaction.h
-/src/ui_mainview.h
 /src/fontmatrix_splashscreen.png
-/src/moc_fmsampletextview.cpp
-/src/moc_tagseteditor.cpp
-/src/ui_tagset.h
 
 # /src/messages/
 /src/messages/about.html~

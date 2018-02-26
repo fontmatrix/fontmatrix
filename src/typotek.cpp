@@ -70,6 +70,7 @@
 #include <QProcess>
 #include <QDockWidget>
 #include <QStackedWidget>
+#include <QMessageBox>
 
 #ifdef HAVE_FONTCONFIG
 #include <fontconfig/fontconfig.h>

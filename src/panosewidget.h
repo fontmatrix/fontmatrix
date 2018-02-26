@@ -21,7 +21,7 @@
 #ifndef PANOSEWIDGET_H
 #define PANOSEWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 #include <QItemSelection>
 
 class QTreeWidgetItem;

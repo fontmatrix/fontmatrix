@@ -15,6 +15,7 @@
 #include <QList>
 // #include <QMap>
 #include <QPair>
+#include <QDebug>
 
 #include <QString>
 #include <QStringList>
@@ -83,14 +84,14 @@ struct RenderedGlyph
 	void dump() const
 	{
 		QString ds("glyph %1; log %2; xadv %3; yadv %4; xof %5; yof %6; char %7; hyph %8");
-		qDebug(ds.arg(glyph)
+		qDebug() << ds.arg(glyph)
 				.arg(log)
 				.arg(xadvance)
 				.arg(yadvance)
 				.arg(xoffset)
 				.arg(yoffset)
 				.arg(QChar(lChar))
-				.arg(hyphen.first.count()).toLocal8Bit());
+				.arg(hyphen.first.count());
 	}
 };
 

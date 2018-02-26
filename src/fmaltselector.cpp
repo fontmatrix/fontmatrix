@@ -34,6 +34,7 @@ FMAltSelectorModel::~FMAltSelectorModel()
 
 void FMAltSelectorModel::reModel(FMAltContext * ctx)
 {
+	beginResetModel();
 	if(rootItem)
 		delete rootItem;
 	rootItem = new AltItem(AltItem::TEXT,0);
@@ -69,7 +70,7 @@ void FMAltSelectorModel::reModel(FMAltContext * ctx)
 	}
 	ctx->restoreRun();
 
-	reset();
+	endResetModel();
 }
 
 QModelIndex FMAltSelectorModel::index ( int row, int column, const QModelIndex & parent  ) const

@@ -339,7 +339,7 @@ void HelpBrowser::searchingButton_clicked()
 
 void HelpBrowser::searchingInDirectory(const QString& aDir)
 {
-	QDir dir(QDir::convertSeparators(aDir + "/"));
+	QDir dir(QDir::toNativeSeparators(aDir + "/"));
 	QStringList in;
 	in.append("*.html");
 	QStringList lst = dir.entryList(in);
@@ -373,7 +373,7 @@ void HelpBrowser::searchingInDirectory(const QString& aDir)
 	QStringList dst = dir.entryList(in, QDir::Dirs);
 	for (QStringList::Iterator it = dst.begin(); it != dst.end(); ++it)
 		if ((*it)!="." && (*it)!="..")
-			searchingInDirectory(QDir::convertSeparators(aDir + QString((*it)) + "/"));
+			searchingInDirectory(QDir::toNativeSeparators(aDir + QString((*it)) + "/"));
 }
 
 void HelpBrowser::find()
@@ -415,7 +415,7 @@ void HelpBrowser::bookmarkButton_clicked()
  	if (title.isNull())
  		return;
 	//TODO: start storing full paths
- 	QString toFind(fname.remove(QDir::convertSeparators(finalBaseDir)));
+ 	QString toFind(fname.remove(QDir::toNativeSeparators(finalBaseDir)));
 	toFind=toFind.mid(1, toFind.length()-1);
 	QMapIterator<QString, QString> i(quickHelpIndex);
 	while (i.hasNext())

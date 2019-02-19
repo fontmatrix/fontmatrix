@@ -164,6 +164,8 @@ QModelIndex TagsWidget_ListModel::addTag()
 			return index(i);
 	}
 
+	return QModelIndex();
+
 }
 
 

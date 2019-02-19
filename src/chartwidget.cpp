@@ -127,7 +127,7 @@ QString ChartWidget::currentBlock()
 	return ui->uniPlaneCombo->currentText();
 }
 
-bool ChartWidget::selectBlock(const QString &uname)
+void ChartWidget::selectBlock(const QString &uname)
 {
 	int idx(ui->uniPlaneCombo->findText(uname));
 	if(idx < 0)

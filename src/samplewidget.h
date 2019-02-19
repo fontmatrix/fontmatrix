@@ -98,8 +98,8 @@ public:
 		QByteArray toByteArray() const;
 		State fromByteArray(QByteArray b);
 
-	private:
-		State operator= (const State&){}
+	// private:
+		// State operator= (const State&){}
 	};
 
 	static const QString Name;

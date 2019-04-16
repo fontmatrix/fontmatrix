@@ -41,7 +41,7 @@ public:
     ~ChartWidget();
 
     QString currentBlock();
-    bool selectBlock(const QString& uname);
+    void selectBlock(const QString& uname);
 
 protected:
     void changeEvent(QEvent *e);

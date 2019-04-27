@@ -15,6 +15,7 @@
 #include "hyphenate/fmhyphenator.h"
 #include "fmpaths.h"
 
+#include <QAction>
 #include <QDebug>
 #include <QToolTip>
 #include <QSettings>

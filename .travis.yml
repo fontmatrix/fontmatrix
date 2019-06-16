@@ -8,9 +8,9 @@ install:
   - sudo apt-get -y build-dep fontmatrix
 
 script:
-  - qmake CONFIG+=release PREFIX=/usr -DWANT_PYTHONQT:bool=false -DWANT_ICU:bool=false -DWANT_HARFBUZZ:bool=false 
+  - cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DWANT_PYTHONQT:bool=false -DWANT_ICU:bool=false -DWANT_HARFBUZZ:bool=false 
   - make -j$(nproc)
-  - make INSTALL_ROOT=appdir -j$(nproc) install ; find appdir/
+  - make DESTDIR=appdir -j$(nproc) install ; find appdir/
   - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage

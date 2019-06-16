@@ -1,3 +1,7 @@
+# Fontmatrix
+
+![Screenshot](screenshot.png)
+
 Fontmatrix is a font management application for Linux, Mac and Windows, 
 concieved by Pierre Marchand in 2007.
 
@@ -5,7 +9,7 @@ It helps keeping your font collection in order, allowing you to enable and
 disable availability of fonts and font families in your system. This is a quite helpful tool for designers who tend to have huge collections of typefaces.
 
 Searching for the right font in Fontmatrix is easy thanks to advanced support 
-for Panose and user defined filters, as well as tags.
+for [PANOSE](https://en.wikipedia.org/wiki/PANOSE) and user defined filters, as well as tags.
 
 Fontmatrix is also useful for type designers and enthusiasts, because it 
 simplifies testing of OpenType features and allows comparing fonts glyph by 

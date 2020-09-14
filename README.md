@@ -17,4 +17,4 @@ glyph which is extremely useful for learning type design.
 
 There is an extremely low-traffic mailing list available:
 
-https://mail.gna.org/listinfo/undertype-users/
+https://www.mail-archive.com/undertype-users@gna.org/maillist.html

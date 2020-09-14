@@ -48,7 +48,7 @@ BrowserWidget::BrowserWidget(QWidget *parent) :
 	folderViewContextMenu = 0;
 	currentPage = BROWSER_VIEW_SAMPLE;
 	sample = chart = 0;
-	ffilter << "*.otf" << "*.ttf" << "*.pfb";
+	ffilter << "*.otf" << "*.ttf" << "*.ttc" << "*.pfb";
 	theDirModel = new QDirModel(ffilter, QDir::AllDirs | QDir::Files | QDir::Drives | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
 	theDirModel->setLazyChildCount(true);
 	ui->browserView->setModel(theDirModel);

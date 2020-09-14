@@ -72,7 +72,7 @@ ListDockWidget::ListDockWidget()
 //	previewSize->setValue(typotek::getInstance()->getPreviewSize());
 
 	// Folders tree
-	ffilter << "*.otf" << "*.ttf" << "*.pfb";
+	ffilter << "*.otf" << "*.ttf" << "*.ttc" << "*.pfb";
 	theDirModel = new QDirModel(ffilter, QDir::AllDirs | QDir::Files | QDir::Drives | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
 	theDirModel->setLazyChildCount(true);
 	folderView->setModel(theDirModel);
@@ -414,7 +414,7 @@ void FolderViewMenu::slotImportDir()
 {
 	QDir dir(selectedFileOrDir.absoluteFilePath());
 	QStringList ffilter;
-	ffilter << "*.otf" << "*.ttf" << "*.pfb";
+	ffilter << "*.otf" << "*.ttf" << "*.ttc" << "*.pfb";
 	QStringList fontList = dir.entryList(ffilter);
 	if (fontList.count() < 1)
 		return;

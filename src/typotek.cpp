@@ -387,7 +387,7 @@ void typotek::open ( QString path, bool recursive, bool announce, bool collect )
 		yetHereFonts = FMFontDb::DB()->AllFontNames();
 
 		QStringList filters;
-		filters << "*.otf" << "*.pfb" << "*.ttf" ;
+		filters << "*.otf" << "*.pfb" << "*.ttf" << "*.ttc";
 		foreach ( QString dr, dirList )
 		{
 			QDir d ( dr );
@@ -524,7 +524,7 @@ void typotek::importFiles()
 	QStringList flist = QFileDialog::getOpenFileNames(this,
 							  tr("Select Files to Import"),
 							  QDir::homePath(),
-							  QString("%1 (*.otf *.ttf *.pfb)").arg(tr("Font Files")));
+							 QString("%1 (*.otf *.ttf *.ttc *.pfb)").arg(tr("Font Files")));
 	if(!flist.isEmpty())
 		openList(flist);
 }
@@ -1227,7 +1227,7 @@ void typotek::initDir()
 
 			QStringList dirList ( fontmatrix::exploreDirs ( theDir,0 ) );
 			QStringList filters;
-			filters << "*.otf" << "*.pfb" << "*.ttf" ;
+			filters << "*.otf" << "*.pfb" << "*.ttf" << "*.ttc";
 			foreach ( QString dr, dirList )
 			{
 				QDir d ( dr );
@@ -1430,6 +1430,10 @@ void typotek::dropEvent ( QDropEvent * event )
 		if ( url.scheme() == "file" )
 		{
 			if ( url.toLocalFile().endsWith ( "ttf",Qt::CaseInsensitive ) )
+			{
+				ret << url.toLocalFile();
+			}
+			else if ( url.toLocalFile().endsWith ( "ttc",Qt::CaseInsensitive ) )
 			{
 				ret << url.toLocalFile();
 			}

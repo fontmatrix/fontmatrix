@@ -1,13 +1,10 @@
 # Blocks-13.0.0.txt
-# Date: 2020-09-15, 02:41:00 PDT [KW]
+# Date: 2019-07-10, 19:06:00 GMT [KW]
+# © 2019 Unicode®, Inc.
+# For terms of use, see http://www.unicode.org/terms_of_use.html
 #
 # Unicode Character Database
-# Copyright (c) 1991-2020 Unicode, Inc.
-# For terms of use, see http://www.unicode.org/terms_of_use.html
-# For documentation, see UCD.html
-#
-# Note:   The casing of block names is not normative.
-#         For example, "Basic Latin" and "BASIC LATIN" are equivalent.
+# For documentation, see http://www.unicode.org/reports/tr44/
 #
 # Format:
 # Start Code..End Code; Block Name
@@ -17,8 +14,16 @@
 # Note:   When comparing block names, casing, whitespace, hyphens,
 #         and underbars are ignored.
 #         For example, "Latin Extended-A" and "latin extended a" are equivalent.
-#         For more information on the comparison of property values, 
-#            see UCD.html.
+#         For more information on the comparison of property values,
+#            see UAX #44: http://www.unicode.org/reports/tr44/
+#
+#  All block ranges start with a value where (cp MOD 16) = 0,
+#  and end with a value where (cp MOD 16) = 15. In other words,
+#  the last hexadecimal digit of the start of range is ...0
+#  and the last hexadecimal digit of the end of range is ...F.
+#  This constraint on block ranges guarantees that allocations
+#  are done in terms of whole columns, and that code chart display
+#  never involves splitting columns in the charts.
 #
 #  All code points not explicitly listed for Block
 #  have the value No_Block.
@@ -89,7 +94,7 @@
 1BC0..1BFF; Batak
 1C00..1C4F; Lepcha
 1C50..1C7F; Ol Chiki
-1C80..1C8F; Cyrillic Extended C
+1C80..1C8F; Cyrillic Extended-C
 1C90..1CBF; Georgian Extended
 1CC0..1CCF; Sundanese Supplement
 1CD0..1CFF; Vedic Extensions
@@ -314,7 +319,7 @@ FFF0..FFFF; Specials
 1F100..1F1FF; Enclosed Alphanumeric Supplement
 1F200..1F2FF; Enclosed Ideographic Supplement
 1F300..1F5FF; Miscellaneous Symbols and Pictographs
-1F600..1F64F; Emoticons (Emoji)
+1F600..1F64F; Emoticons
 1F650..1F67F; Ornamental Dingbats
 1F680..1F6FF; Transport and Map Symbols
 1F700..1F77F; Alchemical Symbols

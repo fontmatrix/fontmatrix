@@ -22,3 +22,7 @@ https://www.mail-archive.com/undertype-users@gna.org/maillist.html
 
 The project was originally developed by Pierre Marchand between 2007 and 2011.
 It is currently in maintenance mode and isn't worked on by any actual programmer.
+
+Windows and macOS builds require new contributors. Flatpak build is
+[available on Flathub](https://flathub.org/apps/details/com.github.fontmatrix.Fontmatrix), 
+AppImage build could be created by interested contributors.

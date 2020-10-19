@@ -5,7 +5,7 @@ Requirements :
 	- CMake (>=2.6.0)
 	- Qt 4.4 (with QtWebKit)
 	- Freetype2 (>=2.3.5)
-*not to mention that you need the developpement packages.
+*not to mention that you need the development packages.
 	
 
 Build instructions are (where $FM_SOURCE_DIR is

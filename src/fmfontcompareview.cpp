@@ -414,7 +414,7 @@ QColor FMFontCompareView::getColor(int level)
 
 void FMFontCompareView::mousePressEvent(QMouseEvent * e)
 {
-	if ( e->button() == Qt::MidButton )
+	if ( e->button() == Qt::MiddleButton )
 	{
 		mouseStartPoint =  e->pos() ;
 		isPanning = true;

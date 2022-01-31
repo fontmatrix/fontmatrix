@@ -73,7 +73,7 @@ void FMPlayGround::mousePressEvent ( QMouseEvent * e )
 {
 	closeLine();
 	mouseStartPoint =  e->pos() ;
-	if ( e->button() == Qt::MidButton )
+	if ( e->button() == Qt::MiddleButton )
 	{
 		isPanning = true;
 		return;

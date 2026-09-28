@@ -108,8 +108,8 @@ int main(int argc, char *argv[])
                        "</ul>"));
     aboutData.setLicense(KAboutLicense::GPL_V2, KAboutLicense::OrLaterVersions);
     aboutData.setCopyrightStatement(QStringLiteral("© 2007–2026 FontMatrix contributors"));
-    aboutData.setHomepage(QStringLiteral("https://github.com/eniac111/fontmatrix"));
-    aboutData.setBugAddress(QByteArrayLiteral("https://github.com/eniac111/fontmatrix/issues"));
+    aboutData.setHomepage(QStringLiteral("https://github.com/fontmatrix/fontmatrix"));
+    aboutData.setBugAddress(QByteArrayLiteral("https://github.com/fontmatrix/fontmatrix/issues"));
     aboutData.setOrganizationDomain(QByteArrayLiteral("io.fontmatrix"));
     // The name of the installed .desktop file; without it KAboutData makes one up from the
     // reversed domain ("fontmatrix.io.fontmatrix") and a Wayland compositor finds no launcher

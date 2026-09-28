@@ -20,7 +20,7 @@ The project was originally developed by Pierre Marchand between 2007 and 2011.
 It is currently maintained by Blagovest Petrov.
 
 Bug reports, questions and patches go to the
-[GitHub issue tracker](https://github.com/eniac111/fontmatrix/issues).
+[GitHub issue tracker](https://github.com/fontmatrix/fontmatrix/issues).
 
 The old mailing list is archived and kept for historical purposes only; it is
 no longer used for communication:

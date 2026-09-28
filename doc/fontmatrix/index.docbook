@@ -1043,7 +1043,7 @@ report.</para>
 <sect2 id="contributing-bugreports">
 <title>Reporting bugs and requesting features</title>
 <para>Submit reports to the <ulink
-url="https://github.com/eniac111/fontmatrix/issues">issue
+url="https://github.com/fontmatrix/fontmatrix/issues">issue
 tracker</ulink>. A useful bug report contains: the steps that led to
 the bug; the backtrace if it crashed; and information about your
 system (distribution, Qt version, &fontmatrix; version).</para>
@@ -1057,7 +1057,7 @@ content is moving to DocBook for translation via
 KDE's standard tooling. To start a UI translation:</para>
 <orderedlist>
 <listitem><para>Clone the source: <command>git clone
-https://github.com/eniac111/fontmatrix.git</command></para></listitem>
+https://github.com/fontmatrix/fontmatrix.git</command></para></listitem>
 <listitem><para>Configure with
 <command>cmake&nbsp;-DTRANSLATOR=&lt;locale&gt;</command>.</para></listitem>
 <listitem><para>Run <command>make translation</command>.</para></listitem>
@@ -1086,7 +1086,7 @@ make new features easier to add. If you want to help, see
 <sect1 id="resources-contact">
 <title>Contacting developers and fellow users</title>
 <para>For questions about using &fontmatrix;, visit the
-<ulink url="https://github.com/eniac111/fontmatrix">project
+<ulink url="https://github.com/fontmatrix/fontmatrix">project
 page</ulink>.</para>
 </sect1>
 

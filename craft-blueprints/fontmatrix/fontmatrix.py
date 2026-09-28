@@ -25,13 +25,13 @@ class subinfo(info.infoclass):
     def setTargets(self):
         self.displayName = "Fontmatrix"
         self.description = "Cross-platform font management application built on Qt6 / KF6"
-        self.webpage = "https://github.com/eniac111/fontmatrix"
+        self.webpage = "https://github.com/fontmatrix/fontmatrix"
 
         # CI passes --options fontmatrix.srcDir=<checkout>, so the URL is
         # never fetched — but Craft requires svnTargets to have at least
         # one entry. CRAFT_FONTMATRIX_VERSION_FULL is set by the workflow.
         version = os.environ.get("CRAFT_FONTMATRIX_VERSION_FULL", "master")
-        self.svnTargets[version] = "https://github.com/eniac111/fontmatrix.git"
+        self.svnTargets[version] = "https://github.com/fontmatrix/fontmatrix.git"
         self.defaultTarget = version
 
     def setDependencies(self):

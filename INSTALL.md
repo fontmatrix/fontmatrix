@@ -14,7 +14,7 @@ flatpak run com.github.fontmatrix.Fontmatrix
 ### Windows
 
 A pre-built MSI installer and portable ZIP are attached to each
-[GitHub Release](https://github.com/eniac111/fontmatrix/releases).
+[GitHub Release](https://github.com/fontmatrix/fontmatrix/releases).
 Download and run the MSI — Qt and FreeType runtime DLLs are bundled.
 
 ---
@@ -71,7 +71,7 @@ fonts* and says so when CMake runs. The Flatpak has it.
 Build:
 
 ```bash
-git clone https://github.com/eniac111/fontmatrix.git
+git clone https://github.com/fontmatrix/fontmatrix.git
 cd fontmatrix
 cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build --parallel

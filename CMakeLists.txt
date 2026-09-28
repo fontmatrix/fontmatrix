@@ -367,14 +367,14 @@ IF(WIN32)
 	SET(CPACK_WIX_UPGRADE_GUID "5D8B1A2F-C3E4-4F56-8901-2B3C4D5E6F78")
 	SET(CPACK_PACKAGE_EXECUTABLES "fontmatrix" "Fontmatrix")
 	SET(CPACK_WIX_PROGRAM_MENU_FOLDER "Fontmatrix")
-	SET(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "https://github.com/eniac111/fontmatrix/")
+	SET(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "https://github.com/fontmatrix/fontmatrix/")
 	# Build a combined license file: copyright header + GPL text + VC++ runtime notice.
 	# file(READ) + file(WRITE) runs at configure time; the original COPYING is not touched.
 	file(READ "${CMAKE_SOURCE_DIR}/COPYING" _gpl_text)
 	file(WRITE "${CMAKE_BINARY_DIR}/LICENSE.txt"
 "Fontmatrix ${VERSION} - Font Management Application\n\
 Copyright (C) 2007 Pierre Marchand and contributors\n\
-https://github.com/eniac111/fontmatrix/\n\
+https://github.com/fontmatrix/fontmatrix/\n\
 \n\
 This program is free software: you can redistribute it and/or modify\n\
 it under the terms of the GNU General Public License as published below.\n\

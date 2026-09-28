@@ -1,0 +1,56 @@
+{
+    "id": "com.github.fontmatrix.Fontmatrix",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.10",
+    "sdk": "org.kde.Sdk",
+    "rename-icon": "fontmatrix",
+    "command": "fontmatrix",
+    "separate-locales": false,
+    "finish-args": [
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--device=dri",
+        "--own-name=fontmatrix.io.fontmatrix",
+        "--filesystem=xdg-data/fonts",
+        "--filesystem=xdg-config/fontconfig",
+        "--filesystem=home"
+    ],
+    "cleanup": [
+        "/share/man"
+    ],
+    "modules": [
+        {
+            "name": "podofo",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DBUILD_SHARED_LIBS=OFF",
+                "-DPODOFO_WITH_FONTMANAGER=OFF",
+                "-DPODOFO_BUILD_TEST=OFF",
+                "-DPODOFO_BUILD_EXAMPLES=OFF",
+                "-DPODOFO_BUILD_UNSUPPORTED_TOOLS=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/podofo/podofo/archive/refs/tags/1.1.2.tar.gz",
+                    "sha256": "d6ffe6fc173ac6d6e5b00f5cb9db01990cab1bdf7cc03bdeffce3013bc9ec63a"
+                }
+            ]
+        },
+        {
+            "name": "fontmatrix",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_DISABLE_FIND_PACKAGE_KF6Auth=ON"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "."
+                }
+            ]
+        }
+    ]
+}

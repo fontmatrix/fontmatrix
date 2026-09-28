@@ -1,22 +1,8 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef FILTERITEM_H
 #define FILTERITEM_H
@@ -25,42 +11,48 @@
 
 class FilterData;
 
-namespace Ui {
-	class FilterItem;
+namespace Ui
+{
+class FilterItem;
 }
 
 class FilterItem : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	FilterData* d;
-	QString text;
+    FilterData *d = nullptr;
+    QString text;
+
 public:
-	enum Operation{
-		AND,
-		OR,
-		NOT
-	};
+    enum Operation {
+        AND,
+        OR,
+        NOT
+    };
 
-	explicit FilterItem(FilterData *filter, QWidget *parent = 0);
-	~FilterItem();
+    explicit FilterItem(FilterData *filter, QWidget *parent = nullptr);
+    ~FilterItem() override;
 
-	FilterData* filter(){return d;}
-	void hideOperation(Operation op);
+    FilterData *filter()
+    {
+        return d;
+    }
+    void hideOperation(Operation op);
+    // to call after the text of the filter has changed
+    void updateText();
 
 protected:
-	void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e) override;
 
 private:
-	Ui::FilterItem *ui;
+    Ui::FilterItem *const ui;
 
-signals:
-	void remove();
+Q_SIGNALS:
+    void remove();
 
-private slots:
-	void setAndMode(bool c);
-	void setNoMode(bool c);
-
+private Q_SLOTS:
+    void setAndMode(bool c);
+    void setNoMode(bool c);
 };
 
 #endif // FILTERITEM_H

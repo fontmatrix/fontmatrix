@@ -1,14 +1,8 @@
-//
-// C++ Interface: dumpdialog
-//
-// Description: 
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef DUMPDIALOG_H
 #define DUMPDIALOG_H
@@ -20,23 +14,23 @@ class FMDumpInfo;
 
 class FMDumpDialog : public QDialog, private Ui::DumpDialog
 {
-	Q_OBJECT
-	public:
-		FMDumpDialog(FontItem * font, QWidget * parent);
-		~FMDumpDialog();
+    Q_OBJECT
+public:
+    FMDumpDialog(FontItem *font, QWidget *parent);
+    ~FMDumpDialog() override;
 
-		QString getModel() const;
-		QString getFilePath() const;
-		
-	private:
-		FMDumpInfo * m_dumpinfo;
-		
-	private slots:
-		void slotDumpIt();
-		void browseFile();
-		void browseModel();
-		
-		void insertSelectedField();
+    [[nodiscard]] QString getModel() const;
+    [[nodiscard]] QString getFilePath() const;
+
+private:
+    FMDumpInfo *m_dumpinfo = nullptr;
+
+private Q_SLOTS:
+    void slotDumpIt();
+    void browseFile();
+    void browseModel();
+
+    void insertSelectedField();
 };
 
 #endif // DUMPDIALOG_H

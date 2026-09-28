@@ -11,20 +11,20 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <widget class="QPushButton" name="activateAll">
      <property name="text">
-      <string>Activate All</string>
+      <string comment="@action:button">Activate All</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
     <widget class="QPushButton" name="deactivateAll">
      <property name="text">
-      <string>Deactivate All</string>
+      <string comment="@action:button">Deactivate All</string>
      </property>
     </widget>
    </item>

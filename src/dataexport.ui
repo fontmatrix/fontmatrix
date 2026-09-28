@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Export Data</string>
+   <string comment="@title:window">Export Data</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -20,7 +20,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>The font files currently filtered and selected here will be copied in a directory of your choice.</string>
+      <string comment="@label">The font files currently filtered and selected here will be copied in a directory of your choice.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -33,14 +33,14 @@
       <item row="0" column="1">
        <widget class="QPushButton" name="cancelButton">
         <property name="text">
-         <string>Cancel</string>
+         <string comment="@action:button">Cancel</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="continueButton">
         <property name="text">
-         <string>Continue</string>
+         <string comment="@action:button">Continue</string>
         </property>
        </widget>
       </item>
@@ -64,7 +64,6 @@
   <zorder>listWidget</zorder>
   <zorder>label</zorder>
   <zorder>widget</zorder>
-  <zorder>horizontalSpacer</zorder>
  </widget>
  <resources/>
  <connections/>

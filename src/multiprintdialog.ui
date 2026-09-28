@@ -16,7 +16,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle" >
-   <string>Printing multiple items</string>
+   <string comment="@title:window">Printing multiple items</string>
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
@@ -38,34 +38,34 @@
       </sizepolicy>
      </property>
      <property name="title" >
-      <string>Views</string>
+      <string comment="@title:group">Views</string>
      </property>
      <layout class="QGridLayout" >
       <item row="0" column="0" >
        <widget class="QCheckBox" name="checkInfo" >
         <property name="text" >
-         <string>Informations</string>
+         <string comment="@option:check">Informations</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1" >
        <widget class="QCheckBox" name="checkPreview" >
         <property name="text" >
-         <string>Preview</string>
+         <string comment="@option:check">Preview</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2" >
        <widget class="QCheckBox" name="checkChart" >
         <property name="text" >
-         <string>Glyphs chart</string>
+         <string comment="@option:check">Glyphs chart</string>
         </property>
        </widget>
       </item>
       <item row="0" column="3" >
        <widget class="QCheckBox" name="checkPlayground" >
         <property name="text" >
-         <string>Playground</string>
+         <string comment="@option:check">Playground</string>
         </property>
        </widget>
       </item>

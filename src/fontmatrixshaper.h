@@ -1,14 +1,8 @@
-//
-// C++ Interface: fontmatrixshaper
-//
-// Description: 
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef FONTMATRIXSHAPER_H
 #define FONTMATRIXSHAPER_H
@@ -18,16 +12,15 @@
 
 class FontmatrixShaper : public FMBaseShaper
 {
-	public:
-	FontmatrixShaper(FMOtf* o, QString s);
-	~FontmatrixShaper();
-	
-	GlyphList doShape( const QString& s );
-	private:
-		FMOwnShaper *fmos;
+public:
+    FontmatrixShaper(FMOtf *o, QString s);
+    ~FontmatrixShaper() override;
+
+    GlyphList doShape(const QString &s) override;
+
+private:
+    Q_DISABLE_COPY(FontmatrixShaper)
+    FMOwnShaper *fmos = nullptr;
 };
 
 #endif
-
-
-

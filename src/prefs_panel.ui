@@ -10,10 +10,10 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Preferences Panel</string>
+   <string comment="@title:window">Preferences Panel</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="application.qrc" >
+   <iconset theme="fontmatrix" resource="application.qrc" >
     <normaloff>:/fontmatrix_icon.png</normaloff>:/fontmatrix_icon.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_13" >
@@ -33,7 +33,7 @@
    <item row="1" column="1" >
     <widget class="QPushButton" name="closeButton" >
      <property name="text" >
-      <string>Close</string>
+      <string comment="@action:button">Close</string>
      </property>
     </widget>
    </item>
@@ -71,37 +71,37 @@
       </property>
       <item>
        <property name="text" >
-        <string>General</string>
+        <string comment="@item:inlistbox">General</string>
        </property>
       </item>
       <item>
        <property name="text" >
-        <string>System tray</string>
+        <string comment="@item:inlistbox">System tray</string>
        </property>
       </item>
       <item>
        <property name="text" >
-        <string>Display</string>
+        <string comment="@item:inlistbox">Display</string>
        </property>
       </item>
       <item>
        <property name="text" >
-        <string>Service</string>
+        <string comment="@item:inlistbox">Tools</string>
        </property>
       </item>
       <item>
        <property name="text" >
-        <string>Samples collection</string>
+        <string comment="@item:inlistbox">Samples collection</string>
        </property>
       </item>
       <item>
        <property name="text" >
-        <string>Files &amp; Folders</string>
+        <string comment="@item:inlistbox">Files &amp; Folders</string>
        </property>
       </item>
       <item>
        <property name="text" >
-        <string>Shortcuts</string>
+        <string comment="@item:inlistbox">Shortcuts</string>
        </property>
       </item>
      </widget>
@@ -120,27 +120,27 @@
         <item row="0" column="0" >
          <widget class="QGroupBox" name="groupBox_10" >
           <property name="title" >
-           <string>General</string>
+           <string comment="@title:group">General</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_14" >
            <item row="0" column="0" >
             <widget class="QCheckBox" name="initTagBox" >
              <property name="text" >
-              <string>Ask for tag names when importing fonts</string>
+              <string comment="@option:check">Ask for tag names when importing fonts</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0" >
             <widget class="QCheckBox" name="showNamesBox" >
              <property name="text" >
-              <string>Show names of imported fonts after import process</string>
+              <string comment="@option:check">Show names of imported fonts after import process</string>
              </property>
             </widget>
            </item>
            <item row="2" column="0" >
             <widget class="QCheckBox" name="splashCheck" >
              <property name="text" >
-              <string>Show splash at startup</string>
+              <string comment="@option:check">Show splash at startup</string>
              </property>
             </widget>
            </item>
@@ -167,7 +167,7 @@
         <item row="0" column="0" >
          <widget class="QGroupBox" name="systrayFrame" >
           <property name="title" >
-           <string>Show Fontmatrix in System Tray</string>
+           <string comment="@title:group">Show Fontmatrix in System Tray</string>
           </property>
           <property name="flat" >
            <bool>false</bool>
@@ -182,7 +182,7 @@
            <item>
             <widget class="QCheckBox" name="closeToSystray" >
              <property name="text" >
-              <string>Close to system tray</string>
+              <string comment="@option:check">Close to system tray</string>
              </property>
              <property name="checked" >
               <bool>true</bool>
@@ -192,14 +192,14 @@
            <item>
             <widget class="QCheckBox" name="startToSystemTray" >
              <property name="text" >
-              <string>Start minimized to system tray</string>
+              <string comment="@option:check">Start minimized to system tray</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QGroupBox" name="activateAllFrame" >
              <property name="title" >
-              <string>Show "All" actions</string>
+              <string comment="@title:group">Show "All" actions</string>
              </property>
              <property name="alignment" >
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -214,7 +214,7 @@
               <item>
                <widget class="QCheckBox" name="activateAllConfirmation" >
                 <property name="text" >
-                 <string>Ask for confirmation when activating or deactivating all fonts</string>
+                 <string comment="@option:check">Ask for confirmation when activating or deactivating all fonts</string>
                 </property>
                 <property name="checked" >
                  <bool>true</bool>
@@ -227,7 +227,7 @@
            <item>
             <widget class="QCheckBox" name="tagsConfirmation" >
              <property name="text" >
-              <string>Ask for confirmation when activating or deactivating fonts by tags</string>
+              <string comment="@option:check">Ask for confirmation when activating or deactivating fonts by tags</string>
              </property>
             </widget>
            </item>
@@ -254,13 +254,13 @@
         <item row="0" column="0" colspan="2" >
          <widget class="QGroupBox" name="groupBox" >
           <property name="title" >
-           <string>Preview Word</string>
+           <string comment="@title:group">Preview Word</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_12" >
            <item row="0" column="0" >
             <widget class="QLabel" name="label_10" >
              <property name="text" >
-              <string>Word:</string>
+              <string comment="@label">Word:</string>
              </property>
              <property name="buddy" >
               <cstring>previewWord</cstring>
@@ -299,7 +299,7 @@
               </sizepolicy>
              </property>
              <property name="text" >
-              <string>Default font size:</string>
+              <string comment="@label">Default font size:</string>
              </property>
              <property name="alignment" >
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -324,7 +324,7 @@
               <bool>true</bool>
              </property>
              <property name="suffix" >
-              <string> pt</string>
+              <string comment="@item:valuesuffix"> pt</string>
              </property>
              <property name="decimals" >
               <number>1</number>
@@ -340,14 +340,14 @@
            <item row="2" column="0" >
             <widget class="QCheckBox" name="previewSubtitled" >
              <property name="text" >
-              <string>subtitled</string>
+              <string comment="@option:check">subtitled</string>
              </property>
             </widget>
            </item>
            <item row="3" column="0" >
             <widget class="QCheckBox" name="previewIsRTL" >
              <property name="text" >
-              <string>is RTL</string>
+              <string comment="@option:check">is RTL</string>
              </property>
             </widget>
            </item>
@@ -357,60 +357,25 @@
         <item row="1" column="0" >
          <widget class="QGroupBox" name="groupBox_7" >
           <property name="title" >
-           <string>Chart Subtitle Font</string>
+           <string comment="@title:group">Chart Subtitle Font</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_5" >
-           <item row="0" column="0" colspan="2" >
-            <widget class="QFontComboBox" name="chartFontCombo" />
-           </item>
-           <item row="1" column="1" >
-            <widget class="QSpinBox" name="chartFontSpin" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="suffix" >
-              <string> pt</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" >
-            <widget class="QLabel" name="label_8" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
-               <horstretch>1</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text" >
-              <string>Size:</string>
-             </property>
-             <property name="alignment" >
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="buddy" >
-              <cstring>chartFontSpin</cstring>
-             </property>
-            </widget>
+           <item row="0" column="0" >
+            <widget class="KFontRequester" name="chartFontRequester" />
            </item>
           </layout>
-          <zorder>chartFontCombo</zorder>
-          <zorder>chartFontSpin</zorder>
-          <zorder>label_8</zorder>
          </widget>
         </item>
         <item row="1" column="1" >
          <widget class="QGroupBox" name="groupBox_3" >
           <property name="title" >
-           <string>Initial Layout</string>
+           <string comment="@title:group">Initial Layout</string>
           </property>
           <layout class="QFormLayout" name="formLayout" >
            <item row="0" column="0" >
             <widget class="QLabel" name="label_2" >
              <property name="text" >
-              <string>Font Size:</string>
+              <string comment="@label">Font Size:</string>
              </property>
              <property name="buddy" >
               <cstring>fontSizeSpin</cstring>
@@ -420,7 +385,7 @@
            <item row="0" column="1" >
             <widget class="QDoubleSpinBox" name="fontSizeSpin" >
              <property name="suffix" >
-              <string> pt</string>
+              <string comment="@item:valuesuffix"> pt</string>
              </property>
              <property name="minimum" >
               <double>1.000000000000000</double>
@@ -430,7 +395,7 @@
            <item row="1" column="0" >
             <widget class="QLabel" name="label_3" >
              <property name="text" >
-              <string>linespacing:</string>
+              <string comment="@label">linespacing:</string>
              </property>
              <property name="buddy" >
               <cstring>interLineSpin</cstring>
@@ -440,7 +405,7 @@
            <item row="1" column="1" >
             <widget class="QDoubleSpinBox" name="interLineSpin" >
              <property name="suffix" >
-              <string> pt</string>
+              <string comment="@item:valuesuffix"> pt</string>
              </property>
              <property name="minimum" >
               <double>1.000000000000000</double>
@@ -454,28 +419,6 @@
           <zorder>label_2</zorder>
          </widget>
         </item>
-        <item row="2" column="0" colspan="2" >
-         <widget class="QGroupBox" name="groupBox_11" >
-          <property name="title" >
-           <string>Information Style</string>
-          </property>
-          <layout class="QFormLayout" name="formLayout_2" >
-           <item row="0" column="0" >
-            <widget class="QLabel" name="label_7" >
-             <property name="text" >
-              <string>Select Style</string>
-             </property>
-             <property name="buddy" >
-              <cstring>infoStyleCombo</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" >
-            <widget class="QComboBox" name="infoStyleCombo" />
-           </item>
-          </layout>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_5" >
@@ -483,8 +426,10 @@
         <item row="0" column="0" >
          <widget class="QGroupBox" name="groupBox_4" >
           <property name="title" >
-           <string>Fonts Editor</string>
+           <string comment="@title:group">Fonts Editor</string>
           </property>
+          <layout class="QVBoxLayout" name="fontEditorLayout" >
+           <item>
           <layout class="QHBoxLayout" name="_5" >
            <item>
             <widget class="QLineEdit" name="fontEditorPath" >
@@ -495,17 +440,17 @@
               </size>
              </property>
              <property name="toolTip" >
-              <string>Add the full path to your preferred font editor</string>
+              <string comment="@info:tooltip">Add the full path to your preferred font editor</string>
              </property>
              <property name="text" >
-              <string>/usr/bin/fontforge</string>
+              <string notr="true">/usr/bin/fontforge</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="fontEditorBrowse" >
              <property name="text" >
-              <string>Browse...</string>
+              <string comment="@action:button">Browse...</string>
              </property>
             </widget>
            </item>
@@ -523,69 +468,16 @@
             </spacer>
            </item>
           </layout>
-         </widget>
-        </item>
-        <item row="1" column="0" >
-         <widget class="QGroupBox" name="groupBox_9" >
-          <property name="title" >
-           <string>Help Browser</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_9" >
-           <item row="0" column="0" colspan="2" >
-            <widget class="QComboBox" name="browserCombo" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
            </item>
-           <item row="2" column="1" >
-            <widget class="QLineEdit" name="browserOptions" />
-           </item>
-           <item row="2" column="0" >
-            <widget class="QLabel" name="label_9" >
+           <item>
+            <widget class="QLabel" name="fontEditorNote" >
              <property name="text" >
-              <string>Extra options:</string>
+              <string comment="@info">Fontmatrix is running in a sandbox and cannot start a program of the system. &lt;interface&gt;Edit current font&lt;/interface&gt; hands the font file to the desktop, which asks you which application should open it.</string>
              </property>
-             <property name="buddy" >
-              <cstring>browserOptions</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2" >
-            <spacer name="horizontalSpacer_3" >
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="2" >
-            <widget class="QPushButton" name="browserButton" >
-             <property name="text" >
-              <string>Browse...</string>
+             <property name="wordWrap" >
+              <bool>true</bool>
              </property>
             </widget>
-           </item>
-           <item row="0" column="3" >
-            <spacer name="horizontalSpacer_5" >
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0" >
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
@@ -593,10 +485,10 @@
         <item row="2" column="0" >
          <widget class="QGroupBox" name="groupBox_8" >
           <property name="toolTip" >
-           <string>Select an  hyphenation dict file as it comes with OpenOffice or Scribus</string>
+           <string comment="@info:tooltip">Select an  hyphenation dict file as it comes with OpenOffice or Scribus</string>
           </property>
           <property name="title" >
-           <string>Hyphenation dictionary</string>
+           <string comment="@title:group">Hyphenation dictionary</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_10" >
            <item row="0" column="0" colspan="4" >
@@ -605,10 +497,10 @@
            <item row="0" column="4" >
             <widget class="QToolButton" name="dictButton" >
              <property name="toolTip" >
-              <string>Browse</string>
+              <string comment="@info:tooltip">Browse</string>
              </property>
              <property name="text" >
-              <string>Browse...</string>
+              <string comment="@action:button">Browse...</string>
              </property>
             </widget>
            </item>
@@ -628,7 +520,7 @@
            <item row="1" column="0" >
             <widget class="QLabel" name="label_5" >
              <property name="text" >
-              <string>Left:</string>
+              <string comment="@label">Left:</string>
              </property>
              <property name="buddy" >
               <cstring>fontSizeSpin</cstring>
@@ -641,7 +533,7 @@
            <item row="1" column="2" >
             <widget class="QLabel" name="label_6" >
              <property name="text" >
-              <string>Right:</string>
+              <string comment="@label">Right:</string>
              </property>
              <property name="buddy" >
               <cstring>interLineSpin</cstring>
@@ -683,7 +575,7 @@
            <string/>
           </property>
           <property name="title" >
-           <string>Sample Texts</string>
+           <string comment="@title:group">Sample Texts</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_16" >
            <item row="0" column="0" >
@@ -723,7 +615,7 @@
                   </size>
                  </property>
                  <property name="text" >
-                  <string>+</string>
+                  <string notr="true">+</string>
                  </property>
                 </widget>
                </item>
@@ -742,7 +634,7 @@
                   </size>
                  </property>
                  <property name="text" >
-                  <string>−</string>
+                  <string notr="true">−</string>
                  </property>
                 </widget>
                </item>
@@ -772,7 +664,7 @@
                <item row="1" column="2" >
                 <widget class="QPushButton" name="commitSample" >
                  <property name="text" >
-                  <string>Save</string>
+                  <string comment="@action:button">Save</string>
                  </property>
                 </widget>
                </item>
@@ -816,7 +708,7 @@
         <item row="0" column="0" >
          <widget class="QGroupBox" name="groupBox_5" >
           <property name="title" >
-           <string>Templates Folder</string>
+           <string comment="@title:group">Templates Folder</string>
           </property>
           <layout class="QGridLayout" name="_6" >
            <item row="0" column="0" >
@@ -832,7 +724,7 @@
            <item row="0" column="1" >
             <widget class="QPushButton" name="templatesDirBrowse" >
              <property name="text" >
-              <string>Browse...</string>
+              <string comment="@action:button">Browse...</string>
              </property>
             </widget>
            </item>
@@ -853,93 +745,83 @@
          </widget>
         </item>
         <item row="1" column="0" >
-         <widget class="QGroupBox" name="groupBox_6" >
+         <widget class="QGroupBox" name="remoteDirsBox" >
           <property name="title" >
-           <string>Remote directories</string>
+           <string comment="@title:group">Remote Directories</string>
           </property>
-          <layout class="QGridLayout" name="_7" >
-           <item row="0" column="0" >
-            <layout class="QHBoxLayout" name="_8" >
-             <item>
-              <widget class="QLineEdit" name="newUrlText" >
-               <property name="text" >
-                <string>http://</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="remoteDirAdd" >
-               <property name="minimumSize" >
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text" >
-                <string>Add</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="0" >
-            <layout class="QHBoxLayout" name="_9" >
-             <item>
-              <widget class="QListWidget" name="remoteDirList" />
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="_10" >
-               <item>
-                <widget class="QPushButton" name="remoteDirRemove" >
-                 <property name="text" >
-                  <string>Remove</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer>
-                 <property name="orientation" >
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0" >
-                  <size>
-                   <width>100</width>
-                   <height>41</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0" >
-            <widget class="Line" name="line" >
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
+          <property name="toolTip" >
+           <string comment="@info:tooltip">A web directory made with File → Export fonts. Its fonts are listed here with their previews and tags; a font's file is downloaded when it is opened or activated.</string>
+          </property>
+          <layout class="QGridLayout" name="remoteDirsLayout" >
+           <item row="0" column="0" colspan="3" >
+            <widget class="QListWidget" name="remoteDirsList" >
+             <property name="minimumSize" >
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
              </property>
             </widget>
            </item>
-           <item row="3" column="0" >
-            <layout class="QHBoxLayout" name="_11" >
-             <item>
-              <widget class="QLabel" name="label_4" >
-               <property name="text" >
-                <string>Local storage</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="localStorageLine" />
-             </item>
-             <item>
-              <widget class="QPushButton" name="localStorageButton" >
-               <property name="text" >
-                <string>Browse...</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+           <item row="1" column="0" >
+            <widget class="QLineEdit" name="remoteDirEdit" >
+             <property name="placeholderText" >
+              <string notr="true">https://server/fonts/</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1" >
+            <widget class="QPushButton" name="remoteDirAdd" >
+             <property name="text" >
+              <string comment="@action:button">Add</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2" >
+            <widget class="QPushButton" name="remoteDirRemove" >
+             <property name="text" >
+              <string comment="@action:button">Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="3" >
+            <widget class="QLabel" name="remoteDirsNote" >
+             <property name="text" >
+              <string comment="@info">The catalogue of a directory is read when it is added and at every start. Fonts already listed stay after the directory is removed.</string>
+             </property>
+             <property name="wordWrap" >
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QGroupBox" name="activationScopeBox" >
+          <property name="title" >
+           <string comment="@title:group">Activation</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_activation" >
+           <item>
+            <widget class="QCheckBox" name="systemWideCheck" >
+             <property name="text" >
+              <string comment="@option:check">Activate fonts for all users of this computer</string>
+             </property>
+             <property name="toolTip" >
+              <string comment="@info:tooltip">Asks for the administrator's password. The fonts are copied into /usr/local/share/fonts/fontmatrix and the hidden system fonts are hidden from everybody.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="systemWideNote" >
+             <property name="text" >
+              <string comment="@info">Fonts activated before the change stay where they are: in your own folder, or in the folder of the system.</string>
+             </property>
+             <property name="wordWrap" >
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -959,7 +841,7 @@
              </sizepolicy>
             </property>
             <property name="text" >
-             <string>Change</string>
+             <string comment="@action:button">Change</string>
             </property>
             <property name="checkable" >
              <bool>true</bool>
@@ -975,14 +857,14 @@
              </sizepolicy>
             </property>
             <property name="text" >
-             <string>Remove</string>
+             <string comment="@action:button">Remove</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="shortcutLabel" >
             <property name="text" >
-             <string>TextLabel</string>
+             <string notr="true">TextLabel</string>
             </property>
            </widget>
           </item>
@@ -1015,6 +897,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KFontRequester</class>
+   <extends>QWidget</extends>
+   <header>KFontRequester</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="application.qrc" />
  </resources>

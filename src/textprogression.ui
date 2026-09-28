@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" >
    <property name="margin" >
@@ -22,7 +22,7 @@
    <item row="0" column="0" >
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
-      <string>Inline progression</string>
+      <string comment="@title:group">Inline progression</string>
      </property>
      <property name="flat" >
       <bool>true</bool>
@@ -37,10 +37,10 @@
       <item row="0" column="0" >
        <widget class="QRadioButton" name="inlineLTR" >
         <property name="toolTip" >
-         <string>e.g. Latin text</string>
+         <string comment="@info:tooltip">e.g. Latin text</string>
         </property>
         <property name="text" >
-         <string>Left to right</string>
+         <string comment="@option:radio">Left to right</string>
         </property>
         <property name="checked" >
          <bool>true</bool>
@@ -50,30 +50,30 @@
       <item row="1" column="0" >
        <widget class="QRadioButton" name="inlineRTL" >
         <property name="toolTip" >
-         <string>e.g. Arabic text</string>
+         <string comment="@info:tooltip">e.g. Arabic text</string>
         </property>
         <property name="text" >
-         <string>Right to left</string>
+         <string comment="@option:radio">Right to left</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0" >
        <widget class="QRadioButton" name="inlineTTB" >
         <property name="toolTip" >
-         <string>e.g. Traditional Chinese &amp; Japanese text</string>
+         <string comment="@info:tooltip">e.g. Traditional Chinese &amp; Japanese text</string>
         </property>
         <property name="text" >
-         <string>Top to bottom</string>
+         <string comment="@option:radio">Top to bottom</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0" >
        <widget class="QRadioButton" name="inlineBTT" >
         <property name="toolTip" >
-         <string>e.g. Runic text</string>
+         <string comment="@info:tooltip">e.g. Runic text</string>
         </property>
         <property name="text" >
-         <string>Bottom to top</string>
+         <string comment="@option:radio">Bottom to top</string>
         </property>
        </widget>
       </item>
@@ -83,7 +83,7 @@
    <item row="1" column="0" >
     <widget class="QGroupBox" name="groupBox_2" >
      <property name="title" >
-      <string>Block progression</string>
+      <string comment="@title:group">Block progression</string>
      </property>
      <property name="flat" >
       <bool>true</bool>
@@ -98,10 +98,10 @@
       <item row="0" column="0" >
        <widget class="QRadioButton" name="blockTTB" >
         <property name="toolTip" >
-         <string>e.g. Latin text</string>
+         <string comment="@info:tooltip">e.g. Latin text</string>
         </property>
         <property name="text" >
-         <string>Top to bottom</string>
+         <string comment="@option:radio">Top to bottom</string>
         </property>
         <property name="checked" >
          <bool>true</bool>
@@ -111,20 +111,20 @@
       <item row="1" column="0" >
        <widget class="QRadioButton" name="blockRTL" >
         <property name="toolTip" >
-         <string>e.g. Tarditionnal Chinese &amp; Japanes text</string>
+         <string comment="@info:tooltip">e.g. Tarditionnal Chinese &amp; Japanes text</string>
         </property>
         <property name="text" >
-         <string>Right to left</string>
+         <string comment="@option:radio">Right to left</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0" >
        <widget class="QRadioButton" name="blockLTR" >
         <property name="toolTip" >
-         <string>e.g. Traditional Mongolian text</string>
+         <string comment="@info:tooltip">e.g. Traditional Mongolian text</string>
         </property>
         <property name="text" >
-         <string>Left to right</string>
+         <string comment="@option:radio">Left to right</string>
         </property>
        </widget>
       </item>

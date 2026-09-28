@@ -1,30 +1,16 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef METAWIDGET_H
 #define METAWIDGET_H
 
-#include <QWidget>
 #include <QMap>
 #include <QString>
 #include <QStringList>
+#include <QWidget>
 
 #include "fmfontstrings.h"
 
@@ -34,8 +20,9 @@ class QLineEdit;
 class QComboBox;
 class QHBoxLayout;
 
-namespace Ui {
-    class MetaWidget;
+namespace Ui
+{
+class MetaWidget;
 }
 
 class MetaWidget : public QWidget
@@ -43,30 +30,30 @@ class MetaWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MetaWidget(QWidget *parent = 0);
-    ~MetaWidget();
+    explicit MetaWidget(QWidget *parent = nullptr);
+    ~MetaWidget() override;
 
     QMap<int, QString> resultMap;
 
 protected:
-    void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e) override;
 
 private:
-    Ui::MetaWidget *ui;
+    Ui::MetaWidget *const ui;
 
     static QStringListModel *mModel;
     static QStringList mList;
-    QWidget *filterWidget;
-    QComboBox *filterCombo;
-    QLineEdit *filterLine;
-    QPushButton *filterButton;
-    QMap<QLineEdit*, FMFontDb::InfoItem> metFields;
+    QWidget *filterWidget = nullptr;
+    QComboBox *filterCombo = nullptr;
+    QLineEdit *filterLine = nullptr;
+    QPushButton *filterButton = nullptr;
+    QMap<QLineEdit *, FMFontDb::InfoItem> metFields;
 
-signals:
+Q_SIGNALS:
     void filterAdded();
     void Close();
 
-private slots:
+private Q_SLOTS:
     void addFilter();
 };
 

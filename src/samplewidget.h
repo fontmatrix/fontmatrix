@@ -1,22 +1,8 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef SAMPLEWIDGET_H
 #define SAMPLEWIDGET_H
@@ -24,11 +10,11 @@
 #include "floatingwidget.h"
 #include "fmotf.h"
 
-#include <QString>
 #include <QByteArray>
-#include <QTime>
-#include <QThread>
 #include <QFileInfo>
+#include <QString>
+#include <QThread>
+#include <QTime>
 
 class QGraphicsScene;
 class FMLayout;
@@ -37,170 +23,175 @@ class QAbstractButton;
 class QFileSystemWatcher;
 class QTimer;
 class SampleToolBar;
+class FMVariationsWidget;
 class QTreeWidgetItem;
 class QStyledItemDelegate;
 class FontItem;
 
-namespace Ui {
-	class SampleWidget;
+namespace Ui
+{
+class SampleWidget;
 }
 
-#define VIEW_PAGE_FREETYPE 0
-#define VIEW_PAGE_ABSOLUTE 1
-#define VIEW_PAGE_OPENTYPE 3
-//#define VIEW_PAGE_SETTINGS 1
-#define VIEW_PAGE_SAMPLES  4
+constexpr int VIEW_PAGE_FREETYPE = 0;
+constexpr int VIEW_PAGE_ABSOLUTE = 1;
+constexpr int VIEW_PAGE_OPENTYPE = 3;
+// #define VIEW_PAGE_SETTINGS 1
+constexpr int VIEW_PAGE_SAMPLES = 4;
+constexpr int VIEW_PAGE_VARIATIONS = 5;
 
 class FMLayoutThread : public QThread
 {
-	FMLayout * pLayout;
-	QList<GlyphList> gl;
-	double fontSize;
-	FontItem * font;
-	unsigned int fHinting;
+    FMLayout *pLayout = nullptr;
+    QList<GlyphList> gl;
+    double fontSize = 0.0;
+    FontItem *font = nullptr;
+    unsigned int fHinting = 0U;
 
 public:
-	void setLayout(FMLayout * l, const QList<GlyphList>& spec , double fs, FontItem * f, unsigned int hinting);
-	void run();
+    void setLayout(FMLayout *l, const QList<GlyphList> &spec, double fs, FontItem *f, unsigned int hinting);
+    void run() override;
 };
 
 class SampleWidget : public FloatingWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	struct State
-	{
-		bool set;
-		State() : set(false) {}
-		State(const QString& sn, double fs, unsigned int rh, const QString& sh, const QString& sc):
-				set(true),
-				sampleName(sn),
-				fontSize(fs),
-				renderHinting(rh),
-				shaper(sh),
-				script(sc)
-		{}
-		State(const State& other)
-			: set(true)
-		{
-			sampleName = other.sampleName;
-			fontSize = other.fontSize;
-			renderHinting = other.renderHinting;
-			shaper = other.shaper;
-			script = other.script;
-		}
-		QString sampleName;
-		double fontSize;
-		unsigned int renderHinting; // 0 = No; 1 = Normal; 2 = Light
-		QString shaper;
-		QString script;
-		QByteArray toByteArray() const;
-		State fromByteArray(QByteArray b);
+    struct State {
+        bool set;
+        State()
+            : set(false)
+            , fontSize(0)
+            , renderHinting(0)
+        {
+        }
+        State(const QString &sn, double fs, unsigned int rh, const QString &sh, const QString &sc)
+            : set(true)
+            , sampleName(sn)
+            , fontSize(fs)
+            , renderHinting(rh)
+            , shaper(sh)
+            , script(sc)
+        {
+        }
+        QString sampleName;
+        double fontSize;
+        unsigned int renderHinting; // 0 = No; 1 = Normal; 2 = Light
+        QString shaper;
+        QString script;
+        [[nodiscard]] QByteArray toByteArray() const;
+        State fromByteArray(QByteArray b);
 
-	// private:
-		// State operator= (const State&){}
-	};
+        // private:
+        // State operator= (const State&){}
+    };
 
-	static const QString Name;
-	explicit SampleWidget(const QString& fid, QWidget *parent = 0);
-	~SampleWidget();
+    static const QString Name;
+    explicit SampleWidget(const QString &fid, QWidget *parent = nullptr);
+    ~SampleWidget() override;
 
-	QGraphicsScene* textScene() const;
-	State state() const;
-	void setState(const State& s);
+    [[nodiscard]] QGraphicsScene *textScene() const;
+    [[nodiscard]] State state() const;
+    void setState(const State &s);
 
 protected:
-	void changeEvent(QEvent *e);
-	void refillSampleList();
-	unsigned int hinting();
+    void changeEvent(QEvent *e) override;
+    void refillSampleList();
+    unsigned int hinting();
 
 private:
-	Ui::SampleWidget *ui;
-	SampleToolBar * sampleToolBar;
-	QTreeWidgetItem * uRoot;
-	QTreeWidgetItem * newSampleName;
-	QStyledItemDelegate * sampleNameEditor;
+    Ui::SampleWidget *const ui;
+    SampleToolBar *sampleToolBar = nullptr;
+    FMVariationsWidget *variationsWidget = nullptr;
+    QTreeWidgetItem *uRoot = nullptr;
+    QTreeWidgetItem *newSampleName = nullptr;
+    QStyledItemDelegate *sampleNameEditor = nullptr;
 
-	const QString fontIdentifier;
-	QGraphicsScene *loremScene;
-	QGraphicsScene *ftScene;
-	FMLayout *textLayoutVect;
-	FMLayout *textLayoutFT;
-	//    QButtonGroup *radioRenderGroup;
-	QButtonGroup *radioFTHintingGroup;
-	double sampleFontSize;
-	double sampleInterSize;
-	double sampleRatio;
-	int toolPanelWidth;
-	QFileSystemWatcher *sysWatcher;
-	QTimer *reloadTimer;
+    const QString fontIdentifier;
+    QGraphicsScene *loremScene = nullptr;
+    QGraphicsScene *ftScene = nullptr;
+    FMLayout *textLayoutVect = nullptr;
+    FMLayout *textLayoutFT = nullptr;
+    //    QButtonGroup *radioRenderGroup;
+    QButtonGroup *radioFTHintingGroup = nullptr;
+    double sampleFontSize = 0.0;
+    double sampleInterSize;
+    double sampleRatio;
+    int toolPanelWidth = 0;
+    QFileSystemWatcher *sysWatcher = nullptr;
+    QTimer *reloadTimer = nullptr;
 
-	void createConnections();
-	void removeConnections();
+    void createConnections();
+    void removeConnections();
 
-	void fillOTTree();
-	OTFSet deFillOTTree();
+    void fillOTTree();
+    OTFSet deFillOTTree();
 
-	bool layoutForPrint;
-	bool firstUpdateRequest;
-	int firstUpdateRequestTimeStamp;
-	QTime layoutTime;
-	QTimer *layoutTimer;
-	int layoutWait;
-	FMLayoutThread * layoutThread;
-	bool layoutSwitch;
-	int pixmapDrawn;
+    bool layoutForPrint;
+    bool firstUpdateRequest = false;
+    int firstUpdateRequestTimeStamp = 0;
+    QTime layoutTime;
+    QTimer *layoutTimer = nullptr;
+    int layoutWait;
+    FMLayoutThread *layoutThread = nullptr;
+    bool layoutSwitch;
+    int pixmapDrawn = 0;
 #ifdef PLATFORM_APPLE
-      QFileInfo fileInfo;
-      qint64 fileLastModified;
+    QFileInfo fileInfo;
+    qint64 fileLastModified = 0;
 #endif
-	void reSize(double fSize, double lSize){sampleFontSize = fSize; sampleInterSize = lSize;}
+    void reSize(double fSize, double lSize)
+    {
+        sampleFontSize = fSize;
+        sampleInterSize = lSize;
+    }
 
-private slots:
-	void slotView();
-	void drawPixmap(int index, double fontsize, double x, double y);
-	void drawBaseline(double y);
-	void clearFTScene();
-	void endLayout();
-	//    void slotChangeViewPage(QAbstractButton* );
-	//    void slotHintChanged(int);
-	//    void slotChangeViewPageSetting(bool);
-	void slotUpdateSView();
-	void slotZoom(int z);
-	void slotUpdateRView();
-	void slotSampleChanged();
-	void slotLiveFontSize(double);
-	void slotFeatureChanged();
-	void slotDefaultOTF();
-	void slotResetOTF();
-	void slotChangeScript();
-	void slotProgressionChanged();
-	void slotWantShape();
-	void slotFileChanged(const QString&);
-	void slotReload();
-	void slotScriptChange();
+private Q_SLOTS:
+    void slotView();
+    void doRender();
+    void drawPixmap(int index, double fontsize, double x, double y);
+    void clearFTScene();
+    void slotUpdateSView();
+    void slotZoom(int z);
+    void slotUpdateRView();
+    void slotSampleChanged();
+    void slotLiveFontSize(double);
+    void slotFeatureChanged();
+    void slotDefaultOTF();
+    void slotResetOTF();
+    void slotFileChanged(const QString &);
+    void slotReload();
+    void slotScriptChange();
 
-	void slotAddSample();
-	void slotSampleNameEdited(QWidget* w);
-	void slotRemoveSample();
-	void slotEditSample();
-	void slotUpdateSample();
+    void slotAddSample();
+    void slotSampleNameEdited(QWidget *w);
+    void slotRemoveSample();
+    void slotEditSample();
+    void slotUpdateSample();
 
-	void slotShowSamples(bool);
-	void slotShowOpenType(bool);
+    void slotShowSamples(bool);
+    void slotShowOpenType(bool);
+    void slotShowVariations(bool);
 
-	void slotPrint();
-	void slotDoPrinting();
+    void slotPrint();
+    void slotDoPrinting();
 
-	void saveState();
+    void saveState();
 
-signals:
-	void stopLayout();
-	void stateChanged();
+private:
+    void drawBaseline(double y);
+    void endLayout();
+    //    void slotChangeViewPage(QAbstractButton* );
+    //    void slotHintChanged(int);
+    //    void slotChangeViewPageSetting(bool);
+    void slotChangeScript();
+    void slotProgressionChanged();
+    void slotWantShape();
 
-
-
+Q_SIGNALS:
+    void stopLayout();
+    void stateChanged();
 };
 
 #endif // SAMPLEWIDGET_H

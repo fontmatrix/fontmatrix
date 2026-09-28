@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui name="fontmatrix" version="6" translationDomain="fontmatrix">
+  <MenuBar>
+    <Menu name="file" noMerge="1">
+      <text>&amp;File</text>
+      <Action name="file_import_dir"/>
+      <Action name="file_import_files"/>
+      <Action name="file_export_fontset"/>
+      <Separator/>
+      <Action name="file_font_book"/>
+      <Action name="file_dump_info"/>
+      <Separator/>
+      <Action name="file_quit"/>
+    </Menu>
+    <Menu name="edit" noMerge="1">
+      <text>&amp;Edit</text>
+      <Action name="edit_tag_all"/>
+      <Action name="edit_activate_current"/>
+      <Action name="edit_deactivate_current"/>
+      <Separator/>
+      <Action name="edit_font_editor"/>
+      <Action name="edit_panose"/>
+      <Separator/>
+      <Action name="edit_reload_single"/>
+      <Action name="edit_reload_filtered"/>
+    </Menu>
+    <Menu name="view" noMerge="1">
+      <text>&amp;View</text>
+      <Action name="view_playground"/>
+      <Action name="view_compare"/>
+      <Separator/>
+    </Menu>
+    <Menu name="tools" noMerge="1">
+      <text>&amp;Tools</text>
+      <Action name="tools_extract_font"/>
+      <Action name="tools_duplicates"/>
+      <Action name="tools_match_raster"/>
+      <Action name="tools_export_xetex"/>
+      <Action name="tools_repair"/>
+      <Action name="tools_tt_tables"/>
+    </Menu>
+  </MenuBar>
+  <ToolBar name="mainToolBar" noMerge="1">
+    <text>Main Toolbar</text>
+    <Action name="file_import_dir"/>
+    <Action name="file_import_files"/>
+    <Separator/>
+    <Action name="file_font_book"/>
+    <Separator/>
+    <Action name="edit_activate_current"/>
+    <Action name="edit_deactivate_current"/>
+    <Separator/>
+    <Action name="view_compare"/>
+    <Action name="view_playground"/>
+  </ToolBar>
+  <ToolBar noMerge="1" name="hamburgerBar">
+    <text>Hamburger Menu Toolbar</text>
+    <Spacer/>
+    <Action name="hamburger_menu"/>
+  </ToolBar>
+</gui>

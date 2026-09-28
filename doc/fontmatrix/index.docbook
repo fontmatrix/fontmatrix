@@ -1,0 +1,1130 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY fontmatrix "<application>Fontmatrix</application>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE">
+]>
+
+<book id="fontmatrix" lang="&language;">
+
+<bookinfo>
+<title>The &fontmatrix; Handbook</title>
+
+<authorgroup>
+<author>
+  <personname>
+    <firstname>Blagovest</firstname>
+    <surname>Petrov</surname>
+  </personname>
+  <email>blagovest@petrovs.info</email>
+</author>
+<author>
+  <personname>
+    <firstname>Pierre</firstname>
+    <surname>Marchand</surname>
+  </personname>
+  <email>pierremarc@oep-h.com</email>
+</author>
+<author>
+  <personname>
+    <firstname>Alexandre</firstname>
+    <surname>Prokoudine</surname>
+  </personname>
+  <email>alexandre.prokoudine@gmail.com</email>
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2007</year>
+<year>2026</year>
+<holder>The &fontmatrix; contributors</holder>
+</copyright>
+
+<legalnotice>&FDLNotice;</legalnotice>
+
+<date>2026-04-29</date>
+<releaseinfo>Fontmatrix 0.11</releaseinfo>
+
+<abstract>
+<para>&fontmatrix; is a font manager for adventurous graphic designers
+and typesetters who need to manage hundreds and even thousands of
+fonts.</para>
+</abstract>
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>fontmatrix</keyword>
+<keyword>font</keyword>
+<keyword>typography</keyword>
+<keyword>OpenType</keyword>
+<keyword>PANOSE</keyword>
+</keywordset>
+
+</bookinfo>
+
+
+<chapter id="introduction">
+<title>Introduction</title>
+
+<para>&fontmatrix; is an end-user font manager originally designed for
+Linux, with builds also available for Windows and macOS.</para>
+
+<para>Its highlights are:</para>
+<itemizedlist>
+<listitem><para>works with local and remote font storages;</para></listitem>
+<listitem><para>features activation and deactivation of fonts based on
+tags;</para></listitem>
+<listitem><para>allows finding suitable fonts by constructing simple or
+complex queries;</para></listitem>
+<listitem><para>allows refining a fonts selection by comparing either
+glyphs in detail or text lines;</para></listitem>
+<listitem><para>supports searching in PANOSE metadata and allows
+non-destructively editing it;</para></listitem>
+<listitem><para>has advanced OpenType support, variable fonts
+and colour fonts (emoji, layered and bitmap glyphs) included;</para></listitem>
+<listitem><para>ships with sample texts in many languages and scripts to
+assist testing fonts with wide Unicode coverage;</para></listitem>
+<listitem><para>features easy template-based creation of font books
+(PDF).</para></listitem>
+</itemizedlist>
+
+</chapter>
+
+
+<chapter id="basics">
+<title>The Very Basics</title>
+
+<para>This chapter explains the very basic things about font managers,
+&fontmatrix; and fonts. If you don't know whether &fontmatrix; is of any
+use to you, or you need to clear up one or two things about fonts, you
+are exactly the person we wrote it for.</para>
+
+<sect1 id="why-management">
+<title>Why Use a Font Manager</title>
+
+<para>This question pops up every now and then. Really, why? Aren't
+people just happy with what they've got? Isn't installing and removing
+fonts the usual way good enough? There are several reasons.</para>
+
+<para>Designers working under contract are doomed to use a variety of
+fonts, because every client has his or her own preferences and ideas
+about what suits a particular task.</para>
+
+<para>So we are talking here about collections of fonts that are as
+large as 3,000 or 5,000 fonts: decorative freeware fonts, licensed
+fonts, very expensive licensed font families with over 20 faces, and so
+on. Keeping all of them loaded in the system is likely to slow it down
+and make browsing through font lists very tedious. Which means you need
+some tool to activate and deactivate fonts selectively.</para>
+
+<para>What else? Searching. If you have over a thousand fonts you need
+to be able to find the one you need quickly given that usually you have
+only a basic idea of what you need. So you want to compare them: type
+in some text and see how all candidates render this text, then pick the
+one that suits the job best.</para>
+
+<para>How about grouping some fonts? Think of branding projects: you
+create a whole package — website, brochures, business cards — and use a
+fixed set of fonts. At any time you have to be able to quickly enable
+these fonts in the system to create a new brochure or a new bunch of
+business cards for this client. Font managers help you here through a
+tagging system.</para>
+
+<para>If you work for a font foundry, your job is to promote fonts.
+The most convenient way is to create a so called <emphasis>font
+book</emphasis> — an album displaying how the same text is rendered
+with several fonts. You filter the whole collection to select just the
+fonts you want and in a few clicks you have a PDF file ready to be
+uploaded or printed.</para>
+
+<para>And the last bit. If you ever used complex design software, you
+know that sometimes it finds a corrupt font and refuses to work. Font
+managers often have built-in font validation tools that help to find
+problematic fonts and deactivate them temporarily.</para>
+</sect1>
+
+<sect1 id="why-fontmatrix">
+<title>Why &fontmatrix;</title>
+
+<para>So, what's so good about &fontmatrix;?</para>
+
+<para><emphasis>It works wherever you go to.</emphasis> It doesn't
+matter if you are a Linux, Windows or macOS user. You can keep all of
+them around and still be using the same app everywhere.</para>
+
+<para><emphasis>You don't need to pay for every installed
+copy.</emphasis> &fontmatrix; is free software. We made it because we
+needed it for our work and we share it with you.</para>
+
+<para><emphasis>On Linux, this is one of the actively maintained font
+managers.</emphasis> There are simpler tools, but few are still
+maintained.</para>
+
+<para><emphasis>You can actually affect the development of
+&fontmatrix;.</emphasis> We appreciate interesting ideas and bug
+reports. If you can fix a bug or implement a new function, see <xref
+linkend="contributing"/>.</para>
+
+<para><emphasis>You can use &fontmatrix; in your native
+language.</emphasis> Both the user interface and documentation are
+localizable.</para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="interface">
+<title>User Interface</title>
+
+<para>&fontmatrix; has both traditionally and not so traditionally
+implemented functionality. The most important user interface parts you
+will see are:</para>
+
+<itemizedlist>
+<listitem><para>Menu bar, on top of the window</para></listitem>
+<listitem><para>Main area, with tabs representing one or another
+mode</para></listitem>
+<listitem><para><guilabel>Browse Fonts</guilabel>
+sidebar</para></listitem>
+<listitem><para><guilabel>Tags</guilabel> sidebar</para></listitem>
+<listitem><para>Status bar</para></listitem>
+<listitem><para>System tray icon</para></listitem>
+</itemizedlist>
+
+<sect1 id="ui-menubar">
+<title>Menu bar</title>
+
+<para>Menu items are logically divided into top-level menus:</para>
+<itemizedlist>
+<listitem><para><guimenu>File</guimenu> — input and output
+operations.</para></listitem>
+<listitem><para><guimenu>Edit</guimenu> — operates on items currently
+selected or filtered in the <guilabel>Browse Fonts</guilabel>
+sidebar.</para></listitem>
+<listitem><para><guimenu>View</guimenu> — controls visibility of
+panels.</para></listitem>
+<listitem><para><guimenu>Service</guimenu> — additional tools.</para></listitem>
+<listitem><para><guimenu>Settings</guimenu> — configuration and toolbar
+visibility.</para></listitem>
+<listitem><para><guimenu>Help</guimenu> — opens this handbook and the
+About dialog.</para></listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="ui-mainarea">
+<title>Main area</title>
+
+<para>The main area uses a tabbed interface. The first three tabs
+(<guilabel>Font Information</guilabel>, <guilabel>Sample Text</guilabel>
+and <guilabel>Glyphs</guilabel>) are related to viewing fonts. The
+<guilabel>Playground</guilabel>, <guilabel>Classification</guilabel>
+and <guilabel>Compare</guilabel> tabs are related to refining font
+selection by comparison.</para>
+
+<para>The main area and the <guilabel>Browse Fonts</guilabel> sidebar
+have mostly a one-way connection: changes in the sidebar update the
+main area, not the other way round, except for the
+<guilabel>Classification</guilabel> tab which has a two-way
+connection.</para>
+</sect1>
+
+<sect1 id="ui-browse-sidebar">
+<title>Browse Fonts sidebar</title>
+
+<para>This sidebar is the gateway to your font collection. Apart from
+letting you search using metadata queries, it lists fonts already added
+to the database and fonts available on the local system and mounted
+remote systems. Functionality is divided into three tabs.</para>
+
+<sect2 id="ui-browse-names">
+<title>Names</title>
+<para>Fonts already added to the database are listed here, sorted
+alphabetically. They are grouped on three levels: initial letter, name
+of the typeface, and the variant (style). Activation and deactivation
+of fonts is described in <xref linkend="management-activation"/>.</para>
+
+<para><guibutton>Collapse or expand</guibutton> opens a drop-down menu
+with items controlling the level of detail. <guibutton>Show face
+boxes</guibutton> toggles checkboxes in front of font family faces,
+allowing you to selectively activate or deactivate them.</para>
+</sect2>
+
+<sect2 id="ui-browse-previews">
+<title>Previews</title>
+<para>In this tab &fontmatrix; renders short text samples with every
+filtered font, sorted alphabetically. The text and font size of
+previews can be changed below the previews. By default previews render
+the names of the fonts themselves, using special placeholders:
+<literal>&lt;name&gt;</literal>, <literal>&lt;family&gt;</literal> and
+<literal>&lt;variant&gt;</literal>.</para>
+</sect2>
+
+<sect2 id="ui-browse-folders">
+<title>Folders</title>
+<para>You can preview typefaces of installed fonts in the system Fonts
+view, browse the Files view, or select any folder to preview all
+typefaces located there.</para>
+</sect2>
+</sect1>
+
+<sect1 id="ui-tags-sidebar">
+<title>Tags sidebar</title>
+<para>This is where you manage tags and assign them to currently
+selected fonts. See <xref linkend="management-tags"/> for details.</para>
+</sect1>
+
+<sect1 id="ui-statusbar">
+<title>Status bar</title>
+<para>The left part displays hints for menu items. The right side names
+the currently selected font and lists the count of currently filtered
+fonts.</para>
+</sect1>
+
+<sect1 id="ui-systray">
+<title>System tray</title>
+<para>The system tray icon allows controlling &fontmatrix; without
+keeping the main window visible. Right-click toggles main-window
+visibility; left-click reveals a menu. This feature can be enabled or
+disabled in the Preferences dialog.</para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="management">
+<title>Managing the Font Collection</title>
+
+<para>This chapter explains how to use &fontmatrix; for effective
+management of your fonts collection.</para>
+
+<sect1 id="management-importing">
+<title>Importing fonts</title>
+<para>For this purpose three means are at your disposal:</para>
+<itemizedlist>
+<listitem><para>Select <menuchoice><guimenu>File</guimenu><guimenuitem>Import
+Directory&hellip;</guimenuitem></menuchoice>. You will be asked to choose
+a directory which is then explored recursively to import all font
+files inside.</para></listitem>
+<listitem><para>Drag-and-drop a selection of files into
+&fontmatrix;.</para></listitem>
+<listitem><para>Use the context menu for files and folders in the
+<guilabel>Folders</guilabel> tab inside the <guilabel>Browse
+Fonts</guilabel> sidebar.</para></listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="management-activation">
+<title>Activating and deactivating fonts</title>
+<para>There are three ways to activate and deactivate fonts in
+&fontmatrix;:</para>
+<itemizedlist>
+<listitem><para><emphasis>Selective.</emphasis> In <guilabel>Browse
+Fonts</guilabel>, go to the <guilabel>Names</guilabel> tab and enable
+or disable particular font faces or whole families.</para></listitem>
+<listitem><para><emphasis>Mass via menu.</emphasis> Filter fonts (for
+example by selecting a tag) and use
+<menuchoice><guimenu>Edit</guimenu><guimenuitem>Activate all
+current</guimenuitem></menuchoice> or
+<menuchoice><guimenu>Edit</guimenu><guimenuitem>Deactivate all
+current</guimenuitem></menuchoice>.</para></listitem>
+<listitem><para><emphasis>Mass via system tray.</emphasis> Right-click
+the system tray icon and click on a tag name to activate or deactivate
+fonts that have this tag.</para></listitem>
+</itemizedlist>
+
+<sect2 id="management-activation-where">
+<title>What activation does</title>
+<para>On Linux an activated font is a copy (a hard link where the file
+system allows one) in <filename
+class="directory">~/.local/share/fonts/fontmatrix/</filename>, the
+user font directory that fontconfig scans by itself. Every application
+sees it, Flatpak applications included, and GNOME applications pick it
+up without a restart; Qt applications read the font list when they
+start. Deactivating removes the copy. The directory belongs to
+&fontmatrix;: a file in it that no active font accounts for is removed
+at the next start, and a font whose copy has gone is shown as
+deactivated.</para>
+<para>A system font cannot be removed, so deactivating one hides it:
+&fontmatrix; writes <filename>~/.config/fontconfig/conf.d/60-fontmatrix-rejects.conf</filename>
+with every system font switched off, and removes the file when none
+is. Nothing else in <filename
+class="directory">~/.config/fontconfig/</filename> is touched. Flatpak
+applications do not read that file and keep seeing the hidden
+fonts.</para>
+<para>Where the distribution package of &fontmatrix; is installed,
+<guilabel>Settings</guilabel> &gt; <guilabel>Configure Fontmatrix</guilabel>
+&gt; <guilabel>Files &amp; Folders</guilabel> offers <guilabel>Activate
+fonts for all users of this computer</guilabel>. The copies then go into
+<filename class="directory">/usr/local/share/fonts/fontmatrix/</filename>
+and the hidden system fonts into <filename>/etc/fonts/conf.d/60-fontmatrix-rejects.conf</filename>,
+through a helper that runs as root once polkit has asked for the
+administrator's password (once, kept for a few minutes). Fonts activated
+before the change stay where they were. The choice is not offered inside
+a Flatpak: the helper, its D-Bus service and its polkit action have to be
+installed on the host, which a sandboxed application cannot do.</para>
+<para>On Windows an activated font is installed for the current user,
+as <guilabel>Settings &gt; Fonts</guilabel> does: a copy in the user
+font folder, a registry value, and running applications are told at
+once. Fonts installed for all users cannot be changed.</para>
+</sect2>
+</sect1>
+
+<sect1 id="management-editing">
+<title>Editing a font</title>
+<para><menuchoice><guimenu>Edit</guimenu><guimenuitem>Edit current
+font</guimenuitem></menuchoice> opens the selected font — or the one
+highlighted in the list — in the font editor named in
+<guilabel>Settings</guilabel> &gt; <guilabel>Configure
+Fontmatrix</guilabel> &gt; <guilabel>Tools</guilabel>.</para>
+<para>Where that editor cannot be reached — inside a Flatpak, where no
+program of the system is the application's to start, or simply when no
+editor is configured — the font file is handed to the desktop instead,
+which asks which application should open it and gives that application
+the right to write the file, so that an editor can save its
+changes.</para>
+</sect1>
+
+<sect1 id="management-tags">
+<title>Using tags</title>
+
+<sect2 id="management-tags-why"><title>Why</title>
+<para>Tags are a flexible way to categorize fonts because they don't
+set any restrictions on how you organize them. Examples:
+&quot;Slab serif fonts my wife hates&quot;, &quot;Fonts I designed for
+COMPANY_NAME&quot;, &quot;Serif high-contrast text fonts I'm allowed to
+embed&quot;.</para>
+</sect2>
+
+<sect2 id="management-tags-add"><title>How to add tags</title>
+<para>Two ways:</para>
+<para>The first one is when you import a directory of fonts (and
+<guilabel>Ask for tag names when importing fonts</guilabel> is enabled
+in Preferences). A dialog lists existing tags and lets you pick or add
+a new one.</para>
+<para>If you want to assign tags to currently filtered fonts, use
+<menuchoice><guimenu>Edit</guimenu><guimenuitem>Tag all
+filtered&hellip;</guimenuitem></menuchoice>.</para>
+</sect2>
+
+<sect2 id="management-tags-edit"><title>Editing and removing tags</title>
+<para>Right-click on a tag in the <guilabel>Tags</guilabel> panel to
+edit or remove it from the database.</para>
+</sect2>
+</sect1>
+
+</chapter>
+
+
+<chapter id="viewing">
+<title>Viewing Fonts</title>
+
+<para>This chapter covers viewing various aspects of fonts, from
+summary to Unicode block coverage.</para>
+
+<sect1 id="viewing-overview">
+<title>Font overview</title>
+<para>Basic information about a font is summarized in the
+<guilabel>Font Information</guilabel> tab, open by default. It
+lists:</para>
+<itemizedlist>
+<listitem><para>full name of the font and its location;</para></listitem>
+<listitem><para>glyph count and font file type;</para></listitem>
+<listitem><para>information about designer and vendor;</para></listitem>
+<listitem><para>license URL and full text where available;</para></listitem>
+<listitem><para>PANOSE metadata, where available;</para></listitem>
+<listitem><para>terms of use (embedding, editing,
+&etc;).</para></listitem>
+</itemizedlist>
+<para>The Information area is rendered with QtWebEngine, so its
+appearance is customizable via CSS — see <xref
+linkend="prefs-display"/>.</para>
+</sect1>
+
+<sect1 id="viewing-sample-text">
+<title>Sample text</title>
+<para>The <guilabel>Sample Text</guilabel> tab can render any sample
+on a large pannable canvas.</para>
+
+<sect2 id="viewing-sample-collection">
+<title>Sample text collection</title>
+<para>&fontmatrix; ships with a set of sample texts in various
+languages and scripts and lets you add your own (see <xref
+linkend="prefs-samples"/>). To pick a text from the collection click
+the <guibutton>Samples collection</guibutton> button to reveal a
+sidebar with the available samples.</para>
+</sect2>
+
+<sect2 id="viewing-sample-navigation">
+<title>Navigation and rendering</title>
+<para>Use <keycombo>&Ctrl;<mousebutton>wheel</mousebutton></keycombo>
+to zoom and the middle mouse button to pan. Click and drag to draw a
+zoom rectangle. A single click anywhere on the canvas resets to 1:1
+zoom.</para>
+<para>By default &fontmatrix; uses FreeType to render text — switch to
+<emphasis>Vector</emphasis> in the <guilabel>Display
+settings</guilabel> sidebar for smooth rescaling.</para>
+<para>The <guilabel>World is wide</guilabel> options control inline
+and block progression for non-Latin scripts (Hebrew, Mongolian,
+&etc;).</para>
+</sect2>
+
+<sect2 id="viewing-sample-otf">
+<title>OpenType features</title>
+<para>Click the <guibutton>OpenType features</guibutton> button to
+reveal a sidebar listing every available OpenType feature in the
+loaded font, grouped by table and subtable. Toggling a feature
+re-renders the canvas immediately.</para>
+</sect2>
+
+<sect2 id="viewing-sample-variations">
+<title>Variations</title>
+<para>For a variable font the <guibutton>Variations</guibutton> button
+reveals a sidebar with its axes: pick a named instance from the list,
+or move the slider of an axis (weight, width, optical size, slant or
+the designer's own) to any point of its range. The sample, the glyphs
+chart and the playground show the font at the chosen coordinates;
+<guibutton>Default</guibutton> takes it back to the position the
+designer chose. The <guilabel>Info</guilabel> page lists the axes and the
+named instances, and the font book shows every named instance as a
+style.</para>
+<para>The coordinates you choose are remembered for the next session, until
+<guibutton>Default</guibutton> is pressed. In the view of a family, a variable
+font has one row for each of its named instances, drawn at that instance: a
+click on a row shows the font there, and choosing an instance in the sidebar
+selects its row.</para>
+</sect2>
+</sect1>
+
+<sect1 id="viewing-glyphs-chart">
+<title>Glyphs chart</title>
+<para>In <guilabel>Glyphs</guilabel> mode &fontmatrix; displays a
+chart of glyphs present in the currently selected font, grouped into
+Unicode blocks with coverage percentages.</para>
+<para>The glyphs of a colour font (emoji and the like, whether bitmaps,
+layered outlines with gradients or SVG pictures) are shown in their colours
+here, in the sample and in the previews.</para>
+<para>Clicking on a glyph displays a larger version with metrics and
+category. Switch to <guilabel>View all mapped glyphs</guilabel> and
+type in the search field to find a glyph by name.</para>
+<para>The <guibutton>Copy Mode</guibutton> button activates an entry
+field used as a digital letter case: enable it, click on glyphs to
+copy them in, then select all and copy to the clipboard.</para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="searching">
+<title>Searching for Fonts</title>
+
+<para>&fontmatrix; provides several ways to refine your selection
+while looking for the best fit for a job. Use the generic metadata or
+PANOSE search first to go from thousands to tens, then use a
+<link linkend="comparisons">comparison</link> function to pick the
+final font.</para>
+
+<sect1 id="search-metadata">
+<title>Generic metadata fields search</title>
+<para>The upper part of the <guilabel>Browse Fonts</guilabel> sidebar
+lets you build queries to filter fonts by metadata or tags.</para>
+<para>By default &fontmatrix; searches all fields. Click the field
+button to narrow the search to a specific field
+(<guilabel>Copyright</guilabel>, <guilabel>Designer</guilabel>, &etc;),
+type your text and press <keycap>Enter</keycap>.</para>
+<para>For complex queries, toggle the <guilabel>And</guilabel> and
+<guilabel>Not</guilabel> switches. The combined query is shown at the
+bottom — for example <literal>[deja][!italic]</literal> matches all
+non-italic DejaVu fonts.</para>
+<para>Click <guibutton>reset</guibutton> to clear the query.</para>
+</sect1>
+
+<sect1 id="search-panose">
+<title>PANOSE metadata search</title>
+<para>In the <guilabel>Classification</guilabel> tab a chart shows a
+PANOSE map of the available fonts. Each axis represents a PANOSE
+variable. Hover over an axis, click on a value, and the sidebar
+filters to fonts matching that value. Hold <keycap>Shift</keycap> and
+click another value on the same axis to extend the search.</para>
+<para>If the PANOSE information is missing or incorrect, you can edit
+it non-destructively — see <xref
+linkend="additional-edit-panose"/>.</para>
+</sect1>
+
+<sect1 id="search-language">
+<title>Filtering by language</title>
+<para>&quot;Which of my fonts can set Bulgarian?&quot; is answered in the
+<guilabel>Languages</guilabel> section of the sidebar: pick a language
+and the list keeps the fonts that have every character a text in it
+needs. The languages are those of the fonts in the collection, so the
+list itself says what the collection can and cannot do.</para>
+<para>The knowledge is fontconfig's, the same as a
+<command>fc-list :lang=bg</command> on the command line: it holds one
+orthography per language and compares it with the characters of each
+font. The section is therefore only shown on systems that have
+fontconfig, which means Linux and the other Unices.</para>
+</sect1>
+
+<sect1 id="search-license">
+<title>Filtering by licence</title>
+<para>Whether a font may go into a client's work at all is a question
+of its licence, and an OpenType font carries the answer in its name
+table. The <guilabel>License</guilabel> section lists the licences the
+fonts of the collection are under, the commonest first, and filters on
+the one picked.</para>
+<para>The fields are free text that every foundry words its own way, so
+&fontmatrix; recognises the well-known licences — the SIL Open Font
+License, Apache, the GNU licences, MIT, BSD, the Creative Commons
+family, the Ubuntu font licence — by the sentences and addresses they
+are stated with. A font whose licence is none of them is listed as
+<guilabel>Another licence</guilabel>, one that reserves everything and
+grants nothing as <guilabel>All rights reserved</guilabel>, and one that
+says nothing at all as <guilabel>No licence information</guilabel>. The
+name of the licence is also shown on the <guilabel>Info</guilabel> page,
+above the text the font itself gives.</para>
+<para>A licence recognised from free text is a guide, not a legal
+opinion: read the text on the <guilabel>Info</guilabel> page before
+relying on it.</para>
+</sect1>
+
+<sect1 id="search-duplicates">
+<title>Finding duplicates</title>
+<para>Every collection that has grown for a few years holds the same
+font more than once. The <guilabel>Duplicates</guilabel> section of the
+sidebar finds them, in two kinds that are worth telling apart.</para>
+<para><guilabel>Identical files</guilabel> are copies: the files are
+byte for byte the same, so whichever of them you drop, nothing is
+lost. <guilabel>Same font, other file</guilabel> are files that declare
+one family, one style and one version but differ in their bytes — the
+same design in another build, hinted differently or carrying another
+set of tables. Which of those to keep is a decision, and the
+<guilabel>Info</guilabel> page of each is where to make it.</para>
+<para>The first time a kind is picked &fontmatrix; reads the font
+files, which takes a moment; the answer is then kept until the
+collection changes. Only files of exactly the same length are ever
+read, so a collection of thousands costs a few dozen reads. Nothing is
+written to the database, and no font is removed for you: the filter
+narrows the list, and you decide what goes.</para>
+<para><menuchoice><guimenu>Tools</guimenu><guimenuitem>Duplicates...</guimenuitem></menuchoice>,
+or <guibutton>Show Groups...</guibutton> in the sidebar, shows the same fonts
+group by group, each file with its folder, size, version and whether it is
+activated. <guibutton>Show in List</guibutton> selects a file's font in the main
+list, <guibutton>Open Folder</guibutton> opens the folder it is in, and
+<guibutton>Tick the Extra Copies</guibutton> ticks every identical file but one
+in each group, keeping the activated one where there is one.</para>
+<para>The ticked files can then be moved to the trash with
+<guibutton>Move to Trash</guibutton>, which you can undo from the trash of your
+desktop, or only removed from the collection with
+<guibutton>Remove from Collection</guibutton>, which leaves the files where they
+are. One file of every group always stays, and an activated font is deactivated
+before it goes. A system font comes back into the collection at the next start
+as long as its file is there, so it can be moved to the trash, where its folder
+allows it, but not only removed; a font of a remote directory can be neither.</para>
+</sect1>
+
+<sect1 id="search-technology">
+<title>Variable and colour fonts</title>
+<para>The <guilabel>Font Technology</guilabel> section of the sidebar narrows
+the list to the <guilabel>Variable fonts</guilabel>, whose design moves along
+axes such as weight or width, or to the <guilabel>Colour fonts</guilabel>, whose
+glyphs carry their own colours. The first time a kind is picked
+&fontmatrix; opens each font once to find out; the answer is then kept until
+the collection changes.</para>
+</sect1>
+
+<sect1 id="search-bitmap">
+<title>Searching using bitmap samples</title>
+<para>If you have an enormous fonts collection, you can search for a
+font using a bitmap sample of one of its glyphs. Either feed
+&fontmatrix; a ready bitmap file or use <emphasis>Grab</emphasis> mode
+to fetch an image from your display.</para>
+<para>Click on the glyph in the raster sample preview so &fontmatrix;
+can compute its bounding box. If the box is wrong, enable
+<guilabel>Tweak rect</guilabel> and drag the corners. Type the
+character that the sample shows and press <guibutton>Search</guibutton>.</para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="comparisons">
+<title>Comparisons</title>
+
+<para>&fontmatrix; provides two ways to compare fonts: by comparing
+lines of text in the <guilabel>Playground</guilabel> tab and by
+comparing standalone glyphs in the <guilabel>Compare</guilabel>
+tab.</para>
+
+<sect1 id="comparisons-fonts">
+<title>Comparison of fonts</title>
+
+<sect2 id="comparisons-fonts-add">
+<title>Adding fonts for comparison</title>
+<orderedlist>
+<listitem><para>In <guilabel>Browse Fonts</guilabel>, click on the
+font you want to add.</para></listitem>
+<listitem><para>Pick a font size of interest.</para></listitem>
+<listitem><para>Click anywhere on the canvas — a text cursor flashes
+where your text will start.</para></listitem>
+<listitem><para>Type some text.</para></listitem>
+<listitem><para>Click on another font in the sidebar to add another
+line.</para></listitem>
+<listitem><para>Repeat steps 1–5 until done.</para></listitem>
+</orderedlist>
+</sect2>
+
+<sect2 id="comparisons-fonts-compare">
+<title>Comparing fonts</title>
+<para>The <guilabel>Playground</guilabel> uses a huge zoomable
+canvas where you can drag text lines around, regroup them and pan.
+Unlike <guilabel>Sample Text</guilabel>, the playground always uses
+Qt's native font rendering engine, so you can zoom freely without
+seeing pixel blocks.</para>
+<para>Hover over a text line to see a tooltip with the font name and
+file location. Drag a line to move it; <keycombo>&Ctrl;
+<mousebutton>click</mousebutton></keycombo> or rubber-band to select
+several lines and move them together. Press <keycap>Esc</keycap> to
+clear the selection.</para>
+<para>Press the middle mouse button to pan;
+<keycombo>&Ctrl;<mousebutton>wheel</mousebutton></keycombo> to
+zoom.</para>
+</sect2>
+
+<sect2 id="comparisons-fonts-clean">
+<title>Cleaning the playground</title>
+<para>To remove existing text lines, select them and press
+<keycap>Delete</keycap>.</para>
+</sect2>
+</sect1>
+
+<sect1 id="comparisons-glyphs">
+<title>Comparison of glyphs</title>
+<para>Comparing the same glyph rendered by different fonts can be
+useful for both work and study. To add a font to the list for
+comparison, click its face in <guilabel>Browse Fonts</guilabel>, then
+go to the <guilabel>Compare</guilabel> tab and click
+<guibutton>Add</guibutton>.</para>
+
+<para>Available options:</para>
+<itemizedlist>
+<listitem><para><guilabel>Show</guilabel> toggles visibility of the
+glyph rendering for the currently selected font.</para></listitem>
+<listitem><para><guilabel>Fill</guilabel> chooses one of the predefined
+fills, or <emphasis>None</emphasis>.</para></listitem>
+<listitem><para><guilabel>Points</guilabel> renders the glyph's outline
+points; <guilabel>Controls</guilabel> renders the control
+points.</para></listitem>
+<listitem><para><guilabel>Metrics</guilabel> renders baseline and em
+size.</para></listitem>
+<listitem><para><guilabel>Offset</guilabel> moves a glyph horizontally
+so several glyphs can be lined up without
+stacking.</para></listitem>
+<listitem><para><guilabel>Keep in sync</guilabel> ensures all fonts
+show the same character. Disable it to compare different glyphs of the
+same font.</para></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+
+<chapter id="output">
+<title>Exporting and Printing</title>
+
+<para>This chapter covers exporting fonts, printing fonts, and
+creating font books in PDF using templates.</para>
+
+<sect1 id="export-fonts">
+<title>Exporting fonts</title>
+<para>Export of fonts in &fontmatrix; is tag-based: you can only export
+fonts that have a particular tag.</para>
+<orderedlist>
+<listitem><para>Choose <menuchoice><guimenu>File</guimenu>
+<guimenuitem>Export fonts&hellip;</guimenuitem></menuchoice>.</para></listitem>
+<listitem><para>Pick a tag.</para></listitem>
+<listitem><para>Pick a destination directory.</para></listitem>
+</orderedlist>
+<para>A progress indicator runs; when it vanishes you can find the
+exported font files plus generated thumbnails in the destination.</para>
+</sect1>
+
+<sect1 id="printing">
+<title>Printing fonts</title>
+<para>&fontmatrix; will scale text lines to fit the whole used area
+of the chosen paper size. Try printing to file first to see what the
+output looks like.</para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="font-books">
+<title>Font Books</title>
+
+<para>A font book is a printable specimen document showcasing a
+collection of fonts. &fontmatrix; makes creation of font books
+easy.</para>
+
+<sect1 id="font-books-create">
+<title>Creating font books</title>
+<para>Suppose you need to create a font book of all fonts your company
+designed in 2009.</para>
+<orderedlist>
+<listitem><para>Go to <guilabel>Browse Fonts</guilabel>.</para></listitem>
+<listitem><para>In the field selector choose
+<guilabel>Manufacturer</guilabel>, type your company's name and press
+<keycap>Enter</keycap>.</para></listitem>
+<listitem><para>Enable <guilabel>And</guilabel>.</para></listitem>
+<listitem><para>In the field selector choose
+<guilabel>Copyright</guilabel>, type 2009 and press
+<keycap>Enter</keycap>.</para></listitem>
+</orderedlist>
+<para>Now to actually generate the book:</para>
+<orderedlist>
+<listitem><para>Choose <menuchoice><guimenu>File</guimenu>
+<guimenuitem>Export font book&hellip;</guimenuitem></menuchoice>.</para></listitem>
+<listitem><para>Pick a template.</para></listitem>
+<listitem><para>Click <guibutton>Browse&hellip;</guibutton> to define
+the output PDF file name.</para></listitem>
+<listitem><para>Click <guibutton>OK</guibutton>.</para></listitem>
+</orderedlist>
+</sect1>
+
+<sect1 id="font-books-templates">
+<title>Creating font book templates</title>
+<para>Documentation on creating font book templates is not yet
+complete. See <xref linkend="resources"/> to ask questions.</para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="additional">
+<title>Additional Tools</title>
+
+<para>&fontmatrix; contains a number of additional tools to help you
+be more productive.</para>
+
+<sect1 id="additional-db-check">
+<title>Checking the database</title>
+<para>Use <menuchoice><guimenu>Service</guimenu>
+<guimenuitem>Check Database</guimenuitem></menuchoice> to scan the
+&fontmatrix; database for dead links to font files.</para>
+</sect1>
+
+<sect1 id="additional-edit-panose">
+<title>Editing PANOSE metadata</title>
+<para>While PANOSE metadata is helpful for searching, not all fonts
+contain it for several reasons:</para>
+<itemizedlist>
+<listitem><para>not all font types can contain it (PostScript Type 1
+fonts have no PANOSE table);</para></listitem>
+<listitem><para>not all type designers fill it in;</para></listitem>
+<listitem><para>some PANOSE metadata is plainly wrong.</para></listitem>
+</itemizedlist>
+<para>&fontmatrix; provides a way to add or edit PANOSE metadata
+non-destructively — by storing changes in its database rather than in
+the font files. This also keeps your changes compliant with most
+proprietary font licenses.</para>
+<para>Pick the font and choose
+<menuchoice><guimenu>Edit</guimenu><guimenuitem>Edit PANOSE
+metadata</guimenuitem></menuchoice>. In the dialog, choose new values
+and click <guibutton>OK</guibutton>. From then on, PANOSE searches
+will use the corrected data. Currently the only way to reset the
+changes is to re-import the font.</para>
+</sect1>
+
+<sect1 id="additional-tt-tables">
+<title>Viewing TrueType tables</title>
+<para>Use <menuchoice><guimenu>Service</guimenu>
+<guimenuitem>Show TrueType tables</guimenuitem></menuchoice> to view
+the hexadecimal contents of the TrueType tables for the currently
+selected font.</para>
+</sect1>
+
+<sect1 id="additional-extract">
+<title>Extracting fonts from documents</title>
+<para>This feature, extracting embedded fonts from documents, relies
+on PoDoFo and currently works only for PDF documents.</para>
+<orderedlist>
+<listitem><para>Choose <menuchoice><guimenu>Service</guimenu>
+<guimenuitem>Extract fonts&hellip;</guimenuitem></menuchoice>.</para></listitem>
+<listitem><para>In <guilabel>Select PDF</guilabel> click
+<guibutton>Browse</guibutton> and pick the source PDF.</para></listitem>
+<listitem><para>Enable checkboxes for fonts of interest.</para></listitem>
+<listitem><para>Click <guibutton>Select Dir</guibutton> to choose
+where to save extracted fonts.</para></listitem>
+<listitem><para>Click <guibutton>Extract</guibutton>.</para></listitem>
+<listitem><para>Click <guibutton>Close</guibutton> when done.</para></listitem>
+</orderedlist>
+<para>Notes: fonts are rarely embedded fully — what you typically get
+is a subsetted font containing only the glyphs actually used in the
+document. &fontmatrix; saves these fonts in PFB format and stores
+useful information from the embedded font.</para>
+<important>
+<para>The &fontmatrix; team strongly discourages users from infringing
+copyright. This feature exists for fun and education, not for making
+unlicensed profit from someone else's work. If you want to create a
+derivative of a font whose license doesn't explicitly allow that,
+contact the designer or vendor first.</para>
+</important>
+</sect1>
+
+<sect1 id="additional-export-info">
+<title>Exporting font info for packaging</title>
+<para>Use <menuchoice><guimenu>File</guimenu>
+<guimenuitem>Export font info for packaging&hellip;</guimenuitem>
+</menuchoice> to fill a template file with metadata for packaging the
+currently selected font for a Linux distribution.</para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="setting-up">
+<title>Setting Up</title>
+
+<para>&fontmatrix; is highly configurable. Most options are set once
+and forgotten via <menuchoice><guimenu>Settings</guimenu>
+<guimenuitem>Configure &fontmatrix;&hellip;</guimenuitem>
+</menuchoice>. Text-layout-engine options are interactive in nature
+and live in a separate dialog
+(<menuchoice><guimenu>Service</guimenu><guimenuitem>Text layout engine
+options</guimenuitem></menuchoice>) which always stays on top.</para>
+
+<sect1 id="prefs-general">
+<title>General</title>
+<para><guilabel>Ask for tag names when importing fonts</guilabel>
+defines whether the import flow opens a tag-assignment dialog. See
+<xref linkend="management-importing"/>.</para>
+<para><guilabel>Show names of imported fonts after import
+process</guilabel> opens a dialog listing the names of the fonts that
+were just imported.</para>
+<para><guilabel>Show splash at startup</guilabel> hides the splash
+screen if disabled. The splash does not delay startup.</para>
+</sect1>
+
+<sect1 id="prefs-systray">
+<title>System tray</title>
+<para><guilabel>Show &fontmatrix; in System Tray</guilabel> enables or
+disables system-tray functionality.</para>
+<para><guilabel>Close to system tray</guilabel> sends the main window
+to the system tray when its close button is clicked. Restore via a
+left click on the icon, or right-click → Restore.</para>
+<para><guilabel>Start minimized to system tray</guilabel> is useful
+when you want &fontmatrix; running in the background but not opening
+its window at startup.</para>
+<para><guilabel>Show "All" actions</guilabel> adds <emphasis>Activate
+all</emphasis> / <emphasis>Deactivate all</emphasis> to the tray
+menu.</para>
+<para><guilabel>Ask confirmation when activating or deactivating all
+fonts</guilabel> and <guilabel>Ask confirmation when activating or
+deactivating fonts by tags</guilabel> add safety prompts.</para>
+</sect1>
+
+<sect1 id="prefs-display">
+<title>Display</title>
+<para><guilabel>Preview word</guilabel> controls the preview phrase
+displayed in the previews area. Use the placeholders
+<literal>&lt;name&gt;</literal>, <literal>&lt;family&gt;</literal>,
+<literal>&lt;variant&gt;</literal>.</para>
+<para><guilabel>Default font size</guilabel> sets the preview font
+size in points.</para>
+<para><guilabel>Subtitled</guilabel> toggles a subtitle below each
+preview. <guilabel>is RTL</guilabel> renders the preview phrase
+right-to-left (e.g. Arabic).</para>
+<para><guilabel>Chart Subtitle Font</guilabel> picks the font and size
+of the preview subtitles.</para>
+<para><guilabel>Information Style</guilabel> lets you use a custom
+CSS for the <guilabel>Font Information</guilabel> tab.</para>
+</sect1>
+
+<sect1 id="prefs-service">
+<title>Service</title>
+<para><guilabel>Fonts Editor</guilabel> defines the preferred external
+font editor (defaults to FontForge on Linux/macOS).</para>
+<para><guilabel>Help Browser</guilabel> selects the browser used for
+this help system. (With KHelpCenter integration, this option is no
+longer relevant — the system handler is used.)</para>
+<para><guilabel>Hyphenation Dictionary</guilabel> picks a dictionary
+for sample-text hyphenation.</para>
+</sect1>
+
+<sect1 id="prefs-samples">
+<title>Samples collection</title>
+<para>&fontmatrix; ships with sample texts for many languages. To add
+your own, type a name into the field below the list of custom samples
+and click <guibutton>+</guibutton>. Then paste your text into the
+entry field and click <guibutton>Save</guibutton>. The new sample
+appears in the <guilabel>Display options</guilabel> tab.</para>
+<para>To remove a custom sample, choose it in the listbox and click
+<guibutton>−</guibutton>. This cannot be undone.</para>
+</sect1>
+
+<sect1 id="prefs-files">
+<title>Files &amp; folders</title>
+<para>This tab configures the templates folder, remote font
+directories, and local storage paths.</para>
+</sect1>
+
+<sect1 id="prefs-shortcuts">
+<title>Shortcuts</title>
+<para>The Shortcuts tab is now provided by KDE's standard "Configure
+Keyboard Shortcuts" dialog
+(<menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
+Keyboard Shortcuts&hellip;</guimenuitem></menuchoice>). Choose an
+action from the list and assign or change its shortcut.</para>
+</sect1>
+
+<sect1 id="prefs-layout">
+<title>Text layout engine options</title>
+<para>&fontmatrix; uses its own text layout engine (TLE) to support
+advanced OpenType features. The TLE has a number of variables you can
+tune via <menuchoice><guimenu>Service</guimenu><guimenuitem>Text
+layout engine options</guimenuitem></menuchoice>.</para>
+<para>The dialog looks like an audio equalizer — drag sliders to
+change weights:</para>
+<itemizedlist>
+<listitem><para><guilabel>Before</guilabel> — factor applied to a
+break node before the first OUT_OF_LINE node.</para></listitem>
+<listitem><para><guilabel>Exact</guilabel> — factor applied to the
+first OUT_OF_LINE node.</para></listitem>
+<listitem><para><guilabel>After</guilabel> — factor applied to nodes
+after the first OUT_OF_LINE node.</para></listitem>
+<listitem><para><guilabel>End</guilabel> — same factor for the last
+line of the paragraph.</para></listitem>
+<listitem><para><guilabel>H-penalty</guilabel> — extra factor applied
+when the node is a hyphen.</para></listitem>
+<listitem><para><guilabel>Max. compression</guilabel> — maximum
+compression of white spaces.</para></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+
+<chapter id="contributing">
+<title>Contributing</title>
+
+<para>There are several ways to help make this project better:</para>
+<itemizedlist>
+<listitem><para>testing and reporting;</para></listitem>
+<listitem><para>translating user interface and
+documentation;</para></listitem>
+<listitem><para>programming new features and fixing
+bugs.</para></listitem>
+</itemizedlist>
+
+<sect1 id="contributing-testing">
+<title>Testing and reporting</title>
+<para>Testing is what helps make applications rock-solid. As a
+community project, &fontmatrix; relies on its users.</para>
+
+<sect2 id="contributing-crashers">
+<title>Crashes</title>
+<para>If you find a reproducible crash on Linux, generate a backtrace
+with <command>gdb</command>:</para>
+<orderedlist>
+<listitem><para>Install <package>gdb</package>.</para></listitem>
+<listitem><para>Open a terminal.</para></listitem>
+<listitem><para>Run <command>gdb fontmatrix</command>.</para></listitem>
+<listitem><para>At the gdb prompt: <command>run</command>.</para></listitem>
+<listitem><para>Reproduce the crash.</para></listitem>
+<listitem><para>At the gdb prompt: <command>bt</command>.</para></listitem>
+<listitem><para>Copy the output.</para></listitem>
+<listitem><para><command>quit</command>.</para></listitem>
+</orderedlist>
+<para>On modern KDE Plasma systems, KCrash and DrKonqi capture this
+information automatically and offer to file a bug
+report.</para>
+</sect2>
+
+<sect2 id="contributing-bugreports">
+<title>Reporting bugs and requesting features</title>
+<para>Submit reports to the <ulink
+url="https://github.com/fontmatrix/fontmatrix/issues">issue
+tracker</ulink>. A useful bug report contains: the steps that led to
+the bug; the backtrace if it crashed; and information about your
+system (distribution, Qt version, &fontmatrix; version).</para>
+</sect2>
+</sect1>
+
+<sect1 id="contributing-translating">
+<title>Translating</title>
+<para>The user interface uses Qt's <literal>.ts</literal> files; help
+content is moving to DocBook for translation via
+KDE's standard tooling. To start a UI translation:</para>
+<orderedlist>
+<listitem><para>Clone the source: <command>git clone
+https://github.com/fontmatrix/fontmatrix.git</command></para></listitem>
+<listitem><para>Configure with
+<command>cmake&nbsp;-DTRANSLATOR=&lt;locale&gt;</command>.</para></listitem>
+<listitem><para>Run <command>make translation</command>.</para></listitem>
+<listitem><para>Open
+<filename>fontmatrix-&lt;locale&gt;.ts</filename> in Qt Linguist and
+translate.</para></listitem>
+<listitem><para>Run <command>make install</command> to test.</para></listitem>
+</orderedlist>
+<para>If your language is right-to-left or uses non-Latin script,
+&fontmatrix; should handle that without special configuration.</para>
+</sect1>
+
+<sect1 id="contributing-programming">
+<title>Programming</title>
+<para>The plan is to implement an internal plug-in architecture to
+make new features easier to add. If you want to help, see
+<xref linkend="resources"/> for contact information.</para>
+</sect1>
+
+</chapter>
+
+
+<chapter id="resources">
+<title>Useful Online Resources</title>
+
+<sect1 id="resources-contact">
+<title>Contacting developers and fellow users</title>
+<para>For questions about using &fontmatrix;, visit the
+<ulink url="https://github.com/fontmatrix/fontmatrix">project
+page</ulink>.</para>
+</sect1>
+
+<sect1 id="resources-fonts">
+<title>Looking for free/libre fonts</title>
+<itemizedlist>
+<listitem><para><ulink url="http://openfontlibrary.org">Open Font
+Library</ulink></para></listitem>
+<listitem><para><ulink url="http://linuxlibertine.sourceforge.net">Linux
+Libertine</ulink></para></listitem>
+<listitem><para><ulink
+url="http://dejavu-fonts.github.io">DejaVu</ulink></para></listitem>
+</itemizedlist>
+</sect1>
+
+</chapter>
+
+
+<chapter id="credits">
+<title>Credits and License</title>
+
+<para>&fontmatrix; — copyright 2007–2026 the &fontmatrix; contributors.</para>
+
+<para>Current maintainer: Blagovest Petrov
+<email>blagovest@petrovs.info</email>.</para>
+
+<para>Original author: Pierre Marchand
+<email>pierremarc@oep-h.com</email>.</para>
+
+<para>This documentation is based on the original Fontmatrix help
+content authored by Alexandre Prokoudine, Pierre Marchand and other
+contributors, converted to DocBook for Fontmatrix.</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;
+&underGPL;
+
+</chapter>
+
+</book>

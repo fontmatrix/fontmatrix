@@ -10,13 +10,13 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Dialog</string>
+   <string comment="@title:window">Activation Report</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" >
    <item row="0" column="0" colspan="2" >
     <widget class="QLabel" name="label" >
      <property name="text" >
-      <string>Activation - Deactivation Error Report</string>
+      <string comment="@label">Activation - Deactivation Error Report</string>
      </property>
     </widget>
    </item>
@@ -36,7 +36,7 @@
    <item row="2" column="1" >
     <widget class="QPushButton" name="pushButton" >
      <property name="text" >
-      <string>Close</string>
+      <string comment="@action:button">Close</string>
      </property>
     </widget>
    </item>
@@ -44,23 +44,20 @@
     <widget class="QTableWidget" name="errorTable" >
      <column>
       <property name="text" >
-       <string>Font path</string>
+       <string comment="@title:column">Font path</string>
       </property>
      </column>
      <column>
       <property name="text" >
-       <string>Error</string>
+       <string comment="@title:column">Error</string>
       </property>
      </column>
     </widget>
    </item>
   </layout>
-  <zorder>listWidget</zorder>
-  <zorder>tableView</zorder>
-  <zorder>pushButton</zorder>
-  <zorder>horizontalSpacer</zorder>
   <zorder>label</zorder>
   <zorder>errorTable</zorder>
+  <zorder>pushButton</zorder>
  </widget>
  <resources/>
  <connections>

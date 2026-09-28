@@ -2,12 +2,17 @@
 
 file ; author ; title ; reference (url/edition)
 
+The licence of each text is in REUSE.toml, at the root of the source tree.
+
+bg/Българският език ; Иван Вазов (1850–1921) ; Българският език, 1883, от стихосбирката „Поля и гори“ ; <https://chitanka.info/text/5189-bylgarskijat-ezik> — public domain
+bg/Търновска конституция ; Учредително Народно събрание ; Конституция на Българското Княжество, Търново, 16 април 1879, глава XII (в оригиналния правопис) ; <https://bg.wikisource.org/wiki/Конституция_на_Българското_княжество> — public domain
+cu/Glagolitic alphabet ; — ; The Glagolitic script: the Unicode block with the letter names and the numeric values of the letters; the last line is the heading of the Gospel of Mark in the Codex Zographensis (10th–11th c.) ; <https://bg.wikipedia.org/wiki/Глаголица>, <https://en.wikipedia.org/wiki/Codex_Zographensis> — public domain
+cu/Miracles of the Virgin 1508 ; Guido de Monte Rochen, translated by Silvestar Bedričić ; Mirakuli slavne deve Marije, Senj 1508, chapter 3, in the Glagolitic script ; <https://hr.wikisource.org/wiki/Ⱞⰻⱃⰰⰽⱆⰾⰻ_ⱄⰾⰰⰲⱀⰵ_ⰴⰵⰲⰵ_ⱞⰰⱃⰻⰵ/Ⰳ̃> — the book is public domain; the Glagolitic transliteration is by Wikisource contributors after the Latin-script transliteration of Ivana Eterović and Mirjana Crnić Novosel, CC BY-SA 4.0
 bn/sample ; Wikipedia ; বাংলা ভাষা - উইকিপিডিয়া  ; <http://bn.wikipedia.org/wiki/বাংলা>
 de/sample ; Friedrich Schiller ; Kabale und Liebe ; http://de.wikisource.org/wiki/Kabale_und_Liebe/1._Akt
-es/sample ; Miguel de Cervantes Saavedra ; El ingenioso Hidalgo Don Quijote de la Mancha ; http://es.wikisource.org/wiki/Don_Quijote,_Primera_Parte:_Capítulo_I
 fr/Mamere ; Marcel Proust ; À l’ombre des jeune filles en fleurs ; <http://www.gutenberg.org/files/2998/2998-8.txt>
 gu/sample ; Wikipedia ; ગુજરાતી - વિકિપીડિયા; <http://gu.wikipedia.org/wiki/ગુજરાતી>
-he/sample ; http://www.mechon-mamre.org/i/t/t0401.htm
+he/sample ; חיים נחמן ביאליק (Hayim Nahman Bialik, 1873–1934) ; אֶל הַצִפּוֹר (To the Bird), 1892, vocalised ; <https://he.wikisource.org/wiki/אל_הציפור_(ביאליק)>, revision 2708764 — public domain
 hi/sample ; Wikipedia ; हिन्दी - विकिपीडिया ; <http://hi.wikipedia.org/wiki/हिन्दी>
 kn/sample ; Wikipedia ; ಕನ್ನಡ - Wikipedia ; <http://kn.wikipedia.org/wiki/ಕನ್ನಡ>
 ml/sample ; Wikipedia ; മലയാളം - വിക്കിപീഡിയ  ; <http://ml.wikipedia.org/wiki/മലയാളം>
@@ -17,4 +22,4 @@ pa/sample ; Wikipedia ; ਪੰਜਾਬੀ - ਵਿਕਿਪੀਡਿਆ ; <http
 ru/Гоголь ; Гоголь ; Нос; http://az.lib.ru/g/gogolx_n_w/text_0100.shtml
 ta/sample ; Wikipedia ; தமிழ் - தமிழ் விக்கிபீடியா ; <http://ta.wikipedia.org/wiki/தமிழ்>
 te/sample ; Wikipedia ; తెలుగు - వికీపీడియా  ; <http://te.wikipedia.org/wiki/తెలుగు>
-udm/sample ; http://udmurt.info/library/udmurt/mamalen.htm
+udm/sample ; Wikipedia ; Удмурт кыл (the Udmurt language) and Кузебай Герд (its poet), two articles of the Udmurt Wikipedia ; <https://udm.wikipedia.org/wiki/Удмурт_кыл> revision 119680, <https://udm.wikipedia.org/wiki/Кузебай_Герд> revision 126024 — CC BY-SA 4.0

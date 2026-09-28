@@ -19,10 +19,6 @@ CPackSourceConfig.cmake
 Makefile
 CMakeFiles/
 
-# /harfbuzz/
-/harfbuzz/.git
-/harfbuzz/tests
-/harfbuzz/.gitignore
 
 # /src/
 /src/Makefile
@@ -41,3 +37,10 @@ CMakeFiles/
 
 # /src/messages/
 /src/messages/about.html~
+
+# Python bytecode from running the CI helper scripts locally
+__pycache__/
+*.pyc
+
+# Written by KDEClangFormat when CMake runs; the style itself lives in ECM
+/.clang-format

@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Fontmatrix - Panose Editor</string>
+   <string comment="@title:window">Fontmatrix - Panose Editor</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" >
    <item row="0" column="0" colspan="2" >
@@ -22,7 +22,7 @@
       </sizepolicy>
      </property>
      <property name="text" >
-      <string>TextLabel</string>
+      <string notr="true">TextLabel</string>
      </property>
     </widget>
    </item>

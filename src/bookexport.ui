@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Export Font Book</string>
+   <string comment="@title:window">Export Font Book</string>
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
@@ -42,7 +42,7 @@
          <item>
           <widget class="QLabel" name="label" >
            <property name="text" >
-            <string>Output</string>
+            <string comment="@label">Output</string>
            </property>
           </widget>
          </item>
@@ -52,7 +52,7 @@
          <item>
           <widget class="QPushButton" name="fileNameButton" >
            <property name="text" >
-            <string>Browse...</string>
+            <string comment="@action:button">Browse...</string>
            </property>
           </widget>
          </item>

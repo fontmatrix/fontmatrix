@@ -1,14 +1,8 @@
-//
-// C++ Interface: FMGlyphHighlight
-//
-// Description: 
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef FMGLYPHHIGHLIGHT_H
 #define FMGLYPHHIGHLIGHT_H
@@ -21,22 +15,23 @@ class QGraphicsScene;
 class QGraphicsRectItem;
 class QTimeLine;
 
-class FMGlyphHighlight : QObject
+class FMGlyphHighlight : public QObject
 {
-	Q_OBJECT
-	public:
-		FMGlyphHighlight(QGraphicsScene* scene, const QRectF& rect, int time = 300, int frames = 12);
-		~FMGlyphHighlight();
-	private:
-		QGraphicsRectItem *m_rect;
-		QTimeLine *m_timeline;
-		QPointF initialPos;
-		int maxFrame;
-		
-		void lastFrame();
-		
-	private slots:
-		void animate(int);
+    Q_OBJECT
+public:
+    FMGlyphHighlight(QGraphicsScene *scene, const QRectF &rect, int time = 300, int frames = 12);
+    ~FMGlyphHighlight() override;
+
+private:
+    QGraphicsRectItem *m_rect = nullptr;
+    QTimeLine *m_timeline = nullptr;
+    QPointF initialPos;
+    int maxFrame;
+
+    void lastFrame();
+
+private Q_SLOTS:
+    void animate(int);
 };
 
 #endif

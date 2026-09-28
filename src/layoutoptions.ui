@@ -16,13 +16,13 @@
    </sizepolicy>
   </property>
   <property name="windowTitle" >
-   <string>Text layout engine options</string>
+   <string comment="@title:window">Text layout engine options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2" >
    <item row="0" column="0" >
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
-      <string>Weights</string>
+      <string comment="@title:group">Weights</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_8" >
       <item row="0" column="0" >
@@ -75,7 +75,7 @@
         <item row="1" column="0" colspan="3" >
          <widget class="QLabel" name="bScore" >
           <property name="text" >
-           <string>score</string>
+           <string comment="@label">score</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>
@@ -88,7 +88,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label" >
           <property name="text" >
-           <string>Before</string>
+           <string comment="@label">Before</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -121,7 +121,7 @@
         <item row="1" column="0" colspan="3" >
          <widget class="QLabel" name="eScore" >
           <property name="text" >
-           <string>score</string>
+           <string comment="@label">score</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>
@@ -134,7 +134,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label_2" >
           <property name="text" >
-           <string>Exact</string>
+           <string comment="@label">Exact</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -219,7 +219,7 @@
         <item row="1" column="0" colspan="3" >
          <widget class="QLabel" name="aScore" >
           <property name="text" >
-           <string>score</string>
+           <string comment="@label">score</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>
@@ -232,7 +232,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label_3" >
           <property name="text" >
-           <string>After</string>
+           <string comment="@label">After</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -291,7 +291,7 @@
         <item row="1" column="0" colspan="3" >
          <widget class="QLabel" name="endScore" >
           <property name="text" >
-           <string>score</string>
+           <string comment="@label">score</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>
@@ -304,7 +304,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label_5" >
           <property name="text" >
-           <string>End</string>
+           <string comment="@label">End</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>
@@ -357,7 +357,7 @@
         <item row="1" column="0" colspan="3" >
          <widget class="QLabel" name="hPenalty" >
           <property name="text" >
-           <string>penalty</string>
+           <string comment="@label">penalty</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>
@@ -370,7 +370,7 @@
         <item row="2" column="0" colspan="3" >
          <widget class="QLabel" name="label_4" >
           <property name="text" >
-           <string>H-penalty</string>
+           <string comment="@label">H-penalty</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -426,7 +426,7 @@
         <item row="1" column="0" colspan="4" >
          <widget class="QLabel" name="minSpace" >
           <property name="text" >
-           <string>space</string>
+           <string comment="@label">space</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>
@@ -439,7 +439,7 @@
         <item row="2" column="0" colspan="4" >
          <widget class="QLabel" name="label_6" >
           <property name="text" >
-           <string>Max. compression</string>
+           <string comment="@label">Max. compression</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignCenter</set>

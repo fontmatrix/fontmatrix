@@ -1,55 +1,47 @@
-//
-// C++ Interface: fmrepair
-//
-// Description: 
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef FMREPAIR_H
 #define FMREPAIR_H
 
-#include <ui_repair.h>
 #include <QDialog>
+#include <ui_repair.h>
 
 class FmRepair : public QDialog, private Ui::repairDialog
 {
-	Q_OBJECT
-	public:
-		FmRepair(QWidget *parent);
-		~FmRepair();
-	private:
-		void fillDeadLink();
-		void fillActNotLinked();
-		void fillDeactLinked();
-		void fillUnreferenced();
-		void fillLists();
-		
-		void doConnect();
-		
-// 		QList<QListWidgetItem*> listItems;
-		
-	private slots:
-		void slotSelAllDead();
-		void slotRemoveDead();
-		
-		void slotSelAllActNotLinked();
-		void slotRelinkActNotLinked();
-		void slotDeactivateActNotLinked();
-		
-		void slotSelAllDeactLinked();
-		void slotDelinkDeactLinked();
-		void slotActivateDeactLinked();
-		
-		void slotSelectAllUnref();
-		void slotRemoveUnref();
-		
-	
-};
+    Q_OBJECT
+public:
+    explicit FmRepair(QWidget *parent);
+    ~FmRepair() override;
 
+private:
+    void fillDeadLink();
+    void fillActNotLinked();
+    void fillDeactLinked();
+    void fillUnreferenced();
+    void fillLists();
+
+    void doConnect();
+
+    // 		QList<QListWidgetItem*> listItems;
+
+private Q_SLOTS:
+    void slotSelAllDead();
+    void slotRemoveDead();
+
+    void slotSelAllActNotLinked();
+    void slotRelinkActNotLinked();
+    void slotDeactivateActNotLinked();
+
+    void slotSelAllDeactLinked();
+    void slotDelinkDeactLinked();
+    void slotActivateDeactLinked();
+
+    void slotSelectAllUnref();
+    void slotRemoveUnref();
+};
 
 #endif

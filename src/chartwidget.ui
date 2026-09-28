@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="verticalSpacing">
@@ -31,10 +31,10 @@
         </sizepolicy>
        </property>
        <property name="toolTip">
-        <string>Coverage of Unicode Interval</string>
+        <string comment="@info:tooltip">Coverage of Unicode Interval</string>
        </property>
        <property name="text">
-        <string>Block:</string>
+        <string comment="@label">Block:</string>
        </property>
        <property name="margin">
         <number>2</number>
@@ -76,7 +76,7 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Search:</string>
+        <string comment="@label">Search:</string>
        </property>
        <property name="buddy">
         <cstring>charSearchLine</cstring>
@@ -86,7 +86,7 @@
      <item>
       <widget class="QLineEdit" name="charSearchLine">
        <property name="toolTip">
-        <string>Search a character by its codepoint (expressed in hexadecimal 
+        <string comment="@info:tooltip">Search a character by its codepoint (expressed in hexadecimal 
 and prefixed with &quot;U+&quot;, &quot;u+&quot; or &quot;+&quot;) or a glyph by its name.
 Press enter after editing to run the search.</string>
        </property>
@@ -112,7 +112,7 @@ Press enter after editing to run the search.</string>
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="statusTip">
-      <string>Clicking on a glyph will show details about it</string>
+      <string comment="@info:status">Clicking on a glyph will show details about it</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -133,13 +133,13 @@ Press enter after editing to run the search.</string>
         </sizepolicy>
        </property>
        <property name="toolTip">
-        <string>Set Mode &quot;Copy Character to Clipboard&quot;</string>
+        <string comment="@info:tooltip">Set Mode &quot;Copy Character to Clipboard&quot;</string>
        </property>
        <property name="text">
-        <string>Copy Mode</string>
+        <string comment="@action:button">Copy Mode</string>
        </property>
        <property name="icon">
-        <iconset resource="application.qrc">
+        <iconset theme="edit-copy" resource="application.qrc">
          <normaloff>:/action-copy-char</normaloff>:/action-copy-char</iconset>
        </property>
        <property name="checkable">

@@ -1,0 +1,11 @@
+Public domain
+
+The work is in the public domain, because its author died more than seventy
+years ago and the term of protection has run out everywhere Fontmatrix is
+distributed, or because it is an official text of a state, which the copyright
+laws of Bulgaria and of the other countries concerned exclude from protection.
+
+The file names the work and its author in samples/CREDITS, together with the
+edition it was taken from. Nobody holds rights over the text itself; an edition
+that adds work of its own — a translation, a commentary, a scholarly
+transliteration — is listed under its own licence instead.

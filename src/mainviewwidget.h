@@ -1,32 +1,17 @@
-/***************************************************************************
- *   Copyright (C) 2007 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2007 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef MAINVIEWWIDGET_H
 #define MAINVIEWWIDGET_H
 
 #include <ui_mainview.h>
 
-#include <QStringList>
+#include <QElapsedTimer>
 #include <QIcon>
-#include <QTime>
-
-
+#include <QStringList>
 
 class QGraphicsScene;
 class typotek;
@@ -36,8 +21,6 @@ class QGridLayout;
 class QTreeWidgetItem;
 class QGraphicsRectItem;
 class QButtonGroup;
-class QWebView;
-//class ListDockWidget;
 struct OTFSet;
 class FMLayout;
 class FMPreviewModel;
@@ -46,97 +29,101 @@ class QTimer;
 /**
 MainViewWidget inherits from an ui designed.
 
-	@author Pierre Marchand <pierre@oep-h.com>
+    @author Pierre Marchand <pierre@oep-h.com>
 */
-class MainViewWidget :  public QWidget, private Ui::MainView
+class MainViewWidget : public QWidget, private Ui::MainView
 {
-		Q_OBJECT
+    Q_OBJECT
 
-	public:
-		MainViewWidget ( QWidget *parent );
+public:
+    explicit MainViewWidget(QWidget *parent);
 
-		~MainViewWidget();
-	private:
-		QStringList ord;
-		QStringList fields;
-		typotek *typo;
-//		ListDockWidget *m_lists;
-		QString faceIndex;
-		QString lastIndex;
-//		QList<FontItem*> currentFonts; *moved to FMFontDB*
-		QList<FontItem*> orderedCurrentFonts;
-//		QString sampleText;
-		QGridLayout *tagLayout;
-		QString currentOrdering;
-		FontItem *theVeryFont; 
-		bool fontsetHasChanged;
-		bool activateByFamilyOnly;
-		bool m_forceReloadSelection;
-		QString quickSearchString;
-		QTime quickSearchTime;
-		QTimer *quickSearchTimer;
-		int quickSearchWait;
+    ~MainViewWidget() override;
 
-		void doConnect();
-		void disConnect();
-		void allActivation(bool act);
-		void activation(QList<FontItem*> fit, bool act);
+private:
+    QStringList ord;
+    QStringList fields;
+    typotek *typo = nullptr;
+    QString faceIndex;
+    QString lastIndex;
+    //		QList<FontItem*> currentFonts; *moved to FMFontDB*
+    QList<FontItem *> orderedCurrentFonts;
+    //		QString sampleText;
+    QGridLayout *tagLayout = nullptr;
+    QString currentOrdering;
+    FontItem *theVeryFont = nullptr;
+    bool fontsetHasChanged;
+    bool activateByFamilyOnly;
+    bool m_forceReloadSelection;
+    QString quickSearchString;
+    QElapsedTimer quickSearchTime;
+    QTimer *quickSearchTimer = nullptr;
+    int quickSearchWait;
 
-		QString curItemName;
-		
-		bool renderingLock;
-		
-		QIcon iconPS1;
-		QIcon iconTTF;
-		QIcon iconOTF;
+    void doConnect();
+    void disConnect();
+    void allActivation(bool act);
+    void activation(QList<FontItem *> fit, bool act);
 
-		FMPreviewModel * previewModel;
+    QString curItemName;
 
-	public slots:
-		void slotOrderingChanged ( QString s );
-		bool slotFontSelectedByName(const QString& fname);
-		void slotPreviewUpdateSize(int w);
-		void slotShowFamily(const QModelIndex& familyIdx);
-		void slotQuitFamily();
-		
-		void slotDesactivateAll();
-		void slotActivateAll();
-		void slotRemoveCurrentItem();
-		
-	private slots:
-		void slotQuickSearch(const QString& text);
-		void slotEndQuickSearch();
-		void slotSelectFromQuickSearch();
+    bool renderingLock = false;
 
-		
-	signals:
-		void faceChanged();
-		void listChanged();
+    QIcon iconPS1;
+    QIcon iconTTF;
+    QIcon iconOTF;
 
-	public:
-		QString defaultOrd() {return ord[0];}
-		QList<FontItem*> curFonts();
-		void setCurFonts(QList<FontItem*> flist);
-		FontItem* selectedFont(){return theVeryFont;}
+    FMPreviewModel *previewModel = nullptr;
 
-		
-		QString sampleName();
-//		void displayWelcomeMessage();
-		
-		QWebView *info();
-		
-		void addFilterToCrumb(QString filter);
-		void setCrumb(QString text = QString());
-		
-		void saveSplitterState();
-		void restoreSplitterState();
+public Q_SLOTS:
+    void slotFontDbChanged();
+    bool slotFontSelectedByName(const QString &fname);
+    void slotPreviewUpdateSize(int w);
+    void slotShowFamily(const QModelIndex &familyIdx);
+    void slotQuitFamily();
+    void slotActivateAll();
 
-		void forceReloadSelection();
+public:
+    void slotOrderingChanged(QString s);
+    void slotDesactivateAll();
+    void slotRemoveCurrentItem();
 
+private Q_SLOTS:
+    void slotQuickSearch(const QString &text);
+    void slotEndQuickSearch();
+    void slotSelectFromQuickSearch();
 
+Q_SIGNALS:
+    void faceChanged();
+    void listChanged();
 
-	protected:
-		void keyPressEvent ( QKeyEvent * event ) ;
+public:
+    QString defaultOrd()
+    {
+        return ord.at(0);
+    }
+    QList<FontItem *> curFonts();
+    void setCurFonts(QList<FontItem *> flist);
+    FontItem *selectedFont()
+    {
+        return theVeryFont;
+    }
+    // The selected font or, in the list, the one of the highlighted tile
+    FontItem *selectedOrCurrentFont();
+
+    QString sampleName();
+    //		void displayWelcomeMessage();
+
+    void addFilterToCrumb(QString filter);
+    void setCrumb(QString text = QString());
+
+    void saveSplitterState();
+    void restoreSplitterState();
+
+    void forceReloadSelection();
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif

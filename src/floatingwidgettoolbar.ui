@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <property name="margin">
@@ -63,20 +63,20 @@
       <item row="0" column="1">
        <widget class="QToolButton" name="printButton">
         <property name="toolTip">
-         <string>Print</string>
+         <string comment="@info:tooltip">Print</string>
         </property>
         <property name="text">
-         <string>P</string>
+         <string comment="@action:button">P</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2">
        <widget class="QToolButton" name="detachButton">
         <property name="toolTip">
-         <string>Detach from main window</string>
+         <string comment="@info:tooltip">Detach from main window</string>
         </property>
         <property name="text">
-         <string>D</string>
+         <string comment="@action:button">D</string>
         </property>
        </widget>
       </item>
@@ -92,13 +92,13 @@
          <cursorShape>ArrowCursor</cursorShape>
         </property>
         <property name="toolTip">
-         <string>Close window</string>
+         <string comment="@info:tooltip">Close window</string>
         </property>
         <property name="text">
-         <string>...</string>
+         <string notr="true">...</string>
         </property>
         <property name="icon">
-         <iconset resource="application.qrc">
+         <iconset theme="list-remove" resource="application.qrc">
           <normaloff>:/graphic-resources/filter-remove.png</normaloff>:/graphic-resources/filter-remove.png</iconset>
         </property>
        </widget>
@@ -106,10 +106,10 @@
       <item row="0" column="3">
        <widget class="QToolButton" name="hideButton">
         <property name="toolTip">
-         <string>Hide window</string>
+         <string comment="@info:tooltip">Hide window</string>
         </property>
         <property name="text">
-         <string>H</string>
+         <string comment="@action:button">H</string>
         </property>
        </widget>
       </item>

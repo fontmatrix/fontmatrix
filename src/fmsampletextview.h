@@ -1,69 +1,54 @@
-/***************************************************************************
- *   Copyright (C) 2007 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2007 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef FMSAMPLETEXTVIEW_H
 #define FMSAMPLETEXTVIEW_H
 
 #include <QGraphicsView>
 #include <QPointF>
 
-
 /**
-	@author Pierre Marchand <pierre@oep-h.com>
+    @author Pierre Marchand <pierre@oep-h.com>
 */
 class FMSampleTextView : public QGraphicsView
 {
-		Q_OBJECT
+    Q_OBJECT
 
-	public:
-		FMSampleTextView ( QWidget* parent );
+public:
+    explicit FMSampleTextView(QWidget *parent);
 
-		~FMSampleTextView();
-		
-		void fakePage();
-		void sheduleUpdate();
-		void unSheduleUpdate();
-		bool locker;
+    ~FMSampleTextView() override;
 
-	protected:
-		void resizeEvent ( QResizeEvent * event );
-		void mousePressEvent ( QMouseEvent * e ) ;
-		void mouseReleaseEvent ( QMouseEvent * e )  ;
-		void mouseMoveEvent ( QMouseEvent * e ) ;
-		void wheelEvent ( QWheelEvent * e );
-		void showEvent ( QShowEvent * event ) ;
+    void fakePage();
+    void sheduleUpdate();
+    void unSheduleUpdate();
+    bool locker = false;
 
-	signals:
-		void refit();
-		void pleaseUpdateMe();
-		void pleaseZoom(int);
-		
-	private:
-		QPointF mouseStartPoint;
-		QGraphicsRectItem *theRect;
-		QGraphicsRectItem *fPage;
-		bool isSelecting;
-		bool isPanning;
-		bool hasPendingUpdate;
-		
-		void ensureTheRect();
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void wheelEvent(QWheelEvent *e) override;
+    void showEvent(QShowEvent *event) override;
 
+Q_SIGNALS:
+    void refit();
+    void pleaseUpdateMe();
+    void pleaseZoom(int);
+
+private:
+    QPointF mouseStartPoint;
+    QGraphicsRectItem *theRect = nullptr;
+    QGraphicsRectItem *fPage = nullptr;
+    bool isSelecting;
+    bool isPanning;
+    bool hasPendingUpdate;
+
+    void ensureTheRect();
 };
 
 #endif

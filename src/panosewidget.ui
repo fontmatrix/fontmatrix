@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Panose Metadata</string>
+   <string comment="@title:window">Panose Metadata</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <property name="margin">
@@ -54,7 +54,7 @@
      </attribute>
      <column>
       <property name="text">
-       <string>Panose Attributes</string>
+       <string comment="@title:column">Panose Attributes</string>
       </property>
      </column>
     </widget>

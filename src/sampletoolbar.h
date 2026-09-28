@@ -1,31 +1,18 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef SAMPLETOOLBAR_H
 #define SAMPLETOOLBAR_H
 
-#include <QWidget>
 #include <QStringList>
+#include <QWidget>
 
-namespace Ui {
-    class SampleToolBar;
+namespace Ui
+{
+class SampleToolBar;
 }
 
 class SampleToolBar : public QWidget
@@ -33,35 +20,39 @@ class SampleToolBar : public QWidget
     Q_OBJECT
 
 public:
-    explicit SampleToolBar(QWidget *parent = 0);
-    ~SampleToolBar();
+    explicit SampleToolBar(QWidget *parent = nullptr);
+    ~SampleToolBar() override;
 
-    enum Button{
-	    SampleButton,
-	    OpenTypeButton
+    enum Button {
+        SampleButton,
+        OpenTypeButton,
+        VariationsButton
     };
 
-    double getFontSize() const;
+    [[nodiscard]] double getFontSize() const;
     void setFontSize(double fs);
 
     bool isChecked(Button b);
     void toggle(Button b, bool c);
 
     void enableButton(Button b, bool c);
+    /// a button that means nothing for the font is not shown at all
+    void showButton(Button b, bool s);
 
-    void setScripts(const QStringList& ll);
+    void setScripts(const QStringList &ll);
     QString getScript();
 
 protected:
-    void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e) override;
 
 private:
-    Ui::SampleToolBar *ui;
+    Ui::SampleToolBar *const ui;
 
-signals:
+Q_SIGNALS:
     void SizeChanged(double);
     void SampleToggled(bool);
     void OpenTypeToggled(bool);
+    void VariationsToggled(bool);
     void ScriptSelected();
 };
 

@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: CC0-1.0
+#
+# Commits that only move code around. To have git blame look through them:
+#     git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Format the sources with clang-format
+83ed9de7c734cebba8cb03394e5933b562d10ea4

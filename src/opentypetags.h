@@ -1,164 +1,149 @@
-/***************************************************************************
- *   Copyright (C) 2007 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2007 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef OTTMEAN_H
 #define OTTMEAN_H
 
+#include <KLocalizedString>
 #include <QMap>
 
-
-QString OTTagMeans ( QString tag )
+QString OTTagMeans(QString tag)
 {
-	static QMap<QString,QString> OTTagsMeaning;
-	if ( OTTagsMeaning.isEmpty() )
-	{
-		OTTagsMeaning["aalt"]= QObject::tr("Access All Alternates");
-		OTTagsMeaning["abvf"]= QObject::tr("Above-Base Forms");
-		OTTagsMeaning["abvm"]= QObject::tr("Above-Base Mark Positioning");
-		OTTagsMeaning["abvs"]= QObject::tr("Above-Base Substitutions");
-		OTTagsMeaning["afrc"]= QObject::tr("Alternative Fractions");
-		OTTagsMeaning["akhn"]= QObject::tr("Akhands");
-		OTTagsMeaning["blwf"]= QObject::tr("Below-Base Forms");
-		OTTagsMeaning["blwm"]= QObject::tr("Below-Base Mark Positioning");
-		OTTagsMeaning["blws"]= QObject::tr("Below-Base Substitutions");
-		OTTagsMeaning["c2pc"]= QObject::tr("Petite Capitals From Capitals");
-		OTTagsMeaning["c2sc"]= QObject::tr("Small Capitals From Capitals");
-		OTTagsMeaning["calt"]= QObject::tr("Contextual Alternates");
-		OTTagsMeaning["case"]= QObject::tr("Case-Sensitive Forms");
-		OTTagsMeaning["ccmp"]= QObject::tr("Glyph Composition/Decomposition");
-		OTTagsMeaning["clig"]= QObject::tr("Contextual Ligatures");
-		OTTagsMeaning["cjct"]= QObject::tr("Conjunct Forms");
-		OTTagsMeaning["cpsp"]= QObject::tr("Capital Spacing");
-		OTTagsMeaning["cswh"]= QObject::tr("Contextual Swash");
-		OTTagsMeaning["curs"]= QObject::tr("Cursive Positioning");
-		OTTagsMeaning["dflt"]= QObject::tr("Default Processing");
-		OTTagsMeaning["dist"]= QObject::tr("Distances");
-		OTTagsMeaning["dlig"]= QObject::tr("Discretionary Ligatures");
-		OTTagsMeaning["dnom"]= QObject::tr("Denominators");
-		OTTagsMeaning["expt"]= QObject::tr("Expert Forms");
-		OTTagsMeaning["falt"]= QObject::tr("Final glyph Alternates");
-		OTTagsMeaning["fin2"]= QObject::tr("Terminal Forms #2");
-		OTTagsMeaning["fin3"]= QObject::tr("Terminal Forms #3");
-		OTTagsMeaning["fina"]= QObject::tr("Terminal Forms");
-		OTTagsMeaning["frac"]= QObject::tr("Fractions");
-		OTTagsMeaning["fwid"]= QObject::tr("Full Width");
-		OTTagsMeaning["half"]= QObject::tr("Half Forms");
-		OTTagsMeaning["haln"]= QObject::tr("Halant Forms");
-		OTTagsMeaning["halt"]= QObject::tr("Alternate Half Width");
-		OTTagsMeaning["hist"]= QObject::tr("Historical Forms");
-		OTTagsMeaning["hkna"]= QObject::tr("Horizontal Kana Alternates");
-		OTTagsMeaning["hlig"]= QObject::tr("Historical Ligatures");
-		OTTagsMeaning["hngl"]= QObject::tr("Hangul");
-		OTTagsMeaning["hojo"]= QObject::tr("Hojo Kanji Forms (JIS x 212-1990 Kanji Forms)");
-		OTTagsMeaning["hwid"]= QObject::tr("Half Width");
-		OTTagsMeaning["init"]= QObject::tr("Initial Forms");
-		OTTagsMeaning["isol"]= QObject::tr("Isolated Forms");
-		OTTagsMeaning["ital"]= QObject::tr("Italics");
-		OTTagsMeaning["jalt"]= QObject::tr("Justification Alternatives");
-		OTTagsMeaning["jp78"]= QObject::tr("JIS78 Forms");
-		OTTagsMeaning["jp83"]= QObject::tr("JIS83 Forms");
-		OTTagsMeaning["jp90"]= QObject::tr("JIS90 Forms");
-		OTTagsMeaning["jp04"]= QObject::tr("JIS2004 Forms");
-		OTTagsMeaning["kern"]= QObject::tr("Kerning");
-		OTTagsMeaning["lfbd"]= QObject::tr("Left Bounds");
-		OTTagsMeaning["liga"]= QObject::tr("Standard Ligatures");
-		OTTagsMeaning["ljmo"]= QObject::tr("Leading Jamo Forms");
-		OTTagsMeaning["lnum"]= QObject::tr("Lining Figures");
-		OTTagsMeaning["locl"]= QObject::tr("Localized Forms");
-		OTTagsMeaning["mark"]= QObject::tr("Mark Positioning");
-		OTTagsMeaning["med2"]= QObject::tr("Medial Forms #2");
-		OTTagsMeaning["medi"]= QObject::tr("Medial Forms");
-		OTTagsMeaning["mgrk"]= QObject::tr("Mathematical Greek");
-		OTTagsMeaning["mkmk"]= QObject::tr("Mark to Mark Positioning");
-		OTTagsMeaning["mset"]= QObject::tr("Mark Positioning via Substitution");
-		OTTagsMeaning["nalt"]= QObject::tr("Alternate Annotation Forms");
-		OTTagsMeaning["nlck"]= QObject::tr("NLC Kanji Forms");
-		OTTagsMeaning["nukt"]= QObject::tr("Nukta Forms");
-		OTTagsMeaning["numr"]= QObject::tr("Numerators");
-		OTTagsMeaning["onum"]= QObject::tr("Old Style Figures");
-		OTTagsMeaning["opbd"]= QObject::tr("Optical Bounds");
-		OTTagsMeaning["ordn"]= QObject::tr("Ordinals");
-		OTTagsMeaning["ornm"]= QObject::tr("Ornaments");
-		OTTagsMeaning["palt"]= QObject::tr("Proportional Alternate Width");
-		OTTagsMeaning["pcap"]= QObject::tr("Petite Capitals");
-		OTTagsMeaning["pnum"]= QObject::tr("Proportional Figures");
-		OTTagsMeaning["pref"]= QObject::tr("Pre-base Forms");
-		OTTagsMeaning["pres"]= QObject::tr("Pre-base Substitutions");
-		OTTagsMeaning["pstf"]= QObject::tr("Post-base Forms");
-		OTTagsMeaning["psts"]= QObject::tr("Post-base Substitutions");
-		OTTagsMeaning["pwid"]= QObject::tr("Proportional Widths");
-		OTTagsMeaning["qwid"]= QObject::tr("Quarter Widths");
-		OTTagsMeaning["rand"]= QObject::tr("Randomize");
-		OTTagsMeaning["rkrf"]= QObject::tr("Rakar Forms");
-		OTTagsMeaning["rlig"]= QObject::tr("Required Ligatures");
-		OTTagsMeaning["rphf"]= QObject::tr("Reph Form");
-		OTTagsMeaning["rtbd"]= QObject::tr("Right Bounds");
-		OTTagsMeaning["rtla"]= QObject::tr("Right-To-Left Alternates");
-		OTTagsMeaning["ruby"]= QObject::tr("Ruby Notation Forms");
-		OTTagsMeaning["salt"]= QObject::tr("Stylistic Alternates");
-		OTTagsMeaning["sinf"]= QObject::tr("Scientific Inferiors");
-		OTTagsMeaning["size"]= QObject::tr("Optical Size");
-		OTTagsMeaning["smcp"]= QObject::tr("Small Capitals");
-		OTTagsMeaning["smpl"]= QObject::tr("Simplified Forms");
-		OTTagsMeaning["ss01"]= QObject::tr("Stylistic Set 1");
-		OTTagsMeaning["ss02"]= QObject::tr("Stylistic Set 2");
-		OTTagsMeaning["ss03"]= QObject::tr("Stylistic Set 3");
-		OTTagsMeaning["ss04"]= QObject::tr("Stylistic Set 4");
-		OTTagsMeaning["ss05"]= QObject::tr("Stylistic Set 5");
-		OTTagsMeaning["ss06"]= QObject::tr("Stylistic Set 6");
-		OTTagsMeaning["ss07"]= QObject::tr("Stylistic Set 7");
-		OTTagsMeaning["ss08"]= QObject::tr("Stylistic Set 8");
-		OTTagsMeaning["ss09"]= QObject::tr("Stylistic Set 9");
-		OTTagsMeaning["ss10"]= QObject::tr("Stylistic Set 10");
-		OTTagsMeaning["ss11"]= QObject::tr("Stylistic Set 11");
-		OTTagsMeaning["ss12"]= QObject::tr("Stylistic Set 12");
-		OTTagsMeaning["ss13"]= QObject::tr("Stylistic Set 13");
-		OTTagsMeaning["ss14"]= QObject::tr("Stylistic Set 14");
-		OTTagsMeaning["ss15"]= QObject::tr("Stylistic Set 15");
-		OTTagsMeaning["ss16"]= QObject::tr("Stylistic Set 16");
-		OTTagsMeaning["ss17"]= QObject::tr("Stylistic Set 17");
-		OTTagsMeaning["ss18"]= QObject::tr("Stylistic Set 18");
-		OTTagsMeaning["ss19"]= QObject::tr("Stylistic Set 19");
-		OTTagsMeaning["ss20"]= QObject::tr("Stylistic Set 20");
-		OTTagsMeaning["subs"]= QObject::tr("Subscript");
-		OTTagsMeaning["sups"]= QObject::tr("Superscript");
-		OTTagsMeaning["swsh"]= QObject::tr("Swash");
-		OTTagsMeaning["titl"]= QObject::tr("Titling");
-		OTTagsMeaning["tjmo"]= QObject::tr("Trailing Jamo Forms");
-		OTTagsMeaning["tnam"]= QObject::tr("Traditional Name Forms");
-		OTTagsMeaning["tnum"]= QObject::tr("Tabular Figures");
-		OTTagsMeaning["trad"]= QObject::tr("Traditional Forms");
-		OTTagsMeaning["twid"]= QObject::tr("Third Widths");
-		OTTagsMeaning["unic"]= QObject::tr("Unicase");
-		OTTagsMeaning["valt"]= QObject::tr("Alternate Vertical Metrics");
-		OTTagsMeaning["vatu"]= QObject::tr("Vattu Variants");
-		OTTagsMeaning["vert"]= QObject::tr("Vertical Writing");
-		OTTagsMeaning["vhal"]= QObject::tr("Alternate Vertical Half Metrics");
-		OTTagsMeaning["vjmo"]= QObject::tr("Vowel Jamo Forms");
-		OTTagsMeaning["vkna"]= QObject::tr("Vertical Kana Alternates");
-		OTTagsMeaning["vkrn"]= QObject::tr("Vertical Kerning");
-		OTTagsMeaning["vpal"]= QObject::tr("Proportional Alternate Vertical Metrics");
-		OTTagsMeaning["vrt2"]= QObject::tr("Vertical Rotation");
-		OTTagsMeaning["zero"]= QObject::tr("Slashed Zero");
-	}
-	return OTTagsMeaning.value(tag);
+    static QMap<QString, QString> OTTagsMeaning;
+    if (OTTagsMeaning.isEmpty()) {
+        OTTagsMeaning[QStringLiteral("aalt")] = i18nc("@item:intable OpenType feature", "Access All Alternates");
+        OTTagsMeaning[QStringLiteral("abvf")] = i18nc("@item:intable OpenType feature", "Above-Base Forms");
+        OTTagsMeaning[QStringLiteral("abvm")] = i18nc("@item:intable OpenType feature", "Above-Base Mark Positioning");
+        OTTagsMeaning[QStringLiteral("abvs")] = i18nc("@item:intable OpenType feature", "Above-Base Substitutions");
+        OTTagsMeaning[QStringLiteral("afrc")] = i18nc("@item:intable OpenType feature", "Alternative Fractions");
+        OTTagsMeaning[QStringLiteral("akhn")] = i18nc("@item:intable OpenType feature", "Akhands");
+        OTTagsMeaning[QStringLiteral("blwf")] = i18nc("@item:intable OpenType feature", "Below-Base Forms");
+        OTTagsMeaning[QStringLiteral("blwm")] = i18nc("@item:intable OpenType feature", "Below-Base Mark Positioning");
+        OTTagsMeaning[QStringLiteral("blws")] = i18nc("@item:intable OpenType feature", "Below-Base Substitutions");
+        OTTagsMeaning[QStringLiteral("c2pc")] = i18nc("@item:intable OpenType feature", "Petite Capitals From Capitals");
+        OTTagsMeaning[QStringLiteral("c2sc")] = i18nc("@item:intable OpenType feature", "Small Capitals From Capitals");
+        OTTagsMeaning[QStringLiteral("calt")] = i18nc("@item:intable OpenType feature", "Contextual Alternates");
+        OTTagsMeaning[QStringLiteral("case")] = i18nc("@item:intable OpenType feature", "Case-Sensitive Forms");
+        OTTagsMeaning[QStringLiteral("ccmp")] = i18nc("@item:intable OpenType feature", "Glyph Composition/Decomposition");
+        OTTagsMeaning[QStringLiteral("clig")] = i18nc("@item:intable OpenType feature", "Contextual Ligatures");
+        OTTagsMeaning[QStringLiteral("cjct")] = i18nc("@item:intable OpenType feature", "Conjunct Forms");
+        OTTagsMeaning[QStringLiteral("cpsp")] = i18nc("@item:intable OpenType feature", "Capital Spacing");
+        OTTagsMeaning[QStringLiteral("cswh")] = i18nc("@item:intable OpenType feature", "Contextual Swash");
+        OTTagsMeaning[QStringLiteral("curs")] = i18nc("@item:intable OpenType feature", "Cursive Positioning");
+        OTTagsMeaning[QStringLiteral("dflt")] = i18nc("@item:intable OpenType feature", "Default Processing");
+        OTTagsMeaning[QStringLiteral("dist")] = i18nc("@item:intable OpenType feature", "Distances");
+        OTTagsMeaning[QStringLiteral("dlig")] = i18nc("@item:intable OpenType feature", "Discretionary Ligatures");
+        OTTagsMeaning[QStringLiteral("dnom")] = i18nc("@item:intable OpenType feature", "Denominators");
+        OTTagsMeaning[QStringLiteral("expt")] = i18nc("@item:intable OpenType feature", "Expert Forms");
+        OTTagsMeaning[QStringLiteral("falt")] = i18nc("@item:intable OpenType feature", "Final glyph Alternates");
+        OTTagsMeaning[QStringLiteral("fin2")] = i18nc("@item:intable OpenType feature", "Terminal Forms #2");
+        OTTagsMeaning[QStringLiteral("fin3")] = i18nc("@item:intable OpenType feature", "Terminal Forms #3");
+        OTTagsMeaning[QStringLiteral("fina")] = i18nc("@item:intable OpenType feature", "Terminal Forms");
+        OTTagsMeaning[QStringLiteral("frac")] = i18nc("@item:intable OpenType feature", "Fractions");
+        OTTagsMeaning[QStringLiteral("fwid")] = i18nc("@item:intable OpenType feature", "Full Width");
+        OTTagsMeaning[QStringLiteral("half")] = i18nc("@item:intable OpenType feature", "Half Forms");
+        OTTagsMeaning[QStringLiteral("haln")] = i18nc("@item:intable OpenType feature", "Halant Forms");
+        OTTagsMeaning[QStringLiteral("halt")] = i18nc("@item:intable OpenType feature", "Alternate Half Width");
+        OTTagsMeaning[QStringLiteral("hist")] = i18nc("@item:intable OpenType feature", "Historical Forms");
+        OTTagsMeaning[QStringLiteral("hkna")] = i18nc("@item:intable OpenType feature", "Horizontal Kana Alternates");
+        OTTagsMeaning[QStringLiteral("hlig")] = i18nc("@item:intable OpenType feature", "Historical Ligatures");
+        OTTagsMeaning[QStringLiteral("hngl")] = i18nc("@item:intable OpenType feature", "Hangul");
+        OTTagsMeaning[QStringLiteral("hojo")] = i18nc("@item:intable OpenType feature", "Hojo Kanji Forms (JIS x 212-1990 Kanji Forms)");
+        OTTagsMeaning[QStringLiteral("hwid")] = i18nc("@item:intable OpenType feature", "Half Width");
+        OTTagsMeaning[QStringLiteral("init")] = i18nc("@item:intable OpenType feature", "Initial Forms");
+        OTTagsMeaning[QStringLiteral("isol")] = i18nc("@item:intable OpenType feature", "Isolated Forms");
+        OTTagsMeaning[QStringLiteral("ital")] = i18nc("@item:intable OpenType feature", "Italics");
+        OTTagsMeaning[QStringLiteral("jalt")] = i18nc("@item:intable OpenType feature", "Justification Alternatives");
+        OTTagsMeaning[QStringLiteral("jp78")] = i18nc("@item:intable OpenType feature", "JIS78 Forms");
+        OTTagsMeaning[QStringLiteral("jp83")] = i18nc("@item:intable OpenType feature", "JIS83 Forms");
+        OTTagsMeaning[QStringLiteral("jp90")] = i18nc("@item:intable OpenType feature", "JIS90 Forms");
+        OTTagsMeaning[QStringLiteral("jp04")] = i18nc("@item:intable OpenType feature", "JIS2004 Forms");
+        OTTagsMeaning[QStringLiteral("kern")] = i18nc("@item:intable OpenType feature", "Kerning");
+        OTTagsMeaning[QStringLiteral("lfbd")] = i18nc("@item:intable OpenType feature", "Left Bounds");
+        OTTagsMeaning[QStringLiteral("liga")] = i18nc("@item:intable OpenType feature", "Standard Ligatures");
+        OTTagsMeaning[QStringLiteral("ljmo")] = i18nc("@item:intable OpenType feature", "Leading Jamo Forms");
+        OTTagsMeaning[QStringLiteral("lnum")] = i18nc("@item:intable OpenType feature", "Lining Figures");
+        OTTagsMeaning[QStringLiteral("locl")] = i18nc("@item:intable OpenType feature", "Localized Forms");
+        OTTagsMeaning[QStringLiteral("mark")] = i18nc("@item:intable OpenType feature", "Mark Positioning");
+        OTTagsMeaning[QStringLiteral("med2")] = i18nc("@item:intable OpenType feature", "Medial Forms #2");
+        OTTagsMeaning[QStringLiteral("medi")] = i18nc("@item:intable OpenType feature", "Medial Forms");
+        OTTagsMeaning[QStringLiteral("mgrk")] = i18nc("@item:intable OpenType feature", "Mathematical Greek");
+        OTTagsMeaning[QStringLiteral("mkmk")] = i18nc("@item:intable OpenType feature", "Mark to Mark Positioning");
+        OTTagsMeaning[QStringLiteral("mset")] = i18nc("@item:intable OpenType feature", "Mark Positioning via Substitution");
+        OTTagsMeaning[QStringLiteral("nalt")] = i18nc("@item:intable OpenType feature", "Alternate Annotation Forms");
+        OTTagsMeaning[QStringLiteral("nlck")] = i18nc("@item:intable OpenType feature", "NLC Kanji Forms");
+        OTTagsMeaning[QStringLiteral("nukt")] = i18nc("@item:intable OpenType feature", "Nukta Forms");
+        OTTagsMeaning[QStringLiteral("numr")] = i18nc("@item:intable OpenType feature", "Numerators");
+        OTTagsMeaning[QStringLiteral("onum")] = i18nc("@item:intable OpenType feature", "Old Style Figures");
+        OTTagsMeaning[QStringLiteral("opbd")] = i18nc("@item:intable OpenType feature", "Optical Bounds");
+        OTTagsMeaning[QStringLiteral("ordn")] = i18nc("@item:intable OpenType feature", "Ordinals");
+        OTTagsMeaning[QStringLiteral("ornm")] = i18nc("@item:intable OpenType feature", "Ornaments");
+        OTTagsMeaning[QStringLiteral("palt")] = i18nc("@item:intable OpenType feature", "Proportional Alternate Width");
+        OTTagsMeaning[QStringLiteral("pcap")] = i18nc("@item:intable OpenType feature", "Petite Capitals");
+        OTTagsMeaning[QStringLiteral("pnum")] = i18nc("@item:intable OpenType feature", "Proportional Figures");
+        OTTagsMeaning[QStringLiteral("pref")] = i18nc("@item:intable OpenType feature", "Pre-base Forms");
+        OTTagsMeaning[QStringLiteral("pres")] = i18nc("@item:intable OpenType feature", "Pre-base Substitutions");
+        OTTagsMeaning[QStringLiteral("pstf")] = i18nc("@item:intable OpenType feature", "Post-base Forms");
+        OTTagsMeaning[QStringLiteral("psts")] = i18nc("@item:intable OpenType feature", "Post-base Substitutions");
+        OTTagsMeaning[QStringLiteral("pwid")] = i18nc("@item:intable OpenType feature", "Proportional Widths");
+        OTTagsMeaning[QStringLiteral("qwid")] = i18nc("@item:intable OpenType feature", "Quarter Widths");
+        OTTagsMeaning[QStringLiteral("rand")] = i18nc("@item:intable OpenType feature", "Randomize");
+        OTTagsMeaning[QStringLiteral("rkrf")] = i18nc("@item:intable OpenType feature", "Rakar Forms");
+        OTTagsMeaning[QStringLiteral("rlig")] = i18nc("@item:intable OpenType feature", "Required Ligatures");
+        OTTagsMeaning[QStringLiteral("rphf")] = i18nc("@item:intable OpenType feature", "Reph Form");
+        OTTagsMeaning[QStringLiteral("rtbd")] = i18nc("@item:intable OpenType feature", "Right Bounds");
+        OTTagsMeaning[QStringLiteral("rtla")] = i18nc("@item:intable OpenType feature", "Right-To-Left Alternates");
+        OTTagsMeaning[QStringLiteral("ruby")] = i18nc("@item:intable OpenType feature", "Ruby Notation Forms");
+        OTTagsMeaning[QStringLiteral("salt")] = i18nc("@item:intable OpenType feature", "Stylistic Alternates");
+        OTTagsMeaning[QStringLiteral("sinf")] = i18nc("@item:intable OpenType feature", "Scientific Inferiors");
+        OTTagsMeaning[QStringLiteral("size")] = i18nc("@item:intable OpenType feature", "Optical Size");
+        OTTagsMeaning[QStringLiteral("smcp")] = i18nc("@item:intable OpenType feature", "Small Capitals");
+        OTTagsMeaning[QStringLiteral("smpl")] = i18nc("@item:intable OpenType feature", "Simplified Forms");
+        OTTagsMeaning[QStringLiteral("ss01")] = i18nc("@item:intable OpenType feature", "Stylistic Set 1");
+        OTTagsMeaning[QStringLiteral("ss02")] = i18nc("@item:intable OpenType feature", "Stylistic Set 2");
+        OTTagsMeaning[QStringLiteral("ss03")] = i18nc("@item:intable OpenType feature", "Stylistic Set 3");
+        OTTagsMeaning[QStringLiteral("ss04")] = i18nc("@item:intable OpenType feature", "Stylistic Set 4");
+        OTTagsMeaning[QStringLiteral("ss05")] = i18nc("@item:intable OpenType feature", "Stylistic Set 5");
+        OTTagsMeaning[QStringLiteral("ss06")] = i18nc("@item:intable OpenType feature", "Stylistic Set 6");
+        OTTagsMeaning[QStringLiteral("ss07")] = i18nc("@item:intable OpenType feature", "Stylistic Set 7");
+        OTTagsMeaning[QStringLiteral("ss08")] = i18nc("@item:intable OpenType feature", "Stylistic Set 8");
+        OTTagsMeaning[QStringLiteral("ss09")] = i18nc("@item:intable OpenType feature", "Stylistic Set 9");
+        OTTagsMeaning[QStringLiteral("ss10")] = i18nc("@item:intable OpenType feature", "Stylistic Set 10");
+        OTTagsMeaning[QStringLiteral("ss11")] = i18nc("@item:intable OpenType feature", "Stylistic Set 11");
+        OTTagsMeaning[QStringLiteral("ss12")] = i18nc("@item:intable OpenType feature", "Stylistic Set 12");
+        OTTagsMeaning[QStringLiteral("ss13")] = i18nc("@item:intable OpenType feature", "Stylistic Set 13");
+        OTTagsMeaning[QStringLiteral("ss14")] = i18nc("@item:intable OpenType feature", "Stylistic Set 14");
+        OTTagsMeaning[QStringLiteral("ss15")] = i18nc("@item:intable OpenType feature", "Stylistic Set 15");
+        OTTagsMeaning[QStringLiteral("ss16")] = i18nc("@item:intable OpenType feature", "Stylistic Set 16");
+        OTTagsMeaning[QStringLiteral("ss17")] = i18nc("@item:intable OpenType feature", "Stylistic Set 17");
+        OTTagsMeaning[QStringLiteral("ss18")] = i18nc("@item:intable OpenType feature", "Stylistic Set 18");
+        OTTagsMeaning[QStringLiteral("ss19")] = i18nc("@item:intable OpenType feature", "Stylistic Set 19");
+        OTTagsMeaning[QStringLiteral("ss20")] = i18nc("@item:intable OpenType feature", "Stylistic Set 20");
+        OTTagsMeaning[QStringLiteral("subs")] = i18nc("@item:intable OpenType feature", "Subscript");
+        OTTagsMeaning[QStringLiteral("sups")] = i18nc("@item:intable OpenType feature", "Superscript");
+        OTTagsMeaning[QStringLiteral("swsh")] = i18nc("@item:intable OpenType feature", "Swash");
+        OTTagsMeaning[QStringLiteral("titl")] = i18nc("@item:intable OpenType feature", "Titling");
+        OTTagsMeaning[QStringLiteral("tjmo")] = i18nc("@item:intable OpenType feature", "Trailing Jamo Forms");
+        OTTagsMeaning[QStringLiteral("tnam")] = i18nc("@item:intable OpenType feature", "Traditional Name Forms");
+        OTTagsMeaning[QStringLiteral("tnum")] = i18nc("@item:intable OpenType feature", "Tabular Figures");
+        OTTagsMeaning[QStringLiteral("trad")] = i18nc("@item:intable OpenType feature", "Traditional Forms");
+        OTTagsMeaning[QStringLiteral("twid")] = i18nc("@item:intable OpenType feature", "Third Widths");
+        OTTagsMeaning[QStringLiteral("unic")] = i18nc("@item:intable OpenType feature", "Unicase");
+        OTTagsMeaning[QStringLiteral("valt")] = i18nc("@item:intable OpenType feature", "Alternate Vertical Metrics");
+        OTTagsMeaning[QStringLiteral("vatu")] = i18nc("@item:intable OpenType feature", "Vattu Variants");
+        OTTagsMeaning[QStringLiteral("vert")] = i18nc("@item:intable OpenType feature", "Vertical Writing");
+        OTTagsMeaning[QStringLiteral("vhal")] = i18nc("@item:intable OpenType feature", "Alternate Vertical Half Metrics");
+        OTTagsMeaning[QStringLiteral("vjmo")] = i18nc("@item:intable OpenType feature", "Vowel Jamo Forms");
+        OTTagsMeaning[QStringLiteral("vkna")] = i18nc("@item:intable OpenType feature", "Vertical Kana Alternates");
+        OTTagsMeaning[QStringLiteral("vkrn")] = i18nc("@item:intable OpenType feature", "Vertical Kerning");
+        OTTagsMeaning[QStringLiteral("vpal")] = i18nc("@item:intable OpenType feature", "Proportional Alternate Vertical Metrics");
+        OTTagsMeaning[QStringLiteral("vrt2")] = i18nc("@item:intable OpenType feature", "Vertical Rotation");
+        OTTagsMeaning[QStringLiteral("zero")] = i18nc("@item:intable OpenType feature", "Slashed Zero");
+    }
+    return OTTagsMeaning.value(tag);
 };
 
 #endif

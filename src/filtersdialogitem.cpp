@@ -1,51 +1,37 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "filtersdialogitem.h"
 #include "ui_filtersdialogitem.h"
 
+#include <KLocalizedString>
+#include <KMessageBox>
 
-#include <QMessageBox>
-
-FiltersDialogItem::FiltersDialogItem(const QString& name, const QString& f, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FiltersDialogItem),
-    filterName(name)
+FiltersDialogItem::FiltersDialogItem(const QString &name, const QString &f, QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::FiltersDialogItem)
+    , filterName(name)
 {
     ui->setupUi(this);
     QString ssheet;
     ssheet += QString("QToolButton{border:none;}");
     ssheet += QString("QToolButton:checked{border-bottom:2px solid black;}");
     ssheet += QString("QToolButton:hover{background:white;}");
-//	ssheet += QString();
-//	ssheet += QString();
-//	ssheet += QString();
-//	ssheet += QString();
+    //	ssheet += QString();
+    //	ssheet += QString();
+    //	ssheet += QString();
+    //	ssheet += QString();
     this->setStyleSheet(ssheet);
-//    setButtonsVisible(false);
+    //    setButtonsVisible(false);
     ui->filterName->setText(filterName);
     ui->filterName->setToolTip(f);
-//    ui->filters->setText(f);
+    //    ui->filters->setText(f);
 
-    connect(ui->filterButton, SIGNAL(clicked()), this, SLOT(slotFilter()));
-    connect(ui->removeButton, SIGNAL(clicked()), this, SLOT(slotRemove()));
+    connect(ui->filterButton, &QToolButton::clicked, this, &FiltersDialogItem::slotFilter);
+    connect(ui->removeButton, &QToolButton::clicked, this, &FiltersDialogItem::slotRemove);
 }
 
 FiltersDialogItem::~FiltersDialogItem()
@@ -53,32 +39,35 @@ FiltersDialogItem::~FiltersDialogItem()
     delete ui;
 }
 
-
 void FiltersDialogItem::slotFilter()
 {
-	emit Filter(filterName);
+    Q_EMIT Filter(filterName);
 }
-
 
 void FiltersDialogItem::slotRemove()
 {
-	if(QMessageBox::question(0, tr("Remove Filter"), tr("Confirm deletion of filter:") + filterName, QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Ok)
-		emit Remove(filterName);
+    if (KMessageBox::warningContinueCancel(this,
+                                           i18nc("@info", "Confirm deletion of filter:") + filterName,
+                                           i18nc("@title:window", "Remove Filter"),
+                                           KStandardGuiItem::remove())
+        == KMessageBox::Continue)
+        Q_EMIT Remove(filterName);
 }
 
 void FiltersDialogItem::setButtonsVisible(bool v)
 {
-	ui->filterButton->setVisible(v);
-	ui->removeButton->setVisible(v);
-
+    ui->filterButton->setVisible(v);
+    ui->removeButton->setVisible(v);
 }
 
 void FiltersDialogItem::enterEvent(QEvent *)
 {
-//	setButtonsVisible(true);
+    //	setButtonsVisible(true);
 }
 
 void FiltersDialogItem::leaveEvent(QEvent *)
 {
-//	setButtonsVisible(false);
+    //	setButtonsVisible(false);
 }
+
+#include "moc_filtersdialogitem.cpp"

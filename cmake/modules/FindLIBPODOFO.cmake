@@ -38,6 +38,22 @@ IF(LIBPODOFO_INCLUDE_DIR AND LIBPODOFO_LIBRARY)
   SET(LIBPODOFO_FOUND TRUE CACHE BOOLEAN "Was libpodofo found")
 ENDIF(LIBPODOFO_INCLUDE_DIR AND LIBPODOFO_LIBRARY)
 
+# The version, from wherever this release keeps its configuration header
+IF(LIBPODOFO_INCLUDE_DIR)
+  FOREACH(_podofo_cfg podofo/auxiliary/podofo_config.h podofo/base/podofo_config.h podofo/podofo_config.h)
+    IF(EXISTS "${LIBPODOFO_INCLUDE_DIR}/${_podofo_cfg}")
+      FILE(STRINGS "${LIBPODOFO_INCLUDE_DIR}/${_podofo_cfg}" _podofo_ver REGEX "^#define[ \t]+PODOFO_VERSION_(MAJOR|MINOR|PATCH)[ \t]+[0-9]+")
+      IF(_podofo_ver)
+        STRING(REGEX REPLACE ".*PODOFO_VERSION_MAJOR[ \t]+([0-9]+).*" "\\1" _podofo_major "${_podofo_ver}")
+        STRING(REGEX REPLACE ".*PODOFO_VERSION_MINOR[ \t]+([0-9]+).*" "\\1" _podofo_minor "${_podofo_ver}")
+        STRING(REGEX REPLACE ".*PODOFO_VERSION_PATCH[ \t]+([0-9]+).*" "\\1" _podofo_patch "${_podofo_ver}")
+        SET(LIBPODOFO_VERSION "${_podofo_major}.${_podofo_minor}.${_podofo_patch}")
+        BREAK()
+      ENDIF()
+    ENDIF()
+  ENDFOREACH()
+ENDIF()
+
 SET(LIBPODOFO_CFLAGS "${useshared}" CACHE STRING "Extra flags for compiling against PoDoFo")
 
 IF(NOT LIBPODOFO_FIND_QUIETLY)

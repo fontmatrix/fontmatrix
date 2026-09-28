@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Imported fonts</string>
+   <string comment="@title:window">Imported fonts</string>
   </property>
   <layout class="QGridLayout" name="gLt" >
    <item row="0" column="0" >
@@ -21,7 +21,7 @@
       </font>
      </property>
      <property name="text" >
-      <string>Imported Fonts:</string>
+      <string comment="@label">Imported Fonts:</string>
      </property>
     </widget>
    </item>
@@ -49,13 +49,13 @@
      <item>
       <widget class="QCheckBox" name="dontShowBox" >
        <property name="toolTip" >
-        <string>&lt;qt>Instead of showing this dialog imported font count
+        <string comment="@info:tooltip">&lt;qt>Instead of showing this dialog imported font count
 will be shown in the status bar. If you choose not to
 show this dialog anymore you can reset the state
 in preferences.&lt;/qt></string>
        </property>
        <property name="text" >
-        <string>&amp;Do not show this dialog again</string>
+        <string comment="@option:check">&amp;Do not show this dialog again</string>
        </property>
       </widget>
      </item>
@@ -81,7 +81,7 @@ in preferences.&lt;/qt></string>
         </sizepolicy>
        </property>
        <property name="text" >
-        <string>&amp;OK</string>
+        <string comment="@action:button">&amp;OK</string>
        </property>
       </widget>
      </item>

@@ -1,65 +1,50 @@
-/***************************************************************************
- *   Copyright (C) 2008 by Riku Leino                                      *
- *   riku@scribus.info                                                     *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2008 Riku Leino <riku@scribus.info>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef SHORTCUTS_H
 #define SHORTCUTS_H
 
-#include <QSettings>
 #include <QMap>
+#include <QObject>
+#include <QString>
 
 class QAction;
 
 class Shortcuts : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	~Shortcuts();
+    ~Shortcuts() override;
 
-	static Shortcuts* getInstance();
+    static Shortcuts *getInstance();
 
-	void add(QAction *a);
+    void add(QAction *a);
 
-	QList<QAction*> getActions();
+    QList<QAction *> getActions();
 
-	/* returns QString::null if it's not reserved or the action name
+    /* returns QString::null if it's not reserved or the action name
       the shortcut belongs if it's already taken. */
-	QString isReserved(const QString &shortcut, const QString &actionText);
+    QString isReserved(const QString &shortcut, const QString &actionText);
 
-	void setShortcut(const QString &shortcut, const QString &actionText);
+    void setShortcut(const QString &shortcut, const QString &actionText);
 
-	void clearShortcut(const QString &actionText);
+    void clearShortcut(const QString &actionText);
 
-	QString cleanName(QAction *action); // without & chars
-	QString cleanName(const QString &s);  // same with a string
+    QString cleanName(QAction *action); // without & chars
+    QString cleanName(const QString &s); // same with a string
 
 private:
-	QSettings settings;
+    QMap<QString, QAction *> actions;
 
-	QMap<QString, QAction*> actions;
+    static Shortcuts *instance;
 
-	static Shortcuts* instance;
-
-	QString settingsKey(QAction *action);
+    QString settingsKey(QAction *action);
 
 protected:
-	Shortcuts();
+    Shortcuts();
 };
 
 #endif

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -41,14 +41,14 @@
          </font>
         </property>
         <property name="text">
-         <string>StyleName</string>
+         <string comment="@label">StyleName</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
        <widget class="QCheckBox" name="activatedStatus">
         <property name="text">
-         <string>Activated</string>
+         <string comment="@option:check">Activated</string>
         </property>
        </widget>
       </item>

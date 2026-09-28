@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Filters Manager</string>
+   <string comment="@title:window">Filters Manager</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_8">
    <property name="verticalSpacing">
@@ -64,7 +64,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>In order to add filters, you have to first select some of tags, meta informations or classifications elements.</string>
+             <string comment="@label">In order to add filters, you have to first select some of tags, meta informations or classifications elements.</string>
             </property>
             <property name="textFormat">
              <enum>Qt::AutoText</enum>
@@ -93,7 +93,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Add Filter</string>
+             <string comment="@label">Add Filter</string>
             </property>
            </widget>
           </item>
@@ -124,7 +124,7 @@
                <item>
                 <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>Filter Name:</string>
+                  <string comment="@label">Filter Name:</string>
                  </property>
                  <property name="buddy">
                   <cstring>newName</cstring>
@@ -150,7 +150,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Add</string>
+                  <string comment="@action:button">Add</string>
                  </property>
                 </widget>
                </item>
@@ -159,7 +159,7 @@
              <item row="1" column="0">
               <widget class="QLabel" name="curFilter">
                <property name="text">
-                <string>current filter</string>
+                <string comment="@label">current filter</string>
                </property>
               </widget>
              </item>
@@ -198,7 +198,7 @@
       <item row="0" column="1">
        <widget class="QPushButton" name="closeButton">
         <property name="text">
-         <string>Close</string>
+         <string comment="@action:button">Close</string>
         </property>
        </widget>
       </item>

@@ -1,0 +1,23 @@
+[Desktop Entry]
+
+Version=1.0
+Type=Application
+Name=Fontmatrix
+Comment=A font management application
+Comment[bg]=Приложение за управление на шрифтове
+Comment[ru]=Программа для управления шрифтами
+Comment[fi]=Työkalu fonttien hallintaan
+Categories=Qt;KDE;Graphics;Viewer;
+Keywords=font;typeface;typography;OpenType;PANOSE;
+Exec=fontmatrix
+Icon=fontmatrix
+Terminal=false
+GenericName=Font Manager
+GenericName[bg]=Управление на шрифтове
+GenericName[fr]=Gestion des Polices
+GenericName[ru]=Управление шрифтами
+GenericName[fi]=Fonttien hallinta
+TryExec=fontmatrix
+X-StandardInstall=false
+StartupWMClass=fontmatrix
+X-KDE-SubstituteUID=false

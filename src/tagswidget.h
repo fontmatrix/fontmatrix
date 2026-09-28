@@ -1,14 +1,8 @@
-//
-// C++ Interface: tagswidget
-//
-// Description:
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef TAGSWIDGET_H
 #define TAGSWIDGET_H
@@ -18,24 +12,21 @@
 class FontItem;
 class TagsWidget_ListModel;
 
-class TagsWidget : public QWidget , private Ui::tagsWidget
+class TagsWidget : public QWidget, private Ui::tagsWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
-
-	TagsWidget_ListModel * model;
+    TagsWidget_ListModel *model = nullptr;
 
 public:
-	TagsWidget(QWidget * parent);
-	~TagsWidget();
+    explicit TagsWidget(QWidget *parent);
+    ~TagsWidget() override;
 
-	void prepare(QList<FontItem*> fonts);
+    void prepare(QList<FontItem *> fonts);
 
-private slots:
-	void slotNewTag();
-	void slotActRemovetag();
-
+private Q_SLOTS:
+    void slotNewTag();
+    void slotActRemovetag();
 };
 
-#endif //TAGSWIDGET_H
-
+#endif // TAGSWIDGET_H

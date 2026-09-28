@@ -1,0 +1,67 @@
+# Fontmatrix-specific Craft packaging blacklist.
+# Layered on top of Craft's default applications_blacklist.txt.
+# Pattern syntax: case-insensitive regex; matched against the path
+# relative to imageDir (e.g. "bin/clang.exe").
+
+# LLVM/Clang/LLD — pulled by qtdeclarative; not loaded by Fontmatrix.
+bin/clang(-.*)?(\.exe)?
+bin/clangd(\.exe)?
+bin/lli(-.*)?(\.exe)?
+bin/llc(\.exe)?
+bin/llvm-.*(\.exe)?
+bin/lld(\.exe)?
+bin/ld\.lld(\.exe)?
+bin/ld64\.lld(\.exe)?
+bin/lld-link(\.exe)?
+bin/wasm-ld(\.exe)?
+bin/lldb(-.*)?(\.exe)?
+bin/opt(\.exe)?
+bin/bugpoint(\.exe)?
+bin/dsymutil(\.exe)?
+bin/sancov(\.exe)?
+bin/yaml2obj(\.exe)?
+bin/obj2yaml(\.exe)?
+bin/c-index-test(\.exe)?
+bin/diagtool(\.exe)?
+bin/dwp(\.exe)?
+bin/scan-.*(\.exe|\.bat|\.py)?
+bin/libclang\.dll
+bin/LLVM-C\.dll
+bin/LTO\.dll
+bin/Remarks\.dll
+lib/clang/.*
+
+# Perl + KDocTools build chain — handbook is built-time only.
+bin/perl.*(\.exe)?
+bin/cpan.*(\.exe|\.bat)?
+bin/pod2.*(\.exe|\.bat)?
+bin/h2.*(\.exe|\.bat)?
+bin/(instmodsh|json_pp|zipdetails|encguess|streamzip|perlbug|perldoc|perlivp|perlthanks|piconv|prove|pstruct|ptar|ptardiff|ptargrep|shasum|splain|xsubpp|corelist|cpanm|libnetcfg)(\.exe|\.bat)?
+lib/perl5/.*
+share/perl5/.*
+
+# libxslt / xml CLI tools — used by kdoctools at build time.
+bin/(xsltproc|xmllint|xmlcatalog|xmlwf|xml2-config)(\.exe)?
+share/xml/.*
+share/sgml/.*
+
+# Build/dev utilities pulled in by deps but never run at runtime.
+bin/(meson|ninja|cmake|ctest|cpack|pkg-config|pkgconf)(\.exe)?
+bin/.*-config(\.exe)?
+bin/(autoconf|autoheader|automake|aclocal|autoreconf)(-[0-9.]+)?(\.exe)?
+bin/(icotool|wrestool|extresso|geniconvtbl|gendict|genrb|makeconv|pkgdata)(\.exe)?
+
+# Qt build tools not covered by Craft's default blacklist.
+#
+# Note on paths: blacklist.txt is matched while files are copied out of each
+# package's image dir, before movePluginsToBin merges plugins/ and qml/ into
+# bin/. A plugin the finished package shows at bin/<x>/y.dll has to be matched
+# as plugins/<x>/y.dll here.
+bin/qmltyperegistrar(\.exe)?
+bin/qmlformat(\.exe)?
+bin/qsb(\.exe)?
+bin/balsam(\.exe)?
+bin/balsamui(\.exe)?
+
+# Symbol files — debug, never shipped.
+.*\.pdb

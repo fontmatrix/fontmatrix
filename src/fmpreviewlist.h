@@ -1,141 +1,159 @@
-/***************************************************************************
- *   Copyright (C) 2007 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2007 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef FMPREVIEWLIST_H
 #define FMPREVIEWLIST_H
 
-
-#include <QListView>
 #include <QAbstractListModel>
 #include <QIconEngine>
+#include <QListView>
+#include <QPainterPath>
+#include <QPen>
 #include <QPixmap>
 #include <QPoint>
-#include <QPen>
-#include <QPainterPath>
 
 class FontItem;
 class MainViewWidget;
 class QListView;
 
-
 // Rather than fighting against Qt to not resize our icons, draw them ourselves.
 class FMPreviewIconEngine : public QIconEngine
 {
 public:
-	enum Activation{
-		NotActivated,
-		Activated,
-		PartlyActivated
-	};
-	FMPreviewIconEngine();
-	~FMPreviewIconEngine();
-	void paint ( QPainter * painter, const QRect & rect, QIcon::Mode mode, QIcon::State state );
-	void addPixmap ( const QPixmap & pixmap, QIcon::Mode mode, QIcon::State state );
-	void setActivation(Activation a){activatedFont = a;}
-	virtual QIconEngine *clone() const; // TODO Implement this function
+    enum Activation {
+        NotActivated,
+        Activated,
+        PartlyActivated
+    };
+    FMPreviewIconEngine();
+    ~FMPreviewIconEngine() override;
+    void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) override;
+    void addPixmap(const QPixmap &pixmap, QIcon::Mode mode, QIcon::State state) override;
+    void setActivation(Activation a)
+    {
+        activatedFont = a;
+    }
+    [[nodiscard]] QIconEngine *clone() const override;
 
 private:
-	QPixmap m_p;
-	Activation activatedFont;
-	static bool initState;
-	static QPen pen;
-	static QVector<QRgb> m_selPalette;
-	static QRgb activatedColor;
-	static QRgb deactivatedColor;
-	static QRgb partlyActivatedColor;
+    // only clone() copies an engine
+    FMPreviewIconEngine(const FMPreviewIconEngine &) = default;
+    FMPreviewIconEngine &operator=(const FMPreviewIconEngine &) = delete;
 
-	QVector<QRgb> actualSelPalette(const QVector<QRgb>& orig);
+    QPixmap m_p;
+    Activation activatedFont;
+    static bool initState;
+    static QPen pen;
+    static QVector<QRgb> m_selPalette;
+    static QRgb activatedColor;
+    static QRgb deactivatedColor;
+    static QRgb partlyActivatedColor;
 
+    QVector<QRgb> actualSelPalette(const QVector<QRgb> &orig);
 };
-
 
 class FMPreviewView : public QListView
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	FMPreviewView(QWidget * parent = 0);
-	~FMPreviewView(){}
-	int getUsedWidth() const{return usedWidth;}
-	// n = 1 for a single column layout (list); n = 2 for multi columns layout
-	void setNumCol(int n){columns = n;}
-	bool moveTo(const QString& fname); // fname can be the begining of a fancy name
+    explicit FMPreviewView(QWidget *parent = nullptr);
+    ~FMPreviewView() override = default;
+    [[nodiscard]] int getUsedWidth() const
+    {
+        return usedWidth;
+    }
+    // n = 1 for a single column layout (list); n = 2 for multi columns layout
+    void setNumCol(int n)
+    {
+        columns = n;
+    }
+    bool moveTo(const QString &fname); // fname can be the begining of a fancy name
 
 protected:
-	void resizeEvent ( QResizeEvent * event );
-	QPoint startDragPoint;
-	bool dragFlag;
-	virtual void mousePressEvent(QMouseEvent *event);
-	virtual void mouseMoveEvent(QMouseEvent *event);
-	void keyPressEvent(QKeyEvent *event);
+    void resizeEvent(QResizeEvent *event) override;
+    QPoint startDragPoint;
+    bool dragFlag;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
-	int usedWidth;
-	int columns;
+    int usedWidth = 0;
+    int columns;
 
-public slots:
-	void updateLayout();
-	void setCurrentFont(const QString& name);
+public Q_SLOTS:
+    void updateLayout();
 
-signals:
-	void widthChanged(int);
-	void keyPressed(QString);
+public:
+    void setCurrentFont(const QString &name);
 
+Q_SIGNALS:
+    void widthChanged(int);
+    void keyPressed(QString);
 };
 
 class FMPreviewModel : public QAbstractListModel
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	enum PreviewItemRole{
-		PathRole = Qt::UserRole + 1
-		   };
+    enum PreviewItemRole {
+        PathRole = Qt::UserRole + 1,
+        InstanceRole ///< the named instance of a variable font the row shows, -1 for the font itself
+    };
 
-	FMPreviewModel ( QObject * pa , FMPreviewView * wPa, QList<FontItem*> db = QList<FontItem*>());
-	//returns a preview
-	QVariant data ( const QModelIndex &index, int role = Qt::DisplayRole ) const;
-	//returns flags for items
-	Qt::ItemFlags flags ( const QModelIndex &index ) const;
-	//returns the number of items
-	int rowCount ( const QModelIndex &parent ) const;
+    FMPreviewModel(QObject *pa, FMPreviewView *wPa, QList<FontItem *> db = QList<FontItem *>());
+    // returns a preview
+    [[nodiscard]] QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    // returns flags for items
+    [[nodiscard]] Qt::ItemFlags flags(const QModelIndex &index) const override;
+    // returns the number of items
+    [[nodiscard]] int rowCount(const QModelIndex &parent) const override;
 
-	void resetBase(QList<FontItem*> db);
-	QList<FontItem*> getBase();
+    void resetBase(QList<FontItem *> db);
+    QList<FontItem *> getBase();
 
-	void setFamilyMode(bool f){familyMode =f;}
-	void setSpecString(const QString& s){specString = s;}
+    void setFamilyMode(bool f)
+    {
+        familyMode = f;
+    }
+    void setSpecString(const QString &s)
+    {
+        specString = s;
+    }
 
-	bool getFamilyMode() const{return familyMode;}
+    [[nodiscard]] bool getFamilyMode() const
+    {
+        return familyMode;
+    }
+
+    /// a variable font is shown as its named instances, one row each (the family view)
+    void setInstanceMode(bool i)
+    {
+        instanceMode = i;
+    }
+    /// the row of the font, at the named instance when it has rows for them
+    [[nodiscard]] QModelIndex indexOf(FontItem *font, int instance) const;
 
 private:
-	FMPreviewView *m_view;
-	QList<FontItem*> base;
-	QString specString;
-	QString styleTooltipName;
-	QString styleTooltipTags;
-	QString styleTooltipPath;
-	bool familyMode;
+    FMPreviewView *m_view = nullptr;
+    QList<FontItem *> base;
+    QString specString;
+    QString styleTooltipName;
+    QString styleTooltipTags;
+    QString styleTooltipPath;
+    bool familyMode;
+    bool instanceMode = false;
+    struct Row {
+        FontItem *font = nullptr;
+        int instance = -1;
+    };
+    QList<Row> rows; ///< in instance mode, what each row shows
 
-public slots:
-	void dataChanged();
-
+public Q_SLOTS:
+    void dataChanged();
 };
-
-
 
 #endif

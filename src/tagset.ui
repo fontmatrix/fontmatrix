@@ -16,7 +16,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle" >
-   <string>TagSet editor</string>
+   <string comment="@title:window">TagSet editor</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="application.qrc" >:/fontmatrix_tagseteditor_icon.png</iconset>
@@ -61,7 +61,7 @@
            </font>
           </property>
           <property name="text" >
-           <string>Collections of Tags</string>
+           <string comment="@label">Collections of Tags</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -77,7 +77,7 @@
           <item>
            <widget class="QLabel" name="label" >
             <property name="text" >
-             <string>Available Tags</string>
+             <string comment="@label">Available Tags</string>
             </property>
            </widget>
           </item>
@@ -112,10 +112,10 @@
                </sizepolicy>
               </property>
               <property name="toolTip" >
-               <string>Add selected tag to current set.</string>
+               <string comment="@info:tooltip">Add selected tag to current set.</string>
               </property>
               <property name="text" >
-               <string>Add</string>
+               <string comment="@action:button">Add</string>
               </property>
              </widget>
             </item>
@@ -135,7 +135,7 @@
           <item>
            <widget class="QLabel" name="label_2" >
             <property name="text" >
-             <string>Collections</string>
+             <string comment="@label">Collections</string>
             </property>
            </widget>
           </item>
@@ -150,14 +150,14 @@
             <item>
              <widget class="QPushButton" name="newSetButton" >
               <property name="text" >
-               <string>New</string>
+               <string comment="@action:button">New</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="deleteTagsetButton" >
               <property name="text" >
-               <string>delete</string>
+               <string comment="@action:button">delete</string>
               </property>
              </widget>
             </item>
@@ -184,7 +184,7 @@
             <item>
              <widget class="QPushButton" name="removeToSetButton" >
               <property name="text" >
-               <string>Remove</string>
+               <string comment="@action:button">Remove</string>
               </property>
              </widget>
             </item>
@@ -228,7 +228,7 @@
      <item>
       <widget class="QPushButton" name="closeButton" >
        <property name="text" >
-        <string>Close</string>
+        <string comment="@action:button">Close</string>
        </property>
       </widget>
      </item>

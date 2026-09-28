@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: 2026 Blagovest Petrov <blagovest@petrovs.info>
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# The polkit actions of the root helper. kauth-policy-gen turns this into
+# org.fontmatrix.policy. auth_admin with a session persistence is auth_admin_keep:
+# the administrator's password, kept
+# for a few minutes, so a session of activations asks once.
+
+[Domain]
+Name=Fontmatrix
+Name[bg]=Fontmatrix
+Icon=fontmatrix
+URL=https://github.com/fontmatrix/fontmatrix
+
+[org.fontmatrix.activate]
+Name=Activate fonts for all users
+Name[bg]=Активиране на шрифтове за всички потребители
+Description=Authentication is required to copy fonts into the font directory of the system
+Description[bg]=За копиране на шрифтове в системната папка с шрифтове е необходимо удостоверяване
+Policy=auth_admin
+Persistence=session
+
+[org.fontmatrix.deactivate]
+Name=Deactivate fonts for all users
+Name[bg]=Деактивиране на шрифтове за всички потребители
+Description=Authentication is required to remove fonts from the font directory of the system
+Description[bg]=За премахване на шрифтове от системната папка с шрифтове е необходимо удостоверяване
+Policy=auth_admin
+Persistence=session
+
+[org.fontmatrix.rejects]
+Name=Hide system fonts from all users
+Name[bg]=Скриване на системни шрифтове от всички потребители
+Description=Authentication is required to change which system fonts are hidden
+Description[bg]=За промяна на скритите системни шрифтове е необходимо удостоверяване
+Policy=auth_admin
+Persistence=session

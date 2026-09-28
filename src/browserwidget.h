@@ -1,123 +1,110 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef BROWSERWIDGET_H
 #define BROWSERWIDGET_H
 
-#include <QWidget>
-#include <QStringList>
-#include <QModelIndex>
 #include <QFileInfo>
-#include <QPoint>
 #include <QMenu>
+#include <QModelIndex>
+#include <QPoint>
+#include <QStringList>
+#include <QWidget>
 
-#define BROWSER_VIEW_INFO	0
-#define BROWSER_VIEW_SAMPLE	1
-#define BROWSER_VIEW_CHART	2
+constexpr int BROWSER_VIEW_INFO = 0;
+constexpr int BROWSER_VIEW_SAMPLE = 1;
+constexpr int BROWSER_VIEW_CHART = 2;
 
-class QDirModel;
+class QFileSystemModel;
 class QFileSystemWatcher;
 class FloatingWidget;
 class FolderViewMenu;
 
-namespace Ui {
-	class BrowserWidget;
+namespace Ui
+{
+class BrowserWidget;
 }
 
 class BrowserWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit BrowserWidget(QWidget *parent = 0);
-	~BrowserWidget();
+    explicit BrowserWidget(QWidget *parent = nullptr);
+    ~BrowserWidget() override;
 
 private:
-	Ui::BrowserWidget *ui;
+    Ui::BrowserWidget *const ui;
 
-	QString curVariant;
+    QString curVariant;
 
-	FloatingWidget *sample;
-	FloatingWidget *chart;
-	FloatingWidget *activation;
+    FloatingWidget *sample = nullptr;
+    FloatingWidget *chart = nullptr;
+    FloatingWidget *activation = nullptr;
 
-	unsigned int currentIndex;
-	unsigned int currentPage;
-	QString uniBlock;
+    unsigned int currentIndex = 0U;
+    unsigned int currentPage;
+    QString uniBlock;
 
-	QDirModel *theDirModel;
-	QStringList ffilter;
-	QFileSystemWatcher *dirWatcher;
-	QModelIndex currentFIndex;
+    QFileSystemModel *theDirModel = nullptr;
+    QStringList ffilter;
+    QFileSystemWatcher *dirWatcher = nullptr;
+    QModelIndex currentFIndex;
 
-	FolderViewMenu *folderViewContextMenu;
+    FolderViewMenu *folderViewContextMenu = nullptr;
 
-	void initWatcher(QModelIndex parent);
-	void settingsDir(const QString& path);
+    void initWatcher(QModelIndex parent);
+    void settingsDir(const QString &path);
 
-	void updateButtons();
+    void updateButtons();
 
-private slots:
-	void slotFolderItemclicked(QModelIndex mIdx);
-	void slotFolderPressed(QModelIndex mIdx);
-	void slotFolderAddToWatcher(QModelIndex mIdx);
-	void slotFolderRemoveFromWatcher(QModelIndex mIdx);
-	void slotFolderRefresh(const QString& dirPath);
+private Q_SLOTS:
+    void slotFolderItemclicked(QModelIndex mIdx);
+    void slotFolderPressed(QModelIndex mIdx);
+    void slotFolderRefresh(const QString &dirPath);
 
-	void slotShowInfo();
-	void slotShowSample();
-	void slotShowChart();
+    void slotShowInfo();
+    void slotShowSample();
+    void slotShowChart();
 
-	void slotImport();
+    void slotImport();
 
-	void slotDetachChart();
-	void slotDetachSample();
+    void slotDetachChart();
+    void slotDetachSample();
 
-	void slotFolderViewContextMenu(const QPoint&);
+    void slotFolderViewContextMenu(const QPoint &);
 
-signals:
-	void folderSelectFont(QString);
+private:
+    void slotFolderAddToWatcher(QModelIndex mIdx);
+    void slotFolderRemoveFromWatcher(QModelIndex mIdx);
+
+Q_SIGNALS:
+    void folderSelectFont(QString);
 };
 
 class FolderViewMenu : public QMenu
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	FolderViewMenu();
-	~FolderViewMenu();
+    FolderViewMenu();
+    ~FolderViewMenu() override;
 
-	void exec(const QFileInfo &fi, const QPoint &p);
+    void exec(const QFileInfo &fi, const QPoint &p);
 
 private:
-	QAction *dirAction;
-	QAction *dirRecursiveAction;
-	QAction *fileAction;
+    QAction *dirAction = nullptr;
+    QAction *dirRecursiveAction = nullptr;
+    QAction *fileAction = nullptr;
 
-	QFileInfo selectedFileOrDir;
+    QFileInfo selectedFileOrDir;
 
-private slots:
-	void slotImportDir();
-	void slotImportDirRecursively();
-	void slotImportFile();
-
+private Q_SLOTS:
+    void slotImportDir();
+    void slotImportDirRecursively();
+    void slotImportFile();
 };
-
 
 #endif // BROWSERWIDGET_H

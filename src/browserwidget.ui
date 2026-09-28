@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">
@@ -63,7 +63,7 @@
           <item row="0" column="3">
            <widget class="QToolButton" name="infoButton">
             <property name="text">
-             <string>Info</string>
+             <string comment="@action:button">Info</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -73,7 +73,7 @@
           <item row="0" column="5">
            <widget class="QPushButton" name="importButton">
             <property name="text">
-             <string>Import</string>
+             <string comment="@action:button">Import</string>
             </property>
             <property name="checkable">
              <bool>false</bool>
@@ -83,7 +83,7 @@
           <item row="0" column="2">
            <widget class="QToolButton" name="chartButton">
             <property name="text">
-             <string>Chart</string>
+             <string comment="@action:button">Chart</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -93,7 +93,7 @@
           <item row="0" column="1">
            <widget class="QToolButton" name="sampleButton">
             <property name="text">
-             <string>Sample</string>
+             <string comment="@action:button">Sample</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -111,11 +111,9 @@
             <number>0</number>
            </property>
            <item row="0" column="0">
-            <widget class="QWebView" name="webView">
-             <property name="url">
-              <url>
-               <string>about:blank</string>
-              </url>
+            <widget class="QTextBrowser" name="webView">
+             <property name="openExternalLinks">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -131,14 +129,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

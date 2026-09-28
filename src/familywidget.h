@@ -1,45 +1,30 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef FAMILYWIDGET_H
 #define FAMILYWIDGET_H
 
-#include <QWidget>
 #include <QList>
 #include <QModelIndex>
 #include <QStringList>
+#include <QWidget>
 
-
-#define FAMILY_VIEW_INFO	0
-#define FAMILY_VIEW_SAMPLE	1
-#define FAMILY_VIEW_CHART	2
-#define FAMILY_VIEW_ACTIVATION	3
+constexpr int FAMILY_VIEW_INFO = 0;
+constexpr int FAMILY_VIEW_SAMPLE = 1;
+constexpr int FAMILY_VIEW_CHART = 2;
+constexpr int FAMILY_VIEW_ACTIVATION = 3;
 
 class FMPreviewModel;
 class FontItem;
 class TagsWidget;
-class QWebView;
 class FloatingWidget;
 
-namespace Ui {
-    class FamilyWidget;
+namespace Ui
+{
+class FamilyWidget;
 }
 
 class FamilyWidget : public QWidget
@@ -47,51 +32,55 @@ class FamilyWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit FamilyWidget(QWidget *parent = 0);
-    ~FamilyWidget();
+    explicit FamilyWidget(QWidget *parent = nullptr);
+    ~FamilyWidget() override;
 
-    void setFamily(const QString& f);
-    TagsWidget* tagWidget();
-    QWebView * info();
+    void setFamily(const QString &f);
+    TagsWidget *tagWidget();
     QString family;
     QString curVariant;
+    int curInstance = -1; ///< the named instance of curVariant chosen in the list, -1 for none
 
 protected:
-    void changeEvent(QEvent *e);
-    void keyPressEvent ( QKeyEvent * event );
+    void changeEvent(QEvent *e) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
-    void buildList(const QList<FontItem*>& fl);
+    void buildList(const QList<FontItem *> &fl);
 
 private:
-    Ui::FamilyWidget *ui;
-    FMPreviewModel * previewModel;
-    FloatingWidget *sample;
-    FloatingWidget *chart;
-    FloatingWidget *activation;
+    Ui::FamilyWidget *const ui;
+    FMPreviewModel *previewModel = nullptr;
+    FloatingWidget *sample = nullptr;
+    FloatingWidget *chart = nullptr;
+    FloatingWidget *activation = nullptr;
 
     unsigned int currentIndex;
+    QMetaObject::Connection variationConnection; ///< the list follows the instance the font is shown at
+    void followVariation();
     unsigned int currentPage;
     QString uniBlock;
 
     void updateButtons();
 
-signals:
+Q_SIGNALS:
     void backToList();
-    void fontSelected(const QString& path);
+    void fontSelected(const QString &path);
     void familyStateChanged();
 
-private slots:
-    void slotPreviewUpdate();
+private Q_SLOTS:
     void slotPreviewUpdateSize(int);
-    void slotPreviewSelected(const QModelIndex & index);
+    void slotPreviewSelected(const QModelIndex &index);
     void slotShowInfo();
     void slotShowSample();
     void slotShowChart();
     void slotShowActivation();
     void slotDetachSample();
     void slotDetachChart();
-//    void slotDetachActivation();
     void slotStateChange();
+
+private:
+    void slotPreviewUpdate();
+    //    void slotDetachActivation();
 };
 
 #endif // FAMILYWIDGET_H

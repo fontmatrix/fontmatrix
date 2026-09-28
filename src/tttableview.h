@@ -1,14 +1,8 @@
-//
-// C++ Interface: tttableview
-//
-// Description: 
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef TTTABLEVIEW_H
 #define TTTABLEVIEW_H
@@ -20,29 +14,27 @@ class QTreeWidgetItem;
 
 class TTTableView : public QWidget, private Ui::TTTableWidget
 {
-	Q_OBJECT
-	enum Tfield_p{
-		NAME = 0,
-		DESCRIPTION = 1,
-		SIZE = 2	
-	};
-	
-	FontItem * m_font;
-	QList<QTreeWidgetItem*> twiList;
-	QVector<uint8_t> m_data;
-	
-	public:
-		
-		TTTableView(FontItem * font, QWidget * parent = 0);
-		~TTTableView();
-		
-	private:
-		QByteArray curTable;
-		
-	private slots:
-		void updateHexView();
-		void exportHex();
-		
+    Q_OBJECT
+    enum Tfield_p {
+        NAME = 0,
+        DESCRIPTION = 1,
+        SIZE = 2
+    };
+
+    FontItem *m_font = nullptr;
+    QList<QTreeWidgetItem *> twiList;
+    QVector<uint8_t> m_data;
+
+public:
+    explicit TTTableView(FontItem *font, QWidget *parent = nullptr);
+    ~TTTableView() override;
+
+private:
+    QByteArray curTable;
+
+private Q_SLOTS:
+    void updateHexView();
+    void exportHex();
 };
 
 #endif

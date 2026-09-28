@@ -1,176 +1,149 @@
-/***************************************************************************
- *   Copyright (C) 2007 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2007 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #include "fmglyphsview.h"
+#include "fontmatrix_debug.h"
 
 #include <QDebug>
-#include <QMouseEvent>
 #include <QGraphicsItem>
+#include <QMouseEvent>
 #include <QScrollBar>
 
 #ifdef HAVE_QTOPENGL
 #include <QGLWidget>
 #endif
 
-FMGlyphsView::FMGlyphsView ( QWidget *parent )
-		: QGraphicsView ( parent )
+FMGlyphsView::FMGlyphsView(QWidget *parent)
+    : QGraphicsView(parent)
 {
-	// There is just one instance and we want to identify it
-	setObjectName ( "theglyphsview" );
+    // There is just one instance and we want to identify it
+    setObjectName("theglyphsview");
 
 #ifdef HAVE_QTOPENGL
-	QGLFormat glfmt;
-	glfmt.setSampleBuffers ( true );
-	QGLWidget *glwgt = new QGLWidget ( glfmt );
-	if ( glwgt->format().sampleBuffers() )
-	{
-		setViewport ( glwgt );
-		qDebug() <<"opengl enabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
-	}
-	else
-	{
-		qDebug() <<"opengl disabled - DirectRendering("<< glwgt->format().directRendering() <<") - SampleBuffers("<< glwgt->format().sampleBuffers() <<")";
-		delete glwgt;
-	}
+    QGLFormat glfmt;
+    glfmt.setSampleBuffers(true);
+    QGLWidget *glwgt = new QGLWidget(glfmt);
+    if (glwgt->format().sampleBuffers()) {
+        setViewport(glwgt);
+        qCDebug(FONTMATRIX_LOG) << "opengl enabled - DirectRendering(" << glwgt->format().directRendering() << ") - SampleBuffers("
+                                << glwgt->format().sampleBuffers() << ")";
+    } else {
+        qCDebug(FONTMATRIX_LOG) << "opengl disabled - DirectRendering(" << glwgt->format().directRendering() << ") - SampleBuffers("
+                                << glwgt->format().sampleBuffers() << ")";
+        delete glwgt;
+    }
 #endif
 
-	setAlignment ( Qt::AlignLeft | Qt::AlignTop );
-	setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	setBackgroundBrush ( Qt::white );
-	m_state = AllView;
-	m_lock = false;
-	m_oper = false;
+    setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setBackgroundBrush(Qt::white);
+    m_state = AllView;
+    m_lock = false;
+    m_oper = false;
 
-	connect ( verticalScrollBar() , SIGNAL ( valueChanged ( int ) ), this, SLOT ( slotViewMoved ( int ) ) );
-
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &FMGlyphsView::slotViewMoved);
 }
 
+FMGlyphsView::~FMGlyphsView() = default;
 
-FMGlyphsView::~FMGlyphsView()
+void FMGlyphsView::resizeEvent(QResizeEvent *)
 {
+    if (m_state == SingleView)
+        Q_EMIT pleaseUpdateSingle();
+
+    Q_EMIT pleaseUpdateMe();
 }
 
-void FMGlyphsView::resizeEvent ( QResizeEvent * event )
+void FMGlyphsView::showEvent(QShowEvent *)
 {
-	if ( m_state == SingleView )
-		emit pleaseUpdateSingle();
-
-	emit pleaseUpdateMe();
-
+    Q_EMIT pleaseUpdateMe();
 }
 
-void FMGlyphsView::showEvent ( QShowEvent * event )
+void FMGlyphsView::mouseReleaseEvent(QMouseEvent *e)
 {
-	emit pleaseUpdateMe();
+    // 	Basically, we just do the job, but legacy implementation
+    // 	does something I can’t figure out that leads to segfault ??
+    if (e->button() == Qt::LeftButton) {
+        QList<QGraphicsItem *> gg = scene()->items(mapToScene(e->pos()));
+        for (auto *ii : std::as_const(gg)) {
+            if (ii->data(1).toString() == QLatin1String("select") && m_state == AllView)
+                ii->setSelected(true);
+        }
+
+        if (m_state == AllView)
+            Q_EMIT pleaseShowSelected();
+        else if (m_state == SingleView)
+            Q_EMIT pleaseShowAll();
+    }
 }
 
-void FMGlyphsView::mouseReleaseEvent ( QMouseEvent * e )
+void FMGlyphsView::mousePressEvent(QMouseEvent *)
 {
-// 	Basically, we just do the job, but legacy implementation
-// 	does something I can’t figure out that leads to segfault ??
-	if ( e->button() == Qt::LeftButton )
-	{
-		QList<QGraphicsItem*> gg = scene()->items ( mapToScene ( e->pos() ) );
-		foreach ( QGraphicsItem* ii, gg )
-		{
-			if ( ii->data ( 1 ).toString() == "select" && m_state == AllView )
-				ii->setSelected ( true );
-		}
-
-		if ( m_state == AllView )
-			emit pleaseShowSelected();
-		else if ( m_state == SingleView )
-			emit pleaseShowAll();
-	}
+    // We just catch it to avoid a waeird segfault ... we’ll see later for a plain fix
+    // 	if(e->button() == Qt::LeftButton)
+    // 		QGraphicsView::mouseReleaseEvent(e);
 }
 
-void FMGlyphsView::mousePressEvent ( QMouseEvent * e )
+void FMGlyphsView::setState(ViewState s)
 {
-	// We just catch it to avoid a waeird segfault ... we’ll see later for a plain fix
-// 	if(e->button() == Qt::LeftButton)
-// 		QGraphicsView::mouseReleaseEvent(e);
+    if (s == SingleView) {
+        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        setFocusPolicy(Qt::NoFocus);
+
+    } else if (s == AllView) {
+        setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        setFocusPolicy(Qt::WheelFocus);
+    }
+    m_state = s;
 }
 
-void FMGlyphsView::setState ( ViewState s )
+void FMGlyphsView::hideEvent(QHideEvent *)
 {
-	if ( s == SingleView )
-	{
-		setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-		setFocusPolicy ( Qt::NoFocus );
-
-	}
-	else if ( s == AllView )
-	{
-
-		setVerticalScrollBarPolicy ( Qt::ScrollBarAsNeeded );
-		setFocusPolicy ( Qt::WheelFocus );
-
-	}
-	m_state = s;
+    //	if ( m_state == SingleView )
+    //		emit pleaseShowAll();
 }
 
-void FMGlyphsView::hideEvent ( QHideEvent * event )
+void FMGlyphsView::wheelEvent(QWheelEvent *e)
 {
-//	if ( m_state == SingleView )
-//		emit pleaseShowAll();
-}
-
-void FMGlyphsView::wheelEvent ( QWheelEvent * e )
-{
-	if ( m_state == AllView )
-	{
-		QGraphicsView::wheelEvent ( e );
-	}
+    if (m_state == AllView) {
+        QGraphicsView::wheelEvent(e);
+    }
 }
 
 QRectF FMGlyphsView::visibleSceneRect()
 {
-	QRectF rr ( mapToScene ( 0.0, 0.0, static_cast<double> ( width() ), static_cast<double> ( height() ) ).boundingRect() );
-	return rr;
+    QRectF rr(mapToScene(0.0, 0.0, static_cast<double>(width()), static_cast<double>(height())).boundingRect());
+    return rr;
 }
 
-void FMGlyphsView::slotViewMoved ( int v )
+void FMGlyphsView::slotViewMoved(int)
 {
-	if ( m_state == AllView )
-		emit pleaseUpdateMe();
+    if (m_state == AllView)
+        Q_EMIT pleaseUpdateMe();
 }
 
-
-void FMGlyphsView::keyPressEvent ( QKeyEvent * e )
+void FMGlyphsView::keyPressEvent(QKeyEvent *e)
 {
-	if ( m_state == AllView )
-		QAbstractScrollArea::keyPressEvent ( e );
+    // QGraphicsView's handler is skipped on purpose: no item of this scene
+    // takes key focus. Keys scroll the grid and do nothing on a single glyph.
+    if (m_state == AllView)
+        QAbstractScrollArea::keyPressEvent(e); // NOLINT(bugprone-parent-virtual-call)
 }
 
 bool FMGlyphsView::lock()
 {
-	if ( m_lock )
-		return false;
-	m_lock = true;
-	return true;
+    if (m_lock)
+        return false;
+    m_lock = true;
+    return true;
 }
 
 void FMGlyphsView::unlock()
 {
-	m_lock = false;
+    m_lock = false;
 }
 
-
-
-
+#include "moc_fmglyphsview.cpp"

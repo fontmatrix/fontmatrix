@@ -1,8 +1,8 @@
 # Fontmatrix
 
-![Screenshot](screenshot.png)
+![Fontmatrix showing a font family with its sample text](doc/screenshots/family.png)
 
-Fontmatrix is a font management application for Linux, macOS, and Windows. 
+Fontmatrix is a font management application for Linux and Windows.
 
 It helps keeping your font collection in order, allowing you to enable and 
 disable availability of fonts and font families in your system. This is typically
@@ -16,13 +16,18 @@ Fontmatrix is also useful for type designers and enthusiasts, because it
 simplifies testing of OpenType features and allows comparing fonts glyph by 
 glyph which is extremely useful for learning type design.
 
-There is an extremely low-traffic mailing list available:
+The project was originally developed by Pierre Marchand between 2007 and 2011.
+It is currently maintained by Blagovest Petrov.
+
+Bug reports, questions and patches go to the
+[GitHub issue tracker](https://github.com/fontmatrix/fontmatrix/issues).
+
+The old mailing list is archived and kept for historical purposes only; it is
+no longer used for communication:
 
 https://www.mail-archive.com/undertype-users@gna.org/maillist.html
 
-The project was originally developed by Pierre Marchand between 2007 and 2011.
-It is currently in maintenance mode and isn't worked on by any actual programmer.
-
-Windows and macOS builds require new contributors. Flatpak build is
+Fontmatrix is currently not shipped for macOS, and macOS contributors are
+wanted. Flatpak build is
 [available on Flathub](https://flathub.org/apps/details/com.github.fontmatrix.Fontmatrix), 
 AppImage build could be created by interested contributors.

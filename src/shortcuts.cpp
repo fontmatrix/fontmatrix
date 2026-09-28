@@ -1,107 +1,91 @@
-/***************************************************************************
- *   Copyright (C) 2008 by Riku Leino                                      *
- *   riku@scribus.info                                                     *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2008 Riku Leino <riku@scribus.info>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "shortcuts.h"
+#include "fmconfig.h"
 
 #include <QAction>
 
-Shortcuts* Shortcuts::instance = 0;
+Shortcuts *Shortcuts::instance = nullptr;
 
-Shortcuts::Shortcuts()
+Shortcuts::Shortcuts() = default;
+
+Shortcuts *Shortcuts::getInstance()
 {
+    if (instance == nullptr)
+        instance = new Shortcuts();
 
-}
-
-Shortcuts* Shortcuts::getInstance()
-{
-	if (instance == 0)
-		instance = new Shortcuts();
-
-	return instance;
+    return instance;
 }
 
 void Shortcuts::add(QAction *a)
 {
-	if (actions.contains(cleanName(a)))
-		return;
+    if (actions.contains(cleanName(a)))
+        return;
 
-	QString key = settingsKey(a);
-	if (settings.contains(key))
-		a->setShortcut(QKeySequence(settings.value(key).toString()));
-	actions[cleanName(a)] = a;
+    QString key = settingsKey(a);
+    if (FMConfig::contains(key))
+        a->setShortcut(QKeySequence(FMConfig::value(key).toString()));
+    actions[cleanName(a)] = a;
 }
 
-QList<QAction*> Shortcuts::getActions()
+QList<QAction *> Shortcuts::getActions()
 {
-	return actions.values();
+    return actions.values();
 }
 
 QString Shortcuts::settingsKey(QAction *action)
 {
-	return QString("ActionShortcut/%1").arg(cleanName(action));
+    return QStringLiteral("ActionShortcut/%1").arg(cleanName(action));
 }
 
 QString Shortcuts::cleanName(QAction *action)
 {
-	return cleanName(action->text());
+    return cleanName(action->text());
 }
 
 QString Shortcuts::cleanName(const QString &s)
 {
-
-	QString h = s;
-	return h.remove("&");
+    QString h = s;
+    return h.remove(QStringLiteral("&"));
 }
 
 QString Shortcuts::isReserved(const QString &shortcut, const QString &actionText)
 {
-	QString isTaken = QString::null;
-	if (actions.contains(cleanName(actionText))) {
-		QList<QAction*> alist = actions.values();
-		foreach(QAction *act, alist) {
-			if (act->shortcut() == shortcut) {
-				isTaken = act->text();
-				break;
-			}
-		}
-	}
-	return isTaken;
+    QString isTaken;
+    if (actions.contains(cleanName(actionText))) {
+        QList<QAction *> alist = actions.values();
+        for (auto *act : std::as_const(alist)) {
+            if (act->shortcut() == shortcut) {
+                isTaken = act->text();
+                break;
+            }
+        }
+    }
+    return isTaken;
 }
 
 void Shortcuts::setShortcut(const QString &shortcut, const QString &actionText)
 {
-	if (actions.contains(cleanName(actionText))) {
-		actions[cleanName(actionText)]->setShortcut(shortcut);
-		settings.setValue(settingsKey(actions[cleanName(actionText)]), shortcut);
-	}
+    if (actions.contains(cleanName(actionText))) {
+        actions.value(cleanName(actionText))->setShortcut(shortcut);
+        FMConfig::setValue(settingsKey(actions.value(cleanName(actionText))), shortcut);
+    }
 }
 
 void Shortcuts::clearShortcut(const QString &actionText)
 {
-	if (actions.contains(cleanName(actionText))) {
-		actions[cleanName(actionText)]->setShortcut(QString(""));
-		settings.setValue(settingsKey(actions[cleanName(actionText)]), QString(""));
-	}
+    if (actions.contains(cleanName(actionText))) {
+        actions.value(cleanName(actionText))->setShortcut(QKeySequence());
+        FMConfig::setValue(settingsKey(actions.value(cleanName(actionText))), QString());
+    }
 }
 
 Shortcuts::~Shortcuts()
 {
-
 }
+
+#include "moc_shortcuts.cpp"

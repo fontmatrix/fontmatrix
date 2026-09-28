@@ -1,23 +1,17 @@
-//
-// C++ Interface: fmlayout
-//
-// Description:
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef FMLAYOUT_H
 #define FMLAYOUT_H
 
-
-#include <QObject>
-#include <QString>
-#include <QRectF>
-#include <QPointF>
 #include <QMap>
+#include <QObject>
+#include <QPointF>
+#include <QRectF>
+#include <QString>
 #include <QThread>
 
 #include "fmsharestruct.h"
@@ -47,171 +41,203 @@ class QGridLayout;
 
 class FMLayout;
 
+struct Node {
+    struct ListItem {
+        ListItem();
+        ListItem(Node *N, double D);
+        ~ListItem();
+        Node *n = nullptr;
+        double distance;
 
-struct Node
-{
-	struct ListItem
-	{
-		ListItem();
-		ListItem ( Node* N, double D );
-		~ListItem() ;
-		Node* n;
-		double distance;
-		
-		
-// 		private:
-// 		ListItem (const ListItem& v);
-	};
+        // deletes n
+        Q_DISABLE_COPY(ListItem)
+    };
 
-	Node (FMLayout * layoutEngine,  int i ) ;
-	~Node();
+    Node(FMLayout *layoutEngine, int i);
+    ~Node();
 
-	QList<ListItem*> nodes;
-	FMLayout *lyt;
-	int index;
+    QList<ListItem *> nodes;
+    FMLayout *lyt = nullptr;
+    int index = 0;
 
-	bool hasNode ( int idx ) ;
-	void nodes_clear();
-	void nodes_insert(ListItem * v);
+    // deletes the items of nodes
+    Q_DISABLE_COPY(Node)
 
-	void sPath ( double dist, QList< int > curList, QList<int>& theList, double& theScore );
-	int deepCount();
+    bool hasNode(int idx);
+    void nodes_clear();
+    void nodes_insert(ListItem *v);
+
+    void sPath(double dist, QList<int> curList, QList<int> &theList, double &theScore);
+    int deepCount();
 
 private:
-	Node() {}
-	
+    Node() = default;
 };
 
-
-		
 class FMLayout : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
-		explicit FMLayout ( QGraphicsScene* scene, FontItem* font = 0, QRectF rect = QRectF());
-		~FMLayout();
-		void doLayout(const QList<GlyphList>& spec , double fs, FontItem* font = 0 );
-		
-	private://methods
-		/// Build a graph on node
-		virtual void doGraph();
-		/// Build the good list of lines
-		virtual void doLines();
-		
-		void clearCaches();
+public:
+    explicit FMLayout(QGraphicsScene *scene, FontItem *font = nullptr, QRectF rect = QRectF());
+    ~FMLayout() override;
+    void doLayout(const QList<GlyphList> &spec, double fs, FontItem *font = nullptr);
 
-		void run();
+private: // methods
+    /// Build a graph on node
+    virtual void doGraph();
+    /// Build the good list of lines
+    virtual void doLines();
 
-	public:// utils
-		double distance ( int start, int end, const GlyphList& gl , bool strip = false );
-		int sepCount( int start, int end, const GlyphList& gl);
-		void resetScene();
+    void clearCaches();
 
-		bool isLayoutFinished() {return layoutIsFinished;}
+    void run();
 
-		QList<int> breakList;
-		QList<int> hyphenList;
-		GlyphList theString;
-		double lineWidth ( int l );
-//		QMutex *layoutMutex;
-		bool stopIt;
-		int drawnLines;
+public: // utils
+    double distance(int start, int end, const GlyphList &gl, bool strip = false);
+    int sepCount(int start, int end, const GlyphList &gl);
+    void resetScene();
 
-		void setContext(bool c);
-		
-	public slots:
-		void stopLayout();		
+    bool isLayoutFinished()
+    {
+        return layoutIsFinished;
+    }
 
-	private:// data
-		// Argued
-//		static FMLayout *instance;
-		bool contextIsMainThread;
-		QGraphicsScene* theScene;
-		FontItem*	theFont;
-		QList<GlyphList> paragraphs;
-		QList<GlyphList> lines;
-		QRectF theRect;// Not really argued now, will come soon
-		QGraphicsRectItem *rules;
-		FMLayOptWidget *optionsWidget;
-		QGridLayout *optionLayout;
-		bool persistentScene;
+    QList<int> breakList;
+    QList<int> hyphenList;
+    GlyphList theString;
+    double lineWidth(int l);
+    //		QMutex *layoutMutex;
+    bool stopIt = false;
+    int drawnLines = 0;
 
-		// built
-		Node *node;
-		QList<int> indices;
-		QList<QGraphicsPixmapItem *> pixList;
-		QList<QGraphicsPathItem*> glyphList;
-		QMap<int, QMap<int, double > > distCache;
-		QMap<int, QMap<int, double > > stripCache;
-		QMap<int, QMap<int, int > > sepCache;
-		bool justRedraw;
-		bool optionHasChanged;
-		QPointF lastOrigine;
+    void setContext(bool c);
 
-		// accessed
-		bool processFeatures;
-		QString script;
-		bool processScript;
-		double fontSize;
-		double adjustedSampleInter;
-		int textProgressionBlock;
-		int textProgressionLine;
-		bool deviceIndy;
-		QPointF origine;
+public Q_SLOTS:
+    void stopLayout();
 
-		bool layoutIsFinished;
+private: // data
+    // Argued
+    //		static FMLayout *instance;
+    bool contextIsMainThread;
+    QGraphicsScene *theScene = nullptr;
+    FontItem *theFont = nullptr;
+    QList<GlyphList> paragraphs;
+    QList<GlyphList> lines;
+    /// how far from the left margin a line starts: the short last line of a right-to-left paragraph
+    QMap<int, double> lineIndent;
+    /// the direction of the paragraph being laid out, from its first strong character
+    bool rightToLeftParagraph = false;
+    QRectF theRect; // Not really argued now, will come soon
+    QGraphicsRectItem *rules = nullptr;
+    FMLayOptWidget *optionsWidget = nullptr;
+    QGridLayout *optionLayout = nullptr;
+    bool persistentScene;
 
-	public: //accessors
-		QRectF getRect()const{return theRect;}
-		void setRect(const QRectF& r){theRect = r;}
-		void setProcessFeatures ( bool theValue ){processFeatures = theValue;}
-		void setScript ( const QString& theValue ){script = theValue;}
-		void setProcessScript ( bool theValue )	{processScript = theValue;}
-		void setAdjustedSampleInter ( double theValue );
-		void setTextProgressionBlock ( int theValue ){textProgressionBlock = theValue;}
-		void setTextProgressionLine ( int theValue ){textProgressionLine = theValue;}
-		void setOrigine ( const QPoint& theValue ){origine = theValue;}
-		void setFontSize ( bool theValue ){fontSize = theValue;}
-		void setDeviceIndy( bool theValue ){deviceIndy = theValue;}
-//		void setTheScene ( QGraphicsScene* theValue , QRectF rect = QRectF());
-//		void setTheFont ( FontItem* theValue );
-		void setPersistentScene(bool p){persistentScene = p;}
+    // built
+    Node *node = nullptr;
+    QList<int> indices;
+    QList<QGraphicsPixmapItem *> pixList;
+    QList<QGraphicsPathItem *> glyphList;
+    QMap<int, QMap<int, double>> distCache;
+    QMap<int, QMap<int, double>> stripCache;
+    QMap<int, QMap<int, int>> sepCache;
+    bool justRedraw = false;
+    bool optionHasChanged;
+    QPointF lastOrigine;
 
+    // accessed
+    bool processFeatures = false;
+    QString script;
+    bool processScript = false;
+    double fontSize = 0.0;
+    double adjustedSampleInter = 0.0;
+    int textProgressionBlock = 0;
+    int textProgressionLine = 0;
+    bool deviceIndy = false;
+    QPointF origine;
 
-	private slots:
-		/// Put lines on stage
-		void doDraw();
-		void endOfRun();
-		void endOfParagraph();
-		
-		void slotOption(int v);
+    bool layoutIsFinished;
 
-	signals:
-		// needed if layout is executed outside the main (GUI) thread
-		// receiver is expected to know with what font and on which scene;
-		void drawPixmapForMe(int index, double fontsize, double x, double y);
-		void drawBaselineForMe(double y);
-		void clearScene();
-		void objectWanted(QObject*);
-		void updateLayout();
-		void layoutFinished();
-		void paragraphFinished();
-		void paintFinished();
-	public:
-		QWidget *optionDialog;
-		
-		double FM_LAYOUT_NODE_SOON_F;
-		double FM_LAYOUT_NODE_FIT_F;
-		double FM_LAYOUT_NODE_LATE_F;
-		double FM_LAYOUT_NODE_END_F;
-		double FM_LAYOUT_HYPHEN_PENALTY;
-		double FM_LAYOUT_MAX_COMPRESSION;
-		QMenu * secretMenu;
+public: // accessors
+    [[nodiscard]] QRectF getRect() const
+    {
+        return theRect;
+    }
+    void setRect(const QRectF &r)
+    {
+        theRect = r;
+    }
+    void setProcessFeatures(bool theValue)
+    {
+        processFeatures = theValue;
+    }
+    void setScript(const QString &theValue)
+    {
+        script = theValue;
+    }
+    void setProcessScript(bool theValue)
+    {
+        processScript = theValue;
+    }
+    void setAdjustedSampleInter(double theValue);
+    void setTextProgressionBlock(int theValue)
+    {
+        textProgressionBlock = theValue;
+    }
+    void setTextProgressionLine(int theValue)
+    {
+        textProgressionLine = theValue;
+    }
+    void setOrigine(const QPoint &theValue)
+    {
+        origine = theValue;
+    }
+    void setFontSize(bool theValue)
+    {
+        fontSize = theValue;
+    }
+    void setDeviceIndy(bool theValue)
+    {
+        deviceIndy = theValue;
+    }
+    //		void setTheScene ( QGraphicsScene* theValue , QRectF rect = QRectF());
+    //		void setTheFont ( FontItem* theValue );
+    void setPersistentScene(bool p)
+    {
+        persistentScene = p;
+    }
 
+private:
+    /// Put lines on stage
+    void doDraw();
+    void endOfRun();
+    void endOfParagraph();
 
+    void slotOption(int v);
+
+Q_SIGNALS:
+    // needed if layout is executed outside the main (GUI) thread
+    // receiver is expected to know with what font and on which scene;
+    void drawPixmapForMe(int index, double fontsize, double x, double y);
+    void drawBaselineForMe(double y);
+    void clearScene();
+    void objectWanted(QObject *);
+    void updateLayout();
+    void layoutFinished();
+    void paragraphFinished();
+    void paintFinished();
+
+public:
+    QWidget *optionDialog = nullptr;
+
+    double FM_LAYOUT_NODE_SOON_F;
+    double FM_LAYOUT_NODE_FIT_F;
+    double FM_LAYOUT_NODE_LATE_F;
+    double FM_LAYOUT_NODE_END_F;
+    double FM_LAYOUT_HYPHEN_PENALTY;
+    double FM_LAYOUT_MAX_COMPRESSION;
+    QMenu *secretMenu = nullptr;
 };
 
-
 #endif
-

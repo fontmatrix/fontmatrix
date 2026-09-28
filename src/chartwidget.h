@@ -1,22 +1,8 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef CHARTWIDGET_H
 #define CHARTWIDGET_H
@@ -27,8 +13,9 @@ class QGraphicsScene;
 class FontItem;
 class QGraphicsRectItem;
 
-namespace Ui {
-    class ChartWidget;
+namespace Ui
+{
+class ChartWidget;
 }
 
 class ChartWidget : public FloatingWidget
@@ -36,34 +23,33 @@ class ChartWidget : public FloatingWidget
     Q_OBJECT
 
 public:
-	static const QString Name;
-    explicit ChartWidget(const QString& fid, const QString& block, QWidget *parent = 0);
-    ~ChartWidget();
+    static const QString Name;
+    explicit ChartWidget(const QString &fid, const QString &block, QWidget *parent = nullptr);
+    ~ChartWidget() override;
 
     QString currentBlock();
-    void selectBlock(const QString& uname);
+    void selectBlock(const QString &uname);
 
 protected:
-    void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e) override;
 
 private:
-    Ui::ChartWidget *ui;
+    Ui::ChartWidget *const ui;
     const QString fontIdentifier;
 
-    QGraphicsScene *abcScene;
+    QGraphicsScene *abcScene = nullptr;
     int fancyGlyphInUse;
-    int fancyGlyphData;
+    int fancyGlyphData = 0;
     QString unMapGlyphName;
     QString allMappedGlyphName;
     bool uRangeIsNotEmpty;
-    QGraphicsRectItem *curGlyph;
-
+    QGraphicsRectItem *curGlyph = nullptr;
 
     void createConnections();
     void removeConnections();
-    void fillUniPlanesCombo(FontItem* item);
+    void fillUniPlanesCombo(FontItem *item);
 
-private slots:
+private Q_SLOTS:
     void slotShowOneGlyph();
     void slotShowAllGlyph();
     void slotAdjustGlyphView(int width);
@@ -75,7 +61,6 @@ private slots:
 
     void slotPrint();
     void slotDoPrinting();
-
 };
 
 #endif // CHARTWIDGET_H

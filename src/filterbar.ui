@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_8">
    <property name="margin">
@@ -20,7 +20,7 @@
    <property name="spacing">
     <number>2</number>
    </property>
-   <item row="14" column="0">
+   <item row="23" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -46,7 +46,7 @@
        <item>
         <widget class="OpenCloseArrow" name="filtersArrow">
          <property name="text">
-          <string>Filters</string>
+          <string comment="@action:button">Filters</string>
          </property>
         </widget>
        </item>
@@ -140,7 +140,7 @@
        <item>
         <widget class="OpenCloseArrow" name="tagsArrow">
          <property name="text">
-          <string>Tags</string>
+          <string comment="@action:button">Tags</string>
          </property>
         </widget>
        </item>
@@ -270,7 +270,7 @@
        <item>
         <widget class="OpenCloseArrow" name="metadataArrow">
          <property name="text">
-          <string>Metadata</string>
+          <string comment="@action:button">Metadata</string>
          </property>
         </widget>
        </item>
@@ -317,7 +317,7 @@
             <item>
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>Search</string>
+               <string comment="@label">Search</string>
               </property>
              </widget>
             </item>
@@ -347,7 +347,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>in</string>
+               <string comment="@label">in</string>
               </property>
              </widget>
             </item>
@@ -392,7 +392,7 @@
        <item>
         <widget class="OpenCloseArrow" name="panoseArrow">
          <property name="text">
-          <string>Panose</string>
+          <string comment="@action:button">Panose</string>
          </property>
         </widget>
        </item>
@@ -422,6 +422,268 @@
         </property>
         <item row="0" column="0">
          <widget class="PanoseWidget" name="panoseWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="15" column="0">
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="OpenCloseArrow" name="languagesArrow">
+         <property name="text">
+          <string comment="@action:button">Languages</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QWidget" name="languagesBox" native="true">
+       <layout class="QGridLayout" name="gridLayout_9">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QComboBox" name="languagesCombo">
+          <property name="toolTip">
+           <string comment="@info:tooltip">The fonts that have every character a text in the language needs.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="17" column="0">
+    <widget class="Line" name="line_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="18" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="OpenCloseArrow" name="licenseArrow">
+         <property name="text">
+          <string comment="@action:button">License</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QWidget" name="licenseBox" native="true">
+       <layout class="QGridLayout" name="gridLayout_10">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QComboBox" name="licenseCombo">
+          <property name="toolTip">
+           <string comment="@info:tooltip">The licence the font states in its name table, recognised from its wording.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="19" column="0">
+    <widget class="Line" name="line_7">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="20" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_8">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="OpenCloseArrow" name="duplicatesArrow">
+         <property name="text">
+          <string comment="@action:button">Duplicates</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QWidget" name="duplicatesBox" native="true">
+       <layout class="QGridLayout" name="gridLayout_11">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QComboBox" name="duplicatesCombo">
+          <property name="toolTip">
+           <string comment="@info:tooltip">The fonts the collection holds more than once. Reading the files takes a moment the first time.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="duplicatesGroupsButton">
+          <property name="toolTip">
+           <string comment="@info:tooltip">Each font with its files side by side, and a way to remove the extra ones</string>
+          </property>
+          <property name="text">
+           <string comment="@action:button">Show Groups...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="21" column="0">
+    <widget class="Line" name="line_8">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="22" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_9">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="OpenCloseArrow" name="kindArrow">
+         <property name="text">
+          <string comment="@action:button">Font Technology</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QWidget" name="kindBox" native="true">
+       <layout class="QGridLayout" name="gridLayout_12">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QComboBox" name="kindCombo">
+          <property name="toolTip">
+           <string comment="@info:tooltip">Variable fonts, whose design moves along axes, and colour fonts, whose glyphs carry their own colours. Each font is opened once the first time.</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

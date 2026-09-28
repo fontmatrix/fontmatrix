@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Find a font using raster sample</string>
+   <string comment="@title:window">Find a font using raster sample</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2" >
    <item row="0" column="0" colspan="2" >
@@ -29,7 +29,7 @@
           </sizepolicy>
          </property>
          <property name="title" >
-          <string>Input Image</string>
+          <string comment="@title:group">Input Image</string>
          </property>
          <layout class="QGridLayout" name="gridLayout" >
           <item row="0" column="0" >
@@ -37,7 +37,7 @@
             <item>
              <widget class="QCheckBox" name="grabModeBox" >
               <property name="text" >
-               <string>Grab mode</string>
+               <string comment="@option:check">Grab mode</string>
               </property>
              </widget>
             </item>
@@ -66,7 +66,7 @@
                </sizepolicy>
               </property>
               <property name="toolTip" >
-               <string>Zoom level</string>
+               <string comment="@info:tooltip">Zoom level</string>
               </property>
               <property name="minimum" >
                <number>1</number>
@@ -105,7 +105,7 @@
             <item>
              <widget class="QPushButton" name="browseButton" >
               <property name="text" >
-               <string>&amp;Browse</string>
+               <string comment="@action:button">&amp;Browse</string>
               </property>
              </widget>
             </item>
@@ -123,7 +123,7 @@
           </sizepolicy>
          </property>
          <property name="title" >
-          <string>Raster sample preview</string>
+          <string comment="@title:group">Raster sample preview</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_4" >
           <item rowspan="2" row="1" column="0" >
@@ -150,7 +150,7 @@
                <item row="0" column="0" >
                 <widget class="QLabel" name="label_2" >
                  <property name="text" >
-                  <string>C&amp;haracter:</string>
+                  <string comment="@label">C&amp;haracter:</string>
                  </property>
                  <property name="buddy" >
                   <cstring>letter</cstring>
@@ -166,7 +166,7 @@
                   </sizepolicy>
                  </property>
                  <property name="toolTip" >
-                  <string>A unique character or a four digits hexadecimal Unicode value</string>
+                  <string comment="@info:tooltip">A unique character or a four digits hexadecimal Unicode value</string>
                  </property>
                  <property name="maxLength" >
                   <number>4</number>
@@ -178,7 +178,7 @@
              <item row="1" column="2" >
               <widget class="QPushButton" name="searchButton" >
                <property name="text" >
-                <string>&amp;Search</string>
+                <string comment="@action:button">&amp;Search</string>
                </property>
               </widget>
              </item>
@@ -198,10 +198,10 @@
              <item row="0" column="2" >
               <widget class="QCheckBox" name="checkInteractive" >
                <property name="toolTip" >
-                <string>If set, you will be prompted for each matching font</string>
+                <string comment="@info:tooltip">If set, you will be prompted for each matching font</string>
                </property>
                <property name="text" >
-                <string>Interactive</string>
+                <string comment="@option:check">Interactive</string>
                </property>
               </widget>
              </item>
@@ -217,7 +217,7 @@
              </sizepolicy>
             </property>
             <property name="text" >
-             <string>Click on the letter to let Fontmatrix compute the bounding box</string>
+             <string comment="@label">Click on the letter to let Fontmatrix compute the bounding box</string>
             </property>
             <property name="scaledContents" >
              <bool>false</bool>
@@ -233,7 +233,7 @@
           <item row="3" column="0" colspan="2" >
            <widget class="QCheckBox" name="tweakRectBox" >
             <property name="text" >
-             <string>Tweak rect</string>
+             <string comment="@option:check">Tweak rect</string>
             </property>
            </widget>
           </item>
@@ -276,7 +276,7 @@
           </sizepolicy>
          </property>
          <property name="text" >
-          <string>Compare with:</string>
+          <string comment="@label">Compare with:</string>
          </property>
         </widget>
        </item>
@@ -319,7 +319,7 @@
           <item row="1" column="2" >
            <widget class="QPushButton" name="stopButton" >
             <property name="text" >
-             <string>Stop</string>
+             <string comment="@action:button">Stop</string>
             </property>
            </widget>
           </item>
@@ -333,7 +333,7 @@
    <item row="2" column="1" >
     <widget class="QPushButton" name="cancelButton" >
      <property name="text" >
-      <string>&amp;Cancel</string>
+      <string comment="@action:button">&amp;Cancel</string>
      </property>
     </widget>
    </item>

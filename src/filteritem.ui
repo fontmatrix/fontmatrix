@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="margin">
@@ -44,7 +44,7 @@
          </font>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string notr="true">TextLabel</string>
         </property>
        </widget>
       </item>
@@ -68,16 +68,16 @@
            </font>
           </property>
           <property name="toolTip">
-           <string>Remove Filter</string>
+           <string comment="@info:tooltip">Remove Filter</string>
           </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
           <property name="text">
-           <string>X</string>
+           <string comment="@action:button">X</string>
           </property>
           <property name="icon">
-           <iconset resource="application.qrc">
+           <iconset theme="list-remove" resource="application.qrc">
             <normaloff>:/graphic-resources/filter-remove.png</normaloff>:/graphic-resources/filter-remove.png</iconset>
           </property>
           <property name="autoRaise">
@@ -100,7 +100,7 @@
            </font>
           </property>
           <property name="toolTip">
-           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+           <string comment="@info:tooltip">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -110,7 +110,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If set, the filter will &lt;span style=&quot; font-weight:600;&quot;&gt;intersect&lt;/span&gt; with the previous filters.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
-           <string>&amp;&amp;</string>
+           <string notr="true">&amp;&amp;</string>
           </property>
           <property name="icon">
            <iconset resource="application.qrc">
@@ -139,10 +139,10 @@ p, li { white-space: pre-wrap; }
            </font>
           </property>
           <property name="toolTip">
-           <string>if set, it will filter all the fonts but these matching this filter</string>
+           <string comment="@info:tooltip">if set, it will filter all the fonts but these matching this filter</string>
           </property>
           <property name="text">
-           <string>!</string>
+           <string notr="true">!</string>
           </property>
           <property name="checkable">
            <bool>true</bool>

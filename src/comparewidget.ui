@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Compare Glyphs</string>
+   <string comment="@title:window">Compare Glyphs</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0" colspan="4">
@@ -41,7 +41,7 @@
             </sizepolicy>
            </property>
            <property name="title">
-            <string>Fonts</string>
+            <string comment="@title:group">Fonts</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_15">
             <item row="0" column="0" colspan="3">
@@ -50,14 +50,14 @@
             <item row="1" column="1">
              <widget class="QPushButton" name="compareAdd">
               <property name="text">
-               <string>Add</string>
+               <string comment="@action:button">Add</string>
               </property>
              </widget>
             </item>
             <item row="1" column="2">
              <widget class="QPushButton" name="compareRemove">
               <property name="text">
-               <string>Remove</string>
+               <string comment="@action:button">Remove</string>
               </property>
              </widget>
             </item>
@@ -80,7 +80,7 @@
          <item>
           <widget class="QGroupBox" name="compareShow">
            <property name="title">
-            <string>Show</string>
+            <string comment="@title:group">Show</string>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -89,7 +89,7 @@
             <item row="2" column="0" colspan="2">
              <widget class="QCheckBox" name="compareMetrics">
               <property name="text">
-               <string>Metrics</string>
+               <string comment="@option:check">Metrics</string>
               </property>
              </widget>
             </item>
@@ -99,7 +99,7 @@
                <bool>true</bool>
               </property>
               <property name="title">
-               <string>Points</string>
+               <string comment="@title:group">Points</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -111,7 +111,7 @@
                <item row="0" column="0">
                 <widget class="QCheckBox" name="compareControls">
                  <property name="text">
-                  <string>Controls</string>
+                  <string comment="@option:check">Controls</string>
                  </property>
                 </widget>
                </item>
@@ -137,7 +137,7 @@
             <item row="3" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Offset</string>
+               <string comment="@label">Offset</string>
               </property>
               <property name="buddy">
                <cstring>compareOffset</cstring>
@@ -147,7 +147,7 @@
             <item row="3" column="2">
              <widget class="QLabel" name="compareOffsetValue">
               <property name="text">
-               <string>0</string>
+               <string notr="true">0</string>
               </property>
              </widget>
             </item>
@@ -157,7 +157,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>Fill:</string>
+               <string comment="@label">Fill:</string>
               </property>
               <property name="buddy">
                <cstring>compareFillColor</cstring>
@@ -184,7 +184,7 @@
    <item row="1" column="1">
     <widget class="QSlider" name="compareCharSelect">
      <property name="toolTip">
-      <string>Select a character</string>
+      <string comment="@info:tooltip">Select a character</string>
      </property>
      <property name="minimum">
       <number>1</number>
@@ -203,7 +203,7 @@
    <item row="1" column="0">
     <widget class="QCheckBox" name="compareSyncChars">
      <property name="text">
-      <string>Keep in sync</string>
+      <string comment="@option:check">Keep in sync</string>
      </property>
      <property name="checked">
       <bool>true</bool>

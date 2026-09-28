@@ -10,9 +10,9 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Database repair</string>
+   <string comment="@title:window">Database repair</string>
   </property>
-  <layout class="QGridLayout" >
+  <layout class="QGridLayout" name="gridLayout_2">
    <item row="1" column="0" >
     <layout class="QHBoxLayout" >
      <item>
@@ -31,7 +31,7 @@
      <item>
       <widget class="QPushButton" name="closeButton" >
        <property name="text" >
-        <string>Close</string>
+        <string comment="@action:button">Close</string>
        </property>
       </widget>
      </item>
@@ -44,9 +44,9 @@
      </property>
      <widget class="QWidget" name="tab" >
       <attribute name="title" >
-       <string>Dead links</string>
+       <string comment="@title:tab">Dead links</string>
       </attribute>
-      <layout class="QGridLayout" >
+      <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0" colspan="3" >
         <widget class="QListWidget" name="deadList" >
          <property name="sizePolicy" >
@@ -60,7 +60,7 @@
        <item row="1" column="0" >
         <widget class="QPushButton" name="selectAllDead" >
          <property name="text" >
-          <string>Select all</string>
+          <string comment="@action:button">Select all</string>
          </property>
         </widget>
        </item>
@@ -80,7 +80,7 @@
        <item row="1" column="2" >
         <widget class="QPushButton" name="removeDead" >
          <property name="text" >
-          <string>Remove</string>
+          <string comment="@action:button">Remove</string>
          </property>
         </widget>
        </item>
@@ -88,9 +88,9 @@
      </widget>
      <widget class="QWidget" name="tab_2" >
       <attribute name="title" >
-       <string>Activated Not Linked</string>
+       <string comment="@title:tab">Activated Not Linked</string>
       </attribute>
-      <layout class="QGridLayout" >
+      <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0" colspan="4" >
         <widget class="QListWidget" name="actNotLinkList" >
          <property name="sizePolicy" >
@@ -104,7 +104,7 @@
        <item row="1" column="0" >
         <widget class="QPushButton" name="selectAllActNot" >
          <property name="text" >
-          <string>Select all</string>
+          <string comment="@action:button">Select all</string>
          </property>
         </widget>
        </item>
@@ -124,14 +124,14 @@
        <item row="1" column="2" >
         <widget class="QPushButton" name="relinkActNot" >
          <property name="text" >
-          <string>Re-link</string>
+          <string comment="@action:button">Re-link</string>
          </property>
         </widget>
        </item>
        <item row="1" column="3" >
         <widget class="QPushButton" name="deactActNot" >
          <property name="text" >
-          <string>Deactivate</string>
+          <string comment="@action:button">Deactivate</string>
          </property>
         </widget>
        </item>
@@ -139,9 +139,9 @@
      </widget>
      <widget class="QWidget" name="tab_3" >
       <attribute name="title" >
-       <string>Deactivated Linked</string>
+       <string comment="@title:tab">Deactivated Linked</string>
       </attribute>
-      <layout class="QGridLayout" >
+      <layout class="QGridLayout" name="gridLayout_5">
        <item row="0" column="0" colspan="4" >
         <widget class="QListWidget" name="deactLinkList" >
          <property name="sizePolicy" >
@@ -155,7 +155,7 @@
        <item row="1" column="0" >
         <widget class="QPushButton" name="selectAllDeactLink" >
          <property name="text" >
-          <string>Select all</string>
+          <string comment="@action:button">Select all</string>
          </property>
         </widget>
        </item>
@@ -175,14 +175,14 @@
        <item row="1" column="2" >
         <widget class="QPushButton" name="delinkDeactLink" >
          <property name="text" >
-          <string>De-link</string>
+          <string comment="@action:button">De-link</string>
          </property>
         </widget>
        </item>
        <item row="1" column="3" >
         <widget class="QPushButton" name="activateDeactLink" >
          <property name="text" >
-          <string>Activate</string>
+          <string comment="@action:button">Activate</string>
          </property>
         </widget>
        </item>
@@ -190,7 +190,7 @@
      </widget>
      <widget class="QWidget" name="tab_4" >
       <attribute name="title" >
-       <string>Unreferenced Files</string>
+       <string comment="@title:tab">Unreferenced Files</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout" >
        <item row="0" column="0" colspan="3" >
@@ -199,7 +199,7 @@
        <item row="1" column="0" >
         <widget class="QPushButton" name="selectAllUnreferenced" >
          <property name="text" >
-          <string>Select all</string>
+          <string comment="@action:button">Select all</string>
          </property>
         </widget>
        </item>
@@ -219,7 +219,7 @@
        <item row="1" column="2" >
         <widget class="QPushButton" name="removeUnreferenced" >
          <property name="text" >
-          <string>Remove</string>
+          <string comment="@action:button">Remove</string>
          </property>
         </widget>
        </item>

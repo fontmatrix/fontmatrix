@@ -1,60 +1,60 @@
-/***************************************************************************
- *   Copyright (C) 2010 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2010 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef PLAYWIDGET_H
 #define PLAYWIDGET_H
 
-#include <QWidget>
 #include <QRectF>
+#include <QWidget>
 
 class QGraphicsScene;
 
-namespace Ui {
-	class PlayWidget;
+namespace Ui
+{
+class PlayWidget;
 }
 
 class PlayWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	static PlayWidget* instance;
-	explicit PlayWidget();
+    static PlayWidget *instance;
+    explicit PlayWidget();
+
 public:
-	~PlayWidget();
-	static PlayWidget* getInstance();
-	double playFontSize();
-	QRectF getMaxRect();
-	void clearSelection();
-	QGraphicsScene* getPlayScene(){return playScene;}
+    ~PlayWidget() override;
+    static PlayWidget *getInstance();
+    double playFontSize();
+    QRectF getMaxRect();
+    void clearSelection();
+    QGraphicsScene *getPlayScene()
+    {
+        return playScene;
+    }
+
+Q_SIGNALS:
+    // Emitted whenever this window is shown or hidden, including when the
+    // user closes it from its own title bar. typotek's checkable Playground
+    // action is toggled on by the action itself, so without this it stays
+    // checked after the window goes away.
+    void visibilityChanged();
 
 protected:
-	void changeEvent(QEvent *e);
-	void closeEvent(QCloseEvent *);
+    void changeEvent(QEvent *e) override;
+    void closeEvent(QCloseEvent *) override;
+    void hideEvent(QHideEvent *) override;
+    void showEvent(QShowEvent *) override;
 
 private:
-	Ui::PlayWidget *ui;
-	QGraphicsScene *playScene;
+    Ui::PlayWidget *const ui;
+    QGraphicsScene *playScene = nullptr;
 
-private slots:
-	void slotZoom ( int z );
-	void print();
+private Q_SLOTS:
+    void slotZoom(int z);
+    void print();
 };
 
 #endif // PLAYWIDGET_H

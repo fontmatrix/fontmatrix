@@ -1,35 +1,25 @@
-//
-// C++ Implementation: harfbuzzqtshaper
-//
-// Description: 
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "harfbuzzqtshaper.h"
 
-
-HarfbuzzShaper::HarfbuzzShaper(FMOtf * o, QString s)
-	:FMBaseShaper(o,s)
+HarfbuzzShaper::HarfbuzzShaper(FMOtf *o, QString s)
+    : FMBaseShaper(o, s)
 {
-	hbqtsh = new FMShaper(otf);
-	hbqtsh->setScript ( script );
+    hbqtsh = new FMShaper(otf);
+    hbqtsh->setScript(script);
 }
 
-HarfbuzzShaper::~ HarfbuzzShaper()
+HarfbuzzShaper::~HarfbuzzShaper()
 {
-	if(hbqtsh)
-		delete hbqtsh;
+    if (hbqtsh)
+        delete hbqtsh;
 }
 
-GlyphList HarfbuzzShaper::doShape(const QString& s)
+GlyphList HarfbuzzShaper::doShape(const QString &s)
 {
-	return hbqtsh->doShape ( s , true );
+    return hbqtsh->doShape(s, true);
 }
-
-
-

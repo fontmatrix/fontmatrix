@@ -1,0 +1,85 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: CC0-1.0
+#
+# Licensing of the files that cannot carry a header of their own.
+# The C++ sources have SPDX tags in the file; this covers the rest.
+version = 1
+
+# Fontmatrix' own non-source files
+[[annotations]]
+path = [
+    "src/**/*.ui", "src/**/*.rc", "src/**/*.qrc", "src/**/*.xml", "src/**/*.png", "src/**/*.svg",
+    "src/**/*.ico", "src/**/*.icns", "src/**/*.txt", "src/langs/**", "src/fontmatrix*",
+    "CMakeLists.txt", "**/CMakeLists.txt",     "cmake/modules/OwnIngestOSXBundleLibraries.cmake",
+    "doc/**", "dodict/**", "OSX-package/**", "craft-blueprints/**", ".github/**",
+    "com.github.fontmatrix.Fontmatrix.json", "com.github.fontmatrix.Fontmatrix.desktop", "fontmatrix.1",
+    "doc/screenshots/**",
+    "README.md", "INSTALL.md", "AUTHORS", "ChangeLog",
+    ".gitignore", "src/ReadMe", "samples/CREDITS",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "2007-2026 Pierre Marchand and the Fontmatrix contributors"
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+[[annotations]]
+path = ["po/**"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2007-2026 The Fontmatrix translators"
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+# "Directly borrowed to Scribus", which is GPL-2.0-or-later
+[[annotations]]
+path = ["cmake/modules/FindLIBPODOFO.cmake"]
+precedence = "closest"
+SPDX-FileCopyrightText = ["The Scribus Team", "2008-2026 The Fontmatrix contributors"]
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+# samples/ holds texts of other authors, not the project's own work, so each one carries the
+# licence of the text it is. samples/CREDITS names the work, the author and the edition.
+
+# Works whose author died more than seventy years ago, and the constitution of 1879, which is
+# an official text of the state: nobody holds rights over them any more.
+[[annotations]]
+path = [
+    "samples/bg/Българският език",        # Иван Вазов, 1850–1921
+    "samples/bg/Търновска конституция",   # Учредително народно събрание, 1879
+    "samples/de/sample",                  # Friedrich Schiller, 1759–1805
+    "samples/fr/Mamere",                  # Marcel Proust, 1871–1922
+    "samples/he/sample",                  # חיים נחמן ביאליק, 1873–1934
+    "samples/ru/Гоголь",                  # Николай Гогол, 1809–1852
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "LicenseRef-PublicDomain"
+
+# Articles of Wikipedia, taken when its text was under version 3.0 of the licence
+[[annotations]]
+path = [
+    "samples/bn/sample", "samples/gu/sample", "samples/hi/sample", "samples/kn/sample",
+    "samples/ml/sample", "samples/mr/sample", "samples/or/sample", "samples/pa/sample",
+    "samples/ta/sample", "samples/te/sample",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "The Wikipedia contributors"
+SPDX-License-Identifier = "CC-BY-SA-3.0"
+
+# A book of 1508, whose text is free, in a transliteration made for Wikisource
+[[annotations]]
+path = ["samples/cu/Miracles of the Virgin 1508"]
+precedence = "closest"
+SPDX-FileCopyrightText = ["The Wikisource contributors", "Ivana Eterović and Mirjana Crnić Novosel"]
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+# The letters of an alphabet, their names as Unicode gives them and their numeric values: facts
+[[annotations]]
+path = ["samples/cu/Glagolitic alphabet"]
+precedence = "closest"
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"
+
+# Articles of Wikipedia under version 4.0 of the licence, the one it has used since 2023
+[[annotations]]
+path = ["samples/udm/sample"]
+precedence = "closest"
+SPDX-FileCopyrightText = "The Wikipedia contributors"
+SPDX-License-Identifier = "CC-BY-SA-4.0"

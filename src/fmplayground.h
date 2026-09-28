@@ -1,14 +1,8 @@
-//
-// C++ Interface: fmplayground
-//
-// Description:
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef FMPLAYGROUND_H
 #define FMPLAYGROUND_H
@@ -22,52 +16,51 @@ class FontItem;
 
 class FMPlayGround : public QGraphicsView
 {
-	Q_OBJECT
-	public:
-		FMPlayGround(QWidget *parent);
-		~FMPlayGround();
+    Q_OBJECT
+public:
+    explicit FMPlayGround(QWidget *parent);
+    ~FMPlayGround() override;
 
-		QStringList fontnameList();
-		QList< QGraphicsItemGroup* > getLines();
-		QRectF getMaxRect();
+    QStringList fontnameList();
+    QList<QGraphicsItemGroup *> getLines();
+    QRectF getMaxRect();
 
-		void updateLine();
-		void closeLine();
-		void deselectAll();
-		
-	protected:
-		void mousePressEvent ( QMouseEvent * e ) ;
-		void mouseReleaseEvent ( QMouseEvent * e )  ;
-		void mouseMoveEvent ( QMouseEvent * e ) ;
-		void wheelEvent ( QWheelEvent * e );
+    void updateLine();
+    void closeLine();
+    void deselectAll();
 
-		void keyReleaseEvent(QKeyEvent *e);
+protected:
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void wheelEvent(QWheelEvent *e) override;
 
-		void leaveEvent(QEvent *e);
-		
-	private:
-		void displayGlyphs(const QString& spec, FontItem* fontI, double fontS);
-		QPointF mouseStartPoint;
-		bool isPanning;
-		QList<QGraphicsItemGroup*> glyphLines;
-		QList< QGraphicsItem* > curLine;
-		QString curString;
-		QRectF curSelRect;
+    void keyReleaseEvent(QKeyEvent *e) override;
 
-		void removeLine();
-		
-		// this cursor is at the begining of a line
-		QPointF CursorPos;
-		// this one at the pen position
-		QPointF BlinkPos;
-		QTimer *CursorTimer;
-		
-	signals:
-		void pleaseZoom(int);
+    void leaveEvent(QEvent *e) override;
 
-	private slots:
-		void blinkCursor();
+private:
+    void displayGlyphs(const QString &spec, FontItem *fontI, double fontS);
+    QPointF mouseStartPoint;
+    bool isPanning;
+    QList<QGraphicsItemGroup *> glyphLines;
+    QList<QGraphicsItem *> curLine;
+    QString curString;
+    QRectF curSelRect;
+
+    void removeLine();
+
+    // this cursor is at the begining of a line
+    QPointF CursorPos;
+    // this one at the pen position
+    QPointF BlinkPos;
+    QTimer *CursorTimer = nullptr;
+
+Q_SIGNALS:
+    void pleaseZoom(int);
+
+private Q_SLOTS:
+    void blinkCursor();
 };
-
 
 #endif

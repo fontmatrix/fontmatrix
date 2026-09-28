@@ -1,14 +1,9 @@
-//
-// C++ Interface: importtags
-//
-// Description:
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef IMPORTTAGS_H
 #define IMPORTTAGS_H
 
@@ -16,23 +11,26 @@
 #include <ui_importtags.h>
 
 /**
-	@author Pierre Marchand <pierremarc@oep-h.com>
+    @author Pierre Marchand <pierremarc@oep-h.com>
 */
 class ImportTags : public QDialog, private Ui::ImportTagsDialog
 {
-	Q_OBJECT
-	public:
-		ImportTags ( QWidget * parent, QStringList tags );
-		~ImportTags();
-		
-		
-		QStringList tags(){return m_tags;}
-	private:
-		QStringList m_tags;
-		
-	private slots:
-		void slotNewTag();
-		void slotEnd();
+    Q_OBJECT
+public:
+    ImportTags(QWidget *parent, QStringList tags);
+    ~ImportTags() override;
+
+    QStringList tags()
+    {
+        return m_tags;
+    }
+
+private:
+    QStringList m_tags;
+
+private Q_SLOTS:
+    void slotNewTag();
+    void slotEnd();
 };
 
 #endif

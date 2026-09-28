@@ -1,0 +1,514 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  flatpak:
+    name: Build Flatpak
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:kde-6.10
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Determine version
+        id: version
+        run: |
+          if echo "${{ github.ref }}" | grep -qE '^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            VER="${{ github.ref_name }}"
+            VER="${VER#v}"
+            MAJOR=$(echo $VER | cut -d. -f1)
+            MINOR=$(echo $VER | cut -d. -f2)
+            PATCH=$(echo $VER | cut -d. -f3)
+            echo "version=$VER"         >> "$GITHUB_OUTPUT"
+            echo "is_release=true"      >> "$GITHUB_OUTPUT"
+          else
+            SHORT="${{ github.sha }}"
+            SHORT="${SHORT:0:7}"
+            MAJOR=0; MINOR=0; PATCH=0
+            echo "version=git-${SHORT}" >> "$GITHUB_OUTPUT"
+            echo "is_release=false"     >> "$GITHUB_OUTPUT"
+          fi
+          echo "major=$MAJOR"           >> "$GITHUB_OUTPUT"
+          echo "minor=$MINOR"           >> "$GITHUB_OUTPUT"
+          echo "patch=$PATCH"           >> "$GITHUB_OUTPUT"
+
+      - name: Inject version into Flatpak manifest
+        run: |
+          python3 -c "
+          import json
+          m = json.load(open('com.github.fontmatrix.Fontmatrix.json'))
+          mod = next(mod for mod in m['modules'] if mod['name'] == 'fontmatrix')
+          mod['config-opts'] = [
+            '-DVERSION_MAJOR=${{ steps.version.outputs.major }}',
+            '-DVERSION_MINOR=${{ steps.version.outputs.minor }}',
+            '-DVERSION_PATCH=${{ steps.version.outputs.patch }}',
+          ]
+          json.dump(m, open('com.github.fontmatrix.Fontmatrix.json', 'w'), indent=4)
+          "
+
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: fontmatrix-${{ steps.version.outputs.version }}.flatpak
+          manifest-path: com.github.fontmatrix.Fontmatrix.json
+          cache-key: flatpak-builder-${{ github.sha }}
+
+      - name: Upload Flatpak artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: fontmatrix-flatpak
+          path: fontmatrix-${{ steps.version.outputs.version }}.flatpak
+
+  # The project's own sources with warnings as errors, then a start under
+  # AddressSanitizer and UBSan. An Arch container, because it packages KF6,
+  # PoDoFo and HarfBuzz, which the Ubuntu runner does not.
+  linux-checks:
+    name: Warnings and sanitizers
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: archlinux:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm --needed \
+            base-devel git cmake ninja extra-cmake-modules \
+            qt6-base qt6-svg \
+            kcoreaddons ki18n kconfig kxmlgui kconfigwidgets kwidgetsaddons \
+            kstatusnotifieritem kdbusaddons kcrash kiconthemes \
+            freetype2 harfbuzz zlib hyphen podofo fontconfig dbus gettext ttf-dejavu
+
+      - uses: actions/checkout@v6
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug
+          "-DECM_ENABLE_SANITIZERS=address;undefined"
+          -DFONTMATRIX_WERROR=ON
+
+      - name: Build
+        run: ninja -C build
+
+      - name: Start under the sanitizers
+        run: .github/scripts/sanitizer-smoke.sh build/bin/fontmatrix 120
+
+  windows:
+    name: Build Windows
+    # Pinned rather than windows-latest: that label moved to a Visual Studio
+    # 2026 image in June 2026, and we build as msvc2022 (see
+    # .github/craft/CraftConfig.ini). windows-2022 is the only x64 hosted
+    # image that still carries VS 2022.
+    #
+    # msvc2022 is also what KDE builds with, and the only Windows toolchain it
+    # populates a usable binary cache for: files.kde.org/craft/Qt6/26.05/
+    # windows/cl/ serves a ~1.3 MB package manifest for msvc2022 against
+    # ~230 KB for msvc2026. Revisit when KDE's own Windows CI moves.
+    runs-on: windows-2022
+    permissions:
+      contents: read
+    env:
+      # Target name from .github/craft/CraftConfig.ini; CraftMaster creates
+      # one Craft root per target under Variables:Root.
+      CRAFT_TARGET: windows-msvc2022_64-cl
+      CRAFT_ROOT: C:\Craft\windows-msvc2022_64-cl
+      # Toolchain and build type are part of the identity of a Craft root, so
+      # they belong in the cache key: a root populated for one must never be
+      # restored into a job expecting another.
+      CRAFT_CACHE_KEY: craft-win2022-msvc2022-relwithdebinfo-x86_64-v4
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Determine version
+        id: version
+        shell: bash
+        run: |
+          if echo "${{ github.ref }}" | grep -qE '^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            VER="${{ github.ref_name }}"
+            VER="${VER#v}"
+            MAJOR=$(echo $VER | cut -d. -f1)
+            MINOR=$(echo $VER | cut -d. -f2)
+            PATCH=$(echo $VER | cut -d. -f3)
+            echo "version=$VER"         >> "$GITHUB_OUTPUT"
+            echo "is_release=true"      >> "$GITHUB_OUTPUT"
+            # Tag builds only: untagged builds keep CMakeLists' in-tree
+            # version default (0.11.0) rather than being stamped 0.0.0.
+            {
+              echo "CRAFT_FONTMATRIX_VERSION_MAJOR=$MAJOR"
+              echo "CRAFT_FONTMATRIX_VERSION_MINOR=$MINOR"
+              echo "CRAFT_FONTMATRIX_VERSION_PATCH=$PATCH"
+            } >> "$GITHUB_ENV"
+          else
+            SHORT="${{ github.sha }}"
+            SHORT="${SHORT:0:7}"
+            MAJOR=0; MINOR=0; PATCH=0
+            VER="git-${SHORT}"
+            echo "version=${VER}"       >> "$GITHUB_OUTPUT"
+            echo "is_release=false"     >> "$GITHUB_OUTPUT"
+          fi
+          echo "major=$MAJOR"           >> "$GITHUB_OUTPUT"
+          echo "minor=$MINOR"           >> "$GITHUB_OUTPUT"
+          echo "patch=$PATCH"           >> "$GITHUB_OUTPUT"
+          # Read by the fontmatrix blueprint's setTargets() and used as
+          # the version label in the package filename.
+          echo "CRAFT_FONTMATRIX_VERSION_FULL=$VER" >> "$GITHUB_ENV"
+
+      - name: Scrub conflicting POSIX toolchains from PATH
+        # MinGW make and MSYS2 make disagree on `/c/...` path handling;
+        # if MinGW's make wins on PATH, autotools sub-builds (pkgconf,
+        # openssl, icu, …) break.
+        shell: pwsh
+        run: |
+          $cleaned = ($env:PATH -split ';' | Where-Object {
+            $_ -and `
+            $_ -notlike '*\mingw64\bin*' -and `
+            $_ -notlike '*\mingw32\bin*' -and `
+            $_ -notlike '*\Strawberry\*' -and `
+            $_ -notlike '*\Git\bin*' -and `
+            $_ -notlike '*\Git\usr\bin*' -and `
+            $_ -notlike '*\Git\mingw64\bin*'
+          }) -join ';'
+          Write-Host "Original PATH segments: $((($env:PATH -split ';').Count))"
+          Write-Host "Cleaned  PATH segments: $((($cleaned -split ';').Count))"
+          "PATH=$cleaned" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      # Craft's own failure for this is "Unable to locate Visual Studio",
+      # which does not say which version it wanted. Check it here instead.
+      - name: Verify the expected Visual Studio is present
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          if (-not (Test-Path $vswhere)) {
+            throw "vswhere.exe not found at $vswhere — no Visual Studio installer on this image"
+          }
+          # No -property here: vswhere honours only the last one given, and
+          # the default listing already shows product, version and path.
+          Write-Host "Visual Studio installations on this runner:"
+          & $vswhere -products '*' -nologo | Write-Host
+
+          # 17.x is VS 2022, matching the windows-msvc2022_64-cl target in
+          # .github/craft/CraftConfig.ini.
+          $vs2022 = & $vswhere -products '*' -version '[17,18)' `
+                               -property installationPath -nologo
+          if (-not $vs2022) {
+            throw ("No Visual Studio 2022 (17.x) on this runner, but " +
+                   ".github/craft/CraftConfig.ini pins the msvc2022 ABI. " +
+                   "Either the runner image changed under us or runs-on needs " +
+                   "revisiting — see the comment on this job.")
+          }
+          Write-Host "OK: VS 2022 found at $vs2022"
+
+      # Build with KDE Craft, driven by CraftMaster, as KDE does in
+      # sysadmin/craft-ci gitlab-templates/blocks/windows-base.yml.
+      # CraftMaster writes etc/CraftSettings.ini from
+      # .github/craft/CraftConfig.ini before invoking craft, so the build type
+      # is already correct for the first command. setup/CraftBootstrap.py
+      # cannot offer that: it runs craft internally during installation.
+
+      - name: Restore Craft cache
+        id: cache-craft
+        uses: actions/cache/restore@v5
+        with:
+          # Exclusions need forward slashes + /** — actions/cache's
+          # fnmatch-style matcher treats `\` as a literal on Windows,
+          # so backslash patterns silently match nothing.
+          key: ${{ env.CRAFT_CACHE_KEY }}-${{ hashFiles('craft-blueprints/**/*', '.github/craft/CraftConfig.ini') }}
+          restore-keys: |
+            ${{ env.CRAFT_CACHE_KEY }}-
+          path: |
+            C:/Craft
+            !C:/Craft/windows-msvc2022_64-cl/build/fontmatrix/**
+            !C:/Craft/windows-msvc2022_64-cl/tmp/**
+
+      - name: Set up Craft via CraftMaster
+        shell: pwsh
+        run: |
+          $cm = 'C:\craftmaster'
+          if (-not (Test-Path (Join-Path $cm 'CraftMaster.py'))) {
+            if (Test-Path $cm) { Remove-Item -Recurse -Force $cm }
+            git clone --depth 1 https://invent.kde.org/packaging/craftmaster.git $cm
+            if ($LASTEXITCODE -ne 0) { throw 'Failed to clone CraftMaster' }
+          }
+
+          $pythonExe = Get-Command python -ErrorAction Stop |
+            Select-Object -First 1 -ExpandProperty Source
+          $pythonDir = Split-Path -Parent $pythonExe
+          Write-Host "Using python: $pythonExe"
+
+          # --setup regenerates the settings every run, on a warm cache too,
+          # so a stale CraftSettings.ini can never outlive a change to
+          # CraftConfig.ini.
+          & $pythonExe -u (Join-Path $cm 'CraftMaster.py') `
+            --config .github\craft\CraftConfig.ini `
+            --variables "Python=$pythonDir" `
+            --targets $env:CRAFT_TARGET `
+            --setup
+          if ($LASTEXITCODE -ne 0) { throw 'CraftMaster --setup failed' }
+
+      # A wrong build type does not fail anything by itself; it misses the
+      # binary cache, and Qt and KF6 get compiled from source instead. Assert
+      # it, and record the generated settings in the log.
+      - name: Verify Craft settings
+        shell: pwsh
+        run: |
+          $ini = "$env:CRAFT_ROOT\etc\CraftSettings.ini"
+          if (-not (Test-Path $ini)) { throw "No Craft settings at $ini" }
+
+          Write-Host '::group::CraftSettings.ini'
+          Get-Content $ini | Where-Object { $_ -notmatch '^\s*($|[#;])' } | Write-Host
+          Write-Host '::endgroup::'
+
+          function Get-CraftSetting($pattern) {
+            $m = Select-String -Path $ini -Pattern $pattern | Select-Object -First 1
+            if (-not $m) { return $null }
+            return $m.Matches[0].Groups[1].Value.Trim()
+          }
+          $buildType = Get-CraftSetting '^\s*BuildType\s*=\s*(.+)$'
+          $abi       = Get-CraftSetting '^\s*ABI\s*=\s*(.+)$'
+          Write-Host "ABI       : $abi"
+          Write-Host "BuildType : $buildType"
+
+          # Matches sysadmin/craft-ci qt6/CraftConfig.ini [windows-msvc2022_64-cl].
+          if ($abi -ne 'windows-cl-msvc2022-x86_64') {
+            throw "Unexpected ABI '$abi' (wanted windows-cl-msvc2022-x86_64)"
+          }
+          if ($buildType -ne 'RelWithDebInfo') {
+            throw ("BuildType is '$buildType', not RelWithDebInfo. KDE publishes " +
+                   "no binary cache for that, so every dependency would be built " +
+                   "from source.")
+          }
+          Write-Host 'OK: settings match KDE''s Windows Qt6 target'
+
+      - name: Install Craft itself
+        shell: pwsh
+        run: |
+          # Mirrors KDE's `Run-CraftMaster -c -i --options virtual.ignored=True
+          # --update craft`. With the settings already in place this is served
+          # from the binary cache rather than built.
+          & python -u C:\craftmaster\CraftMaster.py `
+            --config .github\craft\CraftConfig.ini `
+            --targets $env:CRAFT_TARGET `
+            -c -i --options virtual.ignored=True --update craft
+          if ($LASTEXITCODE -ne 0) { throw 'craft --update craft failed' }
+
+      - name: Install Fontmatrix blueprints
+        shell: pwsh
+        run: |
+          # Blueprint location pattern:
+          #   <CraftRoot>/etc/blueprints/locations/<repo>/<category>/<name>/<name>.py
+          $blueprintRoot = "$env:CRAFT_ROOT\etc\blueprints\locations\fontmatrix"
+          if (Test-Path $blueprintRoot) { Remove-Item -Recurse -Force $blueprintRoot }
+          New-Item -ItemType Directory -Force -Path $blueprintRoot | Out-Null
+          Copy-Item -Recurse -Force craft-blueprints\* $blueprintRoot\
+          Get-ChildItem -Recurse -File $blueprintRoot |
+            ForEach-Object { Write-Host "  installed: $($_.FullName)" }
+
+      - name: Install Fontmatrix runtime deps
+        shell: pwsh
+        run: |
+          & python -u C:\craftmaster\CraftMaster.py `
+            --config .github\craft\CraftConfig.ini --targets $env:CRAFT_TARGET `
+            -c --install-deps fontmatrix
+          if ($LASTEXITCODE -ne 0) { throw 'craft --install-deps failed' }
+
+      - name: Build Fontmatrix from source
+        shell: pwsh
+        run: |
+          $srcDir = $env:GITHUB_WORKSPACE
+          & python -u C:\craftmaster\CraftMaster.py `
+            --config .github\craft\CraftConfig.ini --targets $env:CRAFT_TARGET `
+            -c --no-cache --ignoreInstalled --options "fontmatrix.srcDir=$srcDir" fontmatrix
+          if ($LASTEXITCODE -ne 0) { throw 'craft fontmatrix failed' }
+
+      - name: Install NSIS
+        shell: pwsh
+        run: |
+          # Packaging tool, installed after the build like KDE does it.
+          & python -u C:\craftmaster\CraftMaster.py `
+            --config .github\craft\CraftConfig.ini --targets $env:CRAFT_TARGET `
+            -c -i --update nsis
+          if ($LASTEXITCODE -ne 0) { throw 'craft --update nsis failed' }
+
+      - name: Clean Craft tmp before packaging
+        shell: pwsh
+        run: |
+          # Guards against any stray `fontmatrix-*` files in tmp/
+          # being picked up by the Collect step's recursive glob.
+          if (Test-Path "$env:CRAFT_ROOT\tmp") {
+            Remove-Item -Recurse -Force "$env:CRAFT_ROOT\tmp\*" -ErrorAction SilentlyContinue
+          }
+
+      - name: Package Fontmatrix (NSIS installer + 7z)
+        shell: pwsh
+        run: |
+          $srcDir = $env:GITHUB_WORKSPACE
+          & python -u C:\craftmaster\CraftMaster.py `
+            --config .github\craft\CraftConfig.ini --targets $env:CRAFT_TARGET `
+            -c --package --options "fontmatrix.srcDir=$srcDir" fontmatrix
+          if ($LASTEXITCODE -ne 0) { throw 'craft --package failed' }
+
+      # `craft --package` exits 0 whether or not the package is complete, and
+      # the runner has Visual Studio installed, so an incomplete package still
+      # runs here. See .github/scripts/check-windows-deps.py.
+      - name: Verify packaged dependencies and data files
+        shell: pwsh
+        run: |
+          $stage = "$env:CRAFT_ROOT\build\fontmatrix\archive"
+          if (-not (Test-Path $stage)) {
+            throw "No packaging staging dir at $stage"
+          }
+          python .github\scripts\check-windows-deps.py $stage
+          if ($LASTEXITCODE -ne 0) {
+            throw "Windows package audit failed — see the errors above"
+          }
+
+      - name: Show package size & largest deployed files
+        shell: pwsh
+        run: |
+          Write-Host "=== Package outputs in tmp/ ==="
+          Get-ChildItem "$env:CRAFT_ROOT\tmp" -File -ErrorAction SilentlyContinue |
+            Sort-Object Length -Descending |
+            Format-Table @{n='MB';e={[math]::Round($_.Length/1MB,1)}}, Name -AutoSize |
+            Out-String -Width 200 | Write-Host
+          Write-Host ""
+          Write-Host "=== Top 30 largest files in deploy staging ==="
+          $stage = "$env:CRAFT_ROOT\build\fontmatrix\archive"
+          if (Test-Path $stage) {
+            Get-ChildItem $stage -Recurse -File -ErrorAction SilentlyContinue |
+              Sort-Object Length -Descending |
+              Select-Object -First 30 |
+              Format-Table @{n='MB';e={[math]::Round($_.Length/1MB,1)}}, FullName -AutoSize |
+              Out-String -Width 200 | Write-Host
+          } else {
+            Write-Host "  (no staging dir at $stage)"
+          }
+
+      - name: Collect Craft artifacts
+        id: collect
+        shell: pwsh
+        run: |
+          $outDir = 'fontmatrix-craft-out'
+          New-Item -ItemType Directory -Force -Path $outDir | Out-Null
+          # -Exclude '*-dbg.*' as well as Packager/PackageDebugSymbols=False
+          # in CraftConfig.ini: a symbol archive must never be published as if
+          # it were the portable build.
+          Get-ChildItem -Path "$env:CRAFT_ROOT\tmp" -Recurse `
+            -Include 'fontmatrix-*.exe', 'fontmatrix-*.7z', 'fontmatrix-*.sha256' `
+            -Exclude '*-dbg.*' `
+            -ErrorAction SilentlyContinue |
+            Copy-Item -Destination $outDir
+          Get-ChildItem $outDir | Format-Table -AutoSize
+
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v7
+        with:
+          name: fontmatrix-windows-installer
+          path: |
+            fontmatrix-craft-out/fontmatrix-*.exe
+            fontmatrix-craft-out/fontmatrix-*.exe.sha256
+          if-no-files-found: error
+
+      - name: Upload Windows portable archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: fontmatrix-windows-portable
+          path: |
+            fontmatrix-craft-out/fontmatrix-*.7z
+            fontmatrix-craft-out/fontmatrix-*.7z.sha256
+          if-no-files-found: error
+
+      # `if: always()` on the save step would otherwise store a half-set-up
+      # Craft root under the good key for later runs to restore.
+      - name: Check Craft root is worth caching
+        id: craft-usable
+        if: always()
+        shell: pwsh
+        run: |
+          $ok = (Test-Path "$env:CRAFT_ROOT\etc\CraftSettings.ini") -and
+                (Test-Path 'C:\Craft\craft-clone\bin\craft.py')
+          "ok=$($ok.ToString().ToLower())" |
+            Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          Write-Host "Craft root set up, cacheable: $ok"
+
+      # `if: always()` saves the populated Craft root even when later steps
+      # fail; skip on exact-key hits since the content is unchanged.
+      - name: Save Craft cache
+        if: always() && steps.cache-craft.outputs.cache-hit != 'true' && steps.craft-usable.outputs.ok == 'true'
+        uses: actions/cache/save@v5
+        with:
+          key: ${{ env.CRAFT_CACHE_KEY }}-${{ hashFiles('craft-blueprints/**/*', '.github/craft/CraftConfig.ini') }}
+          path: |
+            C:/Craft
+            !C:/Craft/windows-msvc2022_64-cl/build/fontmatrix/**
+            !C:/Craft/windows-msvc2022_64-cl/tmp/**
+
+  release:
+    name: Publish to Release
+    needs: [ flatpak, windows ]
+
+    if: startsWith(github.ref, 'refs/tags/v') && github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION="${{ github.ref_name }}"
+          echo "version=${VERSION#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Check if tag commit is on master branch
+        id: check-branch
+        run: |
+          git fetch origin master
+          if git merge-base --is-ancestor "${{ github.sha }}" origin/master; then
+            echo "on_master=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "on_master=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Tag commit is not on the master branch — skipping release upload."
+          fi
+
+      - name: Download Flatpak artifact
+        if: steps.check-branch.outputs.on_master == 'true'
+        uses: actions/download-artifact@v7
+        with:
+          name: fontmatrix-flatpak
+          path: release-artifacts/
+
+      - name: Download Windows installer
+        if: steps.check-branch.outputs.on_master == 'true'
+        uses: actions/download-artifact@v7
+        with:
+          name: fontmatrix-windows-installer
+          path: release-artifacts/
+
+      - name: Download Windows portable archive
+        if: steps.check-branch.outputs.on_master == 'true'
+        uses: actions/download-artifact@v7
+        with:
+          name: fontmatrix-windows-portable
+          path: release-artifacts/
+
+      - name: Upload artifacts to GitHub Release
+        if: steps.check-branch.outputs.on_master == 'true'
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            release-artifacts/fontmatrix-*.flatpak
+            release-artifacts/fontmatrix-*.exe
+            release-artifacts/fontmatrix-*.7z
+            release-artifacts/fontmatrix-*.sha256

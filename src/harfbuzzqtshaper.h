@@ -1,14 +1,9 @@
-//
-// C++ Interface: harfbuzzqtshaper
-//
-// Description: 
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef HARFBUZZSHAPER_H
 #define HARFBUZZSHAPER_H
 
@@ -17,14 +12,15 @@
 
 class HarfbuzzShaper : public FMBaseShaper
 {
-	public:
-		HarfbuzzShaper(FMOtf* o, QString s);
-		~HarfbuzzShaper();	
-		
-		GlyphList doShape( const QString& s );
-	private:
-		FMShaper *hbqtsh;
+public:
+    HarfbuzzShaper(FMOtf *o, QString s);
+    ~HarfbuzzShaper() override;
+
+    GlyphList doShape(const QString &s) override;
+
+private:
+    Q_DISABLE_COPY(HarfbuzzShaper)
+    FMShaper *hbqtsh = nullptr;
 };
 
 #endif
-

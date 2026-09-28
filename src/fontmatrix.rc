@@ -1,0 +1,4 @@
+// Windows resource file for Fontmatrix
+// Embeds the application icon into the executable so Windows Explorer,
+// the taskbar, and the Alt+Tab switcher all show the correct icon.
+IDI_ICON1 ICON "icons/fontmatrix.ico"

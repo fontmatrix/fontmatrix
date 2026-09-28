@@ -1,0 +1,6418 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: https://github.com/fontmatrix/fontmatrix/issues\n"
+"POT-Creation-Date: 2026-09-23 17:23+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Language: sr\n"
+"X-Qt-Contexts: true\n"
+
+#. i18n: file: src/activationreportdialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, ActivationReportDialog)
+#: rc.cpp:3
+#, kde-format
+msgctxt "@title:window"
+msgid "Activation Report"
+msgstr ""
+
+#. i18n: file: src/activationreportdialog.ui:19
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, kde-format
+msgctxt "@label"
+msgid "Activation - Deactivation Error Report"
+msgstr ""
+
+#. i18n: file: src/activationreportdialog.ui:39
+#. i18n: ectx: property (text), widget (QPushButton, pushButton)
+#. i18n: file: src/filtersdialog.ui:201
+#. i18n: ectx: property (text), widget (QPushButton, closeButton)
+#. i18n: file: src/fontextractordialog.ui:80
+#. i18n: ectx: property (text), widget (QPushButton, pushButton)
+#. i18n: file: src/prefs_panel.ui:36
+#. i18n: ectx: property (text), widget (QPushButton, closeButton)
+#. i18n: file: src/repair.ui:34
+#. i18n: ectx: property (text), widget (QPushButton, closeButton)
+#. i18n: file: src/tagset.ui:231
+#. i18n: ectx: property (text), widget (QPushButton, closeButton)
+#: rc.cpp:9 rc.cpp:261 rc.cpp:306 rc.cpp:507 rc.cpp:681 rc.cpp:806
+#: src/typotek.cpp:2198
+#, kde-format
+msgctxt "@action:button"
+msgid "Close"
+msgstr ""
+
+#. i18n: file: src/activationreportdialog.ui:47
+#. i18n: ectx: property (text), widget (QTableWidget, errorTable)
+#: rc.cpp:12
+#, kde-format
+msgctxt "@title:column"
+msgid "Font path"
+msgstr ""
+
+#. i18n: file: src/activationreportdialog.ui:52
+#. i18n: ectx: property (text), widget (QTableWidget, errorTable)
+#: rc.cpp:15
+#, kde-format
+msgctxt "@title:column"
+msgid "Error"
+msgstr ""
+
+#. i18n: file: src/activationwidgetitem.ui:44
+#. i18n: ectx: property (text), widget (QLabel, styleName)
+#: rc.cpp:18
+#, kde-format
+msgctxt "@label"
+msgid "StyleName"
+msgstr ""
+
+#. i18n: file: src/activationwidgetitem.ui:51
+#. i18n: ectx: property (text), widget (QCheckBox, activatedStatus)
+#: rc.cpp:21
+#, kde-format
+msgctxt "@option:check"
+msgid "Activated"
+msgstr ""
+
+#. i18n: file: src/activationwidget.ui:20
+#. i18n: ectx: property (text), widget (QPushButton, activateAll)
+#: rc.cpp:24
+#, kde-format
+msgctxt "@action:button"
+msgid "Activate All"
+msgstr ""
+
+#. i18n: file: src/activationwidget.ui:27
+#. i18n: ectx: property (text), widget (QPushButton, deactivateAll)
+#: rc.cpp:27
+#, kde-format
+msgctxt "@action:button"
+msgid "Deactivate All"
+msgstr ""
+
+#. i18n: file: src/bookexport.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, BookExportDialog)
+#: rc.cpp:30
+#, kde-format
+msgctxt "@title:window"
+msgid "Export Font Book"
+msgstr ""
+
+#. i18n: file: src/bookexport.ui:45
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:33
+#, kde-format
+msgctxt "@label"
+msgid "Output"
+msgstr ""
+
+#. i18n: file: src/bookexport.ui:55
+#. i18n: ectx: property (text), widget (QPushButton, fileNameButton)
+#. i18n: file: src/dumpdialog.ui:48
+#. i18n: ectx: property (text), widget (QPushButton, browseButton)
+#. i18n: file: src/prefs_panel.ui:453
+#. i18n: ectx: property (text), widget (QPushButton, fontEditorBrowse)
+#. i18n: file: src/prefs_panel.ui:503
+#. i18n: ectx: property (text), widget (QToolButton, dictButton)
+#. i18n: file: src/prefs_panel.ui:727
+#. i18n: ectx: property (text), widget (QPushButton, templatesDirBrowse)
+#: rc.cpp:36 rc.cpp:128 rc.cpp:603 rc.cpp:618 rc.cpp:636
+#, kde-format
+msgctxt "@action:button"
+msgid "Browse..."
+msgstr ""
+
+#. i18n: file: src/browserwidget.ui:66
+#. i18n: ectx: property (text), widget (QToolButton, infoButton)
+#. i18n: file: src/familywidget.ui:104
+#. i18n: ectx: property (text), widget (QToolButton, infoButton)
+#: rc.cpp:39 rc.cpp:152
+#, kde-format
+msgctxt "@action:button"
+msgid "Info"
+msgstr ""
+
+#. i18n: file: src/browserwidget.ui:76
+#. i18n: ectx: property (text), widget (QPushButton, importButton)
+#: rc.cpp:42 src/typotek.cpp:471
+#, kde-format
+msgctxt "@action:button"
+msgid "Import"
+msgstr ""
+
+#. i18n: file: src/browserwidget.ui:86
+#. i18n: ectx: property (text), widget (QToolButton, chartButton)
+#. i18n: file: src/familywidget.ui:91
+#. i18n: ectx: property (text), widget (QToolButton, chartButton)
+#: rc.cpp:45 rc.cpp:149
+#, kde-format
+msgctxt "@action:button"
+msgid "Chart"
+msgstr ""
+
+#. i18n: file: src/browserwidget.ui:96
+#. i18n: ectx: property (text), widget (QToolButton, sampleButton)
+#. i18n: file: src/familywidget.ui:78
+#. i18n: ectx: property (text), widget (QToolButton, sampleButton)
+#: rc.cpp:48 rc.cpp:146
+#, kde-format
+msgctxt "@action:button"
+msgid "Sample"
+msgstr ""
+
+#. i18n: file: src/chartwidget.ui:34
+#. i18n: ectx: property (toolTip), widget (QLabel, unicodeCoverageStat)
+#: rc.cpp:51
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Coverage of Unicode Interval"
+msgstr ""
+
+#. i18n: file: src/chartwidget.ui:37
+#. i18n: ectx: property (text), widget (QLabel, unicodeCoverageStat)
+#: rc.cpp:54
+#, kde-format
+msgctxt "@label"
+msgid "Block:"
+msgstr ""
+
+#. i18n: file: src/chartwidget.ui:79
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:57
+#, kde-format
+msgctxt "@label"
+msgid "Search:"
+msgstr ""
+
+#. i18n: file: src/chartwidget.ui:91
+#. i18n: ectx: property (toolTip), widget (QLineEdit, charSearchLine)
+#: rc.cpp:60
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Search a character by its codepoint (expressed in hexadecimal \n"
+"and prefixed with \"U+\", \"u+\" or \"+\") or a glyph by its name.\n"
+"Press enter after editing to run the search."
+msgstr ""
+
+#. i18n: file: src/chartwidget.ui:115
+#. i18n: ectx: property (statusTip), widget (FMGlyphsView, abcView)
+#: rc.cpp:65
+#, kde-format
+msgctxt "@info:status"
+msgid "Clicking on a glyph will show details about it"
+msgstr ""
+
+#. i18n: file: src/chartwidget.ui:136
+#. i18n: ectx: property (toolTip), widget (QToolButton, clipboardCheck)
+#: rc.cpp:68
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Set Mode \"Copy Character to Clipboard\""
+msgstr ""
+
+#. i18n: file: src/chartwidget.ui:139
+#. i18n: ectx: property (text), widget (QToolButton, clipboardCheck)
+#: rc.cpp:71
+#, kde-format
+msgctxt "@action:button"
+msgid "Copy Mode"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, CompareWidget)
+#: rc.cpp:74
+#, kde-format
+msgctxt "@title:window"
+msgid "Compare Glyphs"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:44
+#. i18n: ectx: property (title), widget (QGroupBox, fgbox)
+#. i18n: file: src/fontextractordialog.ui:51
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:77 rc.cpp:297
+#, kde-format
+msgctxt "@title:group"
+msgid "Fonts"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:53
+#. i18n: ectx: property (text), widget (QPushButton, compareAdd)
+#. i18n: file: src/filtersdialog.ui:153
+#. i18n: ectx: property (text), widget (QPushButton, addButton)
+#. i18n: file: src/importtags.ui:45
+#. i18n: ectx: property (text), widget (QPushButton, tagNewButton)
+#. i18n: file: src/prefs_panel.ui:776
+#. i18n: ectx: property (text), widget (QPushButton, remoteDirAdd)
+#. i18n: file: src/samplewidget.ui:274
+#. i18n: ectx: property (text), widget (QPushButton, addSampleButton)
+#. i18n: file: src/tagset.ui:118
+#. i18n: ectx: property (text), widget (QPushButton, addToSetButton)
+#: rc.cpp:80 rc.cpp:255 rc.cpp:348 rc.cpp:645 rc.cpp:773 rc.cpp:791
+#, kde-format
+msgctxt "@action:button"
+msgid "Add"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:60
+#. i18n: ectx: property (text), widget (QPushButton, compareRemove)
+#. i18n: file: src/filtersdialogitem.ui:114
+#. i18n: ectx: property (text), widget (QToolButton, removeButton)
+#. i18n: file: src/prefs_panel.ui:783
+#. i18n: ectx: property (text), widget (QPushButton, remoteDirRemove)
+#. i18n: file: src/prefs_panel.ui:860
+#. i18n: ectx: property (text), widget (QToolButton, clearButton)
+#. i18n: file: src/repair.ui:83
+#. i18n: ectx: property (text), widget (QPushButton, removeDead)
+#. i18n: file: src/repair.ui:222
+#. i18n: ectx: property (text), widget (QPushButton, removeUnreferenced)
+#. i18n: file: src/samplewidget.ui:281
+#. i18n: ectx: property (text), widget (QPushButton, removeSampleButton)
+#. i18n: file: src/tagset.ui:187
+#. i18n: ectx: property (text), widget (QPushButton, removeToSetButton)
+#: rc.cpp:83 rc.cpp:240 rc.cpp:648 rc.cpp:669 rc.cpp:690 rc.cpp:723 rc.cpp:776
+#: rc.cpp:803
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:83
+#. i18n: ectx: property (title), widget (QGroupBox, compareShow)
+#: rc.cpp:86
+#, kde-format
+msgctxt "@title:group"
+msgid "Show"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:92
+#. i18n: ectx: property (text), widget (QCheckBox, compareMetrics)
+#: rc.cpp:89
+#, kde-format
+msgctxt "@option:check"
+msgid "Metrics"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:102
+#. i18n: ectx: property (title), widget (QGroupBox, comparePoints)
+#: rc.cpp:92
+#, kde-format
+msgctxt "@title:group"
+msgid "Points"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:114
+#. i18n: ectx: property (text), widget (QCheckBox, compareControls)
+#: rc.cpp:95
+#, kde-format
+msgctxt "@option:check"
+msgid "Controls"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:140
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:98
+#, kde-format
+msgctxt "@label"
+msgid "Offset"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:160
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:101
+#, kde-format
+msgctxt "@label"
+msgid "Fill:"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:187
+#. i18n: ectx: property (toolTip), widget (QSlider, compareCharSelect)
+#: rc.cpp:104
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Select a character"
+msgstr ""
+
+#. i18n: file: src/comparewidget.ui:206
+#. i18n: ectx: property (text), widget (QCheckBox, compareSyncChars)
+#: rc.cpp:107
+#, kde-format
+msgctxt "@option:check"
+msgid "Keep in sync"
+msgstr ""
+
+#. i18n: file: src/dataexport.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, DataExport)
+#: rc.cpp:110
+#, kde-format
+msgctxt "@title:window"
+msgid "Export Data"
+msgstr ""
+
+#. i18n: file: src/dataexport.ui:23
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:113
+#, kde-format
+msgctxt "@label"
+msgid ""
+"The font files currently filtered and selected here will be copied in a "
+"directory of your choice."
+msgstr ""
+
+#. i18n: file: src/dataexport.ui:36
+#. i18n: ectx: property (text), widget (QPushButton, cancelButton)
+#. i18n: file: src/metawidget.ui:73
+#. i18n: ectx: property (text), widget (QPushButton, cancelButton)
+#. i18n: file: src/progressbarduo.ui:61
+#. i18n: ectx: property (text), widget (QPushButton, cancelButton)
+#: rc.cpp:116 rc.cpp:468 rc.cpp:675
+#, kde-format
+msgctxt "@action:button"
+msgid "Cancel"
+msgstr ""
+
+#. i18n: file: src/dataexport.ui:43
+#. i18n: ectx: property (text), widget (QPushButton, continueButton)
+#: rc.cpp:119
+#, kde-format
+msgctxt "@action:button"
+msgid "Continue"
+msgstr ""
+
+#. i18n: file: src/dumpdialog.ui:16
+#. i18n: ectx: property (windowTitle), widget (QDialog, DumpDialog)
+#: rc.cpp:122
+#, kde-format
+msgctxt "@title:window"
+msgid "Fontmatrix - Export font info for packaging"
+msgstr ""
+
+#. i18n: file: src/dumpdialog.ui:35
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:125
+#, kde-format
+msgctxt "@label"
+msgid "Save to:"
+msgstr ""
+
+#. i18n: file: src/dumpdialog.ui:58
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:131
+#, kde-format
+msgctxt "@title:group"
+msgid "Model"
+msgstr ""
+
+#. i18n: file: src/dumpdialog.ui:92
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:134
+#, kde-format
+msgctxt "@label"
+msgid "Available names"
+msgstr ""
+
+#. i18n: file: src/dumpdialog.ui:138
+#. i18n: ectx: property (text), widget (QPushButton, loadButton)
+#: rc.cpp:137
+#, kde-format
+msgctxt "@action:button"
+msgid "Load..."
+msgstr ""
+
+#. i18n: file: src/familywidget.ui:55
+#. i18n: ectx: property (text), widget (QPushButton, returnListButton)
+#: rc.cpp:140
+#, kde-format
+msgctxt "@action:button"
+msgid "Return To List"
+msgstr ""
+
+#. i18n: file: src/familywidget.ui:58
+#. i18n: ectx: property (shortcut), widget (QPushButton, returnListButton)
+#: rc.cpp:143
+#, kde-format
+msgid "Esc"
+msgstr ""
+
+#. i18n: file: src/familywidget.ui:117
+#. i18n: ectx: property (text), widget (QToolButton, activationButton)
+#: rc.cpp:155
+#, kde-format
+msgctxt "@action:button"
+msgid "Activation"
+msgstr ""
+
+#. i18n: file: src/familywidget.ui:143
+#. i18n: ectx: property (text), widget (QLabel, familyLabel)
+#: rc.cpp:158
+#, kde-format
+msgctxt "@label"
+msgid "Family Name"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:49
+#. i18n: ectx: property (text), widget (OpenCloseArrow, filtersArrow)
+#: rc.cpp:161
+#, kde-format
+msgctxt "@action:button"
+msgid "Filters"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:143
+#. i18n: ectx: property (text), widget (OpenCloseArrow, tagsArrow)
+#: rc.cpp:164
+#, kde-format
+msgctxt "@action:button"
+msgid "Tags"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:273
+#. i18n: ectx: property (text), widget (OpenCloseArrow, metadataArrow)
+#: rc.cpp:167
+#, kde-format
+msgctxt "@action:button"
+msgid "Metadata"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:320
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:170
+#, kde-format
+msgctxt "@label"
+msgid "Search"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:350
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:173
+#, kde-format
+msgctxt "@label"
+msgid "in"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:395
+#. i18n: ectx: property (text), widget (OpenCloseArrow, panoseArrow)
+#: rc.cpp:176
+#, kde-format
+msgctxt "@action:button"
+msgid "Panose"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:454
+#. i18n: ectx: property (text), widget (OpenCloseArrow, languagesArrow)
+#: rc.cpp:179
+#, kde-format
+msgctxt "@action:button"
+msgid "Languages"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:485
+#. i18n: ectx: property (toolTip), widget (QComboBox, languagesCombo)
+#: rc.cpp:182
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "The fonts that have every character a text in the language needs."
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:517
+#. i18n: ectx: property (text), widget (OpenCloseArrow, licenseArrow)
+#: rc.cpp:185
+#, kde-format
+msgctxt "@action:button"
+msgid "License"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:548
+#. i18n: ectx: property (toolTip), widget (QComboBox, licenseCombo)
+#: rc.cpp:188
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"The licence the font states in its name table, recognised from its wording."
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:580
+#. i18n: ectx: property (text), widget (OpenCloseArrow, duplicatesArrow)
+#: rc.cpp:191
+#, kde-format
+msgctxt "@action:button"
+msgid "Duplicates"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:611
+#. i18n: ectx: property (toolTip), widget (QComboBox, duplicatesCombo)
+#: rc.cpp:194
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"The fonts the collection holds more than once. Reading the files takes a "
+"moment the first time."
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:618
+#. i18n: ectx: property (toolTip), widget (QPushButton, duplicatesGroupsButton)
+#: rc.cpp:197
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Each font with its files side by side, and a way to remove the extra ones"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:621
+#. i18n: ectx: property (text), widget (QPushButton, duplicatesGroupsButton)
+#: rc.cpp:200
+#, kde-format
+msgctxt "@action:button"
+msgid "Show Groups..."
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:653
+#. i18n: ectx: property (text), widget (OpenCloseArrow, kindArrow)
+#: rc.cpp:203
+#, kde-format
+msgctxt "@action:button"
+msgid "Font Technology"
+msgstr ""
+
+#. i18n: file: src/filterbar.ui:684
+#. i18n: ectx: property (toolTip), widget (QComboBox, kindCombo)
+#: rc.cpp:206
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Variable fonts, whose design moves along axes, and colour fonts, whose "
+"glyphs carry their own colours. Each font is opened once the first time."
+msgstr ""
+
+#. i18n: file: src/filteritem.ui:71
+#. i18n: ectx: property (toolTip), widget (QToolButton, removeButton)
+#: rc.cpp:209
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Remove Filter"
+msgstr ""
+
+#. i18n: file: src/filteritem.ui:77
+#. i18n: ectx: property (text), widget (QToolButton, removeButton)
+#: rc.cpp:212
+#, kde-format
+msgctxt "@action:button"
+msgid "X"
+msgstr ""
+
+#. i18n: file: src/filteritem.ui:110
+#. i18n: ectx: property (toolTip), widget (QToolButton, andButton)
+#: rc.cpp:215
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+"css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<table style=\"-qt-table-type: root; margin-top:4px; margin-bottom:4px; "
+"margin-left:4px; margin-right:4px;\">\n"
+"<tr>\n"
+"<td style=\"border: none;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">If set, the filter will "
+"<span style=\" font-weight:600;\">intersect</span> with the previous filters."
+"</p></td></tr></table></body></html>"
+msgstr ""
+
+#. i18n: file: src/filteritem.ui:142
+#. i18n: ectx: property (toolTip), widget (QToolButton, noButton)
+#: rc.cpp:225
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "if set, it will filter all the fonts but these matching this filter"
+msgstr ""
+
+#. i18n: file: src/filtersdialogitem.ui:72
+#. i18n: ectx: property (text), widget (QLabel, filterName)
+#: rc.cpp:228
+#, kde-format
+msgctxt "@label"
+msgid "filter name"
+msgstr ""
+
+#. i18n: file: src/filtersdialogitem.ui:91
+#. i18n: ectx: property (toolTip), widget (QToolButton, filterButton)
+#: rc.cpp:231
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Apply this filter to the list"
+msgstr ""
+
+#. i18n: file: src/filtersdialogitem.ui:94
+#. i18n: ectx: property (text), widget (QToolButton, filterButton)
+#: rc.cpp:234
+#, kde-format
+msgctxt "@action:button"
+msgid "Filter"
+msgstr ""
+
+#. i18n: file: src/filtersdialogitem.ui:111
+#. i18n: ectx: property (toolTip), widget (QToolButton, removeButton)
+#: rc.cpp:237
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Delete this filter"
+msgstr ""
+
+#. i18n: file: src/filtersdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, FiltersDialog)
+#: rc.cpp:243
+#, kde-format
+msgctxt "@title:window"
+msgid "Filters Manager"
+msgstr ""
+
+#. i18n: file: src/filtersdialog.ui:67
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:246
+#, kde-format
+msgctxt "@label"
+msgid ""
+"In order to add filters, you have to first select some of tags, meta "
+"informations or classifications elements."
+msgstr ""
+
+#. i18n: file: src/filtersdialog.ui:96
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:249
+#, kde-format
+msgctxt "@label"
+msgid "Add Filter"
+msgstr ""
+
+#. i18n: file: src/filtersdialog.ui:127
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:252
+#, kde-format
+msgctxt "@label"
+msgid "Filter Name:"
+msgstr ""
+
+#. i18n: file: src/filtersdialog.ui:162
+#. i18n: ectx: property (text), widget (QLabel, curFilter)
+#: rc.cpp:258
+#, kde-format
+msgctxt "@label"
+msgid "current filter"
+msgstr ""
+
+#. i18n: file: src/floatingwidgettoolbar.ui:66
+#. i18n: ectx: property (toolTip), widget (QToolButton, printButton)
+#: rc.cpp:264
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Print"
+msgstr ""
+
+#. i18n: file: src/floatingwidgettoolbar.ui:69
+#. i18n: ectx: property (text), widget (QToolButton, printButton)
+#: rc.cpp:267
+#, kde-format
+msgctxt "@action:button"
+msgid "P"
+msgstr ""
+
+#. i18n: file: src/floatingwidgettoolbar.ui:76
+#. i18n: ectx: property (toolTip), widget (QToolButton, detachButton)
+#: rc.cpp:270
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Detach from main window"
+msgstr ""
+
+#. i18n: file: src/floatingwidgettoolbar.ui:79
+#. i18n: ectx: property (text), widget (QToolButton, detachButton)
+#: rc.cpp:273
+#, kde-format
+msgctxt "@action:button"
+msgid "D"
+msgstr ""
+
+#. i18n: file: src/floatingwidgettoolbar.ui:95
+#. i18n: ectx: property (toolTip), widget (QToolButton, closeButton)
+#: rc.cpp:276
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Close window"
+msgstr ""
+
+#. i18n: file: src/floatingwidgettoolbar.ui:109
+#. i18n: ectx: property (toolTip), widget (QToolButton, hideButton)
+#: rc.cpp:279
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Hide window"
+msgstr ""
+
+#. i18n: file: src/floatingwidgettoolbar.ui:112
+#. i18n: ectx: property (text), widget (QToolButton, hideButton)
+#: rc.cpp:282
+#, kde-format
+msgctxt "@action:button"
+msgid "H"
+msgstr ""
+
+#. i18n: file: src/fontextractordialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, FontExtractorDialog)
+#: rc.cpp:285
+#, kde-format
+msgctxt "@title:window"
+msgid "Font extractor"
+msgstr ""
+
+#. i18n: file: src/fontextractordialog.ui:19
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:288
+#, kde-format
+msgctxt "@title:group"
+msgid "Select PDF"
+msgstr ""
+
+#. i18n: file: src/fontextractordialog.ui:31
+#. i18n: ectx: property (text), widget (QLabel, docPath)
+#: rc.cpp:291
+#, kde-format
+msgctxt "@label"
+msgid "File name"
+msgstr ""
+
+#. i18n: file: src/fontextractordialog.ui:41
+#. i18n: ectx: property (text), widget (QPushButton, browsePDF)
+#. i18n: file: src/matchraster.ui:108
+#. i18n: ectx: property (text), widget (QPushButton, browseButton)
+#: rc.cpp:294 rc.cpp:426
+#, kde-format
+msgctxt "@action:button"
+msgid "&Browse"
+msgstr ""
+
+#. i18n: file: src/fontextractordialog.ui:63
+#. i18n: ectx: property (text), widget (QPushButton, browseDir)
+#: rc.cpp:300
+#, kde-format
+msgctxt "@action:button"
+msgid "&Select Dir"
+msgstr ""
+
+#. i18n: file: src/fontextractordialog.ui:70
+#. i18n: ectx: property (text), widget (QPushButton, extractButton)
+#: rc.cpp:303
+#, kde-format
+msgctxt "@action:button"
+msgid "&Extract"
+msgstr ""
+
+#. i18n: file: src/fontmatrixui.rc:6
+#. i18n: ectx: Menu (file)
+#: rc.cpp:309
+#, kde-format
+msgid "&File"
+msgstr ""
+
+#. i18n: file: src/fontmatrixui.rc:17
+#. i18n: ectx: Menu (edit)
+#: rc.cpp:312
+#, kde-format
+msgid "&Edit"
+msgstr ""
+
+#. i18n: file: src/fontmatrixui.rc:29
+#. i18n: ectx: Menu (view)
+#: rc.cpp:315
+#, kde-format
+msgid "&View"
+msgstr ""
+
+#. i18n: file: src/fontmatrixui.rc:35
+#. i18n: ectx: Menu (tools)
+#: rc.cpp:318
+#, kde-format
+msgid "&Tools"
+msgstr ""
+
+#. i18n: file: src/fontmatrixui.rc:45
+#. i18n: ectx: ToolBar (mainToolBar)
+#: rc.cpp:321
+#, kde-format
+msgid "Main Toolbar"
+msgstr ""
+
+#. i18n: file: src/fontmatrixui.rc:58
+#. i18n: ectx: ToolBar (hamburgerBar)
+#: rc.cpp:324
+#, kde-format
+msgid "Hamburger Menu Toolbar"
+msgstr ""
+
+#. i18n: file: src/importedfonts.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, ImportedFonts)
+#: rc.cpp:327
+#, kde-format
+msgctxt "@title:window"
+msgid "Imported fonts"
+msgstr ""
+
+#. i18n: file: src/importedfonts.ui:24
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:330
+#, kde-format
+msgctxt "@label"
+msgid "Imported Fonts:"
+msgstr ""
+
+#. i18n: file: src/importedfonts.ui:55
+#. i18n: ectx: property (toolTip), widget (QCheckBox, dontShowBox)
+#: rc.cpp:333
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"<qt>Instead of showing this dialog imported font count\n"
+"will be shown in the status bar. If you choose not to\n"
+"show this dialog anymore you can reset the state\n"
+"in preferences.</qt>"
+msgstr ""
+
+#. i18n: file: src/importedfonts.ui:58
+#. i18n: ectx: property (text), widget (QCheckBox, dontShowBox)
+#: rc.cpp:339
+#, kde-format
+msgctxt "@option:check"
+msgid "&Do not show this dialog again"
+msgstr ""
+
+#. i18n: file: src/importedfonts.ui:84
+#. i18n: ectx: property (text), widget (QPushButton, btnOk)
+#: rc.cpp:342
+#, kde-format
+msgctxt "@action:button"
+msgid "&OK"
+msgstr ""
+
+#. i18n: file: src/importtags.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, ImportTagsDialog)
+#: rc.cpp:345
+#, fuzzy, kde-format
+msgctxt "@title:window"
+msgid "Fontmatrix - Tags"
+msgstr "Fontmatrix"
+
+#. i18n: file: src/importtags.ui:72
+#. i18n: ectx: property (text), widget (QPushButton, okButton)
+#: rc.cpp:351
+#, kde-format
+msgctxt "@action:button"
+msgid "Ok"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:19
+#. i18n: ectx: property (windowTitle), widget (QWidget, LayoutOptionWidget)
+#: rc.cpp:354
+#, kde-format
+msgctxt "@title:window"
+msgid "Text layout engine options"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:25
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:357
+#, kde-format
+msgctxt "@title:group"
+msgid "Weights"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:78
+#. i18n: ectx: property (text), widget (QLabel, bScore)
+#. i18n: file: src/layoutoptions.ui:124
+#. i18n: ectx: property (text), widget (QLabel, eScore)
+#. i18n: file: src/layoutoptions.ui:222
+#. i18n: ectx: property (text), widget (QLabel, aScore)
+#. i18n: file: src/layoutoptions.ui:294
+#. i18n: ectx: property (text), widget (QLabel, endScore)
+#: rc.cpp:360 rc.cpp:366 rc.cpp:372 rc.cpp:378
+#, kde-format
+msgctxt "@label"
+msgid "score"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:91
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:363
+#, kde-format
+msgctxt "@label"
+msgid "Before"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:137
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:369
+#, kde-format
+msgctxt "@label"
+msgid "Exact"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:235
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:375
+#, kde-format
+msgctxt "@label"
+msgid "After"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:307
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: rc.cpp:381
+#, kde-format
+msgctxt "@label"
+msgid "End"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:360
+#. i18n: ectx: property (text), widget (QLabel, hPenalty)
+#: rc.cpp:384
+#, kde-format
+msgctxt "@label"
+msgid "penalty"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:373
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:387
+#, kde-format
+msgctxt "@label"
+msgid "H-penalty"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:429
+#. i18n: ectx: property (text), widget (QLabel, minSpace)
+#: rc.cpp:390
+#, kde-format
+msgctxt "@label"
+msgid "space"
+msgstr ""
+
+#. i18n: file: src/layoutoptions.ui:442
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: rc.cpp:393
+#, kde-format
+msgctxt "@label"
+msgid "Max. compression"
+msgstr ""
+
+#. i18n: file: src/mainview.ui:24
+#. i18n: ectx: property (windowTitle), widget (QWidget, MainView)
+#: rc.cpp:396
+#, kde-format
+msgctxt "@title:window"
+msgid "main view widget"
+msgstr ""
+
+#. i18n: file: src/mainview.ui:103
+#. i18n: ectx: property (text), widget (QLabel, quickSearchLabel)
+#: rc.cpp:399
+#, kde-format
+msgctxt "@label"
+msgid "Quick Search:"
+msgstr ""
+
+#. i18n: file: src/mainview.ui:185
+#. i18n: ectx: property (toolTip), widget (QPushButton, saveButton)
+#: rc.cpp:402
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Save this filter for later use"
+msgstr ""
+
+#. i18n: file: src/mainview.ui:188
+#. i18n: ectx: property (text), widget (QPushButton, saveButton)
+#. i18n: file: src/prefs_panel.ui:667
+#. i18n: ectx: property (text), widget (QPushButton, commitSample)
+#: rc.cpp:405 rc.cpp:630
+#, kde-format
+msgctxt "@action:button"
+msgid "Save"
+msgstr ""
+
+#. i18n: file: src/mainview.ui:195
+#. i18n: ectx: property (toolTip), widget (QPushButton, clearButton)
+#: rc.cpp:408
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Reset the filter to show all fonts"
+msgstr ""
+
+#. i18n: file: src/mainview.ui:198
+#. i18n: ectx: property (text), widget (QPushButton, clearButton)
+#: rc.cpp:411
+#, kde-format
+msgctxt "@action:button"
+msgid "Clear"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, MatchRasterDialog)
+#: rc.cpp:414
+#, kde-format
+msgctxt "@title:window"
+msgid "Find a font using raster sample"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:32
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:417
+#, kde-format
+msgctxt "@title:group"
+msgid "Input Image"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:40
+#. i18n: ectx: property (text), widget (QCheckBox, grabModeBox)
+#: rc.cpp:420
+#, kde-format
+msgctxt "@option:check"
+msgid "Grab mode"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:69
+#. i18n: ectx: property (toolTip), widget (QSlider, grabZoom)
+#: rc.cpp:423
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Zoom level"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:126
+#. i18n: ectx: property (title), widget (QGroupBox, sampleBox)
+#: rc.cpp:429
+#, kde-format
+msgctxt "@title:group"
+msgid "Raster sample preview"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:153
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:432
+#, kde-format
+msgctxt "@label"
+msgid "C&haracter:"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:169
+#. i18n: ectx: property (toolTip), widget (QLineEdit, letter)
+#: rc.cpp:435
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "A unique character or a four digits hexadecimal Unicode value"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:181
+#. i18n: ectx: property (text), widget (QPushButton, searchButton)
+#: rc.cpp:438
+#, kde-format
+msgctxt "@action:button"
+msgid "&Search"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:201
+#. i18n: ectx: property (toolTip), widget (QCheckBox, checkInteractive)
+#: rc.cpp:441
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "If set, you will be prompted for each matching font"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:204
+#. i18n: ectx: property (text), widget (QCheckBox, checkInteractive)
+#: rc.cpp:444
+#, kde-format
+msgctxt "@option:check"
+msgid "Interactive"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:220
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:447
+#, kde-format
+msgctxt "@label"
+msgid "Click on the letter to let Fontmatrix compute the bounding box"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:236
+#. i18n: ectx: property (text), widget (QCheckBox, tweakRectBox)
+#: rc.cpp:450
+#, kde-format
+msgctxt "@option:check"
+msgid "Tweak rect"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:279
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:453
+#, kde-format
+msgctxt "@label"
+msgid "Compare with:"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:322
+#. i18n: ectx: property (text), widget (QPushButton, stopButton)
+#: rc.cpp:456
+#, kde-format
+msgctxt "@action:button"
+msgid "Stop"
+msgstr ""
+
+#. i18n: file: src/matchraster.ui:336
+#. i18n: ectx: property (text), widget (QPushButton, cancelButton)
+#: rc.cpp:459
+#, kde-format
+msgctxt "@action:button"
+msgid "&Cancel"
+msgstr ""
+
+#. i18n: file: src/metawidget.ui:26
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:462
+#, kde-format
+msgctxt "@label"
+msgid ""
+"Fill-in text fields and press enter key  or click \"Add Filters\" button to "
+"process filters."
+msgstr ""
+
+#. i18n: file: src/metawidget.ui:66
+#. i18n: ectx: property (text), widget (QPushButton, filterButton)
+#: rc.cpp:465
+#, kde-format
+msgctxt "@action:button"
+msgid "Add Filters"
+msgstr ""
+
+#. i18n: file: src/multiprintdialog.ui:19
+#. i18n: ectx: property (windowTitle), widget (QDialog, multiPrintDialog)
+#: rc.cpp:471
+#, kde-format
+msgctxt "@title:window"
+msgid "Printing multiple items"
+msgstr ""
+
+#. i18n: file: src/multiprintdialog.ui:41
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:474
+#, kde-format
+msgctxt "@title:group"
+msgid "Views"
+msgstr ""
+
+#. i18n: file: src/multiprintdialog.ui:47
+#. i18n: ectx: property (text), widget (QCheckBox, checkInfo)
+#: rc.cpp:477
+#, kde-format
+msgctxt "@option:check"
+msgid "Informations"
+msgstr ""
+
+#. i18n: file: src/multiprintdialog.ui:54
+#. i18n: ectx: property (text), widget (QCheckBox, checkPreview)
+#: rc.cpp:480
+#, kde-format
+msgctxt "@option:check"
+msgid "Preview"
+msgstr ""
+
+#. i18n: file: src/multiprintdialog.ui:61
+#. i18n: ectx: property (text), widget (QCheckBox, checkChart)
+#: rc.cpp:483
+#, kde-format
+msgctxt "@option:check"
+msgid "Glyphs chart"
+msgstr ""
+
+#. i18n: file: src/multiprintdialog.ui:68
+#. i18n: ectx: property (text), widget (QCheckBox, checkPlayground)
+#: rc.cpp:486
+#, kde-format
+msgctxt "@option:check"
+msgid "Playground"
+msgstr ""
+
+#. i18n: file: src/panosedialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, PanoseDialog)
+#: rc.cpp:489
+#, kde-format
+msgctxt "@title:window"
+msgid "Fontmatrix - Panose Editor"
+msgstr ""
+
+#. i18n: file: src/panosewidget.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, PanoseWidget)
+#: rc.cpp:492
+#, kde-format
+msgctxt "@title:window"
+msgid "Panose Metadata"
+msgstr ""
+
+#. i18n: file: src/panosewidget.ui:57
+#. i18n: ectx: property (text), widget (QTreeWidget, pTree)
+#: rc.cpp:495
+#, kde-format
+msgctxt "@title:column"
+msgid "Panose Attributes"
+msgstr ""
+
+#. i18n: file: src/playwidget.ui:49
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: file: src/prefs_panel.ui:378
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: file: src/sampletoolbar.ui:20
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:498 rc.cpp:585 rc.cpp:726
+#, kde-format
+msgctxt "@label"
+msgid "Font Size:"
+msgstr ""
+
+#. i18n: file: src/playwidget.ui:59
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, playFontSize)
+#. i18n: file: src/prefs_panel.ui:327
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, previewSizeSpin)
+#. i18n: file: src/prefs_panel.ui:388
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, fontSizeSpin)
+#. i18n: file: src/prefs_panel.ui:408
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, interLineSpin)
+#: rc.cpp:501 rc.cpp:570 rc.cpp:588 rc.cpp:594
+#, kde-format
+msgctxt "@item:valuesuffix"
+msgid " pt"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, PrefsPanel)
+#: rc.cpp:504
+#, kde-format
+msgctxt "@title:window"
+msgid "Preferences Panel"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:74
+#. i18n: ectx: property (text), item, widget (QListWidget, catList)
+#: rc.cpp:510
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "General"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:79
+#. i18n: ectx: property (text), item, widget (QListWidget, catList)
+#: rc.cpp:513
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "System tray"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:84
+#. i18n: ectx: property (text), item, widget (QListWidget, catList)
+#: rc.cpp:516
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Display"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:89
+#. i18n: ectx: property (text), item, widget (QListWidget, catList)
+#: rc.cpp:519
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Tools"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:94
+#. i18n: ectx: property (text), item, widget (QListWidget, catList)
+#: rc.cpp:522
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Samples collection"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:99
+#. i18n: ectx: property (text), item, widget (QListWidget, catList)
+#: rc.cpp:525
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Files & Folders"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:104
+#. i18n: ectx: property (text), item, widget (QListWidget, catList)
+#: rc.cpp:528
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Shortcuts"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:123
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_10)
+#: rc.cpp:531
+#, kde-format
+msgctxt "@title:group"
+msgid "General"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:129
+#. i18n: ectx: property (text), widget (QCheckBox, initTagBox)
+#: rc.cpp:534
+#, kde-format
+msgctxt "@option:check"
+msgid "Ask for tag names when importing fonts"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:136
+#. i18n: ectx: property (text), widget (QCheckBox, showNamesBox)
+#: rc.cpp:537
+#, kde-format
+msgctxt "@option:check"
+msgid "Show names of imported fonts after import process"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:143
+#. i18n: ectx: property (text), widget (QCheckBox, splashCheck)
+#: rc.cpp:540
+#, kde-format
+msgctxt "@option:check"
+msgid "Show splash at startup"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:170
+#. i18n: ectx: property (title), widget (QGroupBox, systrayFrame)
+#: rc.cpp:543
+#, kde-format
+msgctxt "@title:group"
+msgid "Show Fontmatrix in System Tray"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:185
+#. i18n: ectx: property (text), widget (QCheckBox, closeToSystray)
+#: rc.cpp:546
+#, kde-format
+msgctxt "@option:check"
+msgid "Close to system tray"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:195
+#. i18n: ectx: property (text), widget (QCheckBox, startToSystemTray)
+#: rc.cpp:549
+#, kde-format
+msgctxt "@option:check"
+msgid "Start minimized to system tray"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:202
+#. i18n: ectx: property (title), widget (QGroupBox, activateAllFrame)
+#: rc.cpp:552
+#, kde-format
+msgctxt "@title:group"
+msgid "Show \"All\" actions"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:217
+#. i18n: ectx: property (text), widget (QCheckBox, activateAllConfirmation)
+#: rc.cpp:555
+#, kde-format
+msgctxt "@option:check"
+msgid "Ask for confirmation when activating or deactivating all fonts"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:230
+#. i18n: ectx: property (text), widget (QCheckBox, tagsConfirmation)
+#: rc.cpp:558
+#, kde-format
+msgctxt "@option:check"
+msgid "Ask for confirmation when activating or deactivating fonts by tags"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:257
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:561
+#, kde-format
+msgctxt "@title:group"
+msgid "Preview Word"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:263
+#. i18n: ectx: property (text), widget (QLabel, label_10)
+#: rc.cpp:564
+#, kde-format
+msgctxt "@label"
+msgid "Word:"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:302
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:567
+#, kde-format
+msgctxt "@label"
+msgid "Default font size:"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:343
+#. i18n: ectx: property (text), widget (QCheckBox, previewSubtitled)
+#: rc.cpp:573
+#, kde-format
+msgctxt "@option:check"
+msgid "subtitled"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:350
+#. i18n: ectx: property (text), widget (QCheckBox, previewIsRTL)
+#: rc.cpp:576
+#, kde-format
+msgctxt "@option:check"
+msgid "is RTL"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:360
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_7)
+#: rc.cpp:579
+#, kde-format
+msgctxt "@title:group"
+msgid "Chart Subtitle Font"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:372
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:582
+#, kde-format
+msgctxt "@title:group"
+msgid "Initial Layout"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:398
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:591
+#, kde-format
+msgctxt "@label"
+msgid "linespacing:"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:429
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
+#: rc.cpp:597
+#, kde-format
+msgctxt "@title:group"
+msgid "Fonts Editor"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:443
+#. i18n: ectx: property (toolTip), widget (QLineEdit, fontEditorPath)
+#: rc.cpp:600
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Add the full path to your preferred font editor"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:475
+#. i18n: ectx: property (text), widget (QLabel, fontEditorNote)
+#: rc.cpp:606
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Fontmatrix is running in a sandbox and cannot start a program of the system. "
+"<interface>Edit current font</interface> hands the font file to the desktop, "
+"which asks you which application should open it."
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:488
+#. i18n: ectx: property (toolTip), widget (QGroupBox, groupBox_8)
+#: rc.cpp:609
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Select an  hyphenation dict file as it comes with OpenOffice or Scribus"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:491
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_8)
+#: rc.cpp:612
+#, kde-format
+msgctxt "@title:group"
+msgid "Hyphenation dictionary"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:500
+#. i18n: ectx: property (toolTip), widget (QToolButton, dictButton)
+#: rc.cpp:615
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Browse"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:523
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: rc.cpp:621
+#, kde-format
+msgctxt "@label"
+msgid "Left:"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:536
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: rc.cpp:624
+#, kde-format
+msgctxt "@label"
+msgid "Right:"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:578
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:627
+#, kde-format
+msgctxt "@title:group"
+msgid "Sample Texts"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:711
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_5)
+#: rc.cpp:633
+#, kde-format
+msgctxt "@title:group"
+msgid "Templates Folder"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:750
+#. i18n: ectx: property (title), widget (QGroupBox, remoteDirsBox)
+#: rc.cpp:639
+#, kde-format
+msgctxt "@title:group"
+msgid "Remote Directories"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:753
+#. i18n: ectx: property (toolTip), widget (QGroupBox, remoteDirsBox)
+#: rc.cpp:642
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"A web directory made with File → Export fonts. Its fonts are listed here "
+"with their previews and tags; a font's file is downloaded when it is opened "
+"or activated."
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:790
+#. i18n: ectx: property (text), widget (QLabel, remoteDirsNote)
+#: rc.cpp:651
+#, kde-format
+msgctxt "@info"
+msgid ""
+"The catalogue of a directory is read when it is added and at every start. "
+"Fonts already listed stay after the directory is removed."
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:803
+#. i18n: ectx: property (title), widget (QGroupBox, activationScopeBox)
+#: rc.cpp:654
+#, kde-format
+msgctxt "@title:group"
+msgid "Activation"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:809
+#. i18n: ectx: property (text), widget (QCheckBox, systemWideCheck)
+#: rc.cpp:657
+#, kde-format
+msgctxt "@option:check"
+msgid "Activate fonts for all users of this computer"
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:812
+#. i18n: ectx: property (toolTip), widget (QCheckBox, systemWideCheck)
+#: rc.cpp:660
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Asks for the administrator's password. The fonts are copied into /usr/local/"
+"share/fonts/fontmatrix and the hidden system fonts are hidden from everybody."
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:819
+#. i18n: ectx: property (text), widget (QLabel, systemWideNote)
+#: rc.cpp:663
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Fonts activated before the change stay where they are: in your own folder, "
+"or in the folder of the system."
+msgstr ""
+
+#. i18n: file: src/prefs_panel.ui:844
+#. i18n: ectx: property (text), widget (QToolButton, changeButton)
+#: rc.cpp:666
+#, kde-format
+msgctxt "@action:button"
+msgid "Change"
+msgstr ""
+
+#. i18n: file: src/progressbarduo.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, ProgressBarDuo)
+#: rc.cpp:672
+#, kde-format
+msgctxt "@title:window"
+msgid "Exporting Font Book"
+msgstr ""
+
+#. i18n: file: src/repair.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, repairDialog)
+#: rc.cpp:678
+#, kde-format
+msgctxt "@title:window"
+msgid "Database repair"
+msgstr ""
+
+#. i18n: file: src/repair.ui:47
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: rc.cpp:684
+#, kde-format
+msgctxt "@title:tab"
+msgid "Dead links"
+msgstr ""
+
+#. i18n: file: src/repair.ui:63
+#. i18n: ectx: property (text), widget (QPushButton, selectAllDead)
+#. i18n: file: src/repair.ui:107
+#. i18n: ectx: property (text), widget (QPushButton, selectAllActNot)
+#. i18n: file: src/repair.ui:158
+#. i18n: ectx: property (text), widget (QPushButton, selectAllDeactLink)
+#. i18n: file: src/repair.ui:202
+#. i18n: ectx: property (text), widget (QPushButton, selectAllUnreferenced)
+#: rc.cpp:687 rc.cpp:696 rc.cpp:708 rc.cpp:720
+#, kde-format
+msgctxt "@action:button"
+msgid "Select all"
+msgstr ""
+
+#. i18n: file: src/repair.ui:91
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: rc.cpp:693
+#, kde-format
+msgctxt "@title:tab"
+msgid "Activated Not Linked"
+msgstr ""
+
+#. i18n: file: src/repair.ui:127
+#. i18n: ectx: property (text), widget (QPushButton, relinkActNot)
+#: rc.cpp:699
+#, kde-format
+msgctxt "@action:button"
+msgid "Re-link"
+msgstr ""
+
+#. i18n: file: src/repair.ui:134
+#. i18n: ectx: property (text), widget (QPushButton, deactActNot)
+#: rc.cpp:702 src/typotek.cpp:1446
+#, kde-format
+msgctxt "@action:button"
+msgid "Deactivate"
+msgstr ""
+
+#. i18n: file: src/repair.ui:142
+#. i18n: ectx: attribute (title), widget (QWidget, tab_3)
+#: rc.cpp:705
+#, kde-format
+msgctxt "@title:tab"
+msgid "Deactivated Linked"
+msgstr ""
+
+#. i18n: file: src/repair.ui:178
+#. i18n: ectx: property (text), widget (QPushButton, delinkDeactLink)
+#: rc.cpp:711
+#, kde-format
+msgctxt "@action:button"
+msgid "De-link"
+msgstr ""
+
+#. i18n: file: src/repair.ui:185
+#. i18n: ectx: property (text), widget (QPushButton, activateDeactLink)
+#: rc.cpp:714 src/fmfloatingpreview.cpp:55 src/typotek.cpp:1433
+#, kde-format
+msgctxt "@action:button"
+msgid "Activate"
+msgstr ""
+
+#. i18n: file: src/repair.ui:193
+#. i18n: ectx: attribute (title), widget (QWidget, tab_4)
+#: rc.cpp:717
+#, kde-format
+msgctxt "@title:tab"
+msgid "Unreferenced Files"
+msgstr ""
+
+#. i18n: file: src/sampletoolbar.ui:37
+#. i18n: ectx: property (text), widget (QToolButton, sampleButton)
+#: rc.cpp:729
+#, kde-format
+msgctxt "@action:button"
+msgid "Samples"
+msgstr ""
+
+#. i18n: file: src/sampletoolbar.ui:56
+#. i18n: ectx: property (text), widget (QToolButton, opentypeButton)
+#: rc.cpp:732
+#, kde-format
+msgctxt "@action:button"
+msgid "OpenType"
+msgstr ""
+
+#. i18n: file: src/sampletoolbar.ui:75
+#. i18n: ectx: property (toolTip), widget (QToolButton, variationsButton)
+#: rc.cpp:735
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "The axes of a variable font"
+msgstr ""
+
+#. i18n: file: src/sampletoolbar.ui:78
+#. i18n: ectx: property (text), widget (QToolButton, variationsButton)
+#: rc.cpp:738
+#, kde-format
+msgctxt "@action:button"
+msgid "Variations"
+msgstr ""
+
+#. i18n: file: src/sampletoolbar.ui:99
+#. i18n: ectx: property (toolTip), widget (QComboBox, languageCombo)
+#: rc.cpp:741
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"Depending of the font, some scripts \n"
+"are especially supported if processed \n"
+"through some logic (ICU here)."
+msgstr ""
+
+#. i18n: file: src/sampletoolbar.ui:106
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:746
+#, kde-format
+msgctxt "@label"
+msgid "Shaping:"
+msgstr ""
+
+#. i18n: file: src/samplewidget.ui:80
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
+#: rc.cpp:749
+#, kde-format
+msgctxt "@title:group"
+msgid "World is wide"
+msgstr ""
+
+#. i18n: file: src/samplewidget.ui:118
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:752
+#, kde-format
+msgctxt "Writing system"
+msgid "Script"
+msgstr ""
+
+#. i18n: file: src/samplewidget.ui:134
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:755
+#, kde-format
+msgctxt "@label"
+msgid "Shaper type"
+msgstr ""
+
+#. i18n: file: src/samplewidget.ui:150
+#. i18n: ectx: property (text), widget (QCheckBox, useShaperCheck)
+#: rc.cpp:758
+#, kde-format
+msgctxt "@option:check"
+msgid "Use shaper"
+msgstr ""
+
+#. i18n: file: src/samplewidget.ui:193
+#. i18n: ectx: property (text), widget (QTreeWidget, OpenTypeTree)
+#: rc.cpp:761
+#, kde-format
+msgctxt "@title:column"
+msgid "OpenType Features"
+msgstr ""
+
+#. i18n: file: src/samplewidget.ui:198
+#. i18n: ectx: property (text), widget (QTreeWidget, OpenTypeTree)
+#: rc.cpp:764
+#, kde-format
+msgctxt "@title:column"
+msgid "Friendly Name"
+msgstr ""
+
+#. i18n: file: src/samplewidget.ui:207
+#. i18n: ectx: property (text), widget (QPushButton, saveDefOTFBut)
+#: rc.cpp:767
+#, kde-format
+msgctxt "@action:button"
+msgid "Save as default"
+msgstr ""
+
+#. i18n: file: src/samplewidget.ui:214
+#. i18n: ectx: property (text), widget (QPushButton, resetDefOTFBut)
+#: rc.cpp:770
+#, kde-format
+msgctxt "@action:button"
+msgid "Reset Default"
+msgstr ""
+
+#. i18n: file: src/tagset.ui:19
+#. i18n: ectx: property (windowTitle), widget (QDialog, TagSetDialog)
+#: rc.cpp:779
+#, kde-format
+msgctxt "@title:window"
+msgid "TagSet editor"
+msgstr ""
+
+#. i18n: file: src/tagset.ui:64
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:782
+#, kde-format
+msgctxt "@label"
+msgid "Collections of Tags"
+msgstr ""
+
+#. i18n: file: src/tagset.ui:80
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:785
+#, kde-format
+msgctxt "@label"
+msgid "Available Tags"
+msgstr ""
+
+#. i18n: file: src/tagset.ui:115
+#. i18n: ectx: property (toolTip), widget (QPushButton, addToSetButton)
+#: rc.cpp:788
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Add selected tag to current set."
+msgstr ""
+
+#. i18n: file: src/tagset.ui:138
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:794
+#, kde-format
+msgctxt "@label"
+msgid "Collections"
+msgstr ""
+
+#. i18n: file: src/tagset.ui:153
+#. i18n: ectx: property (text), widget (QPushButton, newSetButton)
+#: rc.cpp:797
+#, kde-format
+msgctxt "@action:button"
+msgid "New"
+msgstr ""
+
+#. i18n: file: src/tagset.ui:160
+#. i18n: ectx: property (text), widget (QPushButton, deleteTagsetButton)
+#: rc.cpp:800
+#, kde-format
+msgctxt "@action:button"
+msgid "delete"
+msgstr ""
+
+#. i18n: file: src/tagswidget.ui:41
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:809
+#, kde-format
+msgctxt "@label"
+msgid "Tags"
+msgstr ""
+
+#. i18n: file: src/tagswidget.ui:54
+#. i18n: ectx: property (toolTip), widget (QPushButton, newTagButton)
+#: rc.cpp:812
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Add a tag"
+msgstr ""
+
+#. i18n: file: src/tagswidget.ui:57
+#. i18n: ectx: property (text), widget (QPushButton, newTagButton)
+#: rc.cpp:815
+#, kde-format
+msgctxt "@action:button"
+msgid "Add Tag"
+msgstr ""
+
+#. i18n: file: src/tagswidget.ui:67
+#. i18n: ectx: property (text), widget (QPushButton, removeTagButton)
+#: rc.cpp:818
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove Tag"
+msgstr ""
+
+#. i18n: file: src/tagswidget.ui:77
+#. i18n: ectx: property (statusTip), widget (QListView, tagsListView)
+#: rc.cpp:821
+#, kde-format
+msgctxt "@info:status"
+msgid "Right mouse click on a tag to add it or remove it from TagSet"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:25
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:824
+#, kde-format
+msgctxt "@title:group"
+msgid "Inline progression"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:40
+#. i18n: ectx: property (toolTip), widget (QRadioButton, inlineLTR)
+#. i18n: file: src/textprogression.ui:101
+#. i18n: ectx: property (toolTip), widget (QRadioButton, blockTTB)
+#: rc.cpp:827 rc.cpp:854
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "e.g. Latin text"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:43
+#. i18n: ectx: property (text), widget (QRadioButton, inlineLTR)
+#. i18n: file: src/textprogression.ui:127
+#. i18n: ectx: property (text), widget (QRadioButton, blockLTR)
+#: rc.cpp:830 rc.cpp:869
+#, kde-format
+msgctxt "@option:radio"
+msgid "Left to right"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:53
+#. i18n: ectx: property (toolTip), widget (QRadioButton, inlineRTL)
+#: rc.cpp:833
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "e.g. Arabic text"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:56
+#. i18n: ectx: property (text), widget (QRadioButton, inlineRTL)
+#. i18n: file: src/textprogression.ui:117
+#. i18n: ectx: property (text), widget (QRadioButton, blockRTL)
+#: rc.cpp:836 rc.cpp:863
+#, kde-format
+msgctxt "@option:radio"
+msgid "Right to left"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:63
+#. i18n: ectx: property (toolTip), widget (QRadioButton, inlineTTB)
+#: rc.cpp:839
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "e.g. Traditional Chinese & Japanese text"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:66
+#. i18n: ectx: property (text), widget (QRadioButton, inlineTTB)
+#. i18n: file: src/textprogression.ui:104
+#. i18n: ectx: property (text), widget (QRadioButton, blockTTB)
+#: rc.cpp:842 rc.cpp:857
+#, kde-format
+msgctxt "@option:radio"
+msgid "Top to bottom"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:73
+#. i18n: ectx: property (toolTip), widget (QRadioButton, inlineBTT)
+#: rc.cpp:845
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "e.g. Runic text"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:76
+#. i18n: ectx: property (text), widget (QRadioButton, inlineBTT)
+#: rc.cpp:848
+#, kde-format
+msgctxt "@option:radio"
+msgid "Bottom to top"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:86
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:851
+#, kde-format
+msgctxt "@title:group"
+msgid "Block progression"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:114
+#. i18n: ectx: property (toolTip), widget (QRadioButton, blockRTL)
+#: rc.cpp:860
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "e.g. Tarditionnal Chinese & Japanes text"
+msgstr ""
+
+#. i18n: file: src/textprogression.ui:124
+#. i18n: ectx: property (toolTip), widget (QRadioButton, blockLTR)
+#: rc.cpp:866
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "e.g. Traditional Mongolian text"
+msgstr ""
+
+#. i18n: file: src/tttablewidget.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, TTTableWidget)
+#: rc.cpp:872
+#, kde-format
+msgctxt "@title:window"
+msgid "TrueType tables display"
+msgstr ""
+
+#. i18n: file: src/tttablewidget.ui:19
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:875
+#, kde-format
+msgctxt "@label"
+msgid "TrueType Tables "
+msgstr ""
+
+#. i18n: file: src/tttablewidget.ui:34
+#. i18n: ectx: property (text), widget (QTreeWidget, tView)
+#: rc.cpp:878
+#, kde-format
+msgctxt "@title:column"
+msgid "Tag"
+msgstr ""
+
+#. i18n: file: src/tttablewidget.ui:39
+#. i18n: ectx: property (text), widget (QTreeWidget, tView)
+#: rc.cpp:881
+#, kde-format
+msgctxt "@title:column"
+msgid "Description"
+msgstr ""
+
+#. i18n: file: src/tttablewidget.ui:44
+#. i18n: ectx: property (text), widget (QTreeWidget, tView)
+#: rc.cpp:884 src/fmduplicatesdialog.cpp:74
+#, kde-format
+msgctxt "@title:column"
+msgid "Size"
+msgstr ""
+
+#. i18n: file: src/tttablewidget.ui:85
+#. i18n: ectx: property (text), widget (QPushButton, exportButton)
+#: rc.cpp:887
+#, kde-format
+msgctxt "@action:button"
+msgid "&Export"
+msgstr ""
+
+#: src/browserwidget.cpp:300
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Import Directory"
+msgstr ""
+
+#: src/browserwidget.cpp:301
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Import recursively"
+msgstr ""
+
+#: src/browserwidget.cpp:302
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Import File"
+msgstr ""
+
+#: src/chartwidget.cpp:47
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Un-Mapped Glyphs"
+msgstr ""
+
+#: src/chartwidget.cpp:48
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "View all mapped glyphs"
+msgstr ""
+
+#: src/chartwidget.cpp:144 src/chartwidget.cpp:221
+#, kde-format
+msgctxt "@label"
+msgid "Block (%1):"
+msgstr ""
+
+#: src/chartwidget.cpp:432
+#, kde-format
+msgctxt "@title:window"
+msgid "Print Chart"
+msgstr ""
+
+#: src/dataexport.cpp:57
+#, kde-format
+msgctxt "@title:window"
+msgid "Choose Directory"
+msgstr ""
+
+#: src/dataexport.cpp:70
+#, kde-format
+msgctxt "@info:progress"
+msgid "Copying files"
+msgstr ""
+
+#: src/dataexport.cpp:70 src/typotek.cpp:489 src/typotek.cpp:598
+#, kde-format
+msgctxt "@action:button"
+msgid "cancel"
+msgstr ""
+
+#: src/filterbar.cpp:49 src/filtersdialog.cpp:23
+#, kde-format
+msgctxt "@item:intext filter operator"
+msgid "And"
+msgstr ""
+
+#: src/filterbar.cpp:54 src/filtersdialog.cpp:28
+#, kde-format
+msgctxt "@item:intext filter operator"
+msgid "Not"
+msgstr ""
+
+#: src/filterbar.cpp:59 src/filtersdialog.cpp:33
+#, kde-format
+msgctxt "@item:intext filter operator"
+msgid "Or"
+msgstr ""
+
+#: src/filterbar.cpp:103
+#, kde-format
+msgctxt "@item:inlistbox pseudo tag that lists the activated fonts"
+msgid "Activated"
+msgstr ""
+
+#: src/filterbar.cpp:546
+#, kde-format
+msgctxt "@title:window"
+msgid "Fontmatrix - edit tag"
+msgstr ""
+
+#: src/filterbar.cpp:547
+#, kde-format
+msgctxt "@label:textbox"
+msgid "Edit tag: "
+msgstr ""
+
+#: src/filterbar.cpp:607
+#, kde-format
+msgctxt "@title:window"
+msgid "Fontmatrix - Filter name"
+msgstr ""
+
+#: src/filterbar.cpp:608
+#, kde-format
+msgctxt "@label:textbox"
+msgid "Filter name:"
+msgstr ""
+
+#: src/filterbar.cpp:782
+#, kde-format
+msgctxt ""
+"@item:inlistbox no language picked yet, in the list of the languages a font "
+"can set"
+msgid "Select language"
+msgstr ""
+
+#: src/filterbar.cpp:798
+#, kde-format
+msgctxt ""
+"@item:inlistbox no licence picked yet, in the list of the licences of the "
+"fonts"
+msgid "Select license"
+msgstr ""
+
+#: src/filterbar.cpp:810
+#, kde-format
+msgctxt ""
+"@item:inlistbox nothing picked yet, in the list of the kinds of duplicate"
+msgid "Select kind"
+msgstr ""
+
+#: src/filterbar.cpp:812
+#, kde-format
+msgctxt "@info:status"
+msgid "Looking for the fonts the collection holds more than once..."
+msgstr ""
+
+#: src/filterbar.cpp:819
+#, kde-format
+msgctxt ""
+"@item:inlistbox files that are byte for byte the same, %1 how many fonts"
+msgid "Identical file (%1 font)"
+msgid_plural "Identical files (%1 fonts)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/filterbar.cpp:822
+#, kde-format
+msgctxt ""
+"@item:inlistbox one family, style and version in files that differ, %1 how "
+"many fonts"
+msgid "Same font, other file (%1 font)"
+msgid_plural "Same font, other file (%1 fonts)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/filterbar.cpp:835
+#, kde-format
+msgctxt "@item a filter on the fonts whose files are the same"
+msgid "Duplicates: identical files"
+msgstr ""
+
+#: src/filterbar.cpp:836
+#, kde-format
+msgctxt "@item a filter on the fonts of one family, style and version"
+msgid "Duplicates: same font, other file"
+msgstr ""
+
+#: src/filterbar.cpp:849
+#, kde-format
+msgctxt ""
+"@item:inlistbox nothing picked yet, in the list of variable and colour fonts"
+msgid "Select technology"
+msgstr ""
+
+#: src/filterbar.cpp:851
+#, kde-format
+msgctxt "@info:status"
+msgid "Looking for variable and colour fonts..."
+msgstr ""
+
+#: src/filterbar.cpp:857
+#, kde-format
+msgctxt "@item:inlistbox fonts with variation axes, %1 how many"
+msgid "Variable font (%1)"
+msgid_plural "Variable fonts (%1)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/filterbar.cpp:859
+#, kde-format
+msgctxt "@item:inlistbox fonts with colour glyphs, %1 how many"
+msgid "Colour font (%1)"
+msgid_plural "Colour fonts (%1)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/filterbar.cpp:870
+#, kde-format
+msgctxt "@item a filter on the variable fonts"
+msgid "Variable fonts"
+msgstr ""
+
+#: src/filterbar.cpp:871
+#, kde-format
+msgctxt "@item a filter on the colour fonts"
+msgid "Colour fonts"
+msgstr ""
+
+#: src/filterbar.cpp:883
+#, kde-format
+msgctxt "@item a filter on the language a font can set"
+msgid "Language: %1"
+msgstr ""
+
+#: src/filterbar.cpp:895
+#, kde-format
+msgctxt "@item a filter on the licence of a font"
+msgid "License: %1"
+msgstr ""
+
+#: src/filtersdialogitem.cpp:50
+#, kde-format
+msgctxt "@info"
+msgid "Confirm deletion of filter:"
+msgstr ""
+
+#: src/filtersdialogitem.cpp:51
+#, kde-format
+msgctxt "@title:window"
+msgid "Remove Filter"
+msgstr ""
+
+#: src/fmactivate.cpp:32
+#, kde-format
+msgctxt "@info activation error"
+msgid "Font already activated"
+msgstr ""
+
+#: src/fmactivate.cpp:34
+#, kde-format
+msgctxt "@info activation error"
+msgid "Unable to remove the font from the user font folder"
+msgstr ""
+
+#: src/fmactivate.cpp:36
+#, kde-format
+msgctxt "@info activation error"
+msgid "Font already de-activated"
+msgstr ""
+
+#: src/fmactivate.cpp:38
+#, kde-format
+msgctxt "@info activation error"
+msgid "Cannot copy the metrics file"
+msgstr ""
+
+#: src/fmactivate.cpp:40
+#, kde-format
+msgctxt "activation"
+msgid "Error"
+msgstr ""
+
+#: src/fmactivate.cpp:42
+#, kde-format
+msgctxt "@info activation error"
+msgid "Unable to copy the font file into the user font folder"
+msgstr ""
+
+#: src/fmactivate.cpp:44
+#, kde-format
+msgctxt "@info activation error"
+msgid "Unable to register the font for this user"
+msgstr ""
+
+#: src/fmactivate.cpp:46
+#, kde-format
+msgctxt "@info activation error"
+msgid "The font is installed but could not be loaded for running applications"
+msgstr ""
+
+#: src/fmactivate.cpp:48
+#, kde-format
+msgctxt "@info activation error"
+msgid "The font is installed by the system and cannot be changed here"
+msgstr ""
+
+#: src/fmactivate.cpp:50
+#, kde-format
+msgctxt "@info activation error"
+msgid "Only TrueType and OpenType fonts can be activated for this user"
+msgstr ""
+
+#: src/fmactivate.cpp:52
+#, kde-format
+msgctxt "@info activation error"
+msgid "Not authorized to change the fonts of all users"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:51 src/fmduplicatesdialog.cpp:336
+#: src/fmduplicatesdialog.cpp:359 src/fmduplicatesdialog.cpp:402
+#, kde-format
+msgctxt "@title:window"
+msgid "Duplicates"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:57
+#, kde-format
+msgctxt "@label:listbox"
+msgid "Show:"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:59
+#, kde-format
+msgctxt "@item:inlistbox files that are byte for byte the same"
+msgid "Identical files"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:60
+#, kde-format
+msgctxt "@item:inlistbox one family, style and version in files that differ"
+msgid "Same font, other file"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:72
+#, kde-format
+msgctxt "@title:column"
+msgid "Font"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:73
+#, kde-format
+msgctxt "@title:column"
+msgid "Folder"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:75
+#, kde-format
+msgctxt "@title:column"
+msgid "Version"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:76
+#, kde-format
+msgctxt "@title:column"
+msgid "Status"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:83
+#, kde-format
+msgctxt "@action:button"
+msgid "Tick the Extra Copies"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:86
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"In every group of identical files, tick all the files but one: the one that "
+"is activated, or else the one in the shortest path"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:87
+#, kde-format
+msgctxt "@action:button"
+msgid "Show in List"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Open Folder"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:89
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove from Collection"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:90
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Forget the ticked files; they stay where they are on the disk"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:91 src/fmduplicatesdialog.cpp:360
+#, kde-format
+msgctxt "@action:button"
+msgid "Move to Trash"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:92
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Move the ticked files to the trash and forget them"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:170
+#, kde-format
+msgctxt "@item a group of identical files, %1 how many, %2 the font"
+msgid "%2 (%1 copy)"
+msgid_plural "%2 (%1 copies)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/fmduplicatesdialog.cpp:171
+#, kde-format
+msgctxt "@item a group of files of one font, %1 how many, %2 the font"
+msgid "%2 (%1 file)"
+msgid_plural "%2 (%1 files)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/fmduplicatesdialog.cpp:188
+#, kde-format
+msgctxt "@item the font is one of the system"
+msgid "System"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:190
+#, kde-format
+msgctxt "@item the font is activated"
+msgid "Activated"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:192
+#, kde-format
+msgctxt "@item the font is in a remote directory"
+msgid "Remote"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:194
+#, kde-format
+msgctxt "@item the folder of the file cannot be written to"
+msgid "Read-only"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:202
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"This file cannot be removed from here: it would come back at the next start"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:210
+#, kde-format
+msgctxt "@info"
+msgid "No file of the collection is there twice."
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:211
+#, kde-format
+msgctxt "@info"
+msgid "No font of the collection is there in two different files."
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:215
+#, kde-format
+msgctxt "@info %1 how many groups, %2 how many files"
+msgid "%2 files are byte for byte the same as each other. Any of them can go."
+msgid_plural ""
+"%2 files, in %1 groups, are byte for byte the same as the others of their "
+"group. Any of them can go."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/fmduplicatesdialog.cpp:220
+#, kde-format
+msgctxt "@info %1 how many groups, %2 how many files"
+msgid ""
+"%2 files declare the same family, style and version, but differ. Which one "
+"to keep is your decision."
+msgid_plural ""
+"%2 files, in %1 groups, declare the same family, style and version as the "
+"others of their group, but differ. Which one to keep is your decision."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/fmduplicatesdialog.cpp:299
+#, kde-format
+msgctxt "@info:status"
+msgid "This font is not in the list as it is filtered now"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:334
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Every file of <emphasis>%1</emphasis> is ticked. Leave at least one, or the "
+"font is gone."
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:349
+#, kde-format
+msgctxt "@info"
+msgid "Move this file to the trash?"
+msgid_plural "Move these %1 files to the trash?"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/fmduplicatesdialog.cpp:351
+#, kde-format
+msgctxt "@info"
+msgid "Remove this file from the collection? It stays where it is on the disk."
+msgid_plural ""
+"Remove these %1 files from the collection? They stay where they are on the "
+"disk."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/fmduplicatesdialog.cpp:355
+#, kde-format
+msgctxt "@info"
+msgid "The activated fonts among them are deactivated first."
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:395
+#, kde-format
+msgctxt "@info:status"
+msgid "%1 file moved to the trash"
+msgid_plural "%1 files moved to the trash"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/fmduplicatesdialog.cpp:396
+#, kde-format
+msgctxt "@info:status"
+msgid "%1 file removed from the collection"
+msgid_plural "%1 files removed from the collection"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/fmduplicatesdialog.cpp:399
+#, kde-format
+msgctxt "@info"
+msgid "These files could not be moved to the trash:"
+msgstr ""
+
+#: src/fmduplicatesdialog.cpp:400
+#, kde-format
+msgctxt "@info"
+msgid "These files could not be removed from the collection:"
+msgstr ""
+
+#: src/fmfloatingpreview.cpp:62
+#, kde-format
+msgctxt "@action:button"
+msgid "close"
+msgstr ""
+
+#: src/fmfontextract.cpp:56
+#, kde-format
+msgctxt "@info:status"
+msgid "File does not exist:"
+msgstr ""
+
+#: src/fmfontextract.cpp:71
+#, kde-format
+msgctxt "@info:status"
+msgid "Format not handled."
+msgstr ""
+
+#: src/fmfontextract.cpp:123
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Failed to extract:\n"
+"%1"
+msgstr ""
+
+#: src/fmfontstrings.cpp:34
+#, kde-format
+msgctxt "@label font information field"
+msgid "Copyright"
+msgstr ""
+
+#: src/fmfontstrings.cpp:35
+#, kde-format
+msgctxt "@label font information field"
+msgid "Font Family"
+msgstr ""
+
+#: src/fmfontstrings.cpp:36
+#, kde-format
+msgctxt "@label font information field"
+msgid "Font Subfamily"
+msgstr ""
+
+#: src/fmfontstrings.cpp:37
+#, kde-format
+msgctxt "@label font information field"
+msgid "Unique font identifier"
+msgstr ""
+
+#: src/fmfontstrings.cpp:38
+#, kde-format
+msgctxt "@label font information field"
+msgid "Full font name"
+msgstr ""
+
+#: src/fmfontstrings.cpp:39
+#, kde-format
+msgctxt "@label font information field"
+msgid "Version string"
+msgstr ""
+
+#: src/fmfontstrings.cpp:40
+#, kde-format
+msgctxt "@label font information field"
+msgid "Postscript name"
+msgstr ""
+
+#: src/fmfontstrings.cpp:41
+#, kde-format
+msgctxt "@label font information field"
+msgid "Trademark"
+msgstr ""
+
+#: src/fmfontstrings.cpp:42
+#, kde-format
+msgctxt "@label font information field"
+msgid "Manufacturer"
+msgstr ""
+
+#: src/fmfontstrings.cpp:43
+#, kde-format
+msgctxt "@label font information field"
+msgid "Designer"
+msgstr ""
+
+#: src/fmfontstrings.cpp:44
+#, kde-format
+msgctxt "@label font information field"
+msgid "Description"
+msgstr ""
+
+#: src/fmfontstrings.cpp:45
+#, kde-format
+msgctxt "@label font information field"
+msgid "URL Vendor"
+msgstr ""
+
+#: src/fmfontstrings.cpp:46
+#, kde-format
+msgctxt "@label font information field"
+msgid "URL Designer"
+msgstr ""
+
+#: src/fmfontstrings.cpp:47
+#, kde-format
+msgctxt "@label font information field"
+msgid "License Description"
+msgstr ""
+
+#: src/fmfontstrings.cpp:48
+#, kde-format
+msgctxt "@label font information field"
+msgid "License Info URL"
+msgstr ""
+
+#: src/fmfontstrings.cpp:49
+#, kde-format
+msgctxt "@label font information field"
+msgid "Preferred Family"
+msgstr ""
+
+#: src/fmfontstrings.cpp:50
+#, kde-format
+msgctxt "@label font information field"
+msgid "Preferred Subfamily"
+msgstr ""
+
+#: src/fmfontstrings.cpp:51
+#, kde-format
+msgctxt "@label font information field"
+msgid "Compatible Full (Macintosh only)"
+msgstr ""
+
+#: src/fmfontstrings.cpp:52
+#, kde-format
+msgctxt "@label font information field"
+msgid "Sample text"
+msgstr ""
+
+#: src/fmfontstrings.cpp:53
+#, kde-format
+msgctxt "@label font information field"
+msgid "PostScript CID findfont name"
+msgstr ""
+
+#. i18n("Panose");
+#: src/fmfontstrings.cpp:55
+#, kde-format
+msgctxt "@label font information field"
+msgid "All fields"
+msgstr ""
+
+#: src/fmfontstrings.cpp:71 src/fmfontstrings.cpp:83 src/fmfontstrings.cpp:105
+#: src/fmfontstrings.cpp:123 src/fmfontstrings.cpp:141
+#: src/fmfontstrings.cpp:159 src/fmfontstrings.cpp:176
+#: src/fmfontstrings.cpp:196 src/fmfontstrings.cpp:218
+#: src/fmfontstrings.cpp:240
+#, kde-format
+msgctxt "@item:inlistbox PANOSE value"
+msgid "Any"
+msgstr ""
+
+#: src/fmfontstrings.cpp:72 src/fmfontstrings.cpp:84 src/fmfontstrings.cpp:106
+#: src/fmfontstrings.cpp:124 src/fmfontstrings.cpp:142
+#: src/fmfontstrings.cpp:160 src/fmfontstrings.cpp:177
+#: src/fmfontstrings.cpp:197 src/fmfontstrings.cpp:219
+#: src/fmfontstrings.cpp:241
+#, kde-format
+msgctxt "@item:inlistbox PANOSE value"
+msgid "No Fit"
+msgstr ""
+
+#: src/fmfontstrings.cpp:73
+#, kde-format
+msgctxt "Family Type"
+msgid "Text and Display"
+msgstr ""
+
+#: src/fmfontstrings.cpp:74
+#, kde-format
+msgctxt "Family Type"
+msgid "Script"
+msgstr ""
+
+#: src/fmfontstrings.cpp:75
+#, kde-format
+msgctxt "Family Type"
+msgid "Decorative"
+msgstr ""
+
+#: src/fmfontstrings.cpp:76
+#, kde-format
+msgctxt "Family Type"
+msgid "Pictorial"
+msgstr ""
+
+#: src/fmfontstrings.cpp:79
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Family Type"
+msgstr ""
+
+#: src/fmfontstrings.cpp:85
+#, kde-format
+msgctxt "Serif style"
+msgid "Cove"
+msgstr ""
+
+#: src/fmfontstrings.cpp:86
+#, kde-format
+msgctxt "Serif style"
+msgid "Obtuse Cove"
+msgstr ""
+
+#: src/fmfontstrings.cpp:87
+#, kde-format
+msgctxt "Serif style"
+msgid "Square Cove"
+msgstr ""
+
+#: src/fmfontstrings.cpp:88
+#, kde-format
+msgctxt "Serif style"
+msgid "Obtuse Square Cove"
+msgstr ""
+
+#: src/fmfontstrings.cpp:89
+#, kde-format
+msgctxt "Serif style"
+msgid "Square"
+msgstr ""
+
+#: src/fmfontstrings.cpp:90
+#, kde-format
+msgctxt "Serif style"
+msgid "Thin"
+msgstr ""
+
+#: src/fmfontstrings.cpp:91
+#, kde-format
+msgctxt "Serif style"
+msgid "Bone"
+msgstr ""
+
+#: src/fmfontstrings.cpp:92
+#, kde-format
+msgctxt "Serif style"
+msgid "Exaggerated"
+msgstr ""
+
+#: src/fmfontstrings.cpp:93
+#, kde-format
+msgctxt "Serif style"
+msgid "Triangle"
+msgstr ""
+
+#: src/fmfontstrings.cpp:94
+#, kde-format
+msgctxt "Serif style"
+msgid "Normal Sans"
+msgstr ""
+
+#: src/fmfontstrings.cpp:95
+#, kde-format
+msgctxt "Serif style"
+msgid "Obtuse Sans"
+msgstr ""
+
+#: src/fmfontstrings.cpp:96
+#, kde-format
+msgctxt "Serif style"
+msgid "Perp Sans"
+msgstr ""
+
+#: src/fmfontstrings.cpp:97
+#, kde-format
+msgctxt "Serif style"
+msgid "Flared"
+msgstr ""
+
+#: src/fmfontstrings.cpp:98
+#, kde-format
+msgctxt "Serif style"
+msgid "Rounded"
+msgstr ""
+
+#: src/fmfontstrings.cpp:101
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Serif style"
+msgstr ""
+
+#: src/fmfontstrings.cpp:107
+#, kde-format
+msgctxt "Weight"
+msgid "Very Light"
+msgstr ""
+
+#: src/fmfontstrings.cpp:108
+#, kde-format
+msgctxt "Weight"
+msgid "Light"
+msgstr ""
+
+#: src/fmfontstrings.cpp:109
+#, kde-format
+msgctxt "Weight"
+msgid "Thin"
+msgstr ""
+
+#: src/fmfontstrings.cpp:110
+#, kde-format
+msgctxt "Weight"
+msgid "Book"
+msgstr ""
+
+#: src/fmfontstrings.cpp:111
+#, kde-format
+msgctxt "Weight"
+msgid "Medium"
+msgstr ""
+
+#: src/fmfontstrings.cpp:112
+#, kde-format
+msgctxt "Weight"
+msgid "Demi"
+msgstr ""
+
+#: src/fmfontstrings.cpp:113
+#, kde-format
+msgctxt "Weight"
+msgid "Bold"
+msgstr ""
+
+#: src/fmfontstrings.cpp:114
+#, kde-format
+msgctxt "Weight"
+msgid "Heavy"
+msgstr ""
+
+#: src/fmfontstrings.cpp:115
+#, kde-format
+msgctxt "Weight"
+msgid "Black"
+msgstr ""
+
+#: src/fmfontstrings.cpp:116
+#, kde-format
+msgctxt "Weight"
+msgid "Nord"
+msgstr ""
+
+#: src/fmfontstrings.cpp:119
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Weight"
+msgstr ""
+
+#: src/fmfontstrings.cpp:125
+#, kde-format
+msgctxt "Proportion"
+msgid "Old Style"
+msgstr ""
+
+#: src/fmfontstrings.cpp:126
+#, kde-format
+msgctxt "Proportion"
+msgid "Modern"
+msgstr ""
+
+#: src/fmfontstrings.cpp:127
+#, kde-format
+msgctxt "Proportion"
+msgid "Even Width"
+msgstr ""
+
+#: src/fmfontstrings.cpp:128
+#, kde-format
+msgctxt "Proportion"
+msgid "Expanded"
+msgstr ""
+
+#: src/fmfontstrings.cpp:129
+#, kde-format
+msgctxt "Proportion"
+msgid "Condensed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:130
+#, kde-format
+msgctxt "Proportion"
+msgid "Very Expanded"
+msgstr ""
+
+#: src/fmfontstrings.cpp:131
+#, kde-format
+msgctxt "Proportion"
+msgid "Very Condensed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:132
+#, kde-format
+msgctxt "Proportion"
+msgid "Monospaced"
+msgstr ""
+
+#: src/fmfontstrings.cpp:135
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Proportion"
+msgstr ""
+
+#: src/fmfontstrings.cpp:143
+#, kde-format
+msgctxt "Contrast"
+msgid "None"
+msgstr ""
+
+#: src/fmfontstrings.cpp:144
+#, kde-format
+msgctxt "Contrast"
+msgid "Very Low"
+msgstr ""
+
+#: src/fmfontstrings.cpp:145
+#, kde-format
+msgctxt "Contrast"
+msgid "Low"
+msgstr ""
+
+#: src/fmfontstrings.cpp:146
+#, kde-format
+msgctxt "Contrast"
+msgid "Medium Low"
+msgstr ""
+
+#: src/fmfontstrings.cpp:147
+#, kde-format
+msgctxt "Contrast"
+msgid "Medium"
+msgstr ""
+
+#: src/fmfontstrings.cpp:148
+#, kde-format
+msgctxt "Contrast"
+msgid "Medium High"
+msgstr ""
+
+#: src/fmfontstrings.cpp:149
+#, kde-format
+msgctxt "Contrast"
+msgid "High"
+msgstr ""
+
+#: src/fmfontstrings.cpp:150
+#, kde-format
+msgctxt "Contrast"
+msgid "Very High"
+msgstr ""
+
+#: src/fmfontstrings.cpp:153
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Contrast"
+msgstr ""
+
+#: src/fmfontstrings.cpp:161
+#, kde-format
+msgctxt "Stroke Variation"
+msgid "Gradual/Diagonal"
+msgstr ""
+
+#: src/fmfontstrings.cpp:162
+#, kde-format
+msgctxt "Stroke Variation"
+msgid "Gradual/Transitional"
+msgstr ""
+
+#: src/fmfontstrings.cpp:163
+#, kde-format
+msgctxt "Stroke Variation"
+msgid "Gradual/Vertical"
+msgstr ""
+
+#: src/fmfontstrings.cpp:164
+#, kde-format
+msgctxt "Stroke Variation"
+msgid "Gradual/Horizontal"
+msgstr ""
+
+#: src/fmfontstrings.cpp:165
+#, kde-format
+msgctxt "Stroke Variation"
+msgid "Rapid/Vertical"
+msgstr ""
+
+#: src/fmfontstrings.cpp:166
+#, kde-format
+msgctxt "Stroke Variation"
+msgid "Rapid/Horizontal"
+msgstr ""
+
+#: src/fmfontstrings.cpp:167
+#, kde-format
+msgctxt "Stroke Variation"
+msgid "Instant/Vertical"
+msgstr ""
+
+#: src/fmfontstrings.cpp:170
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Stroke Variation"
+msgstr ""
+
+#: src/fmfontstrings.cpp:178
+#, kde-format
+msgctxt "Arm Style"
+msgid "Straight Arms/Horizontal"
+msgstr ""
+
+#: src/fmfontstrings.cpp:179
+#, kde-format
+msgctxt "Arm Style"
+msgid "Straight Arms/Wedge"
+msgstr ""
+
+#: src/fmfontstrings.cpp:180
+#, kde-format
+msgctxt "Arm Style"
+msgid "Straight Arms/Vertical"
+msgstr ""
+
+#: src/fmfontstrings.cpp:181
+#, kde-format
+msgctxt "Arm Style"
+msgid "Straight Arms/Single Serif"
+msgstr ""
+
+#: src/fmfontstrings.cpp:182
+#, kde-format
+msgctxt "Arm Style"
+msgid "Straight Arms/Double Serif"
+msgstr ""
+
+#: src/fmfontstrings.cpp:183
+#, kde-format
+msgctxt "Arm Style"
+msgid "Non-Straight Arms/Horizontal"
+msgstr ""
+
+#: src/fmfontstrings.cpp:184
+#, kde-format
+msgctxt "Arm Style"
+msgid "Non-Straight Arms/Wedge"
+msgstr ""
+
+#: src/fmfontstrings.cpp:185
+#, kde-format
+msgctxt "Arm Style"
+msgid "Non-Straight Arms/Vertical"
+msgstr ""
+
+#: src/fmfontstrings.cpp:186
+#, kde-format
+msgctxt "Arm Style"
+msgid "Non-Straight Arms/Single Serif"
+msgstr ""
+
+#: src/fmfontstrings.cpp:187
+#, kde-format
+msgctxt "Arm Style"
+msgid "Non-Straight Arms/Double Serif"
+msgstr ""
+
+#: src/fmfontstrings.cpp:190
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Arm Style"
+msgstr ""
+
+#: src/fmfontstrings.cpp:198
+#, kde-format
+msgctxt "Letterform"
+msgid "Normal/Contact"
+msgstr ""
+
+#: src/fmfontstrings.cpp:199
+#, kde-format
+msgctxt "Letterform"
+msgid "Normal/Weighted"
+msgstr ""
+
+#: src/fmfontstrings.cpp:200
+#, kde-format
+msgctxt "Letterform"
+msgid "Normal/Boxed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:201
+#, kde-format
+msgctxt "Letterform"
+msgid "Normal/Flattened"
+msgstr ""
+
+#: src/fmfontstrings.cpp:202
+#, kde-format
+msgctxt "Letterform"
+msgid "Normal/Rounded"
+msgstr ""
+
+#: src/fmfontstrings.cpp:203
+#, kde-format
+msgctxt "Letterform"
+msgid "Normal/Off Center"
+msgstr ""
+
+#: src/fmfontstrings.cpp:204
+#, kde-format
+msgctxt "Letterform"
+msgid "Normal/Square"
+msgstr ""
+
+#: src/fmfontstrings.cpp:205
+#, kde-format
+msgctxt "Letterform"
+msgid "Oblique/Contact"
+msgstr ""
+
+#: src/fmfontstrings.cpp:206
+#, kde-format
+msgctxt "Letterform"
+msgid "Oblique/Weighted"
+msgstr ""
+
+#: src/fmfontstrings.cpp:207
+#, kde-format
+msgctxt "Letterform"
+msgid "Oblique/Boxed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:208
+#, kde-format
+msgctxt "Letterform"
+msgid "Oblique/Flattened"
+msgstr ""
+
+#: src/fmfontstrings.cpp:209
+#, kde-format
+msgctxt "Letterform"
+msgid "Oblique/Rounded"
+msgstr ""
+
+#: src/fmfontstrings.cpp:210
+#, kde-format
+msgctxt "Letterform"
+msgid "Oblique/Off Center"
+msgstr ""
+
+#: src/fmfontstrings.cpp:211
+#, kde-format
+msgctxt "Letterform"
+msgid "Oblique/Square"
+msgstr ""
+
+#: src/fmfontstrings.cpp:214
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Letterform"
+msgstr ""
+
+#: src/fmfontstrings.cpp:220
+#, kde-format
+msgctxt "Midline"
+msgid "Standard/Trimmed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:221
+#, kde-format
+msgctxt "Midline"
+msgid "Standard/Pointed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:222
+#, kde-format
+msgctxt "Midline"
+msgid "Standard/Serifed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:223
+#, kde-format
+msgctxt "Midline"
+msgid "High/Trimmed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:224
+#, kde-format
+msgctxt "Midline"
+msgid "High/Pointed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:225
+#, kde-format
+msgctxt "Midline"
+msgid "High/Serifed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:226
+#, kde-format
+msgctxt "Midline"
+msgid "Constant/Trimmed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:227
+#, kde-format
+msgctxt "Midline"
+msgid "Constant/Pointed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:228
+#, kde-format
+msgctxt "Midline"
+msgid "Constant/Serifed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:229
+#, kde-format
+msgctxt "Midline"
+msgid "Low/Trimmed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:230
+#, kde-format
+msgctxt "Midline"
+msgid "Low/Pointed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:231
+#, kde-format
+msgctxt "Midline"
+msgid "Low/Serifed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:234
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "Midline"
+msgstr ""
+
+#: src/fmfontstrings.cpp:242
+#, kde-format
+msgctxt "X-Height"
+msgid "Constant/Small"
+msgstr ""
+
+#: src/fmfontstrings.cpp:243
+#, kde-format
+msgctxt "X-Height"
+msgid "Constant/Standard"
+msgstr ""
+
+#: src/fmfontstrings.cpp:244
+#, kde-format
+msgctxt "X-Height"
+msgid "Constant/Large"
+msgstr ""
+
+#: src/fmfontstrings.cpp:245
+#, kde-format
+msgctxt "X-Height"
+msgid "Ducking/Small"
+msgstr ""
+
+#: src/fmfontstrings.cpp:246
+#, kde-format
+msgctxt "X-Height"
+msgid "Ducking/Standard"
+msgstr ""
+
+#: src/fmfontstrings.cpp:247
+#, kde-format
+msgctxt "X-Height"
+msgid "Ducking/Large"
+msgstr ""
+
+#: src/fmfontstrings.cpp:250
+#, kde-format
+msgctxt "@label PANOSE classification digit"
+msgid "X-Height"
+msgstr ""
+
+#: src/fmfontstrings.cpp:275
+#, kde-format
+msgctxt "@info"
+msgid ""
+"This value is deprecated and was never used nor reported by FreeType. Don't "
+"use or test for it."
+msgstr ""
+
+#: src/fmfontstrings.cpp:288
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Character to glyph mapping"
+msgstr ""
+
+#: src/fmfontstrings.cpp:289
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Font header"
+msgstr ""
+
+#: src/fmfontstrings.cpp:290
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Horizontal header"
+msgstr ""
+
+#: src/fmfontstrings.cpp:291
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Horizontal metrics"
+msgstr ""
+
+#: src/fmfontstrings.cpp:292
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Maximum profile"
+msgstr ""
+
+#: src/fmfontstrings.cpp:293
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Naming table"
+msgstr ""
+
+#: src/fmfontstrings.cpp:294
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "OS/2 and Windows specific metrics"
+msgstr ""
+
+#: src/fmfontstrings.cpp:295
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "PostScript information"
+msgstr ""
+
+#: src/fmfontstrings.cpp:298
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Control Value Table"
+msgstr ""
+
+#: src/fmfontstrings.cpp:299
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Font program"
+msgstr ""
+
+#: src/fmfontstrings.cpp:300
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Glyph data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:301
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Index to location"
+msgstr ""
+
+#: src/fmfontstrings.cpp:302
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "CVT Program"
+msgstr ""
+
+#: src/fmfontstrings.cpp:305
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "PostScript font program"
+msgstr ""
+
+#: src/fmfontstrings.cpp:306
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Vertical Origin"
+msgstr ""
+
+#: src/fmfontstrings.cpp:309
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Embedded bitmap data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:310
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Embedded bitmap location data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:311
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Embedded bitmap scaling data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:314
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Baseline data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:315
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Glyph definition data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:316
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Glyph positioning data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:317
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Glyph substitution data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:318
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Justification data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:321
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Digital signature"
+msgstr ""
+
+#: src/fmfontstrings.cpp:322
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Grid-fitting/Scan-conversion"
+msgstr ""
+
+#: src/fmfontstrings.cpp:323
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Horizontal device metrics"
+msgstr ""
+
+#: src/fmfontstrings.cpp:324
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Kerning"
+msgstr ""
+
+#: src/fmfontstrings.cpp:325
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Linear threshold data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:326
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "PCL 5 data"
+msgstr ""
+
+#: src/fmfontstrings.cpp:327
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Vertical device metrics"
+msgstr ""
+
+#: src/fmfontstrings.cpp:328
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Vertical Metrics header"
+msgstr ""
+
+#: src/fmfontstrings.cpp:329
+#, kde-format
+msgctxt "@item:intable TrueType table"
+msgid "Vertical Metrics"
+msgstr ""
+
+#: src/fmfontstrings.cpp:338
+#, kde-format
+msgctxt "@info font embedding permission"
+msgid ""
+"This font may be embedded and permanently installed on the remote system by "
+"an application. The user of the remote system acquires the identical rights, "
+"obligations and licenses for that font as the original purchaser of the "
+"font, and is subject to the same end-user license agreement, copyright, "
+"design patent, and/or trademark as was the original purchaser."
+msgstr ""
+
+#: src/fmfontstrings.cpp:343
+#, kde-format
+msgctxt "@info font embedding permission"
+msgid ""
+"This font must not be modified, embedded or exchanged in any manner without "
+"first obtaining permission of the legal owner."
+msgstr ""
+
+#: src/fmfontstrings.cpp:346
+#, kde-format
+msgctxt "@info font embedding permission"
+msgid ""
+"This font may be embedded, and temporarily loaded on the remote system. "
+"Documents containing this font must be opened \"read-only;\" no edits can be "
+"applied to the document."
+msgstr ""
+
+#: src/fmfontstrings.cpp:350
+#, kde-format
+msgctxt "@info font embedding permission"
+msgid ""
+"This font may be embedded but must only be installed  temporarily  on other "
+"systems. In contrast to Preview &amp; Print fonts, documents containing this "
+"font may be opened for reading, editing is permitted, and changes may be "
+"saved."
+msgstr ""
+
+#: src/fmfontstrings.cpp:354
+#, kde-format
+msgctxt "@info font embedding permission"
+msgid ""
+"This font may not be subsetted prior to embedding. Other embedding "
+"restrictions specified in bits 0-3 and 9 also apply."
+msgstr ""
+
+#: src/fmfontstrings.cpp:357
+#, kde-format
+msgctxt "@info font embedding permission"
+msgid ""
+"Only bitmaps contained in this font may be embedded. No outline data may be "
+"embedded. If there are no bitmaps available in this font, then it is "
+"considered unembeddable and the embedding services will fail. Other "
+"embedding restrictions specified in bits 0-3 and 8 also apply."
+msgstr ""
+
+#: src/fmfontstrings.cpp:363
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Mark, NonSpacing"
+msgstr ""
+
+#: src/fmfontstrings.cpp:364
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Mark, SpacingCombining"
+msgstr ""
+
+#: src/fmfontstrings.cpp:365
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Mark, Enclosing"
+msgstr ""
+
+#: src/fmfontstrings.cpp:366
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Number, DecimalDigit"
+msgstr ""
+
+#: src/fmfontstrings.cpp:367
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Number, Letter"
+msgstr ""
+
+#: src/fmfontstrings.cpp:368
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Number, Other"
+msgstr ""
+
+#: src/fmfontstrings.cpp:369
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Separator, Space"
+msgstr ""
+
+#: src/fmfontstrings.cpp:370
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Separator, Line"
+msgstr ""
+
+#: src/fmfontstrings.cpp:371
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Separator, Paragraph"
+msgstr ""
+
+#: src/fmfontstrings.cpp:372
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Other, Control"
+msgstr ""
+
+#: src/fmfontstrings.cpp:373
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Other, Format"
+msgstr ""
+
+#: src/fmfontstrings.cpp:374
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Other, Surrogate"
+msgstr ""
+
+#: src/fmfontstrings.cpp:375
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Other, PrivateUse"
+msgstr ""
+
+#: src/fmfontstrings.cpp:376
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Other, NotAssigned"
+msgstr ""
+
+#: src/fmfontstrings.cpp:377
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Letter, Uppercase"
+msgstr ""
+
+#: src/fmfontstrings.cpp:378
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Letter, Lowercase"
+msgstr ""
+
+#: src/fmfontstrings.cpp:379
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Letter, Titlecase"
+msgstr ""
+
+#: src/fmfontstrings.cpp:380
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Letter, Modifier"
+msgstr ""
+
+#: src/fmfontstrings.cpp:381
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Letter, Other"
+msgstr ""
+
+#: src/fmfontstrings.cpp:382
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Punctuation, Connector"
+msgstr ""
+
+#: src/fmfontstrings.cpp:383
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Punctuation, Dash"
+msgstr ""
+
+#: src/fmfontstrings.cpp:384
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Punctuation, Open"
+msgstr ""
+
+#: src/fmfontstrings.cpp:385
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Punctuation, Close"
+msgstr ""
+
+#: src/fmfontstrings.cpp:386
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Punctuation, InitialQuote"
+msgstr ""
+
+#: src/fmfontstrings.cpp:387
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Punctuation, FinalQuote"
+msgstr ""
+
+#: src/fmfontstrings.cpp:388
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Punctuation, Other"
+msgstr ""
+
+#: src/fmfontstrings.cpp:389
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Symbol, Math"
+msgstr ""
+
+#: src/fmfontstrings.cpp:390
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Symbol, Currency"
+msgstr ""
+
+#: src/fmfontstrings.cpp:391
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Symbol, Modifier"
+msgstr ""
+
+#: src/fmfontstrings.cpp:392
+#, kde-format
+msgctxt "@item:intable Unicode general category"
+msgid "Symbol, Other"
+msgstr ""
+
+#: src/fmfontstrings.cpp:397
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Arabic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:398
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Armenian"
+msgstr ""
+
+#: src/fmfontstrings.cpp:399
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Balinese"
+msgstr ""
+
+#: src/fmfontstrings.cpp:400
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Bengali"
+msgstr ""
+
+#: src/fmfontstrings.cpp:401
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Bopomofo"
+msgstr ""
+
+#: src/fmfontstrings.cpp:402
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Braille"
+msgstr ""
+
+#: src/fmfontstrings.cpp:403
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Buginese"
+msgstr ""
+
+#: src/fmfontstrings.cpp:404
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Buhid"
+msgstr ""
+
+#: src/fmfontstrings.cpp:405
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Byzantine Music"
+msgstr ""
+
+#: src/fmfontstrings.cpp:406
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Canadian Syllabics"
+msgstr ""
+
+#: src/fmfontstrings.cpp:407
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Cherokee"
+msgstr ""
+
+#: src/fmfontstrings.cpp:408
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "CJK Ideographic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:409
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Coptic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:410
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Cypriot Syllabary"
+msgstr ""
+
+#: src/fmfontstrings.cpp:411
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Cyrillic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:412
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Default"
+msgstr ""
+
+#: src/fmfontstrings.cpp:413
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Deseret"
+msgstr ""
+
+#: src/fmfontstrings.cpp:414
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Devanagari"
+msgstr ""
+
+#: src/fmfontstrings.cpp:415
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Ethiopic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:416
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Georgian"
+msgstr ""
+
+#: src/fmfontstrings.cpp:417
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Glagolitic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:418
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Gothic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:419
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Greek"
+msgstr ""
+
+#: src/fmfontstrings.cpp:420
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Gujarati"
+msgstr ""
+
+#: src/fmfontstrings.cpp:421
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Gurmukhi"
+msgstr ""
+
+#: src/fmfontstrings.cpp:422
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Hangul Jamo"
+msgstr ""
+
+#: src/fmfontstrings.cpp:423
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Hangul"
+msgstr ""
+
+#: src/fmfontstrings.cpp:424
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Hanunoo"
+msgstr ""
+
+#: src/fmfontstrings.cpp:425
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Hebrew"
+msgstr ""
+
+#: src/fmfontstrings.cpp:426
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Hiragana and Katakana"
+msgstr ""
+
+#: src/fmfontstrings.cpp:427
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Javanese"
+msgstr ""
+
+#: src/fmfontstrings.cpp:428
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Kannada"
+msgstr ""
+
+#: src/fmfontstrings.cpp:429
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Kharosthi"
+msgstr ""
+
+#: src/fmfontstrings.cpp:430
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Khmer"
+msgstr ""
+
+#: src/fmfontstrings.cpp:431
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Lao"
+msgstr ""
+
+#: src/fmfontstrings.cpp:432
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Latin"
+msgstr ""
+
+#: src/fmfontstrings.cpp:433
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Limbu"
+msgstr ""
+
+#: src/fmfontstrings.cpp:434
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Linear B"
+msgstr ""
+
+#: src/fmfontstrings.cpp:435
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Malayalam"
+msgstr ""
+
+#: src/fmfontstrings.cpp:436
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Mathematical Alphanumeric Symbols"
+msgstr ""
+
+#: src/fmfontstrings.cpp:437
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Mongolian"
+msgstr ""
+
+#: src/fmfontstrings.cpp:438
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Musical Symbols"
+msgstr ""
+
+#: src/fmfontstrings.cpp:439
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Myanmar"
+msgstr ""
+
+#: src/fmfontstrings.cpp:440
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "N'ko"
+msgstr ""
+
+#: src/fmfontstrings.cpp:441
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Ogham"
+msgstr ""
+
+#: src/fmfontstrings.cpp:442
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Old Italic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:443
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Old Persian Cuneiform"
+msgstr ""
+
+#: src/fmfontstrings.cpp:444
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Oriya"
+msgstr ""
+
+#: src/fmfontstrings.cpp:445
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Osmanya"
+msgstr ""
+
+#: src/fmfontstrings.cpp:446
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Phags-pa"
+msgstr ""
+
+#: src/fmfontstrings.cpp:447
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Phoenician"
+msgstr ""
+
+#: src/fmfontstrings.cpp:448
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Runic"
+msgstr ""
+
+#: src/fmfontstrings.cpp:449
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Shavian"
+msgstr ""
+
+#: src/fmfontstrings.cpp:450
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Sinhala"
+msgstr ""
+
+#: src/fmfontstrings.cpp:451
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Sumero-Akkadian Cuneiform"
+msgstr ""
+
+#: src/fmfontstrings.cpp:452
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Syloti Nagri"
+msgstr ""
+
+#: src/fmfontstrings.cpp:453
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Syriac"
+msgstr ""
+
+#: src/fmfontstrings.cpp:454
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Tagalog"
+msgstr ""
+
+#: src/fmfontstrings.cpp:455
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Tagbanwa"
+msgstr ""
+
+#: src/fmfontstrings.cpp:456
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Tai Le"
+msgstr ""
+
+#: src/fmfontstrings.cpp:457
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Tai Lu"
+msgstr ""
+
+#: src/fmfontstrings.cpp:458
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Tamil"
+msgstr ""
+
+#: src/fmfontstrings.cpp:459
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Telugu"
+msgstr ""
+
+#: src/fmfontstrings.cpp:460
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Thaana"
+msgstr ""
+
+#: src/fmfontstrings.cpp:461
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Thai"
+msgstr ""
+
+#: src/fmfontstrings.cpp:462
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Tibetan"
+msgstr ""
+
+#: src/fmfontstrings.cpp:463
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Tifinagh"
+msgstr ""
+
+#: src/fmfontstrings.cpp:464
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Ugaritic Cuneiform"
+msgstr ""
+
+#: src/fmfontstrings.cpp:465
+#, kde-format
+msgctxt "@item:inlistbox OpenType script"
+msgid "Yi"
+msgstr ""
+
+#: src/fmfontstrings.cpp:511
+#, kde-format
+msgctxt "@label font embedding permission"
+msgid "Not Restricted"
+msgstr ""
+
+#: src/fmfontstrings.cpp:513
+#, kde-format
+msgctxt "@label font embedding permission"
+msgid "Restricted"
+msgstr ""
+
+#: src/fmfontstrings.cpp:515
+#, kde-format
+msgctxt "@label font embedding permission"
+msgid "Preview/Print"
+msgstr ""
+
+#: src/fmfontstrings.cpp:517
+#, kde-format
+msgctxt "@label font embedding permission"
+msgid "Edit/Embed"
+msgstr ""
+
+#: src/fmfontstrings.cpp:519
+#, kde-format
+msgctxt "@label font embedding permission"
+msgid "No Subset"
+msgstr ""
+
+#: src/fmfontstrings.cpp:521
+#, kde-format
+msgctxt "@label font embedding permission"
+msgid "Bitmap Only"
+msgstr ""
+
+#: src/fmhandbook.cpp:44
+#, fuzzy, kde-format
+msgctxt "@title:window"
+msgid "Fontmatrix Handbook"
+msgstr "Fontmatrix"
+
+#: src/fmhandbook.cpp:57
+#, kde-format
+msgctxt "@action:intoolbar"
+msgid "Back"
+msgstr ""
+
+#: src/fmhandbook.cpp:58
+#, kde-format
+msgctxt "@action:intoolbar"
+msgid "Forward"
+msgstr ""
+
+#: src/fmhandbook.cpp:59
+#, kde-format
+msgctxt "@action:intoolbar go to the table of contents"
+msgid "Contents"
+msgstr ""
+
+#: src/fmhandbook.cpp:61
+#, kde-format
+msgctxt "@action:intoolbar"
+msgid "Open in Browser"
+msgstr ""
+
+#: src/fmhandbook.cpp:62
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Reads the same handbook in the web browser of the desktop."
+msgstr ""
+
+#: src/fminfodisplay.cpp:109
+#, kde-format
+msgctxt "@title:group the axes of a variable font"
+msgid "Variation Axes"
+msgstr ""
+
+#: src/fminfodisplay.cpp:115
+#, kde-format
+msgctxt ""
+"@item an axis of a variable font: %1 name, %2 tag, %3 minimum, %4 maximum, "
+"%5 default"
+msgid "%1 (%2): from %3 to %4, %5 by default"
+msgstr ""
+
+#: src/fminfodisplay.cpp:125
+#, kde-format
+msgctxt "@title:group the named instances of a variable font"
+msgid "Named Instances"
+msgstr ""
+
+#: src/fminfodisplay.cpp:141
+#, kde-format
+msgctxt "@title:group"
+msgid "Unicode Ranges"
+msgstr ""
+
+#: src/fminfodisplay.cpp:212
+#, kde-format
+msgctxt "@label"
+msgid "File"
+msgstr ""
+
+#: src/fminfodisplay.cpp:213
+#, kde-format
+msgctxt "@label"
+msgid "Glyphs count"
+msgstr ""
+
+#: src/fminfodisplay.cpp:214
+#, kde-format
+msgctxt "@label"
+msgid "Font Type"
+msgstr ""
+
+#: src/fminfodisplay.cpp:217
+#, kde-format
+msgctxt "@label the tables a colour font has its colours in"
+msgid "Color"
+msgstr ""
+
+#: src/fminfodisplay.cpp:220
+#, kde-format
+msgctxt "@label the licence of a font, recognised from its wording"
+msgid "License"
+msgstr ""
+
+#: src/fminfodisplay.cpp:232
+#, kde-format
+msgctxt "@title:group"
+msgid "Charmaps List"
+msgstr ""
+
+#: src/fmlicense.cpp:146
+#, kde-format
+msgctxt "@item:inlistbox a font that says nothing about its licence"
+msgid "No licence information"
+msgstr ""
+
+#: src/fmlicense.cpp:148
+#, kde-format
+msgctxt "@item:inlistbox a licence that is not one of those Fontmatrix knows"
+msgid "Another licence"
+msgstr ""
+
+#: src/fmlicense.cpp:150
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "SIL Open Font License"
+msgstr ""
+
+#: src/fmlicense.cpp:152
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "Apache License"
+msgstr ""
+
+#: src/fmlicense.cpp:154
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "GNU General Public License"
+msgstr ""
+
+#: src/fmlicense.cpp:156
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "GNU Lesser General Public License"
+msgstr ""
+
+#: src/fmlicense.cpp:158
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "MIT License"
+msgstr ""
+
+#: src/fmlicense.cpp:160
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "BSD License"
+msgstr ""
+
+#: src/fmlicense.cpp:162
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "Creative Commons Zero"
+msgstr ""
+
+#: src/fmlicense.cpp:164
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "Creative Commons Attribution"
+msgstr ""
+
+#: src/fmlicense.cpp:166
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "Creative Commons Attribution-ShareAlike"
+msgstr ""
+
+#: src/fmlicense.cpp:168
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "Creative Commons Attribution-NoDerivatives"
+msgstr ""
+
+#: src/fmlicense.cpp:170
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "Ubuntu Font Licence"
+msgstr ""
+
+#: src/fmlicense.cpp:172
+#, kde-format
+msgctxt "@item:inlistbox font licence"
+msgid "Public domain"
+msgstr ""
+
+#: src/fmlicense.cpp:174
+#, kde-format
+msgctxt "@item:inlistbox font licence: free to use, not to change or sell"
+msgid "Free of charge"
+msgstr ""
+
+#: src/fmlicense.cpp:176
+#, kde-format
+msgctxt "@item:inlistbox font licence: all rights reserved, nothing granted"
+msgid "All rights reserved"
+msgstr ""
+
+#: src/fmmatchraster.cpp:135
+#, kde-format
+msgctxt "@info"
+msgid ""
+"The font %1 scores %2.\n"
+"Do you want to add it to the filtered fonts?"
+msgstr ""
+
+#: src/fmmatchraster.cpp:184
+#, kde-format
+msgctxt "@info"
+msgid "No font match the submitted image"
+msgstr ""
+
+#: src/fmmissingfonthelper.cpp:17
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Fontmatrix has been unable to load the font in file \n"
+"%1.\n"
+" Please check missing files."
+msgstr ""
+
+#: src/fmmissingfonthelper.cpp:18 src/fmmissingfonthelper.cpp:28
+#, kde-format
+msgctxt "@title:window"
+msgid "Missing Font File"
+msgstr ""
+
+#: src/fmmissingfonthelper.cpp:27
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Fontmatrix has been unable to load fonts in files \n"
+"%1.\n"
+" Please check missing files."
+msgstr ""
+
+#: src/fmpreviewlist.cpp:276
+#, kde-format
+msgctxt ""
+"@info:tooltip a variable font and its named instances, %1 the style name, %2 "
+"the instances"
+msgid "%1 (variable: %2)"
+msgstr ""
+
+#: src/fmvariationswidget.cpp:29
+#, kde-format
+msgctxt "@label the named instances of a variable font"
+msgid "Instance:"
+msgstr ""
+
+#: src/fmvariationswidget.cpp:42
+#, kde-format
+msgctxt "@action:button back to the default coordinates of a variable font"
+msgid "Default"
+msgstr ""
+
+#: src/fmvariationswidget.cpp:77
+#, kde-format
+msgctxt ""
+"@item:inlistbox the coordinates of a variable font match no named instance"
+msgid "Custom"
+msgstr ""
+
+#: src/fmvariationswidget.cpp:92
+#, kde-format
+msgctxt ""
+"@info:tooltip the tag and the range of a variation axis, %1 tag, %2 minimum, "
+"%3 default, %4 maximum"
+msgid "%1: from %2 to %4, %3 by default"
+msgstr ""
+
+#: src/fontbook.cpp:89
+#, kde-format
+msgctxt "@title:window"
+msgid "Print Fontbook"
+msgstr ""
+
+#: src/fontbook.cpp:101
+#, kde-kuit-format
+msgctxt "@info"
+msgid "The font book could not be written to <filename>%1</filename>."
+msgstr ""
+
+#: src/fontbook.cpp:102
+#, kde-format
+msgctxt "@title:window"
+msgid "Font Book Not Written"
+msgstr ""
+
+#: src/fontbook.cpp:492
+#, kde-format
+msgctxt "@label"
+msgid "Unicode coverage"
+msgstr ""
+
+#: src/fontbookdialog.cpp:93
+#, kde-format
+msgctxt "@title:window"
+msgid "Save fontBook"
+msgstr ""
+
+#: src/fontbookdialog.cpp:126 src/fontbookdialog.cpp:151
+#, kde-format
+msgctxt "@info"
+msgid "Cannot read %1."
+msgstr ""
+
+#: src/fontbookdialog.cpp:131 src/fontbookdialog.cpp:156
+#, kde-format
+msgctxt "@info"
+msgid "%1 is not a valid XML file."
+msgstr ""
+
+#: src/fontcomparewidget.cpp:67
+#, kde-format
+msgctxt "No fill color in comprae glyph"
+msgid "None"
+msgstr ""
+
+#: src/fontitem.cpp:2058
+#, kde-format
+msgctxt "@info"
+msgid "codepoint is U+"
+msgstr ""
+
+#: src/fontitem.cpp:2151
+#, kde-format
+msgctxt ""
+"when doing the font preview, used to denote a font that can not displayed "
+"its name"
+msgid "(%1)"
+msgstr ""
+
+#: src/fontitem.cpp:2244
+#, kde-format
+msgctxt ""
+"@item:inlistbox a named instance of a variable font that has no name, with "
+"its number"
+msgid "Instance %1"
+msgstr ""
+
+#: src/fontitem.cpp:3062
+#, kde-format
+msgctxt "@title:window"
+msgid "Downloading a Font"
+msgstr ""
+
+#: src/fontitem.cpp:3063
+#, kde-format
+msgctxt "@info:progress"
+msgid "Downloading %1"
+msgstr ""
+
+#: src/importedfontsdialog.cpp:23
+#, kde-format
+msgctxt ""
+"@item:inlistbox appended to the name of a font that could not be loaded"
+msgid " (not loaded)"
+msgstr ""
+
+#: src/importedfontsdialog.cpp:30
+#, kde-format
+msgctxt "@label"
+msgid "Number of Imported Fonts "
+msgstr ""
+
+#: src/mainviewwidget.cpp:1143
+#, kde-format
+msgctxt "@info"
+msgid ""
+" is activated.\n"
+"If you want to remove it from Fontmatrix database, please deactivate it "
+"first."
+msgstr ""
+
+#: src/mainviewwidget.cpp:1147
+#, kde-format
+msgctxt "@info"
+msgid "You are about to remove a font from Fontmatrix database"
+msgstr ""
+
+#: src/mainviewwidget.cpp:1148
+#, kde-format
+msgctxt "@info"
+msgid "Do you want to continue?"
+msgstr ""
+
+#: src/mainviewwidget.cpp:1149
+#, kde-format
+msgctxt "@title:window"
+msgid "Remove Font"
+msgstr ""
+
+#: src/opentypetags.h:17
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Access All Alternates"
+msgstr ""
+
+#: src/opentypetags.h:18
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Above-Base Forms"
+msgstr ""
+
+#: src/opentypetags.h:19
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Above-Base Mark Positioning"
+msgstr ""
+
+#: src/opentypetags.h:20
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Above-Base Substitutions"
+msgstr ""
+
+#: src/opentypetags.h:21
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Alternative Fractions"
+msgstr ""
+
+#: src/opentypetags.h:22
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Akhands"
+msgstr ""
+
+#: src/opentypetags.h:23
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Below-Base Forms"
+msgstr ""
+
+#: src/opentypetags.h:24
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Below-Base Mark Positioning"
+msgstr ""
+
+#: src/opentypetags.h:25
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Below-Base Substitutions"
+msgstr ""
+
+#: src/opentypetags.h:26
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Petite Capitals From Capitals"
+msgstr ""
+
+#: src/opentypetags.h:27
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Small Capitals From Capitals"
+msgstr ""
+
+#: src/opentypetags.h:28
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Contextual Alternates"
+msgstr ""
+
+#: src/opentypetags.h:29
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Case-Sensitive Forms"
+msgstr ""
+
+#: src/opentypetags.h:30
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Glyph Composition/Decomposition"
+msgstr ""
+
+#: src/opentypetags.h:31
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Contextual Ligatures"
+msgstr ""
+
+#: src/opentypetags.h:32
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Conjunct Forms"
+msgstr ""
+
+#: src/opentypetags.h:33
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Capital Spacing"
+msgstr ""
+
+#: src/opentypetags.h:34
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Contextual Swash"
+msgstr ""
+
+#: src/opentypetags.h:35
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Cursive Positioning"
+msgstr ""
+
+#: src/opentypetags.h:36
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Default Processing"
+msgstr ""
+
+#: src/opentypetags.h:37
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Distances"
+msgstr ""
+
+#: src/opentypetags.h:38
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Discretionary Ligatures"
+msgstr ""
+
+#: src/opentypetags.h:39
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Denominators"
+msgstr ""
+
+#: src/opentypetags.h:40
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Expert Forms"
+msgstr ""
+
+#: src/opentypetags.h:41
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Final glyph Alternates"
+msgstr ""
+
+#: src/opentypetags.h:42
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Terminal Forms #2"
+msgstr ""
+
+#: src/opentypetags.h:43
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Terminal Forms #3"
+msgstr ""
+
+#: src/opentypetags.h:44
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Terminal Forms"
+msgstr ""
+
+#: src/opentypetags.h:45
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Fractions"
+msgstr ""
+
+#: src/opentypetags.h:46
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Full Width"
+msgstr ""
+
+#: src/opentypetags.h:47
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Half Forms"
+msgstr ""
+
+#: src/opentypetags.h:48
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Halant Forms"
+msgstr ""
+
+#: src/opentypetags.h:49
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Alternate Half Width"
+msgstr ""
+
+#: src/opentypetags.h:50
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Historical Forms"
+msgstr ""
+
+#: src/opentypetags.h:51
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Horizontal Kana Alternates"
+msgstr ""
+
+#: src/opentypetags.h:52
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Historical Ligatures"
+msgstr ""
+
+#: src/opentypetags.h:53
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Hangul"
+msgstr ""
+
+#: src/opentypetags.h:54
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Hojo Kanji Forms (JIS x 212-1990 Kanji Forms)"
+msgstr ""
+
+#: src/opentypetags.h:55
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Half Width"
+msgstr ""
+
+#: src/opentypetags.h:56
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Initial Forms"
+msgstr ""
+
+#: src/opentypetags.h:57
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Isolated Forms"
+msgstr ""
+
+#: src/opentypetags.h:58
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Italics"
+msgstr ""
+
+#: src/opentypetags.h:59
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Justification Alternatives"
+msgstr ""
+
+#: src/opentypetags.h:60
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "JIS78 Forms"
+msgstr ""
+
+#: src/opentypetags.h:61
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "JIS83 Forms"
+msgstr ""
+
+#: src/opentypetags.h:62
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "JIS90 Forms"
+msgstr ""
+
+#: src/opentypetags.h:63
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "JIS2004 Forms"
+msgstr ""
+
+#: src/opentypetags.h:64
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Kerning"
+msgstr ""
+
+#: src/opentypetags.h:65
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Left Bounds"
+msgstr ""
+
+#: src/opentypetags.h:66
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Standard Ligatures"
+msgstr ""
+
+#: src/opentypetags.h:67
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Leading Jamo Forms"
+msgstr ""
+
+#: src/opentypetags.h:68
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Lining Figures"
+msgstr ""
+
+#: src/opentypetags.h:69
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Localized Forms"
+msgstr ""
+
+#: src/opentypetags.h:70
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Mark Positioning"
+msgstr ""
+
+#: src/opentypetags.h:71
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Medial Forms #2"
+msgstr ""
+
+#: src/opentypetags.h:72
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Medial Forms"
+msgstr ""
+
+#: src/opentypetags.h:73
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Mathematical Greek"
+msgstr ""
+
+#: src/opentypetags.h:74
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Mark to Mark Positioning"
+msgstr ""
+
+#: src/opentypetags.h:75
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Mark Positioning via Substitution"
+msgstr ""
+
+#: src/opentypetags.h:76
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Alternate Annotation Forms"
+msgstr ""
+
+#: src/opentypetags.h:77
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "NLC Kanji Forms"
+msgstr ""
+
+#: src/opentypetags.h:78
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Nukta Forms"
+msgstr ""
+
+#: src/opentypetags.h:79
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Numerators"
+msgstr ""
+
+#: src/opentypetags.h:80
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Old Style Figures"
+msgstr ""
+
+#: src/opentypetags.h:81
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Optical Bounds"
+msgstr ""
+
+#: src/opentypetags.h:82
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Ordinals"
+msgstr ""
+
+#: src/opentypetags.h:83
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Ornaments"
+msgstr ""
+
+#: src/opentypetags.h:84
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Proportional Alternate Width"
+msgstr ""
+
+#: src/opentypetags.h:85
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Petite Capitals"
+msgstr ""
+
+#: src/opentypetags.h:86
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Proportional Figures"
+msgstr ""
+
+#: src/opentypetags.h:87
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Pre-base Forms"
+msgstr ""
+
+#: src/opentypetags.h:88
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Pre-base Substitutions"
+msgstr ""
+
+#: src/opentypetags.h:89
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Post-base Forms"
+msgstr ""
+
+#: src/opentypetags.h:90
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Post-base Substitutions"
+msgstr ""
+
+#: src/opentypetags.h:91
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Proportional Widths"
+msgstr ""
+
+#: src/opentypetags.h:92
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Quarter Widths"
+msgstr ""
+
+#: src/opentypetags.h:93
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Randomize"
+msgstr ""
+
+#: src/opentypetags.h:94
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Rakar Forms"
+msgstr ""
+
+#: src/opentypetags.h:95
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Required Ligatures"
+msgstr ""
+
+#: src/opentypetags.h:96
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Reph Form"
+msgstr ""
+
+#: src/opentypetags.h:97
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Right Bounds"
+msgstr ""
+
+#: src/opentypetags.h:98
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Right-To-Left Alternates"
+msgstr ""
+
+#: src/opentypetags.h:99
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Ruby Notation Forms"
+msgstr ""
+
+#: src/opentypetags.h:100
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Alternates"
+msgstr ""
+
+#: src/opentypetags.h:101
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Scientific Inferiors"
+msgstr ""
+
+#: src/opentypetags.h:102
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Optical Size"
+msgstr ""
+
+#: src/opentypetags.h:103
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Small Capitals"
+msgstr ""
+
+#: src/opentypetags.h:104
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Simplified Forms"
+msgstr ""
+
+#: src/opentypetags.h:105
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 1"
+msgstr ""
+
+#: src/opentypetags.h:106
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 2"
+msgstr ""
+
+#: src/opentypetags.h:107
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 3"
+msgstr ""
+
+#: src/opentypetags.h:108
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 4"
+msgstr ""
+
+#: src/opentypetags.h:109
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 5"
+msgstr ""
+
+#: src/opentypetags.h:110
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 6"
+msgstr ""
+
+#: src/opentypetags.h:111
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 7"
+msgstr ""
+
+#: src/opentypetags.h:112
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 8"
+msgstr ""
+
+#: src/opentypetags.h:113
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 9"
+msgstr ""
+
+#: src/opentypetags.h:114
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 10"
+msgstr ""
+
+#: src/opentypetags.h:115
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 11"
+msgstr ""
+
+#: src/opentypetags.h:116
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 12"
+msgstr ""
+
+#: src/opentypetags.h:117
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 13"
+msgstr ""
+
+#: src/opentypetags.h:118
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 14"
+msgstr ""
+
+#: src/opentypetags.h:119
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 15"
+msgstr ""
+
+#: src/opentypetags.h:120
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 16"
+msgstr ""
+
+#: src/opentypetags.h:121
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 17"
+msgstr ""
+
+#: src/opentypetags.h:122
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 18"
+msgstr ""
+
+#: src/opentypetags.h:123
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 19"
+msgstr ""
+
+#: src/opentypetags.h:124
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Stylistic Set 20"
+msgstr ""
+
+#: src/opentypetags.h:125
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Subscript"
+msgstr ""
+
+#: src/opentypetags.h:126
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Superscript"
+msgstr ""
+
+#: src/opentypetags.h:127
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Swash"
+msgstr ""
+
+#: src/opentypetags.h:128
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Titling"
+msgstr ""
+
+#: src/opentypetags.h:129
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Trailing Jamo Forms"
+msgstr ""
+
+#: src/opentypetags.h:130
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Traditional Name Forms"
+msgstr ""
+
+#: src/opentypetags.h:131
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Tabular Figures"
+msgstr ""
+
+#: src/opentypetags.h:132
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Traditional Forms"
+msgstr ""
+
+#: src/opentypetags.h:133
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Third Widths"
+msgstr ""
+
+#: src/opentypetags.h:134
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Unicase"
+msgstr ""
+
+#: src/opentypetags.h:135
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Alternate Vertical Metrics"
+msgstr ""
+
+#: src/opentypetags.h:136
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Vattu Variants"
+msgstr ""
+
+#: src/opentypetags.h:137
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Vertical Writing"
+msgstr ""
+
+#: src/opentypetags.h:138
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Alternate Vertical Half Metrics"
+msgstr ""
+
+#: src/opentypetags.h:139
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Vowel Jamo Forms"
+msgstr ""
+
+#: src/opentypetags.h:140
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Vertical Kana Alternates"
+msgstr ""
+
+#: src/opentypetags.h:141
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Vertical Kerning"
+msgstr ""
+
+#: src/opentypetags.h:142
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Proportional Alternate Vertical Metrics"
+msgstr ""
+
+#: src/opentypetags.h:143
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Vertical Rotation"
+msgstr ""
+
+#: src/opentypetags.h:144
+#, kde-format
+msgctxt "@item:intable OpenType feature"
+msgid "Slashed Zero"
+msgstr ""
+
+#: src/playwidget.cpp:22
+#, kde-format
+msgctxt "@title:window"
+msgid "Playground"
+msgstr ""
+
+#: src/playwidget.cpp:105
+#, kde-format
+msgctxt "@title:window"
+msgid "Print Playground"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:37
+#, kde-format
+msgctxt "@title:window"
+msgid "Preferences"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:48
+#, kde-format
+msgctxt "@title:tab"
+msgid "General"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:50
+#, kde-format
+msgctxt "@title:tab"
+msgid "System tray"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:52
+#, kde-format
+msgctxt "@title:tab"
+msgid "Display"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:54
+#, kde-format
+msgctxt "@title:tab"
+msgid "Tools"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:56
+#, kde-format
+msgctxt "@title:tab"
+msgid "Samples collection"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:58
+#, kde-format
+msgctxt "@title:tab"
+msgid "Files & Folders"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:60
+#, kde-format
+msgctxt "@title:tab"
+msgid "Shortcuts"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:70
+#, kde-format
+msgctxt "@info"
+msgid ""
+"This desktop does not provide a system tray. The options below have no "
+"effect."
+msgstr ""
+
+#: src/prefspaneldialog.cpp:102
+#, kde-format
+msgctxt "@info:tooltip"
+msgid ""
+"You can use the following keywords to be replaced by data from fonts: "
+"<strong>&#60;name&#62;</strong> ; <strong>&#60;family&#62;</strong> ; "
+"<strong>&#60;variant&#62;</strong>"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:115
+#, kde-format
+msgctxt "@info:placeholder sample text in font requester"
+msgid "Aa Bb 123"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:121
+#, kde-format
+msgctxt "@info"
+msgid "Please select an item in the list or create a new one."
+msgstr ""
+
+#: src/prefspaneldialog.cpp:281
+#, kde-format
+msgctxt "@info:status validation"
+msgid "Please enter a name for the new sample."
+msgstr ""
+
+#: src/prefspaneldialog.cpp:286
+#, kde-format
+msgctxt "@info:status validation"
+msgid "A sample named \"%1\" already exists."
+msgstr ""
+
+#: src/prefspaneldialog.cpp:292
+#, kde-format
+msgctxt "A default sample text inserted when creating a new sample"
+msgid "Sample Text"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:305
+#, kde-format
+msgctxt "the name of a sample text will be append to the string"
+msgid "Do you confirm that you want to remove:"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:309
+#, kde-format
+msgctxt "@title:window"
+msgid "Remove Sample Text"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:393
+#, kde-format
+msgctxt "@title:window"
+msgid "Select font editor"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:436
+#, kde-format
+msgctxt "@info"
+msgid "%1 is not the address of a web directory."
+msgstr ""
+
+#: src/prefspaneldialog.cpp:464
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Templates Folder"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:540 src/prefspaneldialog.cpp:581
+#, kde-format
+msgid "Alt"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:540 src/prefspaneldialog.cpp:581
+#, kde-format
+msgid "Ctrl"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:540 src/prefspaneldialog.cpp:581
+#, kde-format
+msgid "Shift"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:540 src/prefspaneldialog.cpp:581
+#, kde-format
+msgid "Meta"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:546
+#, kde-format
+msgid "Meta+"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:550
+#, kde-format
+msgid "Shift+"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:554
+#, kde-format
+msgid "Alt+"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:558
+#, kde-format
+msgid "Ctrl+"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:638
+#, kde-format
+msgctxt "action name will be appended to this"
+msgid "Shortcut is already in use for"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:639
+#, kde-format
+msgctxt "@info"
+msgid "Do you still want to assign it?"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:640
+#, kde-format
+msgctxt "@title:window"
+msgid "Replace"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:641
+#, kde-format
+msgctxt "@action:button"
+msgid "Reassign"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:675
+#, kde-format
+msgctxt "@title:column"
+msgid "Action"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:676
+#, kde-format
+msgctxt "@title:column"
+msgid "Shortcut"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:677
+#, kde-format
+msgctxt "@title:column"
+msgid "Tip"
+msgstr ""
+
+#: src/prefspaneldialog.cpp:708
+#, kde-format
+msgctxt "@title:window"
+msgid "Select hyphenation dictionary"
+msgstr ""
+
+#: src/remotedir.cpp:54
+#, kde-format
+msgctxt "@info:status"
+msgid "Downloading %1"
+msgstr ""
+
+#: src/remotedir.cpp:131
+#, kde-format
+msgctxt "@info:status"
+msgid "%1 font description from the network"
+msgid_plural "%1 font descriptions from the network"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/sampletoolbar.cpp:103
+#, kde-format
+msgctxt "@item:inlistbox"
+msgid "Select language"
+msgstr ""
+
+#: src/samplewidget.cpp:736
+#, kde-format
+msgctxt "@item:inlistbox group of the samples the user made"
+msgid "User"
+msgstr ""
+
+#: src/samplewidget.cpp:795
+#, kde-format
+msgctxt "@title:window"
+msgid "Print Sample"
+msgstr ""
+
+#: src/samplewidget.cpp:895
+#, kde-format
+msgctxt "@item:inlistbox default name of a new sample text"
+msgid "New Sample"
+msgstr ""
+
+#: src/systray.cpp:217
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Activate all"
+msgstr ""
+
+#: src/systray.cpp:220
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Deactivate all"
+msgstr ""
+
+#: src/systray.cpp:223
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Mi&nimize"
+msgstr ""
+
+#: src/systray.cpp:226
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Restore"
+msgstr ""
+
+#: src/systray.cpp:229
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "E&xit"
+msgstr ""
+
+#: src/systray.cpp:241
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Tags"
+msgstr ""
+
+#: src/tagswidget.cpp:56
+#, kde-format
+msgctxt "@info"
+msgid ""
+"Please confirm that you want to remove\n"
+"the following tag from database:"
+msgstr ""
+
+#: src/tagswidget.cpp:59
+#, kde-format
+msgctxt "@title:window"
+msgid "Remove Tag"
+msgstr ""
+
+#: src/tagswidget_listmodel.cpp:19
+#, kde-format
+msgctxt "@item:inlistbox default name of a new tag"
+msgid "New Tag"
+msgstr ""
+
+#: src/tttableview.cpp:80
+#, kde-format
+msgctxt "@title:window"
+msgid "Save File"
+msgstr ""
+
+#: src/typotek.cpp:339
+#, kde-format
+msgctxt "@info"
+msgid ""
+"The program will keep running in the system tray. To terminate the program, "
+"choose <b>Exit</b> in the context menu of the system tray entry."
+msgstr ""
+
+#: src/typotek.cpp:419
+#, kde-format
+msgctxt "@title:window"
+msgid "Add Directory"
+msgstr ""
+
+#: src/typotek.cpp:469
+#, kde-format
+msgctxt "@info"
+msgid "Do you confirm you want to import %1 font?"
+msgid_plural "Do you confirm you want to import %1 fonts?"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/typotek.cpp:470
+#, kde-format
+msgctxt "@title:window"
+msgid "Confirmation"
+msgstr ""
+
+#: src/typotek.cpp:489 src/typotek.cpp:598
+#, kde-format
+msgctxt "@info:progress"
+msgid "Importing font files... "
+msgstr ""
+
+#: src/typotek.cpp:499 src/typotek.cpp:603
+#, kde-format
+msgctxt "@info:progress"
+msgid "Import"
+msgstr ""
+
+#: src/typotek.cpp:522
+#, kde-format
+msgctxt "@info"
+msgid "Cannot import this font because it is broken:"
+msgstr ""
+
+#: src/typotek.cpp:549 src/typotek.cpp:640
+#, kde-format
+msgctxt "@info:status"
+msgid "Fonts imported: %1"
+msgstr ""
+
+#: src/typotek.cpp:561
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Files to Import"
+msgstr ""
+
+#: src/typotek.cpp:563
+#, kde-format
+msgctxt "@item:inlistbox file type filter"
+msgid "Font Files"
+msgstr ""
+
+#: src/typotek.cpp:671
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "&Import Directory..."
+msgstr ""
+
+#: src/typotek.cpp:673
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Import a directory"
+msgstr ""
+
+#: src/typotek.cpp:679
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Import &Files..."
+msgstr ""
+
+#: src/typotek.cpp:681
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Import Files"
+msgstr ""
+
+#: src/typotek.cpp:685
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Export &fonts"
+msgstr ""
+
+#: src/typotek.cpp:686
+#, kde-format
+msgctxt "@info:status"
+msgid "Export a fontset"
+msgstr ""
+
+#: src/typotek.cpp:690
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Export font book..."
+msgstr ""
+
+#: src/typotek.cpp:691
+#, kde-format
+msgctxt "@info:status"
+msgid "Export a PDF document that shows selected fonts"
+msgstr ""
+
+#: src/typotek.cpp:695
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Export font info for packaging..."
+msgstr ""
+
+#: src/typotek.cpp:696
+#, kde-format
+msgctxt "@info:status"
+msgid ""
+"Fill a template file with metadata for packaging currently selected font to "
+"a Linux distribution"
+msgstr ""
+
+#. i18n( "&Tag Sets" ),this );
+#. tagsetAct->setIcon ( QIcon ( ":/fontmatrix_tagseteditor_icon.png" ) );
+#. scuts->add(tagsetAct);
+#. connect ( tagsetAct,SIGNAL ( triggered( ) ),this,SLOT ( popupTagsetEditor() ) );
+#: src/typotek.cpp:704
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Activate all current"
+msgstr ""
+
+#: src/typotek.cpp:705
+#, kde-format
+msgctxt "@info:status"
+msgid "Activate all currently visible fonts"
+msgstr ""
+
+#: src/typotek.cpp:709
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Deactivate all current"
+msgstr ""
+
+#: src/typotek.cpp:710
+#, kde-format
+msgctxt "@info:status"
+msgid "Deactivate all currently visible fonts"
+msgstr ""
+
+#: src/typotek.cpp:714
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Edit current font"
+msgstr ""
+
+#: src/typotek.cpp:719
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Reload Filtered"
+msgstr ""
+
+#: src/typotek.cpp:720
+#, kde-format
+msgctxt "@info:status"
+msgid ""
+"Reload informations for filtered fonts from the font files they belong to"
+msgstr ""
+
+#: src/typotek.cpp:724
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Reload Selected"
+msgstr ""
+
+#: src/typotek.cpp:725
+#, kde-format
+msgctxt "@info:status"
+msgid "Reload informations for selected font from the font file"
+msgstr ""
+
+#: src/typotek.cpp:729
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Check Database"
+msgstr ""
+
+#: src/typotek.cpp:730
+#, kde-format
+msgctxt "@info:status"
+msgid "Check Fontmatrix database for dead links to font files"
+msgstr ""
+
+#: src/typotek.cpp:737
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Tag All Filtered..."
+msgstr ""
+
+#: src/typotek.cpp:738
+#, kde-format
+msgctxt "@info:status"
+msgid "Tag all currently visible files"
+msgstr ""
+
+#: src/typotek.cpp:742
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Show TrueType tables"
+msgstr ""
+
+#: src/typotek.cpp:743
+#, kde-format
+msgctxt "@info:status"
+msgid ""
+"View hexadecimal values of TrueType tables for currently selected font file"
+msgstr ""
+
+#: src/typotek.cpp:747
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Edit PANOSE metadata"
+msgstr ""
+
+#: src/typotek.cpp:748
+#, kde-format
+msgctxt "@info:status"
+msgid "Edit PANOSE metadata without saving changes to font files"
+msgstr ""
+
+#: src/typotek.cpp:758
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Playground"
+msgstr ""
+
+#: src/typotek.cpp:760
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Show/Hide Playground"
+msgstr ""
+
+#: src/typotek.cpp:766
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Compare"
+msgstr ""
+
+#: src/typotek.cpp:768
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Show/Hide Compare glyphs"
+msgstr ""
+
+#: src/typotek.cpp:774
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Close All"
+msgstr ""
+
+#: src/typotek.cpp:775
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Close all floating windows"
+msgstr ""
+
+#: src/typotek.cpp:779
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Show All"
+msgstr ""
+
+#: src/typotek.cpp:780
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Show all floating windows"
+msgstr ""
+
+#: src/typotek.cpp:784
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Hide All"
+msgstr ""
+
+#: src/typotek.cpp:785
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Hide all floating windows"
+msgstr ""
+
+#: src/typotek.cpp:805
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract fonts..."
+msgstr ""
+
+#: src/typotek.cpp:806
+#, kde-format
+msgctxt "@info:status"
+msgid "Extract fonts from documents like PDF to PFM file format"
+msgstr ""
+
+#: src/typotek.cpp:811
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Duplicates..."
+msgstr ""
+
+#: src/typotek.cpp:812
+#, kde-format
+msgctxt "@info:status"
+msgid ""
+"The fonts the collection holds more than once, and a way to remove the extra "
+"files"
+msgstr ""
+
+#: src/typotek.cpp:816
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Find a font using raster sample..."
+msgstr ""
+
+#: src/typotek.cpp:817
+#, kde-format
+msgctxt "@info:status"
+msgid "Find a font using a raster sample of a letter"
+msgstr ""
+
+#: src/typotek.cpp:821
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Export font list as XeTeX..."
+msgstr ""
+
+#: src/typotek.cpp:822
+#, kde-format
+msgctxt "@info:status"
+msgid "Export the current filtered font list as a XeTeX source file"
+msgstr ""
+
+#: src/typotek.cpp:921
+#, kde-format
+msgctxt "@action:button"
+msgid "Browse Directories"
+msgstr ""
+
+#: src/typotek.cpp:923
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "Toggle Files/Collection view"
+msgstr ""
+
+#: src/typotek.cpp:929
+#, kde-format
+msgctxt "@info:progress"
+msgid "Load settings"
+msgstr ""
+
+#: src/typotek.cpp:1063
+#, kde-format
+msgctxt "@info:progress"
+msgid "Check for Fontmatrix own dir"
+msgstr ""
+
+#: src/typotek.cpp:1251
+#, kde-format
+msgctxt "@info:progress"
+msgid "Loading System Fonts"
+msgstr ""
+
+#: src/typotek.cpp:1252
+#, kde-format
+msgctxt "@item:inlistbox name of the tag given to system fonts"
+msgid "System Fonts"
+msgstr ""
+
+#: src/typotek.cpp:1285
+#, kde-format
+msgctxt "@info:progress"
+msgid "Adding"
+msgstr ""
+
+#: src/typotek.cpp:1286 src/typotek.cpp:1287
+#, kde-format
+msgctxt "followed by a directory name"
+msgid "fonts from"
+msgstr ""
+
+#: src/typotek.cpp:1287
+#, kde-format
+msgid "Adding"
+msgstr ""
+
+#: src/typotek.cpp:1310
+#, kde-format
+msgctxt "@info:progress"
+msgid "system fonts added."
+msgstr ""
+
+#: src/typotek.cpp:1322 src/typotek.cpp:1325
+#, kde-format
+msgctxt "@info:progress"
+msgid "Checking the activated fonts"
+msgstr ""
+
+#: src/typotek.cpp:1363
+#, kde-format
+msgctxt "@info:progress"
+msgid "Reading the catalogue of %1 remote directory"
+msgid_plural "Reading the catalogues of %1 remote directories"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/typotek.cpp:1405
+#, kde-format
+msgctxt "@info:status"
+msgid "%1 font added from the network"
+msgid_plural "%1 fonts added from the network"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/typotek.cpp:1431
+#, kde-format
+msgctxt "@info"
+msgid ""
+"You are about to activate a bunch of fonts,\n"
+"it is time to cancel if it was not your intent"
+msgstr ""
+
+#: src/typotek.cpp:1432
+#, kde-format
+msgctxt "@title:window"
+msgid "Activate Fonts"
+msgstr ""
+
+#: src/typotek.cpp:1444
+#, kde-format
+msgctxt "@info"
+msgid ""
+"You are about to deactivate a bunch of fonts,\n"
+"it is time to cancel if it was not your intent"
+msgstr ""
+
+#: src/typotek.cpp:1445
+#, kde-format
+msgctxt "@title:window"
+msgid "Deactivate Fonts"
+msgstr ""
+
+#: src/typotek.cpp:1464
+#, kde-format
+msgctxt "@info"
+msgid ""
+"This will hide the menu bar completely. You can show it again by typing %1."
+msgstr ""
+
+#: src/typotek.cpp:1465
+#, kde-format
+msgctxt "@title:window"
+msgid "Hide menu bar"
+msgstr ""
+
+#: src/typotek.cpp:1481
+#, kde-format
+msgctxt "@info:status"
+msgid "This font has not been downloaded yet"
+msgstr ""
+
+#: src/typotek.cpp:1489
+#, kde-format
+msgctxt "@info:status"
+msgid "The desktop could not be asked to open this font"
+msgstr ""
+
+#: src/typotek.cpp:1534
+#, kde-format
+msgctxt "@info:status"
+msgid "Support of DragNDrop over http is sheduled but not yet effective"
+msgstr ""
+
+#: src/typotek.cpp:1553
+#, kde-format
+msgctxt "@info:status"
+msgid "You bring something over me I can’t handle"
+msgstr ""
+
+#: src/typotek.cpp:1614
+#, kde-format
+msgctxt "@info default content of a new sample text"
+msgid "Edit me!"
+msgstr ""
+
+#: src/typotek.cpp:1695
+#, kde-format
+msgid "default"
+msgstr ""
+
+#: src/typotek.cpp:1794
+#, kde-format
+msgctxt "@info:status"
+msgid ""
+"Open the selected font in the application the desktop asks you to choose"
+msgstr ""
+
+#: src/typotek.cpp:1797
+#, kde-format
+msgctxt "@info:status"
+msgid "Edit currently selected font in a font editor of your choice"
+msgstr ""
+
+#: src/typotek.cpp:1801
+#, kde-format
+msgctxt "@info:status"
+msgid ""
+"You don't seem to have a font editor installed. Path to font editor can be "
+"set in Preferences dialog."
+msgstr ""
+
+#: src/typotek.cpp:2086
+#, kde-format
+msgctxt "@title:window"
+msgid "Export font list as XeTeX"
+msgstr ""
+
+#: src/typotek.cpp:2088
+#, kde-format
+msgctxt "@item:inlistbox file type filter"
+msgid "TeX files (*.tex)"
+msgstr ""
+
+#: src/typotek.cpp:2187
+#, kde-format
+msgctxt "@info:status"
+msgid "There is no font selected"
+msgstr ""
+
+#: src/typotek.cpp:2270
+#, kde-format
+msgctxt "@info:status"
+msgid "Failed to reload %1 font"
+msgid_plural "Failed to reload %1 fonts"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/typotek.cpp:2322
+#, kde-format
+msgctxt "number of filtererd fonts showed in status bar"
+msgid "Filtered Font: %1"
+msgid_plural "Filtered Fonts: %1"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/typotek.cpp:2327
+#, kde-format
+msgctxt "followed by currently selected font name (in status bar)"
+msgid "Current Font"
+msgstr ""
+
+#: src/typotek.cpp:2356
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"The Fontmatrix handbook could not be opened: neither <application>KDE Help "
+"Center</application> nor a copy to read in a browser is installed.<nl/>The "
+"project page is at <link>%1</link>."
+msgstr ""
+
+#: src/typotek.cpp:2359
+#, kde-format
+msgctxt "@title:window"
+msgid "Handbook Not Available"
+msgstr ""

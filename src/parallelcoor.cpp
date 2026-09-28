@@ -1,869 +1,772 @@
-//
-// C++ Implementation: parallelcoor
-//
-// Description: 
-//
-//
-// Author: Pierre Marchand <pierremarc@oep-h.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+    SPDX-FileCopyrightText: 2008 Pierre Marchand <pierremarc@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "parallelcoor.h"
+#include "fontmatrix_debug.h"
 #include "typotek.h"
-
 
 #include <QGraphicsScene>
 #ifdef HAVE_QTOPENGL
 #include <QGLWidget>
 #endif
+#include "fmconfig.h"
 #include <QApplication>
-#include <QDebug>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsItemGroup>
-#include <QFontMetricsF>
-#include <QSettings>
-#include <QVariant>
 #include <QColor>
+#include <QDebug>
+#include <QElapsedTimer>
+#include <QFontMetricsF>
+#include <QGraphicsItemGroup>
+#include <QGraphicsSceneMouseEvent>
+#include <QVariant>
 
 /**
-	DataSet
+    DataSet
 */
-const QString ParallelCoorDataSet::FieldSep = ":";
+const QString ParallelCoorDataSet::FieldSep = QStringLiteral(":");
 
-ParallelCoorDataSet::ParallelCoorDataSet()
+ParallelCoorDataSet::ParallelCoorDataSet() = default;
+
+ParallelCoorDataSet::~ParallelCoorDataSet() = default;
+
+QMap<QString, QString> ParallelCoorDataSet::getCategoryDescriptions() const
 {
+    return m_categoryDescriptions;
 }
 
-ParallelCoorDataSet::~ ParallelCoorDataSet()
+void ParallelCoorDataSet::setCategoryDescriptions(const QMap<QString, QString> &theValue)
 {
+    m_categoryDescriptions = theValue;
 }
 
-
-QMap< QString , QString> ParallelCoorDataSet::getCategoryDescriptions() const
+QMap<QString, QString> ParallelCoorDataSet::getValueDescriptions() const
 {
-	return m_categoryDescriptions;
+    return m_valueDescriptions;
 }
 
-
-void ParallelCoorDataSet::setCategoryDescriptions ( const QMap< QString , QString >& theValue )
+void ParallelCoorDataSet::setValueDescriptions(const QMap<QString, QString> &theValue)
 {
-	m_categoryDescriptions = theValue;
-}
-
-
-QMap< QString , QString> ParallelCoorDataSet::getValueDescriptions() const
-{
-	return m_valueDescriptions;
-}
-
-
-void ParallelCoorDataSet::setValueDescriptions ( const QMap< QString , QString >& theValue )
-{
-	m_valueDescriptions = theValue;
+    m_valueDescriptions = theValue;
 }
 
 ParallelCoorDataType ParallelCoorDataSet::getData() const
 {
-	return m_data;
+    return m_data;
 }
 
-
-void ParallelCoorDataSet::setData ( const ParallelCoorDataType& theValue )
+void ParallelCoorDataSet::setData(const ParallelCoorDataType &theValue)
 {
-	m_data = theValue;
+    m_data = theValue;
 }
-
 
 /**
-	View
+    View
 */
 QMap<QString, QPen> ParallelCoorView::pens;
 QMap<QString, QBrush> ParallelCoorView::brushes;
 QPainterPath ParallelCoorView::markPath;
 
-ParallelCoorView::ParallelCoorView(QWidget * parent)
-	:QGraphicsView(parent), m_dataSet(0)
+ParallelCoorView::ParallelCoorView(QWidget *parent)
+    : QGraphicsView(parent)
+    , m_dataSet(nullptr)
 {
-	setScene(new QGraphicsScene(this));
+    setScene(new QGraphicsScene(this));
 #ifdef HAVE_QTOPENGL
-	QGLFormat glfmt;
-	glfmt.setSampleBuffers ( true );
-	QGLWidget *glwgt = new QGLWidget ( glfmt );
-	if ( glwgt->format().sampleBuffers() )
-	{
-		setViewport ( glwgt );
-		setRenderHint(QPainter::Antialiasing,true);
-	}
-	else
-	{
-		delete glwgt;
-		setRenderHint(QPainter::Antialiasing,false);
-	}
+    QGLFormat glfmt;
+    glfmt.setSampleBuffers(true);
+    QGLWidget *glwgt = new QGLWidget(glfmt);
+    if (glwgt->format().sampleBuffers()) {
+        setViewport(glwgt);
+        setRenderHint(QPainter::Antialiasing, true);
+    } else {
+        delete glwgt;
+        setRenderHint(QPainter::Antialiasing, false);
+    }
 #endif
-	setBackgroundBrush(Qt::white);
-	initPensAndBrushes();
-	doConnect();
+    setBackgroundBrush(Qt::white);
+    initPensAndBrushes();
+    doConnect();
 }
 
-ParallelCoorView::ParallelCoorView(ParallelCoorDataSet * dataset, QWidget * parent)
-	:QGraphicsView(parent), m_dataSet(dataset)
+ParallelCoorView::ParallelCoorView(ParallelCoorDataSet *dataset, QWidget *parent)
+    : QGraphicsView(parent)
+    , m_dataSet(dataset)
 {
-	setScene(new QGraphicsScene(this));
+    setScene(new QGraphicsScene(this));
 #ifdef HAVE_QTOPENGL
-	QGLFormat glfmt;
-	glfmt.setSampleBuffers ( true );
-	QGLWidget *glwgt = new QGLWidget ( glfmt );
-	if ( glwgt->format().sampleBuffers() )
-	{
-		setViewport ( glwgt );
-		setRenderHint(QPainter::Antialiasing,true);
-	}
-	else
-	{
-		delete glwgt;
-		setRenderHint(QPainter::Antialiasing,false);
-	}
+    QGLFormat glfmt;
+    glfmt.setSampleBuffers(true);
+    QGLWidget *glwgt = new QGLWidget(glfmt);
+    if (glwgt->format().sampleBuffers()) {
+        setViewport(glwgt);
+        setRenderHint(QPainter::Antialiasing, true);
+    } else {
+        delete glwgt;
+        setRenderHint(QPainter::Antialiasing, false);
+    }
 #endif
-	setBackgroundBrush(Qt::white);
-	initPensAndBrushes();
-	doConnect();
+    setBackgroundBrush(Qt::white);
+    initPensAndBrushes();
+    doConnect();
 }
 
-ParallelCoorView::~ParallelCoorView()
-{	
-}
+ParallelCoorView::~ParallelCoorView() = default;
 
-void ParallelCoorView::selectField(const QString & field)
+void ParallelCoorView::selectField(const QString &field)
 {
-	emit selectedField(field);
-	setCurrentField(field);
+    Q_EMIT selectedField(field);
+    setCurrentField(field);
 }
 
 QString ParallelCoorView::getCurrentField() const
 {
-	return m_currentField;
+    return m_currentField;
 }
 
-void ParallelCoorView::setCurrentField ( const QString& theValue )
+void ParallelCoorView::setCurrentField(const QString &theValue)
 {
-	if(theValue!=m_currentField)
-	{
-		m_currentField = theValue;
-		cleanLists(ValueList);
-		drawValues();
-	}
+    if (theValue != m_currentField) {
+        m_currentField = theValue;
+        cleanLists(ValueList);
+        drawValues();
+    }
 }
 
-ParallelCoorDataSet* ParallelCoorView::getDataSet() const
+ParallelCoorDataSet *ParallelCoorView::getDataSet() const
 {
-	return m_dataSet;
+    return m_dataSet;
 }
 
-
-void ParallelCoorView::setDataSet ( ParallelCoorDataSet* theValue )
+void ParallelCoorView::setDataSet(ParallelCoorDataSet *theValue)
 {
-	if(m_dataSet && (m_dataSet != theValue))
-		delete m_dataSet;
-	m_dataSet = theValue;
+    if (m_dataSet && (m_dataSet != theValue))
+        delete m_dataSet;
+    m_dataSet = theValue;
 }
 
 ParallelCoorView::Units::Units(int width, int height, int count)
-{			
-	hunit = static_cast<double> ( height ) /1000.0 ;
-	wunit = static_cast<double> ( width ) /1000.0  ;
-	XOffset = wunit * 200.0;
-	YOffset = hunit * 100.0 ;
-	H = hunit * 800.0 ;
-	W = wunit * 700.0 ;
-	C = count ;
-	step = W / static_cast<double> ( C-1 ) ;
+{
+    hunit = static_cast<double>(height) / 1000.0;
+    wunit = static_cast<double>(width) / 1000.0;
+    XOffset = wunit * 200.0;
+    YOffset = hunit * 100.0;
+    H = hunit * 800.0;
+    W = wunit * 700.0;
+    C = count;
+    step = W / static_cast<double>(C - 1);
 }
 
 void ParallelCoorView::initPensAndBrushes()
 {
-	// bars
-	pens["bar"] = QPen(QColor(200,200,200), 6.0, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
-	pens["bar-hover"] = QPen(QColor(160,160,160), 6.0, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
-	
-	// vertices
-	pens["vertice-filter"] = QPen(Qt::black, 1.0);
-	pens["vertice-unfilter"] = QPen(QColor(200,200,200), 1.0);
-	
-	// marks
-	double size(0.5);
-	markPath.addRect(-10.0*size,-10.0*size,20.0*size,20.0*size);
-	brushes["mark"] = QBrush(Qt::black);
-	brushes["mark-active"] = QBrush(Qt::red);
-	
-	// debug
-	pens["debug-1"] = QPen(Qt::blue, 5.0);
-	
-	QString cat("Panose/color-%1");
-	QSettings settings;
-	foreach(QString attr, pens.keys())
-	{
-		pens[attr].setColor( QColor(settings.value(cat.arg(attr),pens[attr].color().name()).toString()) );
-		settings.setValue(cat.arg(attr),pens[attr].color().name());
-	}
-	foreach(QString attr, brushes.keys())
-	{
-		brushes[attr].setColor( QColor(settings.value(cat.arg(attr),brushes[attr].color().name()).toString()) );
-		settings.setValue(cat.arg(attr),pens[attr].color().name());
-	}
+    // bars
+    pens[QStringLiteral("bar")] = QPen(QColor(200, 200, 200), 6.0, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+    pens[QStringLiteral("bar-hover")] = QPen(QColor(160, 160, 160), 6.0, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+
+    // vertices
+    pens[QStringLiteral("vertice-filter")] = QPen(Qt::black, 1.0);
+    pens[QStringLiteral("vertice-unfilter")] = QPen(QColor(200, 200, 200), 1.0);
+
+    // marks
+    double size(0.5);
+    markPath.addRect(-10.0 * size, -10.0 * size, 20.0 * size, 20.0 * size);
+    brushes[QStringLiteral("mark")] = QBrush(Qt::black);
+    brushes[QStringLiteral("mark-active")] = QBrush(Qt::red);
+
+    // debug
+    pens[QStringLiteral("debug-1")] = QPen(Qt::blue, 5.0);
+
+    QString cat(QStringLiteral("Panose/color-%1"));
+    for (const auto pensKeys = pens.keys(); const auto &attr : pensKeys) {
+        pens[attr].setColor(QColor(FMConfig::value(cat.arg(attr), pens[attr].color().name()).toString()));
+        FMConfig::setValue(cat.arg(attr), pens[attr].color().name());
+    }
+    for (const auto brushesKeys = brushes.keys(); const auto &attr : brushesKeys) {
+        brushes[attr].setColor(QColor(FMConfig::value(cat.arg(attr), brushes[attr].color().name()).toString()));
+        FMConfig::setValue(cat.arg(attr), pens[attr].color().name());
+    }
 }
 
 void ParallelCoorView::cleanLists(ItemList il)
 {
-	if((il == AllList) || (il == ValueList))
-	{
-		foreach(ParallelCoorValueItem* ti, valueLabels)
-		{
-			delete ti;
-		}
-		valueLabels.clear();
-		
-		foreach(ParallelCoorMarkItem *mi, marks)
-		{
-			delete mi;
-		}
-		marks.clear();
-	}
-	if((il == AllList) || (il == FieldList))
-	{
-		foreach(ParallelCoorFieldItem* ti, fieldLabels)
-		{
-			delete ti;
-		}
-		fieldLabels.clear();
-	}
-	if((il == AllList) || (il == VerticeList))
-	{
-		foreach(QGraphicsLineItem* pi, vertices)
-		{
-			delete pi;
-		}
-		vertices.clear();
-	}
-	if((il == AllList) || (il == BarList))
-	{
-		foreach(ParallelCoorBarItem* li, bars)
-		{
-			delete li;
-		}
-		bars.clear();
-	}
-	
+    if ((il == AllList) || (il == ValueList)) {
+        for (auto *ti : std::as_const(valueLabels)) {
+            delete ti;
+        }
+        valueLabels.clear();
+
+        for (auto *mi : std::as_const(marks)) {
+            delete mi;
+        }
+        marks.clear();
+    }
+    if ((il == AllList) || (il == FieldList)) {
+        for (auto *ti : std::as_const(fieldLabels)) {
+            delete ti;
+        }
+        fieldLabels.clear();
+    }
+    if ((il == AllList) || (il == VerticeList)) {
+        for (auto *pi : std::as_const(vertices)) {
+            delete pi;
+        }
+        vertices.clear();
+    }
+    if ((il == AllList) || (il == BarList)) {
+        for (auto *li : std::as_const(bars)) {
+            delete li;
+        }
+        bars.clear();
+    }
 }
 
 void ParallelCoorView::redraw()
 {
-// 	qDebug()<<"ParallelCoorView::redraw";
-	if ( !m_dataSet )
-	{
-		qWarning()<<"No Dataset";
-		return;
-	}
-	if ( m_dataSet->isEmpty() )
-	{
-		qWarning()<<"Empty Dataset";
-		return;
-	}
-	if(controlSize != size())
-	{
-		// there will be another resize event soon, no need to draw now
-		return;
-	}
-	
-	units = Units(width(), height(), m_dataSet->count());
-// 	QTime t;
-// 	int tclean, tbar, tvert, tfield, tval;
-// 	t.start();
-	cleanLists(AllList);
-// // 	tclean = t.elapsed();
-// 	t.start();
-	drawBars();
-// 	tbar = t.elapsed();
-// 	t.start();
-	drawVertices();
-// // 	tvert = t.elapsed();
-// // 	t.start();
-	drawFields();
-// 	tfield = t.elapsed();
-// 	t.start();
-	drawValues();
-// 	tval = t.elapsed();
+    // 	qDebug()<<"ParallelCoorView::redraw";
+    if (!m_dataSet) {
+        qWarning() << "No Dataset";
+        return;
+    }
+    if (m_dataSet->isEmpty()) {
+        qWarning() << "Empty Dataset";
+        return;
+    }
+    if (controlSize != size()) {
+        // there will be another resize event soon, no need to draw now
+        return;
+    }
 
-// 	qDebug()<<"C"<<tclean<<"B"<<tbar<<"Ve"<<tvert<<"F"<<tfield<<"Va"<<tval;
+    units = Units(width(), height(), m_dataSet->count());
+    // 	QTime t;
+    // 	int tclean, tbar, tvert, tfield, tval;
+    // 	t.start();
+    cleanLists(AllList);
+    // // 	tclean = t.elapsed();
+    // 	t.start();
+    drawBars();
+    // 	tbar = t.elapsed();
+    // 	t.start();
+    drawVertices();
+    // // 	tvert = t.elapsed();
+    // // 	t.start();
+    drawFields();
+    // 	tfield = t.elapsed();
+    // 	t.start();
+    drawValues();
+    // 	tval = t.elapsed();
+
+    // 	qDebug()<<"C"<<tclean<<"B"<<tbar<<"Ve"<<tvert<<"F"<<tfield<<"Va"<<tval;
 }
 
 void ParallelCoorView::drawBars()
 {
-	for ( int i ( 0 ); i < units.C ; ++i )
-	{
-		double di ( static_cast<double> ( i ) );
-		QLineF bl(units.XOffset + ( di * units.step ),  units.YOffset,
-			  units.XOffset + ( di * units.step ),  units.YOffset + units.H);
-		ParallelCoorBarItem * bi ( new ParallelCoorBarItem(m_dataSet->at(i).first, this) );
-		bars << bi;
-		bi->setPen(pens["bar"]);
-		bi->setLine(bl);
-		scene()->addItem(bi);
-	}
-
+    for (int i(0); i < units.C; ++i) {
+        auto di(static_cast<double>(i));
+        QLineF bl(units.XOffset + (di * units.step), units.YOffset, units.XOffset + (di * units.step), units.YOffset + units.H);
+        auto bi(new ParallelCoorBarItem(m_dataSet->at(i).first, this));
+        bars << bi;
+        bi->setPen(pens[QStringLiteral("bar")]);
+        bi->setLine(bl);
+        scene()->addItem(bi);
+    }
 }
 
 void ParallelCoorView::drawVertices()
 {
-// 	qDebug()<<this<<"::drawVertices"<<m_dataSet->getData().count();
-	int tc, td, ta, to;
-	tc = td = ta = to = 0;
-	QTime t;
-	t.start();
-	const int N ( m_dataSet->getData().count() );
-	QMap<int, QMap< int, QPointF> > placeCoords;
-	for ( int k ( 0 );k < m_dataSet->count(); ++k )
-	{
-		QStringList list ( m_dataSet->at ( k ).second );
-		double x ( units.XOffset + ( static_cast<double> ( k ) * units.step ) );
-		double v ( units.H / static_cast<double> ( list.count()-1 ) );
-		for ( int l ( 0 ); l < list.count(); ++l )
-		{
-			double y ( units.YOffset + ( static_cast<double> ( l ) * v ) );
-			placeCoords[k][l] = QPointF ( x,y );
-		}
-	}	
-// 	QList<QLineF> cflines;
-// 	QList<QLineF> culines;
-	QMap<double, QMap<double ,QList<QPointF> > > cflines;
-	QMap<double, QMap<double ,QList<QPointF> > > culines;
-	to = t.elapsed();		
-	QGraphicsLineItem *li;
-	for ( int a ( 0 );a<N;++a )
-	{
-// 		if( m_dataSet->getData().at(a).count() == m_dataSet->count() )
-		{
-			QList<QPointF> pol;
-			t.start();
-			for ( int b ( 0 ); b < m_dataSet->getData().at ( a ).count() ; ++b )
-			{
-				if(placeCoords[b].contains( m_dataSet->getData().at ( a ).at ( b ) ))
-					pol << QPointF( placeCoords[b][m_dataSet->getData().at ( a ).at ( b ) ] );
-				else
-					pol << QPointF( placeCoords[b][0] );
-
-			}
-			tc += t.elapsed();
-			t.start();
-			if ( pol.count() == m_dataSet->count() )
-			{
-				for(int vi(1);vi<pol.count();++vi)
-				{
-					bool f ( matchFilter ( m_dataSet->getData().at ( a ) ) );
-					if(f)
-					{
-						if(cflines.contains(pol[vi-1].x()))
-						{
-							if(cflines[pol[vi-1].x()].contains(pol[vi-1].y()))
-							{
-								if(cflines[pol[vi-1].x()][pol[vi-1].y()].contains(pol[vi]))
-								{
-									continue;
-								}
-							}
-						}
-						QLineF lf(pol[vi-1],pol[vi]);
-						li = new QGraphicsLineItem( lf );
-						li->setPen(  pens["vertice-filter"] );
-						li->setZValue(100.0);
-						vertices << li;
-						cflines[pol[vi-1].x()][pol[vi-1].y()] << pol[vi];
-					}
-					else
-					{
-						if(culines.contains(pol[vi-1].x()))
-						{
-							if(culines[pol[vi-1].x()].contains(pol[vi-1].y()))
-							{
-								if(culines[pol[vi-1].x()][pol[vi-1].y()].contains(pol[vi]))
-								{
-									continue;
-								}
-							}
-						}
-						QLineF lf(pol[vi-1],pol[vi]);
-						li = new QGraphicsLineItem( lf );
-						li->setPen(  pens["vertice-unfilter"] );
-						vertices << li;
-						culines[pol[vi-1].x()][pol[vi-1].y()] << pol[vi];
-					}
-				}
-			}
-			td += t.elapsed();
-			
-		}
-	}
-	t.start();
-	int vcount(vertices.count());
-	QGraphicsScene * ls(scene());
-	for(int i(0); i < vcount; ++i)
-	{
-		ls->addItem( vertices[i] );
-	}
-	ta = t.elapsed();
-	qDebug()<<"R"<< to << tc << td << ta;
+    // 	qDebug()<<this<<"::drawVertices"<<m_dataSet->getData().count();
+    int tc, td, ta, to;
+    tc = td = ta = to = 0;
+    QElapsedTimer t;
+    t.start();
+    const int N(m_dataSet->getData().count());
+    QMap<int, QMap<int, QPointF>> placeCoords;
+    for (int k(0); k < m_dataSet->count(); ++k) {
+        QStringList list(m_dataSet->at(k).second);
+        double x(units.XOffset + (static_cast<double>(k) * units.step));
+        double v(units.H / static_cast<double>(list.count() - 1));
+        for (int l(0); l < list.count(); ++l) {
+            double y(units.YOffset + (static_cast<double>(l) * v));
+            placeCoords[k][l] = QPointF(x, y);
+        }
+    }
+    // 	QList<QLineF> cflines;
+    // 	QList<QLineF> culines;
+    QMap<double, QMap<double, QList<QPointF>>> cflines;
+    QMap<double, QMap<double, QList<QPointF>>> culines;
+    to = t.elapsed();
+    QGraphicsLineItem *li;
+    for (int a(0); a < N; ++a) {
+        // 		if( m_dataSet->getData().at(a).count() == m_dataSet->count() )
+        {
+            QList<QPointF> pol;
+            t.start();
+            for (int b(0); b < m_dataSet->getData().at(a).count(); ++b) {
+                if (placeCoords[b].contains(m_dataSet->getData().at(a).at(b)))
+                    pol << QPointF(placeCoords[b][m_dataSet->getData().at(a).at(b)]);
+                else
+                    pol << QPointF(placeCoords[b][0]);
+            }
+            tc += t.elapsed();
+            t.start();
+            if (pol.count() == m_dataSet->count()) {
+                for (int vi(1); vi < pol.count(); ++vi) {
+                    bool f(matchFilter(m_dataSet->getData().at(a)));
+                    if (f) {
+                        if (cflines.contains(pol[vi - 1].x())) {
+                            if (cflines[pol[vi - 1].x()].contains(pol[vi - 1].y())) {
+                                if (cflines[pol[vi - 1].x()][pol[vi - 1].y()].contains(pol[vi])) {
+                                    continue;
+                                }
+                            }
+                        }
+                        QLineF lf(pol[vi - 1], pol[vi]);
+                        li = new QGraphicsLineItem(lf);
+                        li->setPen(pens[QStringLiteral("vertice-filter")]);
+                        li->setZValue(100.0);
+                        vertices << li;
+                        cflines[pol[vi - 1].x()][pol[vi - 1].y()] << pol[vi];
+                    } else {
+                        if (culines.contains(pol[vi - 1].x())) {
+                            if (culines[pol[vi - 1].x()].contains(pol[vi - 1].y())) {
+                                if (culines[pol[vi - 1].x()][pol[vi - 1].y()].contains(pol[vi])) {
+                                    continue;
+                                }
+                            }
+                        }
+                        QLineF lf(pol[vi - 1], pol[vi]);
+                        li = new QGraphicsLineItem(lf);
+                        li->setPen(pens[QStringLiteral("vertice-unfilter")]);
+                        vertices << li;
+                        culines[pol[vi - 1].x()][pol[vi - 1].y()] << pol[vi];
+                    }
+                }
+            }
+            td += t.elapsed();
+        }
+    }
+    t.start();
+    int vcount(vertices.count());
+    QGraphicsScene *ls(scene());
+    for (int i(0); i < vcount; ++i) {
+        ls->addItem(vertices.at(i));
+    }
+    ta = t.elapsed();
+    qCDebug(FONTMATRIX_LOG) << "R" << to << tc << td << ta;
 }
 
 void ParallelCoorView::drawFields()
 {
-// 	qDebug()<<"ParallelCoorView::drawFields";
-	QFont fontF( "Helvetica" , 100.0 , QFont::DemiBold, false );
-	double lastW(0.0);
-	bool lastPosShifted(false);
-	double maxAscent(0.0);
-	for(int k(0);k < m_dataSet->count(); ++k)
-	{
-		QString f(m_dataSet->at(k).first);
-		QFontMetricsF metrics(fontF);
-		double w(metrics.boundingRect(f).width());
-		double fsize( units.step * 100.0 / w );
-		double ascent(metrics.ascent() * fsize / 100.0 );
-		maxAscent = qMax(maxAscent, ascent);
-	}
-	for(int k(0);k < m_dataSet->count(); ++k)
-	{
-		QString f(m_dataSet->at(k).first);
-		
-		fontF.setPointSizeF(100.0);
-		QFontMetricsF metrics(fontF);
-		double w(metrics.boundingRect(f).width());
-		double fsize( (units.step * 0.9) * 100.0 / w );
-		double ascent(metrics.ascent() * fsize / 100.0);
-		double sw(w * fsize / 100.0 );
-		fontF.setPointSizeF(fsize);
-		
-		ParallelCoorFieldItem * ti = new ParallelCoorFieldItem(f,this);
-		fieldLabels << ti;
-		ti->setFont(fontF);
-		scene()->addItem(ti);
-		ti->setPos(units.XOffset + (k*units.step) - (sw/2.0), units.H + units.YOffset + (maxAscent - ascent));
-// 		double h(ti->boundingRect().height());
-// 		if(lastW > units.step * 1.1)
-// 		{
-// 			if(!lastPosShifted)
-// 			{
-// 				ti->setPos(units.XOffset + (k*units.step) , units.H + units.YOffset + h);
-// 				lastPosShifted = true;
-// 			}
-// 			else
-// 			{
-// 				ti->setPos(units.XOffset + (k*units.step) , units.H + units.YOffset );
-// 				lastPosShifted = false;
-// 			}
-// 		}
-// 		else
-// 		{
-// 			ti->setPos(units.XOffset + (k*units.step) /*- (w/3.0)*/, units.H+units.YOffset);
-// 			lastPosShifted = false;			
-// 		}
-// 		lastW = w;
-	}
-	
+    // 	qDebug()<<"ParallelCoorView::drawFields";
+    QFont fontF(QStringLiteral("Helvetica"), 100.0, QFont::DemiBold, false);
+    double maxAscent(0.0);
+    for (int k(0); k < m_dataSet->count(); ++k) {
+        QString f(m_dataSet->at(k).first);
+        QFontMetricsF metrics(fontF);
+        double w(metrics.boundingRect(f).width());
+        double fsize(units.step * 100.0 / w);
+        double ascent(metrics.ascent() * fsize / 100.0);
+        maxAscent = qMax(maxAscent, ascent);
+    }
+    for (int k(0); k < m_dataSet->count(); ++k) {
+        QString f(m_dataSet->at(k).first);
+
+        fontF.setPointSizeF(100.0);
+        QFontMetricsF metrics(fontF);
+        double w(metrics.boundingRect(f).width());
+        double fsize((units.step * 0.9) * 100.0 / w);
+        double ascent(metrics.ascent() * fsize / 100.0);
+        double sw(w * fsize / 100.0);
+        fontF.setPointSizeF(fsize);
+
+        auto ti = new ParallelCoorFieldItem(f, this);
+        fieldLabels << ti;
+        ti->setFont(fontF);
+        scene()->addItem(ti);
+        ti->setPos(units.XOffset + (k * units.step) - (sw / 2.0), units.H + units.YOffset + (maxAscent - ascent));
+        // 		double h(ti->boundingRect().height());
+        // 		if(lastW > units.step * 1.1)
+        // 		{
+        // 			if(!lastPosShifted)
+        // 			{
+        // 				ti->setPos(units.XOffset + (k*units.step) , units.H + units.YOffset + h);
+        // 				lastPosShifted = true;
+        // 			}
+        // 			else
+        // 			{
+        // 				ti->setPos(units.XOffset + (k*units.step) , units.H + units.YOffset );
+        // 				lastPosShifted = false;
+        // 			}
+        // 		}
+        // 		else
+        // 		{
+        // 			ti->setPos(units.XOffset + (k*units.step) /*- (w/3.0)*/, units.H+units.YOffset);
+        // 			lastPosShifted = false;
+        // 		}
+        // 		lastW = w;
+    }
 }
 
 void ParallelCoorView::drawValues()
 {
-	int di(0);
-	if(!m_currentField.isEmpty())
-	{
-		for(int i(0);i<m_dataSet->count();++i)
-		{
-			if(m_dataSet->at(i).first == m_currentField)
-			{
-				di = i;
-				break;
-			}
-		}
-	}
-	else
-		m_currentField = m_dataSet->at(0).first;
-	
-	QFont fontV( "Helvetica" , 9, QFont::Normal , true );
-	QFont fontS( "Helvetica" , 10, QFont::DemiBold , true );
-	double din(static_cast<double>(di));
-	double dn(static_cast<double>(m_dataSet->at(di).second.count()-1));
-	double vsep(units.H / dn);
-	QList<QString> list (m_dataSet->at(di).second);
-	for(int i(0); i< list.count(); ++i)
-	{
-		ParallelCoorValueItem *vi = new ParallelCoorValueItem(list[i], this);
-		valueLabels << vi;
-		ParallelCoorMarkItem *mi = new ParallelCoorMarkItem(vi, this);
-		marks << mi;
-		if(cfilter.contains(di))
-		{
-			if(cfilter[di].contains(i))
-				vi->setFont(fontS);
-			else
-				vi->setFont(fontV);
-		}
-		else
-			vi->setFont(fontV);
-		
-		scene()->addItem(vi);
-		scene()->addItem(mi);
-		
-		double w((units.XOffset * .9) - vi->boundingRect().width());
-		double h(vi->boundingRect().height() / 2.0);
-// 		qDebug()<<"V"<<w<<vi->boundingRect().width()<<units.XOffset;
-		vi->setPos( w , units.YOffset + (static_cast<double>(i) * vsep) - h);
-		mi->setPos( units.XOffset + ( static_cast<double>(di) * units.step ),  units.YOffset + (static_cast<double>(i) * vsep));
-		vi->setZValue(1000.0);
-		mi->setZValue(1000.0);
-// 		qDebug()<<"=========================================================";
-// 		qDebug()<<vi;
-// 		qDebug()<<mi;
-// 		qDebug()<<"=========================================================";
-	}
+    int di(0);
+    if (!m_currentField.isEmpty()) {
+        for (int i(0); i < m_dataSet->count(); ++i) {
+            if (m_dataSet->at(i).first == m_currentField) {
+                di = i;
+                break;
+            }
+        }
+    } else
+        m_currentField = m_dataSet->at(0).first;
+
+    QFont fontV(QStringLiteral("Helvetica"), 9, QFont::Normal, true);
+    QFont fontS(QStringLiteral("Helvetica"), 10, QFont::DemiBold, true);
+    double dn(static_cast<double>(m_dataSet->at(di).second.count() - 1));
+    double vsep(units.H / dn);
+    QList<QString> list(m_dataSet->at(di).second);
+    for (int i(0); i < list.count(); ++i) {
+        auto vi = new ParallelCoorValueItem(list[i], this);
+        valueLabels << vi;
+        auto mi = new ParallelCoorMarkItem(vi, this);
+        marks << mi;
+        if (cfilter.contains(di)) {
+            if (cfilter.value(di).contains(i))
+                vi->setFont(fontS);
+            else
+                vi->setFont(fontV);
+        } else
+            vi->setFont(fontV);
+
+        scene()->addItem(vi);
+        scene()->addItem(mi);
+
+        double w((units.XOffset * .9) - vi->boundingRect().width());
+        double h(vi->boundingRect().height() / 2.0);
+        // 		qDebug()<<"V"<<w<<vi->boundingRect().width()<<units.XOffset;
+        vi->setPos(w, units.YOffset + (static_cast<double>(i) * vsep) - h);
+        mi->setPos(units.XOffset + (static_cast<double>(di) * units.step), units.YOffset + (static_cast<double>(i) * vsep));
+        vi->setZValue(1000.0);
+        mi->setZValue(1000.0);
+        // 		qDebug()<<"=========================================================";
+        // 		qDebug()<<vi;
+        // 		qDebug()<<mi;
+        // 		qDebug()<<"=========================================================";
+    }
 }
 
 void ParallelCoorView::updateGraphic()
 {
-	if(isVisible())
-		redraw();
+    if (isVisible())
+        redraw();
 }
 
-void ParallelCoorView::resizeEvent(QResizeEvent * event)
+void ParallelCoorView::resizeEvent(QResizeEvent *event)
 {
-	controlSize = size();
-	updateGraphic();
-	QGraphicsView::resizeEvent(event);
+    controlSize = size();
+    updateGraphic();
+    QGraphicsView::resizeEvent(event);
 }
 
-void ParallelCoorView::showEvent(QShowEvent * event)
+void ParallelCoorView::showEvent(QShowEvent *event)
 {
-// 	updateGraphic();
-	QGraphicsView::showEvent(event);
+    // 	updateGraphic();
+    QGraphicsView::showEvent(event);
 }
 
-
-QMap< QString, QStringList > ParallelCoorView::getFilter() const
+QMap<QString, QStringList> ParallelCoorView::getFilter() const
 {
-	return m_filter;
+    return m_filter;
 }
 
 QString ParallelCoorView::filterAsString()
 {
-	QString ret;
-	foreach(QString key, m_filter.keys())
-	{
-		const QStringList& l = m_filter[key];
-		if(!l.isEmpty())
-		{
-			if(ret.isEmpty())
-				ret += key + " {" + l.join(";") + "}";
-			else
-				ret += "\n" + key + " {" + l.join(";") + "}";
-		}
-			
-	}
-	return ret;
-	
+    QString ret;
+    for (const auto m_filterKeys = m_filter.keys(); const auto &key : m_filterKeys) {
+        const QStringList &l = m_filter[key];
+        if (!l.isEmpty()) {
+            if (ret.isEmpty())
+                ret += key + QLatin1String(" {") + l.join(QStringLiteral(";")) + QLatin1String("}");
+            else
+                ret += QLatin1String("\n") + key + QLatin1String(" {") + l.join(QStringLiteral(";")) + QLatin1String("}");
+        }
+    }
+    return ret;
 }
 
-void ParallelCoorView::setFilter ( const QMap< QString, QStringList >& theValue )
+void ParallelCoorView::setFilter(const QMap<QString, QStringList> &theValue)
 {
-	m_filter.clear();
-	cfilter.clear();
-	
-	m_filter = theValue;
-	
-	for(int i(0);i < m_dataSet->count(); i++)
-	{
-		if(m_filter.contains(m_dataSet->at(i).first))
-		{
-			foreach(QString v, m_filter[m_dataSet->at(i).first])
-			{
-				cfilter[i] << m_dataSet->at(i).second.indexOf(v);
-			}
-		}
-	}
-	
-	emit filterChanged();
-	updateGraphic();
+    m_filter.clear();
+    cfilter.clear();
+
+    m_filter = theValue;
+
+    for (int i(0); i < m_dataSet->count(); i++) {
+        if (m_filter.contains(m_dataSet->at(i).first)) {
+            for (const auto range = m_filter.value(m_dataSet->at(i).first); const auto &v : range) {
+                cfilter[i] << m_dataSet->at(i).second.indexOf(v);
+            }
+        }
+    }
+
+    Q_EMIT filterChanged();
+    updateGraphic();
 }
 
-
-
-bool ParallelCoorView::matchFilter(QList< int > list) const
+bool ParallelCoorView::matchFilter(QList<int> list) const
 {
-	if(list.isEmpty())
-	{
-// 		qDebug()<<"List empty";
-		return false;
-	}
-	if(m_filter.isEmpty())
-	{
-// 		qDebug()<<"Filter empty";
-		return true;
-	}
-	
-	bool ret(false);
-	for(int i(0); i < list.count();++i)
-	{
-		if(cfilter.contains(i))
-		{
-			if(cfilter[i].contains(list[i]))
-				ret = true;
-			else
-			{
-				ret = false;
-				break;
-			}
-		}
-	}
-	return ret;
-}
+    if (list.isEmpty()) {
+        // 		qDebug()<<"List empty";
+        return false;
+    }
+    if (m_filter.isEmpty()) {
+        // 		qDebug()<<"Filter empty";
+        return true;
+    }
 
+    bool ret(false);
+    for (int i(0); i < list.count(); ++i) {
+        if (cfilter.contains(i)) {
+            if (cfilter[i].contains(list[i]))
+                ret = true;
+            else {
+                ret = false;
+                break;
+            }
+        }
+    }
+    return ret;
+}
 
 /**
-	Field label
+    Field label
 */
-void ParallelCoorFieldItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
+void ParallelCoorFieldItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 {
-	qApp->setOverrideCursor(Qt::PointingHandCursor);
-	QBrush b = brush();
-	b.setColor(Qt::red);
-	setBrush(b);
+    qApp->setOverrideCursor(Qt::PointingHandCursor);
+    QBrush b = brush();
+    b.setColor(Qt::red);
+    setBrush(b);
 }
 
-void ParallelCoorFieldItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
+void ParallelCoorFieldItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
 {
-	QBrush b = brush();
-	b.setColor(Qt::black);
-	setBrush(b);
-	qApp->restoreOverrideCursor();
+    QBrush b = brush();
+    b.setColor(Qt::black);
+    setBrush(b);
+    qApp->restoreOverrideCursor();
 }
 
-void ParallelCoorFieldItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
+void ParallelCoorFieldItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	event->accept();
+    event->accept();
 }
 
-void ParallelCoorFieldItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+void ParallelCoorFieldItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
 {
-	if(QString(pview->metaObject()->className()) == QString("ParallelCoorView") )
-	{
-		ParallelCoorView *pcv = reinterpret_cast<ParallelCoorView*>(pview);
-		pcv->selectField(text());
-	}
-	
-	qApp->restoreOverrideCursor();
+    if (QLatin1String(pview->metaObject()->className()) == QLatin1String("ParallelCoorView")) {
+        auto pcv = reinterpret_cast<ParallelCoorView *>(pview);
+        pcv->selectField(text());
+    }
+
+    qApp->restoreOverrideCursor();
 }
 
-ParallelCoorFieldItem::ParallelCoorFieldItem(QString text, QGraphicsView* pcv, QGraphicsItem * parent)
-	:QGraphicsSimpleTextItem(parent), pview(pcv)
+ParallelCoorFieldItem::ParallelCoorFieldItem(QString text, QGraphicsView *pcv, QGraphicsItem *parent)
+    : QGraphicsSimpleTextItem(parent)
+    , pview(pcv)
 {
-	setText(text);
-	setEnabled(true);
-	setAcceptHoverEvents ( true );
+    setText(text);
+    setEnabled(true);
+    setAcceptHoverEvents(true);
 }
 
 /**
-	Value label
+    Value label
  */
-ParallelCoorValueItem::ParallelCoorValueItem(QString text, QGraphicsView * pcv, QGraphicsItem * parent)
-	:QGraphicsSimpleTextItem(parent), pview(pcv)
+ParallelCoorValueItem::ParallelCoorValueItem(QString text, QGraphicsView *pcv, QGraphicsItem *parent)
+    : QGraphicsSimpleTextItem(parent)
+    , pview(pcv)
 {
-	setText(text);
-	setEnabled(true);
-	setAcceptHoverEvents ( true );
+    setText(text);
+    setEnabled(true);
+    setAcceptHoverEvents(true);
 }
 
 void ParallelCoorValueItem::hoverEnter()
 {
-	qApp->setOverrideCursor(Qt::PointingHandCursor);
-	QBrush b = brush();
-	b.setColor(Qt::red);
-	setBrush(b);
+    qApp->setOverrideCursor(Qt::PointingHandCursor);
+    QBrush b = brush();
+    b.setColor(Qt::red);
+    setBrush(b);
 }
 
 void ParallelCoorValueItem::hoverLeave()
 {
-	QBrush b = brush();
-	b.setColor(Qt::black);
-	setBrush(b);
-	qApp->restoreOverrideCursor();
+    QBrush b = brush();
+    b.setColor(Qt::black);
+    setBrush(b);
+    qApp->restoreOverrideCursor();
 }
 
 void ParallelCoorValueItem::click(int mod)
 {
-	if(QString(pview->metaObject()->className()) == QString("ParallelCoorView") )
-	{
-		ParallelCoorView *pcv = reinterpret_cast<ParallelCoorView*>(pview);
-		
-		QMap<QString, QStringList> filter;
-		if(mod == 0) // bare left click
-		{
-			filter[pcv->getCurrentField()] << text();
-		}
-		else if(mod == 1) // with Shift
-		{
-			filter = pcv->getFilter();
-			filter[pcv->getCurrentField()] << text();
-		}
-		else if(mod == 2) // with Control
-		{
-			filter = pcv->getFilter();
-			filter[pcv->getCurrentField()].removeAll(text());
-		}
-		
-		pcv->setFilter(filter);
-	}
-	qApp->restoreOverrideCursor();
+    if (QLatin1String(pview->metaObject()->className()) == QLatin1String("ParallelCoorView")) {
+        auto pcv = reinterpret_cast<ParallelCoorView *>(pview);
+
+        QMap<QString, QStringList> filter;
+        if (mod == 0) // bare left click
+        {
+            filter[pcv->getCurrentField()] << text();
+        } else if (mod == 1) // with Shift
+        {
+            filter = pcv->getFilter();
+            filter[pcv->getCurrentField()] << text();
+        } else if (mod == 2) // with Control
+        {
+            filter = pcv->getFilter();
+            filter[pcv->getCurrentField()].removeAll(text());
+        }
+
+        pcv->setFilter(filter);
+    }
+    qApp->restoreOverrideCursor();
 }
 
-void ParallelCoorValueItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
+void ParallelCoorValueItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 {
-	hoverEnter();
+    hoverEnter();
 }
 
-void ParallelCoorValueItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
+void ParallelCoorValueItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
 {
-	hoverLeave();
+    hoverLeave();
 }
 
-void ParallelCoorValueItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
+void ParallelCoorValueItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	event->accept();
+    event->accept();
 }
 
-void ParallelCoorValueItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+void ParallelCoorValueItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-	if(event->modifiers() & Qt::ShiftModifier)
-		click(1);
-	else if(event->modifiers() & Qt::ControlModifier)
-		click(2);
-	else
-		click();
+    if (event->modifiers() & Qt::ShiftModifier)
+        click(1);
+    else if (event->modifiers() & Qt::ControlModifier)
+        click(2);
+    else
+        click();
 }
 
 /**
-	Bars
+    Bars
 */
-ParallelCoorBarItem::ParallelCoorBarItem(const QString& field, QGraphicsView * pcv, QGraphicsItem * parent)
-	:QGraphicsLineItem(parent), pview(pcv), attachedField(field)
+ParallelCoorBarItem::ParallelCoorBarItem(const QString &field, QGraphicsView *pcv, QGraphicsItem *parent)
+    : QGraphicsLineItem(parent)
+    , pview(pcv)
+    , attachedField(field)
 {
-	setEnabled(true);
-	setAcceptHoverEvents ( true );
+    setEnabled(true);
+    setAcceptHoverEvents(true);
 }
 
-void ParallelCoorBarItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
+void ParallelCoorBarItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 {
-// 	qApp->setOverrideCursor(Qt::PointingHandCursor);
-	setPen(ParallelCoorView::pens["bar-hover"]);
-	if(QString(pview->metaObject()->className()) == QString("ParallelCoorView") )
-	{
-		ParallelCoorView *pcv = reinterpret_cast<ParallelCoorView*>(pview);
-		pcv->selectField(attachedField);
-	}
+    // 	qApp->setOverrideCursor(Qt::PointingHandCursor);
+    setPen(ParallelCoorView::pens[QStringLiteral("bar-hover")]);
+    if (QLatin1String(pview->metaObject()->className()) == QLatin1String("ParallelCoorView")) {
+        auto pcv = reinterpret_cast<ParallelCoorView *>(pview);
+        pcv->selectField(attachedField);
+    }
 }
 
-void ParallelCoorBarItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
+void ParallelCoorBarItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
 {
-	setPen(ParallelCoorView::pens["bar"]);
-// 	qApp->restoreOverrideCursor();
+    setPen(ParallelCoorView::pens[QStringLiteral("bar")]);
+    // 	qApp->restoreOverrideCursor();
 }
 
-void ParallelCoorBarItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
+void ParallelCoorBarItem::mousePressEvent(QGraphicsSceneMouseEvent *)
 {
-// 	event->accept();
+    // 	event->accept();
 }
 
-void ParallelCoorBarItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+void ParallelCoorBarItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
 {
-// 	if(QString(pview->metaObject()->className()) == QString("ParallelCoorView") )
-// 	{
-// 		ParallelCoorView *pcv = reinterpret_cast<ParallelCoorView*>(pview);
-// 		pcv->selectField(attachedField);
-// 	}
-// 	qApp->restoreOverrideCursor();
+    // 	if(QString(pview->metaObject()->className()) == QString("ParallelCoorView") )
+    // 	{
+    // 		ParallelCoorView *pcv = reinterpret_cast<ParallelCoorView*>(pview);
+    // 		pcv->selectField(attachedField);
+    // 	}
+    // 	qApp->restoreOverrideCursor();
 }
 
 /**
-	Marks
+    Marks
 */
 
-ParallelCoorMarkItem::ParallelCoorMarkItem(ParallelCoorValueItem * relative, QGraphicsView * pcv, QGraphicsItem * parent)
-	:QGraphicsPathItem(parent), pview(pcv), value(relative)
+ParallelCoorMarkItem::ParallelCoorMarkItem(ParallelCoorValueItem *relative, QGraphicsView *pcv, QGraphicsItem *parent)
+    : QGraphicsPathItem(parent)
+    , pview(pcv)
+    , value(relative)
 {
-	setEnabled(true);
-	setAcceptHoverEvents ( true );
-	
-	setBrush(ParallelCoorView::brushes["mark"]);
-	setPen(QPen(Qt::transparent,0.0));
-	setPath(ParallelCoorView::markPath);
-	
+    setEnabled(true);
+    setAcceptHoverEvents(true);
+
+    setBrush(ParallelCoorView::brushes[QStringLiteral("mark")]);
+    setPen(QPen(Qt::transparent, 0.0));
+    setPath(ParallelCoorView::markPath);
 }
 
-void ParallelCoorMarkItem::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
+void ParallelCoorMarkItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-	setBrush(ParallelCoorView::brushes["mark-active"]);
-	value->hoverEnter();
-	QGraphicsPathItem::hoverEnterEvent(event);
+    setBrush(ParallelCoorView::brushes[QStringLiteral("mark-active")]);
+    value->hoverEnter();
+    QGraphicsPathItem::hoverEnterEvent(event);
 }
 
-void ParallelCoorMarkItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
+void ParallelCoorMarkItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-	setBrush(ParallelCoorView::brushes["mark"]);
-	value->hoverLeave();
-	QGraphicsPathItem::hoverLeaveEvent(event);
+    setBrush(ParallelCoorView::brushes[QStringLiteral("mark")]);
+    value->hoverLeave();
+    QGraphicsPathItem::hoverLeaveEvent(event);
 }
 
-void ParallelCoorMarkItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
+void ParallelCoorMarkItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	event->accept();
+    event->accept();
 }
 
-void ParallelCoorMarkItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+void ParallelCoorMarkItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-	if(event->modifiers() & Qt::ShiftModifier)
-		value->click(1);
-	else if(event->modifiers() & Qt::ControlModifier)
-		value->click(2);
-	else
-		value->click();
+    if (event->modifiers() & Qt::ShiftModifier)
+        value->click(1);
+    else if (event->modifiers() & Qt::ControlModifier)
+        value->click(2);
+    else
+        value->click();
 }
 
 void ParallelCoorView::slotSaveColors()
 {
-// 	qDebug()<<"ParallelCoorView::~ParallelCoorView()";
-// 	QString cat("Panose/%1");
-// 	QSettings settings;
-// 	foreach(QString attr, pens.keys())
-// 	{
-// 		qDebug()<<cat.arg(attr);
-// 		settings.setValue(cat.arg(attr),pens[attr].color() );
-// 	}
-// 	foreach(QString attr, brushes.keys())
-// 	{
-// 		qDebug()<<cat.arg(attr);
-// 		settings.setValue(cat.arg(attr),brushes[attr].color() );
-// 	}
+    // 	qDebug()<<"ParallelCoorView::~ParallelCoorView()";
+    // 	QString cat("Panose/%1");
+    // 	QSettings settings;
+    // 	for (const auto& attr : pens.keys())
+    // 	{
+    // 		qDebug()<<cat.arg(attr);
+    // 		settings.setValue(cat.arg(attr),pens[attr].color() );
+    // 	}
+    // 	for (const auto& attr : brushes.keys())
+    // 	{
+    // 		qDebug()<<cat.arg(attr);
+    // 		settings.setValue(cat.arg(attr),brushes[attr].color() );
+    // 	}
 }
 
 void ParallelCoorView::doConnect()
 {
-// 	connect(this, SIGNAL(destroyed( QObject* )), this, SLOT(slotSaveColors()));
+    // 	connect(this, SIGNAL(destroyed( QObject* )), this, SLOT(slotSaveColors()));
 }
 
-
-
-
-
-
-
-
-
-
+#include "moc_parallelcoor.cpp"

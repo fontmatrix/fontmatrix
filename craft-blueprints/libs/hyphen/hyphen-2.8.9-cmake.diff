@@ -1,0 +1,34 @@
+Upstream builds with autotools only. This CMakeLists.txt is what Craft builds it
+with on Windows: the two C files as a static library, the header installed.
+The library has no export declarations, so a DLL would need every symbol
+exported; a static library of two files is simpler and ships nothing extra.
+
+--- /dev/null
++++ b/CMakeLists.txt
+@@ -0,0 +1,26 @@
++# SPDX-FileCopyrightText: none
++# SPDX-License-Identifier: CC0-1.0
++#
++# Build file added by the Fontmatrix Craft blueprint; upstream has autotools only.
++cmake_minimum_required(VERSION 3.16)
++project(hyphen VERSION 2.8.9 LANGUAGES C)
++
++include(GNUInstallDirs)
++
++add_library(hyphen STATIC hyphen.c hnjalloc.c)
++target_include_directories(hyphen PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
++    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
++if(UNIX)
++    target_compile_definitions(hyphen PRIVATE UNX)
++endif()
++if(MSVC)
++    target_compile_definitions(hyphen PRIVATE _CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE)
++endif()
++
++install(TARGETS hyphen
++    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
++    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
++install(FILES hyphen.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
++install(FILES hyph_en_US.dic DESTINATION ${CMAKE_INSTALL_DATADIR}/hyphen OPTIONAL)

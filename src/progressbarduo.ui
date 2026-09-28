@@ -11,13 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string comment="@title:window">Exporting Font Book</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="Label0">
      <property name="text">
-      <string>TextLabel</string>
+      <string notr="true">TextLabel</string>
      </property>
     </widget>
    </item>
@@ -31,7 +31,7 @@
    <item row="2" column="0" colspan="2">
     <widget class="QLabel" name="Label1">
      <property name="text">
-      <string>TextLabel</string>
+      <string notr="true">TextLabel</string>
      </property>
     </widget>
    </item>
@@ -58,7 +58,7 @@
    <item row="4" column="1">
     <widget class="QPushButton" name="cancelButton">
      <property name="text">
-      <string>Cancel</string>
+      <string comment="@action:button">Cancel</string>
      </property>
     </widget>
    </item>

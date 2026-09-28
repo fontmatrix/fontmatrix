@@ -1,22 +1,8 @@
-/***************************************************************************
- *   Copyright (C) 2009 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2009 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef PANOSEMODEL_H
 #define PANOSEMODEL_H
@@ -24,38 +10,36 @@
 #include <QAbstractListModel>
 #include <QIcon>
 #include <QList>
-#include <QString>
 #include <QMap>
+#include <QString>
 
 class PanoseAttributeModel : public QAbstractListModel
 {
 public:
-	PanoseAttributeModel(QObject * parent);
+    explicit PanoseAttributeModel(QObject *parent);
 
-	virtual QVariant data(const QModelIndex& index, int role) const;
-	virtual int rowCount(const QModelIndex& parent) const;
+    [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
+    [[nodiscard]] int rowCount(const QModelIndex &parent) const override;
 
 private:
-	QStringList m_names;
-	QList<QIcon> m_icons;
+    QStringList m_names;
+    QList<QIcon> m_icons;
 };
-
-
 
 class PanoseValueModel : public QAbstractListModel
 {
 public:
-	PanoseValueModel(QObject * parent);
+    explicit PanoseValueModel(QObject *parent);
 
-	virtual QVariant data(const QModelIndex& index, int role) const;
-	virtual int rowCount(const QModelIndex& parent) const;
+    [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
+    [[nodiscard]] int rowCount(const QModelIndex &parent) const override;
 
-	void setCat(const int& cat);
+    void setCat(const int &cat);
 
 private:
-	int m_cat;
-	QMap<int, QList<QIcon> > m_icons;
-	QMap<int, QStringList> m_names;
+    int m_cat;
+    QMap<int, QList<QIcon>> m_icons;
+    QMap<int, QStringList> m_names;
 };
 
 #endif // PANOSEMODEL_H

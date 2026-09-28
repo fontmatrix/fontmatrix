@@ -1,119 +1,93 @@
-/***************************************************************************
- *   Copyright (C) 2007 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2007 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #include "dataloader.h"
 #include "fmpaths.h"
 
-#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QLocale>
 
-DataLoader::DataLoader ()
+DataLoader::DataLoader()
 {
-	load();
+    load();
 }
 
 void DataLoader::reload()
 {
-	load();
+    load();
 }
 
 void DataLoader::load()
 {
-	sm.clear();
-	pm.clear();
-	// First we load system samples
-	QDir samplesDir(FMPaths::ResourcesDir() + "Samples" );
-	foreach(QString ld,
-		samplesDir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs) )
-	{
-		QDir lang(samplesDir.absoluteFilePath(ld));
-		QLocale locale(ld);
-		QString loclang(QLocale::languageToString(locale.language()));
-		qDebug()<<ld<<loclang;
-		foreach(QString st,
-			lang.entryList(QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files) )
-		{
-			QFile fp(lang.absoluteFilePath(st));
-			if(fp.open(QIODevice::ReadOnly))
-			{
-				sm[loclang][st] = QString::fromUtf8(fp.readAll());
-			}
-		}
-	}
+    sm.clear();
+    pm.clear();
+    lm.clear();
 
-	// Then personals
-	QDir uDir(FMPaths::SamplesDir());
-	if(!uDir.exists())
-	{
-		qDebug()<<"Create Directory:"<<uDir.absolutePath();
-		uDir.mkpath(uDir.absolutePath());
-	}
-	else
-	{
-		foreach(QString ld, uDir.entryList(QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files) )
-		{
-			QFile fp(uDir.absoluteFilePath(ld));
-			if(fp.open(QIODevice::ReadOnly))
-			{
-				pm[ld] = QString::fromUtf8(fp.readAll());
-			}
-		}
-	}
+    // System samples — skip silently if the directory is absent (e.g. not yet installed)
+    QDir samplesDir(FMPaths::ResourcesDir() + QLatin1String("Samples"));
+    if (samplesDir.exists()) {
+        for (const auto entries = samplesDir.entryList(QDir::NoDotAndDotDot | QDir::AllDirs); const auto &ld : entries) {
+            QDir lang(samplesDir.absoluteFilePath(ld));
+            QLocale locale(ld);
+            // Qt does not know every language of the samples (Udmurt): such a group keeps
+            // the name of its directory rather than being called "C"
+            const QString loclang(locale.language() == QLocale::C ? ld : QLocale::languageToString(locale.language()));
+            lm.insert(loclang, locale);
+            for (const auto entriesList = lang.entryList(QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files); const auto &st : entriesList) {
+                QFile fp(lang.absoluteFilePath(st));
+                if (fp.open(QIODevice::ReadOnly)) {
+                    sm[loclang][st] = QString::fromUtf8(fp.readAll());
+                }
+            }
+        }
+    }
 
-	// Emergency !!
-	if(sm.isEmpty() && pm.isEmpty())
-	{
-		sm["Emergency"]["Text"] = QString("Emergency Text");
-	}
+    // User samples
+    QDir uDir(FMPaths::SamplesDir());
+    if (!uDir.exists()) {
+        uDir.mkpath(uDir.absolutePath());
+    } else {
+        for (const auto loopEntries = uDir.entryList(QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Files); const auto &ld : loopEntries) {
+            QFile fp(uDir.absoluteFilePath(ld));
+            if (fp.open(QIODevice::ReadOnly)) {
+                pm[ld] = QString::fromUtf8(fp.readAll());
+            }
+        }
+    }
+
+    // Fallback — keeps the UI functional when no samples are installed
+    if (sm.isEmpty() && pm.isEmpty()) {
+        sm[QStringLiteral("Emergency")][QStringLiteral("Text")] = QStringLiteral("Emergency Text");
+    }
 }
 
-// TODO
-bool DataLoader::update(const QString& name, const QString& sample)
+bool DataLoader::update(const QString &name, const QString &sample)
 {
-	qDebug()<<"DataLoader::update"<<name<<sample;
-	QDir uDir(FMPaths::SamplesDir());
-	QFile fp(uDir.absoluteFilePath(name));
-	if(fp.open(QIODevice::WriteOnly | QIODevice::Truncate))
-	{
-		if(fp.write(sample.toUtf8()) == sample.toUtf8().count())
-		{
-			pm[name] = sample;
-			return true;
-		}
-	}
-	return false;
-
+    QDir uDir(FMPaths::SamplesDir());
+    QFile fp(uDir.absoluteFilePath(name));
+    if (fp.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        const QByteArray utf8 = sample.toUtf8();
+        if (fp.write(utf8) == utf8.size()) {
+            pm[name] = sample;
+            return true;
+        }
+    }
+    return false;
 }
 
-bool DataLoader::remove(const QString& name)
+bool DataLoader::remove(const QString &name)
 {
-	QDir uDir(FMPaths::SamplesDir());
-	QFile fp(uDir.absoluteFilePath(name));
-	if(fp.exists())
-	{
-		if(fp.remove())
-		{
-			pm.remove(name);
-			return true;
-		}
-	}
-	return false;
+    QDir uDir(FMPaths::SamplesDir());
+    QFile fp(uDir.absoluteFilePath(name));
+    if (fp.exists()) {
+        if (fp.remove()) {
+            pm.remove(name);
+            return true;
+        }
+    }
+    return false;
 }

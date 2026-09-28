@@ -10,13 +10,13 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Font extractor</string>
+   <string comment="@title:window">Font extractor</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" >
    <item row="0" column="0" colspan="2" >
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
-      <string>Select PDF</string>
+      <string comment="@title:group">Select PDF</string>
      </property>
      <layout class="QGridLayout" name="gridLayout" >
       <item row="0" column="0" >
@@ -28,7 +28,7 @@
          </sizepolicy>
         </property>
         <property name="text" >
-         <string>File name</string>
+         <string comment="@label">File name</string>
         </property>
         <property name="buddy" >
          <cstring>browsePDF</cstring>
@@ -38,7 +38,7 @@
       <item row="0" column="1" >
        <widget class="QPushButton" name="browsePDF" >
         <property name="text" >
-         <string>&amp;Browse</string>
+         <string comment="@action:button">&amp;Browse</string>
         </property>
        </widget>
       </item>
@@ -48,7 +48,7 @@
    <item row="1" column="0" colspan="2" >
     <widget class="QGroupBox" name="groupBox_2" >
      <property name="title" >
-      <string>Fonts</string>
+      <string comment="@title:group">Fonts</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2" >
       <item row="0" column="0" colspan="3" >
@@ -60,14 +60,14 @@
       <item row="1" column="1" >
        <widget class="QPushButton" name="browseDir" >
         <property name="text" >
-         <string>&amp;Select Dir</string>
+         <string comment="@action:button">&amp;Select Dir</string>
         </property>
        </widget>
       </item>
       <item row="1" column="2" >
        <widget class="QPushButton" name="extractButton" >
         <property name="text" >
-         <string>&amp;Extract</string>
+         <string comment="@action:button">&amp;Extract</string>
         </property>
        </widget>
       </item>
@@ -77,7 +77,7 @@
    <item row="2" column="1" >
     <widget class="QPushButton" name="pushButton" >
      <property name="text" >
-      <string>Close</string>
+      <string comment="@action:button">Close</string>
      </property>
     </widget>
    </item>

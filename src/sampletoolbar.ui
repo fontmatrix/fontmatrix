@@ -11,13 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Font Size:</string>
+      <string comment="@label">Font Size:</string>
      </property>
      <property name="buddy">
       <cstring>liveSize</cstring>
@@ -34,7 +34,7 @@
    <item row="0" column="2">
     <widget class="QToolButton" name="sampleButton">
      <property name="text">
-      <string>Samples</string>
+      <string comment="@action:button">Samples</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -53,7 +53,7 @@
    <item row="0" column="3">
     <widget class="QToolButton" name="opentypeButton">
      <property name="text">
-      <string>OpenType</string>
+      <string comment="@action:button">OpenType</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -69,19 +69,41 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="5">
+   <item row="0" column="4">
+    <widget class="QToolButton" name="variationsButton">
+     <property name="toolTip">
+      <string comment="@info:tooltip">The axes of a variable font</string>
+     </property>
+     <property name="text">
+      <string comment="@action:button">Variations</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonTextBesideIcon</enum>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
+     <property name="arrowType">
+      <enum>Qt::UpArrow</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
     <widget class="QComboBox" name="languageCombo">
      <property name="toolTip">
-      <string>Depending of the font, some scripts 
+      <string comment="@info:tooltip">Depending of the font, some scripts 
 are especially supported if processed 
 through some logic (ICU here).</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
+   <item row="0" column="5">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Shaping:</string>
+      <string comment="@label">Shaping:</string>
      </property>
      <property name="buddy">
       <cstring>languageCombo</cstring>

@@ -1,50 +1,49 @@
-/***************************************************************************
- *   Copyright (C) 2007 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2007 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef DATALOADER_H
 #define DATALOADER_H
 
+#include <QLocale>
 #include <QMap>
 #include <QString>
 
 /**
-	@author Pierre Marchand <pierre@oep-h.com>
+    @author Pierre Marchand <pierre@oep-h.com>
 */
 class DataLoader
 {
-	
-	QMap<QString, QMap<QString,QString> > sm;
-	QMap<QString,QString> pm;
+    QMap<QString, QMap<QString, QString>> sm;
+    QMap<QString, QString> pm;
+    /// the language of each group of system samples, which the group only names
+    QMap<QString, QLocale> lm;
 
-	void load();
+    void load();
+
 public:
-	DataLoader();
-	~DataLoader(){}
+    DataLoader();
+    ~DataLoader() = default;
 
-	bool update(const QString& name, const QString& sample);
-	bool remove(const QString& name);
-	void reload();
+    bool update(const QString &name, const QString &sample);
+    bool remove(const QString &name);
+    void reload();
 
-
-	const QMap<QString, QMap<QString,QString> >& systemSamples()const{return sm;}
-	const QMap<QString,QString>& userSamples()const{return pm;}
-
+    [[nodiscard]] const QMap<QString, QMap<QString, QString>> &systemSamples() const
+    {
+        return sm;
+    }
+    [[nodiscard]] const QMap<QString, QString> &userSamples() const
+    {
+        return pm;
+    }
+    /// the language of a group of system samples ("Bulgarian"); C when the group is not one
+    [[nodiscard]] QLocale sampleLocale(const QString &group) const
+    {
+        return lm.value(group, QLocale::c());
+    }
 };
 
 #endif

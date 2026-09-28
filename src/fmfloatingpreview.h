@@ -1,28 +1,14 @@
-/***************************************************************************
- *   Copyright (C) 2007 by Pierre Marchand   *
- *   pierre@oep-h.com   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2007 Pierre Marchand <pierre@oep-h.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef FMFLOATINGPREVIEW_H
 #define FMFLOATINGPREVIEW_H
 
-#include <QWidget>
 #include <QRect>
+#include <QWidget>
 
 class QPushButton;
 class QGridLayout;
@@ -35,63 +21,62 @@ class FontItem;
 
 class FMFloatingMenu : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	FMFloatingMenu(QWidget * parent, FontItem * item);
-	void childrenVisible(bool v);
+    FMFloatingMenu(QWidget *parent, FontItem *item);
+    void childrenVisible(bool v);
 
-//protected:
-//	void enterEvent(QEvent * e);
-//	void leaveEvent(QEvent *e);
+    // protected:
+    //	void enterEvent(QEvent * e);
+    //	void leaveEvent(QEvent *e);
 
 private:
-	FontItem * fontItem;
-	QPushButton * closeButton;
-	QPushButton * actButton;
-	QFrame * line;
-	QGridLayout * menuLayout;
-	QLabel * fontName;
-	QLineEdit * text;
+    FontItem *fontItem = nullptr;
+    QPushButton *closeButton = nullptr;
+    QPushButton *actButton = nullptr;
+    QFrame *line = nullptr;
+    QGridLayout *menuLayout = nullptr;
+    QLabel *fontName = nullptr;
+    QLineEdit *text = nullptr;
 
+private Q_SLOTS:
+    void forwardCloseClicked();
+    void activateFont();
 
-private slots:
-	void forwardCloseClicked();
-	void activateFont();
-
-signals:
-	void closeClicked();
+Q_SIGNALS:
+    void closeClicked();
 };
 
 class FontItem;
 class FMFloatingPreview : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	FMFloatingPreview(QWidget * parent, FontItem * item);
+    FMFloatingPreview(QWidget *parent, FontItem *item);
+
 public:
-	~FMFloatingPreview();
-	static void create(FontItem* item, QRect pos=QRect());
+    ~FMFloatingPreview() override;
+    static void create(FontItem *item, QRect pos = QRect());
 
 protected:
-	void mousePressEvent(QMouseEvent * e);
-	void mouseReleaseEvent(QMouseEvent * e);
-	void mouseMoveEvent(QMouseEvent * e);
-	void enterEvent(QEvent *e);
-	void leaveEvent(QEvent *e);
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void enterEvent(QEvent *e);
+    void leaveEvent(QEvent *e) override;
 
 private:
-	FontItem *fontItem;
-	bool hasMouseGrab;
-	QPoint refPoint;
-	FMFloatingMenu * menuWidget;
-	QVBoxLayout * mainLayout;
-	QLabel * previewLabel;
+    FontItem *fontItem = nullptr;
+    bool hasMouseGrab;
+    QPoint refPoint;
+    FMFloatingMenu *menuWidget = nullptr;
+    QVBoxLayout *mainLayout = nullptr;
+    QLabel *previewLabel = nullptr;
 
-	bool canTransparent();
+    bool canTransparent();
 
-public slots:
-	void updatePreview(const QString& t);
-
+public Q_SLOTS:
+    void updatePreview(const QString &t);
 };
 
 #endif // FMFLOATINGPREVIEW_H

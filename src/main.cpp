@@ -15,14 +15,18 @@
 #include <QPixmap>
 #include <QSettings>
 #include <QSplashScreen>
+#include <QStandardPaths>
+#include <QStyleHints>
 #include <QThread>
 
 #include <KAboutData>
 #include <KConfigGroup>
 #include <KCrash>
 #include <KDBusService>
+#include <KIconTheme>
 #include <KLocalizedString>
 #include <KSharedConfig>
+#include <KStyleManager>
 
 #include "fmconfig.h"
 #include "fmpaths.h"
@@ -43,6 +47,35 @@
 #endif
 
 bool __FM_SHOW_FONTLOADED;
+
+namespace
+{
+/**
+ * On Plasma without Plasma's own Qt integration, as in the AppImage, Qt's built-in KDE
+ * theme applies the colours of kdeglobals, but KColorSchemeManager, which
+ * KIconTheme::initTheme() starts, does not recognise it and puts Breeze or Breeze Dark in
+ * their place. A scheme path on the application tells it the colours are set already; it
+ * clears the path each time it looks, so the path is set again whenever the system scheme
+ * changes, before the manager hears of it.
+ */
+void keepKdeglobalsColours()
+{
+    // initTheme() left the icons to a platform theme that does the colours as well
+    if (QIcon::themeName() != QLatin1String("KIconEngine"))
+        return;
+    if (!qEnvironmentVariable("XDG_CURRENT_DESKTOP").split(QLatin1Char(':')).contains(QLatin1String("KDE")))
+        return;
+    const QString kdeglobals = QStandardPaths::locate(QStandardPaths::GenericConfigLocation, QStringLiteral("kdeglobals"));
+    if (kdeglobals.isEmpty())
+        return;
+
+    const auto markColoursSet = [kdeglobals] {
+        qApp->setProperty("KDE_COLOR_SCHEME_PATH", kdeglobals);
+    };
+    markColoursSet();
+    QObject::connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged, qApp, markColoursSet);
+}
+}
 
 /**
  *
@@ -83,8 +116,16 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 #endif
 
+    // Outside Plasma — the AppImage, Windows, another desktop — nothing else themes the
+    // application: Breeze icons recoloured to the palette, the colour scheme of the system,
+    // and the style the user chose (Fusion where Breeze is not installed, as in the
+    // packages Craft makes). Under Plasma's platform theme both calls leave everything to it.
+    KIconTheme::initTheme();
+
     Q_INIT_RESOURCE(application);
     QApplication app(argc, argv);
+    KStyleManager::initStyle();
+    keepKdeglobalsColours();
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("fontmatrix"), QIcon(QStringLiteral(":/fontmatrix_icon.png"))));
 
     KLocalizedString::setApplicationDomain("fontmatrix");

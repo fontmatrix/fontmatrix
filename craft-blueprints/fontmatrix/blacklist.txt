@@ -70,3 +70,8 @@ bin/balsamui(\.exe)?
 # AppImage they would be the only other .desktop files, and an AppImage
 # integration tool would offer them as applications.
 share/applications/.*-geo-handler\.desktop
+
+# Fontconfig in the AppImage: the host's is used, as the AppImage exclude list
+# recommends. Craft's copy is older than the configuration in the host's
+# /etc/fonts, and warns about every file it does not understand.
+lib/libfontconfig\.so.*

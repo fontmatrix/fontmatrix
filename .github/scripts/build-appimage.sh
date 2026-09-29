@@ -33,6 +33,12 @@ CRAFTMASTER=/opt/craftmaster
 # needs: the compiler, Python for Craft, and the X11, Wayland and OpenGL
 # headers the Qt of the binary cache was built against. Its CMake packages ask
 # for them again when Fontmatrix links to Qt.
+#
+# fontconfig as well: the AppImage uses the host's, since Craft's copy is older
+# than the configuration in a current /etc/fonts and warns about every file it
+# does not understand. craft-blueprints/fontmatrix/blacklist.txt keeps Craft's
+# out of the package, and linuxdeploy, which has libfontconfig.so.1 on its
+# exclude list, still has to find one before it skips it.
 dnf install -y 'dnf-command(config-manager)'
 dnf config-manager --set-enabled crb
 dnf install -y \
@@ -42,7 +48,7 @@ dnf install -y \
     libXi-devel libXcursor-devel libXrandr-devel \
     xcb-util-devel xcb-util-cursor-devel xcb-util-keysyms-devel xcb-util-renderutil-devel \
     xcb-util-wm-devel xcb-util-image-devel xorg-x11-util-macros \
-    flex bison gperf systemd-devel libmount-devel appstream
+    flex bison gperf systemd-devel libmount-devel appstream fontconfig
 
 PKG_CONFIG_PATH="$(/usr/bin/pkg-config --variable pc_path pkg-config)"
 export PKG_CONFIG_PATH
@@ -84,9 +90,12 @@ cp -r "$SRC"/craft-blueprints/* "$BLUEPRINTS/"
 craftmaster -c --install-deps fontmatrix
 craftmaster -c --no-cache --ignoreInstalled --options "fontmatrix.srcDir=$SRC" fontmatrix
 craftmaster -c -i --update linuxdeploy
+
+# Packages of earlier runs stay there when /craft is kept between runs.
+packageDir="$(craftmaster -c -q --get 'packageDestinationDir()' virtual/base | tail -n 1)"
+rm -f "$packageDir"/fontmatrix-*.AppImage "$packageDir"/fontmatrix-*.AppImage.sha256
 craftmaster -c --package --options "fontmatrix.srcDir=$SRC" fontmatrix
 
-packageDir="$(craftmaster -c -q --get 'packageDestinationDir()' virtual/base | tail -n 1)"
 mkdir -p "$OUT"
 cp -v "$packageDir"/fontmatrix-*.AppImage "$OUT/"
 cp -v "$packageDir"/fontmatrix-*.AppImage.sha256 "$OUT/" 2>/dev/null || true

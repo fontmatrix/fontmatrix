@@ -89,13 +89,14 @@
   </screenshots>
 
   <releases>
-    <release version="1.0.1" date="2026-09-29">
+    <release version="1.0.1" date="2026-09-30">
       <url type="details">https://github.com/fontmatrix/fontmatrix/releases/tag/v1.0.1</url>
       <description>
         <ul>
           <li>The Flatpak no longer needs access to the whole home folder: files are opened and saved through the file chooser</li>
           <li>The single-instance D-Bus service is named after the application ID</li>
           <li>Built on the KDE 6.11 Flatpak runtime</li>
+          <li>An AppImage for Linux distributions with glibc 2.34 or newer</li>
         </ul>
       </description>
     </release>

@@ -65,3 +65,8 @@ bin/balsamui(\.exe)?
 
 # Symbol files — debug, never shipped.
 .*\.pdb
+
+# URL handlers of kio's geo: scheme, which come along with the frameworks. In the
+# AppImage they would be the only other .desktop files, and an AppImage
+# integration tool would offer them as applications.
+share/applications/.*-geo-handler\.desktop

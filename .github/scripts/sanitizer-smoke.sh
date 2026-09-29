@@ -4,6 +4,10 @@
 #
 #   sanitizer-smoke.sh <path to the fontmatrix binary> [seconds]
 #
+# CI also starts the AppImage with it (APPIMAGE_EXTRACT_AND_RUN=1), on a
+# distribution without Qt and KDE Frameworks; there the sanitizers are simply
+# not there, and what counts is that the start writes a database.
+#
 # A new, private profile is used: the start imports the system fonts, which
 # exercises FreeType, HarfBuzz, the database and the list views. There is no
 # display, the window never closes by itself, so the timeout is the normal end.

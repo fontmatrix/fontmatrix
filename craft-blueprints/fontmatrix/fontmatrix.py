@@ -2,14 +2,13 @@
 #
 # KDE Craft blueprint for Fontmatrix.
 #
-# This is consumed on Windows (and optionally macOS) by KDE Craft to build
-# Fontmatrix and produce installer artifacts. It is NOT used on Linux,
-# where the system package manager + Flatpak handle dependencies.
+# KDE Craft builds Fontmatrix with it for the Windows installer and for the
+# Linux AppImage; distribution packages and the Flatpak do not use it.
 #
 # Blueprint deployment in CI: copied at install time to
 #   <CraftRoot>/etc/blueprints/locations/fontmatrix/fontmatrix/fontmatrix.py
-# See .github/workflows/build.yml for the exact wiring, and
-# BUILDING-WINDOWS.md for local-developer setup.
+# See .github/workflows/build.yml and .github/scripts/build-appimage.sh for the
+# exact wiring, and BUILDING-WINDOWS.md for local-developer setup.
 #
 # Pattern derived from the upstream Kirigami tutorial blueprint:
 #   https://develop.kde.org/docs/getting-started/building/craft/
@@ -75,6 +74,9 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/hyphen"] = None
         # the gzip-compressed documents of OpenType-SVG fonts
         self.runtimeDependencies["libs/zlib"] = None
+        if CraftCore.compiler.isLinux:
+            # switching fonts on and off for the other applications
+            self.runtimeDependencies["libs/fontconfig"] = None
 
 
 class Package(CMakePackageBase):
@@ -84,8 +86,10 @@ class Package(CMakePackageBase):
         # No -DCMAKE_BUILD_TYPE: Craft appends its own after the blueprint's
         # args, so one set here has no effect. It comes from Compile/BuildType
         # in .github/craft/CraftConfig.ini.
+        # The polkit helper for activation for all users would have to be installed on the
+        # host, which an AppImage cannot do.
         cmake_args = [
-            "-DWANT_FONTCONFIG=false",
+            "-DCMAKE_DISABLE_FIND_PACKAGE_KF6Auth=ON",
         ]
         for component in ("MAJOR", "MINOR", "PATCH"):
             value = os.environ.get(f"CRAFT_FONTMATRIX_VERSION_{component}")
@@ -114,6 +118,10 @@ class Package(CMakePackageBase):
     def createPackage(self):
         self.defines["appname"] = "fontmatrix"
         self.defines["company"] = "Fontmatrix"
+        self.defines["website"] = "https://github.com/fontmatrix/fontmatrix"
+        # The AppImage packager looks for share/applications/*<desktopFile>.desktop,
+        # <appname> by default; the file is named after the application ID.
+        self.defines["desktopFile"] = "com.github.fontmatrix.Fontmatrix"
         # NSIS template references @{version}; Craft only auto-fills it
         # when a concrete svnTarget version is set, so set it defensively.
         self.defines["version"] = os.environ.get("CRAFT_FONTMATRIX_VERSION_FULL", "0.0.0")
@@ -139,8 +147,8 @@ class Package(CMakePackageBase):
 
         # Drop random executables that came along with build deps but aren't
         # ours (e.g. qmldom.exe, androiddeployqt.exe, openssl.exe). Same
-        # pattern as kate.py.
-        self.addExecutableFilter(r"(bin|libexec)/(?!fontmatrix\.exe).*")
+        # pattern as kate.py; bin/fontmatrix on Linux, bin/fontmatrix.exe on Windows.
+        self.addExecutableFilter(r"(bin|libexec)/(?!fontmatrix(\.exe)?$).*")
 
         self.ignoredPackages.append("binary/mysql")
         # qtdeclarative is NOT ignored, even though Fontmatrix is a pure

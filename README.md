@@ -29,5 +29,6 @@ https://www.mail-archive.com/undertype-users@gna.org/maillist.html
 
 Fontmatrix is currently not shipped for macOS, and macOS contributors are
 wanted. Flatpak build is
-[available on Flathub](https://flathub.org/apps/details/com.github.fontmatrix.Fontmatrix), 
-AppImage build could be created by interested contributors.
+[available on Flathub](https://flathub.org/apps/details/com.github.fontmatrix.Fontmatrix),
+and an AppImage and the Windows installer are attached to each
+[release](https://github.com/fontmatrix/fontmatrix/releases).

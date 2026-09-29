@@ -44,3 +44,6 @@ __pycache__/
 
 # Written by KDEClangFormat when CMake runs; the style itself lives in ECM
 /.clang-format
+
+# AppImage built by .github/scripts/build-appimage.sh
+/appimage-out/

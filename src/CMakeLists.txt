@@ -258,6 +258,7 @@ IF(UNIX AND NOT APPLE)
 	KF6::StatusNotifierItem
 	KF6::DBusAddons
 	KF6::Crash
+	KF6::IconThemes
 	)
 
 	INSTALL(TARGETS fontmatrix
@@ -361,6 +362,7 @@ IF(APPLE)
 	KF6::StatusNotifierItem
 	KF6::DBusAddons
 	KF6::Crash
+	KF6::IconThemes
 	)
 
 	# here we’ll poupulate the bundle in order to make it
@@ -440,6 +442,7 @@ IF(WIN32)
 	KF6::StatusNotifierItem
 	KF6::DBusAddons
 	KF6::Crash
+	KF6::IconThemes
 	# font activation: the per-user font registry key and AddFontResource()
 	advapi32
 	gdi32

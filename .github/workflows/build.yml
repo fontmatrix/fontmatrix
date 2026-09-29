@@ -159,7 +159,7 @@ jobs:
             echo "version=$VER"         >> "$GITHUB_OUTPUT"
             echo "is_release=true"      >> "$GITHUB_OUTPUT"
             # Tag builds only: untagged builds keep CMakeLists' in-tree
-            # version default (0.11.0) rather than being stamped 0.0.0.
+            # version default rather than being stamped 0.0.0.
             {
               echo "CRAFT_FONTMATRIX_VERSION_MAJOR=$MAJOR"
               echo "CRAFT_FONTMATRIX_VERSION_MINOR=$MINOR"
@@ -469,9 +469,124 @@ jobs:
             !C:/Craft/windows-msvc2022_64-cl/build/fontmatrix/**
             !C:/Craft/windows-msvc2022_64-cl/tmp/**
 
+  # The AppImage, built with KDE Craft on AlmaLinux 9 as KDE builds its own
+  # (.github/scripts/build-appimage.sh), so that KDE's linux-gcc-x86_64 binary
+  # cache applies. glibc 2.34 is the oldest the AppImage runs on.
+  appimage:
+    name: Build AppImage
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: almalinux:9.8
+    env:
+      # Toolchain and build type are part of the identity of a Craft root, as
+      # in the Windows job.
+      CRAFT_CACHE_KEY: craft-alma9-linux-gcc-relwithdebinfo-x86_64-v1
+    steps:
+      # actions/checkout falls back to a tarball without git in the container.
+      - name: Install git
+        run: dnf install -y git-core
+
+      - uses: actions/checkout@v6
+
+      - name: Determine version
+        id: version
+        run: |
+          if echo "${{ github.ref }}" | grep -qE '^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            VER="${{ github.ref_name }}"
+            VER="${VER#v}"
+            {
+              echo "CRAFT_FONTMATRIX_VERSION_MAJOR=$(echo $VER | cut -d. -f1)"
+              echo "CRAFT_FONTMATRIX_VERSION_MINOR=$(echo $VER | cut -d. -f2)"
+              echo "CRAFT_FONTMATRIX_VERSION_PATCH=$(echo $VER | cut -d. -f3)"
+            } >> "$GITHUB_ENV"
+          else
+            SHORT="${{ github.sha }}"
+            VER="git-${SHORT:0:7}"
+          fi
+          echo "version=$VER" >> "$GITHUB_OUTPUT"
+          echo "CRAFT_FONTMATRIX_VERSION_FULL=$VER" >> "$GITHUB_ENV"
+
+      - name: Restore Craft cache
+        id: cache-craft
+        uses: actions/cache/restore@v5
+        with:
+          key: ${{ env.CRAFT_CACHE_KEY }}-${{ hashFiles('craft-blueprints/**/*', '.github/craft/CraftConfig.ini') }}
+          restore-keys: |
+            ${{ env.CRAFT_CACHE_KEY }}-
+          path: |
+            /craft
+            !/craft/linux-64-gcc/build/fontmatrix/**
+            !/craft/linux-64-gcc/tmp/**
+
+      - name: Build the AppImage with Craft
+        run: .github/scripts/build-appimage.sh appimage-out
+
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v7
+        with:
+          name: fontmatrix-appimage
+          path: |
+            appimage-out/fontmatrix-*.AppImage
+            appimage-out/fontmatrix-*.AppImage.sha256
+          if-no-files-found: error
+
+      # As in the Windows job: never store a half-set-up Craft root. hashFiles()
+      # only sees the workspace, so the check is a step of its own.
+      - name: Check Craft root is worth caching
+        id: craft-usable
+        if: always()
+        run: |
+          if [ -f /craft/linux-64-gcc/etc/CraftSettings.ini ] && [ -f /craft/craft-clone/bin/craft.py ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Save Craft cache
+        if: always() && steps.cache-craft.outputs.cache-hit != 'true' && steps.craft-usable.outputs.ok == 'true'
+        uses: actions/cache/save@v5
+        with:
+          key: ${{ env.CRAFT_CACHE_KEY }}-${{ hashFiles('craft-blueprints/**/*', '.github/craft/CraftConfig.ini') }}
+          path: |
+            /craft
+            !/craft/linux-64-gcc/build/fontmatrix/**
+            !/craft/linux-64-gcc/tmp/**
+
+  # Starts the AppImage on another distribution, which has neither Qt nor KDE
+  # Frameworks: whatever the package forgot to bundle shows up here.
+  appimage-start:
+    name: Start AppImage
+    needs: appimage
+    runs-on: ubuntu-latest
+    container:
+      image: debian:12
+    steps:
+      - name: Install what a desktop has anyway
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            dbus libegl1 libglx0 libopengl0 libx11-6 libx11-xcb1 libxcb1 libdrm2 \
+            libwayland-client0 fontconfig fonts-dejavu-core
+
+      - uses: actions/checkout@v6
+
+      - uses: actions/download-artifact@v7
+        with:
+          name: fontmatrix-appimage
+          path: appimage
+
+      - name: Start on a new profile
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: 1
+        run: |
+          chmod +x appimage/fontmatrix-*.AppImage
+          .github/scripts/sanitizer-smoke.sh "$(ls appimage/fontmatrix-*.AppImage)" 90
+
   release:
     name: Publish to Release
-    needs: [ flatpak, windows ]
+    needs: [ flatpak, windows, appimage-start ]
 
     if: startsWith(github.ref, 'refs/tags/v') && github.ref_type == 'tag'
     runs-on: ubuntu-latest
@@ -520,6 +635,13 @@ jobs:
           name: fontmatrix-windows-portable
           path: release-artifacts/
 
+      - name: Download AppImage
+        if: steps.check-branch.outputs.on_master == 'true'
+        uses: actions/download-artifact@v7
+        with:
+          name: fontmatrix-appimage
+          path: release-artifacts/
+
       - name: Upload artifacts to GitHub Release
         if: steps.check-branch.outputs.on_master == 'true'
         uses: softprops/action-gh-release@v3
@@ -528,4 +650,5 @@ jobs:
             release-artifacts/fontmatrix-*.flatpak
             release-artifacts/fontmatrix-*.exe
             release-artifacts/fontmatrix-*.7z
+            release-artifacts/fontmatrix-*.AppImage
             release-artifacts/fontmatrix-*.sha256

@@ -11,11 +11,23 @@ flatpak install flathub com.github.fontmatrix.Fontmatrix
 flatpak run com.github.fontmatrix.Fontmatrix
 ```
 
+### AppImage (Linux, any distribution)
+
+An AppImage is attached to each
+[GitHub Release](https://github.com/fontmatrix/fontmatrix/releases). It carries Qt, KDE
+Frameworks and the other libraries, and runs on distributions with glibc 2.34 or newer
+(Debian 12, Ubuntu 22.04, RHEL 9 and later):
+
+```bash
+chmod +x fontmatrix-*-linux-gcc-x86_64.AppImage
+./fontmatrix-*-linux-gcc-x86_64.AppImage
+```
+
 ### Windows
 
-A pre-built MSI installer and portable ZIP are attached to each
+A pre-built installer and a portable 7z archive are attached to each
 [GitHub Release](https://github.com/fontmatrix/fontmatrix/releases).
-Download and run the MSI — Qt and FreeType runtime DLLs are bundled.
+Download and run the installer — Qt, KDE Frameworks and the MSVC runtime are bundled.
 
 ---
 
@@ -28,7 +40,7 @@ Download and run the MSI — Qt and FreeType runtime DLLs are bundled.
 | CMake | ≥ 3.16 | |
 | C++ compiler | C++20 | GCC / Clang / MSVC 2022 |
 | Qt 6 | ≥ 6.8 | Core, Widgets, Svg, SvgWidgets, Sql, Xml, PrintSupport, Network |
-| KDE Frameworks 6 and extra-cmake-modules | ≥ 6.12 | CoreAddons, I18n, Config, XmlGui, ConfigWidgets, WidgetsAddons, StatusNotifierItem, DBusAddons, Crash; DocTools is optional (handbook) |
+| KDE Frameworks 6 and extra-cmake-modules | ≥ 6.12 | CoreAddons, I18n, Config, XmlGui, ConfigWidgets, WidgetsAddons, StatusNotifierItem, DBusAddons, Crash, IconThemes; DocTools is optional (handbook) |
 | PoDoFo | ≥ 0.10 | optional: *Tools → Extract fonts* (the fonts embedded in a PDF file). Without it, or with 0.9, whose API is another one, the application is built without that entry |
 | HarfBuzz | ≥ 2.6.8 | built with FreeType support; Qt 6 depends on it already. COLR version 1 glyphs (gradients) are painted with 7.0 or later, older ones show their base glyph |
 | libhyphen | | hyphenation of the sample texts (hunspell's `hyphen`); the KDE Flatpak runtime has it, Craft builds it from `craft-blueprints/libs/hyphen` |
@@ -90,6 +102,22 @@ flatpak install org.kde.Platform//6.11 org.kde.Sdk//6.11
 flatpak-builder --user --install --force-clean \
                 build-flatpak com.github.fontmatrix.Fontmatrix.json
 ```
+
+---
+
+### Linux — AppImage (build locally)
+
+The AppImage is built with [KDE Craft](https://community.kde.org/Craft) as KDE builds its own:
+on AlmaLinux 9, whose Qt and KDE Frameworks come from KDE's binary cache, from the same
+`craft-blueprints/` as the Windows build. `.github/scripts/build-appimage.sh` does all of it in a
+container; a volume keeps the Craft root, so only the first run downloads the dependencies:
+
+```bash
+podman run --rm -v "$PWD":/src -v fontmatrix-craft:/craft -w /src \
+    almalinux:9.8 .github/scripts/build-appimage.sh
+```
+
+The AppImage lands in `appimage-out/`. `docker run` works the same way.
 
 ---
 

@@ -1,0 +1,7 @@
+{
+    "com.github.fontmatrix.Fontmatrix": {
+        "appid-uses-code-hosting-domain": "Granted by Flathub: the application ID predates the rule",
+        "finish-args-unnecessary-xdg-data-fonts-rw-access": "Activating a font places it in ~/.local/share/fonts/fontmatrix, where the fontconfig of every other application finds it",
+        "finish-args-unnecessary-xdg-config-fontconfig-rw-access": "Hiding a system font writes ~/.config/fontconfig/conf.d/60-fontmatrix-rejects.conf"
+    }
+}

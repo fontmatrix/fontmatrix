@@ -9,7 +9,7 @@ endif()
 
 SET(VERSION_MAJOR "1" CACHE STRING "")
 SET(VERSION_MINOR "0" CACHE STRING "")
-SET(VERSION_PATCH "0" CACHE STRING "")
+SET(VERSION_PATCH "1" CACHE STRING "")
 SET (VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
 ADD_DEFINITIONS(-DFONTMATRIX_VERSION_MAJOR=${VERSION_MAJOR} -DFONTMATRIX_VERSION_MINOR=${VERSION_MINOR} -DFONTMATRIX_VERSION_PATCH=${VERSION_PATCH})
 MESSAGE(STATUS "Building Fontmatrix ${VERSION}")
@@ -43,7 +43,7 @@ MESSAGE(STATUS "Fontmatrix will be installed under ${CMAKE_INSTALL_PREFIX}")
 # pipeline (packaging, vcpkg-based KF6 acquisition) is deferred.
 # The oldest versions the project is built and run against: Debian 13 (Qt 6.8.2, KDE
 # Frameworks 6.13) and Ubuntu 25.04 (Qt 6.8.3, KDE Frameworks 6.12), both in a container, with
-# warnings as errors and a start of the application. CI covers the Flatpak runtime 6.10,
+# warnings as errors and a start of the application. CI covers the Flatpak runtime 6.11,
 # Arch and KDE Craft, all newer. Nothing older has been tried.
 set(QT_MIN_VERSION "6.8.0")
 set(KF_MIN_VERSION "6.12.0")

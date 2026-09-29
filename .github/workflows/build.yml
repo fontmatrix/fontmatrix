@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: read
     container:
-      image: ghcr.io/flathub-infra/flatpak-github-actions:kde-6.10
+      image: ghcr.io/flathub-infra/flatpak-github-actions:kde-6.11
       options: --privileged
     steps:
       - uses: actions/checkout@v6
@@ -49,7 +49,7 @@ jobs:
           import json
           m = json.load(open('com.github.fontmatrix.Fontmatrix.json'))
           mod = next(mod for mod in m['modules'] if mod['name'] == 'fontmatrix')
-          mod['config-opts'] = [
+          mod['config-opts'] = mod.get('config-opts', []) + [
             '-DVERSION_MAJOR=${{ steps.version.outputs.major }}',
             '-DVERSION_MINOR=${{ steps.version.outputs.minor }}',
             '-DVERSION_PATCH=${{ steps.version.outputs.patch }}',
@@ -57,11 +57,28 @@ jobs:
           json.dump(m, open('com.github.fontmatrix.Fontmatrix.json', 'w'), indent=4)
           "
 
+      # Flathub runs the same linter on every submission. The exceptions file names the
+      # errors Flathub has granted, or is asked to grant, for this application; it replaces
+      # Flathub's own list, so it must hold all of them.
+      - name: Lint Flatpak manifest
+        run: >
+          flatpak-builder-lint --exceptions --gha-format
+          --user-exceptions .github/flatpak-lint-exceptions.json
+          manifest com.github.fontmatrix.Fontmatrix.json
+
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           bundle: fontmatrix-${{ steps.version.outputs.version }}.flatpak
           manifest-path: com.github.fontmatrix.Fontmatrix.json
           cache-key: flatpak-builder-${{ github.sha }}
+          # as Flathub's own builds do; the linter rejects screenshots it cannot find there
+          mirror-screenshots-url: https://dl.flathub.org/media/
+
+      - name: Lint Flatpak repository
+        run: >
+          flatpak-builder-lint --exceptions --gha-format
+          --user-exceptions .github/flatpak-lint-exceptions.json
+          repo repo
 
       - name: Upload Flatpak artifact
         uses: actions/upload-artifact@v7

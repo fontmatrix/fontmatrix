@@ -113,8 +113,7 @@ int main(int argc, char *argv[])
     aboutData.setOrganizationDomain(QByteArrayLiteral("io.fontmatrix"));
     // The name of the installed .desktop file; without it KAboutData makes one up from the
     // reversed domain ("fontmatrix.io.fontmatrix") and a Wayland compositor finds no launcher
-    // for the window. KDBusService builds its bus name the same way, fontmatrix.io.fontmatrix:
-    // a Flatpak may only own its application ID, so the manifest grants that name explicitly.
+    // for the window.
     aboutData.setDesktopFileName(QStringLiteral("com.github.fontmatrix.Fontmatrix"));
     // Authors and contributors — preserved from the legacy "The People" tab
     // of the old About dialog (src/messages/about_people.html).
@@ -241,7 +240,18 @@ int main(int argc, char *argv[])
     // It does not weaken the guard on Linux — a duplicate instance exits from
     // a separate branch of KDBusService that activates the running process,
     // and that branch is not governed by this flag.
+    //
+    // The bus name is the application ID, the only name a Flatpak may own without an
+    // --own-name permission. KDBusService builds it from the organization domain and the
+    // application name when it is constructed, so both are changed for that moment only:
+    // they also name the data directories, and on macOS the settings file.
+    const QString organizationDomain = QCoreApplication::organizationDomain();
+    const QString applicationName = QCoreApplication::applicationName();
+    QCoreApplication::setOrganizationDomain(QStringLiteral("fontmatrix.github.com"));
+    QCoreApplication::setApplicationName(QStringLiteral("Fontmatrix"));
     KDBusService dbusService(KDBusService::Unique | KDBusService::NoExitOnFailure);
+    QCoreApplication::setOrganizationDomain(organizationDomain);
+    QCoreApplication::setApplicationName(applicationName);
     if (!dbusService.isRegistered()) {
         // Expected on Windows; on Linux it means the single-instance guard is
         // inactive for this run.

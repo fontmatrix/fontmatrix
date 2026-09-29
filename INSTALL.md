@@ -40,7 +40,7 @@ Download and run the MSI — Qt and FreeType runtime DLLs are bundled.
 
 The Qt and KDE Frameworks versions are the oldest ones the project is built and run
 against: Debian 13 (Qt 6.8.2, KF 6.13) and Ubuntu 25.04 (Qt 6.8.3, KF 6.12). CI covers the
-`org.kde.Platform` 6.10 Flatpak runtime, Arch Linux and KDE Craft, all newer. Older versions
+`org.kde.Platform` 6.11 Flatpak runtime, Arch Linux and KDE Craft, all newer. Older versions
 may work; nobody has tried, and CMake refuses them.
 
 ---
@@ -86,7 +86,7 @@ the KDE coding style; `ninja -C build clang-format` formats everything.
 ### Linux — Flatpak (build locally)
 
 ```bash
-flatpak install org.kde.Platform//6.10 org.kde.Sdk//6.10
+flatpak install org.kde.Platform//6.11 org.kde.Sdk//6.11
 flatpak-builder --user --install --force-clean \
                 build-flatpak com.github.fontmatrix.Fontmatrix.json
 ```

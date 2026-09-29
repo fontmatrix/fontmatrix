@@ -89,6 +89,19 @@
   </screenshots>
 
   <releases>
+    <release version="1.0.0" date="2026-09-28">
+      <url type="details">https://github.com/fontmatrix/fontmatrix/releases/tag/v1.0.0</url>
+      <description>
+        <p>The port to Qt 6 and KDE Frameworks 6 is complete.</p>
+        <ul>
+          <li>Variable fonts: named instances and a slider for each axis</li>
+          <li>Colour fonts: CBDT, sbix, COLR v0 and v1, and OpenType-SVG</li>
+          <li>Right-to-left text, laid out with the Unicode bidirectional algorithm</li>
+          <li>Font activation on Linux, macOS and Windows</li>
+          <li>Filters for language coverage, licence, font technology and duplicates</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.0~alpha" type="development" date="2026-09-19">
       <description>
         <p>Preview of the port to KDE Frameworks 6.</p>

@@ -2,13 +2,14 @@
 #
 # KDE Craft blueprint for Fontmatrix.
 #
-# KDE Craft builds Fontmatrix with it for the Windows installer and for the
-# Linux AppImage; distribution packages and the Flatpak do not use it.
+# KDE Craft builds Fontmatrix with it for the Windows installer, the Linux
+# AppImage and the macOS disk images; distribution packages and the Flatpak do
+# not use it.
 #
 # Blueprint deployment in CI: copied at install time to
 #   <CraftRoot>/etc/blueprints/locations/fontmatrix/fontmatrix/fontmatrix.py
-# See .github/workflows/build.yml and .github/scripts/build-appimage.sh for the
-# exact wiring, and BUILDING-WINDOWS.md for local-developer setup.
+# See .github/workflows/build.yml, .github/scripts/build-appimage.sh and
+# .github/scripts/build-macos.sh for the exact wiring, and BUILDING-WINDOWS.md for local-developer setup.
 #
 # Pattern derived from the upstream Kirigami tutorial blueprint:
 #   https://develop.kde.org/docs/getting-started/building/craft/
@@ -148,6 +149,8 @@ class Package(CMakePackageBase):
         # Drop random executables that came along with build deps but aren't
         # ours (e.g. qmldom.exe, androiddeployqt.exe, openssl.exe). Same
         # pattern as kate.py; bin/fontmatrix on Linux, bin/fontmatrix.exe on Windows.
+        # On macOS the executable is inside Applications/KDE/fontmatrix.app, which
+        # the Mac packager finds by appname.
         self.addExecutableFilter(r"(bin|libexec)/(?!fontmatrix(\.exe)?$).*")
 
         self.ignoredPackages.append("binary/mysql")

@@ -19,12 +19,6 @@ IF(UNIX AND NOT APPLE)
 	SET (CMAKE_INSTALL_PREFIX /usr/local CACHE PATH "Installation path")
 ENDIF(UNIX AND NOT APPLE)
 
-IF(APPLE)
-# 	SET (CMAKE_INSTALL_PREFIX /Applications CACHE PATH "Installation path")
-# 	SET (FONTMATRIX_BIN bin "")
-	set( CMAKE_OSX_ARCHITECTURES i386 )
-ENDIF(APPLE)
-
 IF(WIN32)
 	# Only a default; Craft passes -DCMAKE_INSTALL_PREFIX=<CraftRoot>.
 	# FONTMATRIX_BIN is not set to "." here: the KDE layout puts the
@@ -315,10 +309,6 @@ IF(UNIX AND NOT APPLE)
 	DESTINATION "${KDE_INSTALL_MANDIR}/man1"
 	)
 ENDIF(UNIX AND NOT APPLE)
-
-IF(APPLE)
-# we do not "install" on apple’s OS
-ENDIF(APPLE)
 
 IF(WIN32)
 	# No windeployqt: Craft's qtbase image dir already contains Qt DLLs and

@@ -11,8 +11,8 @@
         "--socket=fallback-x11",
         "--socket=wayland",
         "--device=dri",
-        "--filesystem=xdg-data/fonts",
-        "--filesystem=xdg-config/fontconfig",
+        "--filesystem=xdg-data/fonts:create",
+        "--filesystem=xdg-config/fontconfig:create",
         "--persist=.Fontmatrix"
     ],
     "cleanup": [

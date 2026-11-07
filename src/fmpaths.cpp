@@ -69,8 +69,9 @@ QString FMPaths::HandbookFile()
     const QString dirsep(QDir::separator());
     QString base;
 #ifdef PLATFORM_APPLE
-    base = QApplication::applicationDirPath() + dirsep + QStringLiteral("..") + dirsep + QStringLiteral("Resources") + dirsep + QStringLiteral("handbook")
-        + dirsep;
+    // Craft's Mac packager moves share/ into Contents/Resources; see ResourcesDir().
+    base = QApplication::applicationDirPath() + dirsep + QStringLiteral("..") + dirsep + QStringLiteral("Resources") + dirsep + QStringLiteral("fontmatrix")
+        + dirsep + QStringLiteral("handbook") + dirsep;
 #elif defined(_WIN32)
     // ECM puts the application's data in <appdir>/data on Windows; see ResourcesDir().
     base = QApplication::applicationDirPath() + dirsep + QStringLiteral("data") + dirsep + QStringLiteral("fontmatrix") + dirsep + QStringLiteral("handbook")
@@ -95,7 +96,11 @@ QString FMPaths::ResourcesDir()
     const QString dirsep(QDir::separator());
     QString dir;
 #ifdef PLATFORM_APPLE
-    dir = QApplication::applicationDirPath() + dirsep + QStringLiteral("..") + dirsep + QStringLiteral("Resources") + dirsep;
+    // The resources are installed to ${KDE_INSTALL_DATADIR}/fontmatrix/resources, i.e.
+    // share/fontmatrix/resources, and Craft's Mac packager moves share/ into the
+    // bundle's Contents/Resources.
+    dir = QApplication::applicationDirPath() + dirsep + QStringLiteral("..") + dirsep + QStringLiteral("Resources") + dirsep + QStringLiteral("fontmatrix")
+        + dirsep + QStringLiteral("resources") + dirsep;
 #elif defined(_WIN32)
     // ECM resolves KDE_INSTALL_DATAROOTDIR to "bin/data" on Windows, i.e.
     // <appdir>/data. The top-level CMakeLists.txt installs the resources to

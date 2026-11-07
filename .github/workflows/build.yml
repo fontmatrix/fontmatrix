@@ -584,6 +584,128 @@ jobs:
           chmod +x appimage/fontmatrix-*.AppImage
           .github/scripts/sanitizer-smoke.sh "$(ls appimage/fontmatrix-*.AppImage)" 90
 
+  # The macOS disk images, built with KDE Craft as KDE builds its own
+  # (.github/scripts/build-macos.sh), one per architecture: Craft makes no
+  # universal binaries. Not signed or notarized, and not published to a
+  # release yet.
+  macos:
+    name: Build macOS (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-15
+            target: macos-arm-clang
+          # The last Intel image GitHub offers. Without it, the x86_64 target
+          # runs under Rosetta 2 on an Apple Silicon runner, as on KDE's builders.
+          - arch: x86_64
+            runner: macos-15-intel
+            target: macos-64-clang
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+    env:
+      CRAFT_ROOT_DIR: /Users/runner/craft
+      # Toolchain and build type are part of the identity of a Craft root, as
+      # in the Windows job.
+      CRAFT_CACHE_KEY: craft-${{ matrix.runner }}-${{ matrix.target }}-relwithdebinfo-v1
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Determine version
+        id: version
+        run: |
+          if echo "${{ github.ref }}" | grep -qE '^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            VER="${{ github.ref_name }}"
+            VER="${VER#v}"
+            {
+              echo "CRAFT_FONTMATRIX_VERSION_MAJOR=$(echo $VER | cut -d. -f1)"
+              echo "CRAFT_FONTMATRIX_VERSION_MINOR=$(echo $VER | cut -d. -f2)"
+              echo "CRAFT_FONTMATRIX_VERSION_PATCH=$(echo $VER | cut -d. -f3)"
+            } >> "$GITHUB_ENV"
+          else
+            SHORT="${{ github.sha }}"
+            VER="git-${SHORT:0:7}"
+          fi
+          echo "version=$VER" >> "$GITHUB_OUTPUT"
+          echo "CRAFT_FONTMATRIX_VERSION_FULL=$VER" >> "$GITHUB_ENV"
+
+      - name: Restore Craft cache
+        id: cache-craft
+        uses: actions/cache/restore@v5
+        with:
+          key: ${{ env.CRAFT_CACHE_KEY }}-${{ hashFiles('craft-blueprints/**/*', '.github/craft/CraftConfig.ini') }}
+          restore-keys: |
+            ${{ env.CRAFT_CACHE_KEY }}-
+          path: |
+            /Users/runner/craft
+            !/Users/runner/craft/${{ matrix.target }}/build/fontmatrix/**
+            !/Users/runner/craft/${{ matrix.target }}/tmp/**
+
+      - name: Build the disk image with Craft
+        run: .github/scripts/build-macos.sh ${{ matrix.target }} macos-out
+
+      # Craft refuses to make the image when a library points outside the
+      # bundle; this is what it cannot see: a plugin or a data file that is
+      # missing. Nothing on the runner is used by the start except what the
+      # image holds, and the runner's home is a new profile.
+      - name: Start from the disk image
+        run: |
+          dmg="$(ls macos-out/fontmatrix-*.dmg)"
+          mnt="$(mktemp -d)"
+          hdiutil attach -nobrowse -readonly -mountpoint "$mnt" "$dmg"
+          app="$(find "$mnt" -maxdepth 1 -name '*.app' | head -n 1)"
+          log="$(mktemp)"
+          QT_QPA_PLATFORM=offscreen QT_FORCE_STDERR_LOGGING=1 \
+            "$app/Contents/MacOS/fontmatrix" > "$log" 2>&1 &
+          pid=$!
+          sleep 90
+          alive=0
+          if kill -0 "$pid" 2>/dev/null; then alive=1; kill "$pid"; wait "$pid" || true; fi
+          echo "---- last lines of the log"; tail -n 25 "$log"; echo "----"
+          hdiutil detach "$mnt" || true
+          if [ "$alive" -ne 1 ]; then
+            echo "::error::fontmatrix ended by itself"
+            exit 1
+          fi
+          db="$(find "$HOME/Library/Application Support" -name Data.sql -size +0 2>/dev/null | head -n 1)"
+          if [ -z "$db" ]; then
+            echo "::error::no font database was written, the start did not get far enough"
+            exit 1
+          fi
+          echo "database written: $db"
+
+      - name: Upload disk image
+        uses: actions/upload-artifact@v7
+        with:
+          name: fontmatrix-macos-${{ matrix.arch }}
+          path: |
+            macos-out/fontmatrix-*.dmg
+            macos-out/fontmatrix-*.dmg.sha256
+          if-no-files-found: error
+
+      # As in the Windows job: never store a half-set-up Craft root.
+      - name: Check Craft root is worth caching
+        id: craft-usable
+        if: always()
+        run: |
+          if [ -f "$CRAFT_ROOT_DIR/${{ matrix.target }}/etc/CraftSettings.ini" ] && [ -f "$CRAFT_ROOT_DIR/craft-clone/bin/craft.py" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Save Craft cache
+        if: always() && steps.cache-craft.outputs.cache-hit != 'true' && steps.craft-usable.outputs.ok == 'true'
+        uses: actions/cache/save@v5
+        with:
+          key: ${{ env.CRAFT_CACHE_KEY }}-${{ hashFiles('craft-blueprints/**/*', '.github/craft/CraftConfig.ini') }}
+          path: |
+            /Users/runner/craft
+            !/Users/runner/craft/${{ matrix.target }}/build/fontmatrix/**
+            !/Users/runner/craft/${{ matrix.target }}/tmp/**
+
   release:
     name: Publish to Release
     needs: [ flatpak, windows, appimage-start ]

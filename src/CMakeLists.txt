@@ -340,11 +340,16 @@ exec \"${CMAKE_BINARY_DIR}/bin/fontmatrix\" \"\$@\"
 ENDIF(UNIX AND NOT APPLE)
 
 IF(APPLE)
+	# The icon is a source of the bundle, which puts it in Contents/Resources.
+	set(fontmatrix_ICNS "${CMAKE_SOURCE_DIR}/src/graphic-resources/fontmatrix.icns")
+	set_source_files_properties(${fontmatrix_ICNS} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+
 	add_executable(fontmatrix MACOSX_BUNDLE
 	${fontmatrix_SRCS}
 	${fontmatrix_UIS_H}
 	${fontmatrix_RCC_SRCS}
 	${PODOFO_SRCS}
+	${fontmatrix_ICNS}
 	)
 
 	target_link_libraries(fontmatrix HarfBuzz::HarfBuzz Hyphen::Hyphen
@@ -365,58 +370,24 @@ IF(APPLE)
 	KF6::IconThemes
 	)
 
-	# here we’ll poupulate the bundle in order to make it
-	# self containing regarding external libs (Qt4 & Freetype)
-	# and resources such as QM files.
-	# NOTE: Mac users are not expected to build Fontmatrix
-	# themselves, thus paths are hard coded because it works on the Mac
-	# where we use to build it, period.
-
-	# See:
-	# http://doc.trolltech.com/4.4/deployment-mac.html
-	# http://developer.apple.com/documentation/CoreFoundation/Conceptual/CFBundles/CFBundles.html
-
-	SET(PROGNAME fontmatrix)
-
-	SET(MACOSX_BUNDLE_BUNDLE_NAME "Fontmatrix")
-	SET(MACOSX_BUNDLE_ICON_FILE "fontmatrix.icns")
-	SET(MACOSX_BUNDLE_GUI_IDENTIFIER "io.github.fontmatrix.fontmatrix")
-	SET(MACOSX_BUNDLE_LONG_VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
-	SET(MACOSX_BUNDLE_SHORT_VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}")
-	SET(MACOSX_BUNDLE_BUNDLE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
-	SET(MACOSX_BUNDLE_COPYRIGHT "© 2007–2026 Fontmatrix contributors")
-
-	SET(BUNDLE_RESOURCES_DIR	"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/")
-	SET(BUNDLE_LOCALES_DIR		"${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/Resources/Locales/")
-
-# bundles general resources
-	ADD_CUSTOM_COMMAND( TARGET ${PROGNAME} POST_BUILD
-	COMMAND mkdir ARGS -p ${BUNDLE_RESOURCES_DIR}
-	COMMAND cp ARGS  "${CMAKE_SOURCE_DIR}/src/graphic-resources/fontmatrix.icns" ${BUNDLE_RESOURCES_DIR}
-	COMMAND cp ARGS ${FM_TEMPLATES_FILES} ${BUNDLE_RESOURCES_DIR}
+	set_target_properties(fontmatrix PROPERTIES
+	MACOSX_BUNDLE_BUNDLE_NAME "Fontmatrix"
+	MACOSX_BUNDLE_ICON_FILE "fontmatrix.icns"
+	MACOSX_BUNDLE_GUI_IDENTIFIER "com.github.fontmatrix.Fontmatrix"
+	MACOSX_BUNDLE_LONG_VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+	MACOSX_BUNDLE_SHORT_VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+	MACOSX_BUNDLE_BUNDLE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+	MACOSX_BUNDLE_COPYRIGHT "© 2007–2026 Fontmatrix contributors"
 	)
-# bundles libs
-#	ADD_CUSTOM_COMMAND(TARGET ${PROGNAME} POST_BUILD
-#	COMMAND ${CMAKE_COMMAND} ARGS -Dinput_file=${CMAKE_CURRENT_BINARY_DIR}/${PROGNAME}.app/Contents/MacOS/${PROGNAME} -P ${CMAKE_MODULE_PATH}/OwnIngestOSXBundleLibraries.cmake
-#	)
 
-INSTALL(TARGETS ${PROGNAME}
-    BUNDLE DESTINATION . COMPONENT Runtime
-    )
-
-SET(APPLE_LIBS
-	${QT_LIBRARIES}
-	${FREETYPE_LIBRARIES}
-	ZLIB::ZLIB
-	${PODOFO_LINK_LIBS}
-)
-SET(APPLE_DIRS "${QT_PLUGINS_DIR}/sqldrivers")
-SET(APPLE_APPS "\${CMAKE_INSTALL_PREFIX}/fontmatrix.app")
-INSTALL(CODE "
-    include(BundleUtilities)
-    fixup_bundle(\"${APPLE_APPS}\" \"${APPLE_LIBS}\" \"${APPLE_DIRS}\")
-    " COMPONENT Runtime)
-
+	# Only the bundle itself is installed here: the data goes through the
+	# KDE_INSTALL_* variables like on every platform, under share/, and Craft's
+	# Mac packager moves share/ into Contents/Resources and bundles the
+	# libraries into Contents/Frameworks. Craft points KDE_INSTALL_BUNDLEDIR
+	# at <CraftRoot>/Applications/KDE.
+	INSTALL(TARGETS fontmatrix
+	BUNDLE DESTINATION "${KDE_INSTALL_BUNDLEDIR}"
+	)
 ENDIF(APPLE)
 
 IF(WIN32)
